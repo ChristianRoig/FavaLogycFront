@@ -18,7 +18,7 @@ export const navigation: FuseNavigation[] = [
                         id        : 'partes',
                         title     : 'Partes de artículo',
                         type      : 'item',
-                        url       : '/apps/pedidos/partes-articulo',
+                        // url       : '/apps/pedidos/partes-articulo',
                         exactMatch: true
                     }
                     // {
