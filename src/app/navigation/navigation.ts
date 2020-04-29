@@ -6,20 +6,29 @@ export const navigation: FuseNavigation[] = [
         title    : 'Applications',
         translate: 'NAV.APPLICATIONS',
         type     : 'group',
+        icon     : 'apps',
         children : [
             {
-                id       : 'sample',
-                title    : 'Sample',
-                translate: 'NAV.SAMPLE.TITLE',
-                type     : 'item',
-                icon     : 'email',
-                url      : '/sample',
-                badge    : {
-                    title    : '25',
-                    translate: 'NAV.SAMPLE.BADGE',
-                    bg       : '#F44336',
-                    fg       : '#FFFFFF'
-                }
+                id       : 'pedidos',
+                title    : 'Pedidos a Trabajar',
+                type     : 'collapsable',
+                icon     : 'shopping_cart',
+                children : [
+                    {
+                        id        : 'partes',
+                        title     : 'Partes de artículo',
+                        type      : 'item',
+                        url       : '/apps/pedidos/partes-articulo',
+                        exactMatch: true
+                    }
+                    // {
+                    //     id        : 'codigos-barra',
+                    //     title     : 'Códigos de Barra',
+                    //     type      : 'item',
+                    //     url       : '/apps/pedidos/codigos-barra',
+                    //     exactMatch: true
+                    // }
+                ]
             }
         ]
     }

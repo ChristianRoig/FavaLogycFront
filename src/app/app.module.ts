@@ -18,11 +18,22 @@ import { fuseConfig } from 'app/fuse-config';
 import { AppComponent } from 'app/app.component';
 import { LayoutModule } from 'app/layout/layout.module';
 import { SampleModule } from 'app/main/sample/sample.module';
+import { PagesModule } from './main/pages/pages.module';
+
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 const appRoutes: Routes = [
     {
+        path        : 'apps',
+        loadChildren: () => import('./main/apps/apps.module').then(m => m.AppsModule)
+    },
+    {
+        path        : 'pages',
+        loadChildren: () => import('./main/pages/pages.module').then(m => m.PagesModule)
+    },
+    {
         path      : '**',
-        redirectTo: 'sample'
+        redirectTo: 'pages/login'
     }
 ];
 
@@ -54,7 +65,11 @@ const appRoutes: Routes = [
 
         // App modules
         LayoutModule,
-        SampleModule
+        SampleModule,
+        PagesModule
+    ],
+    providers: [
+        // { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
     ],
     bootstrap   : [
         AppComponent
