@@ -1,27 +1,32 @@
-@mixin e-commerce-products-theme($theme) {
+table {
+    width: 100%;
+  }
+  
 
-    $background: map-get($theme, background);
-    $foreground: map-get($theme, foreground);
+// @mixin e-commerce-products-theme($theme) {
 
-    pedidos-partes-articulo {
+//     $background: map-get($theme, background);
+//     $foreground: map-get($theme, foreground);
 
-        .header {
+//     pedidos-partes-articulo {
 
-            .search-wrapper {
-                background: map-get($background, card);
+//         .header {
 
-                .search {
+//             .search-wrapper {
+//                 background: map-get($background, card);
 
-                    .mat-icon {
-                        color: map-get($foreground, icon);
-                    }
+//                 .search {
 
-                    input {
-                        background: map-get($background, card);
-                        color: map-get($foreground, text);
-                    }
-                }
-            }
-        }
-    }
-}
+//                     .mat-icon {
+//                         color: map-get($foreground, icon);
+//                     }
+
+//                     input {
+//                         background: map-get($background, card);
+//                         color: map-get($foreground, text);
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }

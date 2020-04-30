@@ -25,10 +25,7 @@ import { PedidosPartesArticulosService } from './partes-articulo/partes-articulo
 const routes: Routes = [
     {
         path     : 'partes-articulo',
-        component: PedidosPartesArticuloComponent,
-        resolve  : {
-            data: PedidosPartesArticulosService
-        }
+        component: PedidosPartesArticuloComponent
     }
 ];
 
