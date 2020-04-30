@@ -52,8 +52,9 @@ export class PedidosPartesArticuloComponent implements OnInit
      */
     ngOnInit(): void
     {
+        console.log("1");
         this.dataSource = new FilesDataSource(this._pedidosPartesArticulosService, this.paginator, this.sort);
-
+        console.log("2");
         fromEvent(this.filter.nativeElement, 'keyup')
             .pipe(
                 takeUntil(this._unsubscribeAll),
@@ -61,11 +62,13 @@ export class PedidosPartesArticuloComponent implements OnInit
                 distinctUntilChanged()
             )
             .subscribe(() => {
+                console.log("3");
                 if ( !this.dataSource )
                 {
+                    console.log("4.1");
                     return;
                 }
-
+                console.log("4.2");
                 this.dataSource.filter = this.filter.nativeElement.value;
             });
     }

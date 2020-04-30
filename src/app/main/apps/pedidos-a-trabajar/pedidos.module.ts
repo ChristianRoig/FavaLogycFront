@@ -34,6 +34,7 @@ const routes: Routes = [
 
 @NgModule({
     declarations: [
+        PedidosPartesArticuloComponent
     ],
     imports     : [
         RouterModule.forChild(routes),

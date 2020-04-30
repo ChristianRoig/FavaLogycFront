@@ -51,6 +51,7 @@ export class PedidosPartesArticulosService implements Resolve<any>
      */
     getPartesArticulos(): Promise<any>
     {
+        console.log("entre al servicio");
         return new Promise((resolve, reject) => {
             this._httpClient.get('http://192.168.100.191:8080/api_favalogyc/pedidosatrabajar/articuloparte/porcodigoonombre/MPLA/0/15/id')
                 .subscribe((response: any) => {
