@@ -21,13 +21,13 @@ export const navigation: FuseNavigation[] = [
                         url       : '/apps/pedidos/partes-articulo',
                         exactMatch: true
                     },
-                    // {
-                    //     id        : 'codigos-barra',
-                    //     title     : 'Códigos de Barra',
-                    //     type      : 'item',
-                    //     // url       : '/apps/pedidos/codigos-barra',
-                    //     exactMatch: true
-                    // }
+                    {
+                        id        : 'codigos-barra',
+                        title     : 'Códigos de Barra',
+                        type      : 'item',
+                        url       : '/apps/pedidos/codigos-barra',
+                        exactMatch: true
+                    }
                 ]
             }
         ]

@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable()
-export class PedidosPartesArticulosService implements Resolve<any>
+export class PedidosCodigosBarraService implements Resolve<any>
 {
     partesArticulo: any[];
     onPartesArticuloChanged: BehaviorSubject<any>;

@@ -1,0 +1,32 @@
+<form class="example-form">
+    <mat-form-field class="example-full-width">
+      <mat-label>Codigo Articulo</mat-label>
+      <input matInput disabled value="{{this.dataSource.articulo.codigoArticulo}}">
+    </mat-form-field>
+    
+    <br>
+    
+    <mat-form-field class="example-full-width">
+      <mat-label>Nombre</mat-label>
+      <input matInput disabled value="{{this.dataSource.articulo.nombre}}">
+    </mat-form-field>
+
+    <br>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Descripcion</mat-label>
+      <input matInput disabled value="{{this.dataSource.articulo.descripcion}}">
+    </mat-form-field>
+    
+    <br>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Codigo de Barra</mat-label>
+      <input matInput value="{{this.codigoDeBarra}}">
+    </mat-form-field>
+
+    <div class="example-button-row">
+      <button mat-raised-button color="primary" (click)="editar()">Primary</button>
+    </div>
+  </form>
+  
