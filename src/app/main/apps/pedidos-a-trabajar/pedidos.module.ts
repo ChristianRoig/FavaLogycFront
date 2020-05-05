@@ -29,6 +29,10 @@ import { PedidosCodigosBarraAddComponent } from './codigos-barra-add/codigos-bar
 import { PedidosCodigosBarraEditarService } from './codigos-barra-editar/codigos-barra-editar.service';
 import { PedidosCodigosBarraAddService } from './codigos-barra-add/codigos-barra-add.service';
 import { PedidosCodigosBarraService } from './codigos-barra/codigos-barra.service';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { PedidosCodigosBarraArticulosComponent } from './codigos-barra-articulos/codigos-barra-articulos.component';
+import { PedidosCodigosBarraArticulosService } from './codigos-barra-articulos/codigos-barra-articulos.service';
 
 const routes: Routes = [
     {
@@ -40,11 +44,15 @@ const routes: Routes = [
         component: PedidosPartesArticuloEditarComponent
     },
     {
-        path     : 'codigos-barra',
+        path     : 'codigos-barra/:id',
         component: PedidosCodigosBarraComponent
     },
     {
-        path     : 'codigos-barra/:id',
+        path     : 'codigos-barra-articulos',
+        component: PedidosCodigosBarraArticulosComponent
+    },
+    {
+        path     : 'codigos-barra/ed/:id',
         component: PedidosCodigosBarraEditarComponent
     },
     {
@@ -59,9 +67,13 @@ const routes: Routes = [
         PedidosPartesArticuloEditarComponent,
         PedidosCodigosBarraComponent,
         PedidosCodigosBarraEditarComponent,
-        PedidosCodigosBarraAddComponent
+        PedidosCodigosBarraAddComponent,
+        PedidosCodigosBarraArticulosComponent
     ],
     imports     : [
+        CommonModule,
+        HttpClientModule,
+
         RouterModule.forChild(routes),
 
         MatButtonModule,
@@ -91,7 +103,8 @@ const routes: Routes = [
         PedidosPartesArticulosEditarService,
         PedidosCodigosBarraAddService,
         PedidosCodigosBarraEditarService,
-        PedidosCodigosBarraService
+        PedidosCodigosBarraService,
+        PedidosCodigosBarraArticulosService
     ]
 })
 export class PedidosModule

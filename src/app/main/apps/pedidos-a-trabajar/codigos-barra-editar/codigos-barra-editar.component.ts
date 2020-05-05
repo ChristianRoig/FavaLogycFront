@@ -59,7 +59,7 @@ const ELEMENT_DATA: CodigoBarra =
             fechaAlta: 1587840256000
         },
         codigoDeBarra: "7798035043002",
-        descripcion: null,
+        descripcion: "aca viene la descripcion",
         sysUsuario: {
             id: 1,
             nombre: "Santiago Burroni",
@@ -90,6 +90,7 @@ export class PedidosCodigosBarraEditarComponent implements OnInit {
     subParametros: Subscription;
     id:number;
     codigoDeBarra: string;
+    descripcion: string;
 
     constructor(
         private _router: Router,
@@ -105,6 +106,7 @@ export class PedidosCodigosBarraEditarComponent implements OnInit {
     ngOnInit(): void{
         console.log(this.dataSource.articulo.codigoArticulo);
         this.codigoDeBarra = this.dataSource.codigoDeBarra;
+        this.descripcion = this.dataSource.descripcion;
         this.subParametros = this.route.params.subscribe(params => {
             this.id = params['id'];
         })
@@ -117,7 +119,7 @@ export class PedidosCodigosBarraEditarComponent implements OnInit {
 
     editar(){
         console.log("los cambios fueron guardados");
-        let ruta = `apps/pedidos/codigos-barra`;
+        let ruta = `apps/pedidos/codigos-barra/${this.id}`;
         console.log(ruta);
         this._router.navigate([ruta]);
     }

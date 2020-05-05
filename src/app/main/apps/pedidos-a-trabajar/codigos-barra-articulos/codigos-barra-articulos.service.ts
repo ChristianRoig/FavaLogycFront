@@ -2,12 +2,11 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ParteArticulo } from 'app/objects/parte-articulo';
 
 @Injectable()
-export class PedidosPartesArticulosService implements Resolve<any>
+export class PedidosCodigosBarraArticulosService implements Resolve<any>
 {
-    partesArticulo: ParteArticulo[];
+    partesArticulo: any[];
     onPartesArticuloChanged: BehaviorSubject<any>;
 
     /**
@@ -50,7 +49,7 @@ export class PedidosPartesArticulosService implements Resolve<any>
      *
      * @returns {Promise<any>}
      */
-    getPartesArticulos(): Promise<ParteArticulo[]>
+    getPartesArticulos(): Promise<any>
     {
         console.log("entre al servicio");
         return new Promise((resolve, reject) => {
@@ -59,7 +58,7 @@ export class PedidosPartesArticulosService implements Resolve<any>
                 .subscribe((response: any) => {
                     this.partesArticulo = response;
                     this.onPartesArticuloChanged.next(this.partesArticulo);
-                    resolve(this.partesArticulo);
+                    resolve(response);
                 }, reject);
         });
     }

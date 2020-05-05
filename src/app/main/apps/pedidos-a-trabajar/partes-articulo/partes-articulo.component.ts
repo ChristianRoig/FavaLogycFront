@@ -176,7 +176,7 @@ const ELEMENT_DATA: ParteArticulo[] = [
 export class PedidosPartesArticuloComponent implements OnInit {
     displayedColumns: string[] = ['id', 'codigoArticulo', 'nombre', 'cantidad', 'editar'];
     dataSource = ELEMENT_DATA;
-    dataSource2: ParteArticulo[];
+    dataSource2: any;
 
     constructor(
         private _router: Router,
@@ -187,9 +187,11 @@ export class PedidosPartesArticuloComponent implements OnInit {
     }
 
     ngOnInit(): void{
-        // let dataSource2: any = this._pedidosPartesArticulosService.getPartesArticulos();
-        console.log("datasourse");
-        // console.log(dataSource2);
+        this.dataSource2 = this._pedidosPartesArticulosService.getPartesArticulos();
+        console.log("dataSource");
+        console.log(this.dataSource);
+        console.log("dataSource2");
+        console.log(this.dataSource2);
         
     }
 

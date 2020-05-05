@@ -160,7 +160,7 @@ export class PedidosCodigosBarraComponent implements OnInit {
     }
 
     ngOnInit(): void{
-        // let dataSource2: any = this._pedidosPartesArticulosService.getPartesArticulos();
+        // let dataSource2: any = this._pedidosCodigosBarraService.getPartesArticulos();
         console.log("datasourse");
         // console.log(dataSource2);
         
@@ -168,7 +168,7 @@ export class PedidosCodigosBarraComponent implements OnInit {
 
     editar(id){
         console.log(id);
-        let ruta = `apps/pedidos/codigos-barra/${id}`;
+        let ruta = `apps/pedidos/codigos-barra/ed/${id}`;
         console.log(ruta);
         this._router.navigate([ruta]);
     }

@@ -16,6 +16,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
+import { HttpClientModule } from '@angular/common/http';
 
 const routes = [
     {
@@ -41,7 +42,8 @@ const routes = [
         MatTableModule,
         MatTabsModule,
         MatButtonModule,
-        FuseSharedModule
+        FuseSharedModule,
+        HttpClientModule
     ]
 })
 export class AppsModule
