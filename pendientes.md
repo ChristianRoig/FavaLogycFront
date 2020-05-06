@@ -1,0 +1,9 @@
+-Pantallas: 
+    -Componentes:
+        -Agregar codigo de barra
+    -Headers y footers:
+        - partes articulo
+        - codigos de barra articulo
+        - codigos de barra
+    -Mensajes de error
+    -Mensajes de exito
