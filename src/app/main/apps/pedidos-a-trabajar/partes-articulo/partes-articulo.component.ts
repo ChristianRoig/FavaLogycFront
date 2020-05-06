@@ -187,23 +187,19 @@ export class PedidosPartesArticuloComponent implements OnInit {
     }
 
     ngOnInit(): void{
-        this.dataSource2 = this._pedidosPartesArticulosService.getPartesArticulos();
-        console.log("dataSource");
-        console.log(this.dataSource);
-        console.log("dataSource2");
-        console.log(this.dataSource2);
+        this._pedidosPartesArticulosService.getPartesArticulos().subscribe(data => {
+            this.dataSource2 = data
+        });
+        
         
     }
 
     editar(id){
-        console.log(id);
         let ruta = `apps/pedidos/partes-articulo/${id}`;
-        console.log(ruta);
         this._router.navigate([ruta]);
     }
 
     logout(){
-        console.log("ingreso logout");
         this._router.navigate([''])
     }
 }

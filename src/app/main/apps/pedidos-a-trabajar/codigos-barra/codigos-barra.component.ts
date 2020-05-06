@@ -1,140 +1,9 @@
-import {Component, ViewEncapsulation, OnInit} from '@angular/core';
+import {Component, ViewEncapsulation, OnInit, ChangeDetectorRef} from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { PedidosCodigosBarraService } from './codigos-barra.service';
-
-export interface CodigoBarra {
-    id: number,
-    articulo: {
-        id: number,
-        codigoArticulo: string,
-        nombre: string,
-        descripcion: string,
-        observaciones: string,
-        sysUsuario: {
-            id: number,
-            nombre: string,
-            descripcion: string,
-            usuarioActiveDirectory: string,
-            usuarioGAM: string,
-            usuarioAltaid: number,
-            fechaAlta: number
-        },
-        fechaAlta: 1587840256000
-    },
-    codigoDeBarra: string,
-    descripcion: string,
-    sysUsuario: {
-        id: number,
-        nombre: string,
-        descripcion: string,
-        usuarioActiveDirectory: string,
-        usuarioGAM: string,
-        usuarioAltaid: number,
-        fechaAlta: number
-    },
-    fechaAlta: number
-}
-
-
-const ELEMENT_DATA: CodigoBarra[] = [
-    {
-        id: 1,
-        articulo: {
-            id: 1,
-            codigoArticulo: "AKANSOP010",
-            nombre: "KANEL SOPORTE P/MICROONDAS",
-            descripcion: null,
-            observaciones: null,
-            sysUsuario: {
-                id: 1,
-                nombre: "Santiago Burroni",
-                descripcion: "Administrador",
-                usuarioActiveDirectory: "",
-                usuarioGAM: "",
-                usuarioAltaid: 1,
-                fechaAlta: 1588086274000
-            },
-            fechaAlta: 1587840256000
-        },
-        codigoDeBarra: "7798035043002",
-        descripcion: null,
-        sysUsuario: {
-            id: 1,
-            nombre: "Santiago Burroni",
-            descripcion: "Administrador",
-            usuarioActiveDirectory: "",
-            usuarioGAM: "",
-            usuarioAltaid: 1,
-            fechaAlta: 1588086274000
-        },
-        fechaAlta: 1588086010000
-    },
-    {
-        id: 1,
-        articulo: {
-            id: 1,
-            codigoArticulo: "AKANSOP010",
-            nombre: "KANEL SOPORTE P/MICROONDAS",
-            descripcion: null,
-            observaciones: null,
-            sysUsuario: {
-                id: 1,
-                nombre: "Santiago Burroni",
-                descripcion: "Administrador",
-                usuarioActiveDirectory: "",
-                usuarioGAM: "",
-                usuarioAltaid: 1,
-                fechaAlta: 1588086274000
-            },
-            fechaAlta: 1587840256000
-        },
-        codigoDeBarra: "7798035043002",
-        descripcion: null,
-        sysUsuario: {
-            id: 1,
-            nombre: "Santiago Burroni",
-            descripcion: "Administrador",
-            usuarioActiveDirectory: "",
-            usuarioGAM: "",
-            usuarioAltaid: 1,
-            fechaAlta: 1588086274000
-        },
-        fechaAlta: 1588086010000
-    },
-    {
-        id: 1,
-        articulo: {
-            id: 1,
-            codigoArticulo: "AKANSOP010",
-            nombre: "KANEL SOPORTE P/MICROONDAS",
-            descripcion: null,
-            observaciones: null,
-            sysUsuario: {
-                id: 1,
-                nombre: "Santiago Burroni",
-                descripcion: "Administrador",
-                usuarioActiveDirectory: "",
-                usuarioGAM: "",
-                usuarioAltaid: 1,
-                fechaAlta: 1588086274000
-            },
-            fechaAlta: 1587840256000
-        },
-        codigoDeBarra: "7798035043002",
-        descripcion: null,
-        sysUsuario: {
-            id: 1,
-            nombre: "Santiago Burroni",
-            descripcion: "Administrador",
-            usuarioActiveDirectory: "",
-            usuarioGAM: "",
-            usuarioAltaid: 1,
-            fechaAlta: 1588086274000
-        },
-        fechaAlta: 1588086010000
-    }
-];
+import { Subscription } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 /**
  * @title Basic use of `<table mat-table>`
@@ -148,37 +17,88 @@ const ELEMENT_DATA: CodigoBarra[] = [
 })
 export class PedidosCodigosBarraComponent implements OnInit {
     displayedColumns: string[] = ['id', 'codigoBarra', 'descripcion', 'editar', 'borrar'];
-    dataSource = ELEMENT_DATA;
-    dataSource2: CodigoBarra[];
+    dataSource2: any;
+    subParametros: Subscription;
+
+    codigoArticulo: string;
+    codigoArticuloBusqueda: string;
 
     constructor(
         private _router: Router,
-        private _pedidosCodigosBarraService: PedidosCodigosBarraService
+        private route: ActivatedRoute,
+        private _pedidosCodigosBarraService: PedidosCodigosBarraService,
+        private changeDetectorRefs: ChangeDetectorRef
     )
     {
         
     }
 
     ngOnInit(): void{
-        // let dataSource2: any = this._pedidosCodigosBarraService.getPartesArticulos();
-        console.log("datasourse");
-        // console.log(dataSource2);
+
+        this.subParametros = this.route.params.subscribe(params => {
+            this.codigoArticulo = params['id'];
+        })
+        
+        this.buscar(this.codigoArticulo);
         
     }
 
     editar(id){
-        console.log(id);
         let ruta = `apps/pedidos/codigos-barra/ed/${id}`;
-        console.log(ruta);
         this._router.navigate([ruta]);
     }
 
-    borrar(id){
+    borrar(id:number){
+        this._pedidosCodigosBarraService.deleteCodigoBarra(id)
+            .subscribe(
+            data => {
+                console.log(this.codigoArticuloBusqueda)
+                console.log(this.codigoArticulo)
 
+                if(this.codigoArticuloBusqueda){
+                    this.buscar(this.codigoArticuloBusqueda);
+                } else {
+                    this.buscar(this.codigoArticulo);
+                }
+            },
+            (err: HttpErrorResponse) => {
+              if (err.error instanceof Error) {
+                console.log("Client-side error");
+              } else {
+                console.log("Server-side error");
+              }
+              this.volver();
+            }
+          );
+
+        
     }
 
-    logout(){
-        console.log("ingreso logout");
-        this._router.navigate([''])
+    buscar(busqueda){
+        
+        this._pedidosCodigosBarraService.getCodigosBarra(busqueda).subscribe(
+            data => {
+                this.dataSource2 = data;
+                console.log(this.dataSource2);
+                this.changeDetectorRefs.detectChanges();
+            },
+            (err: HttpErrorResponse) => {
+              if (err.error instanceof Error) {
+                console.log("Client-side error");
+              } else {
+                console.log("Server-side error");
+              }
+              this.volver();
+            }
+          );            
+    }
+
+    agregar(){
+        let ruta = `apps/pedidos/codigos-barra-add/${this.codigoArticulo}`;
+        this._router.navigate([ruta]);
+    }
+
+    volver(){
+        this._router.navigate(['apps/pedidos/codigos-barra-articulos']);
     }
 }

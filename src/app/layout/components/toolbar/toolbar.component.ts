@@ -125,7 +125,6 @@ export class ToolbarComponent implements OnInit, OnDestroy
     }
 
     logout(){
-        console.log("ingreso logout");
         this._router.navigate([''])
     }
 

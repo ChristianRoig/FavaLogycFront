@@ -1,32 +1,32 @@
-<form class="example-form">
+<!-- <form class="example-form">
     <mat-form-field class="example-full-width">
       <mat-label>Codigo Articulo</mat-label>
-      <input matInput disabled value="{{this.dataSource.articulo.codigoArticulo}}">
+      <input matInput disabled value="{{this.codigoArticulo}}">
     </mat-form-field>
     
     <br>
     
     <mat-form-field class="example-full-width">
       <mat-label>Nombre</mat-label>
-      <input matInput disabled value="{{this.dataSource.articulo.nombre}}">
+      <input matInput disabled value="{{this.nombre}}">
     </mat-form-field>
 
     <br>
 
     <mat-form-field class="example-full-width">
       <mat-label>Descripcion</mat-label>
-      <input matInput disabled value="{{this.dataSource.articulo.descripcion}}">
+      <input matInput [(ngModel)]='this.descripcion' [ngModelOptions]="{standalone: true}">
     </mat-form-field>
     
     <br>
 
     <mat-form-field appearance="fill">
-      <mat-label>Codigo Articulo</mat-label>
-      <input matInput value="{{this.cantidad}}">
+      <mat-label>Codigo de Barra</mat-label>
+      <input matInput [(ngModel)]='this.codigoDeBarra' [ngModelOptions]="{standalone: true}">
     </mat-form-field>
 
     <div class="example-button-row">
-      <button mat-raised-button color="primary" (click)="editar()">Primary</button>
+      <button mat-raised-button color="primary" (click)="agregar()">Agregar</button>
     </div>
   </form>
-  
+   -->

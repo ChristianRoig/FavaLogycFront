@@ -3,6 +3,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PedidosPartesArticulosEditarService } from './partes-articulo-editar.service';
 import { Subscription } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 export interface ParteArticulo {
         id: number;
@@ -85,10 +86,13 @@ const ELEMENT_DATA: ParteArticulo =
 export class PedidosPartesArticuloEditarComponent implements OnInit {
     displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
     dataSource = ELEMENT_DATA;
-    dataSource2: ParteArticulo[];
+    dataSource2: any;
     subParametros: Subscription;
     id:number;
     cantidad: number;
+    codigoArticulo: string;
+    nombre: string;
+    descripcion: string;
 
     constructor(
         private _router: Router,
@@ -102,22 +106,39 @@ export class PedidosPartesArticuloEditarComponent implements OnInit {
     
 
     ngOnInit(): void{
-        console.log(this.dataSource.articulo.codigoArticulo);
         this.cantidad = this.dataSource.cantidad;
         this.subParametros = this.route.params.subscribe(params => {
             this.id = params['id'];
         })
 
-        console.log('this.id');
-        console.log(this.id);
 
-        let dataSource2: any = this._pedidosPartesArticulosEditarService.getPartesArticulos();        
+        this._pedidosPartesArticulosEditarService.getArticulo(this.id).subscribe( data => {
+            this.dataSource2 = data;
+            this.cantidad = this.dataSource2.cantidad;
+            this.codigoArticulo = this.dataSource2.articulo.codigoArticulo;
+            this.nombre = this.dataSource2.articulo.nombre;
+            this.descripcion = this.dataSource2.articulo.descripcion;
+        });        
+    }
+
+    volver(){
+        let ruta = `apps/pedidos/partes-articulo`;
+        this._router.navigate([ruta]);
     }
 
     editar(){
-        console.log("los cambios fueron guardados");
-        let ruta = `apps/pedidos/partes-articulo`;
-        console.log(ruta);
-        this._router.navigate([ruta]);
+
+        this._pedidosPartesArticulosEditarService.putArticulo(this.id,this.cantidad).subscribe(
+            data => {
+              this.volver();
+            },
+            (err: HttpErrorResponse) => {
+              if (err.error instanceof Error) {
+                console.log("Client-side error");
+              } else {
+                console.log("Server-side error");
+              }
+            }
+          );
     }
 }

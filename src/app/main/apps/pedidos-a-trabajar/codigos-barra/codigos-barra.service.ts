@@ -51,9 +51,7 @@ export class PedidosCodigosBarraService implements Resolve<any>
      */
     getPartesArticulos(): Promise<any>
     {
-        console.log("entre al servicio");
         return new Promise((resolve, reject) => {
-            console.log("entre al servicio2");
             this._httpClient.get('http://192.168.100.191:8080/api_favalogyc/pedidosatrabajar/articuloparte/porcodigoonombre/MPLA/0/15/id')
                 .subscribe((response: any) => {
                     this.partesArticulo = response;
@@ -61,5 +59,23 @@ export class PedidosCodigosBarraService implements Resolve<any>
                     resolve(response);
                 }, reject);
         });
+    }
+
+    getCodigosBarra(codArticulo): Observable<any>
+    {
+        let ruta = `http://192.168.100.191:8080/api_favalogyc/pedidosatrabajar/codigodebarra/porcodigoarticuloonombre/${codArticulo}/0/7/id`;
+        return this._httpClient.get(ruta);
+    }
+
+    getCodigoBarra(codArticulo): Observable<any>
+    {
+        let ruta = `http://192.168.100.191:8080/api_favalogyc/pedidosatrabajar/codigodebarra/porcodigodebarraodescripcion/${codArticulo}/0/10/id`;
+        return this._httpClient.get(ruta);
+    }
+
+    deleteCodigoBarra(id): Observable<any>
+    {
+        let ruta = `http://192.168.100.191:8080/api_favalogyc/pedidosatrabajar/codigodebarra/${id}`;
+        return this._httpClient.delete(ruta);
     }
 }

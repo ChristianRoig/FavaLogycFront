@@ -32,6 +32,7 @@ import { SampleModule } from 'app/main/sample/sample.module';
 import { PagesModule } from './main/pages/pages.module';
 
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { FormsModule } from '@angular/forms';
 
 const appRoutes: Routes = [
     {
@@ -54,6 +55,7 @@ const appRoutes: Routes = [
     ],
     imports     : [
         BrowserModule,
+        FormsModule,
         BrowserAnimationsModule,
         HttpClientModule,
         RouterModule.forRoot(appRoutes),

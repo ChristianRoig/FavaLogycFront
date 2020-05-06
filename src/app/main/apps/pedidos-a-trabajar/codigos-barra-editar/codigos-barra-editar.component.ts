@@ -3,6 +3,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PedidosCodigosBarraEditarService } from './codigos-barra-editar.service';
 import { Subscription } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 export interface CodigoBarra {
     id: number,
@@ -85,10 +86,11 @@ const ELEMENT_DATA: CodigoBarra =
 
 export class PedidosCodigosBarraEditarComponent implements OnInit {
     displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-    dataSource = ELEMENT_DATA;
-    dataSource2: CodigoBarra;
+    dataSource: any;
     subParametros: Subscription;
     id:number;
+    codigoArticulo:string;
+    nombre:string;
     codigoDeBarra: string;
     descripcion: string;
 
@@ -104,25 +106,37 @@ export class PedidosCodigosBarraEditarComponent implements OnInit {
     
 
     ngOnInit(): void{
-        console.log(this.dataSource.articulo.codigoArticulo);
-        this.codigoDeBarra = this.dataSource.codigoDeBarra;
-        this.descripcion = this.dataSource.descripcion;
+        
         this.subParametros = this.route.params.subscribe(params => {
             this.id = params['id'];
         })
 
-        console.log('this.id');
-        console.log(this.id);
-
-        let dataSource2: any = this._pedidosCodigosBarraEditarService.getPartesArticulos();        
+        this._pedidosCodigosBarraEditarService.getCodigoBarra(this.id).subscribe(data => {
+            this.dataSource = data;
+            this.codigoDeBarra = this.dataSource.codigoDeBarra;
+            this.descripcion = this.dataSource.descripcion;
+            this.nombre = this.dataSource.articulo.nombre;
+            this.codigoArticulo = this.dataSource.articulo.codigoArticulo;
+        });        
     }
 
-    editar(){
-        console.log("los cambios fueron guardados");
-        let ruta = `apps/pedidos/codigos-barra/${this.id}`;
-        console.log(ruta);
+    volver(){
+        let ruta = `apps/pedidos/codigos-barra/${this.codigoArticulo}`;
         this._router.navigate([ruta]);
     }
 
-    
+    editar(){
+        this._pedidosCodigosBarraEditarService.putCodigoBarra(this.id,this.codigoDeBarra,this.descripcion).subscribe(
+            data => {
+              this.volver();
+            },
+            (err: HttpErrorResponse) => {
+              if (err.error instanceof Error) {
+                console.log("Client-side error");
+              } else {
+                console.log("Server-side error");
+              }
+            }
+          );
+    }    
 }

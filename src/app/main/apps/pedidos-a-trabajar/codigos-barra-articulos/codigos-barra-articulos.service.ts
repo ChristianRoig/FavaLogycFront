@@ -34,7 +34,7 @@ export class PedidosCodigosBarraArticulosService implements Resolve<any>
         return new Promise((resolve, reject) => {
 
             Promise.all([
-                this.getPartesArticulos()
+                this.getPartesArticulos2()
             ]).then(
                 () => {
                     resolve();
@@ -49,11 +49,9 @@ export class PedidosCodigosBarraArticulosService implements Resolve<any>
      *
      * @returns {Promise<any>}
      */
-    getPartesArticulos(): Promise<any>
+    getPartesArticulos2(): Promise<any>
     {
-        console.log("entre al servicio");
         return new Promise((resolve, reject) => {
-            console.log("entre al servicio2");
             this._httpClient.get('http://192.168.100.191:8080/api_favalogyc/pedidosatrabajar/articuloparte/porcodigoonombre/MPLA/0/15/id')
                 .subscribe((response: any) => {
                     this.partesArticulo = response;
@@ -61,5 +59,11 @@ export class PedidosCodigosBarraArticulosService implements Resolve<any>
                     resolve(response);
                 }, reject);
         });
+    }
+
+    getArticulos(): Observable<any>
+    {
+
+        return this._httpClient.get('http://192.168.100.191:8080/api_favalogyc/pedidosatrabajar/codigodebarra/porcodigoarticuloonombre/Somm/0/20/id');
     }
 }

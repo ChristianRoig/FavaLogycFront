@@ -56,7 +56,7 @@ const routes: Routes = [
         component: PedidosCodigosBarraEditarComponent
     },
     {
-        path     : 'codigos-barra-add',
+        path     : 'codigos-barra-add/:id',
         component: PedidosCodigosBarraAddComponent
     }
 ];

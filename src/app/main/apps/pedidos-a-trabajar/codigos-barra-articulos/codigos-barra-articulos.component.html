@@ -1,37 +1,37 @@
 <div class="center">
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource2" class="mat-elevation-z8">
 
         <!--- ['id', 'codigoArticulo', 'nombre', 'descripcion', 'codigoBarra'] -->
     
         <!-- Position Column -->
         <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef> Id </th>
-            <td (click)="irAlArticulo(element.id)" mat-cell *matCellDef="let element"> {{element.id}} </td>
+            <td (click)="irAlArticulo(element.articulo.codigoArticulo)" mat-cell *matCellDef="let element"> {{element.id}} </td>
         </ng-container>
         
         <!-- Symbol Column -->
         <ng-container matColumnDef="codigoArticulo">
             <th mat-header-cell *matHeaderCellDef> codigoArticulo </th>
-            <td (click)="irAlArticulo(element.id)" mat-cell *matCellDef="let element"> {{element.articulo.codigoArticulo}} </td>
+            <td (click)="irAlArticulo(element.articulo.codigoArticulo)" mat-cell *matCellDef="let element"> {{element.articulo.codigoArticulo}} </td>
         </ng-container>
 
         
         <!-- Symbol Column -->
         <ng-container matColumnDef="nombre">
             <th mat-header-cell *matHeaderCellDef> nombre </th>
-            <td (click)="irAlArticulo(element.id)" mat-cell *matCellDef="let element"> {{element.articulo.nombre}} </td>
+            <td (click)="irAlArticulo(element.articulo.codigoArticulo)" mat-cell *matCellDef="let element"> {{element.articulo.nombre}} </td>
         </ng-container>
         
         <!-- Weight Column -->
         <ng-container matColumnDef="descripcion">
             <th mat-header-cell *matHeaderCellDef> descripcion </th>
-            <td (click)="irAlArticulo(element.id)" mat-cell *matCellDef="let element"> {{element.articulo.descripcion}} </td>
+            <td (click)="irAlArticulo(element.articulo.codigoArticulo)" mat-cell *matCellDef="let element"> {{element.articulo.descripcion}} </td>
         </ng-container>
         
         <!-- Name Column -->
         <ng-container matColumnDef="codigoBarra">
             <th mat-header-cell *matHeaderCellDef> Codigo de Barra </th>
-            <td (click)="irAlArticulo(element.id)" mat-cell *matCellDef="let element"> {{element.codigoDeBarra}} </td>
+            <td (click)="irAlArticulo(element.articulo.codigoArticulo)" mat-cell *matCellDef="let element"> {{element.codigoDeBarra}} </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

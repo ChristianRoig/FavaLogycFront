@@ -375,7 +375,7 @@ const ELEMENT_DATA: Articulos[] = [
 export class PedidosCodigosBarraArticulosComponent implements OnInit {
     displayedColumns: string[] = ['id', 'codigoArticulo', 'nombre', 'descripcion', 'codigoBarra'];
     dataSource = ELEMENT_DATA;
-    dataSource2: Articulos[];
+    dataSource2: any;
     subParametros: Subscription;
     id:number;
     codigoDeBarra: string;
@@ -393,25 +393,18 @@ export class PedidosCodigosBarraArticulosComponent implements OnInit {
             this.id = params['id'];
         })
 
-        console.log('this.id');
-        console.log(this.id);
-
-
-
-        // let dataSource2: any = this._pedidosCodigosBarraArticulosService.getPartesArticulos();
-        console.log("datasourse");
-        // console.log(dataSource2);
+        this._pedidosCodigosBarraArticulosService.getArticulos().subscribe( data => {
+            this.dataSource2 = data;
+        });
         
     }
 
-    irAlArticulo(id){
-        let ruta = `apps/pedidos/codigos-barra/${id}`;
-        console.log(ruta);
+    irAlArticulo(codigoArticulo){
+        let ruta = `apps/pedidos/codigos-barra/${codigoArticulo}`;
         this._router.navigate([ruta]);
     }
 
     logout(){
-        console.log("ingreso logout");
         this._router.navigate([''])
     }
 }

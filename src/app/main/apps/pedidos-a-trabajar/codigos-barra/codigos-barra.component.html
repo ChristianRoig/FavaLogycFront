@@ -1,5 +1,5 @@
 <div class="center">
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource2" class="mat-elevation-z8">
 
         <!--- ['id', 'codigoBarra', 'descripcion', 'editar', 'borrar'] -->
     
@@ -36,4 +36,8 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+    <div class="example-button-row">
+        <button mat-raised-button class="mr-5px" color="warn" (click)="volver()">Volver</button>
+        <!-- <button mat-raised-button class="mr-5px" color="primary" (click)="agregar()">Agregar</button> -->
+    </div>
 </div>
