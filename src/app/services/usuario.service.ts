@@ -15,7 +15,7 @@ export class UsuarioService {
 
   private token: string = '';
 
-  constructor(private _HttpClient: HttpClient, private storage: Storage, private router: Router) { }
+  constructor(private _HttpClient: HttpClient, private router: Router) { }
 
   login( usuario: string, password: string ) {
 
@@ -51,7 +51,7 @@ export class UsuarioService {
     return new Promise( async resolve => {
 
       this.token = token;
-      await localStorage.setItem('token', token);
+      localStorage.setItem('token', token);
       
       resolve(true);
       
@@ -62,7 +62,7 @@ export class UsuarioService {
     
     return new Promise( async resolve => {
       
-      this.token = await this.storage.get('token') || '';
+      this.token = localStorage.getItem('token') || '';
       resolve(this.token);
 
     });
@@ -73,7 +73,7 @@ export class UsuarioService {
 
     return new Promise( async resolve => {
 
-      await localStorage.setItem('promotor', promotor);
+      localStorage.setItem('promotor', promotor);
       
       resolve(true);
       
@@ -85,7 +85,7 @@ export class UsuarioService {
     
     return new Promise( async resolve => {
       
-      let promotor = await this.storage.get('promotor') || '';
+      let promotor = localStorage.getItem('promotor') || '';
       resolve(promotor);
 
     });
@@ -96,7 +96,7 @@ export class UsuarioService {
 
     return new Promise( async resolve => {
 
-      await localStorage.setItem('persona', persona);
+      localStorage.setItem('persona', persona);
       
       resolve(true);
       
@@ -107,7 +107,7 @@ export class UsuarioService {
     
     return new Promise( async resolve => {
       
-      let persona = await this.storage.get('persona') || '';
+      let persona = localStorage.getItem('persona') || '';
       resolve(persona);
 
     });
@@ -118,7 +118,7 @@ export class UsuarioService {
     
     return new Promise( async resolve => {
       
-      await localStorage.clear();
+      localStorage.clear();
       this.token = ''
       resolve(true);
 
@@ -133,7 +133,7 @@ export class UsuarioService {
     if( token ) {
       return true;
     } else {
-      this.router.navigate(['/']);
+      this.router.navigate(['/apps']);
       return false;
     }
 

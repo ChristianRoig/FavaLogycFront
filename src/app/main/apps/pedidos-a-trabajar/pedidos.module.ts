@@ -21,22 +21,63 @@ import { FuseWidgetModule } from '@fuse/components/widget/widget.module';
 
 import { PedidosPartesArticuloComponent } from './partes-articulo/partes-articulo.component';
 import { PedidosPartesArticulosService } from './partes-articulo/partes-articulo.service';
+import { PedidosPartesArticuloEditarComponent } from './partes-articulo-editar/partes-articulo-editar.component';
+import { PedidosPartesArticulosEditarService } from './partes-articulo-editar/partes-articulo-editar.service';
+import { PedidosCodigosBarraComponent } from './codigos-barra/codigos-barra.component';
+import { PedidosCodigosBarraEditarComponent } from './codigos-barra-editar/codigos-barra-editar.component';
+import { PedidosCodigosBarraAddComponent } from './codigos-barra-add/codigos-barra-add.component';
+import { PedidosCodigosBarraEditarService } from './codigos-barra-editar/codigos-barra-editar.service';
+import { PedidosCodigosBarraAddService } from './codigos-barra-add/codigos-barra-add.service';
+import { PedidosCodigosBarraService } from './codigos-barra/codigos-barra.service';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { PedidosCodigosBarraArticulosComponent } from './codigos-barra-articulos/codigos-barra-articulos.component';
+import { PedidosCodigosBarraArticulosService } from './codigos-barra-articulos/codigos-barra-articulos.service';
 
 const routes: Routes = [
     {
         path     : 'partes-articulo',
-        component: PedidosPartesArticuloComponent,
-        resolve  : {
-            data: PedidosPartesArticulosService
-        }
+        component: PedidosPartesArticuloComponent
+    },
+    {
+        path     : 'partes-articulo/:id',
+        component: PedidosPartesArticuloEditarComponent
+    },
+    {
+        path     : 'codigos-barra/:id',
+        component: PedidosCodigosBarraComponent
+    },
+    {
+        path     : 'codigos-barra-articulos',
+        component: PedidosCodigosBarraArticulosComponent
+    },
+    {
+        path     : 'codigos-barra/ed/:id',
+        component: PedidosCodigosBarraEditarComponent
+    },
+    {
+        path     : 'codigos-barra-add/:id',
+        component: PedidosCodigosBarraAddComponent
     }
 ];
 
 @NgModule({
     declarations: [
+<<<<<<< HEAD
         PedidosPartesArticuloComponent
+=======
+        PedidosPartesArticuloComponent,
+        PedidosPartesArticuloEditarComponent,
+        PedidosCodigosBarraComponent,
+        PedidosCodigosBarraEditarComponent,
+        PedidosCodigosBarraAddComponent,
+        PedidosCodigosBarraArticulosComponent
+>>>>>>> 101f7d7414ce7fa176a3127ffd3b6f3773728b02
     ],
     imports     : [
+        CommonModule,
+        HttpClientModule,
+
         RouterModule.forChild(routes),
 
         MatButtonModule,
@@ -62,7 +103,12 @@ const routes: Routes = [
         FuseWidgetModule
     ],
     providers   : [
-        PedidosPartesArticulosService
+        PedidosPartesArticulosService,
+        PedidosPartesArticulosEditarService,
+        PedidosCodigosBarraAddService,
+        PedidosCodigosBarraEditarService,
+        PedidosCodigosBarraService,
+        PedidosCodigosBarraArticulosService
     ]
 })
 export class PedidosModule

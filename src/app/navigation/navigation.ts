@@ -15,19 +15,19 @@ export const navigation: FuseNavigation[] = [
                 icon     : 'shopping_cart',
                 children : [
                     {
-                        id        : 'partes',
+                        id        : 'partes-articulo',
                         title     : 'Partes de artículo',
                         type      : 'item',
-                        // url       : '/apps/pedidos/partes-articulo',
+                        url       : '/apps/pedidos/partes-articulo',
+                        exactMatch: true
+                    },
+                    {
+                        id        : 'codigos-barra',
+                        title     : 'Códigos de Barra',
+                        type      : 'item',
+                        url       : '/apps/pedidos/codigos-barra-articulos',
                         exactMatch: true
                     }
-                    // {
-                    //     id        : 'codigos-barra',
-                    //     title     : 'Códigos de Barra',
-                    //     type      : 'item',
-                    //     url       : '/apps/pedidos/codigos-barra',
-                    //     exactMatch: true
-                    // }
                 ]
             }
         ]

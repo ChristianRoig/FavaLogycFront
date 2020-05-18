@@ -1,0 +1,33 @@
+<form class="example-form">
+    <mat-form-field class="example-full-width">
+      <mat-label>Codigo Articulo</mat-label>
+      <input matInput disabled value="{{this.codigoArticulo}}">
+    </mat-form-field>
+    
+    <br>
+    
+    <mat-form-field class="example-full-width">
+      <mat-label>Nombre</mat-label>
+      <input matInput disabled value="{{this.nombre}}">
+    </mat-form-field>
+
+    <br>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Descripcion</mat-label>
+      <input matInput disabled value="{{this.descripcion}}">
+    </mat-form-field>
+    
+    <br>
+
+    <mat-form-field appearance="example-full-width">
+      <mat-label>Cantidad</mat-label>
+      <input matInput [(ngModel)]='this.cantidad' [ngModelOptions]="{standalone: true}">
+    </mat-form-field>
+
+    <div class="example-button-row">
+      <button mat-raised-button class="mr-5px" color="warn" (click)="volver()">Cancelar</button>
+      <button mat-raised-button color="primary" (click)="editar()">Actualizar</button>
+    </div>
+  </form>
+  

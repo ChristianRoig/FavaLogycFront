@@ -2,12 +2,11 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ParteArticulo } from 'app/objects/parte-articulo';
 
 @Injectable()
-export class PedidosPartesArticulosService implements Resolve<any>
+export class PedidosCodigosBarraService implements Resolve<any>
 {
-    partesArticulo: ParteArticulo[];
+    partesArticulo: any[];
     onPartesArticuloChanged: BehaviorSubject<any>;
 
     /**
@@ -35,7 +34,7 @@ export class PedidosPartesArticulosService implements Resolve<any>
         return new Promise((resolve, reject) => {
 
             Promise.all([
-                this.getPartesArticulos2()
+                this.getPartesArticulos()
             ]).then(
                 () => {
                     resolve();
@@ -50,20 +49,33 @@ export class PedidosPartesArticulosService implements Resolve<any>
      *
      * @returns {Promise<any>}
      */
-    getPartesArticulos2(): Promise<ParteArticulo[]>
+    getPartesArticulos(): Promise<any>
     {
         return new Promise((resolve, reject) => {
             this._httpClient.get('http://192.168.100.191:8080/api_favalogyc/pedidosatrabajar/articuloparte/porcodigoonombre/MPLA/0/15/id')
                 .subscribe((response: any) => {
                     this.partesArticulo = response;
                     this.onPartesArticuloChanged.next(this.partesArticulo);
-                    resolve(this.partesArticulo);
+                    resolve(response);
                 }, reject);
         });
     }
 
-    getPartesArticulos(): Observable<any>
+    getCodigosBarra(codArticulo): Observable<any>
     {
-        return this._httpClient.get('http://192.168.100.191:8080/api_favalogyc/pedidosatrabajar/articuloparte/porcodigoonombre/MPLA/1/15/id');
+        let ruta = `http://192.168.100.191:8080/api_favalogyc/pedidosatrabajar/codigodebarra/porcodigoarticuloonombre/${codArticulo}/0/7/id`;
+        return this._httpClient.get(ruta);
+    }
+
+    getCodigoBarra(codArticulo): Observable<any>
+    {
+        let ruta = `http://192.168.100.191:8080/api_favalogyc/pedidosatrabajar/codigodebarra/porcodigodebarraodescripcion/${codArticulo}/0/10/id`;
+        return this._httpClient.get(ruta);
+    }
+
+    deleteCodigoBarra(id): Observable<any>
+    {
+        let ruta = `http://192.168.100.191:8080/api_favalogyc/pedidosatrabajar/codigodebarra/${id}`;
+        return this._httpClient.delete(ruta);
     }
 }

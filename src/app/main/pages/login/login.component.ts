@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators   } from '@angular/forms';
 import { FuseConfigService } from '@fuse/services/config.service';
 import { fuseAnimations } from '@fuse/animations';
 import { Router } from '@angular/router';
+import { UsuarioService } from 'app/services/usuario.service';
 
 @Component({
     selector     : 'login',
@@ -25,7 +26,8 @@ export class LoginComponent implements OnInit
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _formBuilder: FormBuilder,
-        private _router: Router
+        private _router: Router, 
+        private _usuarioService: UsuarioService
     )
     {
         // Configure the layout
@@ -57,13 +59,17 @@ export class LoginComponent implements OnInit
     ngOnInit(): void
     {
         this.loginForm = this._formBuilder.group({
-            email   : ['', [Validators.required, Validators.email]],
+            email   : ['', Validators.required],
             password: ['', Validators.required]
         });
     }
 
     ingresar() {
-        console.log("hice clic en ingresar");
+
+        let email   = this.loginForm.get('email').value;
+        let password= this.loginForm.get('password').value;
+        // this._usuarioService.login(email, password)
+
         this._router.navigate(['/apps'])
     }
 
