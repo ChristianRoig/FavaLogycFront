@@ -6,16 +6,13 @@ import { BehaviorSubject, Observable } from 'rxjs';
 @Injectable()
 export class PedidosCodigosBarraAddService
 {
-    partesArticulo: any[];
-    onPartesArticuloChanged: BehaviorSubject<any>;
-
     constructor(
         private _httpClient: HttpClient
     ){}
 
-    getCodigoBarra(id): Observable<any>
+    getCodigoBarra(codArt): Observable<any>
     {
-        let ruta = `http://192.168.100.191:8080/api_favalogyc/pedidosatrabajar/codigodebarra/${id}`;
+        let ruta = `http://192.168.100.191:8080/api_favalogyc/pedidosatrabajar/codigodebarra/porcodigoarticuloonombre/${codArt}/0/1/id`;
         return this._httpClient.get(ruta);
     }
 
@@ -39,6 +36,6 @@ export class PedidosCodigosBarraAddService
             "Content-Type": "application/json"
         });
 
-        return this._httpClient.put(ruta,body,{headers:headers});
+        return this._httpClient.post(ruta,body,{headers:headers});
     }
 }

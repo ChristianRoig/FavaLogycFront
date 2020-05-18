@@ -7,3 +7,5 @@
         - codigos de barra
     -Mensajes de error
     -Mensajes de exito
+
+-Descripciones: diferenciar articulos, codigos de barra, etc.
