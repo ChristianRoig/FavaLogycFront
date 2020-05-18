@@ -63,16 +63,12 @@ const routes: Routes = [
 
 @NgModule({
     declarations: [
-<<<<<<< HEAD
-        PedidosPartesArticuloComponent
-=======
         PedidosPartesArticuloComponent,
         PedidosPartesArticuloEditarComponent,
         PedidosCodigosBarraComponent,
         PedidosCodigosBarraEditarComponent,
         PedidosCodigosBarraAddComponent,
         PedidosCodigosBarraArticulosComponent
->>>>>>> 101f7d7414ce7fa176a3127ffd3b6f3773728b02
     ],
     imports     : [
         CommonModule,
