@@ -5,74 +5,6 @@ import { PedidosCodigosBarraEditarService } from './codigos-barra-editar.service
 import { Subscription } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 
-export interface CodigoBarra {
-    id: number,
-    articulo: {
-        id: number,
-        codigoArticulo: string,
-        nombre: string,
-        descripcion: string,
-        observaciones: string,
-        sysUsuario: {
-            id: number,
-            nombre: string,
-            descripcion: string,
-            usuarioActiveDirectory: string,
-            usuarioGAM: string,
-            usuarioAltaid: number,
-            fechaAlta: number
-        },
-        fechaAlta: 1587840256000
-    },
-    codigoDeBarra: string,
-    descripcion: string,
-    sysUsuario: {
-        id: number,
-        nombre: string,
-        descripcion: string,
-        usuarioActiveDirectory: string,
-        usuarioGAM: string,
-        usuarioAltaid: number,
-        fechaAlta: number
-    },
-    fechaAlta: number
-}
-
-
-const ELEMENT_DATA: CodigoBarra =
-    {
-        id: 1,
-        articulo: {
-            id: 1,
-            codigoArticulo: "AKANSOP010",
-            nombre: "KANEL SOPORTE P/MICROONDAS",
-            descripcion: null,
-            observaciones: null,
-            sysUsuario: {
-                id: 1,
-                nombre: "Santiago Burroni",
-                descripcion: "Administrador",
-                usuarioActiveDirectory: "",
-                usuarioGAM: "",
-                usuarioAltaid: 1,
-                fechaAlta: 1588086274000
-            },
-            fechaAlta: 1587840256000
-        },
-        codigoDeBarra: "7798035043002",
-        descripcion: "aca viene la descripcion",
-        sysUsuario: {
-            id: 1,
-            nombre: "Santiago Burroni",
-            descripcion: "Administrador",
-            usuarioActiveDirectory: "",
-            usuarioGAM: "",
-            usuarioAltaid: 1,
-            fechaAlta: 1588086274000
-        },
-        fechaAlta: 1588086010000
-    };
-
 /**
  * @title Basic use of `<table mat-table>`
  */
@@ -85,7 +17,6 @@ const ELEMENT_DATA: CodigoBarra =
 })
 
 export class PedidosCodigosBarraEditarComponent implements OnInit {
-    displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
     dataSource: any;
     subParametros: Subscription;
     id:number;

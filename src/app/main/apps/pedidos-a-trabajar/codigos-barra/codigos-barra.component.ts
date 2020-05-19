@@ -22,6 +22,7 @@ export class PedidosCodigosBarraComponent implements OnInit {
 
     codigoArticulo: string;
     codigoArticuloBusqueda: string;
+    nombre: string;
 
     constructor(
         private _router: Router,
@@ -79,8 +80,9 @@ export class PedidosCodigosBarraComponent implements OnInit {
         this._pedidosCodigosBarraService.getCodigosBarra(busqueda).subscribe(
             data => {
                 this.dataSource2 = data;
+                this.nombre = this.dataSource2[0].articulo.nombre
                 console.log(this.dataSource2);
-                this.changeDetectorRefs.detectChanges();
+                // this.changeDetectorRefs.detectChanges();
             },
             (err: HttpErrorResponse) => {
               if (err.error instanceof Error) {
@@ -94,7 +96,7 @@ export class PedidosCodigosBarraComponent implements OnInit {
     }
 
     agregar(){
-        let ruta = `apps/pedidos/codigos-barra-add/${this.codigoArticulo}`;
+        let ruta = `apps/pedidos/codigos-barra-add/${this.codigoArticulo}/${this.nombre}`;
         this._router.navigate([ruta]);
     }
 

@@ -41,39 +41,36 @@ export class PedidosCodigosBarraAddComponent implements OnInit {
 
     ngOnInit(): void{
         this.subParametros = this.route.params.subscribe(params => {
-            this.id = params['id'];
+            this.codigoArticulo = params['codArt'];
+            this.nombre = params['nombre'];
         })
 
-
-        this._pedidosCodigosBarraAddService.getCodigoBarra(this.id).subscribe( data => {
+        this._pedidosCodigosBarraAddService.getCodigoBarra(this.codigoArticulo).subscribe( data => {
             this.dataSource2 = data;
-            console.log(this.dataSource2);
-            // this.cantidad = this.dataSource2.cantidad;
-            // this.codigoArticulo = this.dataSource2.articulo.codigoArticulo;
-            // this.nombre = this.dataSource2.articulo.nombre;
-            // this.descripcion = this.dataSource2.articulo.descripcion;
+            this.id = this.dataSource2[0].articulo.id;
+            console.log("id: "+this.id);
         });        
     }
 
     volver(){
-        let ruta = `apps/pedidos/partes-articulo`;
+        let ruta = `apps/pedidos/codigos-barra/${this.codigoArticulo}`;
         this._router.navigate([ruta]);
     }
 
     agregar(){
-
-        this._pedidosCodigosBarraAddService.postCodigoBarra(this.id,this.codigoArticulo,this.descripcion)
-        // .subscribe(
-        //     data => {
-        //       this.volver();
-        //     },
-        //     (err: HttpErrorResponse) => {
-        //       if (err.error instanceof Error) {
-        //         console.log("Client-side error");
-        //       } else {
-        //         console.log("Server-side error");
-        //       }
-        //     }
-        //   );
+        
+        this._pedidosCodigosBarraAddService.postCodigoBarra(this.id,this.codigoDeBarra,this.descripcion)
+        .subscribe(
+            data => {
+              this.volver();
+            },
+            (err: HttpErrorResponse) => {
+              if (err.error instanceof Error) {
+                console.log("Client-side error");
+              } else {
+                console.log("Server-side error");
+              }
+            }
+          );
     }
 }
