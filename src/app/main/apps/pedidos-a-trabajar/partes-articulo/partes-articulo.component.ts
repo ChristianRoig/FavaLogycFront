@@ -180,18 +180,13 @@ export class PedidosPartesArticuloComponent implements OnInit {
 
     constructor(
         private _router: Router,
-        private _pedidosPartesArticulosService: PedidosPartesArticulosService
-    )
-    {
-        
-    }
+        private _pedidosPartesArticulosService: PedidosPartesArticulosService ) { }
 
     ngOnInit(): void{
+        
         this._pedidosPartesArticulosService.getPartesArticulos().subscribe(data => {
             this.dataSource2 = data
         });
-        
-        
     }
 
     editar(id){

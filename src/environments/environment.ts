@@ -4,7 +4,9 @@
 
 export const environment = {
     production: false,
-    hmr       : false
+    hmr       : false,
+    server    : 'http://192.168.100.191:8080/',
+    baseUrl   : 'api_favalogyc/'  
 };
 
 /*
