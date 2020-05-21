@@ -1,5 +1,16 @@
-<div class="center">
-    <table mat-table [dataSource]="dataSource2" class="mat-elevation-z8">
+<app-plantilla-fondo titulo='Articulos'>
+
+    <!-- SEARCH -->
+    <div search class="search-wrapper  ml-sm-32">
+        <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center" style="background-color: white;">
+            <mat-icon style="color: gray;">search</mat-icon>
+            <input #filter placeholder="Búsqueda por descripción">
+        </div>
+    </div>
+    <!-- / SEARCH -->
+
+
+    <table contenido mat-table [dataSource]="dataSource2" class="mat-elevation-z8">
 
         <!--- ['id', 'codigoArticulo', 'nombre', 'descripcion', 'codigoBarra'] -->
     
@@ -31,13 +42,13 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-</div>
-<br>
-<div>
-    <mat-paginator [length]="29"
-        [pageIndex]="page"
-        [pageSize]="size"
-        [pageSizeOptions]="[5, 10, 14, 30]"
-        (page) = "paginar($event)">
-    </mat-paginator>
-</div>
+    <br>
+    <div contenido>
+        <mat-paginator [length]="29"
+            [pageIndex]="page"
+            [pageSize]="size"
+            [pageSizeOptions]="[5, 10, 14, 30]"
+            (page) = "paginar($event)">
+        </mat-paginator>
+    </div>
+</app-plantilla-fondo>

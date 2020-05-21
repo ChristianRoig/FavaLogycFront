@@ -1,5 +1,16 @@
-<div class="center">
-    <table mat-table [dataSource]="dataSource2" class="mat-elevation-z8">
+<app-plantilla-fondo titulo='Codigos de Barra'>
+
+    <!-- SEARCH -->
+    <div search class="search-wrapper  ml-sm-32">
+        <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center" style="background-color: white;">
+            <mat-icon style="color: gray;">search</mat-icon>
+            <input #filter placeholder="Búsqueda por descripción">
+        </div>
+    </div>
+    <!-- / SEARCH -->
+
+
+    <table contenido mat-table [dataSource]="dataSource2" class="mat-elevation-z8">
 
         <!--- ['id', 'codigoBarra', 'descripcion', 'editar', 'borrar'] -->
     
@@ -20,28 +31,33 @@
         
         <ng-container matColumnDef="editar">
             <th mat-header-cell *matHeaderCellDef> Editar </th>
-            <td mat-cell class="example-button-row" *matCellDef="let element"> <button type="button" class="btn btn-primary"(click)="editar(element.id)">Editar</button> </td>
+            <td mat-cell class="example-button-row" *matCellDef="let element"> 
+                <button mat-stroked-button color="primary"(click)="editar(element.id)">Editar</button>
+            </td>
         </ng-container>
         
-       <ng-container matColumnDef="borrar">
+        
+        <ng-container matColumnDef="borrar">
             <th mat-header-cell *matHeaderCellDef> Borrar </th>
-            <td mat-cell class="example-button-row" *matCellDef="let element"> <button type="button" class="btn btn-primary"(click)="borrar(element.id)">Borrar</button> </td>
+            <td mat-cell class="example-button-row" *matCellDef="let element"> 
+                <button mat-stroked-button color="primary"(click)="borrar(element.id)">Borrar</button>
+            </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
     <div class="example-button-row">
-        <button mat-raised-button class="mr-5px" color="warn" (click)="volver()">Volver</button>
-        <button mat-raised-button class="mr-5px" color="primary" (click)="agregar()">Agregar</button>
+        <button mat-stroked-button color="primary" (click)="volver()">Volver</button>
+        <button mat-stroked-button color="primary" (click)="agregar()">Agregar</button>
     </div>
-</div>
-<br>
-<div>
-    <mat-paginator [length]="4"
-        [pageIndex]="page"
-        [pageSize]="size"
-        [pageSizeOptions]="[1, 5, 10, 15]"
-        (page) = "paginar($event)">
-    </mat-paginator>
-</div>
+    <br>
+    <div contenido class="mt=5">
+        <mat-paginator [length]="4"
+            [pageIndex]="page"
+            [pageSize]="size"
+            [pageSizeOptions]="[1, 5, 10, 15]"
+            (page) = "paginar($event)">
+        </mat-paginator>
+    </div>
+</app-plantilla-fondo>
