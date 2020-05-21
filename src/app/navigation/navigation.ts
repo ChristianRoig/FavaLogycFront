@@ -4,7 +4,7 @@ export const navigation: FuseNavigation[] = [
     {
         id       : 'applications',
         title    : 'Applications',
-        translate: 'NAV.APPLICATIONS',
+        translate: 'Menú Principal',
         type     : 'group',
         icon     : 'apps',
         children : [

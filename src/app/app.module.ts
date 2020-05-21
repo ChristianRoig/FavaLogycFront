@@ -33,6 +33,8 @@ import { PagesModule } from './main/pages/pages.module';
 
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { FormsModule } from '@angular/forms';
+import { PlantillaFondoComponent } from './main/custom-tags/plantilla-fondo/plantilla-fondo.component';
+
 
 const appRoutes: Routes = [
     {
@@ -51,7 +53,9 @@ const appRoutes: Routes = [
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+
+
     ],
     imports     : [
         BrowserModule,

@@ -1,33 +1,47 @@
-<form class="example-form">
-    <mat-form-field class="example-full-width">
-      <mat-label>Codigo Articulo</mat-label>
-      <input matInput disabled value="{{this.codigoArticulo}}">
-    </mat-form-field>
+<app-plantilla-fondo titulo='Artículo'>
+
+
+  <div contenido class="content" fxLayout="row" fxLayoutAlign="center">
+
     
-    <br>
+    <form class="p-24 mr-24" fxLayout="column" fxLayoutAlign="center" fxFlex="1 0 auto" name="form">
+
+      <div class="h2 mb-24">Editar cantidad</div>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Codigo Articulo</mat-label>
+          <input matInput disabled value="{{this.codigoArticulo}}">
+        </mat-form-field>
+        
+        <br>
+        
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre</mat-label>
+          <input matInput disabled value="{{this.nombre}}">
+        </mat-form-field>
     
-    <mat-form-field class="example-full-width">
-      <mat-label>Nombre</mat-label>
-      <input matInput disabled value="{{this.nombre}}">
-    </mat-form-field>
-
-    <br>
-
-    <mat-form-field class="example-full-width">
-      <mat-label>Descripcion</mat-label>
-      <input matInput disabled value="{{this.descripcion}}">
-    </mat-form-field>
+        <br>
     
-    <br>
+        <mat-form-field appearance="outline">
+          <mat-label>Descripcion</mat-label>
+          <input matInput disabled value="{{this.descripcion}}">
+        </mat-form-field>
+        
+        <br>
+    
+        <mat-form-field appearance="outline">
+          <mat-label>Cantidad</mat-label>
+          <input id="cantidad-editar" matInput [(ngModel)]='this.cantidad' [ngModelOptions]="{standalone: true}" autofocus>
+        </mat-form-field>
+    
 
-    <mat-form-field appearance="example-full-width">
-      <mat-label>Cantidad</mat-label>
-      <input matInput [(ngModel)]='this.cantidad' [ngModelOptions]="{standalone: true}">
-    </mat-form-field>
+        <div class="mt-4 pt-4" fxLayout="row" fxLayoutAlign="space-between">
 
-    <div class="example-button-row">
-      <button mat-raised-button class="mr-5px" color="warn" (click)="volver()">Cancelar</button>
-      <button mat-raised-button color="primary" (click)="editar()">Actualizar</button>
+          <button mat-raised-button color="accent" (click)="editar()">Actualizar</button>
+          <button mat-stroked-button class="mr-5px" (click)="volver()">Cancelar</button>
+        </div>
+      </form>
+      
     </div>
-  </form>
-  
+</app-plantilla-fondo>
+

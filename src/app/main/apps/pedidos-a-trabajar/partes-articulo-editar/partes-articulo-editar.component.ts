@@ -119,6 +119,13 @@ export class PedidosPartesArticuloEditarComponent implements OnInit {
             this.nombre = this.dataSource2.articulo.nombre;
             this.descripcion = this.dataSource2.articulo.descripcion;
         });        
+
+
+        setTimeout(() => {
+            
+            let cantidad: any = document.getElementById('cantidad-editar');
+            cantidad.focus();
+        }, 200);
     }
 
     volver(){

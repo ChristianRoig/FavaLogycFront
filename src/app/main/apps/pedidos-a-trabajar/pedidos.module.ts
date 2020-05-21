@@ -33,6 +33,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { PedidosCodigosBarraArticulosComponent } from './codigos-barra-articulos/codigos-barra-articulos.component';
 import { PedidosCodigosBarraArticulosService } from './codigos-barra-articulos/codigos-barra-articulos.service';
+import { CustomTagModule } from 'app/main/custom-tags/custom-tag.module';
 
 const routes: Routes = [
     {
@@ -96,7 +97,8 @@ const routes: Routes = [
         }),
 
         FuseSharedModule,
-        FuseWidgetModule
+        FuseWidgetModule,
+        CustomTagModule
     ],
     providers   : [
         PedidosPartesArticulosService,

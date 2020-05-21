@@ -1,0 +1,44 @@
+<div id="plantilla1" class="page-layout carded fullwidth inner-scroll">    
+
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg accent"></div>
+    <!-- / TOP BACKGROUND -->
+
+
+    <!-- CENTER -->
+    <div class="center">
+
+
+        <!-- HEADER -->
+        <div class="header accent"
+             fxLayout="column" fxLayoutAlign="center center"
+             fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
+
+            <!-- APP TITLE -->
+            <div class="logo mb-24 mb-sm-0"
+                 fxLayout="row" fxLayoutAlign="start center">
+
+                <span titulo class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">{{ titulo }}</span>
+            </div>
+            <!-- / APP TITLE -->
+
+            <!-- SEARCH -->
+            <ng-content select="[search]"></ng-content>
+
+            <!-- / SEARCH -->
+
+        </div>
+        <!-- / HEADER -->        
+
+
+        <!-- Contenedor -->
+        <div class="content-card pb-4">
+
+            <ng-content select="[contenido]"></ng-content>
+        </div>
+        <!-- / Contenedor -->
+
+    </div>
+    <!-- / CENTER -->
+
+</div>
