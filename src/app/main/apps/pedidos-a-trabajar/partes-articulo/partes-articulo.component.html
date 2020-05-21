@@ -36,16 +36,15 @@
         
         <!-- Symbol Column -->
         <ng-container matColumnDef="cantidad">
-        <th (click)='logout()' mat-header-cell *matHeaderCellDef> Cantidad </th>
+        <th mat-header-cell *matHeaderCellDef> Cantidad </th>
         <td mat-cell *matCellDef="let element"> {{element.cantidad}} </td>
         </ng-container>
 
         <!-- Symbol Column -->
         <ng-container matColumnDef="editar">
-            <th (click)='logout()' mat-header-cell *matHeaderCellDef> Acción </th>
+            <th mat-header-cell *matHeaderCellDef> Acción </th>
             <td mat-cell class="example-button-row" *matCellDef="let element"> 
                 <button mat-stroked-button color="primary"(click)="editar(element.id)">Editar</button>
-                <!-- <button type="button" class="btn btn-primary"(click)="editar(element.id)">Editar</button>  -->
             </td>
         </ng-container>
     

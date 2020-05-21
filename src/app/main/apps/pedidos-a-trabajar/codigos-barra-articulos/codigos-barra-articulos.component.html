@@ -1,40 +1,54 @@
-<div class="center">
-    <table mat-table [dataSource]="dataSource2" class="mat-elevation-z8">
+<app-plantilla-fondo titulo='Articulos'>
+
+    <!-- SEARCH -->
+    <div search class="search-wrapper  ml-sm-32">
+        <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center" style="background-color: white;">
+            <mat-icon style="color: gray;">search</mat-icon>
+            <input #filter placeholder="Búsqueda por descripción">
+        </div>
+    </div>
+    <!-- / SEARCH -->
+
+
+    <table contenido mat-table [dataSource]="dataSource2" class="mat-elevation-z8">
 
         <!--- ['id', 'codigoArticulo', 'nombre', 'descripcion', 'codigoBarra'] -->
     
-        <!-- Position Column -->
         <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef> Id </th>
+            <th (click)="ordenar(1)" mat-header-cell *matHeaderCellDef> Id </th>
             <td (click)="irAlArticulo(element.articulo.codigoArticulo)" mat-cell *matCellDef="let element"> {{element.id}} </td>
         </ng-container>
         
-        <!-- Symbol Column -->
         <ng-container matColumnDef="codigoArticulo">
-            <th mat-header-cell *matHeaderCellDef> codigoArticulo </th>
+            <th (click)="ordenar(2)" mat-header-cell *matHeaderCellDef> Código Artículo </th>
             <td (click)="irAlArticulo(element.articulo.codigoArticulo)" mat-cell *matCellDef="let element"> {{element.articulo.codigoArticulo}} </td>
         </ng-container>
 
-        
-        <!-- Symbol Column -->
         <ng-container matColumnDef="nombre">
-            <th mat-header-cell *matHeaderCellDef> nombre </th>
+            <th (click)="ordenar(3)" mat-header-cell *matHeaderCellDef> Nombre </th>
             <td (click)="irAlArticulo(element.articulo.codigoArticulo)" mat-cell *matCellDef="let element"> {{element.articulo.nombre}} </td>
         </ng-container>
-        
-        <!-- Weight Column -->
+
         <ng-container matColumnDef="descripcion">
-            <th mat-header-cell *matHeaderCellDef> descripcion </th>
+            <th (click)="ordenar(4)" mat-header-cell *matHeaderCellDef> Descripción </th>
             <td (click)="irAlArticulo(element.articulo.codigoArticulo)" mat-cell *matCellDef="let element"> {{element.articulo.descripcion}} </td>
         </ng-container>
         
-        <!-- Name Column -->
-        <ng-container matColumnDef="codigoBarra">
-            <th mat-header-cell *matHeaderCellDef> Codigo de Barra </th>
+        <ng-container matColumnDef="codigoDeBarra">
+            <th (click)="ordenar(5)" mat-header-cell *matHeaderCellDef> Código de Barras </th>
             <td (click)="irAlArticulo(element.articulo.codigoArticulo)" mat-cell *matCellDef="let element"> {{element.codigoDeBarra}} </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-</div>
+    <br>
+    <div contenido>
+        <mat-paginator [length]="29"
+            [pageIndex]="page"
+            [pageSize]="size"
+            [pageSizeOptions]="[5, 10, 14, 30]"
+            (page) = "paginar($event)">
+        </mat-paginator>
+    </div>
+</app-plantilla-fondo>
