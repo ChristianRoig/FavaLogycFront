@@ -61,9 +61,9 @@ export class PedidosCodigosBarraService implements Resolve<any>
         });
     }
 
-    getCodigosBarra(codArticulo): Observable<any>
+    getCodigosBarra(codArticulo, page, size, order): Observable<any>
     {
-        let ruta = `http://192.168.100.191:8080/api_favalogyc/pedidosatrabajar/codigodebarra/porcodigoarticuloonombre/${codArticulo}/0/7/id`;
+        let ruta = `http://192.168.100.191:8080/api_favalogyc/pedidosatrabajar/codigodebarra/porcodigoarticuloonombre/${codArticulo}/${page}/${size}/${order}`;
         return this._httpClient.get(ruta);
     }
 

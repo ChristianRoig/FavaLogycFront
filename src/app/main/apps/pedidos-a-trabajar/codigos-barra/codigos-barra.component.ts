@@ -24,6 +24,10 @@ export class PedidosCodigosBarraComponent implements OnInit {
     codigoArticuloBusqueda: string;
     nombre: string;
 
+    page: number;
+    size: number;
+    order: string;
+
     constructor(
         private _router: Router,
         private route: ActivatedRoute,
@@ -39,8 +43,12 @@ export class PedidosCodigosBarraComponent implements OnInit {
         this.subParametros = this.route.params.subscribe(params => {
             this.codigoArticulo = params['id'];
         })
+
+        this.page = 0;
+        this.size = 10;
+        this.order = 'id';
         
-        this.buscar(this.codigoArticulo);
+        this.buscar(this.codigoArticulo,this.page, this.size, this.order);
         
     }
 
@@ -53,13 +61,11 @@ export class PedidosCodigosBarraComponent implements OnInit {
         this._pedidosCodigosBarraService.deleteCodigoBarra(id)
             .subscribe(
             data => {
-                console.log(this.codigoArticuloBusqueda)
-                console.log(this.codigoArticulo)
 
                 if(this.codigoArticuloBusqueda){
-                    this.buscar(this.codigoArticuloBusqueda);
+                    this.buscar(this.codigoArticuloBusqueda,this.page, this.size, this.order);
                 } else {
-                    this.buscar(this.codigoArticulo);
+                    this.buscar(this.codigoArticulo,this.page, this.size, this.order);
                 }
             },
             (err: HttpErrorResponse) => {
@@ -75,25 +81,51 @@ export class PedidosCodigosBarraComponent implements OnInit {
         
     }
 
-    buscar(busqueda){
+    buscar(busqueda, page, size, order){
         
-        this._pedidosCodigosBarraService.getCodigosBarra(busqueda).subscribe(
+        this._pedidosCodigosBarraService.getCodigosBarra(busqueda, page, size, order).subscribe(
             data => {
                 this.dataSource2 = data;
                 this.nombre = this.dataSource2[0].articulo.nombre
-                console.log(this.dataSource2);
-                // this.changeDetectorRefs.detectChanges();
             },
             (err: HttpErrorResponse) => {
               if (err.error instanceof Error) {
                 console.log("Client-side error");
               } else {
                 console.log("Server-side error");
+                this.volver();
               }
-              this.volver();
             }
           );            
     }
+
+    ordenar(order){
+      switch(order) { 
+          case 2: { 
+             this.order = "codigoDeBarra" ;
+             break; 
+          }
+          case 3: {
+             this.order = "descripcion" ;
+             break; 
+          }
+          default: { 
+             this.order = "id"
+             break; 
+          } 
+      }
+
+      this.page = 0;
+      
+      this.buscar(this.codigoArticulo,this.page, this.size, this.order);
+
+  }
+  paginar(e: any){
+    this.page = e.pageIndex;
+    this.size = e.pageSize;
+    
+    this.buscar(this.codigoArticulo, this.page, this.size, this.order);
+  }
 
     agregar(){
         let ruta = `apps/pedidos/codigos-barra-add/${this.codigoArticulo}/${this.nombre}`;

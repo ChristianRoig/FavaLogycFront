@@ -3,6 +3,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PedidosCodigosBarraArticulosService } from './codigos-barra-articulos.service';
 import { Subscription } from 'rxjs';
+import { PageEvent } from '@angular/material/paginator';
 
 export interface Articulos {
     id: number,
@@ -373,12 +374,18 @@ const ELEMENT_DATA: Articulos[] = [
 })
 
 export class PedidosCodigosBarraArticulosComponent implements OnInit {
-    displayedColumns: string[] = ['id', 'codigoArticulo', 'nombre', 'descripcion', 'codigoBarra'];
+    displayedColumns: string[] = ['id', 'codigoArticulo', 'nombre', 'descripcion', 'codigoDeBarra'];
     dataSource = ELEMENT_DATA;
     dataSource2: any;
     subParametros: Subscription;
     id:number;
     codigoDeBarra: string;
+
+    page: number;
+    size: number;
+    order: string;
+
+
     constructor(
         private _router: Router,
         private route: ActivatedRoute,
@@ -391,17 +398,61 @@ export class PedidosCodigosBarraArticulosComponent implements OnInit {
     ngOnInit(): void{
         this.subParametros = this.route.params.subscribe(params => {
             this.id = params['id'];
-        })
-
-        this._pedidosCodigosBarraArticulosService.getArticulos().subscribe( data => {
-            this.dataSource2 = data;
-        });
+        })        
         
+        this.page = 0;
+        this.size = 10;
+        this.order = 'id';
+
+        this.buscar(this.page, this.size, this.order);
     }
 
     irAlArticulo(codigoArticulo){
         let ruta = `apps/pedidos/codigos-barra/${codigoArticulo}`;
         this._router.navigate([ruta]);
+    }
+
+    buscar(page, size, order){
+        this._pedidosCodigosBarraArticulosService.getArticulos(page, size, order).subscribe( data => {
+            this.dataSource2 = data;
+        });
+    }
+
+    ordenar(order){
+        switch(order) { 
+            case 2: { 
+               this.order = "codigoArticulo" ;
+               break; 
+            }
+            case 3: { 
+               this.order = "nombre" ;
+               break; 
+            }
+            case 4: { 
+               this.order = "descripcion" ;
+               break; 
+            }
+            case 5: { 
+               this.order = "codigoDeBarra" ;
+               break; 
+            }
+            default: { 
+               this.order = "id"
+               break; 
+            } 
+        }
+
+        this.page = 0;
+        
+        this.buscar(this.page, this.size, this.order);
+
+    }
+
+    paginar(e: any){
+        this.page = e.pageIndex;
+        this.size = e.pageSize;
+        
+        this.buscar(this.page, this.size, this.order);
     }
 
     logout(){
