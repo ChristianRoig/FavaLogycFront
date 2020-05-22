@@ -34,6 +34,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { PedidosCodigosBarraArticulosComponent } from './codigos-barra-articulos/codigos-barra-articulos.component';
 import { PedidosCodigosBarraArticulosService } from './codigos-barra-articulos/codigos-barra-articulos.service';
 import { CustomTagModule } from 'app/main/custom-tags/custom-tag.module';
+import { MaterialDesignModule } from 'app/material-design/material-design.module';
+// import { MaterialDesignModule } from 'app/material-design/material-design.module';
 
 const routes: Routes = [
     {
@@ -77,19 +79,20 @@ const routes: Routes = [
 
         RouterModule.forChild(routes),
 
-        MatButtonModule,
-        MatChipsModule,
-        MatExpansionModule,
-        MatFormFieldModule,
-        MatIconModule,
-        MatInputModule,
-        MatPaginatorModule,
-        MatRippleModule,
-        MatSelectModule,
-        MatSortModule,
-        MatSnackBarModule,
-        MatTableModule,
-        MatTabsModule,
+        // MatButtonModule,
+        // MatChipsModule,
+        // MatExpansionModule,
+        // MatFormFieldModule,
+        // MatIconModule,
+        // MatInputModule,
+        // MatPaginatorModule,
+        // MatRippleModule,
+        // MatSelectModule,
+        // MatSortModule,
+        // MatSnackBarModule,
+        // MatTableModule,
+        // MatTabsModule,
+        MaterialDesignModule,
 
         NgxChartsModule,
         AgmCoreModule.forRoot({
