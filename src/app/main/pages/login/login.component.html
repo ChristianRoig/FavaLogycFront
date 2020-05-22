@@ -12,8 +12,8 @@
                 <form name="loginForm" [formGroup]="loginForm" novalidate>
 
                     <mat-form-field appearance="outline">
-                        <mat-label>Email</mat-label>
-                        <input matInput formControlName="email">
+                        <mat-label>Usuario de dominio</mat-label>
+                        <input matInput formControlName="email" placeholder="Usuario de dominio">
                         <mat-icon matSuffix class="secondary-text">mail</mat-icon>
                         <mat-error *ngIf="loginForm.get('email').hasError('required')">
                             El Email es requerido

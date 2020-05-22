@@ -1,4 +1,4 @@
-import {Component, ViewEncapsulation, OnInit} from '@angular/core';
+import {Component, ViewEncapsulation, OnInit, ViewChild, Input} from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { Router } from '@angular/router';
 import { PedidosPartesArticulosService } from './partes-articulo.service';
@@ -11,6 +11,9 @@ import { PedidosPartesArticulosService } from './partes-articulo.service';
     encapsulation: ViewEncapsulation.None
 })
 export class PedidosPartesArticuloComponent implements OnInit {
+
+    @ViewChild('filter', { static: false}) input: Input;
+
     displayedColumns: string[] = ['id', 'codigoArticulo', 'nombre', 'cantidad', 'editar'];
     dataSource2: any;
 
@@ -37,7 +40,20 @@ export class PedidosPartesArticuloComponent implements OnInit {
         });
     }
 
-    
+
+    search( event ) {
+
+        let search: any = document.getElementById('search');
+
+        let page = 0;
+        let size = 15;
+        let order = 'id';
+
+        this._pedidosPartesArticulosService.searchPartesArticulos( search.value, page, size, order )
+            .then( ( data ) => this.dataSource2 = data )
+
+    }
+
     /**
      * Ordena la tabla por la columna que viene en *event.active*
      * @param event

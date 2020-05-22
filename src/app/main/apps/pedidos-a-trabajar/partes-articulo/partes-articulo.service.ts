@@ -25,4 +25,14 @@ export class PedidosPartesArticulosService
         let ruta = `${BASE_URL}pedidosatrabajar/articuloparte/porcodigoonombre/MPLA/${page}/${size}/${order}`;
         return this._httpClient.get(ruta);
     }
+
+    /**
+     * Devuelve Partes de Artículos
+     * @returns {Promise} Promise
+     */
+    searchPartesArticulos(search, page, size, order)
+    {
+        let ruta = `${BASE_URL}pedidosatrabajar/articuloparte/porcodigoonombre/${search}/${page}/${size}/${order}`;
+        return this._httpClient.get(ruta).toPromise();
+    }
 }
