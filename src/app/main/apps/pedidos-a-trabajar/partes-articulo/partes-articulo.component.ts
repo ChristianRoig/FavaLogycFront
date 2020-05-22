@@ -3,169 +3,6 @@ import { fuseAnimations } from '@fuse/animations';
 import { Router } from '@angular/router';
 import { PedidosPartesArticulosService } from './partes-articulo.service';
 
-export interface ParteArticulo {
-        id: number;
-        articulo: {
-            id: number;
-            codigoArticulo: string;
-            nombre: string;
-            descripcion: string;
-            observaciones: string;
-            sysUsuario: {
-                id: 1;
-                nombre: string;
-                descripcion: string;
-                usuarioActiveDirectory:string;
-                usuarioGAM: string;
-                usuarioAltaid: number;
-                fechaAlta: number;
-            },
-            fechaAlta: number;
-        };
-        cantidad: number;
-        sysUsuario: {
-            id: 1;
-            nombre: string;
-            descripcion: string;
-            usuarioActiveDirectory:string;
-            usuarioGAM: string;
-            usuarioAltaid: number;
-            fechaAlta: number;
-        };
-        fechaAlta: number;
-    }
-
-
-const ELEMENT_DATA: ParteArticulo[] = [
-    {
-        id: 1284,
-        articulo: {
-            id: 1284,
-            codigoArticulo: "MPLAMOD040",
-            nombre: "PLATINUM.MODULAR 553 CED A2",
-            descripcion: "1.82*1.52*0.45",
-            observaciones: null,
-            sysUsuario: {
-                id: 1,
-                nombre: "Santiago Burroni",
-                descripcion: "Administrador",
-                usuarioActiveDirectory: "",
-                usuarioGAM: "",
-                usuarioAltaid: 1,
-                fechaAlta: 1588086274000
-            },
-            fechaAlta: 1588084916000
-        },
-        cantidad: 7,
-        sysUsuario: {
-            id: 1,
-            nombre: "Santiago Burroni",
-            descripcion: "Administrador",
-            usuarioActiveDirectory: "",
-            usuarioGAM: "",
-            usuarioAltaid: 1,
-            fechaAlta: 1588086274000
-        },
-        fechaAlta: 1588086284000
-    },
-    {
-        id: 1284,
-        articulo: {
-            id: 1284,
-            codigoArticulo: "MPLAMOD040",
-            nombre: "PLATINUM.MODULAR 553 CED A2",
-            descripcion: "1.82*1.52*0.45",
-            observaciones: null,
-            sysUsuario: {
-                id: 1,
-                nombre: "Santiago Burroni",
-                descripcion: "Administrador",
-                usuarioActiveDirectory: "",
-                usuarioGAM: "",
-                usuarioAltaid: 1,
-                fechaAlta: 1588086274000
-            },
-            fechaAlta: 1588084916000
-        },
-        cantidad: 7,
-        sysUsuario: {
-            id: 1,
-            nombre: "Santiago Burroni",
-            descripcion: "Administrador",
-            usuarioActiveDirectory: "",
-            usuarioGAM: "",
-            usuarioAltaid: 1,
-            fechaAlta: 1588086274000
-        },
-        fechaAlta: 1588086284000
-    },
-    {
-        id: 1284,
-        articulo: {
-            id: 1284,
-            codigoArticulo: "MPLAMOD040",
-            nombre: "PLATINUM.MODULAR 553 CED A2",
-            descripcion: "1.82*1.52*0.45",
-            observaciones: null,
-            sysUsuario: {
-                id: 1,
-                nombre: "Santiago Burroni",
-                descripcion: "Administrador",
-                usuarioActiveDirectory: "",
-                usuarioGAM: "",
-                usuarioAltaid: 1,
-                fechaAlta: 1588086274000
-            },
-            fechaAlta: 1588084916000
-        },
-        cantidad: 7,
-        sysUsuario: {
-            id: 1,
-            nombre: "Santiago Burroni",
-            descripcion: "Administrador",
-            usuarioActiveDirectory: "",
-            usuarioGAM: "",
-            usuarioAltaid: 1,
-            fechaAlta: 1588086274000
-        },
-        fechaAlta: 1588086284000
-    },
-    {
-        id: 1284,
-        articulo: {
-            id: 1284,
-            codigoArticulo: "MPLAMOD040",
-            nombre: "PLATINUM.MODULAR 553 CED A2",
-            descripcion: "1.82*1.52*0.45",
-            observaciones: null,
-            sysUsuario: {
-                id: 1,
-                nombre: "Santiago Burroni",
-                descripcion: "Administrador",
-                usuarioActiveDirectory: "",
-                usuarioGAM: "",
-                usuarioAltaid: 1,
-                fechaAlta: 1588086274000
-            },
-            fechaAlta: 1588084916000
-        },
-        cantidad: 7,
-        sysUsuario: {
-            id: 1,
-            nombre: "Santiago Burroni",
-            descripcion: "Administrador",
-            usuarioActiveDirectory: "",
-            usuarioGAM: "",
-            usuarioAltaid: 1,
-            fechaAlta: 1588086274000
-        },
-        fechaAlta: 1588086284000
-    }
-];
-
-/**
- * @title Basic use of `<table mat-table>`
- */
 @Component({
     selector     : 'pedidos-partes-articulo',
     templateUrl  : './partes-articulo.component.html',
@@ -175,18 +12,62 @@ const ELEMENT_DATA: ParteArticulo[] = [
 })
 export class PedidosPartesArticuloComponent implements OnInit {
     displayedColumns: string[] = ['id', 'codigoArticulo', 'nombre', 'cantidad', 'editar'];
-    dataSource = ELEMENT_DATA;
     dataSource2: any;
+
+    page: number;
+    size: number;
+    order: string;
 
     constructor(
         private _router: Router,
         private _pedidosPartesArticulosService: PedidosPartesArticulosService ) { }
 
     ngOnInit(): void{
+        this.page = 0;
+        this.size = 10;
+        this.order = 'id';
+
+        this.buscar(this.page, this.size, this.order);
         
-        this._pedidosPartesArticulosService.getPartesArticulos().subscribe(data => {
+    }
+
+    buscar(page, size, order){
+        this._pedidosPartesArticulosService.getPartesArticulos(page, size, order).subscribe(data => {
             this.dataSource2 = data;
         });
+    }
+
+    ordenar(order){
+        switch(order) { 
+            case 2: { 
+               this.order = "codigoArticulo" ;
+               break; 
+            }
+            case 3: { 
+               this.order = "nombre" ;
+               break; 
+            }
+            case 4: { 
+               this.order = "cantidad" ;
+               break; 
+            }
+            default: { 
+               this.order = "id"
+               break; 
+            } 
+        }
+
+        this.page = 0;
+        
+        this.buscar(this.page, this.size, this.order);
+
+    }
+
+    paginar(e: any){
+        this.page = e.pageIndex;
+        this.size = e.pageSize;
+        
+        this.buscar(this.page, this.size, this.order);
     }
 
     editar(id){

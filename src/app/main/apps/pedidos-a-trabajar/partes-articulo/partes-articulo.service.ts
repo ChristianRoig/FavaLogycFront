@@ -20,8 +20,9 @@ export class PedidosPartesArticulosService
      * Devuelve Partes de Artículos
      * @returns {Observable} Observable
      */
-    getPartesArticulos(): Observable<any>
+    getPartesArticulos(page, size, order): Observable<any>
     {
-        return this._httpClient.get(`${URL}pedidosatrabajar/articuloparte/porcodigoonombre/MPLA/1/15/id`);
+        let ruta = `${URL}pedidosatrabajar/articuloparte/porcodigoonombre/MPLA/${page}/${size}/${order}`;
+        return this._httpClient.get(ruta);
     }
 }
