@@ -23,7 +23,6 @@ export class PedidosPartesArticulosService
     getPartesArticulos(page, size, order): Observable<any>
     {
         let ruta = `${URL}pedidosatrabajar/articuloparte/porcodigoonombre/MPLA/${page}/${size}/${order}`;
-        console.log(ruta);
         return this._httpClient.get(ruta);
     }
 }
