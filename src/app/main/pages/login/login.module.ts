@@ -1,15 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
 
 import { FuseSharedModule } from '@fuse/shared.module';
 
 import { LoginComponent } from 'app/main/pages/login/login.component';
 import { UsuarioService } from 'app/services/usuario.service';
+import { MaterialDesignModule } from 'app/material-design/material-design.module';
+import { ModalRecuperarContrasenaComponent } from './modal-recuperar-contrasena/modal-recuperar-contrasena.component';
 
 const routes = [
     {
@@ -20,17 +17,12 @@ const routes = [
 
 @NgModule({
     declarations: [
-        LoginComponent
+        LoginComponent,
+        ModalRecuperarContrasenaComponent
     ],
     imports     : [
         RouterModule.forChild(routes),
-
-        MatButtonModule,
-        MatCheckboxModule,
-        MatFormFieldModule,
-        MatIconModule,
-        MatInputModule,
-
+        MaterialDesignModule,
         FuseSharedModule
     ],
     exports     : [

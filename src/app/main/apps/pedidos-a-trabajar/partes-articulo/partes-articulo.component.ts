@@ -37,31 +37,18 @@ export class PedidosPartesArticuloComponent implements OnInit {
         });
     }
 
-    ordenar(order){
-        switch(order) { 
-            case 2: { 
-               this.order = "codigoArticulo" ;
-               break; 
-            }
-            case 3: { 
-               this.order = "nombre" ;
-               break; 
-            }
-            case 4: { 
-               this.order = "cantidad" ;
-               break; 
-            }
-            default: { 
-               this.order = "id"
-               break; 
-            } 
-        }
-
+    
+    /**
+     * Ordena la tabla por la columna que viene en *event.active*
+     * @param event
+     */
+    sortData( event ) {
+        
         this.page = 0;
         
-        this.buscar(this.page, this.size, this.order);
-
+        this.buscar(this.page, this.size, event.active);        
     }
+
 
     paginar(e: any){
         this.page = e.pageIndex;

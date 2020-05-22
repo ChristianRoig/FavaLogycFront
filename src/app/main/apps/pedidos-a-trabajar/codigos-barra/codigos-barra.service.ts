@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { environment } from 'environments/environment';
+
+const BASE_URL = environment.server + environment.baseUrl;
 
 @Injectable()
 export class PedidosCodigosBarraService implements Resolve<any>
@@ -52,7 +55,7 @@ export class PedidosCodigosBarraService implements Resolve<any>
     getPartesArticulos(): Promise<any>
     {
         return new Promise((resolve, reject) => {
-            this._httpClient.get('http://192.168.100.191:8080/api_favalogyc/pedidosatrabajar/articuloparte/porcodigoonombre/MPLA/0/15/id')
+            this._httpClient.get(`${BASE_URL}pedidosatrabajar/articuloparte/porcodigoonombre/MPLA/0/15/id`)
                 .subscribe((response: any) => {
                     this.partesArticulo = response;
                     this.onPartesArticuloChanged.next(this.partesArticulo);
@@ -63,19 +66,19 @@ export class PedidosCodigosBarraService implements Resolve<any>
 
     getCodigosBarra(codArticulo, page, size, order): Observable<any>
     {
-        let ruta = `http://192.168.100.191:8080/api_favalogyc/pedidosatrabajar/codigodebarra/porcodigoarticuloonombre/${codArticulo}/${page}/${size}/${order}`;
+        let ruta = `${BASE_URL}pedidosatrabajar/codigodebarra/porcodigoarticuloonombre/${codArticulo}/${page}/${size}/${order}`;
         return this._httpClient.get(ruta);
     }
 
     getCodigoBarra(codArticulo): Observable<any>
     {
-        let ruta = `http://192.168.100.191:8080/api_favalogyc/pedidosatrabajar/codigodebarra/porcodigodebarraodescripcion/${codArticulo}/0/10/id`;
+        let ruta = `${BASE_URL}pedidosatrabajar/codigodebarra/porcodigodebarraodescripcion/${codArticulo}/0/10/id`;
         return this._httpClient.get(ruta);
     }
 
     deleteCodigoBarra(id): Observable<any>
     {
-        let ruta = `http://192.168.100.191:8080/api_favalogyc/pedidosatrabajar/codigodebarra/${id}`;
+        let ruta = `${BASE_URL}pedidosatrabajar/codigodebarra/${id}`;
         return this._httpClient.delete(ruta);
     }
 }

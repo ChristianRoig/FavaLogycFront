@@ -13,6 +13,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 
@@ -32,7 +33,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatSortModule,
     MatSnackBarModule,
     MatTableModule,
-    MatTabsModule,    
+    MatTabsModule,  
+    MatDialogModule  
   ],
   exports: [
     CommonModule,
@@ -49,6 +51,7 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatSnackBarModule,
     MatTableModule,
     MatTabsModule,    
+    MatDialogModule
   ]
 })
 export class MaterialDesignModule { }

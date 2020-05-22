@@ -11,32 +11,32 @@
 
 
     <!-- CONTENIDO -->
-    <table contenido mat-table [dataSource]="dataSource2" class="mat-elevation-z8 mb-4">
+    <table contenido mat-table matSort (matSortChange)="sortData($event)" [dataSource]="dataSource2" class="mat-elevation-z8">
 
         <!--- Note that these columns can be defined in any order.
             The actual rendered columns are set as a property on the row definition" -->
     
         <!-- Position Column -->
         <ng-container matColumnDef="id">
-            <th (click)="ordenar(1)" mat-header-cell *matHeaderCellDef> Id </th>
+            <th mat-sort-header="id" mat-header-cell *matHeaderCellDef> Id </th>
             <td mat-cell *matCellDef="let element"> {{element.id}} </td>
         </ng-container>
     
         <!-- Name Column -->
         <ng-container matColumnDef="codigoArticulo">
-            <th (click)="ordenar(2)" mat-header-cell *matHeaderCellDef> Código </th>
+            <th mat-sort-header="codigoArticulo" mat-header-cell *matHeaderCellDef> Código </th>
             <td mat-cell *matCellDef="let element"> {{element.articulo.codigoArticulo}} </td>
         </ng-container>
     
         <!-- Weight Column -->
         <ng-container matColumnDef="nombre">
-            <th (click)="ordenar(3)" mat-header-cell *matHeaderCellDef> Nombre </th>
+            <th mat-sort-header="nombre" mat-header-cell *matHeaderCellDef> Nombre </th>
             <td mat-cell *matCellDef="let element"> {{element.articulo.nombre}} </td>
         </ng-container>
         
         <!-- Symbol Column -->
         <ng-container matColumnDef="cantidad">
-            <th (click)="ordenar(4)" mat-header-cell *matHeaderCellDef> Cantidad </th>
+            <th mat-sort-header="cantidad" mat-header-cell *matHeaderCellDef> Cantidad </th>
             <td mat-cell *matCellDef="let element"> {{element.cantidad}} </td>
         </ng-container>
 
@@ -52,8 +52,8 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>            
     <!-- / CONTENIDO -->
-    <br>
-    <div contenido>
+
+    <div contenido class=" mb-4">
         <mat-paginator [length]="29"
             [pageIndex]="page"
             [pageSize]="size"

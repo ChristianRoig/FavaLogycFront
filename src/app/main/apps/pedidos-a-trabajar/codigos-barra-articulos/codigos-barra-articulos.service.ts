@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'environments/environment';
+
+const BASE_URL = environment.server + environment.baseUrl;
 
 @Injectable()
 export class PedidosCodigosBarraArticulosService
@@ -13,6 +16,6 @@ export class PedidosCodigosBarraArticulosService
 
     getArticulos(page,size,order): Observable<any>
     {
-        return this._httpClient.get(`http://192.168.100.191:8080/api_favalogyc/pedidosatrabajar/codigodebarra/porcodigoarticuloonombre/Somm/${page}/${size}/${order}`);
+        return this._httpClient.get(`${BASE_URL}pedidosatrabajar/codigodebarra/porcodigoarticuloonombre/Somm/${page}/${size}/${order}`);
     }
 }

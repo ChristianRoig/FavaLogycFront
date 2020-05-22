@@ -35,6 +35,7 @@ import { PedidosCodigosBarraArticulosComponent } from './codigos-barra-articulos
 import { PedidosCodigosBarraArticulosService } from './codigos-barra-articulos/codigos-barra-articulos.service';
 import { CustomTagModule } from 'app/main/custom-tags/custom-tag.module';
 import { MaterialDesignModule } from 'app/material-design/material-design.module';
+import { ModalConfirmacionBorrarComponent } from './codigos-barra/modal-confirmacion-borrar/modal-confirmacion-borrar.component';
 // import { MaterialDesignModule } from 'app/material-design/material-design.module';
 
 const routes: Routes = [
@@ -71,7 +72,8 @@ const routes: Routes = [
         PedidosCodigosBarraComponent,
         PedidosCodigosBarraEditarComponent,
         PedidosCodigosBarraAddComponent,
-        PedidosCodigosBarraArticulosComponent
+        PedidosCodigosBarraArticulosComponent,
+        ModalConfirmacionBorrarComponent
     ],
     imports     : [
         CommonModule,

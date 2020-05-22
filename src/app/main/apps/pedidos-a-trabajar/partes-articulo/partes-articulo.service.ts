@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'environments/environment';
 
-const URL = environment.server + environment.baseUrl;
+const BASE_URL = environment.server + environment.baseUrl;
 
 @Injectable()
 export class PedidosPartesArticulosService
@@ -22,7 +22,7 @@ export class PedidosPartesArticulosService
      */
     getPartesArticulos(page, size, order): Observable<any>
     {
-        let ruta = `${URL}pedidosatrabajar/articuloparte/porcodigoonombre/MPLA/${page}/${size}/${order}`;
+        let ruta = `${BASE_URL}pedidosatrabajar/articuloparte/porcodigoonombre/MPLA/${page}/${size}/${order}`;
         return this._httpClient.get(ruta);
     }
 }

@@ -374,7 +374,7 @@ const ELEMENT_DATA: Articulos[] = [
 })
 
 export class PedidosCodigosBarraArticulosComponent implements OnInit {
-    displayedColumns: string[] = ['id', 'codigoArticulo', 'nombre', 'descripcion', 'codigoDeBarra'];
+    displayedColumns: string[] = ['id', 'codigoArticulo', 'nombre', 'descripcion', 'codigoDeBarra', 'seleccionar'];
     dataSource = ELEMENT_DATA;
     dataSource2: any;
     subParametros: Subscription;

@@ -6,7 +6,7 @@
     
     <form class="p-24 mr-24" fxLayout="column" fxLayoutAlign="center" fxFlex="1 0 auto" name="form">
 
-      <div class="h2 mb-24">Editar Articulo Parte </div>
+      <div class="h2 mb-24">Editar Cantidad</div>
 
         <mat-form-field appearance="outline">
           <mat-label>Codigo Articulo</mat-label>
@@ -31,7 +31,7 @@
     
         <mat-form-field appearance="outline">
           <mat-label>Cantidad</mat-label>
-          <input id="cantidad-editar" matInput [(ngModel)]='this.cantidad' [ngModelOptions]="{standalone: true}" autofocus>
+          <input id="cantidad-editar" matInput [(ngModel)]='this.cantidad' [ngModelOptions]="{standalone: true}" type="number" autofocus>
         </mat-form-field>
     
 

@@ -10,11 +10,20 @@
 
     <!-- / SEARCH -->
     
-    <div search class="example-button-row">
+    <!-- <div search class="example-button-row">
         <button mat-fab color="warn" aria-label="Agregar" (click)="agregar()">
             <mat-icon>add</mat-icon>
           </button>
-    </div>
+    </div> -->
+
+    <!-- ADD BUTTON -->
+    <button search mat-stroked-button (click)="agregar()" color="accent" class="fuse-white mt-24 mt-md-0">
+
+            <mat-icon>add</mat-icon>
+            Agregar Código
+
+    </button>
+        <!-- / ADD BUTTON -->
 
     <table contenido mat-table [dataSource]="dataSource2" class="mat-elevation-z8">
 
@@ -26,12 +35,12 @@
         </ng-container>
     
         <ng-container matColumnDef="codigoBarra">
-        <th (click)="ordenar(2)" mat-header-cell *matHeaderCellDef> Codigo de Barra </th>
+        <th (click)="ordenar(2)" mat-header-cell *matHeaderCellDef> Código de Barra </th>
         <td mat-cell *matCellDef="let element"> {{element.codigoDeBarra}} </td>
         </ng-container>
     
         <ng-container matColumnDef="descripcion">
-        <th (click)="ordenar(3)" mat-header-cell *matHeaderCellDef> descripcion </th>
+        <th (click)="ordenar(3)" mat-header-cell *matHeaderCellDef> Descripción </th>
         <td mat-cell *matCellDef="let element"> {{element.descripcion}} </td>
         </ng-container>
         
@@ -46,7 +55,10 @@
         <ng-container matColumnDef="borrar">
             <th mat-header-cell *matHeaderCellDef> Borrar </th>
             <td mat-cell class="example-button-row" *matCellDef="let element"> 
-                <button mat-stroked-button color="primary"(click)="borrar(element.id)">Borrar</button>
+                <button mat-stroked-button color="warn" (click)="confirmacionBorrar(element.id)">
+                    <mat-icon>delete_outline</mat-icon>
+                    Borrar
+                </button>
             </td>
         </ng-container>
 

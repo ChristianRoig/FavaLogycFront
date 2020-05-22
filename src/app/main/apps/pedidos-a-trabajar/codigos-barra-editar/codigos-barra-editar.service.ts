@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { environment } from 'environments/environment';
+
+const BASE_URL = environment.server + environment.baseUrl;
 
 @Injectable()
 export class PedidosCodigosBarraEditarService
@@ -16,14 +18,14 @@ export class PedidosCodigosBarraEditarService
 
     getCodigoBarra(id): Observable<any>
     {
-        let ruta = `http://192.168.100.191:8080/api_favalogyc/pedidosatrabajar/codigodebarra/${id}`;
+        let ruta = `${BASE_URL}pedidosatrabajar/codigodebarra/${id}`;
         return this._httpClient.get(ruta);
     }
 
     putCodigoBarra(id:number, codigoDeBarra:string, descripcion: string): Observable<any>
     {
         
-        let ruta = `http://192.168.100.191:8080/api_favalogyc/pedidosatrabajar/codigodebarra/${id}`
+        let ruta = `${BASE_URL}pedidosatrabajar/codigodebarra/${id}`
 
         let body=  {
             codigoDeBarra: codigoDeBarra,

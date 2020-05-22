@@ -37,7 +37,7 @@
                     <div class="remember-forgot-password" fxLayout="row" fxLayout.xs="column"
                         fxLayoutAlign="space-between center">
                         
-                        <a class="forgot-password" [routerLink]="'/pages/auth/forgot-password'">
+                        <a mat-button color="accent" class="forgot-password" (click)="recuperarContrasena()">
                             Olvidó su contraseña?
                         </a>
                     </div>

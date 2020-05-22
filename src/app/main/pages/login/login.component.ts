@@ -5,6 +5,8 @@ import { FuseConfigService } from '@fuse/services/config.service';
 import { fuseAnimations } from '@fuse/animations';
 import { Router } from '@angular/router';
 import { UsuarioService } from 'app/services/usuario.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ModalRecuperarContrasenaComponent } from './modal-recuperar-contrasena/modal-recuperar-contrasena.component';
 
 @Component({
     selector     : 'login',
@@ -27,7 +29,8 @@ export class LoginComponent implements OnInit
         private _fuseConfigService: FuseConfigService,
         private _formBuilder: FormBuilder,
         private _router: Router, 
-        private _usuarioService: UsuarioService
+        private _usuarioService: UsuarioService,
+        private _dialog: MatDialog
     )
     {
         // Configure the layout
@@ -72,5 +75,16 @@ export class LoginComponent implements OnInit
 
         this._router.navigate(['/apps'])
     }
+
+
+    recuperarContrasena() {
+
+            const dialogRef = this._dialog.open(ModalRecuperarContrasenaComponent);
+        
+            dialogRef.afterClosed().subscribe(result => {
+              console.log(`Dialog result: ${result}`);
+            });
+    }        
+
 
 }
