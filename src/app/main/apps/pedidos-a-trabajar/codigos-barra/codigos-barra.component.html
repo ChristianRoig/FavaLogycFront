@@ -7,8 +7,14 @@
             <input #filter placeholder="Búsqueda por descripción">
         </div>
     </div>
-    <!-- / SEARCH -->
 
+    <!-- / SEARCH -->
+    
+    <div search class="example-button-row">
+        <button mat-fab color="warn" aria-label="Agregar" (click)="agregar()">
+            <mat-icon>add</mat-icon>
+          </button>
+    </div>
 
     <table contenido mat-table [dataSource]="dataSource2" class="mat-elevation-z8">
 
@@ -47,10 +53,9 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <div class="example-button-row">
-        <button mat-stroked-button color="primary" (click)="volver()">Volver</button>
+    <!-- <div contenido class="example-button-row">
         <button mat-stroked-button color="primary" (click)="agregar()">Agregar</button>
-    </div>
+    </div> -->
     <br>
     <div contenido class="mt=5">
         <mat-paginator [length]="4"
