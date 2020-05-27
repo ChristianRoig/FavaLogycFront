@@ -17,8 +17,11 @@ export class PedidosPartesArticuloComponent implements OnInit {
     displayedColumns: string[] = ['id', 'codigoArticulo', 'nombre', 'cantidad', 'editar'];
     dataSource2: any;
 
+    busqueda: string;
+    length: number;
     page: number;
     size: number;
+    columna: string;
     order: string;
 
     constructor(
@@ -26,17 +29,24 @@ export class PedidosPartesArticuloComponent implements OnInit {
         private _pedidosPartesArticulosService: PedidosPartesArticulosService ) { }
 
     ngOnInit(): void{
+        this.busqueda = " "
         this.page = 0;
         this.size = 10;
-        this.order = 'id';
+        this.columna = 'id';
+        this.order = 'asc';
 
-        this.buscar(this.page, this.size, this.order);
-        
+        this.buscar(this.busqueda, this.page, this.size, this.columna, this.order);
     }
 
-    buscar(page, size, order){
-        this._pedidosPartesArticulosService.getPartesArticulos(page, size, order).subscribe(data => {
-            this.dataSource2 = data;
+    buscar(search, page, size, columna, order){
+
+        if(!search){
+            search = ' ';
+        }
+
+        this._pedidosPartesArticulosService.getPartesArticulos(search, page, size, columna, order).subscribe(data => {
+            this.dataSource2 = data.datos;
+            this.length = data.totalRegistros;
         });
     }
 
@@ -44,13 +54,12 @@ export class PedidosPartesArticuloComponent implements OnInit {
     search( event ) {
 
         let search: any = document.getElementById('search');
+        this.busqueda = search.value;
 
-        let page = 0;
-        let size = 15;
-        let order = 'id';
+        this.page = 0;
+        this.columna = 'id';
 
-        this._pedidosPartesArticulosService.searchPartesArticulos( search.value, page, size, order )
-            .then( ( data ) => this.dataSource2 = data )
+        this.buscar(this.busqueda, this.page, this.size, this.columna, this.order);
 
     }
 
@@ -61,8 +70,12 @@ export class PedidosPartesArticuloComponent implements OnInit {
     sortData( event ) {
         
         this.page = 0;
+        this.columna = event.active;
         
-        this.buscar(this.page, this.size, event.active);        
+        if (event.direction !== "")
+            this.order = event.direction;
+        
+        this.buscar(this.busqueda, this.page, this.size, this.columna, this.order);
     }
 
 
@@ -70,7 +83,7 @@ export class PedidosPartesArticuloComponent implements OnInit {
         this.page = e.pageIndex;
         this.size = e.pageSize;
         
-        this.buscar(this.page, this.size, this.order);
+        this.buscar(this.busqueda, this.page, this.size, this.columna, this.order);
     }
 
     editar(id){

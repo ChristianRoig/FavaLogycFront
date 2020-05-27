@@ -54,10 +54,10 @@
     <!-- / CONTENIDO -->
 
     <div contenido class=" mb-4">
-        <mat-paginator [length]="29"
+        <mat-paginator [length]="length"
             [pageIndex]="page"
             [pageSize]="size"
-            [pageSizeOptions]="[5, 10, 14, 30]"
+            [pageSizeOptions]="[5, 10, 15, 500]"
             (page) = "paginar($event)">
         </mat-paginator>
     </div>
