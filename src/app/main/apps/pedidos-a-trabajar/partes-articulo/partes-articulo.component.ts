@@ -38,13 +38,13 @@ export class PedidosPartesArticuloComponent implements OnInit {
         this.buscar(this.busqueda, this.page, this.size, this.columna, this.order);
     }
 
-    buscar(search, page, size, columna, order){
+    buscar(busqueda, page, size, columna, order){
 
-        if(!search){
-            search = ' ';
+        if(!busqueda){
+            busqueda = ' ';
         }
 
-        this._pedidosPartesArticulosService.getPartesArticulos(search, page, size, columna, order).subscribe(data => {
+        this._pedidosPartesArticulosService.getPartesArticulos(busqueda, page, size, columna, order).subscribe(data => {
             this.dataSource2 = data.datos;
             this.length = data.totalRegistros;
         });
