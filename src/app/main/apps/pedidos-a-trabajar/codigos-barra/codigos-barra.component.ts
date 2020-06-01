@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { PedidosCodigosBarraService } from './codigos-barra.service';
 import { Subscription } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
-import { MatDialog } from '@angular/material/dialog';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { ModalConfirmacionBorrarComponent } from './modal-confirmacion-borrar/modal-confirmacion-borrar.component';
 
 /**
@@ -144,9 +144,16 @@ export class PedidosCodigosBarraComponent implements OnInit {
   }
 
 
-  confirmacionBorrar( id ) {
+  confirmacionBorrar( id, codigoDeBarras, descripcion ) {
 
-    const dialogRef = this._dialog.open( ModalConfirmacionBorrarComponent );
+    const dialogRef = this._dialog.open( ModalConfirmacionBorrarComponent, { 
+      data: {
+        id: id, 
+        codigoArticulo: this.codigoArticulo,
+        codigoDeBarras: codigoDeBarras, 
+        descripcion: descripcion
+      } 
+    });
 
     dialogRef.afterClosed()
       .subscribe(result => {
@@ -155,5 +162,5 @@ export class PedidosCodigosBarraComponent implements OnInit {
           this.borrar( id )
 
       });
-}     
+  }     
 }

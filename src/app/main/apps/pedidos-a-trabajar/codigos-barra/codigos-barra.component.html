@@ -48,7 +48,7 @@
         <ng-container matColumnDef="borrar">
             <th mat-header-cell *matHeaderCellDef> Borrar </th>
             <td mat-cell class="example-button-row" *matCellDef="let element"> 
-                <button mat-stroked-button color="warn" (click)="confirmacionBorrar(element.id)">
+                <button mat-stroked-button color="warn" (click)="confirmacionBorrar(element.id, element.codigoDeBarras, element.descripcion)">
                     <mat-icon>delete_outline</mat-icon>
                     Borrar
                 </button>
