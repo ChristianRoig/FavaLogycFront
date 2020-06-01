@@ -17,7 +17,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 
 export class PedidosCodigosBarraAddComponent implements OnInit {
-    displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
     dataSource2: any;
     subParametros: Subscription;
     id:number;
@@ -25,7 +24,7 @@ export class PedidosCodigosBarraAddComponent implements OnInit {
     codigoArticulo: string;
     nombre: string;
     descripcion: string;
-    codigoDeBarra: string;
+    codigoDeBarras: string;
 
 
     constructor(
@@ -42,13 +41,12 @@ export class PedidosCodigosBarraAddComponent implements OnInit {
     ngOnInit(): void{
         this.subParametros = this.route.params.subscribe(params => {
             this.codigoArticulo = params['codArt'];
-            this.nombre = params['nombre'];
         })
 
         this._pedidosCodigosBarraAddService.getCodigoBarra(this.codigoArticulo).subscribe( data => {
-            this.dataSource2 = data;
+            this.dataSource2 = data.datos;
             this.id = this.dataSource2[0].articulo.id;
-            console.log("id: "+this.id);
+            this.nombre = this.dataSource2[0].articulo.nombre;
         });        
     }
 
@@ -59,7 +57,7 @@ export class PedidosCodigosBarraAddComponent implements OnInit {
 
     agregar(){
         
-        this._pedidosCodigosBarraAddService.postCodigoBarra(this.id,this.codigoDeBarra,this.descripcion)
+        this._pedidosCodigosBarraAddService.postCodigoBarra(this.id,this.codigoDeBarras,this.descripcion)
         .subscribe(
             data => {
               this.volver();

@@ -3,35 +3,35 @@
     <form class="p-24 mr-24" fxLayout="column" fxLayoutAlign="center" fxFlex="1 0 auto" name="form">
 
       <div class="h2 mb-24">Alta Código de barras</div>
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline">
         <mat-label>Codigo Articulo</mat-label>
         <input matInput disabled value="{{this.codigoArticulo}}">
       </mat-form-field>
       
       <br>
       
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline">
         <mat-label>Nombre</mat-label>
         <input matInput disabled value="{{this.nombre}}">
       </mat-form-field>
       
       <br>
 
-      <mat-form-field class="example-full-width">
-        <mat-label>Codigo de Barra</mat-label>
-        <input matInput [(ngModel)]='this.codigoDeBarra' [ngModelOptions]="{standalone: true}">
+      <mat-form-field appearance="outline">
+        <mat-label>Codigo de Barras</mat-label>
+        <input matInput [(ngModel)]='this.codigoDeBarras' [ngModelOptions]="{standalone: true}" autofocus>
       </mat-form-field>
       
       <br>
       
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline">
         <mat-label>Descripcion</mat-label>
         <input matInput [(ngModel)]='this.descripcion' [ngModelOptions]="{standalone: true}">
       </mat-form-field>
 
       <div class="mt-4 pt-4" fxLayout="row" fxLayoutAlign="space-between">
-        <button mat-raised-button color="primary" (click)="agregar()">Agregar</button>
-        <button mat-raised-button class="mr-5px" color="warn" (click)="volver()">Cancelar</button>
+        <button mat-raised-button color="accent" (click)="agregar()">Agregar</button>
+        <button mat-stroked-button class="mr-5px" (click)="volver()">Cancelar</button>
       </div>
     </form>
   </div>

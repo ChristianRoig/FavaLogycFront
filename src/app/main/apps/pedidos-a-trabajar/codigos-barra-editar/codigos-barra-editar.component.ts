@@ -22,7 +22,7 @@ export class PedidosCodigosBarraEditarComponent implements OnInit {
     id:number;
     codigoArticulo:string;
     nombre:string;
-    codigoDeBarra: string;
+    codigoDeBarras: string;
     descripcion: string;
 
     constructor(
@@ -44,7 +44,7 @@ export class PedidosCodigosBarraEditarComponent implements OnInit {
 
         this._pedidosCodigosBarraEditarService.getCodigoBarra(this.id).subscribe(data => {
             this.dataSource = data;
-            this.codigoDeBarra = this.dataSource.codigoDeBarra;
+            this.codigoDeBarras = this.dataSource.codigoDeBarras;
             this.descripcion = this.dataSource.descripcion;
             this.nombre = this.dataSource.articulo.nombre;
             this.codigoArticulo = this.dataSource.articulo.codigoArticulo;
@@ -57,7 +57,7 @@ export class PedidosCodigosBarraEditarComponent implements OnInit {
     }
 
     editar(){
-        this._pedidosCodigosBarraEditarService.putCodigoBarra(this.id,this.codigoDeBarra,this.descripcion).subscribe(
+        this._pedidosCodigosBarraEditarService.putCodigoBarra(this.id,this.codigoDeBarras,this.descripcion).subscribe(
             data => {
               this.volver();
             },

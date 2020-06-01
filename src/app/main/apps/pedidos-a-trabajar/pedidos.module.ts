@@ -60,7 +60,7 @@ const routes: Routes = [
         component: PedidosCodigosBarraEditarComponent
     },
     {
-        path     : 'codigos-barra-add/:codArt/:nombre',
+        path     : 'codigos-barra-add/:codArt',
         component: PedidosCodigosBarraAddComponent
     }
 ];

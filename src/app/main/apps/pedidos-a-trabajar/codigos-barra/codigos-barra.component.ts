@@ -18,7 +18,7 @@ import { ModalConfirmacionBorrarComponent } from './modal-confirmacion-borrar/mo
     encapsulation: ViewEncapsulation.None
 })
 export class PedidosCodigosBarraComponent implements OnInit {
-    displayedColumns: string[] = ['id', 'codigoBarra', 'descripcion', 'editar', 'borrar'];
+    displayedColumns: string[] = ['id', 'codigoDeBarras', 'descripcion', 'editar', 'borrar'];
     dataSource2: any;
     subParametros: Subscription;
 
@@ -26,8 +26,11 @@ export class PedidosCodigosBarraComponent implements OnInit {
     codigoArticuloBusqueda: string;
     nombre: string;
 
+    busqueda: string;
+    length: number;
     page: number;
     size: number;
+    columna: string;
     order: string;
 
     constructor(
@@ -43,11 +46,13 @@ export class PedidosCodigosBarraComponent implements OnInit {
             this.codigoArticulo = params['id'];
         })
 
+        this.busqueda = " ";
         this.page = 0;
         this.size = 10;
-        this.order = 'id';
+        this.columna = 'id';
+        this.order = 'asc';
         
-        this.buscar(this.codigoArticulo,this.page, this.size, this.order);
+        this.buscar(this.codigoArticulo, this.busqueda, this.page, this.size, this.columna, this.order);
         
     }
 
@@ -60,12 +65,8 @@ export class PedidosCodigosBarraComponent implements OnInit {
         this._pedidosCodigosBarraService.deleteCodigoBarra(id)
             .subscribe(
             data => {
-
-                if(this.codigoArticuloBusqueda){
-                    this.buscar(this.codigoArticuloBusqueda,this.page, this.size, this.order);
-                } else {
-                    this.buscar(this.codigoArticulo,this.page, this.size, this.order);
-                }
+              this.page = 0
+              this.buscar(this.codigoArticulo, this.busqueda, this.page, this.size, this.columna, this.order);
             },
             (err: HttpErrorResponse) => {
               if (err.error instanceof Error) {
@@ -78,12 +79,17 @@ export class PedidosCodigosBarraComponent implements OnInit {
           );
     }
 
-    buscar(busqueda, page, size, order){
+    buscar(codigoArticulo, busqueda, page, size, columna, order){
+
+        if(!busqueda){
+          busqueda = ' ';
+        }
         
-        this._pedidosCodigosBarraService.getCodigosBarra(busqueda, page, size, order).subscribe(
+        this._pedidosCodigosBarraService.getCodigosBarra(codigoArticulo, busqueda, page, size, columna, order).subscribe(
             data => {
-                this.dataSource2 = data;
-                this.nombre = this.dataSource2[0].articulo.nombre
+                this.dataSource2 = data.datos;
+                this.length = data.totalRegistros;
+                this.nombre = this.dataSource2[0].articulo.nombre;
             },
             (err: HttpErrorResponse) => {
               if (err.error instanceof Error) {
@@ -96,25 +102,27 @@ export class PedidosCodigosBarraComponent implements OnInit {
           );            
     }
 
-    ordenar(order){
-      switch(order) { 
-          case 2: { 
-             this.order = "codigoDeBarra" ;
-             break; 
-          }
-          case 3: {
-             this.order = "descripcion" ;
-             break; 
-          }
-          default: { 
-             this.order = "id"
-             break; 
-          } 
-      }
+    search( event ) {
+
+      let search: any = document.getElementById('search');
+      this.busqueda = search.value;
 
       this.page = 0;
+      this.columna = 'id';
+
+      this.buscar(this.codigoArticulo, this.busqueda, this.page, this.size, this.columna, this.order);
+
+    }
+
+    sortData( event ) {
+        
+      this.page = 0;
+      this.columna = event.active;
       
-      this.buscar(this.codigoArticulo,this.page, this.size, this.order);
+      if (event.direction !== "")
+          this.order = event.direction;
+      
+      this.buscar(this.codigoArticulo, this.busqueda, this.page, this.size, this.columna, this.order);
   }
 
 
@@ -123,11 +131,11 @@ export class PedidosCodigosBarraComponent implements OnInit {
     this.page = e.pageIndex;
     this.size = e.pageSize;
     
-    this.buscar(this.codigoArticulo, this.page, this.size, this.order);
+    this.buscar(this.codigoArticulo, this.busqueda, this.page, this.size, this.columna, this.order);
   }
 
   agregar(){
-      let ruta = `apps/pedidos/codigos-barra-add/${this.codigoArticulo}/${this.nombre}`;
+      let ruta = `apps/pedidos/codigos-barra-add/${this.codigoArticulo}`;
       this._router.navigate([ruta]);
   }
 

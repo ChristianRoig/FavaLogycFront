@@ -82,7 +82,7 @@ export class LoginComponent implements OnInit
             const dialogRef = this._dialog.open(ModalRecuperarContrasenaComponent);
         
             dialogRef.afterClosed().subscribe(result => {
-              console.log(`Dialog result: ${result}`);
+            //   console.log(`Dialog result: ${result}`);
             });
     }        
 
