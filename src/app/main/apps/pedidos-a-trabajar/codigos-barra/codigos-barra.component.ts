@@ -56,7 +56,7 @@ export class PedidosCodigosBarraComponent implements OnInit {
     }
 
     editar(id){
-        let ruta = `apps/pedidos/codigos-barra/ed/${id}`;
+        let ruta = `apps/pedidos/codigos-barra/${this.codigoArticulo}/${id}`;
         this._router.navigate([ruta]);
     }
 

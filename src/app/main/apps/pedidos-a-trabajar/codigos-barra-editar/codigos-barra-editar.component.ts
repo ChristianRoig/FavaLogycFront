@@ -41,6 +41,7 @@ export class PedidosCodigosBarraEditarComponent implements OnInit {
         
         this.subParametros = this.route.params.subscribe(params => {
             this.id = params['id'];
+            this.codigoArticulo = params['codArt'];
         })
 
         this._pedidosCodigosBarraEditarService.getCodigoBarra(this.id).subscribe(

@@ -87,7 +87,16 @@ export class PedidosCodigosBarraAddComponent implements OnInit {
               if (err.error instanceof Error) {
                 console.log("Client-side error");
               } else {
-                console.log("Server-side error");
+                let errStatus = err.status
+                if (errStatus == 0){
+                  let titulo = 'Error de Servidor';
+                  let mensaje = "Por favor comunicarse con Sistemas";
+                  this.mostrarError(errStatus, titulo, mensaje);
+                } else {
+                  let titulo = 'Error al Agregar';
+                  let mensaje = err.error.message.toString();
+                  this.mostrarError(errStatus, titulo, mensaje);
+                }
               }
             }
           );
