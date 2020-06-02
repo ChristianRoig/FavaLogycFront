@@ -4,6 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { PedidosCodigosBarraAddService } from './codigos-barra-add.service'
 import { Subscription } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MatDialog } from '@angular/material/dialog';
+import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 
 /**
  * @title Basic use of `<table mat-table>`
@@ -30,7 +32,8 @@ export class PedidosCodigosBarraAddComponent implements OnInit {
     constructor(
         private _router: Router,
         private route: ActivatedRoute,
-        private _pedidosCodigosBarraAddService: PedidosCodigosBarraAddService
+        private _pedidosCodigosBarraAddService: PedidosCodigosBarraAddService,
+        private _dialog: MatDialog
     )
     {
         
@@ -43,11 +46,29 @@ export class PedidosCodigosBarraAddComponent implements OnInit {
             this.codigoArticulo = params['codArt'];
         })
 
-        this._pedidosCodigosBarraAddService.getCodigoBarra(this.codigoArticulo).subscribe( data => {
+        this._pedidosCodigosBarraAddService.getCodigoBarra(this.codigoArticulo).subscribe( 
+          data => {
             this.dataSource2 = data.datos;
             this.id = this.dataSource2[0].articulo.id;
             this.nombre = this.dataSource2[0].articulo.nombre;
-        });        
+          },
+            (err: HttpErrorResponse) => {
+                if (err.error instanceof Error) {
+                    console.log("Client-side error");
+                } else {
+                    let errStatus = err.status
+                    if (errStatus == 0){
+                        let titulo = 'Error de Servidor';
+                        let mensaje = "Por favor comunicarse con Sistemas";
+                        this.mostrarError(errStatus, titulo, mensaje);
+                    } else {
+                        let titulo = 'Código de Barras no encontrada';
+                        let mensaje = err.error.message.toString();
+                        this.mostrarError(errStatus, titulo, mensaje);
+                    }
+                }
+            }
+        );        
     }
 
     volver(){
@@ -71,4 +92,23 @@ export class PedidosCodigosBarraAddComponent implements OnInit {
             }
           );
     }
+
+    mostrarError(errStatus, titulo, mensaje){
+      const dialogRef = this._dialog.open( ModalErrorComponent, { 
+        data: {
+          titulo: titulo,
+          mensaje: mensaje
+        } 
+      });
+  
+      dialogRef.afterClosed()
+        .subscribe(result => {
+            if (errStatus != 0) {            
+              this.volver();
+            } else {
+              this._router.navigate(['']);
+            }
+        });
+    }
+
 }

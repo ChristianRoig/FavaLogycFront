@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { ModalConfirmacionBorrarComponent } from './modal-confirmacion-borrar/modal-confirmacion-borrar.component';
+import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 
 /**
  * @title Basic use of `<table mat-table>`
@@ -23,7 +24,6 @@ export class PedidosCodigosBarraComponent implements OnInit {
     subParametros: Subscription;
 
     codigoArticulo: string;
-    codigoArticuloBusqueda: string;
     nombre: string;
 
     busqueda: string;
@@ -37,7 +37,6 @@ export class PedidosCodigosBarraComponent implements OnInit {
         private _router: Router,
         private route: ActivatedRoute,
         private _pedidosCodigosBarraService: PedidosCodigosBarraService,
-        private changeDetectorRefs: ChangeDetectorRef,
         private _dialog: MatDialog ) {  }
 
     ngOnInit(): void{
@@ -66,15 +65,26 @@ export class PedidosCodigosBarraComponent implements OnInit {
             .subscribe(
             data => {
               this.page = 0
-              this.buscar(this.codigoArticulo, this.busqueda, this.page, this.size, this.columna, this.order);
+
+              let titulo = 'Confirmación de Borrado';
+              let mensaje = "Se borró el registro correctamente";
+              this.mostrarError(200, titulo, mensaje);
             },
             (err: HttpErrorResponse) => {
               if (err.error instanceof Error) {
                 console.log("Client-side error");
               } else {
-                console.log("Server-side error");
+                let errStatus = err.status
+                if (errStatus == 0){
+                  let titulo = 'Error de Servidor';
+                  let mensaje = "Por favor comunicarse con Sistemas";
+                  this.mostrarError(errStatus, titulo, mensaje);
+                } else {
+                  let titulo = 'Error al eliminar';
+                  let mensaje = err.error.message.toString();
+                  this.mostrarError(errStatus, titulo, mensaje);
+                }
               }
-              this.volver();
             }
           );
     }
@@ -95,8 +105,16 @@ export class PedidosCodigosBarraComponent implements OnInit {
               if (err.error instanceof Error) {
                 console.log("Client-side error");
               } else {
-                console.log("Server-side error");
-                this.volver();
+                let errStatus = err.status
+                if (errStatus == 0){
+                  let titulo = 'Error de Servidor';
+                  let mensaje = "Por favor comunicarse con Sistemas";
+                  this.mostrarError(errStatus, titulo, mensaje);
+                } else {
+                  let titulo = 'Error al listar';
+                  let mensaje = err.error.message.toString();
+                  this.mostrarError(errStatus, titulo, mensaje);
+                }
               }
             }
           );            
@@ -143,6 +161,7 @@ export class PedidosCodigosBarraComponent implements OnInit {
       this._router.navigate(['apps/pedidos/codigos-barra-articulos']);
   }
 
+  
 
   confirmacionBorrar( id, codigoDeBarras, descripcion ) {
 
@@ -162,5 +181,26 @@ export class PedidosCodigosBarraComponent implements OnInit {
           this.borrar( id )
 
       });
-  }     
+  }
+
+  mostrarError(errStatus, titulo, mensaje){
+    const dialogRef = this._dialog.open( ModalErrorComponent, { 
+      data: {
+        titulo: titulo,
+        mensaje: mensaje
+      } 
+    });
+
+    dialogRef.afterClosed()
+      .subscribe(result => {
+          if (errStatus != 0) {            
+            this.busqueda = ' ';
+            let search: any = document.getElementById('search');
+            search.value = '';
+            this.buscar(this.codigoArticulo, this.busqueda, this.page, this.size, this.columna, this.order);
+          } else {
+            this._router.navigate(['']);
+          }
+      });
+  }
 }

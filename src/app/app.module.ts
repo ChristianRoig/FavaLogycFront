@@ -34,6 +34,7 @@ import { PagesModule } from './main/pages/pages.module';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { FormsModule } from '@angular/forms';
 import { PlantillaFondoComponent } from './main/custom-tags/plantilla-fondo/plantilla-fondo.component';
+import { SharedModule } from './shared/shared.module';
 
 
 const appRoutes: Routes = [
@@ -94,7 +95,8 @@ const appRoutes: Routes = [
         // App modules
         LayoutModule,
         SampleModule,
-        PagesModule
+        PagesModule,
+        SharedModule
     ],
     providers: [
         // { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }

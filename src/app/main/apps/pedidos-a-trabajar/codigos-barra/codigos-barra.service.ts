@@ -17,7 +17,7 @@ export class PedidosCodigosBarraService
     getCodigosBarra(codArticulo, busqueda, page, size, columna, order): Observable<any>
     {
         let ruta = `${BASE_URL}pedidosatrabajar/codigodebarras/porarticuloycodigodebarrasodescripcion/${codArticulo}/${busqueda}/${page}/${size}/${columna}/${order}`;
-        console.log(ruta);
+        // console.log(ruta);
         return this._httpClient.get(ruta);
     }
 

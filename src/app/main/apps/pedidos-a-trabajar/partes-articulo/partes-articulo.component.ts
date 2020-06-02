@@ -2,6 +2,9 @@ import {Component, ViewEncapsulation, OnInit, ViewChild, Input} from '@angular/c
 import { fuseAnimations } from '@fuse/animations';
 import { Router } from '@angular/router';
 import { PedidosPartesArticulosService } from './partes-articulo.service';
+import { MatDialog } from '@angular/material/dialog';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 
 @Component({
     selector     : 'pedidos-partes-articulo',
@@ -26,7 +29,8 @@ export class PedidosPartesArticuloComponent implements OnInit {
 
     constructor(
         private _router: Router,
-        private _pedidosPartesArticulosService: PedidosPartesArticulosService ) { }
+        private _pedidosPartesArticulosService: PedidosPartesArticulosService,
+        private _dialog: MatDialog ) { }
 
     ngOnInit(): void{
         this.busqueda = " "
@@ -47,8 +51,45 @@ export class PedidosPartesArticuloComponent implements OnInit {
         this._pedidosPartesArticulosService.getPartesArticulos(busqueda, page, size, columna, order).subscribe(data => {
             this.dataSource2 = data.datos;
             this.length = data.totalRegistros;
+        },
+        (err: HttpErrorResponse) => {
+          if (err.error instanceof Error) {
+            console.log("Client-side error");
+          } else {
+            let errStatus = err.status
+            if (errStatus == 0){
+              let titulo = 'Error de Servidor';
+              let mensaje = "Por favor comunicarse con Sistemas";
+              this.mostrarError(errStatus, titulo, mensaje);
+            } else {
+              let titulo = 'Error al listar';
+              let mensaje = err.error.message.toString();
+              this.mostrarError(errStatus, titulo, mensaje);
+            }
+          }
         });
     }
+
+    mostrarError(errStatus, titulo, mensaje){
+        const dialogRef = this._dialog.open( ModalErrorComponent, { 
+          data: {
+            titulo: titulo,
+            mensaje: mensaje
+          } 
+        });
+    
+        dialogRef.afterClosed()
+          .subscribe(result => {
+              if (errStatus != 0) {            
+                this.busqueda = ' ';
+                let search: any = document.getElementById('search');
+                search.value = '';
+                this.buscar(this.busqueda, this.page, this.size, this.columna, this.order);
+              } else {
+                this._router.navigate(['']);
+              }
+          });
+      }
 
 
     search( event ) {

@@ -3,6 +3,9 @@ import { fuseAnimations } from '@fuse/animations';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PedidosCodigosBarraArticulosService } from './codigos-barra-articulos.service';
 import { Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 
 
 /**
@@ -33,7 +36,8 @@ export class PedidosCodigosBarraArticulosComponent implements OnInit {
 
     constructor(
         private _router: Router,
-        private _pedidosCodigosBarraArticulosService: PedidosCodigosBarraArticulosService
+        private _pedidosCodigosBarraArticulosService: PedidosCodigosBarraArticulosService,
+        private _dialog: MatDialog
     )
     {
         
@@ -61,12 +65,50 @@ export class PedidosCodigosBarraArticulosComponent implements OnInit {
             busqueda = ' ';
         }
 
-        this._pedidosCodigosBarraArticulosService.getArticulos(busqueda, page, size, columna, order).subscribe( data => {
-            this.dataSource2 = data.datos;
-            this.length = data.totalRegistros;
-        });
+        this._pedidosCodigosBarraArticulosService.getArticulos(busqueda, page, size, columna, order).subscribe( 
+            data => {
+                this.dataSource2 = data.datos;
+                this.length = data.totalRegistros;
+            },
+            (err: HttpErrorResponse) => {
+              if (err.error instanceof Error) {
+                console.log("Client-side error");
+              } else {
+                let errStatus = err.status
+                if (errStatus == 0){
+                  let titulo = 'Error de Servidor';
+                  let mensaje = "Por favor comunicarse con Sistemas";
+                  this.mostrarError(errStatus, titulo, mensaje);
+                } else {
+                  let titulo = 'Error al listar';
+                  let mensaje = err.error.message.toString();
+                  this.mostrarError(errStatus, titulo, mensaje);
+                }
+              }
+            }
+        );
     }
 
+    mostrarError(errStatus, titulo, mensaje){
+        const dialogRef = this._dialog.open( ModalErrorComponent, { 
+          data: {
+            titulo: titulo,
+            mensaje: mensaje
+          }
+        });
+    
+        dialogRef.afterClosed()
+          .subscribe(result => {
+              if (errStatus != 0) {            
+                this.busqueda = ' ';
+                let search: any = document.getElementById('search');
+                search.value = '';
+                this.buscar(this.busqueda, this.page, this.size, this.columna, this.order);
+              } else {
+                this._router.navigate(['']);
+              }
+          });
+      }
     
     search( event ) {
 
@@ -96,9 +138,5 @@ export class PedidosCodigosBarraArticulosComponent implements OnInit {
         this.size = e.pageSize;
         
         this.buscar(this.busqueda, this.page, this.size, this.columna, this.order);
-    }
-
-    logout(){
-        this._router.navigate([''])
     }
 }

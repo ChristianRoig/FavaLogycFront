@@ -4,73 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { PedidosPartesArticulosEditarService } from './partes-articulo-editar.service';
 import { Subscription } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
-
-export interface ParteArticulo {
-        id: number;
-        articulo: {
-            id: number;
-            codigoArticulo: string;
-            nombre: string;
-            descripcion: string;
-            observaciones: string;
-            sysUsuario: {
-                id: 1;
-                nombre: string;
-                descripcion: string;
-                usuarioActiveDirectory:string;
-                usuarioGAM: string;
-                usuarioAltaid: number;
-                fechaAlta: number;
-            },
-            fechaAlta: number;
-        };
-        cantidad: number;
-        sysUsuario: {
-            id: 1;
-            nombre: string;
-            descripcion: string;
-            usuarioActiveDirectory:string;
-            usuarioGAM: string;
-            usuarioAltaid: number;
-            fechaAlta: number;
-        };
-        fechaAlta: number;
-    }
-
-
-const ELEMENT_DATA: ParteArticulo = 
-    {
-        id: 1284,
-        articulo: {
-            id: 1284,
-            codigoArticulo: "MPLAMOD040",
-            nombre: "PLATINUM.MODULAR 553 CED A2",
-            descripcion: "1.82*1.52*0.45",
-            observaciones: null,
-            sysUsuario: {
-                id: 1,
-                nombre: "Santiago Burroni",
-                descripcion: "Administrador",
-                usuarioActiveDirectory: "",
-                usuarioGAM: "",
-                usuarioAltaid: 1,
-                fechaAlta: 1588086274000
-            },
-            fechaAlta: 1588084916000
-        },
-        cantidad: 7,
-        sysUsuario: {
-            id: 1,
-            nombre: "Santiago Burroni",
-            descripcion: "Administrador",
-            usuarioActiveDirectory: "",
-            usuarioGAM: "",
-            usuarioAltaid: 1,
-            fechaAlta: 1588086274000
-        },
-        fechaAlta: 1588086284000
-    }
-;
+import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
+import { MatDialog } from '@angular/material/dialog';
 
 /**
  * @title Basic use of `<table mat-table>`
@@ -85,7 +20,6 @@ const ELEMENT_DATA: ParteArticulo =
 
 export class PedidosPartesArticuloEditarComponent implements OnInit {
     displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-    dataSource = ELEMENT_DATA;
     dataSource2: any;
     subParametros: Subscription;
     id:number;
@@ -97,7 +31,8 @@ export class PedidosPartesArticuloEditarComponent implements OnInit {
     constructor(
         private _router: Router,
         private route: ActivatedRoute,
-        private _pedidosPartesArticulosEditarService: PedidosPartesArticulosEditarService
+        private _pedidosPartesArticulosEditarService: PedidosPartesArticulosEditarService,
+        private _dialog: MatDialog
     )
     {
         
@@ -106,19 +41,36 @@ export class PedidosPartesArticuloEditarComponent implements OnInit {
     
 
     ngOnInit(): void{
-        this.cantidad = this.dataSource.cantidad;
         this.subParametros = this.route.params.subscribe(params => {
             this.id = params['id'];
         })
 
 
-        this._pedidosPartesArticulosEditarService.getArticulo(this.id).subscribe( data => {
-            this.dataSource2 = data;
-            this.cantidad = this.dataSource2.cantidad;
-            this.codigoArticulo = this.dataSource2.articulo.codigoArticulo;
-            this.nombre = this.dataSource2.articulo.nombre;
-            this.descripcion = this.dataSource2.articulo.descripcion;
-        });        
+        this._pedidosPartesArticulosEditarService.getArticulo(this.id).subscribe( 
+            data => {
+                this.dataSource2 = data;
+                this.cantidad = this.dataSource2.cantidad;
+                this.codigoArticulo = this.dataSource2.articulo.codigoArticulo;
+                this.nombre = this.dataSource2.articulo.nombre;
+                this.descripcion = this.dataSource2.articulo.descripcion;
+            },
+            (err: HttpErrorResponse) => {
+                if (err.error instanceof Error) {
+                    console.log("Client-side error");
+                } else {
+                    let errStatus = err.status
+                    if (errStatus == 0){
+                        let titulo = 'Error de Servidor';
+                        let mensaje = "Por favor comunicarse con Sistemas";
+                        this.mostrarError(errStatus, titulo, mensaje);
+                    } else {
+                        let titulo = 'Parte de articulo no encontrada';
+                        let mensaje = err.error.message.toString();
+                        this.mostrarError(errStatus, titulo, mensaje);
+                    }
+                }
+            }
+        );        
 
 
         setTimeout(() => {
@@ -137,15 +89,44 @@ export class PedidosPartesArticuloEditarComponent implements OnInit {
 
         this._pedidosPartesArticulosEditarService.putArticulo(this.id,this.cantidad).subscribe(
             data => {
-              this.volver();
+              let titulo = 'Confirmación de Edición';
+              let mensaje = "Se actualizó el registro correctamente";
+              this.mostrarError(200, titulo, mensaje);
             },
             (err: HttpErrorResponse) => {
-              if (err.error instanceof Error) {
-                console.log("Client-side error");
-              } else {
-                console.log("Server-side error");
+                if (err.error instanceof Error) {
+                  console.log("Client-side error");
+                } else {
+                  let errStatus = err.status
+                  if (errStatus == 0){
+                    let titulo = 'Error de Servidor';
+                    let mensaje = "Por favor comunicarse con Sistemas";
+                    this.mostrarError(errStatus, titulo, mensaje);
+                  } else {
+                    let titulo = 'Error al Editar';
+                    let mensaje = err.error.message.toString();
+                    this.mostrarError(errStatus, titulo, mensaje);
+                  }
+                }
               }
-            }
           );
     }
+
+    mostrarError(errStatus, titulo, mensaje){
+        const dialogRef = this._dialog.open( ModalErrorComponent, { 
+          data: {
+            titulo: titulo,
+            mensaje: mensaje
+          } 
+        });
+    
+        dialogRef.afterClosed()
+          .subscribe(result => {
+              if (errStatus != 0) {            
+                this.volver();
+              } else {
+                this._router.navigate(['']);
+              }
+          });
+      }
 }
