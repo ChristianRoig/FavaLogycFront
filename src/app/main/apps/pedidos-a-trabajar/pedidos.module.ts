@@ -36,9 +36,14 @@ import { PedidosCodigosBarraArticulosService } from './codigos-de-barras/codigos
 import { CustomTagModule } from 'app/main/custom-tags/custom-tag.module';
 import { MaterialDesignModule } from 'app/material-design/material-design.module';
 import { ModalConfirmacionBorrarComponent } from './codigos-de-barras/codigos-barra/modal-confirmacion-borrar/modal-confirmacion-borrar.component';
+import { AdministracionModule } from './administracion/administracion.module';
 // import { MaterialDesignModule } from 'app/material-design/material-design.module';
 
 const routes: Routes = [
+    {
+        path        : 'administracion',
+        loadChildren: () => import('./administracion/administracion.module').then(m => m.AdministracionModule)
+    },
     {
         path     : 'partes-articulo',
         component: PedidosPartesArticuloComponent

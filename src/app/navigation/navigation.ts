@@ -15,6 +15,13 @@ export const navigation: FuseNavigation[] = [
                 icon     : 'shopping_cart',
                 children : [
                     {
+                        id        : 'pedidos-lista',
+                        title     : 'Administración',
+                        type      : 'item',
+                        url       : '/apps/pedidos/administracion/pedidos-lista',
+                        exactMatch: true
+                    },
+                    {
                         id        : 'partes-articulo',
                         title     : 'Partes de artículo',
                         type      : 'item',
