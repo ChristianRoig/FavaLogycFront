@@ -7,13 +7,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatRippleModule } from '@angular/material/core';
+import { MatRippleModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatCardModule } from '@angular/material/card';
+import { MatDatepickerModule} from '@angular/material/datepicker';
 
 
 
@@ -34,7 +36,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatSnackBarModule,
     MatTableModule,
     MatTabsModule,  
-    MatDialogModule  
+    MatDialogModule,
+    MatCardModule,
+    MatDatepickerModule
   ],
   exports: [
     CommonModule,
@@ -51,7 +55,13 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatSnackBarModule,
     MatTableModule,
     MatTabsModule,    
-    MatDialogModule
+    MatDialogModule,
+    MatCardModule,
+    MatDatepickerModule
+
+  ],
+  providers: [
+    {provide: MAT_DATE_LOCALE, useValue: 'es-GB'},
   ]
 })
 export class MaterialDesignModule { }
