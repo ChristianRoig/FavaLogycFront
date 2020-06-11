@@ -80,6 +80,8 @@
 <br>
 <br>
 
+
+<!-- SIDE BAR -->
 <fuse-sidebar name="sidebarFilter" class="theme-options-sidebar" position="right" [invisibleOverlay]="false">
 
     <span class="p-24">
@@ -87,8 +89,10 @@
         <ng-container *ngTemplateOutlet="filtros"></ng-container>
     </span>
 </fuse-sidebar>
+<!-- / SIDE BAR -->
 
 
+<!-- TEMPLATE LISTA -->
 <ng-template #articulos>
 
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width: 100%;">
@@ -124,8 +128,10 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
 </ng-template>
+<!-- / TEMPLATE LISTA -->
 
 
+<!-- FILTROS -->
 <ng-template #filtros>
     <form  fxLayout="column" name="form">
                 
@@ -236,3 +242,4 @@
 
     </form>
 </ng-template>
+<!-- / FILTROS -->
