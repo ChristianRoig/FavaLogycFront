@@ -80,7 +80,8 @@ const routes: Routes = [
 
         FuseSharedModule,
         FuseWidgetModule,
-        CustomTagModule
+        CustomTagModule,
+        
     ],
     providers   : [
         PedidosPartesArticulosService,
