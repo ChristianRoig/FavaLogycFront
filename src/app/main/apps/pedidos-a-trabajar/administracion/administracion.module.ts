@@ -12,18 +12,25 @@ import { MaterialDesignModule } from 'app/material-design/material-design.module
 import { PedidosListaComponent } from './pedidos-lista/pedidos-lista.component';
 import { PedidosListaService } from './pedidos-lista/pedidos-lista.service';
 import { FuseSidebarModule } from '@fuse/components';
+import { PedidosVentaVisualizacionComponent } from './pedidos-venta-visualizacion/pedidos-venta-visualizacion.component';
+import { PedidosVentaVisualizacionService } from './pedidos-venta-visualizacion/pedidos-venta-visualizacion.service';
 // import { MaterialDesignModule } from 'app/material-design/material-design.module';
 
 const routes: Routes = [
     {
         path     : 'pedidos-lista',
         component: PedidosListaComponent
+    },
+    {
+        path     : 'visualizacion/:id',
+        component: PedidosVentaVisualizacionComponent
     }
 ];
 
 @NgModule({
     declarations: [
-        PedidosListaComponent
+        PedidosListaComponent,
+        PedidosVentaVisualizacionComponent
     ],
     imports     : [
         CommonModule,
@@ -37,7 +44,8 @@ const routes: Routes = [
         CustomTagModule
     ],
     providers   : [
-        PedidosListaService
+        PedidosListaService,
+        PedidosVentaVisualizacionService
     ]
 })
 export class AdministracionModule

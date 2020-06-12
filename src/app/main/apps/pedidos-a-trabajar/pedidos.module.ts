@@ -21,8 +21,6 @@ import { PedidosCodigosBarraArticulosService } from './codigos-de-barras/codigos
 import { CustomTagModule } from 'app/main/custom-tags/custom-tag.module';
 import { MaterialDesignModule } from 'app/material-design/material-design.module';
 import { ModalConfirmacionBorrarComponent } from './codigos-de-barras/codigos-barra/modal-confirmacion-borrar/modal-confirmacion-borrar.component';
-import { AdministracionModule } from './administracion/administracion.module';
-import { PedidosVentaVisualizacionComponent } from './administracion/pedidos-venta-visualizacion/pedidos-venta-visualizacion.component';
 // import { MaterialDesignModule } from 'app/material-design/material-design.module';
 
 const routes: Routes = [
@@ -53,10 +51,6 @@ const routes: Routes = [
     {
         path     : 'codigos-barra-add/:codArt',
         component: PedidosCodigosBarraAddComponent
-    },
-    {
-        path     : 'administracion/visualizacion/:id',
-        component: PedidosVentaVisualizacionComponent
     }
 ];
 
@@ -68,8 +62,7 @@ const routes: Routes = [
         PedidosCodigosBarraEditarComponent,
         PedidosCodigosBarraAddComponent,
         PedidosCodigosBarraArticulosComponent,
-        ModalConfirmacionBorrarComponent,
-        PedidosVentaVisualizacionComponent
+        ModalConfirmacionBorrarComponent
     ],
     imports     : [
         CommonModule,

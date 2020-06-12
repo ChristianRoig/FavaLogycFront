@@ -10,77 +10,25 @@
                 <form class="p-24" fxLayout="column" fxLayoutAlign="center" fxFlex="1 0 auto" name="form">
                 
                     <div class="h2 mb-24">
-                        Pedido <strong>#123456</strong>
+                        Pedido <strong>#123456????</strong>
                     </div>
         
                     <mat-form-field appearance="outline">
                         <mat-label>Tipo</mat-label>
-                        <input matInput value="">
+                        <!-- <input matInput value="{{cabecera.pedidoCabecera.pedidoTipo.nombre}}"> -->
+                        <input matInput value="VENTA">
                     </mat-form-field>   
             
                     <mat-form-field appearance="outline">
                         <mat-label>Comprobante</mat-label>
-                        <input matInput value="">
-                    </mat-form-field>   
-            
-                    <!-- <mat-form-field appearance="outline">
-                        <mat-label>Código de Cliente</mat-label>
-                        <input matInput value="">
-                    </mat-form-field>   
-            
-                    <mat-form-field appearance="outline">
-                        <mat-label>Nombre de cliente</mat-label>
-                        <input matInput value="">
-                    </mat-form-field>   
-            
-                    <mat-form-field appearance="outline">
-                        <mat-label>Origen</mat-label>
-                        <input matInput value="">
-                    </mat-form-field>    -->
-            
-                    <div fxLayout="row" fxLayoutAlign="start center">
-
-                        <mat-form-field appearance="outline" fxFlex="40" class="mr-8">
-                            <mat-label>Fecha de entrega</mat-label>
-                            <input matInput [matDatepicker]="picker1">
-                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                            <mat-datepicker #picker1></mat-datepicker>
-                        </mat-form-field>   
-                
-                        <mat-form-field appearance="outline" fxFlex="60" class="ml-4">
-                            <mat-label>Turno</mat-label>
-                            <mat-select>
-                                <mat-option value="manana">Mañana</mat-option>
-                                <mat-option value="manana">Tarde</mat-option>
-                                <mat-option value="manana">Noche</mat-option>
-                              </mat-select>
-                        </mat-form-field>   
-                    </div>
-            
-                    <mat-form-field appearance="outline">
-                        <mat-label>Estado</mat-label>
-                        <input matInput value="">
-                    </mat-form-field>   
-            
-                    <mat-form-field appearance="outline">
-                        <mat-label>Etapa</mat-label>
-                        <input matInput value="">
-                    </mat-form-field>   
-            
-                    <!-- <mat-form-field appearance="outline">
-                        <mat-label>Provincia</mat-label>
-                        <input matInput value="">
-                    </mat-form-field>   
-            
-                    <mat-form-field appearance="outline">
-                        <mat-label>Localidad</mat-label>
-                        <input matInput value="">
-                    </mat-form-field> -->
+                        <!-- <input matInput value="{{cabecera.nroCbte}}"> -->
+                        <input matInput value="A0008700000170">
+                    </mat-form-field>
             
                     <mat-form-field appearance="outline">
                         <mat-label>Lote</mat-label>
-                        <input matInput value="">
-                    </mat-form-field>   
+                        <input matInput value="1">
+                    </mat-form-field>
                 </form>
 
     
@@ -89,14 +37,14 @@
                     <mat-card fxLayout="column" class="primary-50-bg p-24 pr-48">
     
                         <span class="mat-title mb-4">Cliente</span>
-                        <span class="mat-body-1">SB3238</span>
-                        <span class="mat-body-1">Santiago Burroni</span>
+                        <span class="mat-body-1">HMI300</span>
+                        <span class="mat-body-1">IJIA HECTOR MIGUEL</span>
+                        <!-- <span class="mat-body-1">{{cabecera.pedidoCabecera.pedidoCliente.codigo}}</span>
+                        <span class="mat-body-1">{{cabecera.pedidoCabecera.pedidoCliente.nombre}}</span> -->
         
                         <span class="mat-title mt-24 mb-4">Origen</span>
-                        <span class="mat-body-1">Salón - Empaque</span>
-
-                        <span class="mat-title mt-24 mb-4">Destino</span>
-                        <span class="mat-body-1">Buenos Aires - Miramar</span>
+                        <span class="mat-body-1">FAVASHOP BALCARCE</span>
+                        <!-- <span class="mat-body-1">{{cabecera.pedidoCabecera.pedidoOrigen.nombre}}</span> -->
                     </mat-card>
     
                 </div>
@@ -106,24 +54,23 @@
                     
             <mat-tab-group class="p-24" color="accent">
                 <mat-tab label="Artículos"> 
-                    <ng-container *ngTemplateOutlet="articulos"></ng-container>
+                    <ng-container *ngTemplateOutlet="articulosPrueba"></ng-container>
                 </mat-tab>
 
-
                 <mat-tab label="CUPA">
-                    <ng-container *ngTemplateOutlet="articulos"></ng-container>
+                    <ng-container *ngTemplateOutlet="prueba"></ng-container>
                 </mat-tab>
 
                 <mat-tab label="Comprobantes">
-                    <ng-container *ngTemplateOutlet="articulos"></ng-container>
+                    <ng-container *ngTemplateOutlet="prueba"></ng-container>
                 </mat-tab>
 
                 <mat-tab label="Datos de entrega">
-                    <ng-container *ngTemplateOutlet="articulos"></ng-container>
+                    <ng-container *ngTemplateOutlet="prueba"></ng-container>
                 </mat-tab>
 
                 <mat-tab label="Otros datos">
-                    <ng-container *ngTemplateOutlet="articulos"></ng-container>
+                    <ng-container *ngTemplateOutlet="prueba"></ng-container>
                 </mat-tab>
             </mat-tab-group>            
         </div>
@@ -141,6 +88,110 @@
 
 
 <ng-template #articulos>
+
+    <table mat-table [dataSource]="dataSourceArticulos" class="mat-elevation-z8" style="width: 100%;">
+      
+        <!-- Position Column -->
+        <ng-container matColumnDef="lote">
+            <th mat-header-cell *matHeaderCellDef> Lote </th>
+            <td mat-cell *matCellDef="let element"> 1 </td>
+        </ng-container>
+      
+        <!-- Name Column -->
+        <ng-container matColumnDef="codigoArticulo">
+            <th mat-header-cell *matHeaderCellDef> Código Artìculo </th>
+            <td mat-cell *matCellDef="let element"> {{element.articulo.codigoArticulo}} </td>
+        </ng-container>
+      
+        <!-- Weight Column -->
+        <ng-container matColumnDef="nombre">
+            <th mat-header-cell *matHeaderCellDef> Nombre </th>
+            <td mat-cell *matCellDef="let element"> {{element.articulo.nombre}} </td>
+        </ng-container>
+      
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="descripcion">
+            <th mat-header-cell *matHeaderCellDef> Descripción </th>
+            <td mat-cell *matCellDef="let element"> {{element.articulo.descripcion}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="cantidad">
+            <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+            <td mat-cell *matCellDef="let element"> 1 </td>
+        </ng-container>
+        
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="estado">
+            <th mat-header-cell *matHeaderCellDef> Estado </th>
+            <td mat-cell *matCellDef="let element"> {{element.pedidoEstado.nombre}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="etapa">
+            <th mat-header-cell *matHeaderCellDef> Etapa </th>
+            <td mat-cell *matCellDef="let element"> {{element.pedidoEtapa.nombre}} </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsArticulos"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsArticulos;"></tr>
+      </table>
+</ng-template>
+
+
+<ng-template #articulosPrueba>
+
+    <table mat-table [dataSource]="dataSourceArticulos" class="mat-elevation-z8" style="width: 100%;">
+      
+        <!-- Position Column -->
+        <ng-container matColumnDef="lote">
+            <th mat-header-cell *matHeaderCellDef> Lote </th>
+            <td mat-cell *matCellDef="let element"> 1 </td>
+        </ng-container>
+      
+        <!-- Name Column -->
+        <ng-container matColumnDef="codigoArticulo">
+            <th mat-header-cell *matHeaderCellDef> Código Artìculo </th>
+            <td mat-cell *matCellDef="let element"> {{element.codigoArticulo}} </td>
+        </ng-container>
+      
+        <!-- Weight Column -->
+        <ng-container matColumnDef="nombre">
+            <th mat-header-cell *matHeaderCellDef> Nombre </th>
+            <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+        </ng-container>
+      
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="descripcion">
+            <th mat-header-cell *matHeaderCellDef> Descripción </th>
+            <td mat-cell *matCellDef="let element"> {{element.descripcion}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="cantidad">
+            <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+            <td mat-cell *matCellDef="let element"> 1 </td>
+        </ng-container>
+        
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="estado">
+            <th mat-header-cell *matHeaderCellDef> Estado </th>
+            <td mat-cell *matCellDef="let element"> {{element.estado}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="etapa">
+            <th mat-header-cell *matHeaderCellDef> Etapa </th>
+            <td mat-cell *matCellDef="let element"> {{element.etapa}} </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsArticulos"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsArticulos;"></tr>
+      </table>
+</ng-template>
+
+
+<ng-template #prueba>
 
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width: 100%;">
 

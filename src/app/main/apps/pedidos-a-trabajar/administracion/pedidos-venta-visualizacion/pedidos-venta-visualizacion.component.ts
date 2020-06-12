@@ -1,10 +1,22 @@
 import { Component, OnInit } from '@angular/core';
+import { PedidosVentaVisualizacionService } from './pedidos-venta-visualizacion.service';
 
 export interface PeriodicElement {
   name: string;
   position: number;
   weight: number;
   symbol: string;
+}
+
+export interface Articulos {
+
+  lote: number;
+  codigoArticulo: string;
+  nombre: string;
+  descripcion: string;
+  cantidad: number;
+  estado: string;
+  etapa: string;
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
@@ -20,6 +32,12 @@ const ELEMENT_DATA: PeriodicElement[] = [
   {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
 ];
 
+const ELEMENT_DATA_ARTICULOS: Articulos[] = [
+  {lote: 1,codigoArticulo: "HCTZCAB030",nombre: "CTZ CALEFACTOR 6000	",          descripcion: "12 MESES DE GARANTIA",cantidad: 1,estado: "INICIAL",etapa: "INICIAL"},
+  {lote: 1,codigoArticulo: "HCTZACC010",nombre: "CTZ ACCESORIO TB	",              descripcion: "12 MESES DE GARANTIA",cantidad: 1,estado: "INICIAL",etapa: "INICIAL"},
+  {lote: 1,codigoArticulo: "HMOUFRE050",nombre: "MOULINEX FREIDORA AF134DAR/D59	",descripcion: "12 MESES DE GARANTIA",cantidad: 1,estado: "INICIAL",etapa: "INICIAL"}
+];
+
 @Component({
   selector: 'app-pedidos-venta-visualizacion',
   templateUrl: './pedidos-venta-visualizacion.component.html',
@@ -28,11 +46,33 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class PedidosVentaVisualizacionComponent implements OnInit {
 
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = ELEMENT_DATA;  
+  dataSource = ELEMENT_DATA;
 
-  constructor() { }
+  
+  displayedColumnsArticulos: string[] = ['lote','codigoArticulo','nombre','descripcion','cantidad','estado','etapa'];
+  dataSourceArticulos = ELEMENT_DATA_ARTICULOS;
+  // dataSourceArticulos: any;
+
+  cabecera: any;
+
+  constructor(private _service: PedidosVentaVisualizacionService) { }
 
   ngOnInit(): void {
+    // this._service.getCabecera(421).subscribe(params => {
+    //   if(params){
+    //     this.cabecera = params;
+    //     let id = params.pedidoCabecera.id;
+    //     console.log("id: "+id);
+        
+    //     this._service.getDetalle(id).subscribe(paramsArt => {
+    //       if(paramsArt){
+    //         this.dataSourceArticulos = paramsArt.datos;
+    //       }
+    //     });
+    //   }
+    // });
+    
+
   }
 
 }

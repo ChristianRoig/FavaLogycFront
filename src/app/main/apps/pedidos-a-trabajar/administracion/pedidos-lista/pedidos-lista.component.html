@@ -97,37 +97,64 @@
 
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width: 100%;">
 
-        <!--- Note that these columns can be defined in any order.
-              The actual rendered columns are set as a property on the row definition" -->
-      
-        <!-- Position Column -->
-        <ng-container matColumnDef="position">
-          <th mat-header-cell *matHeaderCellDef> No. </th>
-          <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+        <ng-container matColumnDef="Tipo">
+            <th mat-header-cell *matHeaderCellDef> Tipo </th>
+            <td mat-cell *matCellDef="let element"> {{element.Tipo}} </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="Codigo-Articulo-Nombre">
+          <th mat-header-cell *matHeaderCellDef> Artículo </th>
+          <td mat-cell *matCellDef="let element"> {{element.CodigoArticulo}} - {{element.Nombre}} </td>
         </ng-container>
       
-        <!-- Name Column -->
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef> Name </th>
-          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        <ng-container matColumnDef="Comprobante">
+          <th mat-header-cell *matHeaderCellDef> Comprobante </th>
+          <td mat-cell *matCellDef="let element"> {{element.Comprobante}} </td>
         </ng-container>
       
-        <!-- Weight Column -->
-        <ng-container matColumnDef="weight">
-          <th mat-header-cell *matHeaderCellDef> Weight </th>
-          <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+        <ng-container matColumnDef="Fecha-Entrega">
+          <th mat-header-cell *matHeaderCellDef> Fecha Entrega </th>
+          <td mat-cell *matCellDef="let element"> {{element.FechaEntrega}} </td>
         </ng-container>
       
-        <!-- Symbol Column -->
-        <ng-container matColumnDef="symbol">
-          <th mat-header-cell *matHeaderCellDef> Symbol </th>
-          <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+        <ng-container matColumnDef="Prov-Loc">
+          <th mat-header-cell *matHeaderCellDef> Prov-Loc </th>
+          <td mat-cell *matCellDef="let element"> {{element.Prov}} - {{element.Loc}} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="Estado-Etapa">
+          <th mat-header-cell *matHeaderCellDef> Estado-Etapa </th>
+          <td mat-cell *matCellDef="let element"> {{element.Estado}} - {{element.Etapa}} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="Lote">
+          <th mat-header-cell *matHeaderCellDef> Lote </th>
+          <td mat-cell *matCellDef="let element"> {{element.Lote}} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="Consultar">
+            <th mat-header-cell *matHeaderCellDef> Consultar </th>
+            <td mat-cell class="example-button-row" *matCellDef="let element"> 
+                <button mat-stroked-button color="primary"(click)="consultar()">Consultar</button>
+            </td>
+        </ng-container>
+        
+        
+        <ng-container matColumnDef="Borrar">
+            <th mat-header-cell *matHeaderCellDef> Borrar </th>
+            <td mat-cell class="example-button-row" *matCellDef="let element"> 
+                <button mat-stroked-button color="warn" (click)="confirmacionBorrar()">
+                    <mat-icon>delete_outline</mat-icon>
+                    Borrar
+                </button>
+            </td>
         </ng-container>
       
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
 </ng-template>
+
 <!-- / TEMPLATE LISTA -->
 
 
@@ -150,10 +177,13 @@
         <mat-form-field appearance="outline">
             <mat-label>Tipo</mat-label>
             <mat-select>
-                <mat-option value="manana">Mañana</mat-option>
-                <mat-option value="manana">Tarde</mat-option>
-                <mat-option value="manana">Noche</mat-option>
-              </mat-select>
+                <mat-option value="manana">VENTA</mat-option>
+                <mat-option value="manana">REPOSICION</mat-option>
+                <mat-option value="manana">SERVICE ARTICULO ROPIO</mat-option>
+                <mat-option value="manana">SERVICE ARTICULO TERCERO</mat-option>
+                <mat-option value="manana">CAMBIO ARTICULO</mat-option>
+                <mat-option value="manana">PRESTAMO</mat-option>
+            </mat-select>
         </mat-form-field>     
 
 
@@ -171,9 +201,10 @@
             <mat-form-field appearance="outline" fxFlex="50" class="ml-4">
                 <mat-label>Origen</mat-label>
                 <mat-select>
-                    <mat-option value="manana">Mañana</mat-option>
-                    <mat-option value="manana">Tarde</mat-option>
-                    <mat-option value="manana">Noche</mat-option>
+                    <mat-option value="manana">FAVASHOP MAIPU</mat-option>
+                    <mat-option value="manana">FAVASHOP MADARIAGA</mat-option>
+                    <mat-option value="manana">PINAMAR-DESPACHO</mat-option>
+                    <mat-option value="manana">VENTA TELEFONICA</mat-option>
                   </mat-select>
             </mat-form-field>     
         </div>
@@ -186,19 +217,19 @@
             <mat-form-field appearance="outline" fxFlex="50" class="mr-4">
                 <mat-label>Estado</mat-label>
                 <mat-select>
-                    <mat-option value="manana">Mañana</mat-option>
-                    <mat-option value="manana">Tarde</mat-option>
-                    <mat-option value="manana">Noche</mat-option>
-                  </mat-select>
+                    <mat-option value="manana">Inicial</mat-option>
+                    <mat-option value="manana">En Proceso</mat-option>
+                    <mat-option value="manana">Aulado</mat-option>
+                </mat-select>
             </mat-form-field>   
 
             <mat-form-field appearance="outline" fxFlex="50" class="ml-4">
                 <mat-label>Etapa</mat-label>
                 <mat-select>
-                    <mat-option value="manana">Mañana</mat-option>
-                    <mat-option value="manana">Tarde</mat-option>
-                    <mat-option value="manana">Noche</mat-option>
-                  </mat-select>
+                    <mat-option value="manana">Inicial</mat-option>
+                    <mat-option value="manana">En Lote</mat-option>
+                    <mat-option value="manana">Estanteria</mat-option>
+                </mat-select>
             </mat-form-field>   
         </div>
 
@@ -207,19 +238,19 @@
             <mat-form-field appearance="outline" fxFlex="50" class="mr-4">
                 <mat-label>Provincia</mat-label>
                 <mat-select>
-                    <mat-option value="manana">Mañana</mat-option>
-                    <mat-option value="manana">Tarde</mat-option>
-                    <mat-option value="manana">Noche</mat-option>
-                  </mat-select>
+                    <mat-option value="manana">Buenos Aires</mat-option>
+                    <mat-option value="manana">Santa Fe</mat-option>
+                    <mat-option value="manana">Cordoba</mat-option>
+                </mat-select>
             </mat-form-field>  
 
             <mat-form-field appearance="outline" fxFlex="50" class="ml-4">
                 <mat-label>Localidad</mat-label>
                 <mat-select>
-                    <mat-option value="manana">Mañana</mat-option>
-                    <mat-option value="manana">Tarde</mat-option>
-                    <mat-option value="manana">Noche</mat-option>
-                  </mat-select>
+                    <mat-option value="manana">Mar del Plata</mat-option>
+                    <mat-option value="manana">Pinamar</mat-option>
+                    <mat-option value="manana">Miramar</mat-option>
+                </mat-select>
             </mat-form-field>     
         </div>                    
 
