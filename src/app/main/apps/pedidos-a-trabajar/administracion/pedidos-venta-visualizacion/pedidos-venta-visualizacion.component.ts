@@ -50,27 +50,27 @@ export class PedidosVentaVisualizacionComponent implements OnInit {
 
   
   displayedColumnsArticulos: string[] = ['lote','codigoArticulo','nombre','descripcion','cantidad','estado','etapa'];
-  dataSourceArticulos = ELEMENT_DATA_ARTICULOS;
-  // dataSourceArticulos: any;
+  // dataSourceArticulos = ELEMENT_DATA_ARTICULOS;
+  dataSourceArticulos: any;
 
   cabecera: any;
 
   constructor(private _service: PedidosVentaVisualizacionService) { }
 
   ngOnInit(): void {
-    // this._service.getCabecera(421).subscribe(params => {
-    //   if(params){
-    //     this.cabecera = params;
-    //     let id = params.pedidoCabecera.id;
-    //     console.log("id: "+id);
+    this._service.getCabecera(1).subscribe(params => {
+      if(params){
+        this.cabecera = params;
+        let id = params.pedidoCabecera.id;
+        console.log("id: "+id);
         
-    //     this._service.getDetalle(id).subscribe(paramsArt => {
-    //       if(paramsArt){
-    //         this.dataSourceArticulos = paramsArt.datos;
-    //       }
-    //     });
-    //   }
-    // });
+        this._service.getDetalle(id).subscribe(paramsArt => {
+          if(paramsArt){
+            this.dataSourceArticulos = paramsArt.datos;
+          }
+        });
+      }
+    });
     
 
   }
