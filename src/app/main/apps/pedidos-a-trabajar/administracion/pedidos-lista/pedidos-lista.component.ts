@@ -34,7 +34,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 
 export class PedidosListaComponent implements OnInit {
 
-  displayedColumns: string[] = ['Tipo', 'Codigo-Articulo-Nombre', 'Comprobante', 'Fecha-Entrega', 'Prov-Loc', 'Estado-Etapa', 'Lote', 'Consultar', 'Borrar'];
+  displayedColumns: string[] = ['select', 'Tipo', 'Codigo-Articulo-Nombre', 'Comprobante', 'Fecha-Entrega', 'Prov-Loc', 'Estado-Etapa', 'Lote', 'Borrar'];
   dataSource = ELEMENT_DATA;  
   selection = new SelectionModel<PeriodicElement>(true, []);
 
@@ -64,6 +64,11 @@ export class PedidosListaComponent implements OnInit {
     console.log("borrar");
   }
 
+  crearLote() {
+
+    console.log(this.selection);
+    
+  }
 
 
   isAllSelected() {

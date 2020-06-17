@@ -1,23 +1,24 @@
-<app-plantilla-fondo titulo='Lista de pedidos a trabajar'>
+<app-plantilla-fondo-simple titulo='Lista de pedidos a trabajar'>
 
     <!-- CONTENIDO -->
     <div contenido>
 
         <div fxLayout="column">
 
-            <div fxLayout="row">
+            <div fxLayout="row" class="content-card pb-4">
     
-                <div fxLayout="column" fxFlex="100" fxFlex.gt-sm="50" class="p-24">
+                <!-- LOTE -->
+                <div fxLayout="column" fxFlex="100" fxFlex.gt-sm="60" class="fuse-card p-24 mr-8">
 
                     <span fxLayout="row" fxLayoutAlign="space-between">
 
                         <div class="h2 mb-24">
-                            Lote
+                            Filtros por Lote
                         </div>
     
                         <button fxShow fxHide.gt-sm mat-button (click)="toggleSidebarOpen('sidebarFilter')">
                             <mat-icon>tune</mat-icon>
-                            Filtros
+                            Filtros por artículos
                         </button>
                     </span>
     
@@ -31,40 +32,57 @@
                     <div fxLayout="row">
         
                         <mat-form-field appearance="outline" fxFlex="50" class="mr-4">
-                            <mat-label>Desde</mat-label>
+                            <mat-label>Desde (lote)</mat-label>
                             <input matInput [matDatepicker]="pickerLoteDesde">
                             <mat-datepicker-toggle matSuffix [for]="pickerLoteDesde"></mat-datepicker-toggle>
                             <mat-datepicker #pickerLoteDesde></mat-datepicker>
                         </mat-form-field>   
     
                         <mat-form-field appearance="outline" fxFlex="50" class="ml-4">
-                            <mat-label>Hasta</mat-label>
+                            <mat-label>Hasta (lote)</mat-label>
                             <input matInput [matDatepicker]="pickerLoteHasta">
                             <mat-datepicker-toggle matSuffix [for]="pickerLoteHasta"></mat-datepicker-toggle>
                             <mat-datepicker #pickerLoteHasta></mat-datepicker>
                         </mat-form-field>                      
                     </div>
     
-                    <button mat-stroked-button color="primary" (click)="toggleSidebarOpen('sidebarFilter')">Crear lote</button>
+                    <!-- <button mat-raised-button color="primary" (click)="crearLote()" class="mt-24 p-8">CREAR LOTE</button> -->
                 </div>
+                <!-- / LOTE -->
     
 
 
-                <span fxHide.sm fxHide.xs fxFlex="50" class="p-24">
+                <!-- FILTROS -->
+                <span fxHide.sm fxHide.xs fxFlex="40" class="fuse-card p-24 ml-8">
 
                     <ng-container *ngTemplateOutlet="filtros"></ng-container>
                 </span>
+                <!-- / FILTROS -->
 
                 
     
             </div>
 
-            <mat-tab-group class="p-24" color="accent" backgroundColor="primary-50-bg">
-                <mat-tab label="Artículos"> 
-                    <ng-container *ngTemplateOutlet="articulos"></ng-container>
-                </mat-tab>
+            <div class="fuse-card my-24" style="max-width: 100%;">
 
-            </mat-tab-group>
+                <div fxLayout="row" fxLayoutAlign="space-between">
+
+                    <div class="h2 m-24">Artículos</div>
+
+                    <div class="m-24">
+
+                        <button (click)="crearLote()" mat-raised-button color="primary" 
+                                [matBadge]="selection.selected.length"
+                                [matBadgeHidden]="selection.selected.length===0"
+                                matBadgeColor="warn"
+                                [disabled]="selection.selected.length===0">
+                                Crear Lote
+                        </button>
+                    </div>
+                </div>
+
+                <ng-container *ngTemplateOutlet="articulos"></ng-container>
+            </div>
         </div>
 
 
@@ -75,7 +93,7 @@
     <!-- / CONTENIDO -->
 
 
-</app-plantilla-fondo>
+</app-plantilla-fondo-simple>
 <br>
 <br>
 <br>
@@ -95,64 +113,88 @@
 <!-- TEMPLATE LISTA -->
 <ng-template #articulos>
 
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width: 100%;">
+    <div style="width: 100%; overflow: auto;">
 
-        <ng-container matColumnDef="Tipo">
-            <th mat-header-cell *matHeaderCellDef> Tipo </th>
-            <td mat-cell *matCellDef="let element"> {{element.Tipo}} </td>
-        </ng-container>
+            <table mat-table [dataSource]="dataSource" class="mb-8">
         
-        <ng-container matColumnDef="Codigo-Articulo-Nombre">
-          <th mat-header-cell *matHeaderCellDef> Artículo </th>
-          <td mat-cell *matCellDef="let element"> {{element.CodigoArticulo}} - {{element.Nombre}} </td>
-        </ng-container>
-      
-        <ng-container matColumnDef="Comprobante">
-          <th mat-header-cell *matHeaderCellDef> Comprobante </th>
-          <td mat-cell *matCellDef="let element"> {{element.Comprobante}} </td>
-        </ng-container>
-      
-        <ng-container matColumnDef="Fecha-Entrega">
-          <th mat-header-cell *matHeaderCellDef> Fecha Entrega </th>
-          <td mat-cell *matCellDef="let element"> {{element.FechaEntrega}} </td>
-        </ng-container>
-      
-        <ng-container matColumnDef="Prov-Loc">
-          <th mat-header-cell *matHeaderCellDef> Prov-Loc </th>
-          <td mat-cell *matCellDef="let element"> {{element.Prov}} - {{element.Loc}} </td>
-        </ng-container>
-      
-        <ng-container matColumnDef="Estado-Etapa">
-          <th mat-header-cell *matHeaderCellDef> Estado-Etapa </th>
-          <td mat-cell *matCellDef="let element"> {{element.Estado}} - {{element.Etapa}} </td>
-        </ng-container>
-      
-        <ng-container matColumnDef="Lote">
-          <th mat-header-cell *matHeaderCellDef> Lote </th>
-          <td mat-cell *matCellDef="let element"> {{element.Lote}} </td>
-        </ng-container>
-      
-        <ng-container matColumnDef="Consultar">
-            <th mat-header-cell *matHeaderCellDef> Consultar </th>
-            <td mat-cell class="example-button-row" *matCellDef="let element"> 
-                <button mat-stroked-button color="primary"(click)="consultar()">Consultar</button>
-            </td>
-        </ng-container>
+                <ng-container matColumnDef="select" sticky>
+                    <th mat-header-cell *matHeaderCellDef class="px-24">
+                        <mat-checkbox (change)="$event ? masterToggle() : null"
+                                      [checked]="selection.hasValue() && isAllSelected()"
+                                      [indeterminate]="selection.hasValue() && !isAllSelected()">
+                        </mat-checkbox>
+                    </th>
         
+                    <td mat-cell *matCellDef="let row" class="px-24">
+                        <mat-checkbox (click)="$event.stopPropagation()"
+                                        (change)="$event ? selection.toggle(row) : null"
+                                        [checked]="selection.isSelected(row)">
+                        </mat-checkbox>
+                    </td>
+                </ng-container>
         
-        <ng-container matColumnDef="Borrar">
-            <th mat-header-cell *matHeaderCellDef> Borrar </th>
-            <td mat-cell class="example-button-row" *matCellDef="let element"> 
-                <button mat-stroked-button color="warn" (click)="confirmacionBorrar()">
-                    <mat-icon>delete_outline</mat-icon>
-                    Borrar
-                </button>
-            </td>
-        </ng-container>
-      
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
+                <ng-container matColumnDef="Tipo">
+                    <th mat-header-cell *matHeaderCellDef class="pl-8"> Tipo </th>
+                    <td mat-cell *matCellDef="let element" class="pl-8"> {{element.Tipo}} </td>
+                </ng-container>
+                
+                <ng-container matColumnDef="Codigo-Articulo-Nombre">
+                  <th mat-header-cell *matHeaderCellDef> Artículo </th>
+                  <td mat-cell *matCellDef="let element"> {{element.CodigoArticulo}} - {{element.Nombre}} </td>
+                </ng-container>
+              
+                <ng-container matColumnDef="Comprobante">
+                    <th mat-header-cell *matHeaderCellDef> Comprobante </th>
+                    <td mat-cell *matCellDef="let element"> 
+                        <a (click)="consultar()">
+        
+                            {{element.Comprobante}} 
+                        </a>
+                    </td>
+                </ng-container>
+              
+                <ng-container matColumnDef="Fecha-Entrega">
+                  <th mat-header-cell *matHeaderCellDef> Fecha Entrega </th>
+                  <td mat-cell *matCellDef="let element"> {{element.FechaEntrega}} </td>
+                </ng-container>
+              
+                <ng-container matColumnDef="Prov-Loc">
+                  <th mat-header-cell *matHeaderCellDef> Prov-Loc </th>
+                  <td mat-cell *matCellDef="let element"> {{element.Prov}} - {{element.Loc}} </td>
+                </ng-container>
+              
+                <ng-container matColumnDef="Estado-Etapa">
+                  <th mat-header-cell *matHeaderCellDef> Estado-Etapa </th>
+                  <td mat-cell *matCellDef="let element"> {{element.Estado}} - {{element.Etapa}} </td>
+                </ng-container>
+              
+                <ng-container matColumnDef="Lote">
+                  <th mat-header-cell *matHeaderCellDef> Lote </th>
+                  <td mat-cell *matCellDef="let element"> {{element.Lote}} </td>
+                </ng-container>
+              
+                <!-- <ng-container matColumnDef="Consultar">
+                    <th mat-header-cell *matHeaderCellDef> Consultar </th>
+                    <td mat-cell class="example-button-row" *matCellDef="let element"> 
+                        <button mat-stroked-button color="primary"(click)="consultar()">Consultar</button>
+                    </td>
+                </ng-container> -->
+                
+                
+                <ng-container matColumnDef="Borrar">
+                    <th mat-header-cell *matHeaderCellDef> Borrar </th>
+                    <td mat-cell class="example-button-row" *matCellDef="let element"> 
+                        <button mat-stroked-button color="warn" (click)="confirmacionBorrar()">
+                            <mat-icon>delete_outline</mat-icon>
+                            Borrar
+                        </button>
+                    </td>
+                </ng-container>
+              
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              </table>
+    </div>
 </ng-template>
 
 <!-- / TEMPLATE LISTA -->
@@ -166,7 +208,7 @@
 
             <div class="h2 mb-24">
                 <div fxHide.gt-sm class="pt-24"></div>
-                Filtros
+                Filtros por Artículos
             </div>
 
             <button fxHide.gt-sm mat-button (click)="toggleSidebarOpen('sidebarFilter')" class="mb-24">

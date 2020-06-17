@@ -16,6 +16,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule} from '@angular/material/datepicker';
+import { MatCheckboxModule} from '@angular/material/checkbox';
+import { MatBadgeModule } from '@angular/material/badge';
 
 
 
@@ -38,7 +40,9 @@ import { MatDatepickerModule} from '@angular/material/datepicker';
     MatTabsModule,  
     MatDialogModule,
     MatCardModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatCheckboxModule,
+    MatBadgeModule
   ],
   exports: [
     CommonModule,
@@ -57,7 +61,9 @@ import { MatDatepickerModule} from '@angular/material/datepicker';
     MatTabsModule,    
     MatDialogModule,
     MatCardModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatCheckboxModule,
+    MatBadgeModule
 
   ],
   providers: [

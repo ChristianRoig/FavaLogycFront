@@ -3,12 +3,14 @@ import { CommonModule } from '@angular/common';
 import { PlantillaFondoComponent } from './plantilla-fondo/plantilla-fondo.component';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { FuseWidgetModule } from '@fuse/components';
+import { PlantillaFondoSimpleComponent } from './plantilla-fondo-simple/plantilla-fondo-simple.component';
 
 
 
 @NgModule({
   declarations: [
-    PlantillaFondoComponent
+    PlantillaFondoComponent,
+    PlantillaFondoSimpleComponent
   ],
   imports: [
     CommonModule,
@@ -16,7 +18,8 @@ import { FuseWidgetModule } from '@fuse/components';
     FuseWidgetModule,
   ],
   exports: [
-    PlantillaFondoComponent
+    PlantillaFondoComponent,
+    PlantillaFondoSimpleComponent
   ]
 })
 export class CustomTagModule { }

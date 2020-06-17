@@ -1,9 +1,9 @@
-<app-plantilla-fondo titulo='Actualizar pedidos'>
+<app-plantilla-fondo-simple titulo='Actualizar pedidos'>
 
     <!-- CONTENIDO -->
-    <div contenido>
+    <div contenido >
 
-        <div fxLayout="column">
+        <div fxLayout="column" class="fuse-card" style="max-width: 100%;">
 
             <div fxLayout="row">
 
@@ -51,37 +51,40 @@
             </div>
 
             
-                    
+        </div>
+        
+        <div class="mat-card my-24">
+            
             <mat-tab-group class="p-24" color="accent">
                 <mat-tab label="Artículos"> 
                     <ng-container *ngTemplateOutlet="articulosPrueba"></ng-container>
                 </mat-tab>
-
+        
                 <mat-tab label="CUPA">
                     <ng-container *ngTemplateOutlet="prueba"></ng-container>
                 </mat-tab>
-
+        
                 <mat-tab label="Comprobantes">
                     <ng-container *ngTemplateOutlet="prueba"></ng-container>
                 </mat-tab>
-
+        
                 <mat-tab label="Datos de entrega">
                     <ng-container *ngTemplateOutlet="prueba"></ng-container>
                 </mat-tab>
-
+        
                 <mat-tab label="Otros datos">
                     <ng-container *ngTemplateOutlet="prueba"></ng-container>
                 </mat-tab>
             </mat-tab-group>            
         </div>
-
     </div>
-
-
+        
+        
+        
     <!-- / CONTENIDO -->
 
 
-</app-plantilla-fondo>
+</app-plantilla-fondo-simple>
 <br>
 <br>
 <br>
