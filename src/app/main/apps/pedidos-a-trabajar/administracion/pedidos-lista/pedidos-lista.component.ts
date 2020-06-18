@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
+import { PedidosListaService } from './pedidos-lista.service';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 export interface PeriodicElement {
 
@@ -39,10 +41,133 @@ export class PedidosListaComponent implements OnInit {
   selection = new SelectionModel<PeriodicElement>(true, []);
 
 
+  /*
+  Filtros
+   */
+  filtroTipos: any;
+  selectedTipo: any;
+  
+  filtroTurnos: any;
+  selectedTurno: any;
+  
+  filtroOrigenes: any;
+  selectedOrigen: any;
 
-  constructor(private _router: Router, private _fuseSidebarService: FuseSidebarService) { }
+  filtroEstados: any;
+  selectedEstado: any;
+
+  filtroEtapas: any;
+  selectedEtapa: any;
+
+  filtroProvincias: any;
+  selectedProvincia: any = 1;
+
+  filtroLocalidades: any;
+  selectedLocalidad: any = 1402;
+
+  pickerFiltroDesde:any;
+  pickerFiltroHasta:any;
+
+  constructor(private _router: Router, private _fuseSidebarService: FuseSidebarService, private _pedidosListaService: PedidosListaService) { }
 
   ngOnInit(): void {
+    this._pedidosListaService.getAllTipos().subscribe(params => {
+      this.selectedTipo = 0;
+      this.filtroTipos = params.datos;
+    })
+    
+    this._pedidosListaService.getAllTurnos().subscribe(params => {
+      this.selectedTurno = 0;
+      this.filtroTurnos = params.datos;
+    })
+    
+    this._pedidosListaService.getAllOrigenes().subscribe(params => {
+      this.selectedOrigen = 0;
+      this.filtroOrigenes = params.datos;
+    })
+
+    this._pedidosListaService.getAllEstados().subscribe(params => {
+      this.selectedEstado = 0;
+      this.filtroEstados = params.datos;
+    })
+
+    this._pedidosListaService.getAllEtapas().subscribe(params => {
+      this.selectedEtapa = 0;
+      this.filtroEtapas = params.datos;
+    })
+
+    this._pedidosListaService.getAllProvincias().subscribe(params => {
+      this.filtroProvincias = params.datos;
+
+    })
+    
+    this._pedidosListaService.getAllLocalidadesPorProvincia(this.selectedProvincia).subscribe(params => {
+      this.selectedLocalidad ;
+      this.filtroLocalidades = params.datos;
+    })
+    
+  }
+
+  selectTipo(event: Event) {
+    this.selectedTipo = (event.target as HTMLSelectElement).value;
+    console.log("Tipo: "+this.selectedTipo);
+  }
+  
+  selectTurno(event: Event) {
+    this.selectedTurno = (event.target as HTMLSelectElement).value;
+    console.log("Turno: "+this.selectedTurno);
+  }
+  
+  selectOrigen(event: Event) {
+    this.selectedOrigen = (event.target as HTMLSelectElement).value;
+    console.log("Origen: "+this.selectedOrigen);
+  }
+  
+  selectEstado(event: Event) {
+    this.selectedEstado = (event.target as HTMLSelectElement).value;
+    if(this.selectedEstado !== 0){
+      //Buscar Estado
+      console.log("Buscar Estado");
+    }
+    console.log("Estado: "+this.selectedEstado);
+  }
+
+  selectEtapa(event: Event) {
+    this.selectedEtapa = (event.target as HTMLSelectElement).value;
+    if(this.selectedEstado !== 0){
+      //Buscar Etapa
+      console.log("Buscar Etapa");
+    } else {
+
+    }
+    console.log("Etapa: "+this.selectedEstado);
+  }
+
+  selectProvincia(event: Event) {
+    this.selectedProvincia = (event.target as HTMLSelectElement).value;
+    if(this.selectedProvincia !== 0){
+      //Buscar Localidad
+      console.log("Buscar Provincia");
+    } else {
+
+    }
+    console.log("Provincia: "+this.selectedProvincia);
+  }
+
+  selectLocalidad(event: Event) {
+    this.selectedLocalidad = (event.target as HTMLSelectElement).value;
+    if(this.selectedLocalidad !== 0){
+      //Buscar Provincia
+      console.log("Buscar Localidad");
+    } else {
+
+    }
+    console.log("Localidad: "+this.selectedLocalidad);
+  }
+
+  selectFiltroDesde(event: MatDatepickerInputEvent<Date>) {
+    console.log(event.value);
+    console.log(this.pickerFiltroDesde);
   }
 
   buscar(){

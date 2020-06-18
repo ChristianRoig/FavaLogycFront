@@ -218,14 +218,11 @@
 
         <mat-form-field appearance="outline">
             <mat-label>Tipo</mat-label>
-            <mat-select>
-                <mat-option value="manana">VENTA</mat-option>
-                <mat-option value="manana">REPOSICION</mat-option>
-                <mat-option value="manana">SERVICE ARTICULO ROPIO</mat-option>
-                <mat-option value="manana">SERVICE ARTICULO TERCERO</mat-option>
-                <mat-option value="manana">CAMBIO ARTICULO</mat-option>
-                <mat-option value="manana">PRESTAMO</mat-option>
-            </mat-select>
+            <select matNativeControl (change)="selectTipo($event)">
+                <option [value]="0">TODOS</option>
+                <option *ngFor="let tipo of filtroTipos" [value]="tipo.id"
+                    [selected]="selectedTipo === tipo.id"> {{ tipo.nombre }}</option>
+            </select>
         </mat-form-field>     
 
 
@@ -233,21 +230,20 @@
 
             <mat-form-field appearance="outline" fxFlex="50" class="mr-4">
                 <mat-label>Turno</mat-label>
-                <mat-select>
-                    <mat-option value="manana">Mañana</mat-option>
-                    <mat-option value="manana">Tarde</mat-option>
-                    <mat-option value="manana">Noche</mat-option>
-                  </mat-select>
+                <select matNativeControl (change)="selectTurno($event)">
+                    <option [value]="0">TODOS</option>
+                    <option *ngFor="let turno of filtroTurnos" [value]="turno.id"
+                        [selected]="selectedTurno === turno.id"> {{ turno.nombre }}</option>
+                </select>
             </mat-form-field>  
 
             <mat-form-field appearance="outline" fxFlex="50" class="ml-4">
                 <mat-label>Origen</mat-label>
-                <mat-select>
-                    <mat-option value="manana">FAVASHOP MAIPU</mat-option>
-                    <mat-option value="manana">FAVASHOP MADARIAGA</mat-option>
-                    <mat-option value="manana">PINAMAR-DESPACHO</mat-option>
-                    <mat-option value="manana">VENTA TELEFONICA</mat-option>
-                  </mat-select>
+                <select matNativeControl (change)="selectOrigen($event)">
+                    <option [value]="0">TODOS</option>
+                    <option *ngFor="let origen of filtroOrigenes" [value]="origen.id"
+                        [selected]="selectedOrigen === origen.id"> {{ origen.nombre }}</option>
+                </select>
             </mat-form-field>     
         </div>
 
@@ -258,20 +254,20 @@
 
             <mat-form-field appearance="outline" fxFlex="50" class="mr-4">
                 <mat-label>Estado</mat-label>
-                <mat-select>
-                    <mat-option value="manana">Inicial</mat-option>
-                    <mat-option value="manana">En Proceso</mat-option>
-                    <mat-option value="manana">Aulado</mat-option>
-                </mat-select>
+                <select matNativeControl (change)="selectEstado($event)">
+                    <option [value]="0">TODOS</option>
+                    <option *ngFor="let estado of filtroEstados" [value]="estado.id"
+                        [selected]="selectedEstado === estado.id"> {{ estado.nombre }}</option>
+                </select>
             </mat-form-field>   
 
             <mat-form-field appearance="outline" fxFlex="50" class="ml-4">
                 <mat-label>Etapa</mat-label>
-                <mat-select>
-                    <mat-option value="manana">Inicial</mat-option>
-                    <mat-option value="manana">En Lote</mat-option>
-                    <mat-option value="manana">Estanteria</mat-option>
-                </mat-select>
+                <select matNativeControl (change)="selectEtapa($event)">
+                    <option [value]="0">TODOS</option>
+                    <option *ngFor="let etapa of filtroEtapas" [value]="etapa.id"
+                        [selected]="selectedEtapa === etapa.id"> {{ etapa.nombre }}</option>
+                </select>
             </mat-form-field>   
         </div>
 
@@ -279,20 +275,20 @@
 
             <mat-form-field appearance="outline" fxFlex="50" class="mr-4">
                 <mat-label>Provincia</mat-label>
-                <mat-select>
-                    <mat-option value="manana">Buenos Aires</mat-option>
-                    <mat-option value="manana">Santa Fe</mat-option>
-                    <mat-option value="manana">Cordoba</mat-option>
-                </mat-select>
+                <select matNativeControl (change)="selectProvincia($event)">
+                    <option [value]="0">TODOS</option>
+                    <option *ngFor="let provincia of filtroProvincias" [value]="provincia.id"
+                        [selected]="selectedProvincia === provincia.id"> {{ provincia.nombre }}</option>
+                </select>
             </mat-form-field>  
 
             <mat-form-field appearance="outline" fxFlex="50" class="ml-4">
                 <mat-label>Localidad</mat-label>
-                <mat-select>
-                    <mat-option value="manana">Mar del Plata</mat-option>
-                    <mat-option value="manana">Pinamar</mat-option>
-                    <mat-option value="manana">Miramar</mat-option>
-                </mat-select>
+                <select matNativeControl (change)="selectLocalidad($event)">
+                    <option [value]="0">TODOS</option>
+                    <option *ngFor="let localidad of filtroLocalidades" [value]="localidad.id"
+                        [selected]="selectedLocalidad === localidad.id"> {{ localidad.nombre }}</option>
+                </select>
             </mat-form-field>     
         </div>                    
 
@@ -300,7 +296,7 @@
 
             <mat-form-field appearance="outline" fxFlex="50" class="mr-4">
                 <mat-label>Desde</mat-label>
-                <input matInput [matDatepicker]="pickerFiltroDesde">
+                <input matInput [matDatepicker]="pickerFiltroDesde" (dateInput)="selectFiltroDesde($event)">
                 <mat-datepicker-toggle matSuffix [for]="pickerFiltroDesde"></mat-datepicker-toggle>
                 <mat-datepicker #pickerFiltroDesde></mat-datepicker>
             </mat-form-field>   
