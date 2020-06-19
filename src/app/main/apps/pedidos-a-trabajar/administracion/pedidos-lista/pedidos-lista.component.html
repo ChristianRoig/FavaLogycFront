@@ -8,7 +8,7 @@
             <div fxLayout="row" class="content-card pb-4">
     
                 <!-- LOTE -->
-                <div fxLayout="column" fxFlex="100" fxFlex.gt-sm="60" class="fuse-card p-24 mr-8">
+                <div fxLayout="column" fxFlex="100" fxFlex.gt-sm="50" class="fuse-card p-24 mr-8">
 
                     <span fxLayout="row" fxLayoutAlign="space-between">
 
@@ -55,7 +55,7 @@
 
 
                 <!-- FILTROS -->
-                <span fxHide.sm fxHide.xs fxFlex="40" class="fuse-card p-24 ml-8">
+                <span fxHide.sm fxHide.xs fxFlex="50" class="fuse-card p-24 ml-8">
 
                     <ng-container *ngTemplateOutlet="filtros"></ng-container>
                 </span>
@@ -225,33 +225,33 @@
         </span>
 
         <mat-form-field appearance="outline">
-            <mat-label>Tipo</mat-label>
-            <select matNativeControl (change)="selectTipo($event)">
-                <option [value]="0">TODOS</option>
-                <option *ngFor="let tipo of filtroTipos" [value]="tipo.id"
-                    [selected]="selectedTipo === tipo.id"> {{ tipo.nombre }}</option>
-            </select>
+            <mat-label>{{ filtroTipos ? 'Tipos' : 'Cargando...'}}</mat-label>
+            <mat-select matNativeControl (change)="selectTipo($event)" [disabled]="!filtroTipos">
+                <mat-option [value]="0">TODOS</mat-option>
+                <mat-option *ngFor="let tipo of filtroTipos" [value]="tipo.id"
+                    [attr.selected]="selectedTipo === tipo.id"> {{ tipo.nombre }}</mat-option>
+            </mat-select>
         </mat-form-field>     
 
 
         <div fxLayout="row">
 
             <mat-form-field appearance="outline" fxFlex="50" class="mr-4">
-                <mat-label>Turno</mat-label>
-                <select matNativeControl (change)="selectTurno($event)">
-                    <option [value]="0">TODOS</option>
-                    <option *ngFor="let turno of filtroTurnos" [value]="turno.id"
-                        [selected]="selectedTurno === turno.id"> {{ turno.nombre }}</option>
-                </select>
+                <mat-label>{{ filtroTurnos ? 'Turno' : 'Cargando...'}}</mat-label>
+                <mat-select matNativeControl (change)="selectTurno($event)" [disabled]="!filtroTurnos">
+                    <mat-option [value]="0">TODOS</mat-option>
+                    <mat-option *ngFor="let turno of filtroTurnos" [value]="turno.id"
+                        [attr.selected]="selectedTurno === turno.id"> {{ turno.nombre }}</mat-option>
+                </mat-select>
             </mat-form-field>  
 
             <mat-form-field appearance="outline" fxFlex="50" class="ml-4">
-                <mat-label>Origen</mat-label>
-                <select matNativeControl (change)="selectOrigen($event)">
-                    <option [value]="0">TODOS</option>
-                    <option *ngFor="let origen of filtroOrigenes" [value]="origen.id"
-                        [selected]="selectedOrigen === origen.id"> {{ origen.nombre }}</option>
-                </select>
+                <mat-label>{{ filtroOrigenes ? 'Origen' : 'Cargando...'}}</mat-label>
+                <mat-select matNativeControl (change)="selectOrigen($event)" [disabled]="!filtroOrigenes">
+                    <mat-option [value]="0">TODOS</mat-option>
+                    <mat-option *ngFor="let origen of filtroOrigenes" [value]="origen.id"
+                        [attr.selected]="selectedOrigen === origen.id"> {{ origen.nombre }}</mat-option>
+                </mat-select>
             </mat-form-field>     
         </div>
 
@@ -261,42 +261,42 @@
         <div fxLayout="row">
 
             <mat-form-field appearance="outline" fxFlex="50" class="mr-4">
-                <mat-label>Estado</mat-label>
-                <select matNativeControl (change)="selectEstado($event)">
-                    <option [value]="0">TODOS</option>
-                    <option *ngFor="let estado of filtroEstados" [value]="estado.id"
-                        [selected]="selectedEstado === estado.id"> {{ estado.nombre }}</option>
-                </select>
+                <mat-label>{{ filtroEstados ? 'Estado' : 'Cargando...'}}</mat-label>
+                <mat-select matNativeControl (change)="selectEstado($event)" [disabled]="!filtroEstados">
+                    <mat-option [value]="0">TODOS</mat-option>
+                    <mat-option *ngFor="let estado of filtroEstados" [value]="estado.id"
+                        [attr.selected]="selectedEstado === estado.id"> {{ estado.nombre }}</mat-option>
+                </mat-select>
             </mat-form-field>   
 
             <mat-form-field appearance="outline" fxFlex="50" class="ml-4">
-                <mat-label>Etapa</mat-label>
-                <select matNativeControl (change)="selectEtapa($event)">
-                    <option [value]="0">TODOS</option>
-                    <option *ngFor="let etapa of filtroEtapas" [value]="etapa.id"
-                        [selected]="selectedEtapa === etapa.id"> {{ etapa.nombre }}</option>
-                </select>
+                <mat-label>{{ filtroEtapas ? 'Etapa' : 'Cargando...'}}</mat-label>
+                <mat-select matNativeControl (change)="selectEtapa($event)" [disabled]="!filtroEtapas">
+                    <mat-option [value]="0">TODOS</mat-option>
+                    <mat-option *ngFor="let etapa of filtroEtapas" [value]="etapa.id"
+                        [attr.selected]="selectedEtapa === etapa.id"> {{ etapa.nombre }}</mat-option>
+                </mat-select>
             </mat-form-field>   
         </div>
 
         <div fxLayout="row">
 
             <mat-form-field appearance="outline" fxFlex="50" class="mr-4">
-                <mat-label>Provincia</mat-label>
-                <select matNativeControl (change)="selectProvincia($event)">
-                    <option [value]="0">TODOS</option>
-                    <option *ngFor="let provincia of filtroProvincias" [value]="provincia.id"
-                        [selected]="selectedProvincia === provincia.id"> {{ provincia.nombre }}</option>
-                </select>
+                <mat-label>{{ filtroProvincias ? 'Provincia' : 'Cargando...'}}</mat-label>
+                <mat-select matNativeControl (change)="selectProvincia($event)" [disabled]="!filtroProvincias">
+                    <mat-option [value]="0">TODOS</mat-option>
+                    <mat-option *ngFor="let provincia of filtroProvincias" [value]="provincia.id"
+                        [attr.selected]="selectedProvincia === provincia.id"> {{ provincia.nombre }}</mat-option>
+                </mat-select>
             </mat-form-field>  
 
             <mat-form-field appearance="outline" fxFlex="50" class="ml-4">
                 <mat-label>Localidad</mat-label>
-                <select matNativeControl (change)="selectLocalidad($event)">
-                    <option [value]="0">TODOS</option>
-                    <option *ngFor="let localidad of filtroLocalidades" [value]="localidad.id"
-                        [selected]="selectedLocalidad === localidad.id"> {{ localidad.nombre }}</option>
-                </select>
+                <mat-select matNativeControl (change)="selectLocalidad($event)">
+                    <mat-option [value]="0">TODOS</mat-option>
+                    <mat-option *ngFor="let localidad of filtroLocalidades" [value]="localidad.id"
+                        [attr.selected]="selectedLocalidad === localidad.id"> {{ localidad.nombre }}</mat-option>
+                </mat-select>
             </mat-form-field>     
         </div>                    
 
@@ -319,6 +319,9 @@
             </mat-form-field>                      
         </div>
 
+        <button mat-stroked-button (click)="buscar()" class="mb-24">
+            Buscar
+        </button>
     </form>
 </ng-template>
 <!-- / FILTROS -->
