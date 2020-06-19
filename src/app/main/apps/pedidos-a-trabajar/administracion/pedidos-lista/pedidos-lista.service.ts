@@ -1,9 +1,24 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'environments/environment';
+import { observeOn } from 'rxjs/operators';
 
 const BASE_URL = environment.server + environment.baseUrl;
+
+export interface BodyDetalle{
+
+    idTipo : number;
+    idTurno : number;
+    idOrigen : number;
+    idEtapa : number;
+    idLocalidad : number;
+    desdePedido : string;
+    hastaPedido : number;
+    idLote : number;
+    desdeLote : string;
+    hastaLote : string;
+}
 
 @Injectable()
 export class PedidosListaService
@@ -75,6 +90,23 @@ export class PedidosListaService
         return this._httpClient.get(ruta);
     }
 
+    getProvinciaPorLocalidad(id:number): Observable<any>
+    {
+        let ruta = `${BASE_URL}pedidosatrabajar/provincia/localidad/${id}`;
+        return this._httpClient.get(ruta);
+    }
+
+    getPedidoDetalle(body: BodyDetalle): Observable<any>
+    {
+
+        let headers = new HttpHeaders({
+            "Content-Type": "application/json"
+        });
 
 
+        let ruta = `${BASE_URL}pedidosatrabajar/pedidodetalle/porcomprobanteoarticulo/M/0/1/articulo/asc`;
+        
+
+        return this._httpClient.post(ruta, body, {headers: headers});
+    }
 }

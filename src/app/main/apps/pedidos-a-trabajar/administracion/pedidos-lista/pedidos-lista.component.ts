@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { PedidosListaService } from './pedidos-lista.service';
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 export interface PeriodicElement {
 
@@ -18,6 +17,20 @@ export interface PeriodicElement {
   Estado: string;
   Etapa: string;
   Lote: number;
+}
+
+export interface BodyDetalle{
+
+  idTipo : number;
+  idTurno : number;
+  idOrigen : number;
+  idEtapa : number;
+  idLocalidad : number;
+  desdePedido : string;
+  hastaPedido : number;
+  idLote : number;
+  desdeLote : string;
+  hastaLote : string;
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
@@ -38,6 +51,7 @@ export class PedidosListaComponent implements OnInit {
 
   displayedColumns: string[] = ['select', 'Tipo', 'Codigo-Articulo-Nombre', 'Comprobante', 'Fecha-Entrega', 'Prov-Loc', 'Estado-Etapa', 'Lote', 'Borrar'];
   dataSource = ELEMENT_DATA;  
+  // dataSource: any;  
   selection = new SelectionModel<PeriodicElement>(true, []);
 
 
@@ -45,19 +59,19 @@ export class PedidosListaComponent implements OnInit {
   Filtros
    */
   filtroTipos: any;
-  selectedTipo: any;
+  selectedTipo: any = 0;
   
   filtroTurnos: any;
-  selectedTurno: any;
+  selectedTurno: any = 0;
   
   filtroOrigenes: any;
-  selectedOrigen: any;
+  selectedOrigen: any = 0;
 
   filtroEstados: any;
-  selectedEstado: any;
+  selectedEstado: any = 0;
 
   filtroEtapas: any;
-  selectedEtapa: any;
+  selectedEtapa: any = 0;
 
   filtroProvincias: any;
   selectedProvincia: any = 1;
@@ -65,34 +79,32 @@ export class PedidosListaComponent implements OnInit {
   filtroLocalidades: any;
   selectedLocalidad: any = 1402;
 
-  pickerFiltroDesde:any;
-  pickerFiltroHasta:any;
+  pickerFiltroDesde:any = null;
+  pickerFiltroHasta:any = null;
+  pickerLoteDesde:any   = null;
+  pickerLoteHasta:any   = null;
 
   constructor(private _router: Router, private _fuseSidebarService: FuseSidebarService, private _pedidosListaService: PedidosListaService) { }
 
   ngOnInit(): void {
+
     this._pedidosListaService.getAllTipos().subscribe(params => {
-      this.selectedTipo = 0;
       this.filtroTipos = params.datos;
     })
     
     this._pedidosListaService.getAllTurnos().subscribe(params => {
-      this.selectedTurno = 0;
       this.filtroTurnos = params.datos;
     })
     
     this._pedidosListaService.getAllOrigenes().subscribe(params => {
-      this.selectedOrigen = 0;
       this.filtroOrigenes = params.datos;
     })
 
     this._pedidosListaService.getAllEstados().subscribe(params => {
-      this.selectedEstado = 0;
       this.filtroEstados = params.datos;
     })
 
     this._pedidosListaService.getAllEtapas().subscribe(params => {
-      this.selectedEtapa = 0;
       this.filtroEtapas = params.datos;
     })
 
@@ -100,74 +112,167 @@ export class PedidosListaComponent implements OnInit {
       this.filtroProvincias = params.datos;
 
     })
+
+    // this._pedidosListaService.getAllLocalidades().subscribe(params => {
+    //   this.filtroLocalidades = params.datos;
+    // })
     
-    this._pedidosListaService.getAllLocalidadesPorProvincia(this.selectedProvincia).subscribe(params => {
-      this.selectedLocalidad ;
-      this.filtroLocalidades = params.datos;
-    })
+    this.getDetalle();
+  }
+
+  getDetalle(){
+    let idTipo=null;
+    let idTurno=null;
+    let idOrigen=null;
+    let idEtapa=null;
+    let idLocalidad=null;
+    let desdePedido=null;
+    let hastaPedido=null;
+    let idLote=null;
+    let desdeLote=null;
+    let hastaLote=null;
+
+    let body: BodyDetalle;
+
+    if (this.selectedTipo > 0 )
+      idTipo = this.selectedTipo;
     
+    if (this.selectedTurno > 0 )
+      idTurno = this.selectedTurno;
+    
+    if (this.selectedOrigen > 0 )
+      idOrigen = this.selectedOrigen;
+    
+    if (this.selectedEtapa > 0 )
+      idEtapa = this.selectedEtapa;
+    
+    if (this.selectedLocalidad > 0 )
+      idLocalidad = this.selectedLocalidad;
+    
+    if (this.pickerFiltroDesde > 0 )
+      desdePedido = this.pickerFiltroDesde;
+    
+    if (this.pickerFiltroHasta > 0 )
+      hastaPedido = this.pickerFiltroHasta;
+    
+    if (this.selectedTipo > 0 )
+      idLote = null;
+    
+    if (this.selectedTipo > 0 )
+      desdeLote = null;	
+    
+    if (this.selectedTipo > 0 )
+      hastaLote = null;
+
+    body.idTipo      = idTipo;
+    body.idTurno     = idTurno;
+    body.idOrigen    = idOrigen;
+    body.idEtapa     = idEtapa;
+    body.idLocalidad = idLocalidad;
+    body.desdePedido = desdePedido;
+    body.hastaPedido = hastaPedido;
+    body.idLote      = idLote;
+    body.desdeLote   = desdeLote;
+    body.hastaLote   = hastaLote;
+
+    console.log(body);
+
+    // this._pedidosListaService.getPedidoDetalle(body).subscribe(
+    //   params => {
+    //     console.log(params.datos);
+    //   }
+    // );
   }
 
   selectTipo(event: Event) {
     this.selectedTipo = (event.target as HTMLSelectElement).value;
-    console.log("Tipo: "+this.selectedTipo);
   }
   
   selectTurno(event: Event) {
     this.selectedTurno = (event.target as HTMLSelectElement).value;
-    console.log("Turno: "+this.selectedTurno);
   }
   
   selectOrigen(event: Event) {
     this.selectedOrigen = (event.target as HTMLSelectElement).value;
-    console.log("Origen: "+this.selectedOrigen);
   }
   
   selectEstado(event: Event) {
     this.selectedEstado = (event.target as HTMLSelectElement).value;
     if(this.selectedEstado !== 0){
       //Buscar Estado
-      console.log("Buscar Estado");
+      //console.log("Buscar Estado");
     }
-    console.log("Estado: "+this.selectedEstado);
+    //console.log("Estado: "+this.selectedEstado);
   }
 
   selectEtapa(event: Event) {
     this.selectedEtapa = (event.target as HTMLSelectElement).value;
     if(this.selectedEstado !== 0){
       //Buscar Etapa
-      console.log("Buscar Etapa");
+      //console.log("Buscar Etapa");
     } else {
 
     }
-    console.log("Etapa: "+this.selectedEstado);
+    //console.log("Etapa: "+this.selectedEstado);
   }
 
   selectProvincia(event: Event) {
     this.selectedProvincia = (event.target as HTMLSelectElement).value;
-    if(this.selectedProvincia !== 0){
-      //Buscar Localidad
-      console.log("Buscar Provincia");
-    } else {
+    this.selectedLocalidad = 0;
+    console.log("seleccionada: "+this.selectedProvincia);
+    if(this.selectedProvincia > 0){
+      
+      this._pedidosListaService.getAllLocalidadesPorProvincia(this.selectedProvincia).subscribe(params => {
+        this.filtroLocalidades = params.datos;
+      })
+      
 
+    } else {
+      this._pedidosListaService.getAllLocalidades().subscribe(params => {
+        this.filtroLocalidades = params.datos;
+      })
     }
-    console.log("Provincia: "+this.selectedProvincia);
   }
 
   selectLocalidad(event: Event) {
     this.selectedLocalidad = (event.target as HTMLSelectElement).value;
-    if(this.selectedLocalidad !== 0){
-      //Buscar Provincia
-      console.log("Buscar Localidad");
-    } else {
-
+    if(this.selectedLocalidad > 0){
+      this._pedidosListaService.getProvinciaPorLocalidad(this.selectedLocalidad).subscribe( params => {
+        this.selectedProvincia = params.id;
+        // console.log("Provincia: "+this.selectedProvincia);
+      })
     }
-    console.log("Localidad: "+this.selectedLocalidad);
   }
 
-  selectFiltroDesde(event: MatDatepickerInputEvent<Date>) {
-    console.log(event.value);
-    console.log(this.pickerFiltroDesde);
+  // addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
+
+  //   console.log(event.value);
+  // }
+
+  addEvent( tipo, evento ) {
+    console.log("tipo "+ tipo +": "+evento.value._i.year+"-"+evento.value._i.month+"-"+evento.value._i.date);
+    let fecha = evento.value._i.year+"-"+(evento.value._i.month+1)+"-"+evento.value._i.date;
+
+    switch (tipo) {
+      case "pickerFiltroDesde":
+        this.pickerFiltroDesde = fecha;
+        break;
+      case "pickerFiltroHasta":
+        this.pickerFiltroHasta = fecha;
+        break;
+      case "pickerLoteDesde":
+        this.pickerLoteDesde = fecha;
+        break;
+      case "pickerLoteHasta":
+        this.pickerLoteHasta = fecha;
+        break;
+    }
+
+    console.log("pickerFiltroDesde: "+this.pickerFiltroDesde);
+    console.log("pickerFiltroHasta: "+this.pickerFiltroHasta);
+    console.log("pickerLoteDesde: "+this.pickerLoteDesde);
+    console.log("pickerLoteHasta: "+this.pickerLoteHasta);
+
   }
 
   buscar(){
