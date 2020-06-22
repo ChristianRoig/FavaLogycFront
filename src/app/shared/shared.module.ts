@@ -1,6 +1,4 @@
 import { NgModule } from '@angular/core';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { AgmCoreModule } from '@agm/core';
 
 import { FuseSharedModule } from '@fuse/shared.module';
 import { FuseWidgetModule } from '@fuse/components/widget/widget.module';
@@ -21,12 +19,6 @@ import { ModalErrorComponent } from './modal-error/modal-error.component';
         CommonModule,
         HttpClientModule,
         MaterialDesignModule,
-
-        NgxChartsModule,
-        AgmCoreModule.forRoot({
-            apiKey: 'AIzaSyD81ecsCj4yYpcXSLFcYU97PvRsE_X8Bx8'
-        }),
-
         FuseSharedModule,
         FuseWidgetModule,
         CustomTagModule

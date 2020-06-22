@@ -1,4 +1,4 @@
-import {Component, ViewEncapsulation, OnInit, ChangeDetectorRef} from '@angular/core';
+import {Component, ViewEncapsulation, OnInit, ChangeDetectorRef, ViewChild, ElementRef} from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PedidosCodigosBarraService } from './codigos-barra.service';
@@ -7,6 +7,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { ModalConfirmacionBorrarComponent } from './modal-confirmacion-borrar/modal-confirmacion-borrar.component';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
+import { Debounce } from 'app/shared/decorators/debounce';
 
 /**
  * @title Basic use of `<table mat-table>`
@@ -19,6 +20,9 @@ import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.componen
     encapsulation: ViewEncapsulation.None
 })
 export class PedidosCodigosBarraComponent implements OnInit {
+
+    @ViewChild('buscar') buscarInput: ElementRef;
+    
     displayedColumns: string[] = ['id', 'codigoDeBarras', 'descripcion', 'editar', 'borrar'];
     dataSource2: any;
     subParametros: Subscription;
@@ -120,19 +124,19 @@ export class PedidosCodigosBarraComponent implements OnInit {
           );            
     }
 
-    search( event ) {
+  @Debounce(1000)  
+  search() {
 
-      let search: any = document.getElementById('search');
-      this.busqueda = search.value;
+    this.busqueda = this.buscarInput.nativeElement.value;
 
-      this.page = 0;
-      this.columna = 'id';
+    this.page = 0;
+    this.columna = 'id';
 
-      this.buscar(this.codigoArticulo, this.busqueda, this.page, this.size, this.columna, this.order);
+    this.buscar(this.codigoArticulo, this.busqueda, this.page, this.size, this.columna, this.order);
 
-    }
+  }
 
-    sortData( event ) {
+  sortData( event ) {
         
       this.page = 0;
       this.columna = event.active;
@@ -192,11 +196,13 @@ export class PedidosCodigosBarraComponent implements OnInit {
     });
 
     dialogRef.afterClosed()
-      .subscribe(result => {
-          if (errStatus != 0) {            
+      .subscribe( () => {
+        
+          if (errStatus != 0) {   
+
             this.busqueda = ' ';
-            let search: any = document.getElementById('search');
-            search.value = '';
+            this.buscarInput.nativeElement.value = '';
+
             this.buscar(this.codigoArticulo, this.busqueda, this.page, this.size, this.columna, this.order);
           } else {
             this._router.navigate(['']);
