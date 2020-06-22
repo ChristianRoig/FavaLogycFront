@@ -24,10 +24,12 @@ export interface BodyDetalle{
   idTipo : number;
   idTurno : number;
   idOrigen : number;
+  idEstado : number;
   idEtapa : number;
+  idProvincia : number;
   idLocalidad : number;
   desdePedido : string;
-  hastaPedido : number;
+  hastaPedido : string;
   idLote : number;
   desdeLote : string;
   hastaLote : string;
@@ -51,7 +53,7 @@ export class PedidosListaComponent implements OnInit {
 
   displayedColumns: string[] = ['select', 'Tipo', 'Codigo-Articulo-Nombre', 'Comprobante', 'Fecha-Entrega', 'Prov-Loc', 'Estado-Etapa', 'Lote', 'Borrar'];
   dataSource = ELEMENT_DATA;  
-  // dataSource: any;  
+  dataSource2: any;
   selection = new SelectionModel<PeriodicElement>(true, []);
 
 
@@ -84,10 +86,25 @@ export class PedidosListaComponent implements OnInit {
   pickerLoteDesde:any   = null;
   pickerLoteHasta:any   = null;
 
+  body: BodyDetalle ={
+    idTipo      : null,
+    idTurno     : null,
+    idOrigen    : null,
+    idEstado    : null,
+    idEtapa     : null,
+    idProvincia : null,
+    idLocalidad : null,
+    desdePedido : null,
+    hastaPedido : null,
+    idLote      : null,
+    desdeLote   : null,
+    hastaLote   : null
+  };
+
   constructor(private _router: Router, private _fuseSidebarService: FuseSidebarService, private _pedidosListaService: PedidosListaService) { }
 
   ngOnInit(): void {
-
+    
     this._pedidosListaService.getAllTipos().subscribe(params => {
       this.filtroTipos = params.datos;
     })
@@ -121,18 +138,18 @@ export class PedidosListaComponent implements OnInit {
   }
 
   getDetalle(){
-    let idTipo=null;
-    let idTurno=null;
-    let idOrigen=null;
-    let idEtapa=null;
-    let idLocalidad=null;
-    let desdePedido=null;
-    let hastaPedido=null;
-    let idLote=null;
-    let desdeLote=null;
-    let hastaLote=null;
-
-    let body: BodyDetalle;
+    let idTipo      :number =null;
+    let idTurno     :number =null;
+    let idOrigen    :number =null;
+    let idEstado    :number =null;
+    let idEtapa     :number =null;
+    let idProvincia :number =null;
+    let idLocalidad :number =null;
+    let desdePedido :string =null;
+    let hastaPedido :string =null;
+    let idLote      :number =null;
+    let desdeLote   :string =null;
+    let hastaLote   :string =null;
 
     if (this.selectedTipo > 0 )
       idTipo = this.selectedTipo;
@@ -143,8 +160,14 @@ export class PedidosListaComponent implements OnInit {
     if (this.selectedOrigen > 0 )
       idOrigen = this.selectedOrigen;
     
+    if (this.selectedEstado > 0 )
+      idEstado = this.selectedEstado;
+    
     if (this.selectedEtapa > 0 )
       idEtapa = this.selectedEtapa;
+    
+    if (this.selectedProvincia > 0 )
+      idProvincia = this.selectedProvincia;
     
     if (this.selectedLocalidad > 0 )
       idLocalidad = this.selectedLocalidad;
@@ -164,36 +187,40 @@ export class PedidosListaComponent implements OnInit {
     if (this.selectedTipo > 0 )
       hastaLote = null;
 
-    body.idTipo      = idTipo;
-    body.idTurno     = idTurno;
-    body.idOrigen    = idOrigen;
-    body.idEtapa     = idEtapa;
-    body.idLocalidad = idLocalidad;
-    body.desdePedido = desdePedido;
-    body.hastaPedido = hastaPedido;
-    body.idLote      = idLote;
-    body.desdeLote   = desdeLote;
-    body.hastaLote   = hastaLote;
-
-    console.log(body);
-
-    // this._pedidosListaService.getPedidoDetalle(body).subscribe(
-    //   params => {
-    //     console.log(params.datos);
-    //   }
-    // );
+    this.body.idTipo      = idTipo;
+    this.body.idTurno     = idTurno;
+    this.body.idOrigen    = idOrigen;
+    this.body.idEstado    = idEstado;
+    this.body.idEtapa     = idEtapa;
+    this.body.idProvincia = idProvincia;
+    this.body.idLocalidad = idLocalidad;
+    this.body.desdePedido = desdePedido;
+    this.body.hastaPedido = hastaPedido;
+    this.body.idLote      = idLote;
+    this.body.desdeLote   = desdeLote;
+    this.body.hastaLote   = hastaLote;
+    
+    this._pedidosListaService.getPedidoDetalle(this.body).subscribe(
+      data => {
+        this.dataSource2 = data.datos;
+        console.log(this.dataSource2);
+      }
+    );
   }
 
   selectTipo(event: Event) {
     this.selectedTipo = (event.target as HTMLSelectElement).value;
+    this.getDetalle();
   }
   
   selectTurno(event: Event) {
     this.selectedTurno = (event.target as HTMLSelectElement).value;
+    this.getDetalle();
   }
   
   selectOrigen(event: Event) {
     this.selectedOrigen = (event.target as HTMLSelectElement).value;
+    this.getDetalle();
   }
   
   selectEstado(event: Event) {
@@ -203,6 +230,7 @@ export class PedidosListaComponent implements OnInit {
       //console.log("Buscar Estado");
     }
     //console.log("Estado: "+this.selectedEstado);
+    this.getDetalle();
   }
 
   selectEtapa(event: Event) {
@@ -213,25 +241,23 @@ export class PedidosListaComponent implements OnInit {
     } else {
 
     }
-    //console.log("Etapa: "+this.selectedEstado);
+    this.getDetalle();
   }
 
   selectProvincia(event: Event) {
     this.selectedProvincia = (event.target as HTMLSelectElement).value;
     this.selectedLocalidad = 0;
-    console.log("seleccionada: "+this.selectedProvincia);
     if(this.selectedProvincia > 0){
       
       this._pedidosListaService.getAllLocalidadesPorProvincia(this.selectedProvincia).subscribe(params => {
         this.filtroLocalidades = params.datos;
       })
-      
-
     } else {
       this._pedidosListaService.getAllLocalidades().subscribe(params => {
         this.filtroLocalidades = params.datos;
       })
     }
+    this.getDetalle();
   }
 
   selectLocalidad(event: Event) {
@@ -242,6 +268,7 @@ export class PedidosListaComponent implements OnInit {
         // console.log("Provincia: "+this.selectedProvincia);
       })
     }
+    this.getDetalle();
   }
 
   // addEvent(type: string, event: MatDatepickerInputEvent<Date>) {

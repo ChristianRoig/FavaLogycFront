@@ -11,14 +11,16 @@ export interface BodyDetalle{
     idTipo : number;
     idTurno : number;
     idOrigen : number;
+    idEstado : number;
     idEtapa : number;
+    idProvincia : number;
     idLocalidad : number;
     desdePedido : string;
-    hastaPedido : number;
+    hastaPedido : string;
     idLote : number;
     desdeLote : string;
     hastaLote : string;
-}
+  }
 
 @Injectable()
 export class PedidosListaService
@@ -104,7 +106,7 @@ export class PedidosListaService
         });
 
 
-        let ruta = `${BASE_URL}pedidosatrabajar/pedidodetalle/porcomprobanteoarticulo/M/0/1/articulo/asc`;
+        let ruta = `${BASE_URL}pedidosatrabajar/pedidodetalle/porcomprobanteoarticulo/M/0/10/articulo/asc`;
         
 
         return this._httpClient.post(ruta, body, {headers: headers});
