@@ -25,6 +25,7 @@
     
                     <mat-form-field appearance="outline">
                         <mat-label>Lote</mat-label>
+                        <!-- <input #buscarLote (keyup)="searchLote()" matInput value="" placeholder="Buscar lote"> -->
                         <input matInput value="" placeholder="Buscar lote">
                         <mat-icon matSuffix>search</mat-icon>
                     </mat-form-field>  
@@ -73,7 +74,7 @@
 
                     <mat-form-field appearance="outline" style="width: 100%;" class="mt-8 mx-12">
                         <mat-label>Comprobante</mat-label>
-                        <input matInput value="" placeholder="Buscar comprobante">
+                        <input #buscarCbte (keyup)="searchCbte()" matInput value="" placeholder="Buscar comprobante">
                         <mat-icon matSuffix>search</mat-icon>
                     </mat-form-field>                      
 
@@ -123,7 +124,7 @@
 
     <div style="width: 100%; overflow: auto;">
 
-            <table mat-table [dataSource]="dataSource2" class="mb-8">
+            <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="dataSource2" class="mb-8">
         
                 <ng-container matColumnDef="select" sticky>
                     <th mat-header-cell *matHeaderCellDef class="px-24">
@@ -142,19 +143,24 @@
                 </ng-container>
         
                 <ng-container matColumnDef="Tipo">
-                    <th mat-header-cell *matHeaderCellDef class="pl-8"> Tipo </th>
+                    <th mat-sort-header="tipo" mat-header-cell *matHeaderCellDef class="pl-8"> Tipo </th>
                     <td mat-cell *matCellDef="let element" class="pl-8"> {{element.pedidoCabecera.pedidoTipo.nombre}} </td>
                 </ng-container>
                 
-                <ng-container matColumnDef="Codigo-Articulo-Nombre">
-                  <th mat-header-cell *matHeaderCellDef> Artículo </th>
-                  <td mat-cell *matCellDef="let element"> {{element.articulo.codigoArticulo}} - {{element.articulo.nombre}} </td>
+                <ng-container matColumnDef="CodigoArticulo">
+                  <th mat-sort-header="codigoArticulo" mat-header-cell *matHeaderCellDef> Cód. Artículo </th>
+                  <td mat-cell *matCellDef="let element"> {{element.articulo.codigoArticulo}}</td>
+                </ng-container>
+                
+                <ng-container matColumnDef="NombreArticulo">
+                  <th mat-sort-header="nombreArticulo" mat-header-cell *matHeaderCellDef> Nombre Artículo </th>
+                  <td mat-cell *matCellDef="let element">{{element.articulo.nombre}} </td>
                 </ng-container>
               
                 <ng-container matColumnDef="Comprobante">
-                    <th mat-header-cell *matHeaderCellDef> Comprobante </th>
+                    <th mat-sort-header="nroCbte" mat-header-cell *matHeaderCellDef> Comprobante </th>
                     <td mat-cell *matCellDef="let element"> 
-                        <a (click)="consultar()">
+                        <a (click)="consultar(element.pedidoCabecera.id)">
         
                             {{element.pedidoCabecera.pedidoCbte.nroCbte}} 
                         </a>
@@ -162,23 +168,33 @@
                 </ng-container>
               
                 <ng-container matColumnDef="Fecha-Entrega">
-                  <th mat-header-cell *matHeaderCellDef> Fecha Entrega </th>
-                  <!-- <td mat-cell *matCellDef="let element"> {{element.pedidoDomicilioEntrega.fechaDeEntrega}} </td> -->
-                  <td mat-cell *matCellDef="let element"> 22/07/1992 </td>
+                  <th mat-sort-header="fechaDeEntrega" mat-header-cell *matHeaderCellDef> Fecha Entrega </th>
+                  <td mat-cell *matCellDef="let element"> {{element.pedidoDomicilioEntrega.fechaDeEntrega | date:'shortDate'}} </td>
+                  <!-- <td mat-cell *matCellDef="let element"> 22-07-1992 </td> -->
                 </ng-container>
               
-                <ng-container matColumnDef="Prov-Loc">
-                  <th mat-header-cell *matHeaderCellDef> Prov-Loc </th>
-                  <td mat-cell *matCellDef="let element"> {{element.pedidoDomicilioEntrega.sysLocalidad.sysProvincia.nombre}} - {{element.pedidoDomicilioEntrega.sysLocalidad.nombre}} </td>
+                <ng-container matColumnDef="Provincia">
+                  <th mat-sort-header="provincia" mat-header-cell *matHeaderCellDef> Provincia </th>
+                  <td mat-cell *matCellDef="let element"> {{element.pedidoDomicilioEntrega.sysLocalidad.sysProvincia.nombre}} </td>
                 </ng-container>
               
-                <ng-container matColumnDef="Estado-Etapa">
-                  <th mat-header-cell *matHeaderCellDef> Estado-Etapa </th>
-                  <td mat-cell *matCellDef="let element"> {{element.pedidoEtapa.pedidoEstado.nombre}} - {{element.pedidoEtapa.nombre}} </td>
+                <ng-container matColumnDef="Localidad">
+                  <th mat-sort-header="localidad" mat-header-cell *matHeaderCellDef> Localidad </th>
+                  <td mat-cell *matCellDef="let element"> {{element.pedidoDomicilioEntrega.sysLocalidad.nombre}} </td>
+                </ng-container>
+              
+                <ng-container matColumnDef="Estado">
+                  <th mat-sort-header="estado" mat-header-cell *matHeaderCellDef> Estado </th>
+                  <td mat-cell *matCellDef="let element"> {{element.pedidoEtapa.pedidoEstado.nombre}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="Etapa">
+                  <th mat-sort-header="etapa" mat-header-cell *matHeaderCellDef> Etapa </th>
+                  <td mat-cell *matCellDef="let element"> {{element.pedidoEtapa.nombre}} </td>
                 </ng-container>
               
                 <ng-container matColumnDef="Lote">
-                  <th mat-header-cell *matHeaderCellDef> Lote </th>
+                  <th mat-sort-header="idLote" mat-header-cell *matHeaderCellDef> Lote </th>
                   <td  mat-cell *matCellDef="let element"> {{ element.pedidoLote.id ? element.pedidoLote.id : '' }} </td>
                 </ng-container>                
                 
@@ -194,7 +210,16 @@
               
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-              </table>
+            </table>
+            
+            <div contenido class=" mb-4">
+                <mat-paginator [length]="length"
+                    [pageIndex]="page"
+                    [pageSize]="size"
+                    [pageSizeOptions]="[5, 10, 15, 500]"
+                    (page) = "paginar($event)">
+                </mat-paginator>
+            </div>
     </div>
 </ng-template>
 
@@ -306,11 +331,11 @@
 
         <mat-form-field appearance="outline">
             <mat-label>{{ filtroTipos ? 'Tipos' : 'Cargando...'}}</mat-label>
-            <mat-select matNativeControl (change)="selectTipo($event)" [disabled]="!filtroTipos">
-                <mat-option [value]="0">TODOS</mat-option>
-                <mat-option *ngFor="let tipo of filtroTipos" [value]="tipo.id"
-                    [attr.selected]="selectedTipo === tipo.id"> {{ tipo.nombre }}</mat-option>
-            </mat-select>
+            <select matNativeControl (change)="selectTipo($event)" [disabled]="!filtroTipos">
+                <option [value]="0">TODOS</option>
+                <option *ngFor="let tipo of filtroTipos" [value]="tipo.id"
+                    [selected]="selectedTipo === tipo.id"> {{ tipo.nombre }}</option>
+            </select>
         </mat-form-field>     
 
 
@@ -318,20 +343,20 @@
 
             <mat-form-field appearance="outline" fxFlex="50" class="mr-4">
                 <mat-label>{{ filtroTurnos ? 'Turno' : 'Cargando...'}}</mat-label>
-                <mat-select matNativeControl (change)="selectTurno($event)" [disabled]="!filtroTurnos">
-                    <mat-option [value]="0">TODOS</mat-option>
-                    <mat-option *ngFor="let turno of filtroTurnos" [value]="turno.id"
-                        [attr.selected]="selectedTurno === turno.id"> {{ turno.nombre }}</mat-option>
-                </mat-select>
+                <select matNativeControl (change)="selectTurno($event)" [disabled]="!filtroTurnos">
+                    <option [value]="0">TODOS</option>
+                    <option *ngFor="let turno of filtroTurnos" [value]="turno.id"
+                        [selected]="selectedTurno === turno.id"> {{ turno.nombre }}</option>
+                </select>
             </mat-form-field>  
 
             <mat-form-field appearance="outline" fxFlex="50" class="ml-4">
                 <mat-label>{{ filtroOrigenes ? 'Origen' : 'Cargando...'}}</mat-label>
-                <mat-select matNativeControl (change)="selectOrigen($event)" [disabled]="!filtroOrigenes">
-                    <mat-option [value]="0">TODOS</mat-option>
-                    <mat-option *ngFor="let origen of filtroOrigenes" [value]="origen.id"
-                        [attr.selected]="selectedOrigen === origen.id"> {{ origen.nombre }}</mat-option>
-                </mat-select>
+                <select matNativeControl (change)="selectOrigen($event)" [disabled]="!filtroOrigenes">
+                    <option [value]="0">TODOS</option>
+                    <option *ngFor="let origen of filtroOrigenes" [value]="origen.id"
+                        [selected]="selectedOrigen === origen.id"> {{ origen.nombre }}</option>
+                </select>
             </mat-form-field>     
         </div>
 
@@ -342,20 +367,20 @@
 
             <mat-form-field appearance="outline" fxFlex="50" class="mr-4">
                 <mat-label>{{ filtroEstados ? 'Estado' : 'Cargando...'}}</mat-label>
-                <mat-select matNativeControl (change)="selectEstado($event)" [disabled]="!filtroEstados">
-                    <mat-option [value]="0">TODOS</mat-option>
-                    <mat-option *ngFor="let estado of filtroEstados" [value]="estado.id"
-                        [attr.selected]="selectedEstado === estado.id"> {{ estado.nombre }}</mat-option>
-                </mat-select>
+                <select matNativeControl (change)="selectEstado($event)" [disabled]="!filtroEstados">
+                    <option [value]="0">TODOS</option>
+                    <option *ngFor="let estado of filtroEstados" [value]="estado.id"
+                        [selected]="selectedEstado === estado.id"> {{ estado.nombre }}</option>
+                </select>
             </mat-form-field>   
 
             <mat-form-field appearance="outline" fxFlex="50" class="ml-4">
                 <mat-label>{{ filtroEtapas ? 'Etapa' : 'Cargando...'}}</mat-label>
-                <mat-select matNativeControl (change)="selectEtapa($event)" [disabled]="!filtroEtapas">
-                    <mat-option [value]="0">TODOS</mat-option>
-                    <mat-option *ngFor="let etapa of filtroEtapas" [value]="etapa.id"
-                        [attr.selected]="selectedEtapa === etapa.id"> {{ etapa.nombre }}</mat-option>
-                </mat-select>
+                <select matNativeControl (change)="selectEtapa($event)" [disabled]="!filtroEtapas">
+                    <option [value]="0">TODOS</option>
+                    <option *ngFor="let etapa of filtroEtapas" [value]="etapa.id"
+                        [selected]="selectedEtapa === etapa.id"> {{ etapa.nombre }}</option>
+                </select>
             </mat-form-field>   
         </div>
 
@@ -363,20 +388,20 @@
 
             <mat-form-field appearance="outline" fxFlex="50" class="mr-4">
                 <mat-label>{{ filtroProvincias ? 'Provincia' : 'Cargando...'}}</mat-label>
-                <mat-select matNativeControl (change)="selectProvincia($event)" [disabled]="!filtroProvincias">
-                    <mat-option [value]="0">TODOS</mat-option>
-                    <mat-option *ngFor="let provincia of filtroProvincias" [value]="provincia.id"
-                        [attr.selected]="selectedProvincia === provincia.id"> {{ provincia.nombre }}</mat-option>
-                </mat-select>
+                <select matNativeControl (change)="selectProvincia($event)" [disabled]="!filtroProvincias">
+                    <option [value]="0">TODOS</option>
+                    <option *ngFor="let provincia of filtroProvincias" [value]="provincia.id"
+                        [selected]="selectedProvincia === provincia.id"> {{ provincia.nombre }}</option>
+                </select>
             </mat-form-field>  
 
             <mat-form-field appearance="outline" fxFlex="50" class="ml-4">
                 <mat-label>Localidad</mat-label>
-                <mat-select matNativeControl (change)="selectLocalidad($event)">
-                    <mat-option [value]="0">TODOS</mat-option>
-                    <mat-option *ngFor="let localidad of filtroLocalidades" [value]="localidad.id"
-                        [attr.selected]="selectedLocalidad === localidad.id"> {{ localidad.nombre }}</mat-option>
-                </mat-select>
+                <select matNativeControl (change)="selectLocalidad($event)">
+                    <option [value]="0">TODOS</option>
+                    <option *ngFor="let localidad of filtroLocalidades" [value]="localidad.id"
+                        [selected]="selectedLocalidad === localidad.id"> {{ localidad.nombre }}</option>
+                </select>
             </mat-form-field>     
         </div>                    
 

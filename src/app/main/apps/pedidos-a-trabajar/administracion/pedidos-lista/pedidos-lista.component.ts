@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { PedidosListaService } from './pedidos-lista.service';
+import { Debounce } from 'app/shared/decorators/debounce';
 
 export interface PeriodicElement {
 
@@ -30,7 +31,7 @@ export interface BodyDetalle{
   idLocalidad : number;
   desdePedido : string;
   hastaPedido : string;
-  idLote : number;
+  idLote : string;
   desdeLote : string;
   hastaLote : string;
 }
@@ -51,10 +52,21 @@ const ELEMENT_DATA: PeriodicElement[] = [
 
 export class PedidosListaComponent implements OnInit {
 
-  displayedColumns: string[] = ['select', 'Tipo', 'Codigo-Articulo-Nombre', 'Comprobante', 'Fecha-Entrega', 'Prov-Loc', 'Estado-Etapa', 'Lote', 'Borrar'];
+  @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
+  @ViewChild('buscarLote') buscarLoteInput: ElementRef;
+
+  displayedColumns: string[] = ['select', 'Tipo', 'CodigoArticulo','NombreArticulo', 'Comprobante', 'Fecha-Entrega', 'Provincia', 'Localidad', 'Estado','Etapa', 'Lote', 'Borrar'];
   dataSource = ELEMENT_DATA;  
   dataSource2: any;
   selection = new SelectionModel<PeriodicElement>(true, []);
+
+  lote: string = null;
+  busqueda: string;
+  length: number;
+  page: number;
+  size: number;
+  columna: string;
+  order: string;
 
 
   /*
@@ -105,6 +117,12 @@ export class PedidosListaComponent implements OnInit {
 
   ngOnInit(): void {
     
+    this.busqueda = ""
+    this.page = 0;
+    this.size = 10;
+    this.columna = 'codigoArticulo';
+    this.order = 'asc';
+
     this._pedidosListaService.getAllTipos().subscribe(params => {
       this.filtroTipos = params.datos;
     })
@@ -130,14 +148,14 @@ export class PedidosListaComponent implements OnInit {
 
     })
 
-    // this._pedidosListaService.getAllLocalidades().subscribe(params => {
-    //   this.filtroLocalidades = params.datos;
-    // })
+    this._pedidosListaService.getAllLocalidades().subscribe(params => {
+      this.filtroLocalidades = params.datos;
+    })
     
-    this.getDetalle();
+    this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
   }
 
-  getDetalle(){
+  getDetalle(busqueda, page, size, columna, order){
     let idTipo      :number =null;
     let idTurno     :number =null;
     let idOrigen    :number =null;
@@ -145,11 +163,11 @@ export class PedidosListaComponent implements OnInit {
     let idEtapa     :number =null;
     let idProvincia :number =null;
     let idLocalidad :number =null;
-    let desdePedido :string =null;
-    let hastaPedido :string =null;
-    let idLote      :number =null;
-    let desdeLote   :string =null;
-    let hastaLote   :string =null;
+    let desdePedido :string =this.pickerFiltroDesde;
+    let hastaPedido :string =this.pickerFiltroHasta;
+    let lote        :string =null;
+    let desdeLote   :string =this.pickerLoteDesde;
+    let hastaLote   :string =this.pickerLoteHasta;
 
     if (this.selectedTipo > 0 )
       idTipo = this.selectedTipo;
@@ -178,14 +196,14 @@ export class PedidosListaComponent implements OnInit {
     if (this.pickerFiltroHasta > 0 )
       hastaPedido = this.pickerFiltroHasta;
     
-    if (this.selectedTipo > 0 )
-      idLote = null;
+    if (this.lote !== null)
+      lote = this.lote;
     
-    if (this.selectedTipo > 0 )
-      desdeLote = null;	
+    if (this.pickerLoteDesde > 0 )
+      desdeLote = this.pickerLoteDesde;	
     
-    if (this.selectedTipo > 0 )
-      hastaLote = null;
+    if (this.pickerLoteHasta > 0 )
+      hastaLote = this.pickerLoteHasta;
 
     this.body.idTipo      = idTipo;
     this.body.idTurno     = idTurno;
@@ -196,31 +214,33 @@ export class PedidosListaComponent implements OnInit {
     this.body.idLocalidad = idLocalidad;
     this.body.desdePedido = desdePedido;
     this.body.hastaPedido = hastaPedido;
-    this.body.idLote      = idLote;
+    this.body.idLote      = lote;
     this.body.desdeLote   = desdeLote;
     this.body.hastaLote   = hastaLote;
     
-    this._pedidosListaService.getPedidoDetalle(this.body).subscribe(
+    this._pedidosListaService.getPedidoDetalle(this.body, busqueda, page, size, columna, order).subscribe(
       data => {
         this.dataSource2 = data.datos;
+        this.length = data.totalRegistros;
         console.log(this.dataSource2);
       }
     );
+    console.log(this.body);
   }
 
   selectTipo(event: Event) {
     this.selectedTipo = (event.target as HTMLSelectElement).value;
-    this.getDetalle();
+    // this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
   }
   
   selectTurno(event: Event) {
     this.selectedTurno = (event.target as HTMLSelectElement).value;
-    this.getDetalle();
+    // this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
   }
   
   selectOrigen(event: Event) {
     this.selectedOrigen = (event.target as HTMLSelectElement).value;
-    this.getDetalle();
+    // this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
   }
   
   selectEstado(event: Event) {
@@ -229,35 +249,37 @@ export class PedidosListaComponent implements OnInit {
       //Buscar Estado
       //console.log("Buscar Estado");
     }
-    //console.log("Estado: "+this.selectedEstado);
-    this.getDetalle();
+    console.log("Estado: "+this.selectedEstado);
+    // this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
   }
 
   selectEtapa(event: Event) {
     this.selectedEtapa = (event.target as HTMLSelectElement).value;
     if(this.selectedEstado !== 0){
       //Buscar Etapa
-      //console.log("Buscar Etapa");
+      console.log("Buscar Etapa");
     } else {
 
     }
-    this.getDetalle();
+    console.log("Etapa: "+this.selectedEtapa);
+    // this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
   }
 
   selectProvincia(event: Event) {
     this.selectedProvincia = (event.target as HTMLSelectElement).value;
-    this.selectedLocalidad = 0;
     if(this.selectedProvincia > 0){
       
       this._pedidosListaService.getAllLocalidadesPorProvincia(this.selectedProvincia).subscribe(params => {
         this.filtroLocalidades = params.datos;
       })
     } else {
+      this.selectedLocalidad = 0;
       this._pedidosListaService.getAllLocalidades().subscribe(params => {
         this.filtroLocalidades = params.datos;
       })
     }
-    this.getDetalle();
+    console.log("Provincia: "+this.selectedProvincia);
+    // this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
   }
 
   selectLocalidad(event: Event) {
@@ -265,10 +287,10 @@ export class PedidosListaComponent implements OnInit {
     if(this.selectedLocalidad > 0){
       this._pedidosListaService.getProvinciaPorLocalidad(this.selectedLocalidad).subscribe( params => {
         this.selectedProvincia = params.id;
-        // console.log("Provincia: "+this.selectedProvincia);
+        console.log("Provincia: "+this.selectedProvincia);
       })
     }
-    this.getDetalle();
+    // this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
   }
 
   // addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
@@ -303,17 +325,36 @@ export class PedidosListaComponent implements OnInit {
   }
 
   buscar(){
-    console.log("buscar");
+    this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
   }
 
-  search( event ) {
-    let search: any = document.getElementById('search');
-    let busqueda = search.value;
-    console.log(busqueda);
+  @Debounce(1000)  
+  searchCbte() {
+
+    this.busqueda = this.buscarCbteInput.nativeElement.value;
+
+    this.page = 0;
+    this.columna = 'id';
+
+    this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
+
   }
 
-  consultar(){
-    let ruta = `apps/pedidos/administracion/visualizacion/${1}`;
+  @Debounce(1000)  
+  searchLote() {
+
+    this.lote = this.buscarLoteInput.nativeElement.value;
+    if(this.lote === '')
+      this.lote =null;
+    this.page = 0;
+    this.columna = 'id';
+
+    this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
+
+  }
+
+  consultar(id){
+    let ruta = `apps/pedidos/administracion/visualizacion/${id}`;
     this._router.navigate([ruta]);
   }
 
@@ -359,4 +400,23 @@ export class PedidosListaComponent implements OnInit {
     {
         this._fuseSidebarService.getSidebar(key).toggleOpen();
     }  
+
+    sortData( event ) {
+        
+      this.page = 0;
+      this.columna = event.active;
+      
+      if (event.direction !== "")
+          this.order = event.direction;
+      
+      this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
+  }
+
+
+  paginar(e: any){
+      this.page = e.pageIndex;
+      this.size = e.pageSize;
+      
+      this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
+  }
 }

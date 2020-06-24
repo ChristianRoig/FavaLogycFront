@@ -18,15 +18,14 @@ export class PedidosVentaVisualizacionService
     getCabecera(id): Observable<any>
     {   
 
-        let ruta = `${BASE_URL}pedidosatrabajar/pedidocbte/detalle/${id}`;
+        let ruta = `${BASE_URL}pedidosatrabajar/pedidocabecera/${id}`;
         // console.log(ruta);
         return this._httpClient.get(ruta);
     }
 
-    getDetalle(id): Observable<any>
+    getDetalle(id, page, size, columna, order): Observable<any>
     {   
-
-        let ruta = `${BASE_URL}pedidosatrabajar/pedidodetalle/cabecera/${id}`;
+        let ruta = `${BASE_URL}pedidosatrabajar/pedidodetalle/cabecera/${id}/${page}/${size}/${columna}/${order}`;
         // console.log(ruta);
         return this._httpClient.get(ruta);
     }

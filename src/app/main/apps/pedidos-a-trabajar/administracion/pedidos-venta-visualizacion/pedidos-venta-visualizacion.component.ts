@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PedidosVentaVisualizacionService } from './pedidos-venta-visualizacion.service';
+import { Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 export interface PeriodicElement {
   name: string;
@@ -47,32 +49,70 @@ export class PedidosVentaVisualizacionComponent implements OnInit {
 
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   dataSource = ELEMENT_DATA;
-
+  subParametros: Subscription;
   
   displayedColumnsArticulos: string[] = ['lote','codigoArticulo','nombre','descripcion','cantidad','estado','etapa'];
   // dataSourceArticulos = ELEMENT_DATA_ARTICULOS;
   dataSourceArticulos: any;
-
+  idCabecera: any;
   cabecera: any;
 
-  constructor(private _service: PedidosVentaVisualizacionService) { }
+  length: number;
+  page: number;
+  size: number;
+  columna: string;
+  order: string;
+
+  constructor(private _service: PedidosVentaVisualizacionService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this._service.getCabecera(1).subscribe(params => {
+
+    this.page = 0;
+        this.size = 100;
+        this.columna = 'id';
+        this.order = 'asc';
+
+    this.subParametros = this.route.params.subscribe(params => {
+      this.idCabecera = params['id'];
+    })
+
+    this._service.getCabecera(this.idCabecera).subscribe(params => {
       if(params){
         this.cabecera = params;
-        let id = params.pedidoCabecera.id;
-        console.log("id: "+id);
         
-        this._service.getDetalle(id).subscribe(paramsArt => {
-          if(paramsArt){
-            this.dataSourceArticulos = paramsArt.datos;
-          }
-        });
+        this.buscarDetalle(this.page, this.size, this.columna, this.order);
       }
     });
     
 
   }
+
+  buscarDetalle(page, size, columna, order){
+    this._service.getDetalle(this.idCabecera,page, size, columna, order).subscribe(paramsArt => {
+      if(paramsArt){
+        this.dataSourceArticulos = paramsArt.datos;
+        this.length = paramsArt.totalRegistros;
+      }
+    });
+  }
+
+  sortData( event ) {
+        
+    this.page = 0;
+    this.columna = event.active;
+    
+    if (event.direction !== "")
+        this.order = event.direction;
+    
+    this.buscarDetalle(this.page, this.size, this.columna, this.order);
+  }
+
+  paginar(e: any){
+    this.page = e.pageIndex;
+    this.size = e.pageSize;
+    
+    this.buscarDetalle(this.page, this.size, this.columna, this.order);
+  }
+
 
 }

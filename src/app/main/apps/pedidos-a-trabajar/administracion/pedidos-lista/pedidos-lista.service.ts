@@ -17,7 +17,7 @@ export interface BodyDetalle{
     idLocalidad : number;
     desdePedido : string;
     hastaPedido : string;
-    idLote : number;
+    idLote : string;
     desdeLote : string;
     hastaLote : string;
   }
@@ -76,19 +76,19 @@ export class PedidosListaService
 
     getAllLocalidades(): Observable<any>
     {
-        let ruta = `${BASE_URL}pedidosatrabajar/localidad/`;
+        let ruta = `${BASE_URL}pedidosatrabajar/localidad/domicilio/`;
         return this._httpClient.get(ruta);
     }
 
     getAllLocalidadesPorProvincia(id:number): Observable<any>
     {
-        let ruta = `${BASE_URL}pedidosatrabajar/localidad/provincia/${id}`;
+        let ruta = `${BASE_URL}pedidosatrabajar/localidad/domicilio/provincia/${id}`;
         return this._httpClient.get(ruta);
     }
 
     getAllProvincias(): Observable<any>
     {
-        let ruta = `${BASE_URL}pedidosatrabajar/provincia/`;
+        let ruta = `${BASE_URL}pedidosatrabajar/provincia/domicilio/`;
         return this._httpClient.get(ruta);
     }
 
@@ -98,15 +98,18 @@ export class PedidosListaService
         return this._httpClient.get(ruta);
     }
 
-    getPedidoDetalle(body: BodyDetalle): Observable<any>
+    getPedidoDetalle(body: BodyDetalle, busqueda, page, size, columna, order): Observable<any>
     {
 
         let headers = new HttpHeaders({
             "Content-Type": "application/json"
         });
 
+        let buscar:string = '';
+        if (busqueda !== '')
+            buscar = `/${busqueda}`
 
-        let ruta = `${BASE_URL}pedidosatrabajar/pedidodetalle/porcomprobanteoarticulo/M/0/10/articulo/asc`;
+        let ruta = `${BASE_URL}pedidosatrabajar/pedidodetalle/porcomprobanteoarticulo${buscar}/${page}/${size}/${columna}/${order}`;
         
 
         return this._httpClient.post(ruta, body, {headers: headers});
