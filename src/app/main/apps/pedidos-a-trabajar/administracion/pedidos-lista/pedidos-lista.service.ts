@@ -17,7 +17,7 @@ export interface BodyDetalle{
     idLocalidad : number;
     desdePedido : string;
     hastaPedido : string;
-    idLote : string;
+    lote : string;
     desdeLote : string;
     hastaLote : string;
   }

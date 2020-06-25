@@ -25,8 +25,8 @@
     
                     <mat-form-field appearance="outline">
                         <mat-label>Lote</mat-label>
-                        <!-- <input #buscarLote (keyup)="searchLote()" matInput value="" placeholder="Buscar lote"> -->
-                        <input matInput value="" placeholder="Buscar lote">
+                        <input #buscarLote (keyup)="searchLote()" matInput value="" placeholder="Buscar lote">
+                        <!-- <input matInput value="" placeholder="Buscar lote"> -->
                         <mat-icon matSuffix>search</mat-icon>
                     </mat-form-field>  
     
@@ -396,8 +396,9 @@
             </mat-form-field>  
 
             <mat-form-field appearance="outline" fxFlex="50" class="ml-4">
-                <mat-label>Localidad</mat-label>
-                <select matNativeControl (change)="selectLocalidad($event)">
+                <!-- <mat-label>Localidad</mat-label> -->
+                <mat-label>{{ filtroLocalidades ? 'Localidad' : 'Cargando...'}}</mat-label>
+                <select matNativeControl (change)="selectLocalidad($event)" [disabled]="!filtroLocalidades">
                     <option [value]="0">TODOS</option>
                     <option *ngFor="let localidad of filtroLocalidades" [value]="localidad.id"
                         [selected]="selectedLocalidad === localidad.id"> {{ localidad.nombre }}</option>

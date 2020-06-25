@@ -31,7 +31,7 @@ export interface BodyDetalle{
   idLocalidad : number;
   desdePedido : string;
   hastaPedido : string;
-  idLote : string;
+  lote : string;
   desdeLote : string;
   hastaLote : string;
 }
@@ -108,7 +108,7 @@ export class PedidosListaComponent implements OnInit {
     idLocalidad : null,
     desdePedido : null,
     hastaPedido : null,
-    idLote      : null,
+    lote        : null,
     desdeLote   : null,
     hastaLote   : null
   };
@@ -214,7 +214,7 @@ export class PedidosListaComponent implements OnInit {
     this.body.idLocalidad = idLocalidad;
     this.body.desdePedido = desdePedido;
     this.body.hastaPedido = hastaPedido;
-    this.body.idLote      = lote;
+    this.body.lote        = lote;
     this.body.desdeLote   = desdeLote;
     this.body.hastaLote   = hastaLote;
     
