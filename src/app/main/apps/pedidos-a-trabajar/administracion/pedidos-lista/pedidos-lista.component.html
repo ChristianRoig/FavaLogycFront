@@ -5,49 +5,14 @@
 
         <div fxLayout="column">
 
-            <div fxLayout="row" class="content-card pb-4">
+            <!-- Filtros en Pantalla grande -->
+            <div fxHide.sm fxHide.xs  fxLayout="row" class="content-card pb-4">
     
                 <!-- LOTE -->
-                <div fxLayout="column" fxFlex="100" fxFlex.gt-sm="50" class="fuse-card p-24 mr-8">
+                <div fxFlex="100" fxFlex.gt-sm="50" class="fuse-card p-24 mr-8">
 
-                    <span fxLayout="row" fxLayoutAlign="space-between">
-
-                        <div class="h2 mb-24">
-                            Filtros por Lote
-                        </div>
-    
-                        <button fxShow fxHide.gt-sm mat-button (click)="toggleSidebarOpen('sidebarFilter')">
-                            <mat-icon>tune</mat-icon>
-                            Filtros por artículos
-                        </button>
-                    </span>
-    
-    
-                    <mat-form-field appearance="outline">
-                        <mat-label>Lote</mat-label>
-                        <input #buscarLote (keyup)="searchLote()" matInput value="" placeholder="Buscar lote">
-                        <!-- <input matInput value="" placeholder="Buscar lote"> -->
-                        <mat-icon matSuffix>search</mat-icon>
-                    </mat-form-field>  
-    
-                    <div fxLayout="row">
-        
-                        <mat-form-field appearance="outline" fxFlex="50" class="mr-4">
-                            <mat-label>Desde (lote)</mat-label>
-                            <input matInput [matDatepicker]="pickerLoteDesde" 
-                                (dateChange)="addEvent('pickerLoteDesde', $event)">
-                            <mat-datepicker-toggle matSuffix [for]="pickerLoteDesde"></mat-datepicker-toggle>
-                            <mat-datepicker #pickerLoteDesde></mat-datepicker>
-                        </mat-form-field>   
-    
-                        <mat-form-field appearance="outline" fxFlex="50" class="ml-4">
-                            <mat-label>Hasta (lote)</mat-label>
-                            <input matInput [matDatepicker]="pickerLoteHasta" 
-                                (dateChange)="addEvent('pickerLoteHasta', $event)">
-                            <mat-datepicker-toggle matSuffix [for]="pickerLoteHasta"></mat-datepicker-toggle>
-                            <mat-datepicker #pickerLoteHasta></mat-datepicker>
-                        </mat-form-field>                      
-                    </div>
+                    <ng-container *ngTemplateOutlet="filtrosLote"></ng-container>
+                    
     
                     <!-- <button mat-raised-button color="primary" (click)="crearLote()" class="mt-24 p-8">CREAR LOTE</button> -->
                 </div>
@@ -56,7 +21,7 @@
 
 
                 <!-- FILTROS -->
-                <span fxHide.sm fxHide.xs fxFlex="50" class="fuse-card p-24 ml-8">
+                <span fxFlex="50" class="fuse-card p-24 ml-8">
 
                     <ng-container *ngTemplateOutlet="filtros"></ng-container>
                 </span>
@@ -65,9 +30,24 @@
                 
     
             </div>
+            <!-- / Filtros en Pantalla grande -->
 
+
+            <!-- SECCION ARTICULOS -->
             <div class="fuse-card my-24" style="max-width: 100%;">
 
+                <!-- BOTON "FILTROS" -->
+                <span fxLayoutAlign="end">
+
+                    <button fxHide.gt-sm mat-button (click)="toggleSidebarOpen('sidebarFilter')" class="m-12">
+                        <mat-icon>tune</mat-icon>
+                        Filtros                
+                    </button> 
+                </span>
+                <!-- / BOTON "FILTROS" -->
+
+
+                <!-- TITULO/BUSCADOR/BOTON -->
                 <div fxLayout="row" fxLayoutAlign="space-between">
 
                     <div class="h2 m-24">Artículos</div>
@@ -89,32 +69,54 @@
                         </button>
                     </div>
                 </div>
+                <!-- / TITULO/BUSCADOR/BOTON -->
+
 
                 <ng-container *ngTemplateOutlet="articulos"></ng-container>
             </div>
+            <!-- / SECCION ARTICULOS -->
         </div>
 
 
 
     </div>
-
-
     <!-- / CONTENIDO -->
-
-
 </app-plantilla-fondo-simple>
-<br>
-<br>
-<br>
+
 
 
 <!-- SIDE BAR -->
-<fuse-sidebar name="sidebarFilter" class="theme-options-sidebar" position="right" [invisibleOverlay]="false">
+<fuse-sidebar name="sidebarFilter" class="theme-options-sidebar" position="right" [invisibleOverlay]="false" >
 
-    <span class="p-24">
+    <div fxLayout="column">
 
-        <ng-container *ngTemplateOutlet="filtros"></ng-container>
-    </span>
+        <!-- BOTON CERRAR -->
+        <span fxLayoutAlign="start">
+
+            <button fxHide.gt-sm mat-button (click)="toggleSidebarOpen('sidebarFilter')" class="mb-24">
+                <mat-icon>close</mat-icon>
+            </button> 
+        </span>
+        <!-- / BOTON CERRAR -->
+
+
+        <!-- FILTROS LOTE -->
+        <span class="p-24 pt-8">
+    
+            <ng-container *ngTemplateOutlet="filtrosLote"></ng-container>
+        </span>
+        <!-- / FILTROS LOTE -->
+
+
+        <!-- FILTROS ARTICULOS -->
+        <span class="p-24 pt-8">
+    
+            <ng-container *ngTemplateOutlet="filtros"></ng-container>
+        </span>
+        <!-- / FILTRO ARTICULOS -->
+
+    </div>
+
 </fuse-sidebar>
 <!-- / SIDE BAR -->
 
@@ -313,20 +315,16 @@
 <!-- / TEMPLATE LISTA -->
 
 
-<!-- FILTROS -->
+<!-- FILTROS ARTICULOS -->
 <ng-template #filtros>
     <form  fxLayout="column" name="form">
                 
         <span fxLayoutAlign="space-between">
 
             <div class="h2 mb-24">
-                <div fxHide.gt-sm class="pt-24"></div>
                 Filtros por Artículos
             </div>
-
-            <button fxHide.gt-sm mat-button (click)="toggleSidebarOpen('sidebarFilter')" class="mb-24">
-                <mat-icon>close</mat-icon>
-            </button>            
+          
         </span>
 
         <mat-form-field appearance="outline">
@@ -359,8 +357,6 @@
                 </select>
             </mat-form-field>     
         </div>
-
-
 
 
         <div fxLayout="row">
@@ -425,9 +421,52 @@
             </mat-form-field>                      
         </div>
 
-        <button mat-stroked-button (click)="buscar()" class="mb-24">
-            Buscar
+        <button mat-stroked-button color="accent" (click)="buscar()" class="mb-24">
+            Aplicar Filtros
         </button>
     </form>
 </ng-template>
-<!-- / FILTROS -->
+<!-- / FILTROS ARTICULOS -->
+
+
+<!-- FILTROS LOTE -->
+<ng-template #filtrosLote>
+
+    <div fxLayout="column">
+
+        <span fxLayout="row" fxLayoutAlign="space-between">
+        
+            <div class="h2 mb-24">
+                Filtros por Lote
+            </div>
+        </span>
+        
+        
+        <mat-form-field appearance="outline">
+            <mat-label>Lote</mat-label>
+            <input #buscarLote (keyup)="searchLote()" matInput value="" placeholder="Buscar lote">
+            <!-- <input matInput value="" placeholder="Buscar lote"> -->
+            <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>  
+        
+        <div fxLayout="row">
+        
+            <mat-form-field appearance="outline" fxFlex="50" class="mr-4">
+                <mat-label>Desde (lote)</mat-label>
+                <input matInput [matDatepicker]="pickerLoteDesde" 
+                    (dateChange)="addEvent('pickerLoteDesde', $event)">
+                <mat-datepicker-toggle matSuffix [for]="pickerLoteDesde"></mat-datepicker-toggle>
+                <mat-datepicker #pickerLoteDesde></mat-datepicker>
+            </mat-form-field>   
+        
+            <mat-form-field appearance="outline" fxFlex="50" class="ml-4">
+                <mat-label>Hasta (lote)</mat-label>
+                <input matInput [matDatepicker]="pickerLoteHasta" 
+                    (dateChange)="addEvent('pickerLoteHasta', $event)">
+                <mat-datepicker-toggle matSuffix [for]="pickerLoteHasta"></mat-datepicker-toggle>
+                <mat-datepicker #pickerLoteHasta></mat-datepicker>
+            </mat-form-field>                      
+        </div>
+    </div>
+</ng-template>
+<!-- / FILTROS LOTE -->
