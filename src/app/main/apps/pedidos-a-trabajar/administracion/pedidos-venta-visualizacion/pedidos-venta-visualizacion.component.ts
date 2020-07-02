@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { PedidosVentaVisualizacionService } from './pedidos-venta-visualizacion.service';
 import { Subscription } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
+import { MatDialog } from '@angular/material/dialog';
 
 export interface PeriodicElement {
   name: string;
@@ -63,14 +66,17 @@ export class PedidosVentaVisualizacionComponent implements OnInit {
   columna: string;
   order: string;
 
-  constructor(private _service: PedidosVentaVisualizacionService, private route: ActivatedRoute) { }
+  constructor(private _router: Router,
+              private _service: PedidosVentaVisualizacionService, 
+              private route: ActivatedRoute,
+              private _dialog: MatDialog) { }
 
   ngOnInit(): void {
 
     this.page = 0;
-        this.size = 100;
-        this.columna = 'id';
-        this.order = 'asc';
+    this.size = 100;
+    this.columna = 'id';
+    this.order = 'asc';
 
     this.subParametros = this.route.params.subscribe(params => {
       this.idCabecera = params['id'];
@@ -82,6 +88,22 @@ export class PedidosVentaVisualizacionComponent implements OnInit {
         
         this.buscarDetalle(this.page, this.size, this.columna, this.order);
       }
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
+        } else {
+          let titulo = 'Error al cargar filtros';
+          let mensaje = err.error.message.toString();
+          this.mostrarError(errStatus, titulo, mensaje);
+        }
+      }
     });
     
 
@@ -92,6 +114,22 @@ export class PedidosVentaVisualizacionComponent implements OnInit {
       if(paramsArt){
         this.dataSourceArticulos = paramsArt.datos;
         this.length = paramsArt.totalRegistros;
+      }
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
+        } else {
+          let titulo = 'Error al cargar filtros';
+          let mensaje = err.error.message.toString();
+          this.mostrarError(errStatus, titulo, mensaje);
+        }
       }
     });
   }
@@ -113,6 +151,31 @@ export class PedidosVentaVisualizacionComponent implements OnInit {
     
     this.buscarDetalle(this.page, this.size, this.columna, this.order);
   }
+
+  mostrarError(errStatus, titulo, mensaje){
+    const dialogRef = this._dialog.open( ModalErrorComponent, { 
+      data: {
+        titulo: titulo,
+        mensaje: mensaje
+      } 
+    });
+
+    dialogRef.afterClosed()
+      .subscribe( () => {
+        if (errStatus != 0) {  
+
+          this.page = 0;
+          this.size = 100;
+          this.columna = 'id';
+          this.order = 'asc';
+        
+          this.buscarDetalle(this.page, this.size, this.columna, this.order);
+          
+        } else {
+          this._router.navigate(['']);
+        }
+  });
+}
 
 
 }
