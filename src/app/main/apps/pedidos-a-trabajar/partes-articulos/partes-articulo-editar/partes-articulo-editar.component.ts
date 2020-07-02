@@ -87,29 +87,36 @@ export class PedidosPartesArticuloEditarComponent implements OnInit {
 
     editar(){
 
+      if(this.cantidad < 1){
+        let titulo = 'Error al Editar';
+        let mensaje = "La cantidad debe ser mayor a 1";
+        this.mostrarError(0, titulo, mensaje);
+      } else {
+
         this._pedidosPartesArticulosEditarService.putArticulo(this.id,this.cantidad).subscribe(
-            data => {
-              let titulo = 'Confirmación de Edición';
-              let mensaje = "Se actualizó el registro correctamente";
-              this.mostrarError(200, titulo, mensaje);
-            },
-            (err: HttpErrorResponse) => {
-                if (err.error instanceof Error) {
-                  console.log("Client-side error");
+          data => {
+            let titulo = 'Confirmación de Edición';
+            let mensaje = "Se actualizó el registro correctamente";
+            this.mostrarError(200, titulo, mensaje);
+          },
+          (err: HttpErrorResponse) => {
+              if (err.error instanceof Error) {
+                console.log("Client-side error");
+              } else {
+                let errStatus = err.status
+                if (errStatus == 0){
+                  let titulo = 'Error de Servidor';
+                  let mensaje = "Por favor comunicarse con Sistemas";
+                  this.mostrarError(errStatus, titulo, mensaje);
                 } else {
-                  let errStatus = err.status
-                  if (errStatus == 0){
-                    let titulo = 'Error de Servidor';
-                    let mensaje = "Por favor comunicarse con Sistemas";
-                    this.mostrarError(errStatus, titulo, mensaje);
-                  } else {
-                    let titulo = 'Error al Editar';
-                    let mensaje = err.error.message.toString();
-                    this.mostrarError(errStatus, titulo, mensaje);
-                  }
+                  let titulo = 'Error al Editar';
+                  let mensaje = err.error.message.toString();
+                  this.mostrarError(errStatus, titulo, mensaje);
                 }
               }
-          );
+            }
+        );
+      }
     }
 
     mostrarError(errStatus, titulo, mensaje){
@@ -122,10 +129,12 @@ export class PedidosPartesArticuloEditarComponent implements OnInit {
     
         dialogRef.afterClosed()
           .subscribe(result => {
-              if (errStatus != 0) {            
+              if (errStatus > 0) {            
                 this.volver();
               } else {
-                this._router.navigate(['']);
+                if (errStatus = 0) {
+                  this._router.navigate(['']);
+                } 
               }
           });
       }

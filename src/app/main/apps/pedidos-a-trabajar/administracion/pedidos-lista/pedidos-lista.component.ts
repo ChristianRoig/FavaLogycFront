@@ -4,6 +4,9 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { PedidosListaService } from './pedidos-lista.service';
 import { Debounce } from 'app/shared/decorators/debounce';
+import { MatDialog } from '@angular/material/dialog';
+import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
+import { HttpErrorResponse } from '@angular/common/http';
 
 export interface PeriodicElement {
 
@@ -69,6 +72,19 @@ export class PedidosListaComponent implements OnInit {
   order: string;
 
 
+  minDateDesdeFiltro: Date;
+  maxDateDesdeFiltro: Date;
+
+  minDateHastaFiltro: Date;
+  maxDateHastaFiltro: Date;
+
+  minDateDesdeLote: Date;
+  maxDateDesdeLote: Date;
+
+  minDateHastaLote: Date;
+  maxDateHastaLote: Date;
+
+
   /*
   Filtros
    */
@@ -113,7 +129,21 @@ export class PedidosListaComponent implements OnInit {
     hastaLote   : null
   };
 
-  constructor(private _router: Router, private _fuseSidebarService: FuseSidebarService, private _pedidosListaService: PedidosListaService) { }
+  constructor(private _router: Router, 
+              private _fuseSidebarService: FuseSidebarService, 
+              private _pedidosListaService: PedidosListaService,
+              private _dialog: MatDialog) { 
+
+    const currentYear = new Date().getFullYear();
+    this.minDateDesdeFiltro = new Date(currentYear - 5, 0, 1);
+    this.maxDateDesdeFiltro = new Date(currentYear + 1, 11, 31);
+    this.minDateHastaFiltro = new Date(currentYear - 5, 0, 1);
+    this.maxDateHastaFiltro = new Date(currentYear + 1, 11, 31);
+    this.minDateDesdeLote   = new Date(currentYear - 5, 0, 1);
+    this.maxDateDesdeLote   = new Date(currentYear + 1, 11, 31);
+    this.minDateHastaLote   = new Date(currentYear - 5, 0, 1);
+    this.maxDateHastaLote   = new Date(currentYear + 1, 11, 31);
+  }
 
   ngOnInit(): void {
     
@@ -123,36 +153,151 @@ export class PedidosListaComponent implements OnInit {
     this.columna = 'codigoArticulo';
     this.order = 'asc';
 
+    this.getfiltros();
+    
+    this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
+  }
+
+  getfiltros(){
     this._pedidosListaService.getAllTipos().subscribe(params => {
       this.filtroTipos = params.datos;
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
+        } else {
+          let titulo = 'Error al cargar filtros';
+          let mensaje = err.error.message.toString();
+          this.mostrarError(errStatus, titulo, mensaje);
+        }
+      }
     })
     
     this._pedidosListaService.getAllTurnos().subscribe(params => {
       this.filtroTurnos = params.datos;
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
+        } else {
+          let titulo = 'Error al cargar filtros';
+          let mensaje = err.error.message.toString();
+          this.mostrarError(errStatus, titulo, mensaje);
+        }
+      }
     })
     
     this._pedidosListaService.getAllOrigenes().subscribe(params => {
       this.filtroOrigenes = params.datos;
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
+        } else {
+          let titulo = 'Error al cargar filtros';
+          let mensaje = err.error.message.toString();
+          this.mostrarError(errStatus, titulo, mensaje);
+        }
+      }
     })
 
     this._pedidosListaService.getAllEstados().subscribe(params => {
       this.filtroEstados = params.datos;
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
+        } else {
+          let titulo = 'Error al cargar filtros';
+          let mensaje = err.error.message.toString();
+          this.mostrarError(errStatus, titulo, mensaje);
+        }
+      }
     })
 
     this._pedidosListaService.getAllEtapas().subscribe(params => {
       this.filtroEtapas = params.datos;
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
+        } else {
+          let titulo = 'Error al cargar filtros';
+          let mensaje = err.error.message.toString();
+          this.mostrarError(errStatus, titulo, mensaje);
+        }
+      }
     })
 
     this._pedidosListaService.getAllProvincias().subscribe(params => {
       this.filtroProvincias = params.datos;
-
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
+        } else {
+          let titulo = 'Error al cargar filtros';
+          let mensaje = err.error.message.toString();
+          this.mostrarError(errStatus, titulo, mensaje);
+        }
+      }
     })
 
     this._pedidosListaService.getAllLocalidades().subscribe(params => {
       this.filtroLocalidades = params.datos;
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
+        } else {
+          let titulo = 'Error al cargar filtros';
+          let mensaje = err.error.message.toString();
+          this.mostrarError(errStatus, titulo, mensaje);
+        }
+      }
     })
-    
-    this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
   }
 
   getDetalle(busqueda, page, size, columna, order){
@@ -163,11 +308,11 @@ export class PedidosListaComponent implements OnInit {
     let idEtapa     :number =null;
     let idProvincia :number =null;
     let idLocalidad :number =null;
-    let desdePedido :string =this.pickerFiltroDesde;
-    let hastaPedido :string =this.pickerFiltroHasta;
+    let desdePedido :string =null;
+    let hastaPedido :string =null;
     let lote        :string =null;
-    let desdeLote   :string =this.pickerLoteDesde;
-    let hastaLote   :string =this.pickerLoteHasta;
+    let desdeLote   :string =null;
+    let hastaLote   :string =null;
 
     if (this.selectedTipo > 0 )
       idTipo = this.selectedTipo;
@@ -190,19 +335,19 @@ export class PedidosListaComponent implements OnInit {
     if (this.selectedLocalidad > 0 )
       idLocalidad = this.selectedLocalidad;
     
-    if (this.pickerFiltroDesde > 0 )
+    if (this.pickerFiltroDesde)
       desdePedido = this.pickerFiltroDesde;
     
-    if (this.pickerFiltroHasta > 0 )
+    if (this.pickerFiltroHasta)
       hastaPedido = this.pickerFiltroHasta;
     
     if (this.lote !== null)
       lote = this.lote;
     
-    if (this.pickerLoteDesde > 0 )
+    if (this.pickerLoteDesde)
       desdeLote = this.pickerLoteDesde;	
     
-    if (this.pickerLoteHasta > 0 )
+    if (this.pickerLoteHasta)
       hastaLote = this.pickerLoteHasta;
 
     this.body.idTipo      = idTipo;
@@ -218,15 +363,69 @@ export class PedidosListaComponent implements OnInit {
     this.body.desdeLote   = desdeLote;
     this.body.hastaLote   = hastaLote;
     
+    console.log(this.body);
+
     this._pedidosListaService.getPedidoDetalle(this.body, busqueda, page, size, columna, order).subscribe(
       data => {
         this.dataSource2 = data.datos;
         this.length = data.totalRegistros;
-        console.log(this.dataSource2);
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error");
+        } else {
+          let errStatus = err.status
+          if (errStatus == 0){
+            let titulo = 'Error de Servidor';
+            let mensaje = "Por favor comunicarse con Sistemas";
+            this.mostrarError(errStatus, titulo, mensaje);
+          } else {
+            let titulo = 'Error al listar';
+            let mensaje = err.error.message.toString();
+            this.mostrarError(errStatus, titulo, mensaje);
+          }
+        }
       }
     );
-    console.log(this.body);
   }
+
+  mostrarError(errStatus, titulo, mensaje){
+    const dialogRef = this._dialog.open( ModalErrorComponent, { 
+      data: {
+        titulo: titulo,
+        mensaje: mensaje
+      } 
+    });
+
+    dialogRef.afterClosed()
+      .subscribe( () => {
+          if (errStatus != 0) {  
+
+            console.log("entre aca")
+
+            this.busqueda = "";
+            this.selectedTipo = 0;
+            this.selectedTurno = 0;
+            this.selectedOrigen = 0;
+            this.selectedEstado = 0;
+            this.selectedEtapa = 0;
+            this.selectedProvincia = 1;
+            this.selectedLocalidad = 1402;
+            this.pickerFiltroDesde= null;
+            this.pickerFiltroHasta= null;
+            this.pickerLoteDesde  = null;
+            this.pickerLoteHasta  = null;
+            this.buscarCbteInput.nativeElement.value = '';
+            this.buscarLoteInput.nativeElement.value = '';
+
+            this.getfiltros();
+            this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
+            
+          } else {
+            this._router.navigate(['']);
+          }
+      });
+}
 
   selectTipo(event: Event) {
     this.selectedTipo = (event.target as HTMLSelectElement).value;
@@ -268,17 +467,48 @@ export class PedidosListaComponent implements OnInit {
   selectProvincia(event: Event) {
     this.selectedProvincia = (event.target as HTMLSelectElement).value;
     if(this.selectedProvincia > 0){
-      
+      this.selectedLocalidad = 0;
       this._pedidosListaService.getAllLocalidadesPorProvincia(this.selectedProvincia).subscribe(params => {
         this.filtroLocalidades = params.datos;
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error");
+        } else {
+          let errStatus = err.status
+          if (errStatus == 0){
+            let titulo = 'Error de Servidor';
+            let mensaje = "Por favor comunicarse con Sistemas";
+            this.mostrarError(errStatus, titulo, mensaje);
+          } else {
+            let titulo = 'Error al cargar filtros';
+            let mensaje = err.error.message.toString();
+            this.mostrarError(errStatus, titulo, mensaje);
+          }
+        }
       })
     } else {
       this.selectedLocalidad = 0;
       this._pedidosListaService.getAllLocalidades().subscribe(params => {
         this.filtroLocalidades = params.datos;
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error");
+        } else {
+          let errStatus = err.status
+          if (errStatus == 0){
+            let titulo = 'Error de Servidor';
+            let mensaje = "Por favor comunicarse con Sistemas";
+            this.mostrarError(errStatus, titulo, mensaje);
+          } else {
+            let titulo = 'Error al cargar filtros';
+            let mensaje = err.error.message.toString();
+            this.mostrarError(errStatus, titulo, mensaje);
+          }
+        }
       })
     }
-    console.log("Provincia: "+this.selectedProvincia);
     // this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
   }
 
@@ -288,6 +518,22 @@ export class PedidosListaComponent implements OnInit {
       this._pedidosListaService.getProvinciaPorLocalidad(this.selectedLocalidad).subscribe( params => {
         this.selectedProvincia = params.id;
         console.log("Provincia: "+this.selectedProvincia);
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error");
+        } else {
+          let errStatus = err.status
+          if (errStatus == 0){
+            let titulo = 'Error de Servidor';
+            let mensaje = "Por favor comunicarse con Sistemas";
+            this.mostrarError(errStatus, titulo, mensaje);
+          } else {
+            let titulo = 'Error al cargar filtros';
+            let mensaje = err.error.message.toString();
+            this.mostrarError(errStatus, titulo, mensaje);
+          }
+        }
       })
     }
     // this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
@@ -299,23 +545,57 @@ export class PedidosListaComponent implements OnInit {
   // }
 
   addEvent( tipo, evento ) {
-    console.log("tipo "+ tipo +": "+evento.value._i.year+"-"+evento.value._i.month+"-"+evento.value._i.date);
-    let fecha = evento.value._i.year+"-"+(evento.value._i.month+1)+"-"+evento.value._i.date;
 
-    switch (tipo) {
-      case "pickerFiltroDesde":
-        this.pickerFiltroDesde = fecha;
-        break;
-      case "pickerFiltroHasta":
-        this.pickerFiltroHasta = fecha;
-        break;
-      case "pickerLoteDesde":
-        this.pickerLoteDesde = fecha;
-        break;
-      case "pickerLoteHasta":
-        this.pickerLoteHasta = fecha;
-        break;
+    console.log("evento value");
+    console.log(evento.value);
+    console.log("evento value");
+
+    if (evento.value) {
+      console.log("tipo "+ tipo +": "+evento.value._i.year+"-"+evento.value._i.month+"-"+evento.value._i.date);
+      let fecha = evento.value._i.year+"-"+(evento.value._i.month+1)+"-"+evento.value._i.date;
+  
+      switch (tipo) {
+        case "pickerFiltroDesde":
+          this.pickerFiltroDesde = fecha;
+          this.minDateHastaFiltro = evento.value;
+          break;
+        case "pickerFiltroHasta":
+          this.pickerFiltroHasta = fecha;
+          this.maxDateDesdeFiltro = evento.value;
+          break;
+        case "pickerLoteDesde":
+          this.pickerLoteDesde = fecha;
+          this.minDateHastaLote = evento.value;
+          break;
+        case "pickerLoteHasta":
+          this.pickerLoteHasta = fecha;
+          this.maxDateDesdeLote = evento.value;
+          break;
+      }
+    } else {
+      
+      const currentYear = new Date().getFullYear();
+
+      switch (tipo) {
+        case "pickerFiltroDesde":
+          this.pickerFiltroDesde = null;
+          this.minDateHastaFiltro = new Date(currentYear - 5, 0, 1);
+          break;
+        case "pickerFiltroHasta":
+          this.pickerFiltroHasta = null;
+          this.maxDateDesdeFiltro = new Date(currentYear + 1, 11, 31);
+          break;
+        case "pickerLoteDesde":
+          this.pickerLoteDesde = null;
+          this.minDateHastaLote = new Date(currentYear - 5, 0, 1);
+          break;
+        case "pickerLoteHasta":
+          this.pickerLoteHasta = null;
+          this.maxDateDesdeLote = new Date(currentYear + 1, 11, 31);
+          break;
+      }
     }
+
 
     console.log("pickerFiltroDesde: "+this.pickerFiltroDesde);
     console.log("pickerFiltroHasta: "+this.pickerFiltroHasta);
@@ -391,25 +671,25 @@ export class PedidosListaComponent implements OnInit {
   }
 
 
-    /**
-     * Toggle sidebar open
-     *
-     * @param key
-     */
-    toggleSidebarOpen(key): void
-    {
-        this._fuseSidebarService.getSidebar(key).toggleOpen();
-    }  
+  /**
+   * Toggle sidebar open
+   *
+   * @param key
+   */
+  toggleSidebarOpen(key): void
+  {
+      this._fuseSidebarService.getSidebar(key).toggleOpen();
+  }  
 
-    sortData( event ) {
-        
-      this.page = 0;
-      this.columna = event.active;
+  sortData( event ) {
       
-      if (event.direction !== "")
-          this.order = event.direction;
-      
-      this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
+    this.page = 0;
+    this.columna = event.active;
+    
+    if (event.direction !== "")
+        this.order = event.direction;
+    
+    this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
   }
 
 

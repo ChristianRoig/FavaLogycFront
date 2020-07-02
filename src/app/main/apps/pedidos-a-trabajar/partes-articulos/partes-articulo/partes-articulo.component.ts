@@ -34,7 +34,7 @@ export class PedidosPartesArticuloComponent implements OnInit {
         private _dialog: MatDialog ) { }
 
     ngOnInit(): void{
-        this.busqueda = " "
+        this.busqueda = ""
         this.page = 0;
         this.size = 10;
         this.columna = 'id';
@@ -46,7 +46,7 @@ export class PedidosPartesArticuloComponent implements OnInit {
     buscar(busqueda, page, size, columna, order){
 
         if(!busqueda){
-            busqueda = ' ';
+            busqueda = '';
         }
 
         this._pedidosPartesArticulosService.getPartesArticulos(busqueda, page, size, columna, order).subscribe(data => {

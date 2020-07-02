@@ -22,7 +22,13 @@ export class PedidosPartesArticulosService
      */
     getPartesArticulos(search, page, size, columna, order): Observable<any>
     {
-        let ruta = `${BASE_URL}pedidosatrabajar/articuloparte/porcodigoonombre/${search}/${page}/${size}/${columna}/${order}`;
+        let busqueda = ""
+
+        if(search != ""){
+            busqueda = `/${search}`
+        }
+
+        let ruta = `${BASE_URL}pedidosatrabajar/articuloparte/porcodigoonombre${busqueda}/${page}/${size}/${columna}/${order}`;
         return this._httpClient.get(ruta);
     }
 }

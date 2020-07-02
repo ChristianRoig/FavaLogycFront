@@ -16,12 +16,12 @@
                         <input matInput formControlName="email" placeholder="Usuario de dominio">
                         <mat-icon matSuffix class="secondary-text">mail</mat-icon>
                         <mat-error *ngIf="loginForm.get('email').hasError('required')">
-                            El Email es requerido
+                            El Usuario es requerido
                         </mat-error>
                         <mat-error
                             *ngIf="!loginForm.get('email').hasError('required') &&
                                     loginForm.get('email').hasError('email')">
-                            Por Favor, ingrese un mail válido
+                            Por Favor, ingrese un Usuario válido
                         </mat-error>
                     </mat-form-field>
 

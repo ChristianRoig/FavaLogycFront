@@ -16,6 +16,11 @@ export class PedidosCodigosBarraArticulosService
 
     getArticulos(busqueda, page, size, columna, order): Observable<any>
     {
-        return this._httpClient.get(`${BASE_URL}pedidosatrabajar/codigodebarras/porcodigoarticuloonombre/${busqueda}/${page}/${size}/${columna}/${order}`);
+        let search = ""
+
+        if(busqueda != ""){
+            search = `/${busqueda}`
+        }   
+        return this._httpClient.get(`${BASE_URL}pedidosatrabajar/codigodebarras/porcodigoarticuloonombre${search}/${page}/${size}/${columna}/${order}`);
     }
 }

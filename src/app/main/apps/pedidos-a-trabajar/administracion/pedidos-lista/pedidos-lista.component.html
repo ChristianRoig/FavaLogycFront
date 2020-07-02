@@ -53,8 +53,8 @@
                     <div class="h2 m-24">Artículos</div>
 
                     <mat-form-field appearance="outline" style="width: 100%;" class="mt-8 mx-12">
-                        <mat-label>Comprobante</mat-label>
-                        <input #buscarCbte (keyup)="searchCbte()" matInput value="" placeholder="Buscar comprobante">
+                        <mat-label>Código de Artículo o Comprobante</mat-label>
+                        <input #buscarCbte class="text-uppercase" (keyup)="searchCbte()" matInput value="" placeholder="Buscar Cód. Artículo o comprobante">
                         <mat-icon matSuffix>search</mat-icon>
                     </mat-form-field>                      
 
@@ -406,7 +406,9 @@
 
             <mat-form-field appearance="outline" fxFlex="50" class="mr-4">
                 <mat-label>Desde</mat-label>
-                <input matInput [matDatepicker]="pickerFiltroDesde" 
+                <input matInput 
+                    [min]="minDateDesdeFiltro" [max]="maxDateDesdeFiltro"    
+                    [matDatepicker]="pickerFiltroDesde" 
                     (dateChange)="addEvent('pickerFiltroDesde', $event)">
                 <mat-datepicker-toggle matSuffix [for]="pickerFiltroDesde"></mat-datepicker-toggle>
                 <mat-datepicker #pickerFiltroDesde></mat-datepicker>
@@ -414,7 +416,9 @@
 
             <mat-form-field appearance="outline" fxFlex="50" class="ml-4">
                 <mat-label>Hasta</mat-label>
-                <input matInput [matDatepicker]="pickerFiltroHasta" 
+                <input matInput 
+                    [min]="minDateHastaFiltro" [max]="maxDateHastaFiltro"    
+                    [matDatepicker]="pickerFiltroHasta" 
                     (dateChange)="addEvent('pickerFiltroHasta', $event)">
                 <mat-datepicker-toggle matSuffix [for]="pickerFiltroHasta"></mat-datepicker-toggle>
                 <mat-datepicker #pickerFiltroHasta></mat-datepicker>
@@ -453,7 +457,9 @@
         
             <mat-form-field appearance="outline" fxFlex="50" class="mr-4">
                 <mat-label>Desde (lote)</mat-label>
-                <input matInput [matDatepicker]="pickerLoteDesde" 
+                <input matInput 
+                    [min]="minDateDesdeLote" [max]="maxDateDesdeLote" 
+                    [matDatepicker]="pickerLoteDesde" 
                     (dateChange)="addEvent('pickerLoteDesde', $event)">
                 <mat-datepicker-toggle matSuffix [for]="pickerLoteDesde"></mat-datepicker-toggle>
                 <mat-datepicker #pickerLoteDesde></mat-datepicker>
@@ -461,7 +467,9 @@
         
             <mat-form-field appearance="outline" fxFlex="50" class="ml-4">
                 <mat-label>Hasta (lote)</mat-label>
-                <input matInput [matDatepicker]="pickerLoteHasta" 
+                <input matInput 
+                    [min]="minDateHastaLote" [max]="maxDateHastaLote" 
+                    [matDatepicker]="pickerLoteHasta" 
                     (dateChange)="addEvent('pickerLoteHasta', $event)">
                 <mat-datepicker-toggle matSuffix [for]="pickerLoteHasta"></mat-datepicker-toggle>
                 <mat-datepicker #pickerLoteHasta></mat-datepicker>

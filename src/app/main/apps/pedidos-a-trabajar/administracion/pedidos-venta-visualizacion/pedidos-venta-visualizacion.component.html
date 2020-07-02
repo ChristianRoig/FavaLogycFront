@@ -15,18 +15,18 @@
 
                     <mat-form-field appearance="outline">
                         <mat-label>Tipo</mat-label>
-                        <input matInput value="{{this.cabecera.pedidoTipo.nombre}}">
+                        <input matInput disabled value="{{this.cabecera.pedidoTipo.nombre}}">
                     </mat-form-field>   
 
                     <mat-form-field appearance="outline">
                         <mat-label>Comprobante</mat-label>
-                        <input matInput value="{{this.cabecera.pedidoCbte.nroCbte}}">
+                        <input matInput disabled value="{{this.cabecera.pedidoCbte.nroCbte}}">
                     </mat-form-field> 
 
-                    <mat-form-field appearance="outline">
+                    <!-- <mat-form-field appearance="outline">
                         <mat-label>Lote</mat-label>
-                        <input matInput value="8">
-                    </mat-form-field>   
+                        <input matInput disabled value="Lote 1 - 17/06/2020 - CENTRAL">
+                    </mat-form-field>    -->
                 </form>
 
     
@@ -112,13 +112,13 @@
       
         <!-- Symbol Column -->
         <ng-container matColumnDef="descripcion">
-            <th mat-sort-header="id" mat-header-cell *matHeaderCellDef> Descripción </th>
+            <th mat-header-cell *matHeaderCellDef> Descripción </th>
             <td mat-cell *matCellDef="let element"> {{element.articulo.descripcion}} </td>
         </ng-container>
 
         <!-- Symbol Column -->
         <ng-container matColumnDef="cantidad">
-            <th mat-sort-header="id" mat-header-cell *matHeaderCellDef> Cantidad </th>
+            <th mat-header-cell *matHeaderCellDef> Cantidad </th>
             <td mat-cell *matCellDef="let element"> 1 </td>
         </ng-container>
         

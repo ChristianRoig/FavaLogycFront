@@ -49,7 +49,7 @@ export class PedidosCodigosBarraComponent implements OnInit {
             this.codigoArticulo = params['id'];
         })
 
-        this.busqueda = " ";
+        this.busqueda = "";
         this.page = 0;
         this.size = 10;
         this.columna = 'id';
@@ -96,7 +96,7 @@ export class PedidosCodigosBarraComponent implements OnInit {
     buscar(codigoArticulo, busqueda, page, size, columna, order){
 
         if(!busqueda){
-          busqueda = ' ';
+          busqueda = '';
         }
         
         this._pedidosCodigosBarraService.getCodigosBarra(codigoArticulo, busqueda, page, size, columna, order).subscribe(

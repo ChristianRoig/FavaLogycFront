@@ -49,7 +49,7 @@ export class PedidosCodigosBarraArticulosComponent implements OnInit {
 
     ngOnInit(): void{   
         
-        this.busqueda = " "
+        this.busqueda = ""
         this.page = 0;
         this.size = 10;
         this.columna = 'id';
@@ -66,7 +66,7 @@ export class PedidosCodigosBarraArticulosComponent implements OnInit {
     buscar(busqueda, page, size, columna, order){
 
         if(!busqueda){
-            busqueda = ' ';
+            busqueda = '';
         }
 
         this._pedidosCodigosBarraArticulosService.getArticulos(busqueda, page, size, columna, order).subscribe( 
@@ -105,7 +105,7 @@ export class PedidosCodigosBarraArticulosComponent implements OnInit {
           .subscribe(result => {
               if (errStatus != 0) {            
 
-                this.busqueda = ' ';
+                this.busqueda = '';
                 this.buscarInput.nativeElement.value = '';
 
                 this.buscar(this.busqueda, this.page, this.size, this.columna, this.order);

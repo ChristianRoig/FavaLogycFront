@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 /**
  * @title Basic use of `<table mat-table>`
@@ -19,6 +20,9 @@ import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.componen
 })
 
 export class PedidosCodigosBarraAddComponent implements OnInit {
+    
+    form: FormGroup;
+  
     dataSource2: any;
     subParametros: Subscription;
     id:number;
@@ -33,7 +37,8 @@ export class PedidosCodigosBarraAddComponent implements OnInit {
         private _router: Router,
         private route: ActivatedRoute,
         private _pedidosCodigosBarraAddService: PedidosCodigosBarraAddService,
-        private _dialog: MatDialog
+        private _dialog: MatDialog,
+        private _formBuilder: FormBuilder
     )
     {
         
@@ -42,6 +47,12 @@ export class PedidosCodigosBarraAddComponent implements OnInit {
     
 
     ngOnInit(): void{
+
+        this.form = this._formBuilder.group({
+          codigoBarras   : ['', Validators.required],
+          descripcion: ['', Validators.required]
+        });
+
         this.subParametros = this.route.params.subscribe(params => {
             this.codigoArticulo = params['codArt'];
         })

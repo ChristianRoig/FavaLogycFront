@@ -19,7 +19,7 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Código de Barras</mat-label>
-        <input matInput [(ngModel)]='this.codigoDeBarras' [ngModelOptions]="{standalone: true}" autofocus>
+        <input matInput [(ngModel)]='this.codigoDeBarras' [ngModelOptions]="{standalone: true}" autofocus required>
       </mat-form-field>
       
       <br>
@@ -30,7 +30,7 @@
       </mat-form-field>
 
       <div class="mt-4 pt-4" fxLayout="row" fxLayoutAlign="space-between">
-        <button mat-raised-button color="accent" (click)="agregar()">Agregar</button>
+        <button mat-raised-button color="accent" [disabled]="!this.codigoDeBarras" (click)="agregar()">Agregar</button>
         <button mat-stroked-button class="mr-5px" (click)="volver()">Cancelar</button>
       </div>
     </form>
