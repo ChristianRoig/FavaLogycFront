@@ -401,8 +401,6 @@ export class PedidosListaComponent implements OnInit {
       .subscribe( () => {
           if (errStatus != 0) {  
 
-            console.log("entre aca")
-
             this.busqueda = "";
             this.selectedTipo = 0;
             this.selectedTurno = 0;
@@ -415,6 +413,7 @@ export class PedidosListaComponent implements OnInit {
             this.pickerFiltroHasta= null;
             this.pickerLoteDesde  = null;
             this.pickerLoteHasta  = null;
+            this.lote = null;
             this.buscarCbteInput.nativeElement.value = '';
             this.buscarLoteInput.nativeElement.value = '';
 

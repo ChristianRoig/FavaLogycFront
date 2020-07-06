@@ -31,13 +31,13 @@
     
         <mat-form-field appearance="outline">
           <mat-label>Cantidad</mat-label>
-          <input id="cantidad-editar" matInput [(ngModel)]='this.cantidad' [ngModelOptions]="{standalone: true}" type="number" min="1" autofocus>
+          <input id="cantidad-editar" matInput [(ngModel)]='this.cantidad' [ngModelOptions]="{standalone: true}" type="number" min="1" autofocus required>
         </mat-form-field>
     
 
         <div class="mt-4 pt-4" fxLayout="row" fxLayoutAlign="space-between">
 
-          <button mat-raised-button color="accent" (click)="editar()">Actualizar</button>
+          <button mat-raised-button [disabled]="this.cantidad < 1"  color="accent" (click)="editar()">Actualizar</button>
           <button mat-stroked-button class="mr-5px" (click)="volver()">Cancelar</button>
         </div>
       </form>
