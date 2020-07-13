@@ -83,7 +83,7 @@ export class PedidosPartesArticuloComponent implements OnInit {
           .subscribe( () => {
               if (errStatus != 0) {  
 
-                this.busqueda = ' ';
+                this.busqueda = '';
                 this.buscarInput.nativeElement.value = '';
 
                 this.buscar(this.busqueda, this.page, this.size, this.columna, this.order);
