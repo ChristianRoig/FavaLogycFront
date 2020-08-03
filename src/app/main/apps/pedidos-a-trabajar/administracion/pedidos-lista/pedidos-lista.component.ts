@@ -7,8 +7,9 @@ import { Debounce } from 'app/shared/decorators/debounce';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 import { HttpErrorResponse } from '@angular/common/http';
+import { stringify } from 'querystring';
 
-export interface PeriodicElement {
+export interface Articulos {
 
   Id: number;
   Tipo: string;
@@ -39,7 +40,7 @@ export interface BodyDetalle{
   hastaLote : string;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
+const ELEMENT_DATA: Articulos[] = [
   {Id: 1,Tipo: "Venta", CodigoArticulo: "ATCLLED110", Nombre: "TCL LED 50\" P8M SMART",    Comprobante: "B0001700006163",    FechaEntrega: "10/05/2020",    Prov: "Bs.As.",    Loc: "Pinamar",    Estado: "INICIAL",       Etapa: "INICIAL",    Lote: 0},
   {Id: 2,Tipo: "Venta", CodigoArticulo: "MPLAPLA010", Nombre: "Mueble Madera 1 puerta",    Comprobante: "B0009000012349",    FechaEntrega: "10/05/2020",    Prov: "Bs.As.",    Loc: "Pinamar",    Estado: "INICIAL",       Etapa: "INICIAL",    Lote: 0},
   {Id: 3,Tipo: "Venta", CodigoArticulo: "MPLAPLA010", Nombre: "Mueble Madera 1 puerta",    Comprobante: "B0009000012349",    FechaEntrega: "10/05/2020",    Prov: "Bs.As.",    Loc: "Minamar",    Estado: "EN PROCESO",    Etapa: "EN LOTE",    Lote: 4},
@@ -61,15 +62,15 @@ export class PedidosListaComponent implements OnInit {
   displayedColumns: string[] = ['select', 'Tipo', 'CodigoArticulo','NombreArticulo', 'Comprobante', 'Fecha-Entrega', 'Provincia', 'Localidad', 'Estado','Etapa', 'Lote', 'Borrar'];
   dataSource = ELEMENT_DATA;  
   dataSource2: any;
-  selection = new SelectionModel<PeriodicElement>(true, []);
+  selection = new SelectionModel<Articulos>(true, []);
 
   lote: string = null;
-  busqueda: string;
-  length: number;
-  page: number;
-  size: number;
-  columna: string;
-  order: string;
+  busqueda: string = "";
+  length: number = 0;
+  page: number = 0;
+  size: number = 10;
+  columna: string = 'codigoArticulo';
+  order: string = 'asc';
 
 
   minDateDesdeFiltro: Date;
@@ -147,15 +148,36 @@ export class PedidosListaComponent implements OnInit {
 
   ngOnInit(): void {
     
+    // this.resetFiltros();    
+
+    this.getfiltros();
+    
+    this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
+  }
+
+  resetFiltros(){
+
     this.busqueda = ""
     this.page = 0;
     this.size = 10;
     this.columna = 'codigoArticulo';
     this.order = 'asc';
 
-    this.getfiltros();
-    
-    this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
+    this.busqueda = "";
+    this.selectedTipo = 0;
+    this.selectedTurno = 0;
+    this.selectedOrigen = 0;
+    this.selectedEstado = 0;
+    this.selectedEtapa = 0;
+    this.selectedProvincia = 1;
+    this.selectedLocalidad = 1402;
+    this.pickerFiltroDesde= null;
+    this.pickerFiltroHasta= null;
+    this.pickerLoteDesde  = null;
+    this.pickerLoteHasta  = null;
+    this.lote = null;
+    this.buscarCbteInput.nativeElement.value = '';
+    this.buscarLoteInput.nativeElement.value = '';
   }
 
   getfiltros(){
@@ -363,7 +385,7 @@ export class PedidosListaComponent implements OnInit {
     this.body.desdeLote   = desdeLote;
     this.body.hastaLote   = hastaLote;
     
-    console.log(this.body);
+    // console.log(this.body);
 
     this._pedidosListaService.getPedidoDetalle(this.body, busqueda, page, size, columna, order).subscribe(
       data => {
@@ -399,24 +421,9 @@ export class PedidosListaComponent implements OnInit {
 
     dialogRef.afterClosed()
       .subscribe( () => {
-          if (errStatus != 0) {  
+          if (errStatus != 0) {
 
-            this.busqueda = "";
-            this.selectedTipo = 0;
-            this.selectedTurno = 0;
-            this.selectedOrigen = 0;
-            this.selectedEstado = 0;
-            this.selectedEtapa = 0;
-            this.selectedProvincia = 1;
-            this.selectedLocalidad = 1402;
-            this.pickerFiltroDesde= null;
-            this.pickerFiltroHasta= null;
-            this.pickerLoteDesde  = null;
-            this.pickerLoteHasta  = null;
-            this.lote = null;
-            this.buscarCbteInput.nativeElement.value = '';
-            this.buscarLoteInput.nativeElement.value = '';
-
+            this.resetFiltros();
             this.getfiltros();
             this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
             
@@ -424,7 +431,7 @@ export class PedidosListaComponent implements OnInit {
             this._router.navigate(['']);
           }
       });
-}
+  }
 
   selectTipo(event: Event) {
     this.selectedTipo = (event.target as HTMLSelectElement).value;
@@ -637,14 +644,25 @@ export class PedidosListaComponent implements OnInit {
     this._router.navigate([ruta]);
   }
 
-  confirmacionBorrar(){
-    console.log("borrar");
+  anular(id){
+    let ruta = `apps/pedidos/administracion/anular/${id}`;
+    console.log(ruta);
+    this._router.navigate([ruta]);
   }
 
   crearLote() {
 
     console.log(this.selection);
+
+    localStorage.setItem('Lote',JSON.stringify(this.selection));
     
+    let ruta = `apps/pedidos/administracion/addLote`;
+    console.log(ruta);
+    this._router.navigate([ruta]);
+  }
+
+  agregarPedido() {
+    console.log("Agregar pedido");
   }
 
 
@@ -662,7 +680,7 @@ export class PedidosListaComponent implements OnInit {
   }
 
   /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: PeriodicElement): string {
+  checkboxLabel(row?: Articulos): string {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }

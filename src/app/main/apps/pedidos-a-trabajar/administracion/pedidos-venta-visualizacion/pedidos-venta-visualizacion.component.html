@@ -9,18 +9,27 @@
 
                 <form class="p-24" fxLayout="column" fxLayoutAlign="center" fxFlex="1 0 auto" name="form">
 
-                    <div class="h2 mb-24">
-                        Pedido <strong>{{this.idCabecera}}</strong>
+                    <div>
+                        <div class="h2 mb-24">
+                            <!-- <button mat-mini-fab color="primary" class="mr-5px" (click)="volver()">
+                                <mat-icon>reply</mat-icon>
+                            </button> -->
+                            <button mat-icon-button color="primary" class="mr-5px" (click)="volver()">
+                                <mat-icon>reply</mat-icon>
+                            </button>
+                            Pedido <strong>{{this.idCabecera}}</strong>
+                        </div>
                     </div>
 
                     <mat-form-field appearance="outline">
                         <mat-label>Tipo</mat-label>
-                        <input matInput disabled value="{{this.cabecera.pedidoTipo.nombre}}">
+                        <input matInput disabled value="{{this.cabecera ? this.cabecera.pedidoTipo.nombre : ''}}">
                     </mat-form-field>   
 
                     <mat-form-field appearance="outline">
                         <mat-label>Comprobante</mat-label>
-                        <input matInput disabled value="{{this.cabecera.pedidoCbte.nroCbte}}">
+                        <!-- <input matInput disabled value="{{this.cabecera.pedidoCbte.nroCbte}}"> -->
+                        <input matInput disabled value="{{this.cabecera ? this.cabecera.pedidoCbte.nroCbte : ''}}">
                     </mat-form-field> 
 
                     <!-- <mat-form-field appearance="outline">
@@ -35,14 +44,14 @@
                     <mat-card fxLayout="column" class="primary-50-bg p-24 pr-48">
     
                         <span class="mat-title mb-4">Cliente</span>
-                        <span class="mat-body-1">{{cabecera.pedidoCliente.codigo}}</span>
-                        <span class="mat-body-1">{{cabecera.pedidoCliente.nombre}}</span>
+                        <span class="mat-body-1">{{this.cabecera ? this.cabecera.pedidoCliente.codigo : ''}}</span>
+                        <span class="mat-body-1">{{this.cabecera ? this.cabecera.pedidoCliente.nombre : ''}}</span>
         
                         <span class="mat-title mt-24 mb-4">Origen</span>
-                        <span class="mat-body-1">{{cabecera.pedidoOrigen.nombre}}</span>
+                        <span class="mat-body-1">{{this.cabecera ? this.cabecera.pedidoOrigen.nombre : ''}}</span>
 
-                        <span class="mat-title mt-24 mb-4">Destino</span>
-                        <span class="mat-body-1">Buenos Aires - Miramar</span>
+                        <!-- <span class="mat-title mt-24 mb-4">Destino</span>
+                        <span class="mat-body-1">Buenos Aires - Miramar</span> -->
                     </mat-card>
     
                 </div>
@@ -59,19 +68,23 @@
                 </mat-tab>
         
                 <mat-tab label="CUPA">
-                    <ng-container *ngTemplateOutlet="prueba"></ng-container>
+                    <ng-container *ngTemplateOutlet="cupa"></ng-container>
                 </mat-tab>
         
                 <mat-tab label="Comprobantes">
-                    <ng-container *ngTemplateOutlet="prueba"></ng-container>
+                    <ng-container *ngTemplateOutlet="comprobantes"></ng-container>
                 </mat-tab>
         
                 <mat-tab label="Datos de entrega">
-                    <ng-container *ngTemplateOutlet="prueba"></ng-container>
+                    <ng-container *ngTemplateOutlet="datosEntrega"></ng-container>
                 </mat-tab>
-        
+                
                 <mat-tab label="Otros datos">
-                    <ng-container *ngTemplateOutlet="prueba"></ng-container>
+                    <ng-container *ngTemplateOutlet="otrosDatos"></ng-container>
+                </mat-tab>
+                
+                <mat-tab label="Trazabilidad">
+                    <ng-container *ngTemplateOutlet="trazabilidad"></ng-container>
                 </mat-tab>
             </mat-tab-group>            
         </div>
@@ -112,10 +125,10 @@
         </ng-container>
       
         <!-- Symbol Column -->
-        <ng-container matColumnDef="descripcion">
+        <!-- <ng-container matColumnDef="descripcion">
             <th mat-header-cell *matHeaderCellDef> Descripción </th>
             <td mat-cell *matCellDef="let element"> {{element.articulo.descripcion}} </td>
-        </ng-container>
+        </ng-container> -->
 
         <!-- Symbol Column -->
         <ng-container matColumnDef="cantidad">
@@ -137,14 +150,321 @@
       
         <tr mat-header-row *matHeaderRowDef="displayedColumnsArticulos"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumnsArticulos;"></tr>
-      </table>
+    </table>
 
-      <div contenido class=" mb-4">
+    <div contenido class=" mb-4">
         <mat-paginator [length]="length"
             [pageIndex]="page"
             [pageSize]="size"
             [pageSizeOptions]="[5, 10, 15, 100]"
             (page) = "paginar($event)">
+        </mat-paginator>
+    </div>
+</ng-template>
+
+<ng-template #cupa>
+
+    <!-- lote','cupa', 'descripcionCupa', 'codigoArticulo', 'codigoBarras', 'descripcionCodigoBarras', 'estado', 'etapa -->
+
+    <table mat-table matSort (matSortChange)="sortDataCUPA($event)" [dataSource]="dataSourceArticulos" class="mat-elevation-z8" style="width: 100%;">
+      
+        <!-- Lote Column -->
+        <ng-container matColumnDef="lote">
+            <th mat-sort-header="idLote" mat-header-cell *matHeaderCellDef> Lote </th>
+            <td mat-cell *matCellDef="let element"> 1 </td>
+        </ng-container>
+      
+        <!-- CUPA Column -->
+        <ng-container matColumnDef="cupa">
+            <th mat-sort-header="cupa" mat-header-cell *matHeaderCellDef> CUPA </th>
+            <td mat-cell *matCellDef="let element"> 01234567890753 </td>
+        </ng-container>
+      
+        <!-- Descripcion CUPA Column -->
+        <ng-container matColumnDef="descripcionCupa">
+            <th mat-sort-header="descripcionCupa" mat-header-cell *matHeaderCellDef> Descripción CUPA </th>
+            <td mat-cell *matCellDef="let element"> Parte Arriba </td>
+        </ng-container>
+      
+        <!-- codigoArticulo Column -->
+        <ng-container matColumnDef="codigoArticulo">
+            <th mat-sort-header="codigoArticulo" mat-header-cell *matHeaderCellDef> Código Artículo </th>
+            <td mat-cell *matCellDef="let element"> MPLAPLA010 </td>
+        </ng-container>
+      
+        <!-- codigoBarras Column -->
+        <ng-container matColumnDef="codigoBarras">
+            <th mat-sort-header="codigoBarras" mat-header-cell *matHeaderCellDef> Código Barras </th>
+            <td mat-cell *matCellDef="let element"> 012541232654122 </td>
+        </ng-container>
+      
+        <!-- descripcionCodigoBarras Column -->
+        <ng-container matColumnDef="descripcionCodigoBarras">
+            <th mat-sort-header="descripcionCodigoBarras" mat-header-cell *matHeaderCellDef> Descripción Código Barras </th>
+            <td mat-cell *matCellDef="let element"> Partida Verano </td>
+        </ng-container>
+      
+        <!-- estado Column -->
+        <ng-container matColumnDef="estado">
+            <th mat-sort-header="estado" mat-header-cell *matHeaderCellDef> Estado </th>
+            <td mat-cell *matCellDef="let element"> EN PROCESO </td>
+        </ng-container>
+      
+        <!-- etapa Column -->
+        <ng-container matColumnDef="etapa">
+            <th mat-sort-header="etapa" mat-header-cell *matHeaderCellDef> Etapa </th>
+            <td mat-cell *matCellDef="let element"> EN LOTE </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsCupa"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsCupa;"></tr>
+    </table>
+
+    <div contenido class=" mb-4">
+        <mat-paginator [length]="length"
+            [pageIndex]="page"
+            [pageSize]="size"
+            [pageSizeOptions]="[5, 10, 15, 100]"
+            (page) = "paginar($event)">
+        </mat-paginator>
+    </div>
+</ng-template>
+
+
+<ng-template #comprobantes>
+
+    <!-- 'tipoCbte', 'nroCbte', 'fechaCbte' -->
+
+    <table mat-table matSort (matSortChange)="sortDataComprobantes($event)" [dataSource]="dataSourceArticulos" class="mat-elevation-z8" style="width: 100%;">
+      
+        <!-- tipoCbte Column -->
+        <ng-container matColumnDef="tipoCbte">
+            <th mat-sort-header="tipoCbte" mat-header-cell *matHeaderCellDef> Tipo Cbte </th>
+            <td mat-cell *matCellDef="let element"> Venta </td>
+        </ng-container>
+
+        <!-- nroCbte Column -->
+        <ng-container matColumnDef="nroCbte">
+            <th mat-sort-header="nroCbte" mat-header-cell *matHeaderCellDef> Nro Cbte </th>
+            <td mat-cell *matCellDef="let element"> A0008800000363 </td>
+        </ng-container>
+
+        <!-- nroCbte Column -->
+        <ng-container matColumnDef="fechaCbte">
+            <th mat-sort-header="fechaCbte" mat-header-cell *matHeaderCellDef> Fecha Cbte </th>
+            <td mat-cell *matCellDef="let element"> 22/07/1992 </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsCbts"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsCbts;"></tr>
+    </table>
+
+    <div contenido class=" mb-4">
+        <mat-paginator [length]="length"
+            [pageIndex]="page"
+            [pageSize]="size"
+            [pageSizeOptions]="[5, 10, 15, 100]"
+            (page) = "paginar($event)">
+        </mat-paginator>
+    </div>
+</ng-template>
+
+<ng-template #datosEntrega>
+
+    <!-- 'lote', 'codigoArticulo', 'direccion', 'localidad', 'provincia', 'codigoPostal', 'contacto', 'telefono', 'mail', 'observaciones', 'fechaEntrega', 'turno' -->
+
+    <table mat-table matSort (matSortChange)="sortDataDatosEntrega($event)" [dataSource]="dataSourceDatosEntrega" class="mat-elevation-z8" style="width: 100%;">
+      
+        <!-- lote Column -->
+        <ng-container matColumnDef="lote">
+            <th mat-sort-header="lote" mat-header-cell *matHeaderCellDef> Lote </th>
+            <td mat-cell *matCellDef="let element"> {{element.pedidoLote ? element.pedidoLote.id : ''}} </td>
+        </ng-container>
+      
+        <!-- codigoArticulo Column -->
+        <ng-container matColumnDef="codigoArticulo">
+            <th mat-sort-header="codigoArticulo" mat-header-cell *matHeaderCellDef> Código Artículo </th>
+            <td mat-cell *matCellDef="let element"> {{element.articulo.codigoArticulo}} </td>
+        </ng-container>
+      
+        <!-- direccion Column -->
+        <ng-container matColumnDef="direccion">
+            <th mat-sort-header="direccion" mat-header-cell *matHeaderCellDef> Direccion </th>
+            <td mat-cell *matCellDef="let element"> {{element.pedidoDomicilioEntrega.direccion}} </td>
+        </ng-container>
+      
+        <!-- localidad Column -->
+        <ng-container matColumnDef="localidad">
+            <th mat-sort-header="localidad" mat-header-cell *matHeaderCellDef> Localidad </th>
+            <td mat-cell *matCellDef="let element"> {{element.pedidoDomicilioEntrega.sysLocalidad.nombre}} </td>
+        </ng-container>
+      
+        <!-- provincia Column -->
+        <ng-container matColumnDef="provincia">
+            <th mat-sort-header="provincia" mat-header-cell *matHeaderCellDef> Provincia </th>
+            <td mat-cell *matCellDef="let element"> {{element.pedidoDomicilioEntrega.sysLocalidad.sysProvincia.nombre}} </td>
+        </ng-container>
+      
+        <!-- codigoPostal Column -->
+        <ng-container matColumnDef="codigoPostal">
+            <th mat-sort-header="codigoPostal" mat-header-cell *matHeaderCellDef> Código Postal </th>
+            <td mat-cell *matCellDef="let element"> {{element.pedidoDomicilioEntrega.sysLocalidad.codigoPostal}} </td>
+        </ng-container>
+      
+        <!-- contacto Column -->
+        <ng-container matColumnDef="contacto">
+            <th mat-sort-header="contacto" mat-header-cell *matHeaderCellDef> Contacto </th>
+            <td mat-cell *matCellDef="let element"> {{element.pedidoDomicilioEntrega.contacto ? element.pedidoDomicilioEntrega.contacto : ''}} </td>
+        </ng-container>
+      
+        <!-- telefono Column -->
+        <ng-container matColumnDef="telefono">
+            <th mat-sort-header="telefono" mat-header-cell *matHeaderCellDef> Teléfono </th>
+            <td mat-cell *matCellDef="let element"> {{element.pedidoDomicilioEntrega.telefono ? element.pedidoDomicilioEntrega.telefono : ''}} </td>
+        </ng-container>
+      
+        <!-- mail Column -->
+        <ng-container matColumnDef="mail">
+            <th mat-sort-header="mail" mat-header-cell *matHeaderCellDef> Mail </th>
+            <td mat-cell *matCellDef="let element"> {{element.pedidoDomicilioEntrega.mail ? element.pedidoDomicilioEntrega.mail : ''}} </td>
+        </ng-container>
+      
+        <!-- observaciones Column -->
+        <ng-container matColumnDef="observaciones">
+            <th mat-sort-header="observaciones" mat-header-cell *matHeaderCellDef> Observaciones </th>
+            <td mat-cell *matCellDef="let element"> {{element.pedidoDomicilioEntrega.observaciones ? element.pedidoDomicilioEntrega.observaciones : ''}} </td>
+        </ng-container>
+      
+        <!-- fechaEntrega Column -->
+        <ng-container matColumnDef="fechaEntrega">
+            <th mat-sort-header="fechaEntrega" mat-header-cell *matHeaderCellDef> Fecha Entrega </th>
+            <td mat-cell *matCellDef="let element"> {{element.pedidoDomicilioEntrega.fechaDeEntrega}} </td>
+        </ng-container>
+      
+        <!-- turno Column -->
+        <ng-container matColumnDef="turno">
+            <th mat-sort-header="turno" mat-header-cell *matHeaderCellDef> Turno </th>
+            <td mat-cell *matCellDef="let element"> {{element.pedidoDomicilioEntrega.pedidoTurno.nombre}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsDatosEntrega"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsDatosEntrega;"></tr>
+    </table>
+
+    <div contenido class=" mb-4">
+        <mat-paginator [length]="lengthDatosEntrega"
+            [pageIndex]="pageDatosEntrega"
+            [pageSize]="sizeDatosEntrega"
+            [pageSizeOptions]="[5, 10, 15, 100]"
+            (page) = "paginar($event)">
+        </mat-paginator>
+    </div>
+</ng-template>
+
+<ng-template #otrosDatos>
+
+    <!-- Codigo Articulo, Nombre, Accion, Observaciones 
+         MPLAPLA013 Mueble Madera 4 puertas Anulacion Unidad rota-->
+
+    <table mat-table matSort (matSortChange)="sortDataOtrosDatos($event)" [dataSource]="dataSourceArticulos" class="mat-elevation-z8" style="width: 100%;">
+      
+        <!-- Codigo Articulo Column -->
+        <ng-container matColumnDef="codigoArticulo">
+            <th mat-sort-header="codigoArticulo" mat-header-cell *matHeaderCellDef> Código Artículo </th>
+            <td mat-cell *matCellDef="let element"> MPLAPLA013 </td>
+        </ng-container>
+
+        <!-- Nombre Column -->
+        <ng-container matColumnDef="nombre">
+            <th mat-sort-header="nombre" mat-header-cell *matHeaderCellDef> Nombre </th>
+            <td mat-cell *matCellDef="let element"> Mueble Madera 4 puertas </td>
+        </ng-container>
+
+        <!-- Accion Column -->
+        <ng-container matColumnDef="accion">
+            <th mat-sort-header="accion" mat-header-cell *matHeaderCellDef> Accion </th>
+            <td mat-cell *matCellDef="let element"> Anulacion </td>
+        </ng-container>
+
+        <!-- Observaciones Column -->
+        <ng-container matColumnDef="observaciones">
+            <th mat-sort-header="observaciones" mat-header-cell *matHeaderCellDef> Observaciones </th>
+            <td mat-cell *matCellDef="let element"> Unidad rota </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsOtrosDatos"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsOtrosDatos;"></tr>
+    </table>
+
+    <div contenido class=" mb-4">
+        <mat-paginator [length]="length"
+            [pageIndex]="page"
+            [pageSize]="size"
+            [pageSizeOptions]="[5, 10, 15, 100]"
+            (page) = "paginar($event)">
+        </mat-paginator>
+    </div>
+</ng-template>
+
+<ng-template #trazabilidad>
+
+    <!-- 'Fecha', 'Estado', 'Etapa', 'Accion', 'Cupa', 'Codigo Articulo', 'Usuario' -->
+
+    <table mat-table matSort (matSortChange)="sortDataTrazabilidad($event)" [dataSource]="dataSourceTrazabilidad" class="mat-elevation-z8" style="width: 100%;">
+      
+        <!-- Fecha Column -->
+        <ng-container matColumnDef="fecha">
+            <th mat-sort-header="fecha" mat-header-cell *matHeaderCellDef> Fecha </th>
+            <td mat-cell *matCellDef="let element"> {{element.fechaAlta}} </td>
+        </ng-container>
+      
+        <!-- Estado Column -->
+        <ng-container matColumnDef="estado">
+            <th mat-sort-header="estado" mat-header-cell *matHeaderCellDef> Estado </th>
+            <td mat-cell *matCellDef="let element"> {{element.trazabilidadAccion.pedidoEtapa.pedidoEstado.nombre}} </td>
+        </ng-container>
+      
+        <!-- Etapa Column -->
+        <ng-container matColumnDef="etapa">
+            <th mat-sort-header="etapa" mat-header-cell *matHeaderCellDef> Etapa </th>
+            <td mat-cell *matCellDef="let element"> {{element.trazabilidadAccion.pedidoEtapa.nombre}} </td>
+        </ng-container>
+      
+        <!-- Accion Column -->
+        <ng-container matColumnDef="accion">
+            <th mat-sort-header="accion" mat-header-cell *matHeaderCellDef> Acción </th>
+            <td mat-cell *matCellDef="let element"> {{element.trazabilidadAccion.nombre}} </td>
+        </ng-container>
+      
+        <!-- Cupa Column -->
+        <ng-container matColumnDef="cupa">
+            <th mat-sort-header="cupa" mat-header-cell *matHeaderCellDef> CUPA </th>
+            <td mat-cell *matCellDef="let element"> {{element.pedidoDetalleParte.articuloCupa ? element.pedidoDetalleParte.articuloCupa.codigoUnicoParteArticulo : ''}} </td>
+            <!-- <td mat-cell *matCellDef="let element"> VEEEEERRRR!!! </td> -->
+        </ng-container>
+      
+        <!-- Codigo Articulo Column -->
+        <ng-container matColumnDef="codigoArticulo">
+            <th mat-sort-header="codigoArticulo" mat-header-cell *matHeaderCellDef> Código Artículo </th>
+            <td mat-cell *matCellDef="let element"> {{element.pedidoDetalleParte.pedidoDetalle.articulo.codigoArticulo}} </td>
+        </ng-container>
+      
+        <!-- Usuario Column -->
+        <ng-container matColumnDef="usuario">
+            <th mat-sort-header="usuario" mat-header-cell *matHeaderCellDef> Usuario </th>
+            <td mat-cell *matCellDef="let element"> {{element.sysUsuario.nombre}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsTrazabilidad"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsTrazabilidad;"></tr>
+    </table>
+
+    <div contenido class=" mb-4">
+        <mat-paginator [length]="lengthTrazabilidad"
+            [pageIndex]="pageTrazabilidad"
+            [pageSize]="sizeTrazabilidad"
+            [pageSizeOptions]="[5, 10, 15, 100]"
+            (page) = "paginarTrazabilidad($event)">
         </mat-paginator>
     </div>
 </ng-template>
@@ -165,13 +485,13 @@
             <th mat-header-cell *matHeaderCellDef> Código Artìculo </th>
             <td mat-cell *matCellDef="let element"> {{element.codigoArticulo}} </td>
         </ng-container>
-      
+
         <!-- Weight Column -->
         <ng-container matColumnDef="nombre">
             <th mat-header-cell *matHeaderCellDef> Nombre </th>
             <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
         </ng-container>
-      
+
         <!-- Symbol Column -->
         <ng-container matColumnDef="descripcion">
             <th mat-header-cell *matHeaderCellDef> Descripción </th>
@@ -183,7 +503,7 @@
             <th mat-header-cell *matHeaderCellDef> Cantidad </th>
             <td mat-cell *matCellDef="let element"> 1 </td>
         </ng-container>
-        
+
         <!-- Symbol Column -->
         <ng-container matColumnDef="estado">
             <th mat-header-cell *matHeaderCellDef> Estado </th>
@@ -195,10 +515,10 @@
             <th mat-header-cell *matHeaderCellDef> Etapa </th>
             <td mat-cell *matCellDef="let element"> {{element.etapa}} </td>
         </ng-container>
-      
+
         <tr mat-header-row *matHeaderRowDef="displayedColumnsArticulos"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumnsArticulos;"></tr>
-      </table>
+    </table>
 </ng-template>
 
 
@@ -235,5 +555,5 @@
       
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
+    </table>
 </ng-template>

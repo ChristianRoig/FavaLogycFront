@@ -6,7 +6,7 @@ import { environment } from 'environments/environment';
 const BASE_URL = environment.server + environment.baseUrl;
 
 @Injectable()
-export class PedidosVentaVisualizacionService
+export class PedidosAnularService
 {
     constructor(
         private _httpClient: HttpClient
@@ -26,20 +26,6 @@ export class PedidosVentaVisualizacionService
     getDetalle(id, page, size, columna, order): Observable<any>
     {   
         let ruta = `${BASE_URL}pedidosatrabajar/pedidodetalle/cabecera/${id}/${page}/${size}/${columna}/${order}`;
-        // console.log(ruta);
-        return this._httpClient.get(ruta);
-    }
-
-    getTrazabilidad(id, page, size, columna, order): Observable<any>
-    {   
-        let ruta = `${BASE_URL}pedidosatrabajar/trazabilidad/gestion/pedidocabecera/${id}/${page}/${size}/${columna}/${order}`;
-        // console.log(ruta);
-        return this._httpClient.get(ruta);
-    }
-
-    getDatosEntrega(id, page, size, columna, order): Observable<any>
-    {   
-        let ruta = `${BASE_URL}pedidosatrabajar/datosentrega/cabecera/${id}/${page}/${size}/${columna}/${order}`;
         // console.log(ruta);
         return this._httpClient.get(ruta);
     }
