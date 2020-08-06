@@ -210,11 +210,7 @@ export class PedidosAnularComponent implements OnInit {
   }
 
   anular(){
-    console.log("anular");
-    console.log(this.selection);
     this.armarArrarIds();
-    // console.log(this.toDelete);
-    // this.volver();
   }
 
   volver(){
