@@ -71,7 +71,9 @@ export class PedidosAnularComponent implements OnInit {
   idCabecera: any;
   cabecera: any;
   
-  selection = new SelectionModel<PeriodicElement>(true, []);
+  selection = new SelectionModel<any>(true, []);
+
+  toDelete = new Array<number>();
 
   motivo: any = '';
 
@@ -162,12 +164,7 @@ export class PedidosAnularComponent implements OnInit {
       .subscribe( () => {
         if (errStatus != 0) {  
 
-          this.page = 0;
-          this.size = 100;
-          this.columna = 'id';
-          this.order = 'asc';
-        
-          this.buscarDetalle(this.page, this.size, this.columna, this.order);
+          this.volver();
           
         } else {
           this._router.navigate(['']);
@@ -215,12 +212,56 @@ export class PedidosAnularComponent implements OnInit {
   anular(){
     console.log("anular");
     console.log(this.selection);
-    this.volver();
+    this.armarArrarIds();
+    // console.log(this.toDelete);
+    // this.volver();
   }
 
   volver(){
     let ruta = `apps/pedidos/administracion/pedidos-lista`;
     this._router.navigate([ruta]);
   }
+
+
+
+
+  armarArrarIds(){
+
+    for (let elemento of this.selection.selected){
+      this.toDelete.push(elemento.id);
+    }
+
+    this._service.deletePedido(this.motivo, this.toDelete)
+    .subscribe(
+      data => {
+
+        let titulo = 'Confirmación de Borrado';
+        let mensaje = "Se borró el registro correctamente";
+        this.mostrarError(200, titulo, mensaje);
+      },
+      (err: HttpErrorResponse) => {
+        console.log(err);
+        if (err.error instanceof Error) {
+          console.log("Client-side error");
+        } else {
+          let errStatus = err.status
+          if (errStatus == 0){
+            let titulo = 'Error de Servidor';
+            let mensaje = "Por favor comunicarse con Sistemas";
+            this.mostrarError(errStatus, titulo, mensaje);
+          } else {
+            let titulo = 'Error al eliminar';
+            let mensaje = err.error.message.toString();
+            this.mostrarError(errStatus, titulo, mensaje);
+          }
+        }
+      }
+    );
+
+  }
+
+
+
+
 
 }

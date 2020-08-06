@@ -18,6 +18,10 @@
             <div class="logo mb-24 mb-sm-0"
                  fxLayout="row" fxLayoutAlign="start center">
 
+                 <button mat-icon-button (click)="back()">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+
                 <span titulo class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">{{ titulo }}</span>
             </div>
             <!-- / APP TITLE -->

@@ -57,16 +57,12 @@ export class PedidosVentaVisualizacionComponent implements OnInit {
   // displayedColumnsArticulos: string[] = ['lote','codigoArticulo','nombre','descripcion','cantidad','estado','etapa'];
   displayedColumnsArticulos: string[] = ['lote','codigoArticulo','nombre','cantidad','estado','etapa'];
   displayedColumnsCupa: string[] = ['lote','cupa', 'descripcionCupa', 'codigoArticulo', 'codigoBarras', 'descripcionCodigoBarras', 'estado', 'etapa'];
-  displayedColumnsCbts: string[] = ['tipoCbte', 'nroCbte', 'fechaCbte'];
-  displayedColumnsDatosEntrega: string[] = ['lote', 'codigoArticulo', 'direccion', 'localidad', 'provincia', 'codigoPostal', 'contacto', 'telefono', 'mail', 'observaciones', 'fechaEntrega', 'turno'];
   displayedColumnsOtrosDatos: string[] = ['codigoArticulo', 'nombre', 'accion', 'observaciones'];
-  displayedColumnsTrazabilidad: string[] = ['fecha', 'estado', 'etapa', 'accion', 'cupa', 'codigoArticulo', 'usuario'];
+  
 
 
   // dataSourceArticulos = ELEMENT_DATA_ARTICULOS;
   dataSourceArticulos: any;
-  dataSourceTrazabilidad: any;
-  dataSourceDatosEntrega: any;
   idCabecera: any;
   cabecera: any;
 
@@ -82,12 +78,6 @@ export class PedidosVentaVisualizacionComponent implements OnInit {
   columnaTrazabilidad: string;
   orderTrazabilidad: string;
 
-  lengthDatosEntrega: number;
-  pageDatosEntrega: number;
-  sizeDatosEntrega: number;
-  columnaDatosEntrega: string;
-  orderDatosEntrega: string;
-
 
 
   constructor(private _router: Router,
@@ -102,16 +92,6 @@ export class PedidosVentaVisualizacionComponent implements OnInit {
     this.columna = 'id';
     this.order = 'asc';
 
-    this.pageTrazabilidad = 0;
-    this.sizeTrazabilidad = 50;
-    this.columnaTrazabilidad = 'fechaAlta';
-    this.orderTrazabilidad = 'asc';
-
-    this.pageDatosEntrega = 0;
-    this.sizeDatosEntrega = 50;
-    this.columnaDatosEntrega = 'direccion';
-    this.orderDatosEntrega = 'asc';
-
     this.subParametros = this.route.params.subscribe(params => {
       this.idCabecera = params['id'];
     })
@@ -121,8 +101,6 @@ export class PedidosVentaVisualizacionComponent implements OnInit {
         this.cabecera = params;
         // console.log(this.cabecera)
         this.buscarDetalle(this.page, this.size, this.columna, this.order);
-        this.buscarTrazabilidad(this.pageTrazabilidad, this.sizeTrazabilidad, this.columnaTrazabilidad, this.orderTrazabilidad);
-        this.buscarDatosEntrega(this.pageDatosEntrega, this.sizeDatosEntrega, this.columnaDatosEntrega, this.orderDatosEntrega);
       }
     },
     (err: HttpErrorResponse) => {
@@ -171,60 +149,6 @@ export class PedidosVentaVisualizacionComponent implements OnInit {
     });
   }
 
-  buscarTrazabilidad(page, size, columna, order){
-    this._service.getTrazabilidad(this.idCabecera,page, size, columna, order).subscribe(paramsArt => {
-    // this._service.getTrazabilidad(, page, size, columna, order).subscribe(paramsArt => {
-      if(paramsArt){
-        this.dataSourceTrazabilidad = paramsArt.datos;
-        this.lengthTrazabilidad = paramsArt.totalRegistros;
-        console.log(this.dataSourceTrazabilidad);
-      }
-    },
-    (err: HttpErrorResponse) => {
-      if (err.error instanceof Error) {
-        console.log("Client-side error");
-      } else {
-        let errStatus = err.status
-        if (errStatus == 0){
-          let titulo = 'Error de Servidor';
-          let mensaje = "Por favor comunicarse con Sistemas";
-          this.mostrarError(errStatus, titulo, mensaje);
-        } else {
-          let titulo = 'Error al cargar Trazabilidad';
-          let mensaje = err.error.message.toString();
-          this.mostrarError(errStatus, titulo, mensaje);
-        }
-      }
-    });
-  }
-
-  buscarDatosEntrega(page, size, columna, order){
-    // this._service.getTrazabilidad(this.idCabecera,page, size, columna, order).subscribe(paramsArt => {
-    this._service.getDatosEntrega(this.idCabecera, page, size, columna, order).subscribe(paramsArt => {
-      if(paramsArt){
-        this.dataSourceDatosEntrega = paramsArt.datos;
-        this.lengthDatosEntrega = paramsArt.totalRegistros;
-        // console.log(this.dataSourceArticulos);
-      }
-    },
-    (err: HttpErrorResponse) => {
-      if (err.error instanceof Error) {
-        console.log("Client-side error");
-      } else {
-        let errStatus = err.status
-        if (errStatus == 0){
-          let titulo = 'Error de Servidor';
-          let mensaje = "Por favor comunicarse con Sistemas";
-          this.mostrarError(errStatus, titulo, mensaje);
-        } else {
-          let titulo = 'Error al cargar Datos de Entrega';
-          let mensaje = err.error.message.toString();
-          this.mostrarError(errStatus, titulo, mensaje);
-        }
-      }
-    });
-  }
-
   sortData( event ) {
         
     this.page = 0;
@@ -258,17 +182,6 @@ export class PedidosVentaVisualizacionComponent implements OnInit {
     this.buscarDetalle(this.page, this.size, this.columna, this.order);
   }
 
-  sortDataTrazabilidad( event ) {
-        
-    this.pageTrazabilidad = 0;
-    this.columnaTrazabilidad = event.active;
-    
-    if (event.direction !== "")
-        this.orderTrazabilidad = event.direction;
-    
-    this.buscarTrazabilidad(this.pageTrazabilidad, this.sizeTrazabilidad, this.columnaTrazabilidad, this.orderTrazabilidad);
-  }
-
   sortDataOtrosDatos( event ) {
         
     this.page = 0;
@@ -278,17 +191,6 @@ export class PedidosVentaVisualizacionComponent implements OnInit {
         this.order = event.direction;
     
     this.buscarDetalle(this.page, this.size, this.columna, this.order);
-  }
-
-  sortDataDatosEntrega( event ) {
-        
-    this.pageDatosEntrega = 0;
-    this.columnaDatosEntrega = event.active;
-    
-    if (event.direction !== "")
-    this.orderDatosEntrega = event.direction;
-    
-        this.buscarDatosEntrega(this.pageDatosEntrega, this.sizeDatosEntrega, this.columnaDatosEntrega, this.orderDatosEntrega);
   }
 
   paginar(e: any){

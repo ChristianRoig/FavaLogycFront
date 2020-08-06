@@ -4,6 +4,7 @@ import { PlantillaFondoComponent } from './plantilla-fondo/plantilla-fondo.compo
 import { FuseSharedModule } from '@fuse/shared.module';
 import { FuseWidgetModule } from '@fuse/components';
 import { PlantillaFondoSimpleComponent } from './plantilla-fondo-simple/plantilla-fondo-simple.component';
+import { MaterialDesignModule } from 'app/material-design/material-design.module';
 
 
 
@@ -16,6 +17,7 @@ import { PlantillaFondoSimpleComponent } from './plantilla-fondo-simple/plantill
     CommonModule,
     FuseSharedModule,
     FuseWidgetModule,
+    MaterialDesignModule
   ],
   exports: [
     PlantillaFondoComponent,

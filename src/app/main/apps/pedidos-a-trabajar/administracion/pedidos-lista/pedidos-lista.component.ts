@@ -390,6 +390,7 @@ export class PedidosListaComponent implements OnInit {
     this._pedidosListaService.getPedidoDetalle(this.body, busqueda, page, size, columna, order).subscribe(
       data => {
         this.dataSource2 = data.datos;
+        // console.log(this.dataSource2);
         this.length = data.totalRegistros;
       },
       (err: HttpErrorResponse) => {
@@ -668,7 +669,7 @@ export class PedidosListaComponent implements OnInit {
 
   isAllSelected() {
     const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.length;
+    const numRows = this.dataSource2.length;
     return numSelected === numRows;
   }
 
@@ -676,7 +677,7 @@ export class PedidosListaComponent implements OnInit {
   masterToggle() {
     this.isAllSelected() ?
         this.selection.clear() :
-        this.dataSource.forEach(row => this.selection.select(row));
+        this.dataSource2.forEach(row => this.selection.select(row));
   }
 
   /** The label for the checkbox on the passed row */

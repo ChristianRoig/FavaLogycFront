@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-plantilla-fondo',
@@ -10,9 +11,14 @@ export class PlantillaFondoComponent implements OnInit {
 
   @Input('titulo') titulo: string = '';
 
-  constructor() { }
+  constructor(private _location : Location) { }
 
   ngOnInit(): void {
+  }
+
+  back() {
+    this._location.back();
+    localStorage.clear();
   }
 
 }

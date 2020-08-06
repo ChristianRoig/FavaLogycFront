@@ -18,6 +18,10 @@ import { PedidosAnularComponent } from './pedidos-venta-anular/pedidos-anular.co
 import { PedidosAnularService } from './pedidos-venta-anular/pedidos-anular.service';
 import { PedidosAgregarLoteComponent } from './pedidos-agregar-lote/pedidos-agregar-lote.component';
 import { PedidosAgregarLoteService } from './pedidos-agregar-lote/pedidos-agregar-lote.service';
+import { PedidosDatosEntregaComponent } from './pedidos-venta-visualizacion/pedidos-datos-entrega/pedidos-datos-entrega.component';
+import { PedidosTrazabilidadComponent } from './pedidos-venta-visualizacion/pedidos-trazabilidad/pedidos-trazabilidad.component';
+import { PedidosComprobantesComponent } from './pedidos-venta-visualizacion/pedidos-comprobantes/pedidos-comprobantes.component';
+import { PedidosCupaComponent } from './pedidos-venta-visualizacion/pedidos-cupa copy/pedidos-cupa.component';
 // import { MaterialDesignModule } from 'app/material-design/material-design.module';
 
 const routes: Routes = [
@@ -44,7 +48,11 @@ const routes: Routes = [
         PedidosListaComponent,
         PedidosVentaVisualizacionComponent,
         PedidosAnularComponent,
-        PedidosAgregarLoteComponent
+        PedidosAgregarLoteComponent,
+        PedidosDatosEntregaComponent,
+        PedidosTrazabilidadComponent,
+        PedidosComprobantesComponent,
+        PedidosCupaComponent
     ],
     imports     : [
         CommonModule,

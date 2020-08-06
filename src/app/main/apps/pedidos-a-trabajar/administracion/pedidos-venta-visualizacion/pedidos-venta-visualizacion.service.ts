@@ -42,6 +42,21 @@ export class PedidosVentaVisualizacionService
         let ruta = `${BASE_URL}pedidosatrabajar/datosentrega/cabecera/${id}/${page}/${size}/${columna}/${order}`;
         // console.log(ruta);
         return this._httpClient.get(ruta);
+    
     }
 
+    getComprobantes(id, page, size, columna, order): Observable<any>
+    {   
+        let ruta = `${BASE_URL}pedidosatrabajar/pedidocbte/cabecera/${id}/${page}/${size}/${columna}/${order}`;
+        // console.log(ruta);
+        return this._httpClient.get(ruta);
+    }
+
+    getCUPA(id, page, size, columna, order): Observable<any>
+    {   
+        let ruta = `${BASE_URL}pedidosatrabajar/pedidoparte/cabecera/${id}/${page}/${size}/${columna}/${order}`;
+        // console.log(ruta);
+        return this._httpClient.get(ruta);
+    }
+    
 }
