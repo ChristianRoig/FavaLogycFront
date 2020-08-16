@@ -51,7 +51,6 @@ export class PedidosDatosEntregaComponent implements OnInit {
   }
 
   buscarDatosEntrega(page, size, columna, order){
-    // this._service.getTrazabilidad(this.idCabecera,page, size, columna, order).subscribe(paramsArt => {
     this._service.getDatosEntrega(this.idCabecera, page, size, columna, order).subscribe(paramsArt => {
       if(paramsArt){
         this.dataSourceDatosEntrega = paramsArt.datos;

@@ -1,7 +1,6 @@
 import {Component, ViewEncapsulation, OnInit, Input} from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
@@ -55,7 +54,6 @@ export class PedidosComprobantesComponent implements OnInit {
 
   buscarComprobantes(page, size, columna, order){
     this._service.getComprobantes(this.idCabecera,page, size, columna, order).subscribe(paramsArt => {
-    // this._service.getTrazabilidad(, page, size, columna, order).subscribe(paramsArt => {
       if(paramsArt){
         this.dataSourceComprobantes = paramsArt.datos;
         this.length = paramsArt.totalRegistros;

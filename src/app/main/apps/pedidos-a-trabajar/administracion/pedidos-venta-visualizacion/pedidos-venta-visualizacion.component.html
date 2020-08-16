@@ -22,14 +22,9 @@
 
                     <mat-form-field appearance="outline">
                         <mat-label>Comprobante</mat-label>
-                        <!-- <input matInput disabled value="{{this.cabecera.pedidoCbte.nroCbte}}"> -->
                         <input matInput disabled value="{{this.cabecera ? this.cabecera.pedidoCbte.nroCbte : ''}}">
                     </mat-form-field> 
 
-                    <!-- <mat-form-field appearance="outline">
-                        <mat-label>Lote</mat-label>
-                        <input matInput disabled value="Lote 1 - 17/06/2020 - CENTRAL">
-                    </mat-form-field>    -->
                 </form>
 
     
@@ -43,9 +38,6 @@
         
                         <span class="mat-title mt-24 mb-4">Origen</span>
                         <span class="mat-body-1">{{this.cabecera ? this.cabecera.pedidoOrigen.nombre : ''}}</span>
-
-                        <!-- <span class="mat-title mt-24 mb-4">Destino</span>
-                        <span class="mat-body-1">Buenos Aires - Miramar</span> -->
                     </mat-card>
     
                 </div>
@@ -73,10 +65,6 @@
                     <ng-container *ngTemplateOutlet="datosEntrega"></ng-container>
                 </mat-tab>
                 
-                <mat-tab label="Otros datos">
-                    <ng-container *ngTemplateOutlet="otrosDatos"></ng-container>
-                </mat-tab>
-                
                 <mat-tab label="Trazabilidad">
                     <ng-container *ngTemplateOutlet="trazabilidad"></ng-container>
                 </mat-tab>
@@ -102,7 +90,6 @@
         <!-- Position Column -->
         <ng-container matColumnDef="lote">
             <th mat-sort-header="idLote" mat-header-cell *matHeaderCellDef> Lote </th>
-            <!-- <td mat-cell *matCellDef="let element"> 1 </td> -->
             <td mat-cell *matCellDef="let element"> {{ element.pedidoLote ? element.pedidoLote.id : ''}} </td>
         </ng-container>
       
@@ -117,12 +104,6 @@
             <th mat-sort-header="nombreArticulo" mat-header-cell *matHeaderCellDef> Nombre </th>
             <td mat-cell *matCellDef="let element"> {{element.articulo.nombre}} </td>
         </ng-container>
-      
-        <!-- Symbol Column -->
-        <!-- <ng-container matColumnDef="descripcion">
-            <th mat-header-cell *matHeaderCellDef> Descripción </th>
-            <td mat-cell *matCellDef="let element"> {{element.articulo.descripcion}} </td>
-        </ng-container> -->
 
         <!-- Symbol Column -->
         <ng-container matColumnDef="cantidad">
@@ -167,51 +148,6 @@
 
 <ng-template #datosEntrega>
     <pedidos-datos-entrega idCabecera='{{this.idCabecera}}'></pedidos-datos-entrega>
-</ng-template>
-
-<ng-template #otrosDatos>
-
-    <!-- Codigo Articulo, Nombre, Accion, Observaciones 
-         MPLAPLA013 Mueble Madera 4 puertas Anulacion Unidad rota-->
-
-    <table mat-table matSort (matSortChange)="sortDataOtrosDatos($event)" [dataSource]="dataSourceArticulos" class="mat-elevation-z8" style="width: 100%;">
-      
-        <!-- Codigo Articulo Column -->
-        <ng-container matColumnDef="codigoArticulo">
-            <th mat-sort-header="codigoArticulo" mat-header-cell *matHeaderCellDef> Código Artículo </th>
-            <td mat-cell *matCellDef="let element"> MPLAPLA013 </td>
-        </ng-container>
-
-        <!-- Nombre Column -->
-        <ng-container matColumnDef="nombre">
-            <th mat-sort-header="nombre" mat-header-cell *matHeaderCellDef> Nombre </th>
-            <td mat-cell *matCellDef="let element"> Mueble Madera 4 puertas </td>
-        </ng-container>
-
-        <!-- Accion Column -->
-        <ng-container matColumnDef="accion">
-            <th mat-sort-header="accion" mat-header-cell *matHeaderCellDef> Accion </th>
-            <td mat-cell *matCellDef="let element"> Anulacion </td>
-        </ng-container>
-
-        <!-- Observaciones Column -->
-        <ng-container matColumnDef="observaciones">
-            <th mat-sort-header="observaciones" mat-header-cell *matHeaderCellDef> Observaciones </th>
-            <td mat-cell *matCellDef="let element"> Unidad rota </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumnsOtrosDatos"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumnsOtrosDatos;"></tr>
-    </table>
-
-    <div contenido class=" mb-4">
-        <mat-paginator [length]="length"
-            [pageIndex]="page"
-            [pageSize]="size"
-            [pageSizeOptions]="[5, 10, 15, 100]"
-            (page) = "paginar($event)">
-        </mat-paginator>
-    </div>
 </ng-template>
 
 <ng-template #trazabilidad>
@@ -270,42 +206,5 @@
 
         <tr mat-header-row *matHeaderRowDef="displayedColumnsArticulos"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumnsArticulos;"></tr>
-    </table>
-</ng-template>
-
-
-<ng-template #prueba>
-
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width: 100%;">
-
-        <!--- Note that these columns can be defined in any order.
-              The actual rendered columns are set as a property on the row definition" -->
-      
-        <!-- Position Column -->
-        <ng-container matColumnDef="position">
-          <th mat-header-cell *matHeaderCellDef> No. </th>
-          <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-        </ng-container>
-      
-        <!-- Name Column -->
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef> Name </th>
-          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-        </ng-container>
-      
-        <!-- Weight Column -->
-        <ng-container matColumnDef="weight">
-          <th mat-header-cell *matHeaderCellDef> Weight </th>
-          <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
-        </ng-container>
-      
-        <!-- Symbol Column -->
-        <ng-container matColumnDef="symbol">
-          <th mat-header-cell *matHeaderCellDef> Symbol </th>
-          <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
-        </ng-container>
-      
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 </ng-template>

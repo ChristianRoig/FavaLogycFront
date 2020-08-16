@@ -55,7 +55,6 @@ export class PedidosTrazabilidadComponent implements OnInit {
 
   buscarTrazabilidad(page, size, columna, order){
     this._service.getTrazabilidad(this.idCabecera,page, size, columna, order).subscribe(paramsArt => {
-    // this._service.getTrazabilidad(, page, size, columna, order).subscribe(paramsArt => {
       if(paramsArt){
         this.dataSourceTrazabilidad = paramsArt.datos;
         this.length = paramsArt.totalRegistros;
@@ -113,9 +112,7 @@ export class PedidosTrazabilidadComponent implements OnInit {
           this.size = 100;
           this.columna = 'id';
           this.order = 'asc';
-        
-          // this.buscarTrazabilidad(this.page, this.size, this.columna, this.order);
-          
+                  
         } else {
           this._router.navigate(['']);
         }

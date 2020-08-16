@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -6,6 +6,7 @@ import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.componen
 import { MatDialog } from '@angular/material/dialog';
 import { PedidosAgregarLoteService } from './pedidos-agregar-lote.service';
 import { SelectionModel } from '@angular/cdk/collections';
+import { Debounce } from 'app/shared/decorators/debounce';
 
 export interface PeriodicElement {
   Id: number;
@@ -21,36 +22,6 @@ export interface PeriodicElement {
   Lote: number;
 }
 
-export interface Articulos {
-
-  lote: number;
-  codigoArticulo: string;
-  nombre: string;
-  descripcion: string;
-  cantidad: number;
-  estado: string;
-  etapa: string;
-}
-
-// const ELEMENT_DATA: PeriodicElement[] = [
-//   {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-//   {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-//   {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-//   {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-//   {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-//   {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-//   {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-//   {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-//   {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-//   {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-// ];
-
-const ELEMENT_DATA_ARTICULOS: Articulos[] = [
-  {lote: 1,codigoArticulo: "HCTZCAB030",nombre: "CTZ CALEFACTOR 6000	",          descripcion: "12 MESES DE GARANTIA",cantidad: 1,estado: "INICIAL",etapa: "INICIAL"},
-  {lote: 1,codigoArticulo: "HCTZACC010",nombre: "CTZ ACCESORIO TB	",              descripcion: "12 MESES DE GARANTIA",cantidad: 1,estado: "INICIAL",etapa: "INICIAL"},
-  {lote: 1,codigoArticulo: "HMOUFRE050",nombre: "MOULINEX FREIDORA AF134DAR/D59	",descripcion: "12 MESES DE GARANTIA",cantidad: 1,estado: "INICIAL",etapa: "INICIAL"}
-];
-
 @Component({
   selector: 'app-pedidos-agregar-lote',
   templateUrl: './pedidos-agregar-lote.component.html',
@@ -59,26 +30,22 @@ const ELEMENT_DATA_ARTICULOS: Articulos[] = [
 
 export class PedidosAgregarLoteComponent implements OnInit {
 
+  @ViewChild('buscarNombreLote') buscarNombreLote: ElementRef;
+
+
   subParametros: Subscription;
   
-  displayedColumnsArticulos: string[] = ['select','codigoArticulo','nombre','cantidad','estado','etapa'];
+  displayedColumnsArticulos: string[] = ['select','id','codigoArticulo','nombre','cantidad','estado','etapa'];
 
 
-  // dataSourceArticulos = ELEMENT_DATA_ARTICULOS;
   dataSourceArticulos: any;
   cantidad: number;
   idCabecera: any;
-  cabecera: any;
-  picker: any;
-  selection = new SelectionModel<PeriodicElement>(true, []);
+  picker: Date;
+  selection = new SelectionModel<any>(true, []);
+  toAdd = new Array<number>();
 
-  motivo: any = '';
-
-  length: number;
-  page: number;
-  size: number;
-  columna: string;
-  order: string;
+  nombreLote: string;
 
   constructor(private _router: Router,
               private _service: PedidosAgregarLoteService, 
@@ -87,12 +54,6 @@ export class PedidosAgregarLoteComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.page = 0;
-    this.size = 100;
-    this.columna = 'id';
-    this.order = 'asc';
-    this.motivo = '';
-
     this.subParametros = this.route.params.subscribe(params => {
       this.idCabecera = params['id'];
     })
@@ -100,21 +61,18 @@ export class PedidosAgregarLoteComponent implements OnInit {
     this.dataSourceArticulos = JSON.parse(localStorage.getItem('Lote'))._selected;
 
     this.cantidad = this.dataSourceArticulos.length;
+
+    this.picker =  new Date();
     
     console.log(this.dataSourceArticulos);    
     console.log(this.cantidad);    
     
   }
-
   
+  searchNombreLote() {
 
-  sortData( event ) {
-        
-    this.page = 0;
-    this.columna = event.active;
-    
-    if (event.direction !== "")
-        this.order = event.direction;
+    this.nombreLote = this.buscarNombreLote.nativeElement.value;
+
   }
 
   mostrarError(errStatus, titulo, mensaje){
@@ -128,29 +86,12 @@ export class PedidosAgregarLoteComponent implements OnInit {
     dialogRef.afterClosed()
       .subscribe( () => {
         if (errStatus != 0) {  
-
-          this.page = 0;
-          this.size = 100;
-          this.columna = 'id';
-          this.order = 'asc';
-        
-          // this.buscarDetalle(this.page, this.size, this.columna, this.order);
           
         } else {
           this._router.navigate(['']);
         }
     });
   }
-
-  addEvent( evento ) {
-    if (evento.value) {
-      let fecha = evento.value._i.year+"-"+(evento.value._i.month+1)+"-"+evento.value._i.date;
-      this.picker = fecha;
-    } else {
-      this.picker = null;
-    }
-  }
-
 
   isAllSelected() {
     const numSelected = this.selection.selected.length;
@@ -175,9 +116,45 @@ export class PedidosAgregarLoteComponent implements OnInit {
 
   crearLote(){
     console.log("crearLote");
+
     localStorage.removeItem("Lote");
     console.log(this.selection);
-    this.volver();
+    this.armarArrarIds();
+  }
+
+  armarArrarIds(){
+    this.picker.getFullYear()
+    let fecha = this.picker.getFullYear()+"-"+(this.picker.getMonth()+1)+"-"+this.picker.getDate();
+
+    
+    for (let elemento of this.selection.selected){
+      this.toAdd.push(elemento.id);
+    }
+    
+    this._service.postLote(this.toAdd , fecha, this.nombreLote).subscribe(
+      data => {
+        this.volver();
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error");
+        } else {
+          let errStatus = err.status
+          if (errStatus == 0){
+            let titulo = 'Error de Servidor';
+            let mensaje = "Por favor comunicarse con Sistemas";
+            this.mostrarError(errStatus, titulo, mensaje);
+          } else {
+            let titulo = 'Error al Agregar';
+            let mensaje = err.error.message.toString();
+            this.mostrarError(errStatus, titulo, mensaje);
+          }
+        }
+      }
+    )
+    // console.log(this.toAdd);
+    // console.log(fecha);
+    // console.log(this.nombreLote);
   }
 
   volver(){

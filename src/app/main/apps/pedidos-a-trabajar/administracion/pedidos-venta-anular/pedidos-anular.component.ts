@@ -58,15 +58,10 @@ const ELEMENT_DATA_ARTICULOS: Articulos[] = [
 
 export class PedidosAnularComponent implements OnInit {
 
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  // dataSource = ELEMENT_DATA;
   subParametros: Subscription;
   
-  // displayedColumnsArticulos: string[] = ['lote','codigoArticulo','nombre','descripcion','cantidad','estado','etapa'];
-  displayedColumnsArticulos: string[] = ['select','codigoArticulo','nombre','cantidad','estado','etapa'];
+  displayedColumnsArticulos: string[] = ['select','id','codigoArticulo','nombre','cantidad','estado','etapa'];
 
-
-  // dataSourceArticulos = ELEMENT_DATA_ARTICULOS;
   dataSourceArticulos: any;
   idCabecera: any;
   cabecera: any;
@@ -164,7 +159,7 @@ export class PedidosAnularComponent implements OnInit {
       .subscribe( () => {
         if (errStatus != 0) {  
 
-          this.volver();
+          //this.volver();
           
         } else {
           this._router.navigate(['']);

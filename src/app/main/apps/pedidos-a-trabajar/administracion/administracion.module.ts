@@ -21,7 +21,11 @@ import { PedidosAgregarLoteService } from './pedidos-agregar-lote/pedidos-agrega
 import { PedidosDatosEntregaComponent } from './pedidos-venta-visualizacion/pedidos-datos-entrega/pedidos-datos-entrega.component';
 import { PedidosTrazabilidadComponent } from './pedidos-venta-visualizacion/pedidos-trazabilidad/pedidos-trazabilidad.component';
 import { PedidosComprobantesComponent } from './pedidos-venta-visualizacion/pedidos-comprobantes/pedidos-comprobantes.component';
-import { PedidosCupaComponent } from './pedidos-venta-visualizacion/pedidos-cupa copy/pedidos-cupa.component';
+import { PedidosAgregarPedido1Service } from './pedidos-agregar-pedido-1/pedidos-agregar-pedido-1.service';
+import { PedidosAgregarPedido1Component } from './pedidos-agregar-pedido-1/pedidos-agregar-pedido-1.component';
+import { PedidosAgregarPedido2Component } from './pedidos-agregar-pedido-2/pedidos-agregar-pedido-2.component';
+import { PedidosAgregarPedido2Service } from './pedidos-agregar-pedido-2/pedidos-agregar-pedido-2.service';
+import { PedidosCupaComponent } from './pedidos-venta-visualizacion/pedidos-cupa/pedidos-cupa.component';
 // import { MaterialDesignModule } from 'app/material-design/material-design.module';
 
 const routes: Routes = [
@@ -41,6 +45,14 @@ const routes: Routes = [
         path     : 'addLote',
         component: PedidosAgregarLoteComponent
     },
+    {
+        path     : 'addPedido1',
+        component: PedidosAgregarPedido1Component
+    },
+    {
+        path     : 'addPedido2/:modo',
+        component: PedidosAgregarPedido2Component
+    }
 ];
 
 @NgModule({
@@ -52,7 +64,9 @@ const routes: Routes = [
         PedidosDatosEntregaComponent,
         PedidosTrazabilidadComponent,
         PedidosComprobantesComponent,
-        PedidosCupaComponent
+        PedidosCupaComponent,
+        PedidosAgregarPedido1Component,
+        PedidosAgregarPedido2Component
     ],
     imports     : [
         CommonModule,
@@ -69,7 +83,9 @@ const routes: Routes = [
         PedidosListaService,
         PedidosVentaVisualizacionService,
         PedidosAnularService,
-        PedidosAgregarLoteService
+        PedidosAgregarLoteService,
+        PedidosAgregarPedido1Service,
+        PedidosAgregarPedido2Service
     ]
 })
 

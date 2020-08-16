@@ -11,18 +11,18 @@ import { PedidosVentaVisualizacionService } from '../pedidos-venta-visualizacion
  * @title Basic use of `<table mat-table>`
  */
 @Component({
-    selector     : 'pedidos-comprobantes',
-    templateUrl  : './pedidos-comprobantes.component.html',
-    styleUrls    : ['./pedidos-comprobantes.component.scss']
+    selector     : 'pedidos-cupa',
+    templateUrl  : './pedidos-cupa.component.html',
+    styleUrls    : ['./pedidos-cupa.component.scss']
 })
 
-export class PedidosComprobantesComponent implements OnInit {
+export class PedidosCupaComponent implements OnInit {
 
   @Input('idCabecera') idCabecera: number;
 
-  dataSourceComprobantes: any;
+  dataSourceCUPA: any;
 
-  displayedColumnsCbts: string[] = ['codigoArticulo','codigoCbte', 'nroCbte', 'fechaCbte'];
+  displayedColumnsCupa: string[] = ['lote', 'codigoArticulo','codigoUnicoParteArticulo', 'estado', 'etapa'];
 
   length: number;
   page: number;
@@ -34,7 +34,6 @@ export class PedidosComprobantesComponent implements OnInit {
 
   constructor(
       private _router: Router,
-      private route: ActivatedRoute,
       private _service: PedidosVentaVisualizacionService,
       private _dialog: MatDialog
   )
@@ -53,10 +52,10 @@ export class PedidosComprobantesComponent implements OnInit {
   }
 
   buscarComprobantes(page, size, columna, order){
-    this._service.getComprobantes(this.idCabecera,page, size, columna, order).subscribe(paramsArt => {
-    // this._service.getTrazabilidad(, page, size, columna, order).subscribe(paramsArt => {
+    this._service.getCUPA(this.idCabecera,page, size, columna, order).subscribe(paramsArt => {
       if(paramsArt){
-        this.dataSourceComprobantes = paramsArt.datos;
+        this.dataSourceCUPA = paramsArt.datos;
+        console.log(this.dataSourceCUPA);
         this.length = paramsArt.totalRegistros;
       }
     },

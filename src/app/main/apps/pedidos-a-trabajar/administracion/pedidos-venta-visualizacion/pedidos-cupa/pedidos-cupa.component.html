@@ -14,31 +14,32 @@
         <!-- Lote Column -->
         <ng-container matColumnDef="lote">
             <th mat-sort-header="idLote" mat-header-cell *matHeaderCellDef> Lote </th>
-            <td mat-cell *matCellDef="let element"> 1 </td>
+            <td mat-cell *matCellDef="let element"> {{ element.pedidoDetalle.pedidoLote ? element.pedidoDetalle.pedidoLote.id : ''}} </td>
         </ng-container>
         
           <!-- codigoArticulo Column -->
           <ng-container matColumnDef="codigoArticulo">
               <th mat-sort-header="codigoArticulo" mat-header-cell *matHeaderCellDef> Código Artículo </th>
-              <td mat-cell *matCellDef="let element"> MPLAPLA010 </td>
+              <td mat-cell *matCellDef="let element"> {{element.articuloCupa.articulo.codigoArticulo}} </td>
+              
           </ng-container>
       
         <!-- CUPA Column -->
         <ng-container matColumnDef="codigoUnicoParteArticulo">
             <th mat-sort-header="codigoUnicoParteArticulo" mat-header-cell *matHeaderCellDef> CUPA </th>
-            <td mat-cell *matCellDef="let element"> 01234567890753 </td>
+            <td mat-cell *matCellDef="let element"> {{ element.articuloCupa ? element.articuloCupa.codigoUnicoParteArticulo : ''}} </td>
         </ng-container>
         
-          <!-- etapa Column -->
-          <ng-container matColumnDef="etapa">
-              <th mat-sort-header="etapa" mat-header-cell *matHeaderCellDef> Etapa </th>
-              <td mat-cell *matCellDef="let element"> EN LOTE </td>
-          </ng-container>
-      
         <!-- estado Column -->
         <ng-container matColumnDef="estado">
-            <th mat-sort-header="estado" mat-header-cell *matHeaderCellDef> Estado </th>
-            <td mat-cell *matCellDef="let element"> EN PROCESO </td>
+            <th mat-sort-header="estado" mat-header-cell *matHeaderCellDef> Estado de CUPA</th>
+            <td mat-cell *matCellDef="let element"> {{ element.articuloCupa ? element.articuloCupa.articuloCupaEstado.nombre : ''}} </td>
+        </ng-container>
+      
+        <!-- etapa Column -->
+        <ng-container matColumnDef="etapa">
+            <th mat-sort-header="etapa" mat-header-cell *matHeaderCellDef> Etapa </th>
+            <td mat-cell *matCellDef="let element"> {{ element.pedidoDetalle.pedidoEtapa ? element.pedidoDetalle.pedidoEtapa.nombre : ''}} </td>
         </ng-container>
       
         <tr mat-header-row *matHeaderRowDef="displayedColumnsCupa"></tr>

@@ -658,12 +658,13 @@ export class PedidosListaComponent implements OnInit {
     localStorage.setItem('Lote',JSON.stringify(this.selection));
     
     let ruta = `apps/pedidos/administracion/addLote`;
-    console.log(ruta);
     this._router.navigate([ruta]);
   }
 
   agregarPedido() {
-    console.log("Agregar pedido");
+    let ruta = `apps/pedidos/administracion/addPedido1`;
+    console.log(ruta);
+    // this._router.navigate([ruta]);
   }
 
 
