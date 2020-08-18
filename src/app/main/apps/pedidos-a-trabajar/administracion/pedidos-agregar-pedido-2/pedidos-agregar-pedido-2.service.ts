@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'environments/environment';
 
@@ -15,20 +15,43 @@ export class PedidosAgregarPedido2Service
     }
 
 
-    getCabecera(id): Observable<any>
+    getDatosDeEntregaUpd(cabecera: number): Observable<any>
     {   
 
-        let ruta = `${BASE_URL}pedidosatrabajar/pedidocabecera/${id}`;
+        let ruta = `${BASE_URL}pedidosatrabajar/datosentrega/cabecera/${cabecera}`;
         // console.log(ruta);
         return this._httpClient.get(ruta);
     }
 
-    getDetalle(puntoVenta, cbte): Observable<any>
+    postPedidos(listaDatosDeEntrega, idTipo , numerocbte): Observable<any>
     {   
-        // let ruta = `${BASE_URL}pedidosatrabajar/pedidodetalle/cabecera/${id}/${page}/${size}/${columna}/${order}`;
-        let ruta = `${BASE_URL}pedidosatrabajar/pedidodetalle/cabecera`;
-        // console.log(ruta);
-        return this._httpClient.get(ruta);
+        let ruta = `${BASE_URL}pedidosatrabajar/pedidodetalle/sinremitir/datoentrega/${idTipo}/${numerocbte}`;
+        
+        let body=   {
+            "listaDatosDeEntrega": listaDatosDeEntrega
+        }
+
+        let headers = new HttpHeaders({
+            "Content-Type": "application/json"
+        });
+
+        return this._httpClient.post(ruta,body,{headers:headers});
+    }
+
+
+    putPedidos(listaDatosDeEntrega): Observable<any>
+    {   
+        let ruta = `${BASE_URL}pedidosatrabajar/datosentrega`;
+        
+        let body=   {
+            "listaDatosDeEntrega": listaDatosDeEntrega
+        }
+
+        let headers = new HttpHeaders({
+            "Content-Type": "application/json"
+        });
+
+        return this._httpClient.post(ruta,body,{headers:headers});
     }
 
 }

@@ -11,6 +11,7 @@ import { MatTable } from '@angular/material/table';
 import { indexOf } from 'lodash';
 import { coerceNumberProperty } from '@angular/cdk/coercion';
 import { PedidosDatosEntregaComponent } from '../pedidos-venta-visualizacion/pedidos-datos-entrega/pedidos-datos-entrega.component';
+import { HttpErrorResponse } from '@angular/common/http';
 
 export interface PeriodicElement {
   Id: number;
@@ -78,7 +79,7 @@ export class PedidosAgregarPedido2Component implements OnInit {
   @ViewChild(MatTable) tabla1: MatTable<Articulo>;
   @ViewChildren('tabla2') tabla2: QueryList<MatTable<Articulo>>;;
 
-  modo: string;
+  modo: number;
 
   subParametros: Subscription;
   selection = new SelectionModel<Articulo>(true, []);
@@ -217,7 +218,7 @@ export class PedidosAgregarPedido2Component implements OnInit {
       this.modo = params['modo'];
     })
     
-    if(this.modo === 'ins'){
+    if(this.modo < 1) {
       this.dataSourceArticulos = JSON.parse(localStorage.getItem('AddPedido'))._selected;
       this.dataSourceDatosDeEntrega = this.listaDatosVacia;
       
@@ -228,7 +229,8 @@ export class PedidosAgregarPedido2Component implements OnInit {
     } else {
       
       this.dataSourceArticulos = [];
-      this.dataSourceDatosDeEntrega = this.listaDatos;
+
+      this.getDatosDeEntrga();
 
       this.tipoCbte      = this.dataSourceDatosDeEntrega.datos[0].listaPedidoDetalle[0].tipoCbte;
       this.numeroCbte    = this.dataSourceDatosDeEntrega.datos[0].listaPedidoDetalle[0].numeroCbte;
@@ -237,6 +239,84 @@ export class PedidosAgregarPedido2Component implements OnInit {
     }
 
   }
+
+
+  getDatosDeEntrga(){
+    this._service.getDatosDeEntregaUpd(this.modo).subscribe(params => {
+      console.log(params);
+      // this.dataSourceDatosDeEntrega = params;
+      this.dataSourceDatosDeEntrega = this.listaDatos;
+    },
+    (err: HttpErrorResponse) => {
+      
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
+        } else {
+          let titulo = 'Error al cargar los Pedidos';
+          let mensaje = err.error.message.toString();
+          this.mostrarError(errStatus, titulo, mensaje);
+        }
+      }
+    })
+  }
+
+  procesar(){
+    this._service.postPedidos(this.dataSourceDatosDeEntrega.datos, 1, this.dataSourceDatosDeEntrega.datos[0].listaPedidoDetalle[0].numeroCbte).subscribe(data => {
+      console.log(data);
+      // this.dataSourceDatosDeEntrega = params;
+    },
+    (err: HttpErrorResponse) => {
+      
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
+        } else {
+          let titulo = 'Error al Agregar los Pedidos';
+          let mensaje = err.error.message.toString();
+          this.mostrarError(errStatus, titulo, mensaje);
+        }
+      }
+    });
+  }
+
+
+  modificar(){
+    this._service.putPedidos(this.dataSourceDatosDeEntrega.datos).subscribe(data => {
+      console.log(data);
+      // this.dataSourceDatosDeEntrega = params;
+    },
+    (err: HttpErrorResponse) => {
+      
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
+        } else {
+          let titulo = 'Error al Modificar los Pedidos';
+          let mensaje = err.error.message.toString();
+          this.mostrarError(errStatus, titulo, mensaje);
+        }
+      }
+    });
+  }
+
+
+
 
   moverDesdeDatosEntrega(event: Event, element: any, indexItem:any, indexElement: any){
     
@@ -299,6 +379,30 @@ export class PedidosAgregarPedido2Component implements OnInit {
   }
 
 
+  mostrarError(errStatus, titulo, mensaje){
+    const dialogRef = this._dialog.open( ModalErrorComponent, { 
+      data: {
+        titulo: titulo,
+        mensaje: mensaje
+      } 
+    });
+
+    dialogRef.afterClosed()
+      .subscribe( () => {
+        if (errStatus != 0) {  
+        
+          
+        } else {
+          if (this.modo === 0){
+            this.volverIns();
+          } else {
+            this.volverUpd();
+          }
+        }
+    });
+  }
+
+
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSourceArticulos.length;
@@ -320,9 +424,16 @@ export class PedidosAgregarPedido2Component implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
   }
 
-  volver(){
-    let ruta = `apps/pedidos/administracion/pedidos-lista`;
+  volverIns(){
+    let ruta = `apps/pedidos/administracion/addPedido1`;
     localStorage.removeItem('AddPedido');
+    this._router.navigate([ruta]);
+  }
+
+  volverUpd(){
+    let ruta = `apps/pedidos/administracion/visualizacion/${this.modo}`;
+    localStorage.removeItem('AddPedido');
+    console.log(ruta);
     this._router.navigate([ruta]);
   }
 }

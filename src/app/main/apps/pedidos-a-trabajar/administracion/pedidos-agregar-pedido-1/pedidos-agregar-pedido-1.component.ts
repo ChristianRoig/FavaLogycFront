@@ -77,7 +77,7 @@ export class PedidosAgregarPedido1Component implements OnInit {
   agregar(){
     localStorage.setItem('AddPedido',JSON.stringify(this.selection));
     
-    let ruta = `apps/pedidos/administracion/addPedido2/ins`;
+    let ruta = `apps/pedidos/administracion/addPedido2/0`;
 
     this._router.navigate([ruta]);
   }

@@ -94,18 +94,21 @@
                 </div>
             </div>
 
-            <div class="mt-4 mb-24 pt-4" fxLayout="row" fxLayoutAlign="space-between">
+            <div  class="mat-card  my-24">
 
-                <button mat-raised-button color="accent">NUEVO DATO DE ENTREGA</button>
-
-                <mat-form-field appearance="fill">
-                    <mat-label>Mover a</mat-label>
-                    <select matNativeControl (change)="moverDesdeArticulos($event)">
-                        <option [value]="-1"> MOVER </option>
-                        <option *ngFor="let items of this.dataSourceDatosDeEntrega.datos; let indexItems = index" 
-                                [value]="indexItems"> {{items.id}} - {{items.direccion}} </option>
-                    </select>
-                </mat-form-field>
+                <div class="mt-4 mb-24 pt-4" fxLayout="row" fxLayoutAlign="space-between">
+    
+                    <button mat-raised-button color="accent">NUEVO DATO DE ENTREGA</button>
+    
+                    <mat-form-field appearance="fill">
+                        <mat-label>Mover a</mat-label>
+                        <select matNativeControl (change)="moverDesdeArticulos($event)">
+                            <option [value]="-1"> MOVER </option>
+                            <option *ngFor="let items of this.dataSourceDatosDeEntrega.datos; let indexItems = index" 
+                                    [value]="indexItems"> {{items.id}} - {{items.direccion}} </option>
+                        </select>
+                    </mat-form-field>
+                </div>
             </div>
         </div>
         
@@ -160,13 +163,20 @@
                 </div>
             </div>
         </div>
-        
-        <div class="mt-4 mb-24 pt-4" fxLayout="row" fxLayoutAlign="space-between">
+
+        <div  class="mat-card  my-24">
             
-            <button *ngIf = "this.modo === 'ins'" [disabled] = "this.dataSourceArticulos.length > 0" mat-raised-button color="accent" >Procesar</button>
-            <button *ngIf = "this.modo === 'upd'" [disabled] = "this.dataSourceArticulos.length > 0" mat-raised-button color="accent" >Modificar</button>
-            <button mat-stroked-button class="mr-5px">Cancelar</button>
+            <div class="mt-4 mb-24 pt-4" fxLayout="row" fxLayoutAlign="space-between">
+                
+                <button *ngIf = "this.modo === 0" [disabled] = "this.dataSourceArticulos.length > 0" 
+                    mat-raised-button color="accent" (click) = "this.procesar()">Procesar</button>
+                <button *ngIf = "this.modo  >  0" [disabled] = "this.dataSourceArticulos.length > 0" 
+                    mat-raised-button color="accent" (click) = "this.modificar()">Modificar</button>
+                        
+                <button *ngIf = "this.modo === 0" mat-stroked-button class="mr-5px" (click) = "this.volverIns()">Cancelar</button>
+                <button *ngIf = "this.modo  >  0" mat-stroked-button class="mr-5px" (click) = "this.volverUpd()">Cancelar</button>
+            </div>
         </div>
     </div>
-    
+                
 </app-plantilla-fondo-simple>

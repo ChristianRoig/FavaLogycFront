@@ -22,7 +22,7 @@ export class PedidosDatosEntregaComponent implements OnInit {
 
   dataSourceDatosEntrega: any;
 
-  displayedColumnsDatosEntrega: string[] = ['lote', 'codigoArticulo', 'direccion', 'localidad', 'provincia', 'codigoPostal', 'transporte', 'contacto', 'telefono', 'mail', 'observaciones', 'fechaEntrega', 'turno'];
+  displayedColumnsDatosEntrega: string[] = ['lote', 'codigoArticulo', 'direccion', 'localidad', 'provincia', 'codigoPostal', 'transporte', 'contacto', 'telefono', 'mail', 'observaciones', 'fechaEntrega', 'turno', 'editar'];
 
   length: number;
   page: number;
@@ -92,6 +92,12 @@ export class PedidosDatosEntregaComponent implements OnInit {
     this.size = e.pageSize;
     
     this.buscarDatosEntrega(this.page, this.size, this.columna, this.order);
+  }
+
+  editar(){
+    let ruta = `apps/pedidos/administracion/addPedido2/${this.idCabecera}`;
+
+    this._router.navigate([ruta]);
   }
 
   mostrarError(errStatus, titulo, mensaje){
