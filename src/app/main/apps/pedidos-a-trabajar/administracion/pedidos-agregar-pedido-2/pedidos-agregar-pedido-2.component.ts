@@ -8,6 +8,9 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { PedidosListaService } from '../pedidos-lista/pedidos-lista.service';
 import { Articulos } from '../pedidos-lista/pedidos-lista.component';
 import { MatTable } from '@angular/material/table';
+import { indexOf } from 'lodash';
+import { coerceNumberProperty } from '@angular/cdk/coercion';
+import { PedidosDatosEntregaComponent } from '../pedidos-venta-visualizacion/pedidos-datos-entrega/pedidos-datos-entrega.component';
 
 export interface PeriodicElement {
   Id: number;
@@ -36,7 +39,7 @@ export interface Articulo {
 
 
 export interface DatosDeEntrega {
-  listaDatosDeEntrega : Array< ListaDatosDeEntrega>
+  datos : Array< ListaDatosDeEntrega>
 }
 
 
@@ -66,7 +69,6 @@ export interface ListaDatosDeEntrega
 
 @Component({
   selector: 'app-pedidos-agregar-pedido-2',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './pedidos-agregar-pedido-2.component.html',
   styleUrls: ['./pedidos-agregar-pedido-2.component.scss']
 })
@@ -74,12 +76,12 @@ export interface ListaDatosDeEntrega
 export class PedidosAgregarPedido2Component implements OnInit {
 
   @ViewChild(MatTable) tabla1: MatTable<Articulo>;
-  @ViewChildren('tabla2') tabla2: QueryList;
+  @ViewChildren('tabla2') tabla2: QueryList<MatTable<Articulo>>;;
 
   modo: string;
 
   subParametros: Subscription;
-  selection = new SelectionModel<any>(true, []);
+  selection = new SelectionModel<Articulo>(true, []);
 
   tipoCbte: string;
   numeroCbte: string;
@@ -91,7 +93,7 @@ export class PedidosAgregarPedido2Component implements OnInit {
     codigoArticulo: "MGENMES032",
     codigoCliente: "MK995",
     codigoDeBarras: "MGENMES032",
-    nombreArticulo: "GENOUD MESA REC.180x090 WEN A2",
+    nombreArticulo: "Lapiz",
     nombreCliente: "KREPCHUK MARTIN",
     numeroCbte: "B0008800024195",
     tipoCbte: "FAC"
@@ -101,14 +103,14 @@ export class PedidosAgregarPedido2Component implements OnInit {
     codigoArticulo: "MGENMES032",
     codigoCliente: "MK995",
     codigoDeBarras: "MGENMES032",
-    nombreArticulo: "GENOUD MESA REC.180x090 WEN A2",
+    nombreArticulo: "Goma",
     nombreCliente: "KREPCHUK MARTIN",
     numeroCbte: "B0008800024195",
     tipoCbte: "FAC"
   }];
 
   listaDatos: DatosDeEntrega = {
-    listaDatosDeEntrega: [
+    datos: [
       {
         id: 1,
         direccion: "Calle falsa 123",
@@ -136,7 +138,7 @@ export class PedidosAgregarPedido2Component implements OnInit {
               codigoArticulo: "MGENMES032",
               codigoCliente: "MK995",
               codigoDeBarras: "MGENMES032",
-              nombreArticulo: "GENOUD MESA REC.180x090 WEN A2",
+              nombreArticulo: "Cartuchera",
               nombreCliente: "KREPCHUK MARTIN",
               numeroCbte: "B0008800024195",
               tipoCbte: "FAC"
@@ -170,7 +172,7 @@ export class PedidosAgregarPedido2Component implements OnInit {
                     codigoArticulo: "MGENMES032",
                     codigoCliente: "MK995",
                     codigoDeBarras: "MGENMES032",
-                    nombreArticulo: "GENOUD MESA REC.180x090 WEN A2",
+                    nombreArticulo: "Regla",
                     nombreCliente: "KREPCHUK MARTIN",
                     numeroCbte: "B0008800024195",
                     tipoCbte: "FAC"
@@ -180,7 +182,7 @@ export class PedidosAgregarPedido2Component implements OnInit {
                   codigoArticulo: "MGENMES032",
                   codigoCliente: "MK995",
                   codigoDeBarras: "MGENMES032",
-                  nombreArticulo: "GENOUD MESA REC.180x090 WEN A2",
+                  nombreArticulo: "Sacapuntas",
                   nombreCliente: "KREPCHUK MARTIN",
                   numeroCbte: "B0008800024195",
                   tipoCbte: "FAC"
@@ -188,8 +190,12 @@ export class PedidosAgregarPedido2Component implements OnInit {
             ]
         }
       ]
-  }
-  ;
+  };
+  
+
+  listaDatosVacia: DatosDeEntrega = {
+    datos: []
+  };
   
   displayedColumnsArticulos: string[] = ['select','codigoArticulo','nombre','codigoDeBarras'];
   displayedColumnsPedidoDetalle: string[] = ['codigoArticulo','nombre','codigoDeBarras', 'mover'];
@@ -213,7 +219,7 @@ export class PedidosAgregarPedido2Component implements OnInit {
     
     if(this.modo === 'ins'){
       this.dataSourceArticulos = JSON.parse(localStorage.getItem('AddPedido'))._selected;
-
+      this.dataSourceDatosDeEntrega = this.listaDatosVacia;
       
       this.tipoCbte = this.dataSourceArticulos[0].tipoCbte;
       this.numeroCbte = this.dataSourceArticulos[0].numeroCbte;
@@ -221,48 +227,75 @@ export class PedidosAgregarPedido2Component implements OnInit {
       this.nombreCliente = this.dataSourceArticulos[0].nombreCliente;
     } else {
       
-      this.dataSourceArticulos = this.listaArticulos;
+      this.dataSourceArticulos = [];
       this.dataSourceDatosDeEntrega = this.listaDatos;
 
-      
-      
-      console.log(this.dataSourceArticulos);
-      this.tipoCbte      = this.dataSourceDatosDeEntrega.listaDatosDeEntrega[0].listaPedidoDetalle[0].tipoCbte;
-      this.numeroCbte    = this.dataSourceDatosDeEntrega.listaDatosDeEntrega[0].listaPedidoDetalle[0].numeroCbte;
-      this.codigoCliente = this.dataSourceDatosDeEntrega.listaDatosDeEntrega[0].listaPedidoDetalle[0].codigoCliente;
-      this.nombreCliente = this.dataSourceDatosDeEntrega.listaDatosDeEntrega[0].listaPedidoDetalle[0].nombreCliente;
+      this.tipoCbte      = this.dataSourceDatosDeEntrega.datos[0].listaPedidoDetalle[0].tipoCbte;
+      this.numeroCbte    = this.dataSourceDatosDeEntrega.datos[0].listaPedidoDetalle[0].numeroCbte;
+      this.codigoCliente = this.dataSourceDatosDeEntrega.datos[0].listaPedidoDetalle[0].codigoCliente;
+      this.nombreCliente = this.dataSourceDatosDeEntrega.datos[0].listaPedidoDetalle[0].nombreCliente;
     }
-
-    console.log(this.dataSourceArticulos[0]);
-    console.log(this.dataSourceDatosDeEntrega);
 
   }
 
-  mover(event: Event, element: any, item: any){
+  moverDesdeDatosEntrega(event: Event, element: any, indexItem:any, indexElement: any){
     
-    console.log("item");
-    console.log(item);
-    console.log("element");
-    console.log(element);
-
-    
-    console.log("ANTES");
-    // console.log(this.dataSourceArticulos);
-    console.log(this.dataSourceDatosDeEntrega);
-    console.log("---------------------------------------");
+    let indexTo = (event.target as HTMLSelectElement).value;
     
     let art: Articulo = element;
     
+    switch (indexTo) {
+      case '-1' : {
+        this.dataSourceArticulos.push(art);
+        this.dataSourceDatosDeEntrega.datos[indexItem].listaPedidoDetalle.splice(indexElement,1);
+        break;
+      }
+      case '-2' : {
+        break;
+      }
+      default: {
+        this.dataSourceDatosDeEntrega.datos[indexTo].listaPedidoDetalle.push(art);
+        this.dataSourceDatosDeEntrega.datos[indexItem].listaPedidoDetalle.splice(indexElement,1);
 
-    this.dataSourceArticulos.push(art);
-    this.dataSourceDatosDeEntrega.listaDatosDeEntrega[1].listaPedidoDetalle.splice(0,1);
+      }
+    }
+
+    if(this.dataSourceDatosDeEntrega.datos[indexItem].listaPedidoDetalle.length === 0){
+      this.dataSourceDatosDeEntrega.datos.splice(indexItem,1)
+    }
+
+    this.render();
     
-    this.tabla2.renderRows();
+  }
+
+  moverDesdeArticulos(event: Event){
+
+    let indexItems = (event.target as HTMLSelectElement).value    
+
+    switch (indexItems) {
+      case '-1' : {
+        break;
+      }
+      default: {
+        for (let art of this.selection.selected) {
+          this.dataSourceDatosDeEntrega.datos[indexItems].listaPedidoDetalle.push(art);
+          
+          let indexToSplice = this.dataSourceArticulos.indexOf(art);
+          this.dataSourceArticulos.splice(indexToSplice,1);
+
+        }
+      }
+    }
+
+    this.render();
+  }
+
+  render(){
     this.tabla1.renderRows();
-    
-    console.log("DESPUES");
-    // console.log(this.dataSourceArticulos);
-    console.log(this.dataSourceDatosDeEntrega);
+    this.tabla2.forEach( (item:MatTable<Articulo>) => {
+
+      item.renderRows();
+    });
   }
 
 
@@ -280,11 +313,11 @@ export class PedidosAgregarPedido2Component implements OnInit {
   }
 
   /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: PeriodicElement): string {
+  checkboxLabel(row?: Articulo): string {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.Id + 1}`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
   }
 
   volver(){
