@@ -26,7 +26,7 @@ export class PedidosAgregarPedido1Service
     getDetalle(tipoPedido: number, cbte: string): Observable<any>
     {   
         let ruta = `${BASE_URL}pedidosatrabajar/pedidodetalle/sinremitir/${tipoPedido}/${cbte}`;
-        // let ruta = `${BASE_URL}pedidosatrabajar/pedidodetalle/sinremitir/${tipoPedido}/B0008800024195`;
+        // let ruta = `${BASE_URL}/pedidosatrabajar/pedidodetalle/sinremitir/1/B0008800024195;
         console.log(ruta);
         return this._httpClient.get(ruta);
     }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { PedidosAgregarPedido2Service } from './pedidos-agregar-pedido-2.service';
 import { SelectionModel } from '@angular/cdk/collections';
 import { PedidosListaService } from '../pedidos-lista/pedidos-lista.service';
+import { Articulos } from '../pedidos-lista/pedidos-lista.component';
 
 export interface PeriodicElement {
   Id: number;
@@ -21,7 +22,19 @@ export interface PeriodicElement {
   Lote: number;
 }
 
-export interface ListaDatosDeEntrega {
+export interface Articulo {
+  id: number,
+  codigoArticulo: string,
+  codigoCliente: string,
+  codigoDeBarras: string,
+  nombreArticulo: string,
+  nombreCliente: string,
+  numeroCbte: string,
+  tipoCbte: string
+}
+
+export interface DatosDeEntrega {
+  length: number,
   listaDatosDeEntrega: [
     {
       id: number,
@@ -61,11 +74,6 @@ export interface ListaDatosDeEntrega {
   ]
 }
 
-export interface Articulos {
-  
-  
-}
-
 @Component({
   selector: 'app-pedidos-agregar-pedido-2',
   templateUrl: './pedidos-agregar-pedido-2.component.html',
@@ -79,7 +87,33 @@ export class PedidosAgregarPedido2Component implements OnInit {
   subParametros: Subscription;
   selection = new SelectionModel<any>(true, []);
 
-  string: any = {
+  tipoCbte: string;
+  numeroCbte: string;
+  codigoCliente: string;
+  nombreCliente: string;
+
+  listaArticulos = [{
+    id: 114,
+    codigoArticulo: "MGENMES032",
+    codigoCliente: "MK995",
+    codigoDeBarras: "MGENMES032",
+    nombreArticulo: "GENOUD MESA REC.180x090 WEN A2",
+    nombreCliente: "KREPCHUK MARTIN",
+    numeroCbte: "B0008800024195",
+    tipoCbte: "FAC"
+  },
+  {
+    id: 115,
+    codigoArticulo: "MGENMES032",
+    codigoCliente: "MK995",
+    codigoDeBarras: "MGENMES032",
+    nombreArticulo: "GENOUD MESA REC.180x090 WEN A2",
+    nombreCliente: "KREPCHUK MARTIN",
+    numeroCbte: "B0008800024195",
+    tipoCbte: "FAC"
+  }];
+
+  listaDatos: DatosDeEntrega = {
     listaDatosDeEntrega: [
       {
         id: 1,
@@ -115,7 +149,7 @@ export class PedidosAgregarPedido2Component implements OnInit {
             }
             
         ]
-    },
+      },
         {
             id: 3,
             direccion: "Avenida Siempre Viva 742",
@@ -159,17 +193,16 @@ export class PedidosAgregarPedido2Component implements OnInit {
                 }
             ]
         }
-         
-    ]
-  };
+    ]}
+  ;
   
   displayedColumnsArticulos: string[] = ['select','codigoArticulo','nombre','codigoDeBarras'];
   displayedColumnsPedidoDetalle: string[] = ['codigoArticulo','nombre','codigoDeBarras', 'mover'];
 
 
   // dataSourceArticulos = ELEMENT_DATA_ARTICULOS;
-  dataSourceArticulos: any;
-  dataSourceDatosDeEntrega: any;
+  dataSourceArticulos: Array<Articulo> = new Array<Articulo>();
+  dataSourceDatosDeEntrega: DatosDeEntrega;
 
   constructor(private _router: Router,
               private _service: PedidosAgregarPedido2Service, 
@@ -183,14 +216,45 @@ export class PedidosAgregarPedido2Component implements OnInit {
       this.modo = params['modo'];
     })
     
-    this.dataSourceArticulos = JSON.parse(localStorage.getItem('AddPedido'))._selected;
-    this.dataSourceDatosDeEntrega = this.string.listaDatosDeEntrega;
-    console.log(this.dataSourceArticulos);
-    console.log(this.dataSourceDatosDeEntrega);
+    if(this.modo === 'ins'){
+      // this.dataSourceArticulos = JSON.parse(localStorage.getItem('AddPedido'))._selected;
+      
+      this.tipoCbte = this.dataSourceArticulos[0].tipoCbte;
+      this.numeroCbte = this.dataSourceArticulos[0].numeroCbte;
+      this.codigoCliente = this.dataSourceArticulos[0].codigoCliente;
+      this.nombreCliente = this.dataSourceArticulos[0].nombreCliente;
+    } else {
+      this.dataSourceArticulos = this.listaArticulos;
+      this.dataSourceDatosDeEntrega = this.listaDatos;
+
+      this.tipoCbte = this.dataSourceDatosDeEntrega.listaDatosDeEntrega[0].listaPedidoDetalle[0].tipoCbte;
+      this.numeroCbte = this.dataSourceDatosDeEntrega.listaDatosDeEntrega[0].listaPedidoDetalle[0].numeroCbte;
+      this.codigoCliente = this.dataSourceDatosDeEntrega.listaDatosDeEntrega[0].listaPedidoDetalle[0].codigoCliente;
+      this.nombreCliente = this.dataSourceDatosDeEntrega.listaDatosDeEntrega[0].listaPedidoDetalle[0].nombreCliente;
+    }
+
   }
 
-  mover(tabla: number){
-    this.dataSourceDatosDeEntrega[0]
+  mover(element: any, item: any){
+    
+    console.log(item);
+    console.log(element);
+
+    
+    console.log("ANTES");
+    console.log(this.dataSourceArticulos);
+    console.log(this.dataSourceDatosDeEntrega);
+    console.log("---------------------------------------");
+    
+    let art: Articulo = element;
+
+    this.dataSourceArticulos.push(art);
+
+    this.dataSourceDatosDeEntrega.listaDatosDeEntrega[0].listaPedidoDetalle.push(art);
+    
+    console.log("DESPUES");
+    console.log(this.dataSourceArticulos);
+    console.log(this.dataSourceDatosDeEntrega);
   }
 
 
