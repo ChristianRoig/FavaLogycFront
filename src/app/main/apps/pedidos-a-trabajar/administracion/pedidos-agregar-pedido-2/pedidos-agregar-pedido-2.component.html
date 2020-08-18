@@ -42,7 +42,7 @@
                 <div class="h2 m-24">Articulos pendientes de remitir</div>
                 
                 <ng-container >
-                    <table mat-table [(dataSource)]="this.dataSourceArticulos" class="mat-elevation-z8" style="width: 100%;">
+                    <table mat-table [(dataSource)]="this.dataSourceArticulos" class="mat-elevation-z8" style="width: 100%;" #tabla1>
       
                         <ng-container matColumnDef="select" sticky>
                             <th mat-header-cell *matHeaderCellDef class="px-24">
@@ -81,7 +81,7 @@
                         <ng-container matColumnDef="mover">
                             <th mat-header-cell *matHeaderCellDef> Mover </th>
                             <td mat-cell *matCellDef="let element" class="example-button-row"> 
-                                <button mat-stroked-button color="info" (click) = "mover(2)">
+                                <button mat-stroked-button color="info" >
                                     Mover
                                 </button>
                             </td>
@@ -97,6 +97,7 @@
         <div class="mt-4 mb-24 pt-4" fxLayout="row" fxLayoutAlign="space-between">
 
             <button mat-raised-button color="accent">NUEVO DATO DE ENTREGA</button>
+
             <mat-form-field appearance="fill">
                 <mat-label>Mover a</mat-label>
                 <mat-select>
@@ -106,50 +107,62 @@
                 </mat-select>
             </mat-form-field>
         </div>
+        
+        <div *ngIf = "this.dataSourceDatosDeEntrega">
 
-        <div *ngFor="let item of this.dataSourceDatosDeEntrega.listaDatosDeEntrega" fxLayout="column" class="fuse-card" style="max-width: 100%;">
-            <div class="mat-card  my-24">
-                <div class="h2 m-24"> {{item.id}} - {{item.direccion}} </div>
-                
-                <ng-container >
-                    <table mat-table [dataSource]="item.listaPedidoDetalle" class="mat-elevation-z8" style="width: 100%;">
-                      
-                        <!-- Name Column -->
-                        <ng-container matColumnDef="codigoArticulo">
-                            <th mat-header-cell *matHeaderCellDef> Código Artìculo </th>
-                            <td mat-cell *matCellDef="let element"> {{element.codigoArticulo}} </td>
-                        </ng-container>
-                      
-                        <!-- Weight Column -->
-                        <ng-container matColumnDef="nombre">
-                            <th mat-header-cell *matHeaderCellDef> Nombre </th>
-                            <td mat-cell *matCellDef="let element"> {{element.nombreArticulo}} </td>
-                        </ng-container>
-                      
-                        <!-- Symbol Column -->
-                        <ng-container matColumnDef="codigoDeBarras">
-                            <th mat-header-cell *matHeaderCellDef> Código de Barras </th>
-                            <td mat-cell *matCellDef="let element"> {{element.codigoDeBarras}} </td>
-                        </ng-container>
+            <div *ngFor="let item of this.dataSourceDatosDeEntrega.listaDatosDeEntrega; let indexItem=index"  #cards fxLayout="column" class="fuse-card" style="max-width: 100%;">
+                <div class="mat-card  my-24">
+                    <div class="h2 m-24"> {{item.id}} - {{item.direccion}} </div>
+                    
+                    <ng-container >
+                        <table mat-table #tabla2 [dataSource]="item.listaPedidoDetalle" class="mat-elevation-z8" style="width: 100%;">
+                            
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="codigoArticulo">
+                                <th mat-header-cell *matHeaderCellDef> Código Artìculo </th>
+                                <td mat-cell *matCellDef="let element"> {{element.codigoArticulo}} </td>
+                            </ng-container>
+                            
+                            <!-- Weight Column -->
+                            <ng-container matColumnDef="nombre">
+                                <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                                <td mat-cell *matCellDef="let element"> {{element.nombreArticulo}} </td>
+                            </ng-container>
+                            
+                            <!-- Symbol Column -->
+                            <ng-container matColumnDef="codigoDeBarras">
+                                <th mat-header-cell *matHeaderCellDef> Código de Barras </th>
+                                <td mat-cell *matCellDef="let element"> {{element.codigoDeBarras}} </td>
+                            </ng-container>
+                            
+                            <ng-container matColumnDef="mover">
+                                <th mat-header-cell *matHeaderCellDef> Mover </th>
+                                <td mat-cell *matCellDef="let element; let indexElement = index" class="example-button-row"> 
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Mover a</mat-label>
+                                        <mat-select matNativeControl (change)="mover($event, element, item)">
+                                            <mat-option [value]="0"> Articulos a remitir </mat-option>
+                                            <mat-option *ngFor="let items of this.dataSourceDatosDeEntrega.listaDatosDeEntrega; let indexItem = index" 
+                                                    [value]="indexItem"> {{items.id}} - {{items.direccion}} </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
 
-                        <ng-container matColumnDef="mover">
-                            <th mat-header-cell *matHeaderCellDef> Mover </th>
-                            <td mat-cell *matCellDef="let element" class="example-button-row"> 
-                                <button mat-stroked-button color="info" (click) = "mover(element, item)">
-                                    Mover
-                                </button>
-                            </td>
-                        </ng-container>
-                      
-                        <tr mat-header-row *matHeaderRowDef="displayedColumnsPedidoDetalle"></tr>
-                        <tr mat-row *matRowDef="let row; columns: displayedColumnsPedidoDetalle;"></tr>
-                    </table>
-                </ng-container>
+                                    <!-- <button mat-stroked-button color="info" (click) = "mover(element, item)">
+                                        Mover
+                                    </button> -->
+                                </td>
+                            </ng-container>
+                            
+                            <tr mat-header-row *matHeaderRowDef="displayedColumnsPedidoDetalle"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumnsPedidoDetalle;"></tr>
+                        </table>
+                    </ng-container>
+                </div>
             </div>
         </div>
-
+        
         <div class="mt-4 mb-24 pt-4" fxLayout="row" fxLayoutAlign="space-between">
-    
+            
             <button mat-raised-button color="accent" >Procesar</button>
             <button mat-stroked-button class="mr-5px">Cancelar</button>
         </div>

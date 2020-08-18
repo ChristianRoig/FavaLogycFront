@@ -664,7 +664,7 @@ export class PedidosListaComponent implements OnInit {
   agregarPedido() {
     let ruta = `apps/pedidos/administracion/addPedido1`;
     console.log(ruta);
-    // this._router.navigate([ruta]);
+    this._router.navigate([ruta]);
   }
 
 

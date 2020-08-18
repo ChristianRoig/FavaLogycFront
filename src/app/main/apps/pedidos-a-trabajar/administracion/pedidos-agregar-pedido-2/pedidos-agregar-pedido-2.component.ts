@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ViewChildren, QueryList} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
@@ -7,6 +7,7 @@ import { PedidosAgregarPedido2Service } from './pedidos-agregar-pedido-2.service
 import { SelectionModel } from '@angular/cdk/collections';
 import { PedidosListaService } from '../pedidos-lista/pedidos-lista.service';
 import { Articulos } from '../pedidos-lista/pedidos-lista.component';
+import { MatTable } from '@angular/material/table';
 
 export interface PeriodicElement {
   Id: number;
@@ -33,9 +34,13 @@ export interface Articulo {
   tipoCbte: string
 }
 
+
 export interface DatosDeEntrega {
-  length: number,
-  listaDatosDeEntrega: [
+  listaDatosDeEntrega : Array< ListaDatosDeEntrega>
+}
+
+
+export interface ListaDatosDeEntrega 
     {
       id: number,
       direccion: string,
@@ -56,31 +61,20 @@ export interface DatosDeEntrega {
       pedidoTurno: {
           id: number,
       },
-      listaPedidoDetalle: [
-          
-          {
-            id: number,
-            codigoArticulo: string,
-            codigoCliente: string,
-            codigoDeBarras: string,
-            nombreArticulo: string,
-            nombreCliente: string,
-            numeroCbte: string,
-            tipoCbte: string
-          }
-          
-      ]
+      listaPedidoDetalle: Array <Articulo>
     }
-  ]
-}
 
 @Component({
   selector: 'app-pedidos-agregar-pedido-2',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './pedidos-agregar-pedido-2.component.html',
   styleUrls: ['./pedidos-agregar-pedido-2.component.scss']
 })
 
 export class PedidosAgregarPedido2Component implements OnInit {
+
+  @ViewChild(MatTable) tabla1: MatTable<Articulo>;
+  @ViewChildren('tabla2') tabla2: QueryList;
 
   modo: string;
 
@@ -92,7 +86,7 @@ export class PedidosAgregarPedido2Component implements OnInit {
   codigoCliente: string;
   nombreCliente: string;
 
-  listaArticulos = [{
+  listaArticulos: Array<Articulo> = [{
     id: 114,
     codigoArticulo: "MGENMES032",
     codigoCliente: "MK995",
@@ -126,14 +120,14 @@ export class PedidosAgregarPedido2Component implements OnInit {
         sysLocalidad: {
             id: 6,
             sysProvincia: {
-                "id": 1
+                id: 1
             }
         },
         sysTransporte: {
-            "id": 3
+            id: 3
         },
         pedidoTurno: {
-            "id": 2
+            id: 2
         },
         listaPedidoDetalle: [
             
@@ -161,14 +155,14 @@ export class PedidosAgregarPedido2Component implements OnInit {
             sysLocalidad: {
                 id: 1468,
                 sysProvincia: {
-                    "id": 1
+                    id: 1
                 }
             },
             sysTransporte: {
-                "id": 3
+                id: 3
             },
             pedidoTurno: {
-                "id": 2
+                id: 2
             },
             listaPedidoDetalle: [
                 {
@@ -193,7 +187,8 @@ export class PedidosAgregarPedido2Component implements OnInit {
                 }
             ]
         }
-    ]}
+      ]
+  }
   ;
   
   displayedColumnsArticulos: string[] = ['select','codigoArticulo','nombre','codigoDeBarras'];
@@ -201,7 +196,7 @@ export class PedidosAgregarPedido2Component implements OnInit {
 
 
   // dataSourceArticulos = ELEMENT_DATA_ARTICULOS;
-  dataSourceArticulos: Array<Articulo> = new Array<Articulo>();
+  dataSourceArticulos: Array<Articulo> = [];
   dataSourceDatosDeEntrega: DatosDeEntrega;
 
   constructor(private _router: Router,
@@ -217,43 +212,56 @@ export class PedidosAgregarPedido2Component implements OnInit {
     })
     
     if(this.modo === 'ins'){
-      // this.dataSourceArticulos = JSON.parse(localStorage.getItem('AddPedido'))._selected;
+      this.dataSourceArticulos = JSON.parse(localStorage.getItem('AddPedido'))._selected;
+
       
       this.tipoCbte = this.dataSourceArticulos[0].tipoCbte;
       this.numeroCbte = this.dataSourceArticulos[0].numeroCbte;
       this.codigoCliente = this.dataSourceArticulos[0].codigoCliente;
       this.nombreCliente = this.dataSourceArticulos[0].nombreCliente;
     } else {
+      
       this.dataSourceArticulos = this.listaArticulos;
       this.dataSourceDatosDeEntrega = this.listaDatos;
 
-      this.tipoCbte = this.dataSourceDatosDeEntrega.listaDatosDeEntrega[0].listaPedidoDetalle[0].tipoCbte;
-      this.numeroCbte = this.dataSourceDatosDeEntrega.listaDatosDeEntrega[0].listaPedidoDetalle[0].numeroCbte;
+      
+      
+      console.log(this.dataSourceArticulos);
+      this.tipoCbte      = this.dataSourceDatosDeEntrega.listaDatosDeEntrega[0].listaPedidoDetalle[0].tipoCbte;
+      this.numeroCbte    = this.dataSourceDatosDeEntrega.listaDatosDeEntrega[0].listaPedidoDetalle[0].numeroCbte;
       this.codigoCliente = this.dataSourceDatosDeEntrega.listaDatosDeEntrega[0].listaPedidoDetalle[0].codigoCliente;
       this.nombreCliente = this.dataSourceDatosDeEntrega.listaDatosDeEntrega[0].listaPedidoDetalle[0].nombreCliente;
     }
 
+    console.log(this.dataSourceArticulos[0]);
+    console.log(this.dataSourceDatosDeEntrega);
+
   }
 
-  mover(element: any, item: any){
+  mover(event: Event, element: any, item: any){
     
+    console.log("item");
     console.log(item);
+    console.log("element");
     console.log(element);
 
     
     console.log("ANTES");
-    console.log(this.dataSourceArticulos);
+    // console.log(this.dataSourceArticulos);
     console.log(this.dataSourceDatosDeEntrega);
     console.log("---------------------------------------");
     
     let art: Articulo = element;
+    
 
     this.dataSourceArticulos.push(art);
-
-    this.dataSourceDatosDeEntrega.listaDatosDeEntrega[0].listaPedidoDetalle.push(art);
+    this.dataSourceDatosDeEntrega.listaDatosDeEntrega[1].listaPedidoDetalle.splice(0,1);
+    
+    this.tabla2.renderRows();
+    this.tabla1.renderRows();
     
     console.log("DESPUES");
-    console.log(this.dataSourceArticulos);
+    // console.log(this.dataSourceArticulos);
     console.log(this.dataSourceDatosDeEntrega);
   }
 
