@@ -230,24 +230,23 @@ export class PedidosAgregarPedido2Component implements OnInit {
     } else {
       
       this.dataSourceArticulos = [];
+      
+      this.dataSourceDatosDeEntrega = this.listaDatos;
 
       this.getDatosDeEntrga();
-
-      this.tipoCbte      = this.dataSourceDatosDeEntrega.datos[0].listaPedidoDetalle[0].tipoCbte;
-      this.numeroCbte    = this.dataSourceDatosDeEntrega.datos[0].listaPedidoDetalle[0].numeroCbte;
-      this.codigoCliente = this.dataSourceDatosDeEntrega.datos[0].listaPedidoDetalle[0].codigoCliente;
-      this.nombreCliente = this.dataSourceDatosDeEntrega.datos[0].listaPedidoDetalle[0].nombreCliente;
     }
-
   }
-
-
+  
+  
   getDatosDeEntrga(){
     this._service.getDatosDeEntregaUpd(this.modo).subscribe(params => {
-      console.log(params);
-      // this.dataSourceDatosDeEntrega = params;
-      this.dataSourceDatosDeEntrega = this.listaDatos;
+
+      this.tipoCbte      = params.datos[0].listaPedidoDetalle[0].pedidoCabecera.pedidoCbte.pedidoTipoCbte.codigoCbte;
+      this.numeroCbte    = params.datos[0].listaPedidoDetalle[0].pedidoCabecera.pedidoCbte.nroCbte;
+      this.codigoCliente = params.datos[0].listaPedidoDetalle[0].pedidoCabecera.pedidoCliente.codigo;
+      this.nombreCliente = params.datos[0].listaPedidoDetalle[0].pedidoCabecera.pedidoCliente.nombre;
     },
+
     (err: HttpErrorResponse) => {
       
       if (err.error instanceof Error) {
