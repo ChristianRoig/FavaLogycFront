@@ -26,6 +26,7 @@ import { PedidosAgregarPedido1Component } from './pedidos-agregar-pedido-1/pedid
 import { PedidosAgregarPedido2Component } from './pedidos-agregar-pedido-2/pedidos-agregar-pedido-2.component';
 import { PedidosAgregarPedido2Service } from './pedidos-agregar-pedido-2/pedidos-agregar-pedido-2.service';
 import { PedidosCupaComponent } from './pedidos-venta-visualizacion/pedidos-cupa/pedidos-cupa.component';
+import { AgregarDatosEntregaComponent } from './pedidos-agregar-pedido-2/agregar-datos-entrega/agregar-datos-entrega.component';
 // import { MaterialDesignModule } from 'app/material-design/material-design.module';
 
 const routes: Routes = [
@@ -66,7 +67,8 @@ const routes: Routes = [
         PedidosComprobantesComponent,
         PedidosCupaComponent,
         PedidosAgregarPedido1Component,
-        PedidosAgregarPedido2Component
+        PedidosAgregarPedido2Component,
+        AgregarDatosEntregaComponent
     ],
     imports     : [
         CommonModule,

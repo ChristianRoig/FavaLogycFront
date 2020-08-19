@@ -28,6 +28,8 @@
                                 <mat-form-field appearance="outline" fxFlex="50%" class="ml-4 mr-4">
                                     <mat-label>Cliente</mat-label>
                                     <input disabled matInput value="{{this.codigoCliente}} - {{this.nombreCliente}}">
+                                    <input disabled matInput [value]="codigoCliente + '-' + nombreCliente">
+
                                 </mat-form-field>
                                 
                             </div>
@@ -98,7 +100,7 @@
 
                 <div class="mt-4 mb-24 pt-4" fxLayout="row" fxLayoutAlign="space-between">
     
-                    <button mat-raised-button color="accent">NUEVO DATO DE ENTREGA</button>
+                    <button mat-raised-button color="accent" (click)="agregarDatoEntrega()">NUEVO DATO DE ENTREGA</button>
     
                     <mat-form-field appearance="fill">
                         <mat-label>Mover a</mat-label>

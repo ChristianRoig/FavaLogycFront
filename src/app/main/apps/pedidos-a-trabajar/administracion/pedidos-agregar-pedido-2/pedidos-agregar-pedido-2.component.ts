@@ -12,6 +12,7 @@ import { indexOf } from 'lodash';
 import { coerceNumberProperty } from '@angular/cdk/coercion';
 import { PedidosDatosEntregaComponent } from '../pedidos-venta-visualizacion/pedidos-datos-entrega/pedidos-datos-entrega.component';
 import { HttpErrorResponse } from '@angular/common/http';
+import { AgregarDatosEntregaComponent } from './agregar-datos-entrega/agregar-datos-entrega.component';
 
 export interface PeriodicElement {
   Id: number;
@@ -435,5 +436,13 @@ export class PedidosAgregarPedido2Component implements OnInit {
     localStorage.removeItem('AddPedido');
     console.log(ruta);
     this._router.navigate([ruta]);
+  }
+
+
+  agregarDatoEntrega() {
+
+    let dialogRef = this._dialog.open(AgregarDatosEntregaComponent, {
+      width: window.innerWidth+'px'
+    });    
   }
 }
