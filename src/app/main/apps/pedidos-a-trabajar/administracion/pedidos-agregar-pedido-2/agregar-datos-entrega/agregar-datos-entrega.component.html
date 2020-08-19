@@ -6,27 +6,32 @@
 
         <form class="p-24" fxLayout="column" fxLayoutAlign="center" fxFlex="1 0 auto" name="form">
                             
-            <div class="fuse-card">
-                <h3>Dirección</h3>
+            <!-- <div class="fuse-card"> -->
+                <!-- <h3>Dirección</h3> -->
 
                 <mat-form-field appearance="outline">
                     <mat-label>Dirección</mat-label>
                     <input matInput>
-                </mat-form-field>         
+                </mat-form-field>
     
                 <mat-form-field appearance="fill">
-                    <mat-label>Localidad</mat-label>
-                    <select matNativeControl >
-                        <option value="-1"> MOVER </option>
+                    <mat-label>{{ filtroLocalidades ? 'Localidad' : 'Cargando...'}}</mat-label>
+                    <select matNativeControl (change)="selectLocalidad($event)" [disabled]="!filtroLocalidades">
+                        <option [value]="0">TODOS</option>
+                        <option *ngFor="let localidad of filtroLocalidades" 
+                            [value]="localidad.id"
+                            [selected]="selectedLocalidad === localidad.id"> {{ localidad.nombre }}</option>
                     </select>
-                </mat-form-field>            
+                </mat-form-field>
     
                 <mat-form-field appearance="fill">
-                    <mat-label>Provincia</mat-label>
-                    <select matNativeControl >
-                        <option value="-1"> MOVER </option>
+                    <mat-label>{{ filtroProvincias ? 'Provincia' : 'Cargando...'}}</mat-label>
+                    <select matNativeControl (change)="selectProvincia($event)" [disabled]="!filtroProvincias">
+                        <option [value]="0">TODOS</option>
+                        <option *ngFor="let provincia of filtroProvincias" [value]="provincia.id"
+                            [selected]="selectedProvincia === provincia.id"> {{ provincia.nombre }}</option>
                     </select>
-                </mat-form-field>            
+                </mat-form-field>
     
                 <mat-form-field appearance="outline">
                     <mat-label>Código Postal</mat-label>
@@ -36,39 +41,41 @@
                 <mat-form-field appearance="outline">
                     <mat-label>Fecha de entrega</mat-label>
                     <input matInput>
-                </mat-form-field>       
+                </mat-form-field>
                 
                 <mat-form-field appearance="fill">
-                    <mat-label>Turno</mat-label>
-                    <select matNativeControl >
-                        <option value="-1"> MOVER </option>
+                    <mat-label>{{ filtroTurnos ? 'Turno' : 'Cargando...'}}</mat-label>
+                    <select matNativeControl (change)="selectTurno($event)" [disabled]="!filtroTurnos">
+                        <option [value]="0">TODOS</option>
+                        <option *ngFor="let turno of filtroTurnos" [value]="turno.id"
+                            [selected]="selectedTurno === turno.id"> {{ turno.nombre }}</option>
                     </select>
-                </mat-form-field>        
-            </div>
+                </mat-form-field>
+            <!-- </div> -->
 
-            <div class="fuse-card">
-                <h3>Datos Contacto</h3>
+            <!-- <div class="fuse-card"> -->
+                <!-- <h3>Datos Contacto</h3> -->
 
                 <mat-form-field appearance="outline">
                 <mat-label>Contacto</mat-label>
                     <input matInput>
-                </mat-form-field>  
+                </mat-form-field>
                 
                 <mat-form-field appearance="outline">
                     <mat-label>Teléfono</mat-label>
                     <input matInput>
-                </mat-form-field>  
+                </mat-form-field>
                 
                 <mat-form-field appearance="outline">
                     <mat-label>Mail</mat-label>
                     <input matInput>
-                </mat-form-field>              
-            </div>
+                </mat-form-field>
+            <!-- </div> -->
 
         </form>
 
     </div>
-    
+
 </mat-dialog-content>
 
 <mat-dialog-actions>
