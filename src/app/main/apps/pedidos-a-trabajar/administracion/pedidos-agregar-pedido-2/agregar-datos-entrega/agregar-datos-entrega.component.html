@@ -35,12 +35,25 @@
     
                 <mat-form-field appearance="outline">
                     <mat-label>Código Postal</mat-label>
-                    <input matInput>
+                    <input matInput [disabled] [value]="this.codigoPostal">
                 </mat-form-field>  
+
+                <mat-form-field appearance="fill">
+                    <mat-label>{{ filtroTurnos ? 'Trasnporte' : 'Cargando...'}}</mat-label>
+                    <select matNativeControl (change)="selectTransporte($event)" [disabled]="!filtroTransporte">
+                        <option [value]="0">TODOS</option>
+                        <option *ngFor="let transporte of filtroTransporte" [value]="transporte.id"
+                            [selected]="selectedTurno === transporte.id"> {{ transporte.nombre }}</option>
+                    </select>
+                </mat-form-field>
     
                 <mat-form-field appearance="outline">
                     <mat-label>Fecha de entrega</mat-label>
-                    <input matInput>
+                    <input matInput     
+                        [matDatepicker]="picker" 
+                        (dateChange)="addEvent($event)">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
                 
                 <mat-form-field appearance="fill">
@@ -81,6 +94,6 @@
 <mat-dialog-actions>
   <button mat-button mat-dialog-close>Cancel</button>
   <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
-  <button mat-button [mat-dialog-close]="true" color="accent">Agregar</button>
+  <button mat-button [mat-dialog-close]="true" color="accent" (click)= "agregar()">Agregar</button>
 
 </mat-dialog-actions>
