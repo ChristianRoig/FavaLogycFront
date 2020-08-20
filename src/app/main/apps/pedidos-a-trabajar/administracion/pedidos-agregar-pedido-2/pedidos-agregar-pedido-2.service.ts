@@ -102,7 +102,7 @@ export class PedidosAgregarPedido2Service
             "Content-Type": "application/json"
         });
 
-        return this._httpClient.post(ruta,body,{headers:headers});
+        return this._httpClient.put(ruta,body,{headers:headers});
     }
 
 }

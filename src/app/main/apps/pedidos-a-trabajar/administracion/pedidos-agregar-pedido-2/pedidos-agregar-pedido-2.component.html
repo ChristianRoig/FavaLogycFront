@@ -170,13 +170,9 @@
             
             <div class="mt-4 mb-24 pt-4" fxLayout="row" fxLayoutAlign="space-between">
                 
-                <button *ngIf = "this.modo === 0" [disabled] = "this.dataSourceArticulos.length > 0" 
-                    mat-raised-button color="accent" (click) = "this.procesar()">Procesar</button>
-                <button *ngIf = "this.modo  >  0" [disabled] = "this.dataSourceArticulos.length > 0" 
-                    mat-raised-button color="accent" (click) = "this.modificar()">Modificar</button>
+                <button mat-raised-button color="accent" (click) = "this.procesar()">Procesar</button>
                         
-                <button *ngIf = "this.modo === 0" mat-stroked-button class="mr-5px" (click) = "this.volverIns()">Cancelar</button>
-                <button *ngIf = "this.modo  >  0" mat-stroked-button class="mr-5px" (click) = "this.volverUpd()">Cancelar</button>
+                <button mat-stroked-button class="mr-5px" (click) = "this.volver()">Cancelar</button>
             </div>
         </div>
     </div>

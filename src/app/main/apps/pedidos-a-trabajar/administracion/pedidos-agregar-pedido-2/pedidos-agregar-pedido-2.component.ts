@@ -272,9 +272,23 @@ export class PedidosAgregarPedido2Component implements OnInit {
   }
 
   procesar(){
+    if (this.modo === 0){
+      this.agregar();
+    } else {
+      this.modificar();
+    }
+  }
+
+
+  agregar(){
     this._service.postPedidos(this.dataSourceDatosDeEntrega.datos, 1, this.dataSourceDatosDeEntrega.datos[0].listaPedidoDetalle[0].numeroCbte).subscribe(data => {
       console.log(data);
       // this.dataSourceDatosDeEntrega = params;
+      let ruta = `apps/pedidos/administracion/pedidos-lista`;
+      localStorage.removeItem('AddPedido');
+      localStorage.removeItem('datoEntrega');
+      localStorage.removeItem('IsTipo');
+      this._router.navigate([ruta]);
     },
     (err: HttpErrorResponse) => {
       
@@ -293,15 +307,19 @@ export class PedidosAgregarPedido2Component implements OnInit {
         }
       }
     });
-  }
 
+  }
   
 
 
   modificar(){
     this._service.putPedidos(this.dataSourceDatosDeEntrega.datos).subscribe(data => {
       console.log(data);
-      // this.dataSourceDatosDeEntrega = params;
+      let ruta = `apps/pedidos/administracion/pedidos-lista`;
+      localStorage.removeItem('AddPedido');
+      localStorage.removeItem('datoEntrega');
+      localStorage.removeItem('IsTipo');
+      this._router.navigate([ruta]);
     },
     (err: HttpErrorResponse) => {
       
@@ -401,11 +419,7 @@ export class PedidosAgregarPedido2Component implements OnInit {
         
           
         } else {
-          if (this.modo === 0){
-            this.volverIns();
-          } else {
-            this.volverUpd();
-          }
+          this.volver();
         }
     });
   }
@@ -430,6 +444,14 @@ export class PedidosAgregarPedido2Component implements OnInit {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
+  }
+
+  volver(){
+    if (this.modo === 0){
+      this.volverIns();
+    } else {
+      this.volverUpd();
+    }
   }
 
   volverIns(){
