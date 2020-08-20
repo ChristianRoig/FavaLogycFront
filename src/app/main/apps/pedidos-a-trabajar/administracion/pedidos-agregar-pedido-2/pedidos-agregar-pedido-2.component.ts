@@ -290,6 +290,8 @@ export class PedidosAgregarPedido2Component implements OnInit {
     });
   }
 
+  
+
 
   modificar(){
     this._service.putPedidos(this.dataSourceDatosDeEntrega.datos).subscribe(data => {

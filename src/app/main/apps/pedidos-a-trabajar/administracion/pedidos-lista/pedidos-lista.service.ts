@@ -50,6 +50,13 @@ export class PedidosListaService
         return this._httpClient.get(ruta);
     }
 
+
+    getAllTransportes(): Observable<any>
+    {
+        let ruta = `${BASE_URL}pedidosatrabajar/transporte/`;
+        return this._httpClient.get(ruta);
+    }
+
     getAllEstadosPorId(id:number): Observable<any>
     {
         let ruta = `${BASE_URL}pedidosatrabajar/pedidoestado/etapa/${id}`;
