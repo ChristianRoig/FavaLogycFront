@@ -96,6 +96,16 @@ export class AgregarDatosEntregaComponent implements OnInit{
     picker: any;
     codigoPostal: any = 7600;
 
+
+
+    contacto:string      = '';
+    direccion:string     = '';
+    mail:string          = '';
+    observaciones:string = '';
+    telefono:string      = '';
+
+
+
     ngOnInit(): void {
       this.getfiltros();
     }
@@ -108,20 +118,20 @@ export class AgregarDatosEntregaComponent implements OnInit{
 
       console.log("agregar");
 
-      this.datoEntrega.contacto                     = "blas";
-      this.datoEntrega.direccion                    = "bdf";
+      this.datoEntrega.contacto                     = this.contacto;
+      this.datoEntrega.direccion                    = this.direccion;
       this.datoEntrega.fechaDeEntrega               = this.picker;
       this.datoEntrega.id                           = null;
-      this.datoEntrega.listaPedidoDetalle           = null;
-      this.datoEntrega.mail                         = "bfd";
-      this.datoEntrega.observaciones                = "bfdf";
+      this.datoEntrega.listaPedidoDetalle           = this.data.articulos;
+      this.datoEntrega.mail                         = this.mail;
+      this.datoEntrega.observaciones                = this.observaciones;
       this.datoEntrega.pedidoTurno.id               = this.selectedTurno;
       this.datoEntrega.sysLocalidad.id              = this.selectedLocalidad;
       this.datoEntrega.sysLocalidad.sysProvincia.id = this.selectedProvincia;
       this.datoEntrega.sysTransporte.id             = this.selectedTransporte;
-      this.datoEntrega.telefono                     = "bfd";
+      this.datoEntrega.telefono                     = this.telefono;
 
-      console.log(this.datoEntrega);
+      // console.log(this.datoEntrega);
       localStorage.setItem('datoEntrega', JSON.stringify(this.datoEntrega));
 
       this.dialogRef.close();

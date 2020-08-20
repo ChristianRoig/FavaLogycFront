@@ -11,7 +11,7 @@
 
                 <mat-form-field appearance="outline">
                     <mat-label>Dirección</mat-label>
-                    <input matInput>
+                    <input matInput [(ngModel)]='this.direccion' [ngModelOptions]="{standalone: true}">
                 </mat-form-field>
     
                 <mat-form-field appearance="fill">
@@ -71,17 +71,17 @@
 
                 <mat-form-field appearance="outline">
                 <mat-label>Contacto</mat-label>
-                    <input matInput>
+                    <input matInput [(ngModel)]='this.contacto' [ngModelOptions]="{standalone: true}">
                 </mat-form-field>
                 
                 <mat-form-field appearance="outline">
                     <mat-label>Teléfono</mat-label>
-                    <input matInput>
+                    <input matInput [(ngModel)]='this.telefono' [ngModelOptions]="{standalone: true}">
                 </mat-form-field>
                 
                 <mat-form-field appearance="outline">
                     <mat-label>Mail</mat-label>
-                    <input matInput>
+                    <input matInput [(ngModel)]='this.mail' [ngModelOptions]="{standalone: true}">
                 </mat-form-field>
             <!-- </div> -->
 

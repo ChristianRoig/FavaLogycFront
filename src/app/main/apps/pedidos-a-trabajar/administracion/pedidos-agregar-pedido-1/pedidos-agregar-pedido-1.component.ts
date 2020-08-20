@@ -76,6 +76,7 @@ export class PedidosAgregarPedido1Component implements OnInit {
 
   agregar(){
     localStorage.setItem('AddPedido',JSON.stringify(this.selection));
+    localStorage.setItem('IdTipo',JSON.stringify(this.selectedTipo));
     
     let ruta = `apps/pedidos/administracion/addPedido2/0`;
 

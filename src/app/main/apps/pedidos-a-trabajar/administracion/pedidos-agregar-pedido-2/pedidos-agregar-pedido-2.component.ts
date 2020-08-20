@@ -13,6 +13,7 @@ import { coerceNumberProperty } from '@angular/cdk/coercion';
 import { PedidosDatosEntregaComponent } from '../pedidos-venta-visualizacion/pedidos-datos-entrega/pedidos-datos-entrega.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AgregarDatosEntregaComponent } from './agregar-datos-entrega/agregar-datos-entrega.component';
+import { DATOS_ENTREGA } from 'app/main/apps/interfaces/datos-entrega';
 
 export interface PeriodicElement {
   Id: number;
@@ -85,6 +86,7 @@ export class PedidosAgregarPedido2Component implements OnInit {
   subParametros: Subscription;
   selection = new SelectionModel<Articulo>(true, []);
 
+  idTipoCbte: number;
   tipoCbte: string;
   numeroCbte: string;
   codigoCliente: string;
@@ -223,6 +225,7 @@ export class PedidosAgregarPedido2Component implements OnInit {
       this.dataSourceArticulos = JSON.parse(localStorage.getItem('AddPedido'))._selected;
       this.dataSourceDatosDeEntrega = this.listaDatosVacia;
       
+      this.idTipoCbte = JSON.parse(localStorage.getItem('IdTipo'));
       this.tipoCbte = this.dataSourceArticulos[0].tipoCbte;
       this.numeroCbte = this.dataSourceArticulos[0].numeroCbte;
       this.codigoCliente = this.dataSourceArticulos[0].codigoCliente;
@@ -231,7 +234,7 @@ export class PedidosAgregarPedido2Component implements OnInit {
       
       this.dataSourceArticulos = [];
       
-      this.dataSourceDatosDeEntrega = this.listaDatos;
+      this.dataSourceDatosDeEntrega = this.listaDatosVacia;
 
       this.getDatosDeEntrga();
     }
@@ -239,12 +242,14 @@ export class PedidosAgregarPedido2Component implements OnInit {
   
   
   getDatosDeEntrga(){
-    this._service.getDatosDeEntregaUpd(this.modo).subscribe(params => {
+    this._service.getDatosDeEntregaUpd(this.modo).subscribe((params) => {
 
-      this.tipoCbte      = params.datos[0].listaPedidoDetalle[0].pedidoCabecera.pedidoCbte.pedidoTipoCbte.codigoCbte;
-      this.numeroCbte    = params.datos[0].listaPedidoDetalle[0].pedidoCabecera.pedidoCbte.nroCbte;
-      this.codigoCliente = params.datos[0].listaPedidoDetalle[0].pedidoCabecera.pedidoCliente.codigo;
-      this.nombreCliente = params.datos[0].listaPedidoDetalle[0].pedidoCabecera.pedidoCliente.nombre;
+      this.dataSourceDatosDeEntrega.datos = params;
+      
+      this.tipoCbte      = this.dataSourceDatosDeEntrega.datos[0].listaPedidoDetalle[0].tipoCbte;
+      this.numeroCbte    = this.dataSourceDatosDeEntrega.datos[0].listaPedidoDetalle[0].numeroCbte;
+      this.codigoCliente = this.dataSourceDatosDeEntrega.datos[0].listaPedidoDetalle[0].codigoCliente;
+      this.nombreCliente = this.dataSourceDatosDeEntrega.datos[0].listaPedidoDetalle[0].nombreCliente;
     },
 
     (err: HttpErrorResponse) => {
@@ -366,6 +371,7 @@ export class PedidosAgregarPedido2Component implements OnInit {
           this.dataSourceArticulos.splice(indexToSplice,1);
 
         }
+        this.selection.clear();
       }
     }
 
@@ -438,12 +444,30 @@ export class PedidosAgregarPedido2Component implements OnInit {
     console.log(ruta);
     this._router.navigate([ruta]);
   }
-
-
+  
+  
   agregarDatoEntrega() {
-
+    
     let dialogRef = this._dialog.open(AgregarDatosEntregaComponent, {
-      width: window.innerWidth+'px'
-    });    
+      width: window.innerWidth+'px',
+      data: {
+        articulos: this.selection.selected
+      } 
+    });
+    
+    dialogRef.afterClosed()
+      .subscribe(result => {
+        console.log(JSON.parse(localStorage.getItem('datoEntrega')));
+        this.dataSourceDatosDeEntrega.datos.push(JSON.parse(localStorage.getItem('datoEntrega')));
+        for (let art of this.selection.selected) {
+
+          let indexToSplice = this.dataSourceArticulos.indexOf(art);
+          this.dataSourceArticulos.splice(indexToSplice,1);
+
+        }
+
+        this.selection.clear();
+        this.render();
+      });
   }
 }
