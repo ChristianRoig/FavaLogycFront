@@ -60,7 +60,7 @@ export class PedidosAnularComponent implements OnInit {
 
   subParametros: Subscription;
   
-  displayedColumnsArticulos: string[] = ['select','id','codigoArticulo','nombre','cantidad','estado','etapa'];
+  displayedColumnsArticulos: string[] = ['select','id','codigoArticulo','nombre','cantidad','etapa'];
 
   dataSourceArticulos: any;
   idCabecera: any;

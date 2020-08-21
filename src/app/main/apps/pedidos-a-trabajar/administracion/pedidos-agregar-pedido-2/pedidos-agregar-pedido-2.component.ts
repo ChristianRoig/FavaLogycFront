@@ -482,16 +482,19 @@ export class PedidosAgregarPedido2Component implements OnInit {
     dialogRef.afterClosed()
       .subscribe(result => {
         console.log(JSON.parse(localStorage.getItem('datoEntrega')));
-        this.dataSourceDatosDeEntrega.datos.push(JSON.parse(localStorage.getItem('datoEntrega')));
-        for (let art of this.selection.selected) {
+        if(JSON.parse(localStorage.getItem('datoEntrega'))){
 
-          let indexToSplice = this.dataSourceArticulos.indexOf(art);
-          this.dataSourceArticulos.splice(indexToSplice,1);
-
+          this.dataSourceDatosDeEntrega.datos.push(JSON.parse(localStorage.getItem('datoEntrega')));
+          for (let art of this.selection.selected) {
+            
+            let indexToSplice = this.dataSourceArticulos.indexOf(art);
+            this.dataSourceArticulos.splice(indexToSplice,1);
+            
+          }
+          
+          this.selection.clear();
+          this.render();
         }
-
-        this.selection.clear();
-        this.render();
       });
   }
 }
