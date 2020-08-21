@@ -82,6 +82,7 @@ export class PedidosAgregarPedido2Component implements OnInit {
   @ViewChildren('tabla2') tabla2: QueryList<MatTable<Articulo>>;;
 
   modo: number;
+  titulo: string;
 
   subParametros: Subscription;
   selection = new SelectionModel<Articulo>(true, []);
@@ -222,6 +223,7 @@ export class PedidosAgregarPedido2Component implements OnInit {
     })
     
     if(this.modo < 1) {
+      this.titulo = 'Agregar Pedido'
       this.dataSourceArticulos = JSON.parse(localStorage.getItem('AddPedido'))._selected;
       this.dataSourceDatosDeEntrega = this.listaDatosVacia;
       
@@ -231,7 +233,7 @@ export class PedidosAgregarPedido2Component implements OnInit {
       this.codigoCliente = this.dataSourceArticulos[0].codigoCliente;
       this.nombreCliente = this.dataSourceArticulos[0].nombreCliente;
     } else {
-      
+      this.titulo = 'Modificar Pedido'
       this.dataSourceArticulos = [];
       
       this.dataSourceDatosDeEntrega = this.listaDatosVacia;
@@ -272,7 +274,7 @@ export class PedidosAgregarPedido2Component implements OnInit {
   }
 
   procesar(){
-    if (this.modo === 0){
+    if (this.modo < 1){
       this.agregar();
     } else {
       this.modificar();
@@ -447,7 +449,7 @@ export class PedidosAgregarPedido2Component implements OnInit {
   }
 
   volver(){
-    if (this.modo === 0){
+    if (this.modo < 1){
       this.volverIns();
     } else {
       this.volverUpd();

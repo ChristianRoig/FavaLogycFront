@@ -159,7 +159,7 @@ export class PedidosAnularComponent implements OnInit {
       .subscribe( () => {
         if (errStatus != 0) {  
 
-          //this.volver();
+          this.volver();
           
         } else {
           this._router.navigate(['']);

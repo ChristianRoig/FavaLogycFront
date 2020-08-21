@@ -1,4 +1,4 @@
-<app-plantilla-fondo-simple titulo='Agregar Pedido Paso 2'>
+<app-plantilla-fondo-simple titulo='{{this.titulo}}'>
 
 
     
@@ -100,7 +100,7 @@
 
                 <div class="mt-4 mb-24 pt-4" fxLayout="row" fxLayoutAlign="space-between">
     
-                    <button mat-raised-button color="accent" (click)="agregarDatoEntrega()">NUEVO DATO DE ENTREGA</button>
+                    <button mat-raised-button color="accent" [disabled]="this.selection.isEmpty()" (click)="agregarDatoEntrega()">NUEVO DATO DE ENTREGA</button>
     
                     <mat-form-field appearance="fill">
                         <mat-label>Mover a</mat-label>
@@ -170,7 +170,7 @@
             
             <div class="mt-4 mb-24 pt-4" fxLayout="row" fxLayoutAlign="space-between">
                 
-                <button mat-raised-button color="accent" (click) = "this.procesar()">Procesar</button>
+                <button mat-raised-button color="accent" [disabled]="this.dataSourceArticulos.length > 0" (click) = "this.procesar()">Procesar</button>
                         
                 <button mat-stroked-button class="mr-5px" (click) = "this.volver()">Cancelar</button>
             </div>

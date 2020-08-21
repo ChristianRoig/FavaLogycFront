@@ -23,7 +23,7 @@ export class PedidosTrazabilidadComponent implements OnInit {
 
   dataSourceTrazabilidad: any;
 
-  displayedColumnsTrazabilidad: string[] = ['fecha', 'estado', 'etapa', 'accion', 'cupa', 'codigoArticulo', 'usuario'];
+  displayedColumnsTrazabilidad: string[] = ['fecha', 'etapa', 'accion', 'cupa', 'codigoArticulo', 'usuario'];
 
   length: number;
   page: number;

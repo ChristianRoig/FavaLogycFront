@@ -79,8 +79,10 @@ export class PedidosAgregarPedido2Service
         let ruta = `${BASE_URL}pedidosatrabajar/pedidodetalle/sinremitir/datoentrega/${idTipo}/${numerocbte}`;
         
         let body=   {
-            "listaDatosDeEntrega": listaDatosDeEntrega
+            listaDatosDeEntrega: listaDatosDeEntrega
         }
+
+        console.log(JSON.stringify(body));
 
         let headers = new HttpHeaders({
             "Content-Type": "application/json"
