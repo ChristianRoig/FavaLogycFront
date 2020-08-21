@@ -202,8 +202,8 @@ export class PedidosAgregarPedido2Component implements OnInit {
     datos: []
   };
   
-  displayedColumnsArticulos: string[] = ['select','codigoArticulo','nombre','codigoDeBarras'];
-  displayedColumnsPedidoDetalle: string[] = ['codigoArticulo','nombre','codigoDeBarras', 'mover'];
+  displayedColumnsArticulos: string[] = ['select','codigoArticulo','nombre'];
+  displayedColumnsPedidoDetalle: string[] = ['codigoArticulo','nombre', 'mover'];
 
 
   // dataSourceArticulos = ELEMENT_DATA_ARTICULOS;
