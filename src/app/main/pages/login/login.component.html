@@ -11,7 +11,7 @@
 
                 <form name="loginForm" [formGroup]="loginForm" novalidate>
 
-                    <mat-form-field appearance="outline">
+                    <!-- <mat-form-field appearance="outline">
                         <mat-label>Usuario de dominio</mat-label>
                         <input matInput formControlName="email" placeholder="Usuario de dominio">
                         <mat-icon matSuffix class="secondary-text">mail</mat-icon>
@@ -32,20 +32,21 @@
                         <mat-error>
                             La contraseña es requerida
                         </mat-error>
-                    </mat-form-field>
+                    </mat-form-field> -->
+                    <button mat-raised-button color="accent" class="submit-button" aria-label="LOG IN"
+                            [disabled]="loginForm.invalid" (click)="ingresar()">
+                        INGRESAR
+                    </button>
 
                     <div class="remember-forgot-password" fxLayout="row" fxLayout.xs="column"
-                        fxLayoutAlign="space-between center">
+                        fxLayoutAlign="center">
+                        <!-- fxLayoutAlign="space-between center"> -->
                         
                         <a mat-button color="accent" class="forgot-password" (click)="recuperarContrasena()">
                             Olvidó su contraseña?
                         </a>
                     </div>
 
-                    <button mat-raised-button color="accent" class="submit-button" aria-label="LOG IN"
-                            [disabled]="loginForm.invalid" (click)="ingresar()">
-                        INGRESAR
-                    </button>
 
                 </form>
 

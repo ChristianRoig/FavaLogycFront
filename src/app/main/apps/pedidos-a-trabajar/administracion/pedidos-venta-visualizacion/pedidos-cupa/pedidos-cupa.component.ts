@@ -55,7 +55,7 @@ export class PedidosCupaComponent implements OnInit {
     this._service.getCUPA(this.idCabecera,page, size, columna, order).subscribe(paramsArt => {
       if(paramsArt){
         this.dataSourceCUPA = paramsArt.datos;
-        console.log(this.dataSourceCUPA);
+        // console.log(this.dataSourceCUPA);
         this.length = paramsArt.totalRegistros;
       }
     },

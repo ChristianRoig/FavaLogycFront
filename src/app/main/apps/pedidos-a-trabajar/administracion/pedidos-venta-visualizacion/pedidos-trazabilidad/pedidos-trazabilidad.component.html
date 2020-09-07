@@ -40,6 +40,13 @@
             <td mat-cell *matCellDef="let element"> {{element.pedidoDetalleParte.articuloCupa ? element.pedidoDetalleParte.articuloCupa.codigoUnicoParteArticulo : ''}} </td>
         </ng-container>
     
+        <!-- Cantidad Column -->
+        <ng-container matColumnDef="cantidad">
+            <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+            <td mat-cell *matCellDef="let element"> {{element.pedidoDetalleParte.nroParte}} </td>
+            <!-- <td mat-cell *matCellDef="let element"> {{element.pedidoDetalleParte.nroParte ? element.pedidoDetalleParte.nroParte : ''}} </td> -->
+        </ng-container>
+    
         <!-- Codigo Articulo Column -->
         <ng-container matColumnDef="codigoArticulo">
             <th mat-sort-header="codigoArticulo" mat-header-cell *matHeaderCellDef> Código Artículo </th>

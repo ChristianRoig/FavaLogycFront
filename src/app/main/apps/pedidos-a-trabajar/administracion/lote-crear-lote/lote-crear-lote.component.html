@@ -1,36 +1,11 @@
-<app-plantilla-fondo-simple titulo='Lista de pedidos a trabajar'>
+<app-plantilla-fondo-simple titulo='Crear Lote'>
 
     <!-- CONTENIDO -->
     <div contenido>
 
         <div fxLayout="column">
 
-            <!-- Filtros en Pantalla grande -->
-            <!-- <div fxHide.sm fxHide.xs  fxLayout="row" class="content-card pb-4">
-    
-                LOTE
-                <div fxFlex="100" fxFlex.gt-sm="50" class="fuse-card p-24 mr-8">
-
-                    <ng-container *ngTemplateOutlet="filtrosLote"></ng-container>
-                    
-    
-                    <button mat-raised-button color="primary" (click)="crearLote()" class="mt-24 p-8">CREAR LOTE</button>
-                </div>
-                / LOTE
-    
-
-
-                FILTROS
-                <span fxFlex="50" class="fuse-card p-24 ml-8">
-
-                    <ng-container *ngTemplateOutlet="filtros"></ng-container>
-                </span>
-                / FILTROS
-
-                
-    
-            </div> -->
-            <!-- / Filtros en Pantalla grande -->
+            
 
 
             <!-- SECCION ARTICULOS -->
@@ -60,11 +35,12 @@
 
                     <div class="m-24">
 
-                        <button mat-stroked-button (click)="agregarPedido()" color="accent" class="fuse-white">
-
-                            <mat-icon>add</mat-icon>
-                            Agregar Pedido
-                
+                        <button (click)="crearLote()" mat-raised-button color="primary" 
+                                [matBadge]="selection.selected.length"
+                                [matBadgeHidden]="selection.selected.length===0"
+                                matBadgeColor="warn"
+                                [disabled]="selection.selected.length===0">
+                                Crear Lote
                         </button>
                     </div>
                 </div>
@@ -100,10 +76,10 @@
 
 
         <!-- FILTROS LOTE -->
-        <span class="p-24 pt-8">
+        <!-- <span class="p-24 pt-8">
     
             <ng-container *ngTemplateOutlet="filtrosLote"></ng-container>
-        </span>
+        </span> -->
         <!-- / FILTROS LOTE -->
 
 
@@ -123,10 +99,27 @@
 <!-- TEMPLATE LISTA -->
 <ng-template #articulos>
 
-    <div class="p-24" style="width: 100%; overflow: auto;">
+    <div style="width: 100%; overflow: auto;">
 
             <!-- <table mat-table [dataSource]="dataSource2" class="mb-8"> -->
-            <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="dataSource2" class="mat-elevation-z8" style="width: 100%;">
+            <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="dataSource2" class="mb-8">
+        
+                <ng-container matColumnDef="select" sticky>
+                    <th mat-header-cell *matHeaderCellDef class="px-24">
+                        <mat-checkbox (change)="$event ? masterToggle() : null"
+                                      [checked]="selection.hasValue() && isAllSelected()"
+                                      [indeterminate]="selection.hasValue() && !isAllSelected()">
+                        </mat-checkbox>
+                    </th>
+        
+                    <td mat-cell *matCellDef="let row" class="px-24">
+                        <mat-checkbox (click)="$event.stopPropagation()"
+                                        (change)="$event ? selection.toggle(row) : null"
+                                        [checked]="selection.isSelected(row)"
+                                        [disabled]="row.pedidoEtapa.nombre !== 'INICIAL' && row.pedidoEtapa.pedidoEstado.nombre !== 'INICIAL' || row.pedidoEtapa.nombre === 'ANULADO'">
+                        </mat-checkbox>
+                    </td>
+                </ng-container>
 
                 <ng-container matColumnDef="Tipo">
                     <th mat-header-cell *matHeaderCellDef class="pl-8"> Tipo </th>
@@ -149,12 +142,7 @@
                 <ng-container matColumnDef="Comprobante">
                     <th mat-header-cell *matHeaderCellDef> Comprobante </th>
                     <!-- <th mat-sort-header="nroCbte" mat-header-cell *matHeaderCellDef> Comprobante </th> -->
-                    <td mat-cell *matCellDef="let element"> 
-                        <a (click)="consultar(element.pedidoCabecera.id)">
-        
-                            {{element.pedidoCabecera.pedidoCbte.nroCbte}} 
-                        </a>
-                    </td>
+                    <td mat-cell *matCellDef="let element"> {{element.pedidoCabecera.pedidoCbte.nroCbte}} </td>
                 </ng-container>
               
                 <ng-container matColumnDef="Fecha-Entrega">
@@ -185,13 +173,7 @@
                     <!-- <th mat-header-cell *matHeaderCellDef> Etapa </th> -->
                     <th mat-sort-header="etapa" mat-header-cell *matHeaderCellDef> Etapa </th>
                     <td mat-cell *matCellDef="let element"> {{element.pedidoEtapa.nombre}} </td>
-                </ng-container>
-              
-                <ng-container matColumnDef="Lote">
-                    <!-- <th mat-header-cell *matHeaderCellDef> Lote </th> -->
-                    <th mat-sort-header="idLote" mat-header-cell *matHeaderCellDef> Lote </th>
-                    <td  mat-cell *matCellDef="let element"> {{ element.pedidoLote.id ? element.pedidoLote.id : '' }} </td>
-                </ng-container>                
+                </ng-container>          
                 
                 <ng-container matColumnDef="Borrar">
                     <th mat-header-cell *matHeaderCellDef> Anular </th>

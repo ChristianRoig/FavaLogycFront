@@ -27,6 +27,11 @@ import { PedidosAgregarPedido2Component } from './pedidos-agregar-pedido-2/pedid
 import { PedidosAgregarPedido2Service } from './pedidos-agregar-pedido-2/pedidos-agregar-pedido-2.service';
 import { PedidosCupaComponent } from './pedidos-venta-visualizacion/pedidos-cupa/pedidos-cupa.component';
 import { AgregarDatosEntregaComponent } from './pedidos-agregar-pedido-2/agregar-datos-entrega/agregar-datos-entrega.component';
+import { LoteCrearLoteComponent } from './lote-crear-lote/lote-crear-lote.component';
+import { LoteCrearLoteService } from './lote-crear-lote/lote-crear-lote.service';
+import { LoteAdministrarLoteComponent } from './lote-administrar-lote/lote-administrar-lote.component';
+import { LoteAdministrarLoteService } from './lote-administrar-lote/lote-administrar-lote.service';
+import { BuscarLoteComponent } from './lote-administrar-lote/buscar-lote/buscar-lote.component';
 // import { MaterialDesignModule } from 'app/material-design/material-design.module';
 
 const routes: Routes = [
@@ -53,6 +58,14 @@ const routes: Routes = [
     {
         path     : 'addPedido2/:modo',
         component: PedidosAgregarPedido2Component
+    },
+    {
+        path     : 'crear-lote',
+        component: LoteCrearLoteComponent
+    },
+    {
+        path     : 'administrar-lote',
+        component: LoteAdministrarLoteComponent
     }
 ];
 
@@ -68,7 +81,10 @@ const routes: Routes = [
         PedidosCupaComponent,
         PedidosAgregarPedido1Component,
         PedidosAgregarPedido2Component,
-        AgregarDatosEntregaComponent
+        AgregarDatosEntregaComponent,
+        LoteCrearLoteComponent,
+        LoteAdministrarLoteComponent,
+        BuscarLoteComponent
     ],
     imports     : [
         CommonModule,
@@ -87,7 +103,9 @@ const routes: Routes = [
         PedidosAnularService,
         PedidosAgregarLoteService,
         PedidosAgregarPedido1Service,
-        PedidosAgregarPedido2Service
+        PedidosAgregarPedido2Service,
+        LoteCrearLoteService,
+        LoteAdministrarLoteService
     ]
 })
 

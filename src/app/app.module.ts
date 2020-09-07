@@ -23,6 +23,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { FormsModule } from '@angular/forms';
 import { PlantillaFondoComponent } from './main/custom-tags/plantilla-fondo/plantilla-fondo.component';
 import { SharedModule } from './shared/shared.module';
+import { SonidoService } from './services/sonidos.service';
 
 
 const appRoutes: Routes = [
@@ -72,6 +73,7 @@ const appRoutes: Routes = [
         SharedModule
     ],
     providers: [
+        SonidoService
         // { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
     ],
     bootstrap   : [

@@ -1,4 +1,4 @@
-<app-plantilla-fondo-simple titulo='Lista de pedidos a trabajar'>
+<app-plantilla-fondo-simple titulo='Administrar Lotes'>
 
     <!-- CONTENIDO -->
     <div contenido>
@@ -6,35 +6,23 @@
         <div fxLayout="column">
 
             <!-- Filtros en Pantalla grande -->
-            <!-- <div fxHide.sm fxHide.xs  fxLayout="row" class="content-card pb-4">
+            <div fxHide.sm fxHide.xs  fxLayout="row" class="content-card pb-4">
     
-                LOTE
-                <div fxFlex="100" fxFlex.gt-sm="50" class="fuse-card p-24 mr-8">
+                <!-- LOTE -->
+                <div fxFlex="100" class="fuse-card p-24 mr-8">
 
                     <ng-container *ngTemplateOutlet="filtrosLote"></ng-container>
                     
     
-                    <button mat-raised-button color="primary" (click)="crearLote()" class="mt-24 p-8">CREAR LOTE</button>
+                    <button [disabled]="!this.lote" mat-raised-button color="primary" (click)="buscarLote()" class="mt-24 p-8">Buscar Lote</button>
                 </div>
-                / LOTE
     
-
-
-                FILTROS
-                <span fxFlex="50" class="fuse-card p-24 ml-8">
-
-                    <ng-container *ngTemplateOutlet="filtros"></ng-container>
-                </span>
-                / FILTROS
-
-                
-    
-            </div> -->
+            </div>
             <!-- / Filtros en Pantalla grande -->
 
 
             <!-- SECCION ARTICULOS -->
-            <div class="fuse-card my-24" style="max-width: 100%;">
+            <div *ngIf = "this.dataSource2" class="fuse-card my-24" style="max-width: 100%;">
 
                 <!-- BOTON "FILTROS" -->
                 <span fxLayoutAlign="end">
@@ -50,7 +38,7 @@
                 <!-- TITULO/BUSCADOR/BOTON -->
                 <div fxLayout="row" fxLayoutAlign="space-between">
 
-                    <div class="h2 m-24">Artículos</div>
+                    <div class="h2 m-24">{{this.lote}}</div>
 
                     <mat-form-field appearance="outline" style="width: 100%;" class="mt-8 mx-12">
                         <mat-label>Código de Artículo o Comprobante</mat-label>
@@ -60,16 +48,27 @@
 
                     <div class="m-24">
 
-                        <button mat-stroked-button (click)="agregarPedido()" color="accent" class="fuse-white">
+                        <button (click)="crearLote()" mat-raised-button color="primary" 
+                                [matBadge]="selection.selected.length"
+                                [matBadgeHidden]="selection.selected.length===0"
+                                matBadgeColor="warn"
+                                [disabled]="selection.selected.length===0">
+                                Eliminar
+                        </button>
+                    </div>
 
-                            <mat-icon>add</mat-icon>
-                            Agregar Pedido
-                
+                    <div class="m-24">
+
+                        <button (click)="crearLote()" mat-raised-button color="primary" 
+                                [matBadge]="selection.selected.length"
+                                [matBadgeHidden]="selection.selected.length===0"
+                                matBadgeColor="warn"
+                                [disabled]="selection.selected.length===0">
+                                Imprimir CUPA
                         </button>
                     </div>
                 </div>
                 <!-- / TITULO/BUSCADOR/BOTON -->
-
 
                 <ng-container *ngTemplateOutlet="articulos"></ng-container>
             </div>
@@ -100,10 +99,10 @@
 
 
         <!-- FILTROS LOTE -->
-        <span class="p-24 pt-8">
+        <!-- <span class="p-24 pt-8">
     
             <ng-container *ngTemplateOutlet="filtrosLote"></ng-container>
-        </span>
+        </span> -->
         <!-- / FILTROS LOTE -->
 
 
@@ -123,10 +122,26 @@
 <!-- TEMPLATE LISTA -->
 <ng-template #articulos>
 
-    <div class="p-24" style="width: 100%; overflow: auto;">
+    <div style="width: 100%; overflow: auto;">
 
             <!-- <table mat-table [dataSource]="dataSource2" class="mb-8"> -->
-            <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="dataSource2" class="mat-elevation-z8" style="width: 100%;">
+            <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="dataSource2" class="mb-8">
+        
+                <ng-container matColumnDef="select" sticky>
+                    <th mat-header-cell *matHeaderCellDef class="px-24">
+                        <mat-checkbox (change)="$event ? masterToggle() : null"
+                                      [checked]="selection.hasValue() && isAllSelected()"
+                                      [indeterminate]="selection.hasValue() && !isAllSelected()">
+                        </mat-checkbox>
+                    </th>
+        
+                    <td mat-cell *matCellDef="let row" class="px-24">
+                        <mat-checkbox (click)="$event.stopPropagation()"
+                                        (change)="$event ? selection.toggle(row) : null"
+                                        [checked]="selection.isSelected(row)">
+                        </mat-checkbox>
+                    </td>
+                </ng-container>
 
                 <ng-container matColumnDef="Tipo">
                     <th mat-header-cell *matHeaderCellDef class="pl-8"> Tipo </th>
@@ -149,12 +164,7 @@
                 <ng-container matColumnDef="Comprobante">
                     <th mat-header-cell *matHeaderCellDef> Comprobante </th>
                     <!-- <th mat-sort-header="nroCbte" mat-header-cell *matHeaderCellDef> Comprobante </th> -->
-                    <td mat-cell *matCellDef="let element"> 
-                        <a (click)="consultar(element.pedidoCabecera.id)">
-        
-                            {{element.pedidoCabecera.pedidoCbte.nroCbte}} 
-                        </a>
-                    </td>
+                    <td mat-cell *matCellDef="let element"> {{element.pedidoCabecera.pedidoCbte.nroCbte}} </td>
                 </ng-container>
               
                 <ng-container matColumnDef="Fecha-Entrega">
@@ -194,14 +204,14 @@
                 </ng-container>                
                 
                 <ng-container matColumnDef="Borrar">
-                    <th mat-header-cell *matHeaderCellDef> Anular </th>
+                    <th mat-header-cell *matHeaderCellDef> Eliminar </th>
                     <td mat-cell class="example-button-row" *matCellDef="let element"> 
                         <!-- <button mat-stroked-button color="warn" (click)="confirmacionBorrar(element.pedidoCabecera.id)"> -->
                         <button mat-stroked-button color="warn" 
                                 (click)="anular(element.pedidoCabecera.id)"
                                 [disabled]="element.pedidoEtapa.nombre === 'ANULADO'">
                             <mat-icon>delete_outline</mat-icon>
-                            Anular
+                            Eliminar
                         </button>
                     </td>
                 </ng-container>
@@ -209,15 +219,6 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
-            
-            <div contenido class=" mb-4">
-                <mat-paginator [length]="length"
-                    [pageIndex]="page"
-                    [pageSize]="size"
-                    [pageSizeOptions]="[5, 10, 15, 500]"
-                    (page) = "paginar($event)">
-                </mat-paginator>
-            </div>
     </div>
 </ng-template>
 
@@ -353,15 +354,7 @@
 <!-- FILTROS LOTE -->
 <ng-template #filtrosLote>
 
-    <div fxLayout="column">
-
-        <span fxLayout="row" fxLayoutAlign="space-between">
-        
-            <div class="h2 mb-24">
-                Filtros por Lote
-            </div>
-        </span>
-        
+    <div fxLayout="column">       
         
         <mat-form-field appearance="outline">
             <mat-label>Lote</mat-label>

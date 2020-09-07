@@ -23,7 +23,7 @@ export class PedidosTrazabilidadComponent implements OnInit {
 
   dataSourceTrazabilidad: any;
 
-  displayedColumnsTrazabilidad: string[] = ['fecha', 'etapa', 'accion', 'cupa', 'codigoArticulo', 'usuario'];
+  displayedColumnsTrazabilidad: string[] = ['fecha', 'etapa', 'accion', 'cupa', 'cantidad', 'codigoArticulo', 'usuario'];
 
   length: number;
   page: number;
@@ -57,6 +57,7 @@ export class PedidosTrazabilidadComponent implements OnInit {
     this._service.getTrazabilidad(this.idCabecera,page, size, columna, order).subscribe(paramsArt => {
       if(paramsArt){
         this.dataSourceTrazabilidad = paramsArt.datos;
+        console.log(this.dataSourceTrazabilidad);
         this.length = paramsArt.totalRegistros;
       }
     },

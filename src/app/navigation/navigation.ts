@@ -16,10 +16,31 @@ export const navigation: FuseNavigation[] = [
                 children : [
                     {
                         id        : 'pedidos-lista',
-                        title     : 'Administración',
+                        title     : 'Administración Pedidos',
                         type      : 'item',
                         url       : '/apps/pedidos/administracion/pedidos-lista',
                         exactMatch: true
+                    },
+                    {
+                        id        : 'Lotes',
+                        title     : 'Trabajar con Lotes',
+                        type      : 'collapsable',
+                        children : [ 
+                            {
+                                id        : 'crearLote',
+                                title     : 'Crear Lote',
+                                type      : 'item',
+                                url       : '/apps/pedidos/administracion/crear-lote',
+                                exactMatch: true
+                            },
+                            {
+                                id        : 'admLote',
+                                title     : 'Administrar Lotes',
+                                type      : 'item',
+                                url       : '/apps/pedidos/administracion/administrar-lote',
+                                exactMatch: true
+                            }
+                        ]
                     },
                     {
                         id        : 'partes-articulo',

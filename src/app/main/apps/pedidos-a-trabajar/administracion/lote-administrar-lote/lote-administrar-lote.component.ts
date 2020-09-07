@@ -2,12 +2,12 @@ import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
-import { PedidosListaService } from './pedidos-lista.service';
+import { LoteAdministrarLoteService } from './lote-administrar-lote.service';
 import { Debounce } from 'app/shared/decorators/debounce';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 import { HttpErrorResponse } from '@angular/common/http';
-import { stringify } from 'querystring';
+import { BuscarLoteComponent } from './buscar-lote/buscar-lote.component';
 
 export interface Articulos {
 
@@ -49,17 +49,17 @@ const ELEMENT_DATA: Articulos[] = [
 ];
 
 @Component({  
-  selector: 'app-pedidos-lista',  
-  templateUrl: './pedidos-lista.component.html',
-  styleUrls: ['./pedidos-lista.component.scss']
+  selector: 'app-lote-administrar-lote',  
+  templateUrl: './lote-administrar-lote.component.html',
+  styleUrls: ['./lote-administrar-lote.component.scss']
 })
 
-export class PedidosListaComponent implements OnInit {
+export class LoteAdministrarLoteComponent implements OnInit {
 
   @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
   @ViewChild('buscarLote') buscarLoteInput: ElementRef;
 
-  displayedColumns: string[] = ['Tipo', 'CodigoArticulo','NombreArticulo', 'Comprobante', 'Fecha-Entrega', 'Provincia', 'Localidad','Etapa', 'Lote', 'Borrar'];
+  displayedColumns: string[] = ['select', 'Tipo', 'CodigoArticulo','NombreArticulo', 'Comprobante', 'Fecha-Entrega', 'Provincia', 'Localidad','Etapa', 'Lote', 'Borrar'];
   dataSource = ELEMENT_DATA;  
   dataSource2: any;
   selection = new SelectionModel<Articulos>(true, []);
@@ -102,7 +102,7 @@ export class PedidosListaComponent implements OnInit {
   selectedEstado: any = 0;
 
   filtroEtapas: any;
-  selectedEtapa: any = 0;
+  selectedEtapa: any = 3;
 
   filtroProvincias: any;
   selectedProvincia: any = 1;
@@ -132,7 +132,7 @@ export class PedidosListaComponent implements OnInit {
 
   constructor(private _router: Router, 
               private _fuseSidebarService: FuseSidebarService, 
-              private _pedidosListaService: PedidosListaService,
+              private _loteAdministrarLoteService: LoteAdministrarLoteService,
               private _dialog: MatDialog) { 
 
     const currentYear = new Date().getFullYear();
@@ -152,8 +152,30 @@ export class PedidosListaComponent implements OnInit {
 
     this.getfiltros();
     
-    this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
+    // this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
   }
+
+  buscarLote() {
+    
+    let dialogRef = this._dialog.open(BuscarLoteComponent, {
+      data: {
+        lote:       this.lote,
+        fechaDesde: this.pickerLoteDesde,
+        fechaHasta: this.pickerLoteHasta
+      } 
+    });
+    
+    dialogRef.afterClosed()
+      .subscribe(result => {
+        console.log(JSON.parse(localStorage.getItem('datoEntrega')));
+        if(localStorage.getItem('Lote')){
+          this.lote = localStorage.getItem('Lote');
+          this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
+        }
+      });
+  }
+
+
 
   resetFiltros(){
 
@@ -181,7 +203,7 @@ export class PedidosListaComponent implements OnInit {
   }
 
   getfiltros(){
-    this._pedidosListaService.getAllTipos().subscribe(params => {
+    this._loteAdministrarLoteService.getAllTipos().subscribe(params => {
       this.filtroTipos = params.datos;
     },
     (err: HttpErrorResponse) => {
@@ -201,7 +223,7 @@ export class PedidosListaComponent implements OnInit {
       }
     })
     
-    this._pedidosListaService.getAllTurnos().subscribe(params => {
+    this._loteAdministrarLoteService.getAllTurnos().subscribe(params => {
       this.filtroTurnos = params.datos;
     },
     (err: HttpErrorResponse) => {
@@ -221,7 +243,7 @@ export class PedidosListaComponent implements OnInit {
       }
     })
     
-    this._pedidosListaService.getAllOrigenes().subscribe(params => {
+    this._loteAdministrarLoteService.getAllOrigenes().subscribe(params => {
       this.filtroOrigenes = params.datos;
     },
     (err: HttpErrorResponse) => {
@@ -241,7 +263,7 @@ export class PedidosListaComponent implements OnInit {
       }
     })
 
-    this._pedidosListaService.getAllEstados().subscribe(params => {
+    this._loteAdministrarLoteService.getAllEstados().subscribe(params => {
       this.filtroEstados = params.datos;
     },
     (err: HttpErrorResponse) => {
@@ -261,7 +283,7 @@ export class PedidosListaComponent implements OnInit {
       }
     })
 
-    this._pedidosListaService.getAllEtapas().subscribe(params => {
+    this._loteAdministrarLoteService.getAllEtapas().subscribe(params => {
       this.filtroEtapas = params.datos;
     },
     (err: HttpErrorResponse) => {
@@ -281,7 +303,7 @@ export class PedidosListaComponent implements OnInit {
       }
     })
 
-    this._pedidosListaService.getAllProvincias().subscribe(params => {
+    this._loteAdministrarLoteService.getAllProvincias().subscribe(params => {
       this.filtroProvincias = params.datos;
     },
     (err: HttpErrorResponse) => {
@@ -301,7 +323,7 @@ export class PedidosListaComponent implements OnInit {
       }
     })
 
-    this._pedidosListaService.getAllLocalidades().subscribe(params => {
+    this._loteAdministrarLoteService.getAllLocalidades().subscribe(params => {
       this.filtroLocalidades = params.datos;
     },
     (err: HttpErrorResponse) => {
@@ -387,7 +409,7 @@ export class PedidosListaComponent implements OnInit {
     
     // console.log(this.body);
 
-    this._pedidosListaService.getPedidoDetalle(this.body, busqueda, page, size, columna, order).subscribe(
+    this._loteAdministrarLoteService.getPedidoDetalle(this.body, busqueda, page, size, columna, order).subscribe(
       data => {
         this.dataSource2 = data.datos;
         // console.log(this.dataSource2);
@@ -475,7 +497,7 @@ export class PedidosListaComponent implements OnInit {
     this.selectedProvincia = (event.target as HTMLSelectElement).value;
     if(this.selectedProvincia > 0){
       this.selectedLocalidad = 0;
-      this._pedidosListaService.getAllLocalidadesPorProvincia(this.selectedProvincia).subscribe(params => {
+      this._loteAdministrarLoteService.getAllLocalidadesPorProvincia(this.selectedProvincia).subscribe(params => {
         this.filtroLocalidades = params.datos;
       },
       (err: HttpErrorResponse) => {
@@ -496,7 +518,7 @@ export class PedidosListaComponent implements OnInit {
       })
     } else {
       this.selectedLocalidad = 0;
-      this._pedidosListaService.getAllLocalidades().subscribe(params => {
+      this._loteAdministrarLoteService.getAllLocalidades().subscribe(params => {
         this.filtroLocalidades = params.datos;
       },
       (err: HttpErrorResponse) => {
@@ -522,7 +544,7 @@ export class PedidosListaComponent implements OnInit {
   selectLocalidad(event: Event) {
     this.selectedLocalidad = (event.target as HTMLSelectElement).value;
     if(this.selectedLocalidad > 0){
-      this._pedidosListaService.getProvinciaPorLocalidad(this.selectedLocalidad).subscribe( params => {
+      this._loteAdministrarLoteService.getProvinciaPorLocalidad(this.selectedLocalidad).subscribe( params => {
         this.selectedProvincia = params.id;
         console.log("Provincia: "+this.selectedProvincia);
       },
@@ -627,16 +649,11 @@ export class PedidosListaComponent implements OnInit {
 
   }
 
-  @Debounce(1000)  
   searchLote() {
 
     this.lote = this.buscarLoteInput.nativeElement.value;
     if(this.lote === '')
       this.lote =null;
-    this.page = 0;
-    this.columna = 'id';
-
-    this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
 
   }
 
@@ -651,11 +668,38 @@ export class PedidosListaComponent implements OnInit {
     this._router.navigate([ruta]);
   }
 
-  agregarPedido() {
-    let ruta = `apps/pedidos/administracion/addPedido1`;
-    console.log(ruta);
+  crearLote() {
+
+    console.log(this.selection);
+
+    localStorage.setItem('Lote',JSON.stringify(this.selection));
+    
+    let ruta = `apps/pedidos/administracion/addLote`;
     this._router.navigate([ruta]);
   }
+
+
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource2.length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+        this.selection.clear() :
+        this.dataSource2.forEach(row => this.selection.select(row));
+  }
+
+  /** The label for the checkbox on the passed row */
+  checkboxLabel(row?: Articulos): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.Id + 1}`;
+  }
+
 
   /**
    * Toggle sidebar open
@@ -676,13 +720,5 @@ export class PedidosListaComponent implements OnInit {
         this.order = event.direction;
     
     this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
-  }
-
-
-  paginar(e: any){
-      this.page = e.pageIndex;
-      this.size = e.pageSize;
-      
-      this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
   }
 }

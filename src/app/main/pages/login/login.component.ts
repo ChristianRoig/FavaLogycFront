@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { UsuarioService } from 'app/services/usuario.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalRecuperarContrasenaComponent } from './modal-recuperar-contrasena/modal-recuperar-contrasena.component';
+import { SonidoService } from 'app/services/sonidos.service';
 
 @Component({
     selector     : 'login',
@@ -30,7 +31,8 @@ export class LoginComponent implements OnInit
         private _formBuilder: FormBuilder,
         private _router: Router, 
         private _usuarioService: UsuarioService,
-        private _dialog: MatDialog
+        private _dialog: MatDialog,
+        private _serviceSonido: SonidoService
     )
     {
         // Configure the layout
@@ -62,8 +64,10 @@ export class LoginComponent implements OnInit
     ngOnInit(): void
     {
         this.loginForm = this._formBuilder.group({
-            email   : ['', Validators.required],
-            password: ['', Validators.required]
+            // email   : ['', Validators.required],
+            // password: ['', Validators.required]
+            email   : [''],
+            password: ['']
         });
     }
 
@@ -72,9 +76,9 @@ export class LoginComponent implements OnInit
         let email   = this.loginForm.get('email').value;
         let password= this.loginForm.get('password').value;
         // this._usuarioService.login(email, password)
-
+        this._serviceSonido.playAudioSuccess();
         this._router.navigate(['/apps'])
-    }
+    }   
 
 
     recuperarContrasena() {
@@ -82,9 +86,7 @@ export class LoginComponent implements OnInit
             const dialogRef = this._dialog.open(ModalRecuperarContrasenaComponent);
         
             dialogRef.afterClosed().subscribe(result => {
-            //   console.log(`Dialog result: ${result}`);
+                this._serviceSonido.playAudioAlert();
             });
-    }        
-
-
+    }
 }
