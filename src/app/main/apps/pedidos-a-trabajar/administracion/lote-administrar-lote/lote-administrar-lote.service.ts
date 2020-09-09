@@ -11,15 +11,12 @@ export interface BodyDetalle{
     idTipo : number;
     idTurno : number;
     idOrigen : number;
-    idEstado : number;
     idEtapa : number;
     idProvincia : number;
     idLocalidad : number;
     desdePedido : string;
     hastaPedido : string;
-    lote : string;
-    desdeLote : string;
-    hastaLote : string;
+    idLote : number;
   }
 
 @Injectable()
@@ -104,7 +101,7 @@ export class LoteAdministrarLoteService
         return this._httpClient.get(ruta);
     }
 
-    getPedidoDetalle(body: BodyDetalle, busqueda, page, size, columna, order): Observable<any>
+    getPedidosLote(body: BodyDetalle, busqueda, columna, order): Observable<any>
     {
 
         let headers = new HttpHeaders({
@@ -115,7 +112,7 @@ export class LoteAdministrarLoteService
         if (busqueda !== '')
             buscar = `/${busqueda}`
 
-        let ruta = `${BASE_URL}pedidosatrabajar/pedidodetalle/porcomprobanteoarticulo${buscar}/${page}/${size}/${columna}/${order}`;
+        let ruta = `${BASE_URL}pedidosatrabajar/pedidodetalle/pedidolote/porcomprobanteoarticulo${buscar}/${columna}/${order}`;
         
 
         return this._httpClient.post(ruta, body, {headers: headers});

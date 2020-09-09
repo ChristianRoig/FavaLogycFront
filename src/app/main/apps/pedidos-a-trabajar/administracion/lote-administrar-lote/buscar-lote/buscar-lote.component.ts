@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { BuscarLoteService } from './buscar-lote.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
+import { Debounce } from 'app/shared/decorators/debounce';
 
 export interface Lotes {
 
@@ -11,10 +12,13 @@ export interface Lotes {
   nombre: string;
 }
 
+export interface BodyDetalle{
+
+  desdeLote : string;
+  hastaLote : string;
+}
+
 const ELEMENT_DATA_ARTICULOS: Lotes[] = [
-  {id: 1,nombre: "Lote 10/05/2020 - Miramar"},
-  {id: 2,nombre: "Lote 10/05/2020 - Centrar"},
-  {id: 3,nombre: "Lote 10/05/2020 - Pinamar"}
 ];
 
 @Component({
@@ -27,8 +31,13 @@ const ELEMENT_DATA_ARTICULOS: Lotes[] = [
 export class BuscarLoteComponent implements OnInit {
 
 
-  displayedColumns: string[] = ['id', 'nombre', 'seleccionar'];
+  displayedColumns: string[] = ['id', 'nombre', 'fecha', 'seleccionar'];
   dataSource2 = ELEMENT_DATA_ARTICULOS;
+
+  body: BodyDetalle ={
+    desdeLote   : null,
+    hastaLote   : null
+  };
 
   constructor(
     public dialogRef: MatDialogRef<BuscarLoteComponent>,
@@ -39,7 +48,12 @@ export class BuscarLoteComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this._buscarLoteService.getPartesArticulos(this.data.lote).subscribe(data => {
+    this.body.desdeLote = this.data.fechaDesde;
+    this.body.hastaLote = this.data.fechaHasta;
+
+
+
+    this._buscarLoteService.getLotesPorFecha(this.body, this.data.lote).subscribe(data => {
       this.dataSource2 = data.datos;
     },
     (err: HttpErrorResponse) => {
@@ -80,7 +94,8 @@ export class BuscarLoteComponent implements OnInit {
   }
 
   seleccionar(lote){
-    localStorage.setItem('Lote', lote);
+    console.log(lote);
+    localStorage.setItem('Lote', JSON.stringify(lote));
     this.dialogRef.close();
   }
 

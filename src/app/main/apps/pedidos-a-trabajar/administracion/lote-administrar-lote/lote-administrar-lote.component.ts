@@ -29,15 +29,12 @@ export interface BodyDetalle{
   idTipo : number;
   idTurno : number;
   idOrigen : number;
-  idEstado : number;
   idEtapa : number;
   idProvincia : number;
   idLocalidad : number;
   desdePedido : string;
   hastaPedido : string;
-  lote : string;
-  desdeLote : string;
-  hastaLote : string;
+  idLote : number;
 }
 
 const ELEMENT_DATA: Articulos[] = [
@@ -59,17 +56,20 @@ export class LoteAdministrarLoteComponent implements OnInit {
   @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
   @ViewChild('buscarLote') buscarLoteInput: ElementRef;
 
-  displayedColumns: string[] = ['select', 'Tipo', 'CodigoArticulo','NombreArticulo', 'Comprobante', 'Fecha-Entrega', 'Provincia', 'Localidad','Etapa', 'Lote', 'Borrar'];
+  // displayedColumns: string[] = ['select', 'Tipo', 'CodigoArticulo','NombreArticulo', 'Comprobante', 'Fecha-Entrega', 'Provincia', 'Localidad','Etapa', 'Lote', 'Borrar'];
+  displayedColumns: string[] = ['select', 'CodigoArticulo','NombreArticulo', 'CUPA', 'Etapa', 'Comprobante'];
   dataSource = ELEMENT_DATA;  
   dataSource2: any;
   selection = new SelectionModel<Articulos>(true, []);
 
+  idLote: number = null;
   lote: string = null;
+  nombreLote: string = null;
   busqueda: string = "";
   length: number = 0;
   page: number = 0;
   size: number = 10;
-  columna: string = 'codigoArticulo';
+  columna: string = 'idDetalle';
   order: string = 'asc';
 
 
@@ -119,15 +119,12 @@ export class LoteAdministrarLoteComponent implements OnInit {
     idTipo      : null,
     idTurno     : null,
     idOrigen    : null,
-    idEstado    : null,
     idEtapa     : null,
     idProvincia : null,
     idLocalidad : null,
     desdePedido : null,
     hastaPedido : null,
-    lote        : null,
-    desdeLote   : null,
-    hastaLote   : null
+    idLote        : null
   };
 
   constructor(private _router: Router, 
@@ -149,7 +146,7 @@ export class LoteAdministrarLoteComponent implements OnInit {
   ngOnInit(): void {
     
     // this.resetFiltros();    
-
+    this.buscarCbteInput.nativeElement.value = '';
     this.getfiltros();
     
     // this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
@@ -167,22 +164,24 @@ export class LoteAdministrarLoteComponent implements OnInit {
     
     dialogRef.afterClosed()
       .subscribe(result => {
-        console.log(JSON.parse(localStorage.getItem('datoEntrega')));
         if(localStorage.getItem('Lote')){
-          this.lote = localStorage.getItem('Lote');
+          console.log(JSON.parse(localStorage.getItem('Lote')));
+          this.nombreLote = JSON.parse(localStorage.getItem('Lote')).nombre;
+          this.idLote     = JSON.parse(localStorage.getItem('Lote')).id;
+          localStorage.removeItem('Lote');
+          
+          console.log(JSON.parse(localStorage.getItem('Lote')));
           this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
         }
       });
   }
-
-
 
   resetFiltros(){
 
     this.busqueda = ""
     this.page = 0;
     this.size = 10;
-    this.columna = 'codigoArticulo';
+    this.columna = 'idDetalle';
     this.order = 'asc';
 
     this.busqueda = "";
@@ -195,10 +194,10 @@ export class LoteAdministrarLoteComponent implements OnInit {
     this.selectedLocalidad = 1402;
     this.pickerFiltroDesde= null;
     this.pickerFiltroHasta= null;
-    this.pickerLoteDesde  = null;
-    this.pickerLoteHasta  = null;
-    this.lote = null;
-    this.buscarCbteInput.nativeElement.value = '';
+    // this.pickerLoteDesde  = null;
+    // this.pickerLoteHasta  = null;
+    // this.lote = null;
+    
     this.buscarLoteInput.nativeElement.value = '';
   }
 
@@ -354,7 +353,7 @@ export class LoteAdministrarLoteComponent implements OnInit {
     let idLocalidad :number =null;
     let desdePedido :string =null;
     let hastaPedido :string =null;
-    let lote        :string =null;
+    let idLote      :number =null;
     let desdeLote   :string =null;
     let hastaLote   :string =null;
 
@@ -385,8 +384,8 @@ export class LoteAdministrarLoteComponent implements OnInit {
     if (this.pickerFiltroHasta)
       hastaPedido = this.pickerFiltroHasta;
     
-    if (this.lote !== null)
-      lote = this.lote;
+    if (this.idLote !== null)
+      idLote = this.idLote;
     
     if (this.pickerLoteDesde)
       desdeLote = this.pickerLoteDesde;	
@@ -397,22 +396,19 @@ export class LoteAdministrarLoteComponent implements OnInit {
     this.body.idTipo      = idTipo;
     this.body.idTurno     = idTurno;
     this.body.idOrigen    = idOrigen;
-    this.body.idEstado    = idEstado;
     this.body.idEtapa     = idEtapa;
     this.body.idProvincia = idProvincia;
     this.body.idLocalidad = idLocalidad;
     this.body.desdePedido = desdePedido;
     this.body.hastaPedido = hastaPedido;
-    this.body.lote        = lote;
-    this.body.desdeLote   = desdeLote;
-    this.body.hastaLote   = hastaLote;
+    this.body.idLote      = idLote;
     
     // console.log(this.body);
 
-    this._loteAdministrarLoteService.getPedidoDetalle(this.body, busqueda, page, size, columna, order).subscribe(
+    this._loteAdministrarLoteService.getPedidosLote(this.body, busqueda, columna, order).subscribe(
       data => {
+        console.log(data)
         this.dataSource2 = data.datos;
-        // console.log(this.dataSource2);
         this.length = data.totalRegistros;
       },
       (err: HttpErrorResponse) => {
@@ -446,9 +442,9 @@ export class LoteAdministrarLoteComponent implements OnInit {
       .subscribe( () => {
           if (errStatus != 0) {
 
-            this.resetFiltros();
-            this.getfiltros();
-            this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
+            // this.resetFiltros();
+            // this.getfiltros();
+            // this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
             
           } else {
             this._router.navigate(['']);
@@ -575,9 +571,9 @@ export class LoteAdministrarLoteComponent implements OnInit {
 
   addEvent( tipo, evento ) {
 
-    console.log("evento value");
-    console.log(evento.value);
-    console.log("evento value");
+    // console.log("evento value");
+    // console.log(evento.value);
+    // console.log("evento value");
 
     if (evento.value) {
       console.log("tipo "+ tipo +": "+evento.value._i.year+"-"+evento.value._i.month+"-"+evento.value._i.date);
@@ -626,10 +622,10 @@ export class LoteAdministrarLoteComponent implements OnInit {
     }
 
 
-    console.log("pickerFiltroDesde: "+this.pickerFiltroDesde);
-    console.log("pickerFiltroHasta: "+this.pickerFiltroHasta);
-    console.log("pickerLoteDesde: "+this.pickerLoteDesde);
-    console.log("pickerLoteHasta: "+this.pickerLoteHasta);
+    // console.log("pickerFiltroDesde: "+this.pickerFiltroDesde);
+    // console.log("pickerFiltroHasta: "+this.pickerFiltroHasta);
+    // console.log("pickerLoteDesde: "+this.pickerLoteDesde);
+    // console.log("pickerLoteHasta: "+this.pickerLoteHasta);
 
   }
 

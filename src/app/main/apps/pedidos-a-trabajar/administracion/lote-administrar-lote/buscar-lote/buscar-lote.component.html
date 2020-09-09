@@ -18,12 +18,18 @@
             <th mat-header-cell *matHeaderCellDef> Nombre </th>
             <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
         </ng-container>
+        
+        <!-- Weight Column -->
+        <ng-container matColumnDef="fecha">
+            <th mat-header-cell *matHeaderCellDef> Fecha </th>
+            <td mat-cell *matCellDef="let element"> {{element.fechaAlta}} </td>
+        </ng-container>
 
         <!-- Symbol Column -->
         <ng-container matColumnDef="seleccionar">
             <th mat-header-cell *matHeaderCellDef> Acción </th>
             <td mat-cell class="example-button-row" *matCellDef="let element"> 
-                <button mat-stroked-button color="primary" (click)="seleccionar(element.nombre)"> Seleccionar </button>
+                <button mat-stroked-button color="primary" (click)="seleccionar(element)"> Seleccionar </button>
             </td>
         </ng-container>
     
