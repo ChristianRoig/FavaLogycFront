@@ -1,14 +1,17 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { BuscarLoteService } from './buscar-lote.service';
+import { VerImpresorasService } from './ver-impresoras.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
+import { MatTableDataSource } from '@angular/material/table';
+import { Debounce } from '../../../../../../shared/decorators/debounce';
 
-export interface Lotes {
+export interface CUPAS {
 
-  id: number;
-  nombre: string;
+  nroParte: number;
+  CUPA: string;
+  nombre: string
 }
 
 export interface BodyDetalle{
@@ -17,43 +20,35 @@ export interface BodyDetalle{
   hastaLote : string;
 }
 
-const ELEMENT_DATA_ARTICULOS: Lotes[] = [
-];
-
 @Component({
-  selector: 'app-buscar-lote',
-  templateUrl: './buscar-lote.component.html',
-  styleUrls: ['./buscar-lote.component.scss']
+  selector: 'app-ver-impresoras',
+  templateUrl: './ver-impresoras.component.html',
+  styleUrls: ['./ver-impresoras.component.scss']
 })
 
 
-export class BuscarLoteComponent implements OnInit {
+export class VerImpresorasComponent implements OnInit {
 
 
-  displayedColumns: string[] = ['id', 'nombre', 'fecha', 'seleccionar'];
-  dataSource2 = ELEMENT_DATA_ARTICULOS;
-
-  body: BodyDetalle ={
-    desdeLote   : null,
-    hastaLote   : null
-  };
+  displayedColumns: string[] = ['impresora', 'seleccionar'];
+  dataSource2: any;
 
   constructor(
-    public dialogRef: MatDialogRef<BuscarLoteComponent>,
+    public dialogRef: MatDialogRef<VerImpresorasComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private _buscarLoteService: BuscarLoteService,
+    private _verImpresorasService: VerImpresorasService,
     private _dialog: MatDialog,
     private _router: Router) {}
 
   ngOnInit(): void {
 
-    this.body.desdeLote = this.data.fechaDesde;
-    this.body.hastaLote = this.data.fechaHasta;
+  
+    console.log(this.data.pedidos._selected);
 
 
-
-    this._buscarLoteService.getLotesPorFecha(this.body, this.data.lote).subscribe(data => {
-      this.dataSource2 = data.datos;
+    this._verImpresorasService.getImpresoras().subscribe(data => {
+      this.dataSource2 = new MatTableDataSource<any>(data.datos);
+      
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
@@ -92,10 +87,15 @@ export class BuscarLoteComponent implements OnInit {
       });
   }
 
-  seleccionar(lote){
-    console.log(lote);
-    localStorage.setItem('Lote', JSON.stringify(lote));
-    this.dialogRef.close();
+  seleccionar(impresora){
+    console.log("Impresora: "+impresora );
+    console.log("Imprimiendo....")
+    this.imprimir();
+  }
+
+  @Debounce(10000)
+  imprimir(){
+    console.log("Se imprimió correctamente")
   }
 
 }

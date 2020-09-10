@@ -117,4 +117,17 @@ export class LoteAdministrarLoteService
 
         return this._httpClient.post(ruta, body, {headers: headers});
     }
+    
+    
+    postEliminarArticuloDeLote(listaIdPedidoDetalle): Observable<any>
+    {
+
+        let headers = new HttpHeaders({
+            "Content-Type": "application/json"
+        });
+
+        let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/lote/detalle/`;
+
+        return this._httpClient.post(ruta, listaIdPedidoDetalle, {headers: headers});
+    }
 }

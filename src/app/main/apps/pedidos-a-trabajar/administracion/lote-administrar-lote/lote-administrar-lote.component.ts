@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { BuscarLoteComponent } from './buscar-lote/buscar-lote.component';
+import { VerImpresorasComponent } from './ver-impresoras/ver-impresoras.component';
 
 export interface Articulos {
 
@@ -60,7 +61,7 @@ export class LoteAdministrarLoteComponent implements OnInit {
   displayedColumns: string[] = ['select', 'CodigoArticulo','NombreArticulo', 'CUPA', 'Etapa', 'Comprobante'];
   dataSource = ELEMENT_DATA;  
   dataSource2: any;
-  selection = new SelectionModel<Articulos>(true, []);
+  selection = new SelectionModel<any>(true, []);
 
   idLote: number = null;
   lote: string = null;
@@ -173,6 +174,50 @@ export class LoteAdministrarLoteComponent implements OnInit {
           console.log(JSON.parse(localStorage.getItem('Lote')));
           this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
         }
+      });
+  }
+
+  sacarDelLote(){
+    let listaIdPedidoDetalle: Array<number> = new Array<number>();
+
+    // console.log(this.selection.selected)
+
+    for (let entry of this.selection.selected) {
+      listaIdPedidoDetalle.push(entry.id);
+    }
+    
+    // this._loteAdministrarLoteService.postEliminarArticuloDeLote(listaIdPedidoDetalle).subscribe(params => {
+    //   console.log("termino Ok");
+    //   this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
+    // },
+    // (err: HttpErrorResponse) => {
+    //   if (err.error instanceof Error) {
+    //     console.log("Client-side error");
+    //   } else {
+    //     let errStatus = err.status
+    //     if (errStatus == 0){
+    //       let titulo = 'Error de Servidor';
+    //       let mensaje = "Por favor comunicarse con Sistemas";
+    //       this.mostrarError(errStatus, titulo, mensaje);
+    //     } else {
+    //       let titulo = 'Error al cargar filtros';
+    //       let mensaje = err.error.message.toString();
+    //       this.mostrarError(errStatus, titulo, mensaje);
+    //     }
+    //   }
+    // })
+    
+  }
+
+  seleccionarImpresora(){
+    let dialogRef = this._dialog.open(VerImpresorasComponent, {
+      data: {
+        pedidos: this.selection
+      } 
+    });
+    dialogRef.afterClosed()
+      .subscribe(result => {
+        console.log(result)
       });
   }
 
@@ -356,6 +401,7 @@ export class LoteAdministrarLoteComponent implements OnInit {
     let idLote      :number =null;
     let desdeLote   :string =null;
     let hastaLote   :string =null;
+    this.selection.clear();
 
     if (this.selectedTipo > 0 )
       idTipo = this.selectedTipo;
@@ -407,7 +453,7 @@ export class LoteAdministrarLoteComponent implements OnInit {
 
     this._loteAdministrarLoteService.getPedidosLote(this.body, busqueda, columna, order).subscribe(
       data => {
-        console.log(data)
+        // console.log(data)
         this.dataSource2 = data.datos;
         this.length = data.totalRegistros;
       },
