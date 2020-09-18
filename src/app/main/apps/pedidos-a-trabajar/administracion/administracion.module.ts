@@ -37,6 +37,7 @@ import { LoteAdministrarLoteComponent } from './lote-administrar-lote/lote-admin
 import { LoteAdministrarLoteService } from './lote-administrar-lote/lote-administrar-lote.service';
 import { BuscarLoteComponent } from './lote-administrar-lote/buscar-lote/buscar-lote.component';
 import { BuscarLoteService } from './lote-administrar-lote/buscar-lote/buscar-lote.service';
+import { ModalDeseaImprimirLoteComponent } from './pedidos-agregar-lote/modal-confirmacion-borrar/modal-desea-imprimir.component';
 // import { MaterialDesignModule } from 'app/material-design/material-design.module';
 
 const routes: Routes = [
@@ -91,7 +92,8 @@ const routes: Routes = [
         LoteAdministrarLoteComponent,
         BuscarLoteComponent,
         VerCupasComponent,
-        VerImpresorasComponent
+        VerImpresorasComponent,
+        ModalDeseaImprimirLoteComponent
     ],
     imports     : [
         CommonModule,

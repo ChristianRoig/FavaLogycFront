@@ -58,7 +58,7 @@ export class LoteAdministrarLoteComponent implements OnInit {
   @ViewChild('buscarLote') buscarLoteInput: ElementRef;
 
   // displayedColumns: string[] = ['select', 'Tipo', 'CodigoArticulo','NombreArticulo', 'Comprobante', 'Fecha-Entrega', 'Provincia', 'Localidad','Etapa', 'Lote', 'Borrar'];
-  displayedColumns: string[] = ['select', 'CodigoArticulo','NombreArticulo', 'CUPA', 'Etapa', 'Comprobante'];
+  displayedColumns: string[] = ['select', 'CodigoArticulo','NombreArticulo', 'Etapa', 'Comprobante'];
   dataSource = ELEMENT_DATA;  
   dataSource2: any;
   selection = new SelectionModel<any>(true, []);
@@ -103,7 +103,7 @@ export class LoteAdministrarLoteComponent implements OnInit {
   selectedEstado: any = 0;
 
   filtroEtapas: any;
-  selectedEtapa: any = 3;
+  selectedEtapa: any = 0;
 
   filtroProvincias: any;
   selectedProvincia: any = 1;
@@ -147,7 +147,7 @@ export class LoteAdministrarLoteComponent implements OnInit {
   ngOnInit(): void {
     
     // this.resetFiltros();    
-    this.buscarCbteInput.nativeElement.value = '';
+    
     this.getfiltros();
     
     // this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
@@ -166,12 +166,9 @@ export class LoteAdministrarLoteComponent implements OnInit {
     dialogRef.afterClosed()
       .subscribe(result => {
         if(localStorage.getItem('Lote')){
-          console.log(JSON.parse(localStorage.getItem('Lote')));
           this.nombreLote = JSON.parse(localStorage.getItem('Lote')).nombre;
           this.idLote     = JSON.parse(localStorage.getItem('Lote')).id;
           localStorage.removeItem('Lote');
-          
-          console.log(JSON.parse(localStorage.getItem('Lote')));
           this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
         }
       });
@@ -180,44 +177,87 @@ export class LoteAdministrarLoteComponent implements OnInit {
   sacarDelLote(){
     let listaIdPedidoDetalle: Array<number> = new Array<number>();
 
-    // console.log(this.selection.selected)
-
+    
     for (let entry of this.selection.selected) {
       listaIdPedidoDetalle.push(entry.id);
     }
+    console.log(listaIdPedidoDetalle)
     
-    // this._loteAdministrarLoteService.postEliminarArticuloDeLote(listaIdPedidoDetalle).subscribe(params => {
-    //   console.log("termino Ok");
-    //   this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
-    // },
-    // (err: HttpErrorResponse) => {
-    //   if (err.error instanceof Error) {
-    //     console.log("Client-side error");
-    //   } else {
-    //     let errStatus = err.status
-    //     if (errStatus == 0){
-    //       let titulo = 'Error de Servidor';
-    //       let mensaje = "Por favor comunicarse con Sistemas";
-    //       this.mostrarError(errStatus, titulo, mensaje);
-    //     } else {
-    //       let titulo = 'Error al cargar filtros';
-    //       let mensaje = err.error.message.toString();
-    //       this.mostrarError(errStatus, titulo, mensaje);
-    //     }
-    //   }
-    // })
+    this._loteAdministrarLoteService.postEliminarArticuloDeLote(listaIdPedidoDetalle).subscribe(params => {
+      console.log("termino Ok");
+      this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
+        } else {
+          let titulo = 'Error al cargar filtros';
+          let mensaje = err.error.message.toString();
+          this.mostrarError(errStatus, titulo, mensaje);
+        }
+      }
+    })
     
+  }
+
+  imprimirCupa(){
+    if(localStorage.getItem('ImpresoraCUPA')){
+      this.imprimir();
+    } else {
+      this.seleccionarImpresora()
+    }
+  }
+
+
+  imprimir(){
+    let impresora = localStorage.getItem('ImpresoraCUPA');
+
+    this._loteAdministrarLoteService.imprimir(this.idLote,impresora).subscribe(data => {
+      
+      let titulo = 'Estado de impresión';
+      let mensaje = "Completado correctamente";
+      this.mostrarError(-1, titulo, mensaje);
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
+        } else {
+          let titulo = 'Error al imprimir';
+          let mensaje = err.error.message.toString();
+          this.mostrarError(errStatus, titulo, mensaje);
+        }
+      }
+    });
+
   }
 
   seleccionarImpresora(){
     let dialogRef = this._dialog.open(VerImpresorasComponent, {
       data: {
-        pedidos: this.selection
-      } 
+        pedidos: this.selection,
+        impresora: 'ImpresoraCUPA'
+      }
     });
     dialogRef.afterClosed()
       .subscribe(result => {
-        console.log(result)
+        if(localStorage.getItem('ImpresoraCUPA')){
+          this.imprimir();
+        } else {
+          dialogRef.close();
+          this.seleccionarImpresora();
+        }
       });
   }
 
@@ -233,7 +273,6 @@ export class LoteAdministrarLoteComponent implements OnInit {
     this.selectedTipo = 0;
     this.selectedTurno = 0;
     this.selectedOrigen = 0;
-    this.selectedEstado = 0;
     this.selectedEtapa = 0;
     this.selectedProvincia = 1;
     this.selectedLocalidad = 1402;
@@ -243,7 +282,8 @@ export class LoteAdministrarLoteComponent implements OnInit {
     // this.pickerLoteHasta  = null;
     // this.lote = null;
     
-    this.buscarLoteInput.nativeElement.value = '';
+    // this.buscarLoteInput.nativeElement.value = '';
+    this.buscarCbteInput.nativeElement.value = '';
   }
 
   getfiltros(){
@@ -289,26 +329,6 @@ export class LoteAdministrarLoteComponent implements OnInit {
     
     this._loteAdministrarLoteService.getAllOrigenes().subscribe(params => {
       this.filtroOrigenes = params.datos;
-    },
-    (err: HttpErrorResponse) => {
-      if (err.error instanceof Error) {
-        console.log("Client-side error");
-      } else {
-        let errStatus = err.status
-        if (errStatus == 0){
-          let titulo = 'Error de Servidor';
-          let mensaje = "Por favor comunicarse con Sistemas";
-          this.mostrarError(errStatus, titulo, mensaje);
-        } else {
-          let titulo = 'Error al cargar filtros';
-          let mensaje = err.error.message.toString();
-          this.mostrarError(errStatus, titulo, mensaje);
-        }
-      }
-    })
-
-    this._loteAdministrarLoteService.getAllEstados().subscribe(params => {
-      this.filtroEstados = params.datos;
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
@@ -488,7 +508,7 @@ export class LoteAdministrarLoteComponent implements OnInit {
       .subscribe( () => {
           if (errStatus != 0) {
 
-            // this.resetFiltros();
+            this.resetFiltros();
             // this.getfiltros();
             // this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
             

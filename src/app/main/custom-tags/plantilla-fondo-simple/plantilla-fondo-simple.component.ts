@@ -18,7 +18,6 @@ export class PlantillaFondoSimpleComponent implements OnInit {
 
   back() {
     this._location.back();
-    localStorage.clear();
   }
 
 }

@@ -7,6 +7,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { PedidosAgregarLoteService } from './pedidos-agregar-lote.service';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Debounce } from 'app/shared/decorators/debounce';
+import { ModalDeseaImprimirLoteComponent } from './modal-confirmacion-borrar/modal-desea-imprimir.component';
+import { LoteAdministrarLoteService } from '../lote-administrar-lote/lote-administrar-lote.service';
+import { VerImpresorasComponent } from '../lote-administrar-lote/ver-impresoras/ver-impresoras.component';
+
 
 export interface PeriodicElement {
   Id: number;
@@ -48,7 +52,8 @@ export class PedidosAgregarLoteComponent implements OnInit {
   nombreLote: string;
 
   constructor(private _router: Router,
-              private _service: PedidosAgregarLoteService, 
+              private _service: PedidosAgregarLoteService,
+              private _loteAdministrarLoteService: LoteAdministrarLoteService,
               private route: ActivatedRoute,
               private _dialog: MatDialog) { }
 
@@ -133,7 +138,8 @@ export class PedidosAgregarLoteComponent implements OnInit {
     
     this._service.postLote(this.toAdd , fecha, this.nombreLote).subscribe(
       data => {
-        this.volver();
+        let idLote = data.idLote
+        this.imprimirCupas(idLote);
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
@@ -152,13 +158,90 @@ export class PedidosAgregarLoteComponent implements OnInit {
         }
       }
     )
-    // console.log(this.toAdd);
-    // console.log(fecha);
-    // console.log(this.nombreLote);
   }
 
+  imprimirCupas(idLote: number){
+    const dialogRef = this._dialog.open( ModalDeseaImprimirLoteComponent, {
+      data: {
+        idLote: idLote
+      }
+    });
+
+    dialogRef.beforeClosed()
+      .subscribe(result => {
+
+        if ( result ){
+          this.imprimirCupa(idLote);
+        } 
+        this.volver();  
+        
+      });
+
+
+      
+  }
+
+
+  imprimirCupa(idLote){
+    if(localStorage.getItem('ImpresoraCUPA')){
+      this.imprimir(idLote);
+    } else {
+      this.seleccionarImpresora(idLote)
+    }
+  }
+
+
+  imprimir(idLote){
+    let impresora = localStorage.getItem('ImpresoraCUPA');
+
+    this._loteAdministrarLoteService.imprimir(idLote,impresora).subscribe(data => {
+      
+      let titulo = 'Estado de impresión';
+      let mensaje = "Completado correctamente";
+      this.mostrarError(-1, titulo, mensaje);
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
+        } else {
+          let titulo = 'Error al imprimir';
+          let mensaje = err.error.message.toString();
+          this.mostrarError(errStatus, titulo, mensaje);
+        }
+      }
+    });
+
+  }
+
+  seleccionarImpresora(idLote){
+    let dialogRef = this._dialog.open(VerImpresorasComponent, {
+      data: {
+        pedidos: this.selection,
+        impresora: 'ImpresoraCUPA'
+      }
+    });
+    dialogRef.afterClosed()
+      .subscribe(result => {
+        if(localStorage.getItem('ImpresoraCUPA')){
+          this.imprimir(idLote);
+        } else {
+          dialogRef.close();
+          this.seleccionarImpresora(idLote);
+        }
+      });
+  }
+
+
+
+
   volver(){
-    let ruta = `apps/pedidos/administracion/pedidos-lista`;
+    let ruta = `apps/pedidos/administracion/crear-lote`;
     this._router.navigate([ruta]);
   }
 

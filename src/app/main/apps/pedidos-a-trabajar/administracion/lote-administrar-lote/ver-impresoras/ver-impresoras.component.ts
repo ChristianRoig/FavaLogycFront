@@ -88,14 +88,7 @@ export class VerImpresorasComponent implements OnInit {
   }
 
   seleccionar(impresora){
-    console.log("Impresora: "+impresora );
-    console.log("Imprimiendo....")
-    this.imprimir();
+    localStorage.setItem('ImpresoraCUPA', impresora)
+    this.dialogRef.close();
   }
-
-  @Debounce(10000)
-  imprimir(){
-    console.log("Se imprimió correctamente")
-  }
-
 }

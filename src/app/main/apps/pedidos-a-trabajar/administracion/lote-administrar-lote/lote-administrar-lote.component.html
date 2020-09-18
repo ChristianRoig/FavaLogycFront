@@ -55,7 +55,7 @@
 
                     <div class="m-24">
 
-                        <button (click)="seleccionarImpresora()" mat-raised-button color="primary" [matBadge]="selection.selected.length" [matBadgeHidden]="selection.selected.length===0" matBadgeColor="warn" [disabled]="selection.selected.length===0">
+                        <button (click)="imprimirCupa()" mat-raised-button color="primary" [matBadge]="selection.selected.length" [matBadgeHidden]="selection.selected.length===0" matBadgeColor="warn">
                                 Imprimir CUPA
                         </button>
                     </div>
@@ -143,13 +143,6 @@
                 <!-- <th mat-header-cell *matHeaderCellDef> Nombre Artículo </th> -->
                 <th mat-sort-header="nombreArticulo" mat-header-cell *matHeaderCellDef> Nombre Artículo </th>
                 <td mat-cell *matCellDef="let element">{{element.articulo.nombre}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="CUPA">
-                <!-- <th mat-header-cell *matHeaderCellDef> Etapa </th> -->
-                <th mat-sort-header="etapa" mat-header-cell *matHeaderCellDef> CUPA </th>
-                <!-- <td mat-cell *matCellDef="let element"> {{element.pedidoEtapa.nombre}} </td> -->
-                <td mat-cell *matCellDef="let element"> 20123456789 </td>
             </ng-container>
 
             <ng-container matColumnDef="Etapa">

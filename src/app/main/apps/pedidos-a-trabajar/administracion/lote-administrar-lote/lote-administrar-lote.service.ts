@@ -126,8 +126,25 @@ export class LoteAdministrarLoteService
             "Content-Type": "application/json"
         });
 
+        let body= {
+            listaIdPedidoDetalle: listaIdPedidoDetalle
+        }
+
         let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/lote/detalle/`;
 
-        return this._httpClient.post(ruta, listaIdPedidoDetalle, {headers: headers});
+        console.log(listaIdPedidoDetalle);
+
+        return this._httpClient.post(ruta, body, {headers: headers});
+    }
+
+    imprimir(lote, impresora): Observable<any>
+    {
+
+        let headers = new HttpHeaders({
+            "Content-Type": "application/json"
+        });
+
+        let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/lote/imprimir/cupa/${lote}/${impresora}`;
+        return this._httpClient.post(ruta, {headers: headers});
     }
 }
