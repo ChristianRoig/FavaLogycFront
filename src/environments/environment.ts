@@ -7,7 +7,9 @@ export const environment = {
     hmr       : false,
     server    : 'http://192.168.100.191:8080/',
     // server    : 'localhost:8080/',
-    baseUrl   : 'api_favalogyc/'  
+    baseUrl   : 'api_favalogyc/',
+    url_node: 'http://localhost:3000',
+    url_tomcat: 'https://192.168.100.101:8443/apiOnboard_trb/rest/'
 };
 
 /*

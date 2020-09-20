@@ -1,57 +1,53 @@
+<div id="login" fxLayout="column">
 
-    <div id="login" fxLayout="column">
+    <div id="login-form-wrapper" fxLayout="column" fxLayoutAlign="center center">
 
-        <div id="login-form-wrapper" fxLayout="column" fxLayoutAlign="center center">
+        <div id="login-form" [@animate]="{value:'*',params:{duration:'300ms',y:'100px'}}">
 
-            <div id="login-form" [@animate]="{value:'*',params:{duration:'300ms',y:'100px'}}">
+            <div class="logo">
+                <img src="assets/images/logos/fuse.svg">
+            </div>
 
-                <div class="logo">
-                    <img src="assets/images/logos/fuse.svg">
-                </div>
+            <form name="loginForm" [formGroup]="loginForm" novalidate>
 
-                <form name="loginForm" [formGroup]="loginForm" novalidate>
-
-                    <!-- <mat-form-field appearance="outline">
-                        <mat-label>Usuario de dominio</mat-label>
-                        <input matInput formControlName="email" placeholder="Usuario de dominio">
-                        <mat-icon matSuffix class="secondary-text">mail</mat-icon>
-                        <mat-error *ngIf="loginForm.get('email').hasError('required')">
-                            El Usuario es requerido
-                        </mat-error>
-                        <mat-error
-                            *ngIf="!loginForm.get('email').hasError('required') &&
+                <mat-form-field appearance="outline">
+                    <mat-label>Usuario de dominio</mat-label>
+                    <input matInput formControlName="email" placeholder="Usuario de dominio">
+                    <mat-icon matSuffix class="secondary-text">mail</mat-icon>
+                    <mat-error *ngIf="loginForm.get('email').hasError('required')">
+                        El Usuario es requerido
+                    </mat-error>
+                    <mat-error *ngIf="!loginForm.get('email').hasError('required') &&
                                     loginForm.get('email').hasError('email')">
-                            Por Favor, ingrese un Usuario válido
-                        </mat-error>
-                    </mat-form-field>
+                        Por Favor, ingrese un Usuario válido
+                    </mat-error>
+                </mat-form-field>
 
-                    <mat-form-field appearance="outline">
-                        <mat-label>Contraseña</mat-label>
-                        <input matInput type="password" formControlName="password">
-                        <mat-icon matSuffix class="secondary-text">vpn_key</mat-icon>
-                        <mat-error>
-                            La contraseña es requerida
-                        </mat-error>
-                    </mat-form-field> -->
-                    <button mat-raised-button color="accent" class="submit-button" aria-label="LOG IN"
-                            [disabled]="loginForm.invalid" (click)="ingresar()">
+                <mat-form-field appearance="outline">
+                    <mat-label>Contraseña</mat-label>
+                    <input matInput type="password" formControlName="password">
+                    <mat-icon matSuffix class="secondary-text">vpn_key</mat-icon>
+                    <mat-error>
+                        La contraseña es requerida
+                    </mat-error>
+                </mat-form-field>
+                <button mat-raised-button color="accent" class="submit-button" aria-label="LOG IN" [disabled]="loginForm.invalid" (click)="ingresar()">
                         INGRESAR
                     </button>
 
-                    <div class="remember-forgot-password" fxLayout="row" fxLayout.xs="column"
-                        fxLayoutAlign="center">
-                        <!-- fxLayoutAlign="space-between center"> -->
-                        
-                        <a mat-button color="accent" class="forgot-password" (click)="recuperarContrasena()">
+                <div class="remember-forgot-password" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center">
+                    <!-- fxLayoutAlign="space-between center"> -->
+
+                    <a mat-button color="accent" class="forgot-password" (click)="recuperarContrasena()">
                             Olvidó su contraseña?
                         </a>
-                    </div>
+                </div>
 
 
-                </form>
-
-            </div>
+            </form>
 
         </div>
 
     </div>
+
+</div>

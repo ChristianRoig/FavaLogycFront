@@ -8,6 +8,7 @@ import { UsuarioService } from 'app/services/usuario.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalRecuperarContrasenaComponent } from './modal-recuperar-contrasena/modal-recuperar-contrasena.component';
 import { SonidoService } from 'app/services/sonidos.service';
+import { ModalUsuarioErroneoComponent } from './modal-usuario-erroneo/modal-usuario-erroneo.component';
 
 @Component({
     selector     : 'login',
@@ -71,13 +72,19 @@ export class LoginComponent implements OnInit
         });
     }
 
-    ingresar() {
+    async ingresar() {
 
         let email   = this.loginForm.get('email').value;
         let password= this.loginForm.get('password').value;
-        // this._usuarioService.login(email, password)
-        this._serviceSonido.playAudioSuccess();
-        this._router.navigate(['/apps'])
+        this._usuarioService.login(email, password).then(res => {
+            if(res) {
+                this._serviceSonido.playAudioSuccess();
+                this._router.navigate(['/apps'])
+            } else {
+                // logueo incorrecto
+                this.usuarioIncorrecto();
+            }
+        });
     }   
 
 
@@ -88,5 +95,13 @@ export class LoginComponent implements OnInit
             dialogRef.afterClosed().subscribe(result => {
                 this._serviceSonido.playAudioAlert();
             });
+        }
+        
+    usuarioIncorrecto() {
+        const dialogRef = this._dialog.open(ModalUsuarioErroneoComponent);
+    
+        dialogRef.afterOpened().subscribe(result => {
+            this._serviceSonido.playAudioAlert();
+        });
     }
 }

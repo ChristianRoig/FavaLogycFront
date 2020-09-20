@@ -7,6 +7,7 @@ import { LoginComponent } from 'app/main/pages/login/login.component';
 import { UsuarioService } from 'app/services/usuario.service';
 import { MaterialDesignModule } from 'app/material-design/material-design.module';
 import { ModalRecuperarContrasenaComponent } from './modal-recuperar-contrasena/modal-recuperar-contrasena.component';
+import { ModalUsuarioErroneoComponent } from './modal-usuario-erroneo/modal-usuario-erroneo.component';
 
 const routes = [
     {
@@ -18,7 +19,8 @@ const routes = [
 @NgModule({
     declarations: [
         LoginComponent,
-        ModalRecuperarContrasenaComponent
+        ModalRecuperarContrasenaComponent,
+        ModalUsuarioErroneoComponent
     ],
     imports     : [
         RouterModule.forChild(routes),
