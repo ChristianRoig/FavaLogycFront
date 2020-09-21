@@ -55,6 +55,13 @@ export const navigation: FuseNavigation[] = [
                         type      : 'item',
                         url       : '/apps/pedidos/codigos-barra-articulos',
                         exactMatch: true
+                    },
+                    {
+                        id        : 'control-estanteria',
+                        title     : 'Control Estantería',
+                        type      : 'item',
+                        url       : '/apps/pedidos/administracion/control-estanteria',
+                        exactMatch: true
                     }
                 ]
             }
