@@ -48,7 +48,7 @@ export class PedidosVentaVisualizacionService
     getComprobantes(id, page, size, columna, order): Observable<any>
     {   
         let ruta = `${BASE_URL}pedidosatrabajar/pedidocbte/cabecera/${id}/${page}/${size}/${columna}/${order}`;
-        // console.log(ruta);
+        console.log(ruta);
         return this._httpClient.get(ruta);
     }
 

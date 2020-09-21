@@ -38,7 +38,8 @@ import { LoteAdministrarLoteService } from './lote-administrar-lote/lote-adminis
 import { BuscarLoteComponent } from './lote-administrar-lote/buscar-lote/buscar-lote.component';
 import { BuscarLoteService } from './lote-administrar-lote/buscar-lote/buscar-lote.service';
 import { ModalDeseaImprimirLoteComponent } from './pedidos-agregar-lote/modal-confirmacion-borrar/modal-desea-imprimir.component';
-// import { MaterialDesignModule } from 'app/material-design/material-design.module';
+import { ControlEstanteriaComponent } from './control-estanteria/control-estanteria.component';
+import { ControlEstanteriaService } from './control-estanteria/control-estanteria.service';
 
 const routes: Routes = [
     {
@@ -72,6 +73,10 @@ const routes: Routes = [
     {
         path     : 'administrar-lote',
         component: LoteAdministrarLoteComponent
+    },
+    {
+        path     : 'control-estanteria',
+        component: ControlEstanteriaComponent
     }
 ];
 
@@ -93,7 +98,8 @@ const routes: Routes = [
         BuscarLoteComponent,
         VerCupasComponent,
         VerImpresorasComponent,
-        ModalDeseaImprimirLoteComponent
+        ModalDeseaImprimirLoteComponent,
+        ControlEstanteriaComponent
     ],
     imports     : [
         CommonModule,
@@ -117,7 +123,8 @@ const routes: Routes = [
         LoteAdministrarLoteService,
         BuscarLoteService,
         VerCupasService,
-        VerImpresorasService
+        VerImpresorasService,
+        ControlEstanteriaService
     ]
 })
 
