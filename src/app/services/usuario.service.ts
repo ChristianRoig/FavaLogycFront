@@ -131,7 +131,7 @@ export class UsuarioService {
     if( token ) {
       return true;
     } else {
-      this.router.navigate(['/apps']);
+      this.router.navigate(['']);
       return false;
     }
 

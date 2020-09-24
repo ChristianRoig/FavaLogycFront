@@ -24,16 +24,20 @@ import { FormsModule } from '@angular/forms';
 import { PlantillaFondoComponent } from './main/custom-tags/plantilla-fondo/plantilla-fondo.component';
 import { SharedModule } from './shared/shared.module';
 import { SonidoService } from './services/sonidos.service';
+import { UsuarioGuard } from './guards/usuario.guard';
+import { LoginModule } from './main/pages/login/login.module';
+import { LoginComponent } from './main/pages/login/login.component';
 
 
 const appRoutes: Routes = [
     {
         path        : 'apps',
-        loadChildren: () => import('./main/apps/apps.module').then(m => m.AppsModule)
+        loadChildren: () => import('./main/apps/apps.module').then(m => m.AppsModule),
+        canLoad: [UsuarioGuard]
     },
     {
-        path        : 'pages',
-        loadChildren: () => import('./main/pages/pages.module').then(m => m.PagesModule)
+        path        : 'pages/auth/login',
+        component   : LoginComponent
     },
     {
         path      : '**',
@@ -70,7 +74,8 @@ const appRoutes: Routes = [
         LayoutModule,
         SampleModule,
         PagesModule,
-        SharedModule
+        SharedModule,
+        LoginModule
     ],
     providers: [
         SonidoService
