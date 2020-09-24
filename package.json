@@ -1,5 +1,6 @@
 {
     "name": "favalogyc",
+    
     "version": "9.0.0",
     "license": "https://themeforest.net/licenses/terms/regular",
     "scripts": {
@@ -50,7 +51,7 @@
         "d3": "5.15.0",
         "date-fns": "2.9.0",
         "hammerjs": "2.0.8",
-        "lodash": "4.17.15",
+        "lodash": "4.17.20",
         "material-table": "1.57.2",
         "moment": "2.24.0",
         "ng2-charts": "2.3.0",
@@ -65,10 +66,10 @@
         "zone.js": "0.10.2"
     },
     "devDependencies": {
+        "@angular-devkit/build-angular": "0.1001.3",
         "@angular/cli": "9.0.1",
         "@angular/compiler-cli": "9.0.0",
         "@angular/language-service": "9.0.0",
-        "@angular-devkit/build-angular": "0.900.1",
         "@angularclass/hmr": "2.1.3",
         "@types/jasmine": "3.5.2",
         "@types/jasminewd2": "2.0.8",
@@ -77,15 +78,15 @@
         "codelyzer": "5.2.1",
         "jasmine-core": "3.5.0",
         "jasmine-spec-reporter": "4.2.1",
-        "karma": "4.3.0",
+        "karma": "5.2.2",
         "karma-chrome-launcher": "3.1.0",
         "karma-coverage-istanbul-reporter": "2.1.1",
         "karma-jasmine": "2.0.1",
         "karma-jasmine-html-reporter": "1.5.1",
-        "protractor": "5.4.3",
+        "protractor": "7.0.0",
         "ts-node": "8.3.0",
         "tslint": "5.18.0",
         "typescript": "3.7.5",
-        "webpack-bundle-analyzer": "3.6.0"
+        "webpack-bundle-analyzer": "3.9.0"
     }
 }
