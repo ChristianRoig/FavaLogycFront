@@ -45,7 +45,7 @@ export class PedidosComprobantesComponent implements OnInit {
   ngOnInit(): void{
     this.page = 0;
     this.size = 50;
-    this.columna = 'codigoArticulo';
+    this.columna = 'id';
     this.order = 'asc';
 
     this.buscarComprobantes(this.page, this.size, this.columna, this.order);
@@ -109,7 +109,7 @@ export class PedidosComprobantesComponent implements OnInit {
 
           this.page = 0;
           this.size = 100;
-          this.columna = 'codigoArticulo';
+          this.columna = 'id';
           this.order = 'asc';
         
           this.buscarComprobantes(this.page, this.size, this.columna, this.order);

@@ -44,14 +44,14 @@ export class PedidosCupaComponent implements OnInit {
   ngOnInit(): void{
     this.page = 0;
     this.size = 50;
-    this.columna = 'codigoArticulo';
+    this.columna = 'id';
     this.order = 'asc';
 
-    this.buscarComprobantes(this.page, this.size, this.columna, this.order);
+    this.buscarCUPA(this.page, this.size, this.columna, this.order);
 
   }
 
-  buscarComprobantes(page, size, columna, order){
+  buscarCUPA(page, size, columna, order){
     this._service.getCUPA(this.idCabecera,page, size, columna, order).subscribe(paramsArt => {
       if(paramsArt){
         this.dataSourceCUPA = paramsArt.datos;
@@ -85,14 +85,14 @@ export class PedidosCupaComponent implements OnInit {
     if (event.direction !== "")
     this.order = event.direction;
     
-        this.buscarComprobantes(this.page, this.size, this.columna, this.order);
+        this.buscarCUPA(this.page, this.size, this.columna, this.order);
   }
 
   paginar(e: any){
     this.page = e.pageIndex;
     this.size = e.pageSize;
     
-    this.buscarComprobantes(this.page, this.size, this.columna, this.order);
+    this.buscarCUPA(this.page, this.size, this.columna, this.order);
   }
 
   mostrarError(errStatus, titulo, mensaje){
@@ -109,10 +109,10 @@ export class PedidosCupaComponent implements OnInit {
 
           this.page = 0;
           this.size = 100;
-          this.columna = 'codigoArticulo';
+          this.columna = 'id';
           this.order = 'asc';
         
-          this.buscarComprobantes(this.page, this.size, this.columna, this.order);
+          this.buscarCUPA(this.page, this.size, this.columna, this.order);
           
         } else {
           this._router.navigate(['']);

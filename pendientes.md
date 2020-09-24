@@ -1,3 +1,3 @@
 -Pantallas: 
-    -Mensajes de error
-    -Mensajes de exito
+    -Datos de entrega
+    -Control Darsena

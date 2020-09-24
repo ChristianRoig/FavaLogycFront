@@ -55,7 +55,7 @@ export class PedidosDatosEntregaComponent implements OnInit {
       if(paramsArt){
         this.dataSourceDatosEntrega = paramsArt.datos;
         this.length = paramsArt.totalRegistros;
-        // console.log(this.dataSourceArticulos);
+        console.log(this.dataSourceDatosEntrega);
       }
     },
     (err: HttpErrorResponse) => {

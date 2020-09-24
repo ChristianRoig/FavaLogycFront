@@ -39,7 +39,7 @@
                 </mat-form-field>  
 
                 <mat-form-field appearance="fill">
-                    <mat-label>{{ filtroTurnos ? 'Trasnporte' : 'Cargando...'}}</mat-label>
+                    <mat-label>{{ filtroTransporte ? 'Trasnporte' : 'Cargando...'}}</mat-label>
                     <select matNativeControl (change)="selectTransporte($event)" [disabled]="!filtroTransporte">
                         <option [value]="0">TODOS</option>
                         <option *ngFor="let transporte of filtroTransporte" [value]="transporte.id"

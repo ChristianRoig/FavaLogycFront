@@ -64,6 +64,14 @@ export const navigation: FuseNavigation[] = [
                         exactMatch: true
                     }
                 ]
+            },
+            {
+                id        : 'remitos',
+                title     : 'Remitos',
+                type      : 'item',
+                icon      : 'insert_drive_file',
+                url       : '/apps/remitos/remitos',
+                exactMatch: true
             }
         ]
     }

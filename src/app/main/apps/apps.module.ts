@@ -8,6 +8,10 @@ const routes = [
     {
         path        : 'pedidos',
         loadChildren: () => import('./pedidos-a-trabajar/pedidos.module').then(m => m.PedidosModule)
+    },
+    {
+        path        : 'remitos',
+        loadChildren: () => import('./remitos/remitos.module').then(m => m.RemitosModule)
     }
 ];
 
