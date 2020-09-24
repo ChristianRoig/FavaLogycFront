@@ -40,6 +40,7 @@ import { BuscarLoteService } from './lote-administrar-lote/buscar-lote/buscar-lo
 import { ModalDeseaImprimirLoteComponent } from './pedidos-agregar-lote/modal-confirmacion-borrar/modal-desea-imprimir.component';
 import { ControlEstanteriaComponent } from './control-estanteria/control-estanteria.component';
 import { ControlEstanteriaService } from './control-estanteria/control-estanteria.service';
+import { TablaRetractilModule } from 'app/components/tabla-retractil/tabla-retractil.module';
 
 const routes: Routes = [
     {
@@ -110,7 +111,8 @@ const routes: Routes = [
         FuseSidebarModule,
         FuseSharedModule,
         FuseWidgetModule,
-        CustomTagModule
+        CustomTagModule,
+        TablaRetractilModule
     ],
     providers   : [
         PedidosListaService,

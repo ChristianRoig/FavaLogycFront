@@ -147,4 +147,45 @@ export class ControlEstanteriaService
         let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/lote/imprimir/cupa/${lote}/${impresora}`;
         return this._httpClient.post(ruta, {headers: headers});
     }
+
+    async getDetalleUnico(idLote, codArt, etapaproceso): Promise<any>
+    {
+
+        let headers = new HttpHeaders({
+            "Content-Type": "application/json"
+        });
+
+        let ruta = `${BASE_URL}pedidosatrabajar/detalleunico/lote/${idLote}/${etapaproceso}/${codArt}`;
+        
+
+        return this._httpClient.get(ruta, {headers: headers})
+		.toPromise().then ( (response: any) => {
+
+			return response;
+			
+		});
+    }
+
+
+    async getCupaCodBarras(cupa, idLote, codBarras): Promise<any>
+    {
+
+        let headers = new HttpHeaders({
+            "Content-Type": "application/json"
+        });
+
+        let ruta = `${BASE_URL}pedidosatrabajar/cupa/lote/codbarras/${cupa}/${idLote}/${codBarras}`;
+        
+
+        return this._httpClient.get(ruta, {headers: headers})
+		.toPromise().then ( (response: any) => {
+
+			return response;
+			
+		}, (err) => {
+            
+            return err;
+            
+        });
+    }
 }
