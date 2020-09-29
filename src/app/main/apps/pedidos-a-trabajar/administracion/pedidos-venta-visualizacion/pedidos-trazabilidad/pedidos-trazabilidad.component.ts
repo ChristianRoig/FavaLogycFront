@@ -57,7 +57,6 @@ export class PedidosTrazabilidadComponent implements OnInit {
     this._service.getTrazabilidad(this.idCabecera,page, size, columna, order).subscribe(paramsArt => {
       if(paramsArt){
         this.dataSourceTrazabilidad = paramsArt.datos;
-        console.log(this.dataSourceTrazabilidad);
         this.length = paramsArt.totalRegistros;
       }
     },

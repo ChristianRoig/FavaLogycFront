@@ -55,8 +55,6 @@ export class PedidosVentaVisualizacionComponent implements OnInit {
   columnaTrazabilidad: string;
   orderTrazabilidad: string;
 
-
-
   constructor(private _router: Router,
               private _service: PedidosVentaVisualizacionService, 
               private route: ActivatedRoute,

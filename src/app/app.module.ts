@@ -33,7 +33,7 @@ const appRoutes: Routes = [
     {
         path        : 'apps',
         loadChildren: () => import('./main/apps/apps.module').then(m => m.AppsModule),
-        canLoad: [UsuarioGuard]
+        // canLoad: [UsuarioGuard]
     },
     {
         path        : 'pages/auth/login',

@@ -119,7 +119,16 @@
 
             <div *ngFor="let item of this.dataSourceDatosDeEntrega.datos; let indexItem=index"  #cards fxLayout="column" class="fuse-card" style="max-width: 100%;">
                 <div class="mat-card  my-24">
-                    <div class="h2 m-24"> {{item.id}} - {{item.direccion}} </div>
+                    <div class="h2 m-24"> 
+                        {{item.id}} - {{item.direccion}} 
+                            
+                        <button mat-icon-button color="primary" (click)="verDatoEntrega(item)" class="m-12" >
+                            <mat-icon>visibility</mat-icon>                
+                        </button>
+                        <button mat-icon-button color="primary" (click)="modificarDatoEntrega(item, indexItem)" class="m-12">
+                            <mat-icon>edit</mat-icon>                
+                        </button>
+                    </div>
                     
                     <ng-container >
                         <table mat-table #tabla2 [dataSource]="item.listaPedidoDetalle" class="mat-elevation-z8" style="width: 100%;">

@@ -775,8 +775,8 @@ export class ControlEstanteriaComponent implements OnInit {
 
   async agregarEstanteria() {
     let res = await this._loteAdministrarLoteService.getCupaCodBarras(this.CUPA, this.idLote, this.codigoBarras);
-    
-    if(res.ok) {
+    console.log(res);
+    if(!res) {
       this._sonido.playAudioSuccess();
       this.resetCampos();
       await this.buscarDetalleUnico();

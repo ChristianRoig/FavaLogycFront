@@ -1,4 +1,6 @@
-<h2 mat-dialog-title>Agregar Datos de entrega</h2>
+<h2 *ngIf="this.data.option === 'add'"  mat-dialog-title>Agregar Dato de entrega</h2>
+<h2 *ngIf="this.data.option === 'upd'"  mat-dialog-title>Modificar Dato de entrega</h2>
+<h2 *ngIf="this.data.option === 'view'" mat-dialog-title>Ver Dato de entrega</h2>
 
 <mat-dialog-content class="mat-typography">
 
@@ -11,12 +13,12 @@
 
                 <mat-form-field appearance="outline">
                     <mat-label>Dirección</mat-label>
-                    <input matInput [(ngModel)]='this.direccion' [ngModelOptions]="{standalone: true}">
+                    <input matInput [(ngModel)]='this.direccion' [disabled]='deshabilitado' [ngModelOptions]="{standalone: true}">
                 </mat-form-field>
     
                 <mat-form-field appearance="fill">
                     <mat-label>{{ filtroLocalidades ? 'Localidad' : 'Cargando...'}}</mat-label>
-                    <select matNativeControl (change)="selectLocalidad($event)" [disabled]="!filtroLocalidades">
+                    <select matNativeControl (change)="selectLocalidad($event)" [disabled]="!filtroLocalidades || deshabilitado">
                         <option [value]="0">TODOS</option>
                         <option *ngFor="let localidad of filtroLocalidades" 
                             [value]="localidad.id"
@@ -26,7 +28,7 @@
     
                 <mat-form-field appearance="fill">
                     <mat-label>{{ filtroProvincias ? 'Provincia' : 'Cargando...'}}</mat-label>
-                    <select matNativeControl (change)="selectProvincia($event)" [disabled]="!filtroProvincias">
+                    <select matNativeControl (change)="selectProvincia($event)" [disabled]="!filtroProvincias || deshabilitado">
                         <option [value]="0">TODOS</option>
                         <option *ngFor="let provincia of filtroProvincias" [value]="provincia.id"
                             [selected]="selectedProvincia === provincia.id"> {{ provincia.nombre }}</option>
@@ -35,12 +37,12 @@
     
                 <mat-form-field appearance="outline">
                     <mat-label>Código Postal</mat-label>
-                    <input matInput [disabled] [value]="this.codigoPostal">
+                    <input matInput disabled [value]="this.codigoPostal">
                 </mat-form-field>  
 
                 <mat-form-field appearance="fill">
                     <mat-label>{{ filtroTransporte ? 'Trasnporte' : 'Cargando...'}}</mat-label>
-                    <select matNativeControl (change)="selectTransporte($event)" [disabled]="!filtroTransporte">
+                    <select matNativeControl (change)="selectTransporte($event)" [disabled]="!filtroTransporte || deshabilitado">
                         <option [value]="0">TODOS</option>
                         <option *ngFor="let transporte of filtroTransporte" [value]="transporte.id"
                             [selected]="selectedTurno === transporte.id"> {{ transporte.nombre }}</option>
@@ -51,14 +53,16 @@
                     <mat-label>Fecha de entrega</mat-label>
                     <input matInput     
                         [matDatepicker]="picker" 
-                        (dateChange)="addEvent($event)">
+                        [value] = 'valorPicker'
+                        (dateChange)="addEvent($event)"
+                        [disabled]='deshabilitado'>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
                 
                 <mat-form-field appearance="fill">
                     <mat-label>{{ filtroTurnos ? 'Turno' : 'Cargando...'}}</mat-label>
-                    <select matNativeControl (change)="selectTurno($event)" [disabled]="!filtroTurnos">
+                    <select matNativeControl (change)="selectTurno($event)" [disabled]="!filtroTurnos || deshabilitado">
                         <option [value]="0">TODOS</option>
                         <option *ngFor="let turno of filtroTurnos" [value]="turno.id"
                             [selected]="selectedTurno === turno.id"> {{ turno.nombre }}</option>
@@ -71,22 +75,22 @@
 
                 <mat-form-field appearance="outline">
                 <mat-label>Contacto</mat-label>
-                    <input matInput [(ngModel)]='this.contacto' [ngModelOptions]="{standalone: true}">
+                    <input matInput [(ngModel)]='this.contacto' [disabled]='deshabilitado' [ngModelOptions]="{standalone: true}">
                 </mat-form-field>
                 
                 <mat-form-field appearance="outline">
                     <mat-label>Teléfono</mat-label>
-                    <input matInput [(ngModel)]='this.telefono' [ngModelOptions]="{standalone: true}">
+                    <input matInput [(ngModel)]='this.telefono' [disabled]='deshabilitado' [ngModelOptions]="{standalone: true}">
                 </mat-form-field>
                 
                 <mat-form-field appearance="outline">
                     <mat-label>Mail</mat-label>
-                    <input matInput [(ngModel)]='this.mail' [ngModelOptions]="{standalone: true}">
+                    <input matInput [(ngModel)]='this.mail' [disabled]='deshabilitado' [ngModelOptions]="{standalone: true}">
                 </mat-form-field>
                 
                 <mat-form-field appearance="outline">
                     <mat-label>Observaciones</mat-label>
-                    <input matInput [(ngModel)]='this.observaciones' [ngModelOptions]="{standalone: true}">
+                    <input matInput [(ngModel)]='this.observaciones' [disabled]='deshabilitado' [ngModelOptions]="{standalone: true}">
                 </mat-form-field>
             <!-- </div> -->
 
@@ -96,7 +100,14 @@
 
 </mat-dialog-content>
 
-<mat-dialog-actions fxLayoutAlign="space-between">
+<mat-dialog-actions *ngIf="this.data.option === 'add'" fxLayoutAlign="space-between">
     <button mat-raised-button [mat-dialog-close]="true" color="accent" (click)= "agregar()">Agregar</button>
+    <button mat-stroked-button mat-dialog-close>Cancelar</button>
+</mat-dialog-actions>
+<mat-dialog-actions *ngIf="this.data.option === 'upd'" fxLayoutAlign="space-between">
+    <button mat-raised-button [mat-dialog-close]="true" color="accent" (click)= "agregar()">Modificar</button>
+    <button mat-stroked-button mat-dialog-close>Cancelar</button>
+</mat-dialog-actions>
+<mat-dialog-actions *ngIf="this.data.option === 'view'" fxLayoutAlign="end center">
     <button mat-stroked-button mat-dialog-close>Cancelar</button>
 </mat-dialog-actions>

@@ -18,7 +18,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule} from '@angular/material/datepicker';
 import { MatCheckboxModule} from '@angular/material/checkbox';
 import { MatBadgeModule } from '@angular/material/badge';
-
+import { MatSlideToggleModule } from '@angular/material/slide-toggle'
 
 
 @NgModule({
@@ -42,7 +42,8 @@ import { MatBadgeModule } from '@angular/material/badge';
     MatCardModule,
     MatDatepickerModule,
     MatCheckboxModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatSlideToggleModule
   ],
   exports: [
     CommonModule,
@@ -63,7 +64,8 @@ import { MatBadgeModule } from '@angular/material/badge';
     MatCardModule,
     MatDatepickerModule,
     MatCheckboxModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatSlideToggleModule
 
   ],
   providers: [
