@@ -4,6 +4,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { PedidosListaService } from '../../pedidos-lista/pedidos-lista.service';
 import { Router } from '@angular/router';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
+import { AnyMxRecord } from 'dns';
 
 
 
@@ -94,9 +95,10 @@ export class AgregarDatosEntregaComponent implements OnInit{
     selectedTransporte: any = 0;
 
     picker: any;
+    valorPicker: any;
     codigoPostal: any = 7600;
 
-
+    deshabilitado: boolean;
 
     contacto:string      = '';
     direccion:string     = '';
@@ -104,11 +106,25 @@ export class AgregarDatosEntregaComponent implements OnInit{
     observaciones:string = '';
     telefono:string      = '';
 
-
+    id: number = null;
 
     ngOnInit(): void {
       this.getfiltros();
-    }
+      switch (this.data.option) {
+        case "add":
+          this.deshabilitado = false;
+          break;
+        case "upd":
+          this.deshabilitado = false;
+          this.getDatoEntrega();
+          break;
+        case "view":
+          this.deshabilitado = true;
+          this.getDatoEntrega();
+          break;
+      }
+    } 
+
 
     onNoClick(): void {
       // this.dialogRef.close();
@@ -116,12 +132,10 @@ export class AgregarDatosEntregaComponent implements OnInit{
 
     agregar(){
 
-      console.log("agregar");
-
       this.datoEntrega.contacto                     = this.contacto;
       this.datoEntrega.direccion                    = this.direccion;
       this.datoEntrega.fechaDeEntrega               = this.picker;
-      this.datoEntrega.id                           = null;
+      this.datoEntrega.id                           = this.id;
       this.datoEntrega.listaPedidoDetalle           = this.data.articulos;
       this.datoEntrega.mail                         = this.mail;
       this.datoEntrega.observaciones                = this.observaciones;
@@ -135,6 +149,27 @@ export class AgregarDatosEntregaComponent implements OnInit{
       localStorage.setItem('datoEntrega', JSON.stringify(this.datoEntrega));
 
       this.dialogRef.close();
+    }
+
+    getDatoEntrega(){
+
+      this.contacto             = this.data.item.contacto;
+      this.direccion            = this.data.item.direccion;
+      this.picker               = new Date(this.data.item.fechaDeEntrega);
+      this.valorPicker          = new Date(this.data.item.fechaDeEntrega);
+      this.data.articulos       = this.data.item.listaPedidoDetalle;
+      this.mail                 = this.data.item.mail;
+      this.id                   = this.data.item.id;
+      this.observaciones        = this.data.item.observaciones;
+      this.selectedTurno        = this.data.item.pedidoTurno.id;
+      this.selectedLocalidad    = this.data.item.sysLocalidad.id;
+      this.selectedProvincia    = this.data.item.sysLocalidad.sysProvincia.id;
+      this.selectedTransporte   = this.data.item.sysTransporte.id;
+      this.telefono             = this.data.item.telefono;
+
+      console.log(this.picker);
+      console.log(this.data.item.fechaDeEntrega);
+
     }
 
     getfiltros(){

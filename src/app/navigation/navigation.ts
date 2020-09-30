@@ -60,7 +60,14 @@ export const navigation: FuseNavigation[] = [
                         id        : 'control-estanteria',
                         title     : 'Control Estantería',
                         type      : 'item',
-                        url       : '/apps/pedidos/administracion/control-estanteria',
+                        url       : '/apps/pedidos/administracion/control/estanteria',
+                        exactMatch: true
+                    },
+                    {
+                        id        : 'control-estanteria',
+                        title     : 'Control Dársena',
+                        type      : 'item',
+                        url       : '/apps/pedidos/administracion/control/darsena',
                         exactMatch: true
                     }
                 ]

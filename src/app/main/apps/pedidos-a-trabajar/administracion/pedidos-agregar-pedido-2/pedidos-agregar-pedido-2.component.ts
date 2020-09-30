@@ -468,14 +468,63 @@ export class PedidosAgregarPedido2Component implements OnInit {
     console.log(ruta);
     this._router.navigate([ruta]);
   }
-  
-  
-  agregarDatoEntrega() {
-    
+
+  verDatoEntrega(item){
+    console.log(item);
+
     let dialogRef = this._dialog.open(AgregarDatosEntregaComponent, {
       width: window.innerWidth+'px',
       data: {
-        articulos: this.selection.selected
+        option: 'view',
+        articulos: this.selection.selected,
+        item: item
+      } 
+    });
+  }
+
+  modificarDatoEntrega(item, indexItem){
+
+
+    console.log("indexItem");
+    console.log(indexItem);
+
+    let dialogRef = this._dialog.open(AgregarDatosEntregaComponent, {
+      width: window.innerWidth+'px',
+      data: {
+        option: 'upd',
+        articulos: this.selection.selected,
+        item: item
+      } 
+    });
+    
+    dialogRef.afterClosed()
+      .subscribe(result => {
+
+        let datos = this.dataSourceDatosDeEntrega;
+        console.log('antes');
+        console.log(datos);
+        
+        if(JSON.parse(localStorage.getItem('datoEntrega'))){
+          
+          this.dataSourceDatosDeEntrega.datos.splice(indexItem,1,JSON.parse(localStorage.getItem('datoEntrega'))); 
+          
+          console.log('despues');
+          console.log(this.dataSourceDatosDeEntrega);
+
+          this.render();
+          this.selection.clear();
+        }
+      });
+  }
+  
+  
+  agregarDatoEntrega() {
+
+    let dialogRef = this._dialog.open(AgregarDatosEntregaComponent, {
+      width: window.innerWidth+'px',
+      data: {
+        option: 'add',
+        articulos: this.selection.selected,
       } 
     });
     
@@ -483,17 +532,19 @@ export class PedidosAgregarPedido2Component implements OnInit {
       .subscribe(result => {
         console.log(JSON.parse(localStorage.getItem('datoEntrega')));
         if(JSON.parse(localStorage.getItem('datoEntrega'))){
-
+          
           this.dataSourceDatosDeEntrega.datos.push(JSON.parse(localStorage.getItem('datoEntrega')));
           for (let art of this.selection.selected) {
             
             let indexToSplice = this.dataSourceArticulos.indexOf(art);
             this.dataSourceArticulos.splice(indexToSplice,1);
             
+            console.log(JSON.parse(localStorage.getItem('datoEntrega')));
           }
           
           this.selection.clear();
           this.render();
+
         }
       });
   }
