@@ -76,7 +76,7 @@ const routes: Routes = [
         component: LoteAdministrarLoteComponent
     },
     {
-        path     : 'control-estanteria',
+        path     : 'control/:modo',
         component: ControlEstanteriaComponent
     }
 ];

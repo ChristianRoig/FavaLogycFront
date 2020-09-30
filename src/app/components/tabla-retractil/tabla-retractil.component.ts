@@ -26,6 +26,8 @@ export class TablaRetractilComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void { 
+
+    console.log(this.arregloDeDetalles);
     
     this.convertirDatosEnArreglo();
 

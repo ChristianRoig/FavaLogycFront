@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { ControlEstanteriaService } from './control-estanteria.service';
@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { SonidoService } from 'app/services/sonidos.service';
+import { Subscription } from 'rxjs';
 
 export interface Articulos {
 
@@ -124,9 +125,14 @@ export class ControlEstanteriaComponent implements OnInit {
 
   arregloDeDetalles;
 
+  modo: string;
+  subParametros: Subscription;
+  titulo: string;
+
   constructor(private _router: Router, 
               private _fuseSidebarService: FuseSidebarService, 
               private _loteAdministrarLoteService: ControlEstanteriaService,
+              private route: ActivatedRoute,
               private _dialog: MatDialog,
               private _sonido: SonidoService) { 
 
@@ -139,333 +145,33 @@ export class ControlEstanteriaComponent implements OnInit {
     this.maxDateDesdeLote   = new Date(currentYear + 1, 11, 31);
     this.minDateHastaLote   = new Date(currentYear - 5, 0, 1);
     this.maxDateHastaLote   = new Date(currentYear + 1, 11, 31);
+
+    this.subParametros = this.route.params.subscribe(params => {
+      this.modo = params['modo'];
+    });
+
+    console.log(this.modo);
+
+    switch (this.modo) {
+      case "estanteria":
+        this.titulo = "Estantería";
+        break;
+      case "darsena":
+        this.titulo = "Dársena";
+        break;
+    }
   }
 
   ngOnInit(): void {
     
-    // this.resetFiltros();    
-    
-    // this.getfiltros();
-    
-    // this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
   }
 
   buscarLote() {
-    
-    // let dialogRef = this._dialog.open(BuscarLoteComponent, {
-    //   data: {
-    //     lote:       this.lote,
-    //     fechaDesde: this.pickerLoteDesde,
-    //     fechaHasta: this.pickerLoteHasta
-    //   } 
-    // });
-    
-    // dialogRef.afterClosed()
-    //   .subscribe(result => {
-    //     if(localStorage.getItem('Lote')){
-    //       this.nombreLote = JSON.parse(localStorage.getItem('Lote')).nombre;
-    //       this.idLote     = JSON.parse(localStorage.getItem('Lote')).id;
-    //       localStorage.removeItem('Lote');
-    //       this.buscarDetalleUnico();
-    //     }
-    //   });
     
     this.idLote = this.buscarLoteInput.nativeElement.value;
     this.buscarDetalleUnico();
 
   }
-
-  // sacarDelLote(){
-  //   let listaIdPedidoDetalle: Array<number> = new Array<number>();
-
-    
-  //   for (let entry of this.selection.selected) {
-  //     listaIdPedidoDetalle.push(entry.id);
-  //   }
-  //   console.log(listaIdPedidoDetalle)
-    
-  //   this._loteAdministrarLoteService.postEliminarArticuloDeLote(listaIdPedidoDetalle).subscribe(params => {
-  //     console.log("termino Ok");
-  //     this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
-  //   },
-  //   (err: HttpErrorResponse) => {
-  //     if (err.error instanceof Error) {
-  //       console.log("Client-side error");
-  //     } else {
-  //       let errStatus = err.status
-  //       if (errStatus == 0){
-  //         let titulo = 'Error de Servidor';
-  //         let mensaje = "Por favor comunicarse con Sistemas";
-  //         this.mostrarError(errStatus, titulo, mensaje);
-  //       } else {
-  //         let titulo = 'Error al cargar filtros';
-  //         let mensaje = err.error.message.toString();
-  //         this.mostrarError(errStatus, titulo, mensaje);
-  //       }
-  //     }
-  //   })
-    
-  // }
-
-  // resetFiltros(){
-
-  //   this.busqueda = ""
-  //   this.page = 0;
-  //   this.size = 10;
-  //   this.columna = 'idDetalle';
-  //   this.order = 'asc';
-
-  //   this.busqueda = "";
-  //   this.selectedTipo = 0;
-  //   this.selectedTurno = 0;
-  //   this.selectedOrigen = 0;
-  //   this.selectedEtapa = 0;
-  //   this.selectedProvincia = 1;
-  //   this.selectedLocalidad = 1402;
-  //   this.pickerFiltroDesde= null;
-  //   this.pickerFiltroHasta= null;
-  //   // this.pickerLoteDesde  = null;
-  //   // this.pickerLoteHasta  = null;
-  //   // this.lote = null;
-    
-  //   // this.buscarLoteInput.nativeElement.value = '';
-  //   this.buscarCbteInput.nativeElement.value = '';
-  // }
-
-  // getfiltros(){
-  //   this._loteAdministrarLoteService.getAllTipos().subscribe(params => {
-  //     this.filtroTipos = params.datos;
-  //   },
-  //   (err: HttpErrorResponse) => {
-  //     if (err.error instanceof Error) {
-  //       console.log("Client-side error");
-  //     } else {
-  //       let errStatus = err.status
-  //       if (errStatus == 0){
-  //         let titulo = 'Error de Servidor';
-  //         let mensaje = "Por favor comunicarse con Sistemas";
-  //         this.mostrarError(errStatus, titulo, mensaje);
-  //       } else {
-  //         let titulo = 'Error al cargar filtros';
-  //         let mensaje = err.error.message.toString();
-  //         this.mostrarError(errStatus, titulo, mensaje);
-  //       }
-  //     }
-  //   })
-    
-  //   this._loteAdministrarLoteService.getAllTurnos().subscribe(params => {
-  //     this.filtroTurnos = params.datos;
-  //   },
-  //   (err: HttpErrorResponse) => {
-  //     if (err.error instanceof Error) {
-  //       console.log("Client-side error");
-  //     } else {
-  //       let errStatus = err.status
-  //       if (errStatus == 0){
-  //         let titulo = 'Error de Servidor';
-  //         let mensaje = "Por favor comunicarse con Sistemas";
-  //         this.mostrarError(errStatus, titulo, mensaje);
-  //       } else {
-  //         let titulo = 'Error al cargar filtros';
-  //         let mensaje = err.error.message.toString();
-  //         this.mostrarError(errStatus, titulo, mensaje);
-  //       }
-  //     }
-  //   })
-    
-  //   this._loteAdministrarLoteService.getAllOrigenes().subscribe(params => {
-  //     this.filtroOrigenes = params.datos;
-  //   },
-  //   (err: HttpErrorResponse) => {
-  //     if (err.error instanceof Error) {
-  //       console.log("Client-side error");
-  //     } else {
-  //       let errStatus = err.status
-  //       if (errStatus == 0){
-  //         let titulo = 'Error de Servidor';
-  //         let mensaje = "Por favor comunicarse con Sistemas";
-  //         this.mostrarError(errStatus, titulo, mensaje);
-  //       } else {
-  //         let titulo = 'Error al cargar filtros';
-  //         let mensaje = err.error.message.toString();
-  //         this.mostrarError(errStatus, titulo, mensaje);
-  //       }
-  //     }
-  //   })
-
-  //   this._loteAdministrarLoteService.getAllEtapas().subscribe(params => {
-  //     this.filtroEtapas = params.datos;
-  //   },
-  //   (err: HttpErrorResponse) => {
-  //     if (err.error instanceof Error) {
-  //       console.log("Client-side error");
-  //     } else {
-  //       let errStatus = err.status
-  //       if (errStatus == 0){
-  //         let titulo = 'Error de Servidor';
-  //         let mensaje = "Por favor comunicarse con Sistemas";
-  //         this.mostrarError(errStatus, titulo, mensaje);
-  //       } else {
-  //         let titulo = 'Error al cargar filtros';
-  //         let mensaje = err.error.message.toString();
-  //         this.mostrarError(errStatus, titulo, mensaje);
-  //       }
-  //     }
-  //   })
-
-  //   this._loteAdministrarLoteService.getAllProvincias().subscribe(params => {
-  //     this.filtroProvincias = params.datos;
-  //   },
-  //   (err: HttpErrorResponse) => {
-  //     if (err.error instanceof Error) {
-  //       console.log("Client-side error");
-  //     } else {
-  //       let errStatus = err.status
-  //       if (errStatus == 0){
-  //         let titulo = 'Error de Servidor';
-  //         let mensaje = "Por favor comunicarse con Sistemas";
-  //         this.mostrarError(errStatus, titulo, mensaje);
-  //       } else {
-  //         let titulo = 'Error al cargar filtros';
-  //         let mensaje = err.error.message.toString();
-  //         this.mostrarError(errStatus, titulo, mensaje);
-  //       }
-  //     }
-  //   })
-
-  //   this._loteAdministrarLoteService.getAllLocalidades().subscribe(params => {
-  //     this.filtroLocalidades = params.datos;
-  //   },
-  //   (err: HttpErrorResponse) => {
-  //     if (err.error instanceof Error) {
-  //       console.log("Client-side error");
-  //     } else {
-  //       let errStatus = err.status
-  //       if (errStatus == 0){
-  //         let titulo = 'Error de Servidor';
-  //         let mensaje = "Por favor comunicarse con Sistemas";
-  //         this.mostrarError(errStatus, titulo, mensaje);
-  //       } else {
-  //         let titulo = 'Error al cargar filtros';
-  //         let mensaje = err.error.message.toString();
-  //         this.mostrarError(errStatus, titulo, mensaje);
-  //       }
-  //     }
-  //   })
-  // }
-
-  // getDetalle(busqueda, page, size, columna, order){
-  //   let idTipo      :number =null;
-  //   let idTurno     :number =null;
-  //   let idOrigen    :number =null;
-  //   let idEstado    :number =null;
-  //   let idEtapa     :number =null;
-  //   let idProvincia :number =null;
-  //   let idLocalidad :number =null;
-  //   let desdePedido :string =null;
-  //   let hastaPedido :string =null;
-  //   let idLote      :number =null;
-  //   let desdeLote   :string =null;
-  //   let hastaLote   :string =null;
-  //   this.selection.clear();
-
-  //   if (this.selectedTipo > 0 )
-  //     idTipo = this.selectedTipo;
-    
-  //   if (this.selectedTurno > 0 )
-  //     idTurno = this.selectedTurno;
-    
-  //   if (this.selectedOrigen > 0 )
-  //     idOrigen = this.selectedOrigen;
-    
-  //   if (this.selectedEstado > 0 )
-  //     idEstado = this.selectedEstado;
-    
-  //   if (this.selectedEtapa > 0 )
-  //     idEtapa = this.selectedEtapa;
-    
-  //   if (this.selectedProvincia > 0 )
-  //     idProvincia = this.selectedProvincia;
-    
-  //   if (this.selectedLocalidad > 0 )
-  //     idLocalidad = this.selectedLocalidad;
-    
-  //   if (this.pickerFiltroDesde)
-  //     desdePedido = this.pickerFiltroDesde;
-    
-  //   if (this.pickerFiltroHasta)
-  //     hastaPedido = this.pickerFiltroHasta;
-    
-  //   if (this.idLote !== null)
-  //     idLote = this.idLote;
-    
-  //   if (this.pickerLoteDesde)
-  //     desdeLote = this.pickerLoteDesde;	
-    
-  //   if (this.pickerLoteHasta)
-  //     hastaLote = this.pickerLoteHasta;
-
-  //   this.body.idTipo      = idTipo;
-  //   this.body.idTurno     = idTurno;
-  //   this.body.idOrigen    = idOrigen;
-  //   this.body.idEtapa     = idEtapa;
-  //   this.body.idProvincia = idProvincia;
-  //   this.body.idLocalidad = idLocalidad;
-  //   this.body.desdePedido = desdePedido;
-  //   this.body.hastaPedido = hastaPedido;
-  //   this.body.idLote      = idLote;
-    
-  //   // console.log(this.body);
-
-  //   this._loteAdministrarLoteService.getPedidosLote(this.body, busqueda, columna, order).subscribe(
-  //     data => {
-  //       // console.log(data)
-  //       this.dataSource2 = data.datos;
-  //       this.length = data.totalRegistros;
-  //       // this.buscarCodigoBarrasInput.nativeElement.focus();
-  //       console.log('datos', data);
-        
-  //     },
-  //     (err: HttpErrorResponse) => {
-  //       if (err.error instanceof Error) {
-  //         console.log("Client-side error");
-  //       } else {
-  //         let errStatus = err.status
-  //         if (errStatus == 0){
-  //           let titulo = 'Error de Servidor';
-  //           let mensaje = "Por favor comunicarse con Sistemas";
-  //           this.mostrarError(errStatus, titulo, mensaje);
-  //         } else {
-  //           let titulo = 'Error al listar';
-  //           let mensaje = err.error.message.toString();
-  //           this.mostrarError(errStatus, titulo, mensaje);
-  //         }
-  //       }
-  //     }
-  //   );
-  // }
-
-  // mostrarError(errStatus, titulo, mensaje){
-  //   const dialogRef = this._dialog.open( ModalErrorComponent, { 
-  //     data: {
-  //       titulo: titulo,
-  //       mensaje: mensaje
-  //     } 
-  //   });
-
-  //   dialogRef.afterClosed()
-  //     .subscribe( () => {
-  //         if (errStatus != 0) {
-
-  //           this.resetFiltros();
-  //           // this.getfiltros();
-  //           // this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
-            
-  //         } else {
-  //           this._router.navigate(['']);
-  //         }
-  //     });
-  // }
 
   selectTipo(event: Event) {
     this.selectedTipo = (event.target as HTMLSelectElement).value;
@@ -501,164 +207,7 @@ export class ControlEstanteriaComponent implements OnInit {
 
     }
     console.log("Etapa: "+this.selectedEtapa);
-    // this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
   }
-
-  // selectProvincia(event: Event) {
-  //   this.selectedProvincia = (event.target as HTMLSelectElement).value;
-  //   if(this.selectedProvincia > 0){
-  //     this.selectedLocalidad = 0;
-  //     this._loteAdministrarLoteService.getAllLocalidadesPorProvincia(this.selectedProvincia).subscribe(params => {
-  //       this.filtroLocalidades = params.datos;
-  //     },
-  //     (err: HttpErrorResponse) => {
-  //       if (err.error instanceof Error) {
-  //         console.log("Client-side error");
-  //       } else {
-  //         let errStatus = err.status
-  //         if (errStatus == 0){
-  //           let titulo = 'Error de Servidor';
-  //           let mensaje = "Por favor comunicarse con Sistemas";
-  //           this.mostrarError(errStatus, titulo, mensaje);
-  //         } else {
-  //           let titulo = 'Error al cargar filtros';
-  //           let mensaje = err.error.message.toString();
-  //           this.mostrarError(errStatus, titulo, mensaje);
-  //         }
-  //       }
-  //     })
-  //   } else {
-  //     this.selectedLocalidad = 0;
-  //     this._loteAdministrarLoteService.getAllLocalidades().subscribe(params => {
-  //       this.filtroLocalidades = params.datos;
-  //     },
-  //     (err: HttpErrorResponse) => {
-  //       if (err.error instanceof Error) {
-  //         console.log("Client-side error");
-  //       } else {
-  //         let errStatus = err.status
-  //         if (errStatus == 0){
-  //           let titulo = 'Error de Servidor';
-  //           let mensaje = "Por favor comunicarse con Sistemas";
-  //           this.mostrarError(errStatus, titulo, mensaje);
-  //         } else {
-  //           let titulo = 'Error al cargar filtros';
-  //           let mensaje = err.error.message.toString();
-  //           this.mostrarError(errStatus, titulo, mensaje);
-  //         }
-  //       }
-  //     })
-  //   }
-  //   // this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
-  // }
-
-  // selectLocalidad(event: Event) {
-  //   this.selectedLocalidad = (event.target as HTMLSelectElement).value;
-  //   if(this.selectedLocalidad > 0){
-  //     this._loteAdministrarLoteService.getProvinciaPorLocalidad(this.selectedLocalidad).subscribe( params => {
-  //       this.selectedProvincia = params.id;
-  //       console.log("Provincia: "+this.selectedProvincia);
-  //     },
-  //     (err: HttpErrorResponse) => {
-  //       if (err.error instanceof Error) {
-  //         console.log("Client-side error");
-  //       } else {
-  //         let errStatus = err.status
-  //         if (errStatus == 0){
-  //           let titulo = 'Error de Servidor';
-  //           let mensaje = "Por favor comunicarse con Sistemas";
-  //           this.mostrarError(errStatus, titulo, mensaje);
-  //         } else {
-  //           let titulo = 'Error al cargar filtros';
-  //           let mensaje = err.error.message.toString();
-  //           this.mostrarError(errStatus, titulo, mensaje);
-  //         }
-  //       }
-  //     })
-  //   }
-  //   // this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
-  // }
-
-  // // addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
-
-  // //   console.log(event.value);
-  // // }
-
-  // addEvent( tipo, evento ) {
-
-  //   // console.log("evento value");
-  //   // console.log(evento.value);
-  //   // console.log("evento value");
-
-  //   if (evento.value) {
-  //     console.log("tipo "+ tipo +": "+evento.value._i.year+"-"+evento.value._i.month+"-"+evento.value._i.date);
-  //     let fecha = evento.value._i.year+"-"+(evento.value._i.month+1)+"-"+evento.value._i.date;
-  
-  //     switch (tipo) {
-  //       case "pickerFiltroDesde":
-  //         this.pickerFiltroDesde = fecha;
-  //         this.minDateHastaFiltro = evento.value;
-  //         break;
-  //       case "pickerFiltroHasta":
-  //         this.pickerFiltroHasta = fecha;
-  //         this.maxDateDesdeFiltro = evento.value;
-  //         break;
-  //       case "pickerLoteDesde":
-  //         this.pickerLoteDesde = fecha;
-  //         this.minDateHastaLote = evento.value;
-  //         break;
-  //       case "pickerLoteHasta":
-  //         this.pickerLoteHasta = fecha;
-  //         this.maxDateDesdeLote = evento.value;
-  //         break;
-  //     }
-  //   } else {
-      
-  //     const currentYear = new Date().getFullYear();
-
-  //     switch (tipo) {
-  //       case "pickerFiltroDesde":
-  //         this.pickerFiltroDesde = null;
-  //         this.minDateHastaFiltro = new Date(currentYear - 5, 0, 1);
-  //         break;
-  //       case "pickerFiltroHasta":
-  //         this.pickerFiltroHasta = null;
-  //         this.maxDateDesdeFiltro = new Date(currentYear + 1, 11, 31);
-  //         break;
-  //       case "pickerLoteDesde":
-  //         this.pickerLoteDesde = null;
-  //         this.minDateHastaLote = new Date(currentYear - 5, 0, 1);
-  //         break;
-  //       case "pickerLoteHasta":
-  //         this.pickerLoteHasta = null;
-  //         this.maxDateDesdeLote = new Date(currentYear + 1, 11, 31);
-  //         break;
-  //     }
-  //   }
-
-
-  //   // console.log("pickerFiltroDesde: "+this.pickerFiltroDesde);
-  //   // console.log("pickerFiltroHasta: "+this.pickerFiltroHasta);
-  //   // console.log("pickerLoteDesde: "+this.pickerLoteDesde);
-  //   // console.log("pickerLoteHasta: "+this.pickerLoteHasta);
-
-  // }
-
-  // buscar(){
-  //   this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
-  // }
-
-  // @Debounce(1000)  
-  // searchCbte() {
-
-  //   this.busqueda = this.buscarCbteInput.nativeElement.value;
-
-  //   this.page = 0;
-  //   this.columna = 'id';
-
-  //   this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
-
-  // }
 
   searchLote() {
 
@@ -671,24 +220,18 @@ export class ControlEstanteriaComponent implements OnInit {
 
   }
 
-  // @Debounce(1000) 
+  @Debounce(1000) 
   searchCodigoBarras() {
 
     this.codigoBarras = this.buscarCodigoBarrasInput.nativeElement.value;
-    // if(this.lote !== ''){
-    //   this.buscarCUPAInput.nativeElement.focus();
-    // }
-
+    this.buscarCUPAInput.nativeElement.focus();
   }
 
-  // @Debounce(1000) 
+  @Debounce(1000) 
   searchCUPA() {
 
     this.CUPA = this.buscarCUPAInput.nativeElement.value;
-    // if(this.lote !== ''){
-    //   this.buscarCodigoBarrasInput.nativeElement.focus();
-    // }
-
+    this.agregarEstanteria();
   }
 
   // @Debounce(1000) 
@@ -697,6 +240,7 @@ export class ControlEstanteriaComponent implements OnInit {
     this.buscarCUPAInput.nativeElement.value = '';
     this.codigoBarras = '';
     this.CUPA = '';
+    this.buscarCodigoBarrasInput.nativeElement.focus();
   }
 
   consultar(id){
@@ -753,27 +297,22 @@ export class ControlEstanteriaComponent implements OnInit {
       this._fuseSidebarService.getSidebar(key).toggleOpen();
   }  
 
-  // sortData( event ) {
-      
-  //   this.page = 0;
-  //   this.columna = event.active;
-    
-  //   if (event.direction !== "")
-  //       this.order = event.direction;
-    
-  //   this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
-  // }
-
   async buscarDetalleUnico() {
     this.arregloDeDetalles = null;
     let codArt = this.buscarCbteInput.nativeElement.value ? this.buscarCbteInput.nativeElement.value : '';
-    let res = await this._loteAdministrarLoteService.getDetalleUnico(this.idLote, codArt, 'estanteria');
+    let res = await this._loteAdministrarLoteService.getDetalleUnico(this.idLote, codArt, this.modo);
     this.arregloDeDetalles = res.datos;
     console.log(this.arregloDeDetalles);
     
   }
-
+  
+  @Debounce(1000) 
   async agregarEstanteria() {
+    
+    console.log(this.CUPA);
+    console.log(this.codigoBarras);
+    
+
     let res = await this._loteAdministrarLoteService.getCupaCodBarras(this.CUPA, this.idLote, this.codigoBarras);
     console.log(res);
     if(!res) {

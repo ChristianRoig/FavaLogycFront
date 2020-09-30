@@ -116,12 +116,14 @@
             <div class="mat-card  my-24">
                 <div class="h2 m-24"> 
                     {{item.id}} - {{item.direccion}} 
-                        
-                    <button mat-icon-button color="primary" (click)="verDatoEntrega(item)" class="m-12" >
-                        <mat-icon>visibility</mat-icon>                
+
+                    <button mat-stroked-button color="primary" (click)="verDatoEntrega(item)">
+                        <mat-icon>visibility</mat-icon>
+                        Ver Dato
                     </button>
-                    <button mat-icon-button color="primary" (click)="editar()" class="m-12">
-                        <mat-icon>edit</mat-icon>                
+                    <button mat-stroked-button color="primary" (click)="editar()">
+                        <mat-icon>edit</mat-icon>
+                        Editar
                     </button>
                 </div>
                 
