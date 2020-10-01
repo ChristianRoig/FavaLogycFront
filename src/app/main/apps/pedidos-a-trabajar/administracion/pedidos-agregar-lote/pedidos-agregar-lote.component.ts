@@ -10,6 +10,7 @@ import { Debounce } from 'app/shared/decorators/debounce';
 import { ModalDeseaImprimirLoteComponent } from './modal-confirmacion-borrar/modal-desea-imprimir.component';
 import { LoteAdministrarLoteService } from '../lote-administrar-lote/lote-administrar-lote.service';
 import { VerImpresorasComponent } from '../lote-administrar-lote/ver-impresoras/ver-impresoras.component';
+import { UsuarioService } from 'app/services/usuario.service';
 
 
 export interface PeriodicElement {
@@ -54,6 +55,7 @@ export class PedidosAgregarLoteComponent implements OnInit {
   constructor(private _router: Router,
               private _service: PedidosAgregarLoteService,
               private _loteAdministrarLoteService: LoteAdministrarLoteService,
+              private _usuarioService: UsuarioService,
               private route: ActivatedRoute,
               private _dialog: MatDialog) { }
 
@@ -91,7 +93,7 @@ export class PedidosAgregarLoteComponent implements OnInit {
     dialogRef.afterClosed()
       .subscribe( () => {
         if (errStatus != 0) {  
-          
+          this.volver(); 
         } else {
           this._router.navigate(['']);
         }
@@ -182,11 +184,21 @@ export class PedidosAgregarLoteComponent implements OnInit {
   }
 
 
-  imprimirCupa(idLote){
-    if(localStorage.getItem('ImpresoraCUPA')){
-      this.imprimir(idLote);
+  async imprimirCupa(idLote){
+
+    let application_name = "Favalogyc";
+    let permission_name = "Impresion_CUPA"
+
+    let res = await this._usuarioService.checkPermision(application_name, permission_name);
+
+    if (res === false){
+      this.mostrarError(1, 'Error de Permisos', `Usted no tiene permisos para realizar la acción: ${permission_name}.`);
     } else {
-      this.seleccionarImpresora(idLote)
+      if(localStorage.getItem('ImpresoraCUPA')){
+        this.imprimir(idLote);
+      } else {
+        this.seleccionarImpresora(idLote)
+      }
     }
   }
 
