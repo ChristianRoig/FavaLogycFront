@@ -411,4 +411,39 @@ export class UsuarioService {
 
   }
 
+  checkPermision(application_name, permission_name){
+    
+
+    let headers = new HttpHeaders({
+      "Content-Type": "application/json",
+      'Authorization': `OAuth 4114db25-f475-4b4c-8b77-21ec14396bd8!9d899bf1d1b669ba1d567a0cb5866338cf337290992d97e2404df5778e5c823fc4493a35905ff3`  //Mariano
+      // 'Authorization': `OAuth 4114db25-f475-4b4c-8b77-21ec14396bd8!a255779aed6d8bb5e2ad722f77f57debcaf95cc739ae3a8587e0914a71e3c720f06544e7b2587e`  //Santiago
+    });
+
+    let body = {
+      application_name: "Favalogyc",
+      permission_name: "Impresion_CUPA"
+    }
+  
+    console.log(this.token);
+    
+    return new Promise( resolve => {
+      
+      this._HttpClient.post('https://192.168.100.101:8443/apiGAM_trb/rest/apiGAM_CheckPermission', body, { headers }).subscribe( res => {
+        
+        if( res['isAutorized'] === true ) {
+          
+          resolve( true );
+          
+        } else {
+          
+          resolve( false );
+
+        }
+
+      });
+
+    });
+  }
+
 }

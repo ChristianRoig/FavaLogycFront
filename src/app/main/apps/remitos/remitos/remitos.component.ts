@@ -70,6 +70,7 @@ export class RemitosComponent implements OnInit {
   minDateHastaFiltro: Date;
   maxDateHastaFiltro: Date;
 
+  mensaje: string;
 
   /*
   Filtros
@@ -178,6 +179,9 @@ export class RemitosComponent implements OnInit {
 
     if (this.selectedTipo > 0 )
       idTipo = this.selectedTipo;
+  
+    if (this.selectedDarsena > 0 )
+      idDarsena = this.selectedDarsena;
     
     if (this.pickerFiltroDesde)
       desde = this.pickerFiltroDesde;
@@ -187,7 +191,7 @@ export class RemitosComponent implements OnInit {
 
     this.body.idTipo      = idTipo;
     this.body.idDarsena   = idDarsena;   
-    this.body.desdePedido       = desde;
+    this.body.desdePedido = desde;
     this.body.hastaPedido = hasta;
     
     console.log(this.body);
@@ -199,6 +203,7 @@ export class RemitosComponent implements OnInit {
         this.length = data.totalRegistros;
       },
       (err: HttpErrorResponse) => {
+        this.length = 0;
         if (err.error instanceof Error) {
           console.log("Client-side error");
         } else {
@@ -210,8 +215,7 @@ export class RemitosComponent implements OnInit {
           } else {
             let titulo = 'Error al listar';
             let mensaje = err.error.message.toString();
-            this.resetFiltros();
-            this.mostrarError(errStatus, titulo, mensaje);
+            this.mensaje = mensaje;
           }
         }
       }
@@ -247,6 +251,7 @@ export class RemitosComponent implements OnInit {
 
   selectDarsena(event: Event) {
     this.selectedDarsena = (event.target as HTMLSelectElement).value;
+    console.log(this.selectedDarsena);
     this.getDetalle(this.busqueda, this.columna, this.order);
   }
 

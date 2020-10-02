@@ -54,7 +54,9 @@ export class AgregarDatosEntregaComponent implements OnInit{
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _pedidosListaService: PedidosListaService,
     private _dialog: MatDialog,
-    private _router: Router) {}
+    private _router: Router) {
+      this.minDateHastaFiltro = new Date();
+    }
 
 
     datoEntrega: ListaDatosDeEntrega ={
@@ -80,6 +82,7 @@ export class AgregarDatosEntregaComponent implements OnInit{
       listaPedidoDetalle: null,
     };
 
+    minDateHastaFiltro: any;
 
     filtroProvincias: any;
     selectedProvincia: any = 1;

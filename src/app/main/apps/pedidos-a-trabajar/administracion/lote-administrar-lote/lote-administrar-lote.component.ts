@@ -9,6 +9,7 @@ import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.componen
 import { HttpErrorResponse } from '@angular/common/http';
 import { BuscarLoteComponent } from './buscar-lote/buscar-lote.component';
 import { VerImpresorasComponent } from './ver-impresoras/ver-impresoras.component';
+import { UsuarioService } from 'app/services/usuario.service';
 
 export interface Articulos {
 
@@ -73,6 +74,7 @@ export class LoteAdministrarLoteComponent implements OnInit {
   columna: string = 'idDetalle';
   order: string = 'asc';
 
+  mensaje: string;
 
   minDateDesdeFiltro: Date;
   maxDateDesdeFiltro: Date;
@@ -131,6 +133,7 @@ export class LoteAdministrarLoteComponent implements OnInit {
   constructor(private _router: Router, 
               private _fuseSidebarService: FuseSidebarService, 
               private _loteAdministrarLoteService: LoteAdministrarLoteService,
+              private _usuarioService: UsuarioService,
               private _dialog: MatDialog) { 
 
     const currentYear = new Date().getFullYear();
@@ -206,12 +209,23 @@ export class LoteAdministrarLoteComponent implements OnInit {
     
   }
 
-  imprimirCupa(){
-    if(localStorage.getItem('ImpresoraCUPA')){
-      this.imprimir();
+  async imprimirCupa(){
+
+    let application_name = "Favalogyc";
+    let permission_name = "Impresion_CUPA"
+
+    let res = await this._usuarioService.checkPermision(application_name, permission_name);
+    console.log('component')
+    console.log(res)
+    if (res === false){
+      this.mostrarError(1, 'Error de Permisos', `Usted no tiene permisos para realizar la acción: ${permission_name}.`);
     } else {
-      this.seleccionarImpresora()
-    }
+      if(localStorage.getItem('ImpresoraCUPA')){
+        this.imprimir();
+      } else {
+        this.seleccionarImpresora()
+      }
+    }   
   }
 
 
@@ -223,6 +237,7 @@ export class LoteAdministrarLoteComponent implements OnInit {
       let titulo = 'Estado de impresión';
       let mensaje = "Completado correctamente";
       this.mostrarError(-1, titulo, mensaje);
+      this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
@@ -478,6 +493,7 @@ export class LoteAdministrarLoteComponent implements OnInit {
         this.length = data.totalRegistros;
       },
       (err: HttpErrorResponse) => {
+        this.length = 0;
         if (err.error instanceof Error) {
           console.log("Client-side error");
         } else {
@@ -489,7 +505,8 @@ export class LoteAdministrarLoteComponent implements OnInit {
           } else {
             let titulo = 'Error al listar';
             let mensaje = err.error.message.toString();
-            this.mostrarError(errStatus, titulo, mensaje);
+            this.mensaje = mensaje;
+            // this.mostrarError(errStatus, titulo, mensaje);
           }
         }
       }
