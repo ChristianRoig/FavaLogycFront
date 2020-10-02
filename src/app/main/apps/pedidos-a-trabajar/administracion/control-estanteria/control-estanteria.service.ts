@@ -135,6 +135,7 @@ export class ControlEstanteriaService
         console.log(listaIdPedidoDetalle);
 
         return this._httpClient.post(ruta, body, {headers: headers});
+
     }
 
     imprimir(lote, impresora): Observable<any>
@@ -178,6 +179,28 @@ export class ControlEstanteriaService
         
 
         return this._httpClient.get(ruta, {headers: headers})
+		.toPromise().then ( (response: any) => {
+
+			return response;
+			
+		}, (err) => {
+            
+            return err;
+            
+        });
+    }
+
+    async eliminarArticuloDeLotePorCupa(cupa): Promise<any>
+    {
+
+        let headers = new HttpHeaders({
+            "Content-Type": "application/json"
+        });
+
+        let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/cupa/${cupa}`;
+        
+
+        return this._httpClient.delete(ruta, {headers: headers})
 		.toPromise().then ( (response: any) => {
 
 			return response;
