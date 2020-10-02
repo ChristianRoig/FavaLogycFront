@@ -51,7 +51,7 @@ export const navigation: FuseNavigation[] = [
                     },
                     {
                         id        : 'codigos-barra',
-                        title     : 'Códigos de Barra',
+                        title     : 'Códigos de Barras',
                         type      : 'item',
                         url       : '/apps/pedidos/codigos-barra-articulos',
                         exactMatch: true

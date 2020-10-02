@@ -74,6 +74,7 @@ export class LoteAdministrarLoteComponent implements OnInit {
   columna: string = 'idDetalle';
   order: string = 'asc';
 
+  mensaje: string;
 
   minDateDesdeFiltro: Date;
   maxDateDesdeFiltro: Date;
@@ -492,6 +493,7 @@ export class LoteAdministrarLoteComponent implements OnInit {
         this.length = data.totalRegistros;
       },
       (err: HttpErrorResponse) => {
+        this.length = 0;
         if (err.error instanceof Error) {
           console.log("Client-side error");
         } else {
@@ -503,7 +505,8 @@ export class LoteAdministrarLoteComponent implements OnInit {
           } else {
             let titulo = 'Error al listar';
             let mensaje = err.error.message.toString();
-            this.mostrarError(errStatus, titulo, mensaje);
+            this.mensaje = mensaje;
+            // this.mostrarError(errStatus, titulo, mensaje);
           }
         }
       }
