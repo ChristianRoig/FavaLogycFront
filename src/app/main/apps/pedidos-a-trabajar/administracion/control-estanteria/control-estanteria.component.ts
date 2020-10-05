@@ -172,6 +172,13 @@ export class ControlEstanteriaComponent implements OnInit {
       
       this.modo = params['modo'];
 
+      // agregar refresh
+      if(this.titulo) {
+        if(this.titulo !== this.modo) {
+          location.reload();
+        }
+      }
+      
       switch (this.modo) {
         case "estanteria":
           this.titulo = "Estantería";
@@ -337,7 +344,7 @@ export class ControlEstanteriaComponent implements OnInit {
     console.log(this.codigoBarras);
     
 
-    let res = await this._loteAdministrarLoteService.getCupaCodBarras(this.CUPA, this.idLote, this.codigoBarras);
+    let res = await this._loteAdministrarLoteService.getCupaCodBarras(this.CUPA, this.idLote, this.codigoBarras, this.modo);
     console.log(res);
     if(!res) {
       this._sonido.playAudioSuccess();

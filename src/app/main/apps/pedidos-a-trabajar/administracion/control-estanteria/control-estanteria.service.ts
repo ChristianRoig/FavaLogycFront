@@ -168,14 +168,16 @@ export class ControlEstanteriaService
     }
 
 
-    async getCupaCodBarras(cupa, idLote, codBarras): Promise<any>
+    async getCupaCodBarras(cupa, idLote, codBarras, modo): Promise<any>
     {
 
         let headers = new HttpHeaders({
             "Content-Type": "application/json"
         });
 
-        let ruta = `${BASE_URL}pedidosatrabajar/cupa/lote/codbarras/${cupa}/${idLote}/${codBarras}`;
+        let pedidoparte = modo === 'darsena' ? '/pedidoparte' : '';
+
+        let ruta = `${BASE_URL}pedidosatrabajar${pedidoparte}/cupa/lote/codbarras/${cupa}/${idLote}/${codBarras}`;
         
 
         return this._httpClient.get(ruta, {headers: headers})
