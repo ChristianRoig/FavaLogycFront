@@ -184,22 +184,22 @@ export class PedidosAgregarLoteComponent implements OnInit {
   }
 
 
-  async imprimirCupa(idLote){
+  imprimirCupa(idLote){
 
     let application_name = "Favalogyc";
     let permission_name = "Impresion_CUPA"
 
-    let res = await this._usuarioService.checkPermision(application_name, permission_name);
+    // let res = await this._usuarioService.checkPermision(application_name, permission_name);
 
-    if (res === false){
-      this.mostrarError(1, 'Error de Permisos', `Usted no tiene permisos para realizar la acción: ${permission_name}.`);
-    } else {
+    // if (res === false){
+    //   this.mostrarError(1, 'Error de Permisos', `Usted no tiene permisos para realizar la acción: ${permission_name}.`);
+    // } else {
       if(localStorage.getItem('ImpresoraCUPA')){
         this.imprimir(idLote);
       } else {
         this.seleccionarImpresora(idLote)
       }
-    }
+    // }
   }
 
 

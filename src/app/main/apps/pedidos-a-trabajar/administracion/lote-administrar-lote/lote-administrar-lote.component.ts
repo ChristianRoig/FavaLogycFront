@@ -209,23 +209,23 @@ export class LoteAdministrarLoteComponent implements OnInit {
     
   }
 
-  async imprimirCupa(){
+  imprimirCupa(){
 
     let application_name = "Favalogyc";
     let permission_name = "Impresion_CUPA"
 
-    let res = await this._usuarioService.checkPermision(application_name, permission_name);
+    // let res = await this._usuarioService.checkPermision(application_name, permission_name);
     console.log('component')
-    console.log(res)
-    if (res === false){
-      this.mostrarError(1, 'Error de Permisos', `Usted no tiene permisos para realizar la acción: ${permission_name}.`);
-    } else {
+    // console.log(res)
+    // if (res === false){
+    //   this.mostrarError(1, 'Error de Permisos', `Usted no tiene permisos para realizar la acción: ${permission_name}.`);
+    // } else {
       if(localStorage.getItem('ImpresoraCUPA')){
         this.imprimir();
       } else {
         this.seleccionarImpresora()
       }
-    }   
+    // }   
   }
 
 
