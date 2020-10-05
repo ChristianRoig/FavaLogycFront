@@ -364,7 +364,7 @@ export class AgregarDatosEntregaComponent implements OnInit{
       this.selectedTurno = (event.target as HTMLSelectElement).value;
       console.log(this.selectedTurno);
     }
-
+    
     selectTransporte(event: Event) {
       this.selectedTransporte = (event.target as HTMLSelectElement).value;
       console.log(this.selectedTransporte);
