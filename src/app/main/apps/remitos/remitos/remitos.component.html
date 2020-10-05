@@ -77,7 +77,7 @@
         </div>
         
         <div class="mat-card my-24">            
-            <ng-container *ngTemplateOutlet="articulos"></ng-container>
+            <ng-container  *ngIf="this.length > 0; then hasDetalle; else notHasDetalle"></ng-container>
         </div>
 
     </div>
@@ -93,7 +93,11 @@
 <br>
 
 
-<ng-template #articulos>
+<ng-template #notHasDetalle>
+    <mat-card class="align-items: center;">{{this.mensaje}}</mat-card>
+</ng-template>
+
+<ng-template #hasDetalle>
 
     <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="dataSource2" class="mb-8">
 

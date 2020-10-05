@@ -5,36 +5,8 @@
 
         <div fxLayout="column">
 
-            <!-- Filtros en Pantalla grande -->
-            <!-- <div fxHide.sm fxHide.xs  fxLayout="row" class="content-card pb-4">
-    
-                LOTE
-                <div fxFlex="100" fxFlex.gt-sm="50" class="fuse-card p-24 mr-8">
-
-                    <ng-container *ngTemplateOutlet="filtrosLote"></ng-container>
-                    
-    
-                    <button mat-raised-button color="primary" (click)="crearLote()" class="mt-24 p-8">CREAR LOTE</button>
-                </div>
-                / LOTE
-    
-
-
-                FILTROS
-                <span fxFlex="50" class="fuse-card p-24 ml-8">
-
-                    <ng-container *ngTemplateOutlet="filtros"></ng-container>
-                </span>
-                / FILTROS
-
-                
-    
-            </div> -->
-            <!-- / Filtros en Pantalla grande -->
-
-
             <!-- SECCION ARTICULOS -->
-            <div class="fuse-card my-24" style="max-width: 100%;">
+            <div  class="fuse-card my-24" style="max-width: 100%;">
 
                 <!-- BOTON "FILTROS" -->
                 <span fxLayoutAlign="end">
@@ -71,7 +43,12 @@
                 <!-- / TITULO/BUSCADOR/BOTON -->
 
 
-                <ng-container *ngTemplateOutlet="articulos"></ng-container>
+                <ng-container   *ngIf="this.length > 0; then articulos;  else notHasDetalle"></ng-container>
+
+            </div>
+
+            <div class="fuse-card my-24" style="max-width: 100%;">
+
             </div>
             <!-- / SECCION ARTICULOS -->
         </div>
@@ -119,6 +96,10 @@
 </fuse-sidebar>
 <!-- / SIDE BAR -->
 
+<!-- TEMPLATE SIN DETALLES -->
+<ng-template #notHasDetalle>
+    <mat-card class="align-items: center;">{{this.mensaje}}</mat-card>
+</ng-template>
 
 <!-- TEMPLATE LISTA -->
 <ng-template #articulos>

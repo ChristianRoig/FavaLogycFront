@@ -70,6 +70,7 @@ export class RemitosComponent implements OnInit {
   minDateHastaFiltro: Date;
   maxDateHastaFiltro: Date;
 
+  mensaje: string;
 
   /*
   Filtros
@@ -202,6 +203,7 @@ export class RemitosComponent implements OnInit {
         this.length = data.totalRegistros;
       },
       (err: HttpErrorResponse) => {
+        this.length = 0;
         if (err.error instanceof Error) {
           console.log("Client-side error");
         } else {
@@ -213,8 +215,7 @@ export class RemitosComponent implements OnInit {
           } else {
             let titulo = 'Error al listar';
             let mensaje = err.error.message.toString();
-            this.resetFiltros();
-            this.mostrarError(errStatus, titulo, mensaje);
+            this.mensaje = mensaje;
           }
         }
       }

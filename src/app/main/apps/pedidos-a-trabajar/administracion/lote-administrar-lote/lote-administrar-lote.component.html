@@ -22,7 +22,11 @@
 
 
             <!-- SECCION ARTICULOS -->
-            <div *ngIf="this.dataSource2" class="fuse-card my-24" style="max-width: 100%;">
+            <div *ngIf="this.length < 1 && this.mensaje" class="fuse-card my-24" style="max-width: 100%;">
+                <mat-card class="align-items: center;">{{this.mensaje}}</mat-card>
+            </div>
+
+            <div *ngIf="this.length > 0" class="fuse-card my-24" style="max-width: 100%;">
 
                 <!-- BOTON "FILTROS" -->
                 <span fxLayoutAlign="end">

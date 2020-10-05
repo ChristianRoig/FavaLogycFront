@@ -72,6 +72,7 @@ export class PedidosListaComponent implements OnInit {
   columna: string = 'codigoArticulo';
   order: string = 'asc';
 
+  mensaje: string;
 
   minDateDesdeFiltro: Date;
   maxDateDesdeFiltro: Date;
@@ -183,8 +184,11 @@ export class PedidosListaComponent implements OnInit {
   getfiltros(){
     this._pedidosListaService.getAllTipos().subscribe(params => {
       this.filtroTipos = params.datos;
+      console.log(params)
+      this.length = params.totalRegistros
     },
     (err: HttpErrorResponse) => {
+      this.length = 0
       if (err.error instanceof Error) {
         console.log("Client-side error");
       } else {
@@ -196,6 +200,7 @@ export class PedidosListaComponent implements OnInit {
         } else {
           let titulo = 'Error al cargar filtros';
           let mensaje = err.error.message.toString();
+          this.mensaje = mensaje;
           this.mostrarError(errStatus, titulo, mensaje);
         }
       }
@@ -394,6 +399,7 @@ export class PedidosListaComponent implements OnInit {
         this.length = data.totalRegistros;
       },
       (err: HttpErrorResponse) => {
+        this.length = 0
         if (err.error instanceof Error) {
           console.log("Client-side error");
         } else {
@@ -403,9 +409,10 @@ export class PedidosListaComponent implements OnInit {
             let mensaje = "Por favor comunicarse con Sistemas";
             this.mostrarError(errStatus, titulo, mensaje);
           } else {
-            let titulo = 'Error al listar';
+            let titulo = 'Error al cargar filtros';
             let mensaje = err.error.message.toString();
-            this.mostrarError(errStatus, titulo, mensaje);
+            this.mensaje = mensaje;
+            // this.mostrarError(errStatus, titulo, mensaje);
           }
         }
       }
