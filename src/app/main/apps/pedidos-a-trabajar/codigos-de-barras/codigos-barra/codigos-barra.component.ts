@@ -200,13 +200,14 @@ export class PedidosCodigosBarraComponent implements OnInit {
         
           if (errStatus != 0) {   
 
-            this.busqueda = ' ';
+            this.busqueda = '';
             this.buscarInput.nativeElement.value = '';
 
             this.buscar(this.codigoArticulo, this.busqueda, this.page, this.size, this.columna, this.order);
           } else {
             this._router.navigate(['']);
           }
+
       });
   }
 }
