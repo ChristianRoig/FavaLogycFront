@@ -20,24 +20,20 @@
             <mat-form-field appearance="fill">
                 <mat-label>{{ filtroLocalidades ? 'Localidad' : 'Cargando...'}}</mat-label>
                 <select matNativeControl (change)="selectLocalidad($event)" [disabled]="!filtroLocalidades || deshabilitado">
-
                         <option [value]="0">TODOS</option>
                         <option *ngFor="let localidad of filtroLocalidades" 
                             [value]="localidad.id"
                             [selected]="selectedLocalidad === localidad.id"> {{ localidad.nombre }}</option>
                     </select>
-
             </mat-form-field>
 
             <mat-form-field appearance="fill">
                 <mat-label>{{ filtroProvincias ? 'Provincia' : 'Cargando...'}}</mat-label>
                 <select matNativeControl (change)="selectProvincia($event)" [disabled]="!filtroProvincias || deshabilitado">
-
                         <option [value]="0">TODOS</option>
                         <option *ngFor="let provincia of filtroProvincias" [value]="provincia.id"
                             [selected]="selectedProvincia === provincia.id"> {{ provincia.nombre }}</option>
                     </select>
-
             </mat-form-field>
 
             <mat-form-field appearance="outline">
