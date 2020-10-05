@@ -1,4 +1,4 @@
-<app-plantilla-fondo-simple titulo='Control de {{this.titulo}}'>
+<app-plantilla-fondo-simple *ngIf="titulo" titulo='Control de {{this.titulo}}'>
 
     <!-- CONTENIDO -->
     <div contenido>
@@ -54,7 +54,17 @@
                 </div>
 
                 <div class="p-16">
-                    <button mat-raised-button color="primary" (click)="agregarEstanteria()" class="mb-24 p-8" style="width: 100%;">Agregar</button>
+                    <button mat-raised-button color="primary" (click)="agregarEstanteria()" class="p-8" style="width: 100%;">Agregar</button>
+                </div>
+
+                <div class="p-16">
+                    <button mat-raised-button color="warn" (click)="toggle()" class="mb-16 p-8" style="width: 100%;">Eliminar</button>
+                </div>
+                <div [@esconder]="funcionEsconder" style="width: 100%;">
+                    <mat-form-field appearance="outline" style="width: 90%; margin-left: 5%; margin-right: 5%;">
+                        <mat-label>Cupa</mat-label>
+                        <input #eliminaCupa class="text-uppercase" (keyup)="eliminarCupa()" matInput value="" placeholder="Cupa">
+                    </mat-form-field>
                 </div>
 
                 <!-- / TITULO/BUSCADOR/BOTON -->

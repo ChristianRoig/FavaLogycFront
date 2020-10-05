@@ -5,10 +5,16 @@ import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { ControlEstanteriaService } from './control-estanteria.service';
 import { Debounce } from 'app/shared/decorators/debounce';
 import { MatDialog } from '@angular/material/dialog';
-import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
-import { HttpErrorResponse } from '@angular/common/http';
 import { SonidoService } from 'app/services/sonidos.service';
 import { Subscription } from 'rxjs';
+import { ErroresService } from 'app/services/errores.service';
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition
+} from '@angular/animations';
 
 export interface Articulos {
 
@@ -41,7 +47,21 @@ export interface BodyDetalle{
 @Component({  
   selector: 'app-control-estanteria',  
   templateUrl: './control-estanteria.component.html',
-  styleUrls: ['./control-estanteria.component.scss']
+  styleUrls: ['./control-estanteria.component.scss'],
+  animations: [
+    trigger('esconder', [
+      state('show', style({
+        height: '90px',
+        opacity: 1
+      })),
+      state('hide',   style({
+        height: '0px',
+        opacity: 0
+      })),
+      transition('show => hide', animate('300ms ease-out')),
+      transition('hide => show', animate('300ms ease-in'))
+    ])
+  ]
 })
 
 export class ControlEstanteriaComponent implements OnInit {
@@ -50,6 +70,7 @@ export class ControlEstanteriaComponent implements OnInit {
   @ViewChild('buscarLote') buscarLoteInput: ElementRef;
   @ViewChild('buscarCUPA') buscarCUPAInput: ElementRef;
   @ViewChild('buscarCodigoBarras') buscarCodigoBarrasInput: ElementRef;
+  @ViewChild('eliminaCupa') eliminaCupaInput: ElementRef;
 
   // displayedColumns: string[] = ['select', 'Tipo', 'CodigoArticulo','NombreArticulo', 'Comprobante', 'Fecha-Entrega', 'Provincia', 'Localidad','Etapa', 'Lote', 'Borrar'];
   displayedColumns: string[] = ['select', 'CodigoArticulo','NombreArticulo', 'Etapa', 'Comprobante'];
@@ -125,16 +146,17 @@ export class ControlEstanteriaComponent implements OnInit {
 
   arregloDeDetalles;
 
-  modo: string;
+  modo: string = '';
   subParametros: Subscription;
   titulo: string;
+  eliminar: boolean = false;
 
   constructor(private _router: Router, 
               private _fuseSidebarService: FuseSidebarService, 
               private _loteAdministrarLoteService: ControlEstanteriaService,
               private route: ActivatedRoute,
-              private _dialog: MatDialog,
-              private _sonido: SonidoService) { 
+              private _sonido: SonidoService,
+              private _erroresServices: ErroresService) { 
 
     const currentYear = new Date().getFullYear();
     this.minDateDesdeFiltro = new Date(currentYear - 5, 0, 1);
@@ -146,20 +168,28 @@ export class ControlEstanteriaComponent implements OnInit {
     this.minDateHastaLote   = new Date(currentYear - 5, 0, 1);
     this.maxDateHastaLote   = new Date(currentYear + 1, 11, 31);
 
-    this.subParametros = this.route.params.subscribe(params => {
+    this.route.params.subscribe(params => {
+      
       this.modo = params['modo'];
+
+      // agregar refresh
+      if(this.titulo) {
+        if(this.titulo !== this.modo) {
+          location.reload();
+        }
+      }
+      
+      switch (this.modo) {
+        case "estanteria":
+          this.titulo = "Estantería";
+          break;
+        case "darsena":
+          this.titulo = "Dársena";
+          break;
+      }
+
     });
-
-    console.log(this.modo);
-
-    switch (this.modo) {
-      case "estanteria":
-        this.titulo = "Estantería";
-        break;
-      case "darsena":
-        this.titulo = "Dársena";
-        break;
-    }
+    
   }
 
   ngOnInit(): void {
@@ -240,6 +270,7 @@ export class ControlEstanteriaComponent implements OnInit {
     this.buscarCUPAInput.nativeElement.value = '';
     this.codigoBarras = '';
     this.CUPA = '';
+    this.eliminar = false;
     this.buscarCodigoBarrasInput.nativeElement.focus();
   }
 
@@ -313,18 +344,44 @@ export class ControlEstanteriaComponent implements OnInit {
     console.log(this.codigoBarras);
     
 
-    let res = await this._loteAdministrarLoteService.getCupaCodBarras(this.CUPA, this.idLote, this.codigoBarras);
+    let res = await this._loteAdministrarLoteService.getCupaCodBarras(this.CUPA, this.idLote, this.codigoBarras, this.modo);
     console.log(res);
     if(!res) {
       this._sonido.playAudioSuccess();
       this.resetCampos();
       await this.buscarDetalleUnico();
     } else {
-      this._sonido.playAudioAlert();
+      this._erroresServices.error(res);
+      
       this.resetCampos();
       await this.buscarDetalleUnico();
     }
 
+  }
+
+  get funcionEsconder() {
+    return this.eliminar ? 'show' : 'hide'
+  }
+
+  toggle() {
+    this.eliminar = !this.eliminar;
+  }
+
+  @Debounce(1000)
+  async eliminarCupa() {
+    
+    let res = await this._loteAdministrarLoteService.eliminarArticuloDeLotePorCupa(this.eliminaCupaInput.nativeElement.value);
+    if(!res) {
+      this._sonido.playAudioSuccess();
+      this.resetCampos();
+      await this.buscarDetalleUnico();
+    } else {
+      this._erroresServices.error(res);
+      
+      this.resetCampos();
+      await this.buscarDetalleUnico();
+    }
+    
   }
 
 }
