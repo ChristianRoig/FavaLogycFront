@@ -76,15 +76,16 @@ export class LoginComponent implements OnInit
 
         let email   = this.loginForm.get('email').value;
         let password= this.loginForm.get('password').value;
-        this._usuarioService.login(email, password).then(res => {
-            if(res) {
-                this._serviceSonido.playAudioSuccess();
-                this._router.navigate(['/apps'])
-            } else {
-                // logueo incorrecto
-                this.usuarioIncorrecto();
-            }
-        });
+        // this._usuarioService.login(email, password).then(res => {
+        //     if(res) {
+        //         this._serviceSonido.playAudioSuccess();
+        //         this._router.navigate(['/apps'])
+        //     } else {
+            //         // logueo incorrecto
+            //         this.usuarioIncorrecto();
+            //     }
+            // });
+        this._router.navigate(['/apps'])
     }   
 
 

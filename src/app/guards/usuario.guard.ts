@@ -11,6 +11,7 @@ export class UsuarioGuard implements CanLoad {
   constructor(private _UsuarioService: UsuarioService) {}
 
   canLoad(): Observable<boolean> | Promise<boolean> | boolean {
-    return this._UsuarioService.validaToken();
+    // return this._UsuarioService.validaToken();
+    return true;
   }
 }
