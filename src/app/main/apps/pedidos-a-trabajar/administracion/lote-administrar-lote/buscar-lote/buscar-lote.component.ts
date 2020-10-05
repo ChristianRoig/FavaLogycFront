@@ -85,7 +85,7 @@ export class BuscarLoteComponent implements OnInit {
     dialogRef.afterClosed()
       .subscribe( () => {
           if (errStatus != 0) {  
-
+            this.dialogRef.close();
           } else {
             this._router.navigate(['']);
           }
