@@ -83,10 +83,25 @@ export const navigation: FuseNavigation[] = [
             {
                 id        : 'lotes',
                 title     : 'Lotes',
-                type      : 'item',
+                type      : 'collapsable',
                 icon      : 'apps',
-                url       : '/apps/lotes/lotes',
-                exactMatch: true
+                exactMatch: true,
+                children : [ 
+                    {
+                        id        : 'crearLote',
+                        title     : 'Crear Lote',
+                        type      : 'item',
+                        url       : '/apps/lotes/crear-lote',
+                        exactMatch: true
+                    },
+                    {
+                        id        : 'admLote',
+                        title     : 'Administrar Lotes',
+                        type      : 'item',
+                        url       : '/apps/lotes/administrar-lote',
+                        exactMatch: true
+                    }
+                ]
             }
         ]
     }
