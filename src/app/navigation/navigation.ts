@@ -79,6 +79,14 @@ export const navigation: FuseNavigation[] = [
                 icon      : 'insert_drive_file',
                 url       : '/apps/remitos/remitos',
                 exactMatch: true
+            },
+            {
+                id        : 'lotes',
+                title     : 'Lotes',
+                type      : 'item',
+                icon      : 'apps',
+                url       : '/apps/lotes/lotes',
+                exactMatch: true
             }
         ]
     }
