@@ -5,7 +5,7 @@ import { VerImpresorasService } from './ver-impresoras.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 import { MatTableDataSource } from '@angular/material/table';
-import { Debounce } from '../../../../../../shared/decorators/debounce';
+import { Debounce } from 'app/shared/decorators/debounce';
 
 export interface CUPAS {
 

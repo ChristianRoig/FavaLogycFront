@@ -12,7 +12,12 @@ const routes = [
     {
         path        : 'remitos',
         loadChildren: () => import('./remitos/remitos.module').then(m => m.RemitosModule)
+    },
+    {
+        path        : 'lotes',
+        loadChildren: () => import('./lotes/lotes.module').then(m => m.LotesModule)
     }
+    
 ];
 
 @NgModule({

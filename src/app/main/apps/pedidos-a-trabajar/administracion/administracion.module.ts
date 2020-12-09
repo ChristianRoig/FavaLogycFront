@@ -1,21 +1,19 @@
+// modulos angular
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
-
-import { FuseSharedModule } from '@fuse/shared.module';
-import { FuseWidgetModule } from '@fuse/components/widget/widget.module';
-
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { CustomTagModule } from 'app/main/custom-tags/custom-tag.module';
 import { MaterialDesignModule } from 'app/material-design/material-design.module';
-import { VerImpresorasComponent } from './lote-administrar-lote/ver-impresoras/ver-impresoras.component';
-import { VerImpresorasService } from './lote-administrar-lote/ver-impresoras/ver-impresoras.service';
-import { VerCupasService } from './lote-administrar-lote/ver-cupas/ver-cupas.service';
-import { VerCupasComponent } from './lote-administrar-lote/ver-cupas/ver-cupas.component';
+
+// modulos fuse
+import { FuseSharedModule } from '@fuse/shared.module';
+import { FuseWidgetModule } from '@fuse/components/widget/widget.module';
+import { FuseSidebarModule } from '@fuse/components';
+
+// modulos favalogyc
 import { PedidosListaComponent } from './pedidos-lista/pedidos-lista.component';
 import { PedidosListaService } from './pedidos-lista/pedidos-lista.service';
-import { FuseSidebarModule } from '@fuse/components';
 import { PedidosVentaVisualizacionComponent } from './pedidos-venta-visualizacion/pedidos-venta-visualizacion.component';
 import { PedidosVentaVisualizacionService } from './pedidos-venta-visualizacion/pedidos-venta-visualizacion.service';
 import { PedidosAnularComponent } from './pedidos-venta-anular/pedidos-anular.component';
@@ -31,12 +29,6 @@ import { PedidosAgregarPedido2Component } from './pedidos-agregar-pedido-2/pedid
 import { PedidosAgregarPedido2Service } from './pedidos-agregar-pedido-2/pedidos-agregar-pedido-2.service';
 import { PedidosCupaComponent } from './pedidos-venta-visualizacion/pedidos-cupa/pedidos-cupa.component';
 import { AgregarDatosEntregaComponent } from './pedidos-agregar-pedido-2/agregar-datos-entrega/agregar-datos-entrega.component';
-import { LoteCrearLoteComponent } from './lote-crear-lote/lote-crear-lote.component';
-import { LoteCrearLoteService } from './lote-crear-lote/lote-crear-lote.service';
-import { LoteAdministrarLoteComponent } from './lote-administrar-lote/lote-administrar-lote.component';
-import { LoteAdministrarLoteService } from './lote-administrar-lote/lote-administrar-lote.service';
-import { BuscarLoteComponent } from './lote-administrar-lote/buscar-lote/buscar-lote.component';
-import { BuscarLoteService } from './lote-administrar-lote/buscar-lote/buscar-lote.service';
 import { ModalDeseaImprimirLoteComponent } from './pedidos-agregar-lote/modal-confirmacion-borrar/modal-desea-imprimir.component';
 import { ControlEstanteriaComponent } from './control-estanteria/control-estanteria.component';
 import { ControlEstanteriaService } from './control-estanteria/control-estanteria.service';
@@ -68,14 +60,6 @@ const routes: Routes = [
         component: PedidosAgregarPedido2Component
     },
     {
-        path     : 'crear-lote',
-        component: LoteCrearLoteComponent
-    },
-    {
-        path     : 'administrar-lote',
-        component: LoteAdministrarLoteComponent
-    },
-    {
         path     : 'control/:modo',
         component: ControlEstanteriaComponent
     }
@@ -94,18 +78,12 @@ const routes: Routes = [
         PedidosAgregarPedido1Component,
         PedidosAgregarPedido2Component,
         AgregarDatosEntregaComponent,
-        LoteCrearLoteComponent,
-        LoteAdministrarLoteComponent,
-        BuscarLoteComponent,
-        VerCupasComponent,
-        VerImpresorasComponent,
         ModalDeseaImprimirLoteComponent,
         ControlEstanteriaComponent
     ],
     imports     : [
         CommonModule,
         HttpClientModule,
-
         RouterModule.forChild(routes),
         MaterialDesignModule,
         FuseSidebarModule,
@@ -121,11 +99,6 @@ const routes: Routes = [
         PedidosAgregarLoteService,
         PedidosAgregarPedido1Service,
         PedidosAgregarPedido2Service,
-        LoteCrearLoteService,
-        LoteAdministrarLoteService,
-        BuscarLoteService,
-        VerCupasService,
-        VerImpresorasService,
         ControlEstanteriaService
     ]
 })
