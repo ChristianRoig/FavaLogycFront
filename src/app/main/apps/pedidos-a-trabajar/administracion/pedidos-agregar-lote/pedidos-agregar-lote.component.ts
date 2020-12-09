@@ -8,8 +8,8 @@ import { PedidosAgregarLoteService } from './pedidos-agregar-lote.service';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Debounce } from 'app/shared/decorators/debounce';
 import { ModalDeseaImprimirLoteComponent } from './modal-confirmacion-borrar/modal-desea-imprimir.component';
-//import { LoteAdministrarLoteService } from '../lote-administrar-lote/lote-administrar-lote.service';
-//import { VerImpresorasComponent } from '../lote-administrar-lote/ver-impresoras/ver-impresoras.component';
+import { LoteAdministrarLoteService } from '../../../lotes/lote-administrar-lote/lote-administrar-lote.service';
+import { VerImpresorasComponent } from '../../../lotes/lote-administrar-lote/ver-impresoras/ver-impresoras.component';
 import { UsuarioService } from 'app/services/usuario.service';
 
 
@@ -54,7 +54,7 @@ export class PedidosAgregarLoteComponent implements OnInit {
 
   constructor(private _router: Router,
               private _service: PedidosAgregarLoteService,
-              //private _loteAdministrarLoteService: LoteAdministrarLoteService,
+              private _loteAdministrarLoteService: LoteAdministrarLoteService,
               private _usuarioService: UsuarioService,
               private route: ActivatedRoute,
               private _dialog: MatDialog) { }
@@ -194,18 +194,16 @@ export class PedidosAgregarLoteComponent implements OnInit {
     // if (res === false){
     //   this.mostrarError(1, 'Error de Permisos', `Usted no tiene permisos para realizar la acción: ${permission_name}.`);
     // } else {
-    /* comentado por octi||  if(localStorage.getItem('ImpresoraCUPA')){
-                                this.imprimir(idLote);
-                              } else {
-                                this.seleccionarImpresora(idLote)
-     fin coment octi          } */
+    if(localStorage.getItem('ImpresoraCUPA')){
+      this.imprimir(idLote);
+    } else {
+      this.seleccionarImpresora(idLote)
+    } 
     // }
   }
+ 
 
-  // se debe desarticular la relacion entre pedidos-lotes y lotes
-  //darle los service de otra forma 
-
-  /* imprimir(idLote){
+   imprimir(idLote){
     let impresora = localStorage.getItem('ImpresoraCUPA');
 
     this._loteAdministrarLoteService.imprimir(idLote,impresora).subscribe(data => {
@@ -231,13 +229,10 @@ export class PedidosAgregarLoteComponent implements OnInit {
       }
     });
 
-  } */
+  } 
 
   
-  // se debe desarticular la relacion entre ver-impresoras y lotes
-  //darle los service de otra forma 
-  
-  /* seleccionarImpresora(idLote){
+  seleccionarImpresora(idLote){
     let dialogRef = this._dialog.open(VerImpresorasComponent, {
       data: {
         pedidos: this.selection,
@@ -253,7 +248,7 @@ export class PedidosAgregarLoteComponent implements OnInit {
           this.seleccionarImpresora(idLote);
         }
       });
-  } */
+  }
 
 
 

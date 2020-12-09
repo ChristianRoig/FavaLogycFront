@@ -7,8 +7,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { RemitosConfirmarService } from './remitos-confirmar.service';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Debounce } from 'app/shared/decorators/debounce';
-import { VerImpresorasComponent } from '../../pedidos-a-trabajar/administracion/lote-administrar-lote/ver-impresoras/ver-impresoras.component';
-
+//import { VerImpresorasComponent } from '../../pedidos-a-trabajar/administracion/lote-administrar-lote/ver-impresoras/ver-impresoras.component';
+import { VerImpresorasComponent } from '../../lotes/lote-administrar-lote/ver-impresoras/ver-impresoras.component';
 
 export interface PeriodicElement {
   Id: number;
