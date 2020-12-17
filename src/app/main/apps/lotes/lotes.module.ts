@@ -16,6 +16,8 @@ import { LoteCrearLoteComponent } from './lote-crear-lote/lote-crear-lote.compon
 import { LoteCrearLoteService } from './lote-crear-lote/lote-crear-lote.service';
 import { LoteAdministrarLoteComponent } from './lote-administrar-lote/lote-administrar-lote.component';
 import { LoteAdministrarLoteService } from './lote-administrar-lote/lote-administrar-lote.service';
+import { ListaLotesComponent } from './lista-lotes/lista-lotes.component';
+import { ListaLotesService } from './lista-lotes/lista-lotes.service';
 import { BuscarLoteComponent } from './lote-administrar-lote/buscar-lote/buscar-lote.component';
 import { BuscarLoteService } from './lote-administrar-lote/buscar-lote/buscar-lote.service';
 import { VerImpresorasComponent } from './lote-administrar-lote/ver-impresoras/ver-impresoras.component';
@@ -31,6 +33,10 @@ const routes: Routes = [
         component: LoteAdministrarLoteComponent
     },
     {
+        path     : 'lista-lotes',
+        component: ListaLotesComponent
+    },
+    {
         path     : 'crear-lote',
         component: LoteCrearLoteComponent
     }
@@ -38,10 +44,11 @@ const routes: Routes = [
 @NgModule({
     declarations: [
         LoteCrearLoteComponent,
-        LoteAdministrarLoteComponent,
+        LoteAdministrarLoteComponent, //borrar
         BuscarLoteComponent,
         VerCupasComponent,
-        VerImpresorasComponent
+        VerImpresorasComponent,
+        ListaLotesComponent
     ],
     imports     : [
         CommonModule,
@@ -59,6 +66,7 @@ const routes: Routes = [
         BuscarLoteService,
         VerCupasService,
         VerImpresorasService,
+        ListaLotesService,
     ]
 })
 

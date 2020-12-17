@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
-import { LoteAdministrarLoteService } from './lista-lotes.service';
+import { ListaLotesService } from './lista-lotes.service';
 import { Debounce } from 'app/shared/decorators/debounce';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
@@ -53,7 +53,7 @@ const ELEMENT_DATA: Articulos[] = [
   styleUrls: ['./lista-lotes.component.scss']
 })
 
-export class LoteAdministrarLoteComponent implements OnInit {
+export class ListaLotesComponent implements OnInit {
 
   @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
   @ViewChild('buscarLote') buscarLoteInput: ElementRef;
@@ -132,7 +132,7 @@ export class LoteAdministrarLoteComponent implements OnInit {
 
   constructor(private _router: Router, 
               private _fuseSidebarService: FuseSidebarService, 
-              private _loteAdministrarLoteService: LoteAdministrarLoteService,
+              private _listaLoteService: ListaLotesService,
               private _usuarioService: UsuarioService,
               private _dialog: MatDialog) { 
 
@@ -186,7 +186,7 @@ export class LoteAdministrarLoteComponent implements OnInit {
     }
     console.log(listaIdPedidoDetalle)
     
-    this._loteAdministrarLoteService.postEliminarArticuloDeLote(listaIdPedidoDetalle).subscribe(params => {
+    this._listaLoteService.postEliminarArticuloDeLote(listaIdPedidoDetalle).subscribe(params => {
       console.log("termino Ok");
       this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
     },
@@ -232,7 +232,7 @@ export class LoteAdministrarLoteComponent implements OnInit {
   imprimir(){
     let impresora = localStorage.getItem('ImpresoraCUPA');
 
-    this._loteAdministrarLoteService.imprimir(this.idLote,impresora).subscribe(data => {
+    this._listaLoteService.imprimir(this.idLote,impresora).subscribe(data => {
       
       let titulo = 'Estado de impresión';
       let mensaje = "Completado correctamente";
@@ -302,7 +302,7 @@ export class LoteAdministrarLoteComponent implements OnInit {
   }
 
   getfiltros(){
-    this._loteAdministrarLoteService.getAllTipos().subscribe(params => {
+    this._listaLoteService.getAllTipos().subscribe(params => {
       this.filtroTipos = params.datos;
     },
     (err: HttpErrorResponse) => {
@@ -322,7 +322,7 @@ export class LoteAdministrarLoteComponent implements OnInit {
       }
     })
     
-    this._loteAdministrarLoteService.getAllTurnos().subscribe(params => {
+    this._listaLoteService.getAllTurnos().subscribe(params => {
       this.filtroTurnos = params.datos;
     },
     (err: HttpErrorResponse) => {
@@ -342,7 +342,7 @@ export class LoteAdministrarLoteComponent implements OnInit {
       }
     })
     
-    this._loteAdministrarLoteService.getAllOrigenes().subscribe(params => {
+    this._listaLoteService.getAllOrigenes().subscribe(params => {
       this.filtroOrigenes = params.datos;
     },
     (err: HttpErrorResponse) => {
@@ -362,7 +362,7 @@ export class LoteAdministrarLoteComponent implements OnInit {
       }
     })
 
-    this._loteAdministrarLoteService.getAllEtapas().subscribe(params => {
+    this._listaLoteService.getAllEtapas().subscribe(params => {
       this.filtroEtapas = params.datos;
     },
     (err: HttpErrorResponse) => {
@@ -382,7 +382,7 @@ export class LoteAdministrarLoteComponent implements OnInit {
       }
     })
 
-    this._loteAdministrarLoteService.getAllProvincias().subscribe(params => {
+    this._listaLoteService.getAllProvincias().subscribe(params => {
       this.filtroProvincias = params.datos;
     },
     (err: HttpErrorResponse) => {
@@ -402,7 +402,7 @@ export class LoteAdministrarLoteComponent implements OnInit {
       }
     })
 
-    this._loteAdministrarLoteService.getAllLocalidades().subscribe(params => {
+    this._listaLoteService.getAllLocalidades().subscribe(params => {
       this.filtroLocalidades = params.datos;
     },
     (err: HttpErrorResponse) => {
@@ -486,7 +486,7 @@ export class LoteAdministrarLoteComponent implements OnInit {
     
     // console.log(this.body);
 
-    this._loteAdministrarLoteService.getPedidosLote(this.body, busqueda, columna, order).subscribe(
+    this._listaLoteService.getPedidosLote(this.body, busqueda, columna, order).subscribe(
       data => {
         // console.log(data)
         this.dataSource2 = data.datos;
@@ -576,7 +576,7 @@ export class LoteAdministrarLoteComponent implements OnInit {
     this.selectedProvincia = (event.target as HTMLSelectElement).value;
     if(this.selectedProvincia > 0){
       this.selectedLocalidad = 0;
-      this._loteAdministrarLoteService.getAllLocalidadesPorProvincia(this.selectedProvincia).subscribe(params => {
+      this._listaLoteService.getAllLocalidadesPorProvincia(this.selectedProvincia).subscribe(params => {
         this.filtroLocalidades = params.datos;
       },
       (err: HttpErrorResponse) => {
@@ -597,7 +597,7 @@ export class LoteAdministrarLoteComponent implements OnInit {
       })
     } else {
       this.selectedLocalidad = 0;
-      this._loteAdministrarLoteService.getAllLocalidades().subscribe(params => {
+      this._listaLoteService.getAllLocalidades().subscribe(params => {
         this.filtroLocalidades = params.datos;
       },
       (err: HttpErrorResponse) => {
@@ -623,7 +623,7 @@ export class LoteAdministrarLoteComponent implements OnInit {
   selectLocalidad(event: Event) {
     this.selectedLocalidad = (event.target as HTMLSelectElement).value;
     if(this.selectedLocalidad > 0){
-      this._loteAdministrarLoteService.getProvinciaPorLocalidad(this.selectedLocalidad).subscribe( params => {
+      this._listaLoteService.getProvinciaPorLocalidad(this.selectedLocalidad).subscribe( params => {
         this.selectedProvincia = params.id;
         console.log("Provincia: "+this.selectedProvincia);
       },

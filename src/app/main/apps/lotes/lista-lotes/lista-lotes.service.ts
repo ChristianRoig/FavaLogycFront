@@ -20,7 +20,7 @@ export interface BodyDetalle{
   }
 
 @Injectable()
-export class LoteAdministrarLoteService
+export class ListaLotesService
 {
     constructor(
         private _httpClient: HttpClient
