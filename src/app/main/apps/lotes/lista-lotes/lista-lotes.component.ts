@@ -2,13 +2,13 @@ import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
-import { LoteAdministrarLoteService } from './lote-administrar-lote.service';
+import { LoteAdministrarLoteService } from './lista-lotes.service';
 import { Debounce } from 'app/shared/decorators/debounce';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 import { HttpErrorResponse } from '@angular/common/http';
-import { BuscarLoteComponent } from './buscar-lote/buscar-lote.component';
-import { VerImpresorasComponent } from './ver-impresoras/ver-impresoras.component';
+import { BuscarLoteComponent } from './lista-lotes/buscar-lote.component';
+import { VerImpresorasComponent } from './lista-lotes/ver-impresoras.component';
 import { UsuarioService } from 'app/services/usuario.service';
 
 export interface Articulos {
@@ -48,9 +48,9 @@ const ELEMENT_DATA: Articulos[] = [
 ];
 
 @Component({  
-  selector: 'app-lote-administrar-lote',  
-  templateUrl: './lote-administrar-lote.component.html',
-  styleUrls: ['./lote-administrar-lote.component.scss']
+  selector: 'app-lista-lotes',  
+  templateUrl: './lista-lotes.component.html',
+  styleUrls: ['./lista-lotes.component.scss']
 })
 
 export class LoteAdministrarLoteComponent implements OnInit {
