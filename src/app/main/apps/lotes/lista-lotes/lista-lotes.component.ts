@@ -4,9 +4,10 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { ListaLotesService } from './lista-lotes.service';
 import { Debounce } from 'app/shared/decorators/debounce';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 import { HttpErrorResponse } from '@angular/common/http';
+
 import { BuscarLoteComponent } from './buscar-lote/buscar-lote.component';
 import { VerImpresorasComponent } from './ver-impresoras/ver-impresoras.component';
 import { UsuarioService } from 'app/services/usuario.service';
