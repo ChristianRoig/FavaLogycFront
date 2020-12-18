@@ -14,8 +14,6 @@ import { FuseSidebarModule } from '@fuse/components';
 // modulos lotes
 import { LoteCrearLoteComponent } from './lote-crear-lote/lote-crear-lote.component';
 import { LoteCrearLoteService } from './lote-crear-lote/lote-crear-lote.service';
-//import { LoteAdministrarLoteComponent } from './lote-administrar-lote/lote-administrar-lote.component';
-//import { LoteAdministrarLoteService } from './lote-administrar-lote/lote-administrar-lote.service';
 import { ListaLotesComponent } from './lista-lotes/lista-lotes.component';
 import { ListaLotesService } from './lista-lotes/lista-lotes.service';
 import { BuscarLoteComponent } from './lista-lotes/buscar-lote/buscar-lote.component';
@@ -24,8 +22,6 @@ import { VerImpresorasComponent } from './lista-lotes/ver-impresoras/ver-impreso
 import { VerImpresorasService } from './lista-lotes/ver-impresoras/ver-impresoras.service';
 import { VerCupasService } from './lista-lotes/ver-cupas/ver-cupas.service';
 import { VerCupasComponent } from './lista-lotes/ver-cupas/ver-cupas.component';
-
-
 
 const routes: Routes = [
     /* {
