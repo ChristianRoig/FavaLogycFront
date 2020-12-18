@@ -8,8 +8,8 @@ import { PedidosAgregarLoteService } from './pedidos-agregar-lote.service';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Debounce } from 'app/shared/decorators/debounce';
 import { ModalDeseaImprimirLoteComponent } from './modal-confirmacion-borrar/modal-desea-imprimir.component';
-import { LoteAdministrarLoteService } from '../../../lotes/lote-administrar-lote/lote-administrar-lote.service';
-import { VerImpresorasComponent } from '../../../lotes/lote-administrar-lote/ver-impresoras/ver-impresoras.component';
+import { ListaLotesService } from '../../../lotes/lista-lotes/lista-lotes.service';
+import { VerImpresorasComponent } from '../../../lotes/lista-lotes/ver-impresoras/ver-impresoras.component';
 import { UsuarioService } from 'app/services/usuario.service';
 
 
@@ -54,7 +54,7 @@ export class PedidosAgregarLoteComponent implements OnInit {
 
   constructor(private _router: Router,
               private _service: PedidosAgregarLoteService,
-              private _loteAdministrarLoteService: LoteAdministrarLoteService,
+              private _listaLoteService: ListaLotesService,
               private _usuarioService: UsuarioService,
               private route: ActivatedRoute,
               private _dialog: MatDialog) { }
@@ -206,7 +206,7 @@ export class PedidosAgregarLoteComponent implements OnInit {
    imprimir(idLote){
     let impresora = localStorage.getItem('ImpresoraCUPA');
 
-    this._loteAdministrarLoteService.imprimir(idLote,impresora).subscribe(data => {
+    this._listaLoteService.imprimir(idLote,impresora).subscribe(data => {
       
       let titulo = 'Estado de impresión';
       let mensaje = "Completado correctamente";
