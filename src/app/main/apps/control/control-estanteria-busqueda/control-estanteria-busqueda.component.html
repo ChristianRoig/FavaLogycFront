@@ -1,0 +1,50 @@
+<app-plantilla-fondo titulo='Busqueda de Lote'>
+
+
+    <div contenido class="content" fxLayout="row" fxLayoutAlign="center">
+
+        <div class="my-24" style="width: 90%;">
+
+            <div fxLayout="row" fxLayoutAlign="space-between">
+
+                <div class="h2 m-24">{{this.nombreLote}}</div>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="space-between">
+
+                <mat-form-field appearance="outline" style="width: 100%;" class="mt-8 mx-12">
+                    <mat-label>Código de Barras</mat-label>
+                    <input #buscarCodigoBarras class="text-uppercase" (keyup)="searchCodigoBarras()" matInput value="" placeholder="Código de Barras">
+                    <mat-icon matSuffix>search</mat-icon>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" style="width: 100%;" class="mt-8 mx-12">
+                    <mat-label>CUPA</mat-label>
+                    <input #buscarCUPA class="text-uppercase" (keyup)="searchCUPA()" matInput value="" placeholder="CUPA">
+                    <mat-icon matSuffix>search</mat-icon>
+                </mat-form-field>
+            </div>
+
+            <div class="p-16">
+                <button mat-raised-button color="primary" (click)="agregarEstanteria()" class="p-8" style="width: 100%;">Agregar</button>
+            </div>
+
+            <div class="p-16">
+                <button mat-raised-button color="warn" (click)="toggle()" class="mb-16 p-8" style="width: 100%;">Eliminar</button>
+            </div>
+            <div [@esconder]="funcionEsconder" style="width: 100%;">
+                <mat-form-field appearance="outline" style="width: 90%; margin-left: 5%; margin-right: 5%;">
+                    <mat-label>Cupa</mat-label>
+                    <input #eliminaCupa class="text-uppercase" (keyup)="eliminarCupa()" matInput value="" placeholder="Cupa">
+                </mat-form-field>
+            </div>
+
+            <app-tabla-retractil *ngIf="this.arregloDeDetalles" [arregloDeDetalles]='this.arregloDeDetalles'></app-tabla-retractil>
+
+            <br>
+            <br>
+
+        </div>
+
+    </div>
+</app-plantilla-fondo>

@@ -81,7 +81,7 @@ export class PedidosPartesArticuloEditarComponent implements OnInit {
     }
 
     volver(){
-        let ruta = `apps/pedidos/partes-articulo`;
+        let ruta = `apps/articulos/partes-articulo`;
         this._router.navigate([ruta]);
     }
 

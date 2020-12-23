@@ -130,7 +130,7 @@ export class PedidosPartesArticuloComponent implements OnInit {
     }
 
     editar(id){
-        let ruta = `apps/pedidos/partes-articulo/${id}`;
+        let ruta = `apps/articulos/partes-articulo/${id}`;
         this._router.navigate([ruta]);
     }
 }

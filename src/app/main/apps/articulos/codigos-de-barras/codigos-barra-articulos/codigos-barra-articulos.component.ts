@@ -59,7 +59,7 @@ export class PedidosCodigosBarraArticulosComponent implements OnInit {
     }
 
     irAlArticulo(codigoArticulo){
-        let ruta = `apps/pedidos/codigos-barra/${codigoArticulo}`;
+        let ruta = `apps/articulos/codigos-barra/${codigoArticulo}`;
         this._router.navigate([ruta]);
     }
 

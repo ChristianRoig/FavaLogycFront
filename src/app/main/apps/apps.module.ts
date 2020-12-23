@@ -16,6 +16,14 @@ const routes = [
     {
         path        : 'lotes',
         loadChildren: () => import('./lotes/lotes.module').then(m => m.LotesModule)
+    },
+    {
+        path        : 'control',
+        loadChildren: () => import('./control/control.module').then(m => m.ControlModule)
+    },
+    {
+        path        : 'articulos',
+        loadChildren: () => import('./articulos/articulos.module').then(m => m.ArticulosModule)
     }
     
 ];
