@@ -38,10 +38,10 @@ export const navigation: FuseNavigation[] = [
                         exactMatch: true
                     },
                     {
-                        id        : 'admLote',
-                        title     : 'Administrar Lotes',
+                        id        : 'listaLotes',
+                        title     : 'Lista Lotes',
                         type      : 'item',
-                        url       : '/apps/lotes/administrar-lote',
+                        url       : '/apps/lotes/lista-lotes',
                         exactMatch: true
                     }
                 ]

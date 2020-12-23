@@ -5,6 +5,7 @@ import { BuscarLoteService } from './buscar-lote.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 
+
 export interface Lotes {
 
   id: number;

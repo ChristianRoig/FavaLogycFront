@@ -14,21 +14,23 @@ import { FuseSidebarModule } from '@fuse/components';
 // modulos lotes
 import { LoteCrearLoteComponent } from './lote-crear-lote/lote-crear-lote.component';
 import { LoteCrearLoteService } from './lote-crear-lote/lote-crear-lote.service';
-import { LoteAdministrarLoteComponent } from './lote-administrar-lote/lote-administrar-lote.component';
-import { LoteAdministrarLoteService } from './lote-administrar-lote/lote-administrar-lote.service';
-import { BuscarLoteComponent } from './lote-administrar-lote/buscar-lote/buscar-lote.component';
-import { BuscarLoteService } from './lote-administrar-lote/buscar-lote/buscar-lote.service';
-import { VerImpresorasComponent } from './lote-administrar-lote/ver-impresoras/ver-impresoras.component';
-import { VerImpresorasService } from './lote-administrar-lote/ver-impresoras/ver-impresoras.service';
-import { VerCupasService } from './lote-administrar-lote/ver-cupas/ver-cupas.service';
-import { VerCupasComponent } from './lote-administrar-lote/ver-cupas/ver-cupas.component';
-
-
+import { ListaLotesComponent } from './lista-lotes/lista-lotes.component';
+import { ListaLotesService } from './lista-lotes/lista-lotes.service';
+import { BuscarLoteComponent } from './lista-lotes/buscar-lote/buscar-lote.component';
+import { BuscarLoteService } from './lista-lotes/buscar-lote/buscar-lote.service';
+import { VerImpresorasComponent } from './lista-lotes/ver-impresoras/ver-impresoras.component';
+import { VerImpresorasService } from './lista-lotes/ver-impresoras/ver-impresoras.service';
+import { VerCupasService } from './lista-lotes/ver-cupas/ver-cupas.service';
+import { VerCupasComponent } from './lista-lotes/ver-cupas/ver-cupas.component';
 
 const routes: Routes = [
-    {
+    /* {
         path     : 'administrar-lote',
         component: LoteAdministrarLoteComponent
+    }, */
+    {
+        path     : 'lista-lotes',
+        component: ListaLotesComponent
     },
     {
         path     : 'crear-lote',
@@ -38,10 +40,11 @@ const routes: Routes = [
 @NgModule({
     declarations: [
         LoteCrearLoteComponent,
-        LoteAdministrarLoteComponent,
+        //LoteAdministrarLoteComponent, //borrar
         BuscarLoteComponent,
         VerCupasComponent,
-        VerImpresorasComponent
+        VerImpresorasComponent,
+        ListaLotesComponent
     ],
     imports     : [
         CommonModule,
@@ -55,10 +58,11 @@ const routes: Routes = [
     ],
     providers   : [
         LoteCrearLoteService,
-        LoteAdministrarLoteService,
+        //LoteAdministrarLoteService,
         BuscarLoteService,
         VerCupasService,
         VerImpresorasService,
+        ListaLotesService,
     ]
 })
 
