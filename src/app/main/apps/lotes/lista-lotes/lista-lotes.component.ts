@@ -8,7 +8,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { BuscarLoteComponent } from './buscar-lote/buscar-lote.component';
+//import { BuscarLoteComponent } from './buscar-lote/buscar-lote.component';
 import { VerImpresorasComponent } from './ver-impresoras/ver-impresoras.component';
 import { UsuarioService } from 'app/services/usuario.service';
 
@@ -60,7 +60,7 @@ export class ListaLotesComponent implements OnInit {
   @ViewChild('buscarLote') buscarLoteInput: ElementRef;
 
   // displayedColumns: string[] = ['select', 'Tipo', 'CodigoArticulo','NombreArticulo', 'Comprobante', 'Fecha-Entrega', 'Provincia', 'Localidad','Etapa', 'Lote', 'Borrar'];
-  displayedColumns: string[] = ['select', 'CodigoArticulo','NombreArticulo', 'Etapa', 'Comprobante'];
+  displayedColumns: string[] = ['id', 'nombre','fechaAlta'];
   dataSource = ELEMENT_DATA;  
   dataSource2: any;
   selection = new SelectionModel<any>(true, []);
@@ -131,6 +131,10 @@ export class ListaLotesComponent implements OnInit {
     idLote        : null
   };
 
+  //Agregados octi
+  //lotesOcti: any[] = [];
+  hayLotes: boolean = false;
+
   constructor(private _router: Router, 
               private _fuseSidebarService: FuseSidebarService, 
               private _listaLoteService: ListaLotesService,
@@ -153,11 +157,13 @@ export class ListaLotesComponent implements OnInit {
     // this.resetFiltros();    
     
     this.getfiltros();
+
+    this.getLotes();
     
     // this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
   }
 
-  buscarLote() {
+ /*  buscarLote() {
     
     let dialogRef = this._dialog.open(BuscarLoteComponent, {
       data: {
@@ -176,6 +182,32 @@ export class ListaLotesComponent implements OnInit {
           this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
         }
       });
+  } */
+
+  getLotes(){
+    this._listaLoteService.getAllLotes() .subscribe( data => {
+      console.log(data);
+      this.hayLotes = true;
+      this.dataSource2 = data.datos;
+      this.length = data.totalRegistros;
+      console.log(this.dataSource2);
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
+        } else {
+          let titulo = 'Error al listar';
+          let mensaje = err.error.message.toString();
+          this.mostrarError(errStatus, titulo, mensaje);
+        }
+      }
+    });
   }
 
   sacarDelLote(){

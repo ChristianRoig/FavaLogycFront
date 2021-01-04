@@ -28,6 +28,11 @@ export class ListaLotesService
     {
     }
 
+    getAllLotes(): Observable<any>{                                   //MIO
+        //lote hardcodeado al 1 para traer lotes
+        let ruta = `${ BASE_URL }pedidosatrabajar/pedidolote/1`;
+        return this._httpClient.get(ruta);
+    }
 
     getAllEtapasPorId(id:number): Observable<any>
     {
