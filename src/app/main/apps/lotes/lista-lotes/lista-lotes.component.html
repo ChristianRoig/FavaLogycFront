@@ -254,7 +254,7 @@
             </mat-form-field>
         </div>
 
-        <button mat-stroked-button color="accent" (click)="buscar()" class="mb-24">
+        <button mat-stroked-button color="accent" (click)="buscar()" class="mt-0">
             Aplicar Filtros
         </button>
     </form>
@@ -274,7 +274,7 @@
             <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
 
-        <div fxLayout="row">
+        <div fxLayout="row" class="mt-0">
 
             <mat-form-field appearance="outline" fxFlex="50" class="mr-4">
                 <mat-label>Desde (lote)</mat-label>
@@ -289,26 +289,36 @@
                 <mat-datepicker-toggle matSuffix [for]="pickerLoteHasta"></mat-datepicker-toggle>
                 <mat-datepicker #pickerLoteHasta></mat-datepicker>
             </mat-form-field>
+
         </div>
         <!-- (click)="buscarLote()" IBA ACÁ ABAJO-->
-        <button [disabled]="!this.lote" mat-raised-button color="primary" class="mt-24 p-8 btn-block">Buscar Lote</button>
+        <button [disabled]="!this.lote" mat-raised-button color="primary" class="mt-0 mb-5 btn-block">Buscar Lote</button>
     </div>
 
     <!-- Lista de Lotes -->
     <div style="width: 100%; overflow: auto;">
-        <table mat-table [dataSource]="dataSource2" class="mb-8">
+        <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="dataSource2" class="mb-8">
             <ng-container matColumnDef="id">
+                <th mat-sort-header="id" mat-header-cell *matHeaderCellDef> Id </th>
+                <td mat-cell *matCellDef="let lote"> {{ lote.id }} </td>
+            </ng-container>
 
-                <th mat-header-cell *matHeaderCellDef> Id </th>
-                <td mat-cell *matCellDef="let lote"> {{lote.id}} </td>
-            </ng-container>
             <ng-container matColumnDef="nombre">
-                <th mat-header-cell *matHeaderCellDef> nombre </th>
-                <td mat-cell *matCellDef="let lote"> {{lote.nombre}} </td>
+                <th mat-sort-header="nombre" mat-header-cell *matHeaderCellDef> Nombre </th>
+                <td mat-cell *matCellDef="let lote"> {{ lote.nombre }} </td>
             </ng-container>
+
             <ng-container matColumnDef="fechaAlta">
-                <th mat-header-cell *matHeaderCellDef> fechaAlta </th>
-                <td mat-cell *matCellDef="let lote"> {{lote.fechaAlta}} </td>
+                <th mat-sort-header="fechaAlta" mat-header-cell *matHeaderCellDef> Fecha Alta </th>
+                <td mat-cell *matCellDef="let lote"> {{ lote.fechaAlta }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="seleccionar">
+                <th mat-header-cell *matHeaderCellDef> Seleccionar </th>
+                <td mat-cell class="example-button-row" *matCellDef="let lote">
+                    <!-- (click)="seleccionar(element)" -->
+                    <button mat-stroked-button color="primary"> Ver Lote </button>
+                </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

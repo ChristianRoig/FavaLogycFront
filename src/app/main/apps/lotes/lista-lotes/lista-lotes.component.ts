@@ -60,7 +60,7 @@ export class ListaLotesComponent implements OnInit {
   @ViewChild('buscarLote') buscarLoteInput: ElementRef;
 
   // displayedColumns: string[] = ['select', 'Tipo', 'CodigoArticulo','NombreArticulo', 'Comprobante', 'Fecha-Entrega', 'Provincia', 'Localidad','Etapa', 'Lote', 'Borrar'];
-  displayedColumns: string[] = ['id', 'nombre','fechaAlta'];
+  displayedColumns: string[] = ['id', 'nombre','fechaAlta', 'seleccionar'];
   dataSource = ELEMENT_DATA;  
   dataSource2: any;
   selection = new SelectionModel<any>(true, []);
