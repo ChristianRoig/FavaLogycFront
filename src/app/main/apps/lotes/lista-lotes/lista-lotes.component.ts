@@ -169,16 +169,15 @@ export class ListaLotesComponent implements OnInit {
     // this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
   }
 
-  bodyFechas: BodyDetalleFecha = {
-    desdeLote   : this.pickerLoteDesde,
-    hastaLote   : this.pickerLoteDesde
-  }
-
+  
   buscarLote() {
-    //console.log("asdasd");
-    this._listaLoteService.getLotesPorFecha(this.lote, this.bodyFechas)
+    let bodyFechas: BodyDetalleFecha  = {
+      desdeLote   : this.pickerLoteDesde,
+      hastaLote   : this.pickerLoteDesde
+    }
+    this._listaLoteService.getLotesPorFecha(this.lote, bodyFechas)
       .subscribe(data => {
-        console.log(data);
+        //console.log(data);
         this.dataSource2 = data.datos;
       },
       (err: HttpErrorResponse) => {
@@ -742,7 +741,7 @@ export class ListaLotesComponent implements OnInit {
           this.pickerLoteDesde = fecha;
           this.minDateHastaLote = evento.value;
           break;
-          case "pickerLoteHasta":
+        case "pickerLoteHasta":
           this.pickerLoteHasta = fecha;
           this.maxDateDesdeLote = evento.value;
           break;

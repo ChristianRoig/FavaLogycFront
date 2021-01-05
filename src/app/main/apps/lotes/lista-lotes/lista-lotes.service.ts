@@ -107,8 +107,7 @@ export class ListaLotesService
         return this._httpClient.get(ruta);
     }
 
-    getPedidosLote(body: BodyDetalle, busqueda, columna, order): Observable<any>  // sacar
-    {
+    getPedidosLote(body: BodyDetalle, busqueda, columna, order): Observable<any>{     // sacar
 
         let headers = new HttpHeaders({
             "Content-Type": "application/json"
