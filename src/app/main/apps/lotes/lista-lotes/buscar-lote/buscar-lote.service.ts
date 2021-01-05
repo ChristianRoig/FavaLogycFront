@@ -33,17 +33,16 @@ export class BuscarLoteService
       return this._httpClient.get(ruta);
   }
 
-  getLotesPorFecha(body: BodyDetalle, lote): Observable<any>
-    {
+  getLotesPorFecha(body: BodyDetalle, lote): Observable<any>{
 
-        let headers = new HttpHeaders({
-            "Content-Type": "application/json"
-        });
+    let headers = new HttpHeaders({
+        "Content-Type": "application/json"
+    });
 
-        let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/pornombreyfechas/${lote}`;
-        
+    let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/pornombreyfechas/${lote}`;
+    
 
-        return this._httpClient.post(ruta, body, {headers: headers});
-    }
+    return this._httpClient.post(ruta, body, {headers: headers});
+  }
 }
 

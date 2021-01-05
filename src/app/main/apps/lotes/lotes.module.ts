@@ -25,8 +25,8 @@ import { VerCupasComponent } from './lista-lotes/ver-cupas/ver-cupas.component';
 
 const routes: Routes = [
     /* {
-        path     : 'administrar-lote',
-        component: LoteAdministrarLoteComponent
+        path     : 'ver-lote/:id',
+        component: verLoteComponent
     }, */
     {
         path     : 'lista-lotes',

@@ -26,6 +26,11 @@ export interface Articulos {
   Etapa: string;
   Lote: number;
 }
+export interface Lote {
+  Id: number;
+  Nombre: string;
+  FechaAlta: string;
+}
 
 export interface BodyDetalle{
 
@@ -38,6 +43,11 @@ export interface BodyDetalle{
   desdePedido : string;
   hastaPedido : string;
   idLote : number;
+}
+export interface BodyDetalleFecha{
+
+  desdeLote : string;
+  hastaLote : string;
 }
 
 const ELEMENT_DATA: Articulos[] = [
@@ -114,10 +124,10 @@ export class ListaLotesComponent implements OnInit {
   filtroLocalidades: any;
   selectedLocalidad: any = 1402;
 
-  pickerFiltroDesde:any = null;
-  pickerFiltroHasta:any = null;
-  pickerLoteDesde:any   = null;
-  pickerLoteHasta:any   = null;
+  pickerFiltroDesde: any = null;
+  pickerFiltroHasta: any = null;
+  pickerLoteDesde: any   = null;
+  pickerLoteHasta: any   = null;
 
   body: BodyDetalle ={
     idTipo      : null,
@@ -130,10 +140,6 @@ export class ListaLotesComponent implements OnInit {
     hastaPedido : null,
     idLote        : null
   };
-
-  //Agregados octi
-  //lotesOcti: any[] = [];
-  hayLotes: boolean = false;
 
   constructor(private _router: Router, 
               private _fuseSidebarService: FuseSidebarService, 
@@ -163,9 +169,36 @@ export class ListaLotesComponent implements OnInit {
     // this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
   }
 
- /*  buscarLote() {
-    
-    let dialogRef = this._dialog.open(BuscarLoteComponent, {
+  bodyFechas: BodyDetalleFecha = {
+    desdeLote   : this.pickerLoteDesde,
+    hastaLote   : this.pickerLoteDesde
+  }
+
+  buscarLote() {
+    //console.log("asdasd");
+    this._listaLoteService.getLotesPorFecha(this.lote, this.bodyFechas)
+      .subscribe(data => {
+        console.log(data);
+        this.dataSource2 = data.datos;
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error");
+        } else {
+          let errStatus = err.status
+          if (errStatus == 0){
+            let titulo = 'Error de Servidor';
+            let mensaje = "Por favor comunicarse con Sistemas";
+            this.mostrarError(errStatus, titulo, mensaje);
+          } else {
+            let titulo = 'Error al listar';
+            let mensaje = err.error.message.toString();
+            this.mostrarError(errStatus, titulo, mensaje);
+          }
+        }
+    }); 
+  }
+  /*   let dialogRef = this._dialog.open(BuscarLoteComponent, {
       data: {
         lote:       this.lote,
         fechaDesde: this.pickerLoteDesde,
@@ -181,16 +214,13 @@ export class ListaLotesComponent implements OnInit {
           localStorage.removeItem('Lote');
           this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
         }
-      });
-  } */
+      }); */
+
 
   getLotes(){
     this._listaLoteService.getAllLotes() .subscribe( data => {
-      console.log(data);
-      this.hayLotes = true;
       this.dataSource2 = data.datos;
       this.length = data.totalRegistros;
-      console.log(this.dataSource2);
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
@@ -208,6 +238,12 @@ export class ListaLotesComponent implements OnInit {
         }
       }
     });
+  }
+
+  verLote(lote: Lote){ //redireccionar 
+    console.log(lote);
+    //this._router.navigate([ `/verLote/${ lote }`]);
+    //localStorage.setItem('Lote', JSON.stringify(lote));
   }
 
   sacarDelLote(){
@@ -326,9 +362,7 @@ export class ListaLotesComponent implements OnInit {
     this.selectedLocalidad = 1402;
     this.pickerFiltroDesde= null;
     this.pickerFiltroHasta= null;
-    // this.pickerLoteDesde  = null;
-    // this.pickerLoteHasta  = null;
-    // this.lote = null;
+    
     
     // this.buscarLoteInput.nativeElement.value = '';
     this.buscarCbteInput.nativeElement.value = '';
@@ -708,7 +742,7 @@ export class ListaLotesComponent implements OnInit {
           this.pickerLoteDesde = fecha;
           this.minDateHastaLote = evento.value;
           break;
-        case "pickerLoteHasta":
+          case "pickerLoteHasta":
           this.pickerLoteHasta = fecha;
           this.maxDateDesdeLote = evento.value;
           break;
@@ -764,8 +798,10 @@ export class ListaLotesComponent implements OnInit {
   searchLote() {
 
     this.lote = this.buscarLoteInput.nativeElement.value;
-    if(this.lote === '')
-      this.lote =null;
+    //console.log(this.lote);
+    if(this.lote === ''){
+      this.lote = null;
+    }
 
   }
 

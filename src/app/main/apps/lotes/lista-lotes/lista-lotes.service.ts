@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'environments/environment';
 import { observeOn } from 'rxjs/operators';
+import { BodyDetalleFecha } from './lista-lotes.component';
 
 const BASE_URL = environment.server + environment.baseUrl;
 
@@ -106,7 +107,7 @@ export class ListaLotesService
         return this._httpClient.get(ruta);
     }
 
-    getPedidosLote(body: BodyDetalle, busqueda, columna, order): Observable<any>
+    getPedidosLote(body: BodyDetalle, busqueda, columna, order): Observable<any>  // sacar
     {
 
         let headers = new HttpHeaders({
@@ -124,7 +125,7 @@ export class ListaLotesService
     }
     
     
-    postEliminarArticuloDeLote(listaIdPedidoDetalle): Observable<any>
+    postEliminarArticuloDeLote(listaIdPedidoDetalle): Observable<any>  // sacar
     {
 
         let headers = new HttpHeaders({
@@ -142,14 +143,25 @@ export class ListaLotesService
         return this._httpClient.post(ruta, body, {headers: headers});
     }
 
-    imprimir(lote, impresora): Observable<any>
-    {
+    imprimir(lote, impresora): Observable<any>{
 
         let headers = new HttpHeaders({
             "Content-Type": "application/json"
         });
-
+    
         let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/lote/imprimir/cupa/${lote}/${impresora}`;
         return this._httpClient.post(ruta, {headers: headers});
     }
+
+    getLotesPorFecha(lote: any, body: BodyDetalleFecha): Observable<any>{
+
+        let headers = new HttpHeaders({
+            "Content-Type": "application/json"
+        });
+    
+        let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/pornombreyfechas/${lote}`;
+        
+    
+        return this._httpClient.post(ruta, body, {headers: headers});
+      }
 }
