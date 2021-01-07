@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+/* import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'environments/environment';
@@ -16,17 +16,17 @@ export interface BodyDetalle{
 })
 export class BuscarLoteService 
 {
-  /**
-   * Constructor
-   *
-   * @param {HttpClient} _httpClient
-   */
+  
+  // Constructor
+ 
+   // @param {HttpClient} _httpClient
+  
   constructor( private _httpClient: HttpClient ) { }
 
-  /**
-   * Devuelve Partes de Artículos
-   * @returns {Observable} Observable
-   */
+  
+   // Devuelve Partes de Artículos
+   // @returns {Observable} Observable
+   
   getLotes(lote): Observable<any>
   {
       let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/${lote}`;
@@ -46,3 +46,4 @@ export class BuscarLoteService
   }
 }
 
+ */

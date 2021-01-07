@@ -28,7 +28,6 @@ import { UsuarioGuard } from './guards/usuario.guard';
 import { LoginModule } from './main/pages/login/login.module';
 import { LoginComponent } from './main/pages/login/login.component';
 
-
 const appRoutes: Routes = [
     {
         path        : 'apps',
@@ -48,7 +47,6 @@ const appRoutes: Routes = [
 @NgModule({
     declarations: [
         AppComponent,
-
 
     ],
     imports     : [

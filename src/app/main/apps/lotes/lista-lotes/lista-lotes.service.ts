@@ -8,7 +8,7 @@ import { BodyDetalleFecha } from './lista-lotes.component';
 const BASE_URL = environment.server + environment.baseUrl;
 
 export interface BodyDetalle{
-
+    
     idTipo : number;
     idTurno : number;
     idOrigen : number;
@@ -18,7 +18,7 @@ export interface BodyDetalle{
     desdePedido : string;
     hastaPedido : string;
     idLote : number;
-  }
+}
 
 @Injectable()
 export class ListaLotesService
@@ -35,7 +35,21 @@ export class ListaLotesService
         return this._httpClient.get(ruta);
     }
 
-    getAllEtapasPorId(id:number): Observable<any>
+    getLotePorId(loteId: number): Observable<any>{                       //PROPUESTA
+        /* let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/${ loteId }`;
+        return this._httpClient.get(ruta); */
+
+        let headers = new HttpHeaders({
+            "Content-Type": "application/json"
+        });
+    
+        let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/${ loteId }`;
+        
+    
+        return this._httpClient.post(ruta, {headers: headers});
+    }
+
+    getAllEtapasPorId(id: number): Observable<any>
     {
         let ruta = `${BASE_URL}pedidosatrabajar/pedidoetapa/estado/${id}`;
         return this._httpClient.get(ruta);
@@ -107,8 +121,8 @@ export class ListaLotesService
         return this._httpClient.get(ruta);
     }
 
-    getPedidosLote(body: BodyDetalle, busqueda, columna, order): Observable<any>{     // sacar
-
+    getPedidosLote(body: BodyDetalle, busqueda, columna, order): Observable<any>{
+        
         let headers = new HttpHeaders({
             "Content-Type": "application/json"
         });
@@ -119,7 +133,6 @@ export class ListaLotesService
 
         let ruta = `${BASE_URL}pedidosatrabajar/pedidodetalle/pedidolote/porcomprobanteoarticulo${buscar}/${columna}/${order}`;
         
-
         return this._httpClient.post(ruta, body, {headers: headers});
     }
     

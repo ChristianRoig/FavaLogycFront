@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+/* import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { BuscarLoteService } from './buscar-lote.service';
@@ -100,3 +100,4 @@ export class BuscarLoteComponent implements OnInit {
   }
 
 }
+ */

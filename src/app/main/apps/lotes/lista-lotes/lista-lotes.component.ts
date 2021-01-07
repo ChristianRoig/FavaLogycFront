@@ -11,6 +11,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 //import { BuscarLoteComponent } from './buscar-lote/buscar-lote.component';
 import { VerImpresorasComponent } from './ver-impresoras/ver-impresoras.component';
 import { UsuarioService } from 'app/services/usuario.service';
+import { forEach } from 'lodash';
+import { element } from 'protractor';
 
 export interface Articulos {
 
@@ -27,7 +29,7 @@ export interface Articulos {
   Lote: number;
 }
 export interface Lote {
-  Id: number;
+  id: number;
   Nombre: string;
   FechaAlta: string;
 }
@@ -51,11 +53,19 @@ export interface BodyDetalleFecha{
 }
 
 const ELEMENT_DATA: Articulos[] = [
-  {Id: 1,Tipo: "Venta", CodigoArticulo: "ATCLLED110", Nombre: "TCL LED 50\" P8M SMART",    Comprobante: "B0001700006163",    FechaEntrega: "10/05/2020",    Prov: "Bs.As.",    Loc: "Pinamar",    Estado: "INICIAL",       Etapa: "INICIAL",    Lote: 0},
-  {Id: 2,Tipo: "Venta", CodigoArticulo: "MPLAPLA010", Nombre: "Mueble Madera 1 puerta",    Comprobante: "B0009000012349",    FechaEntrega: "10/05/2020",    Prov: "Bs.As.",    Loc: "Pinamar",    Estado: "INICIAL",       Etapa: "INICIAL",    Lote: 0},
-  {Id: 3,Tipo: "Venta", CodigoArticulo: "MPLAPLA010", Nombre: "Mueble Madera 1 puerta",    Comprobante: "B0009000012349",    FechaEntrega: "10/05/2020",    Prov: "Bs.As.",    Loc: "Minamar",    Estado: "EN PROCESO",    Etapa: "EN LOTE",    Lote: 4},
-  {Id: 4,Tipo: "Venta", CodigoArticulo: "MPLAPLA010", Nombre: "Mueble Madera 1 puerta",    Comprobante: "B0009000012349",    FechaEntrega: "10/05/2020",    Prov: "Bs.As.",    Loc: "Gesell",     Estado: "EN PROCESO",    Etapa: "ESTANTERIA", Lote: 3},
-  {Id: 5,Tipo: "Venta", CodigoArticulo: "MPLAPLA010", Nombre: "Mueble Madera 1 puerta",    Comprobante: "B0009000012349",    FechaEntrega: "10/05/2020",    Prov: "Bs.As.",    Loc: "Gesell",     Estado: "ANULADO",       Etapa: "SIN STOCK",  Lote: 0},
+  {Id: 1,Tipo: "Venta", CodigoArticulo: "ATCLLED110", Nombre: "TCL LED 50\" P8M SMART",    Comprobante: "B0001700006163",    FechaEntrega: "10/05/2020",    Prov: "Bs.As.",    Loc: "Pinamar",    Estado: "INICIAL",       Etapa: "INICIAL",    Lote: 1},
+  {Id: 2,Tipo: "Venta", CodigoArticulo: "MPLAPLA010", Nombre: "Mueble Madera 1 puerta",    Comprobante: "B0009000012349",    FechaEntrega: "10/05/2020",    Prov: "Bs.As.",    Loc: "Pinamar",    Estado: "INICIAL",       Etapa: "INICIAL",    Lote: 1},
+  {Id: 3,Tipo: "Venta", CodigoArticulo: "MPLAPLA010", Nombre: "Mueble Madera 1 puerta",    Comprobante: "B0009000012349",    FechaEntrega: "10/05/2020",    Prov: "Bs.As.",    Loc: "Minamar",    Estado: "EN PROCESO",    Etapa: "EN LOTE",    Lote: 1},
+  {Id: 4,Tipo: "Venta", CodigoArticulo: "MPLAPLA010", Nombre: "Mueble Madera 1 puerta",    Comprobante: "B0009000012349",    FechaEntrega: "10/05/2020",    Prov: "Bs.As.",    Loc: "Gesell",     Estado: "EN PROCESO",    Etapa: "ESTANTERIA", Lote: 1},
+  {Id: 5,Tipo: "Venta", CodigoArticulo: "MPLAPLA010", Nombre: "Mueble Madera 1 puerta",    Comprobante: "B0009000012349",    FechaEntrega: "10/05/2020",    Prov: "Bs.As.",    Loc: "Gesell",     Estado: "ANULADO",       Etapa: "SIN STOCK",  Lote: 1},
+];
+
+const ELEMENT_DATA2: any[] = [
+  {id: 1, nombre: "Lote 1",  fechaAlta: "10/05/2020 20:05:00"},
+  {id: 2, nombre: "Lote 2",  fechaAlta: "10/05/2020 20:05:00"},
+  {id: 3, nombre: "Lote 3",  fechaAlta: "10/05/2020 20:05:00"},
+  {id: 4, nombre: "Lote 4",  fechaAlta: "10/05/2020 20:05:00"},
+  {id: 5, nombre: "Lote 5",  fechaAlta: "10/05/2020 20:05:00"},
 ];
 
 @Component({  
@@ -70,7 +80,7 @@ export class ListaLotesComponent implements OnInit {
   @ViewChild('buscarLote') buscarLoteInput: ElementRef;
 
   // displayedColumns: string[] = ['select', 'Tipo', 'CodigoArticulo','NombreArticulo', 'Comprobante', 'Fecha-Entrega', 'Provincia', 'Localidad','Etapa', 'Lote', 'Borrar'];
-  displayedColumns: string[] = ['id', 'nombre','fechaAlta', 'seleccionar'];
+  displayedColumns: string[] = ['id', 'nombre', 'fechaAlta', 'cantArticulos', 'seleccionar'];
   dataSource = ELEMENT_DATA;  
   dataSource2: any;
   selection = new SelectionModel<any>(true, []);
@@ -86,6 +96,7 @@ export class ListaLotesComponent implements OnInit {
   order: string = 'asc';
 
   mensaje: string;
+  
 
   minDateDesdeFiltro: Date;
   maxDateDesdeFiltro: Date;
@@ -160,15 +171,16 @@ export class ListaLotesComponent implements OnInit {
 
   ngOnInit(): void {
     
-    // this.resetFiltros();    
+    //this.resetFiltros();    
     
-    this.getfiltros();
+    //this.getfiltros();
 
     this.getLotes();
     
     // this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
   }
 
+  
   
   buscarLote() {
     let bodyFechas: BodyDetalleFecha  = {
@@ -214,13 +226,15 @@ export class ListaLotesComponent implements OnInit {
           this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
         }
       }); */
-
+  
 
   getLotes(){
-    this._listaLoteService.getAllLotes() .subscribe( data => {
-      this.dataSource2 = data.datos;
-      this.length = data.totalRegistros;
-    },
+    /* this._listaLoteService.getAllLotes() .subscribe( data => {
+    this.dataSource2 = data.datos; */
+    this.dataSource2 = ELEMENT_DATA2;
+    console.log(this.dataSource2);
+    this.length = this.dataSource2.length;
+    /* },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
         console.log("Client-side error");
@@ -236,23 +250,45 @@ export class ListaLotesComponent implements OnInit {
           this.mostrarError(errStatus, titulo, mensaje);
         }
       }
+    }); */
+  }
+
+  getSoloFecha(fecha: any){
+    return fecha.split(' ')[0];
+  }
+
+  getCantArticulos( id: number ){              //propuesto para usar
+    this._listaLoteService.getLotePorId( id ) .subscribe ( data => {
+      console.log(data);
+      let nroArticulos = data.length;
+      return nroArticulos;
     });
   }
 
+  getArticulo(id: number){
+    id = id + 7;
+    return id.toString();
+    
+     /* Math.floor(Math.random() * (50 - 15)) + 15; */
+  }
+
   verLote(lote: Lote){ //redireccionar 
-    console.log(lote);
-    //this._router.navigate([ `/verLote/${ lote }`]);
-    //localStorage.setItem('Lote', JSON.stringify(lote));
+    if( lote != null ){
+      //this.idLote = lote.id;
+      this.idLote = lote.id;
+      let ruta = `apps/lotes/lista-lotes/ver-lote/${ this.idLote }`;
+      //console.log("lote ASD");
+      this._router.navigate([ ruta ]);
+    }
   }
 
   sacarDelLote(){
     let listaIdPedidoDetalle: Array<number> = new Array<number>();
 
-    
     for (let entry of this.selection.selected) {
       listaIdPedidoDetalle.push(entry.id);
     }
-    console.log(listaIdPedidoDetalle)
+    console.log(listaIdPedidoDetalle);
     
     this._listaLoteService.postEliminarArticuloDeLote(listaIdPedidoDetalle).subscribe(params => {
       console.log("termino Ok");

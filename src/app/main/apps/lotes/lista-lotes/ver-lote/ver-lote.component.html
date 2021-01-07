@@ -1,0 +1,118 @@
+<app-plantilla-fondo-simple titulo='Administrar Lotes'>
+
+    <!-- CONTENIDO -->
+    <div contenido>
+
+        <div fxLayout="column" style="max-width: 100%;">
+
+            <!-- Filtros en Pantalla grande -->
+            <div fxLayout="row" class="content-card pb-4 unaClase">
+
+                <!-- LOTE -->
+                <!-- <div fxFlex="100" class="fuse-card p-24 mr-8"> -->
+                <h1 class="colorText"> Nombre del Lote </h1>
+                <button mat-raised-button color="light" class="mt-22 mb-20">Eliminar lote</button>
+                <!-- </div> -->
+            </div>
+            <!-- / Filtros en Pantalla grande -->
+
+            <!-- SECCION ARTICULOS -->
+            <div class="fuse-card my-24" style="max-width: 100%;">
+
+                <!-- TITULO/BUSCADOR/BOTON -->
+                <div fxLayout="row" fxLayoutAlign="space-around">
+
+                    <mat-form-field appearance="outline" style="width: 100%;" class="mt-8 mx-12">
+                        <mat-label>Código de Artículo o Comprobante</mat-label>
+                        <input #buscarCbte class="text-uppercase" (keyup)="searchCbte()" matInput value="" placeholder="Buscar Cód. Artículo o comprobante">
+                        <mat-icon matSuffix>search</mat-icon>
+                    </mat-form-field>
+
+                    <div class="m-24">
+
+                        <button (click)="sacarDelLote()" mat-raised-button color="primary" [matBadge]="selection.selected.length" [matBadgeHidden]="selection.selected.length===0" matBadgeColor="warn" [disabled]="selection.selected.length===0">
+                                Eliminar Seleccionados
+                        </button>
+                    </div>
+                    <div class="m-24">
+
+                        <button (click)="editarLote()" mat-raised-button color="primary">
+                                Editar Lote 
+                        </button>
+                    </div>
+
+                    <div class="m-24">
+
+                        <button (click)="imprimirCupa()" mat-raised-button color="primary">
+                                Imprimir CUPA
+                        </button>
+                    </div>
+                </div>
+
+                <!-- / TITULO/BUSCADOR/BOTON -->
+
+                <ng-container *ngTemplateOutlet="articulos" class="tablaArticulos"></ng-container>
+            </div>
+            <!-- / SECCION ARTICULOS -->
+        </div>
+
+
+
+    </div>
+    <!-- / CONTENIDO -->
+</app-plantilla-fondo-simple>
+
+<!-- ------------------------------------------------------------------------------------------------------------------------------ -->
+
+
+<ng-template #articulos>
+
+    <div style="width: 100%; overflow: auto;">
+        <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="dataSource2" class="mb-8 tablaArticulos">
+
+            <ng-container matColumnDef="select" sticky>
+                <th mat-header-cell *matHeaderCellDef class="px-24">
+                    <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() 
+                        && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
+                    </mat-checkbox>
+                </th>
+
+                <td mat-cell *matCellDef="let row" class="px-24">
+                    <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
+                    </mat-checkbox>
+                </td>
+            </ng-container>
+            <!-- id: 1, pedidoCabecera: {…}, articulo: {…}, pedidoDomicilioEntrega: {…}, pedidoEtapa: {…},  -->
+            <!-- ['select', 'codigoArticulo', 'nombreArticulo', 'etapa', 'comprobante']; -->
+            <ng-container matColumnDef="codigoArticulo">
+                <th mat-sort-header="codigoArticulo" mat-header-cell *matHeaderCellDef> Id </th>
+                <td mat-cell *matCellDef="let producto"> {{ producto.articulo.id }} </td>
+                <!-- <td mat-cell *matCellDef="let producto"> {{ producto.Id }} </td> -->
+            </ng-container>
+
+            <ng-container matColumnDef="nombreArticulo">
+                <th mat-sort-header="nombreArticulo" mat-header-cell *matHeaderCellDef> Nombre Articulo </th>
+                <td mat-cell *matCellDef="let producto"> {{ producto.articulo.nombre }} </td>
+                <!-- <td mat-cell *matCellDef="let producto"> {{ producto.Nombre }} </td> -->
+            </ng-container>
+
+            <ng-container matColumnDef="etapa">
+                <th mat-sort-header="etapa" mat-header-cell *matHeaderCellDef> Etapa </th>
+                <td mat-cell *matCellDef="let producto"> {{ producto.pedidoEtapa.nombre }} </td>
+                <!-- <td mat-cell *matCellDef="let producto"> {{ producto.Etapa }} </td> -->
+            </ng-container>
+
+            <ng-container matColumnDef="comprobante">
+                <th mat-header-cell *matHeaderCellDef> Comprobante </th>
+                <td mat-cell class="example-button-row" *matCellDef="let producto">{{ producto.pedidoCabecera.pedidoCbte.nroCbte }}</td>
+                <!-- <td mat-cell class="example-button-row" *matCellDef="let producto">{{ producto.Comprobante }}</td> -->
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+    <!-- </app-plantilla-fondo-simple> -->
+
+    <!-- <ng-template #articulos>-->
+</ng-template>
