@@ -57,6 +57,20 @@ export class VerLoteService {
       return this._httpClient.post(ruta, body, {headers: headers});
   }
 
+  postEliminarLote(  ): Observable<any> {
+
+    let headers = new HttpHeaders({
+        "Content-Type": "application/json"
+    });
+
+    let body= {
+        
+    }
+    let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/lote/detalle/`;
+
+    return this._httpClient.post(ruta, body, {headers: headers});
+}
+
   getPedidosLote(body: BodyDetalle, busqueda, columna, order): Observable<any>{
         
     let headers = new HttpHeaders({
@@ -77,10 +91,25 @@ export class VerLoteService {
     let headers = new HttpHeaders({
         "Content-Type": "application/json"
     });
-
+    
     let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/lote/imprimir/cupa/${lote}/${impresora}`;
     return this._httpClient.post(ruta, {headers: headers});
-}
+  }
+  /* updateNombreLote(nombre, lote){
+    
+    let headers = new HttpHeaders({
+      "Content-Type": "application/json"
+    });
+
+    let body = {
+      "id": lote.id,
+      "nombre": nombre,
+      "fechaAlta": lote.fechaAlta
+    }
+
+    let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/lote/imprimir/cupa/${ lote }`;
+    return this._httpClient.put(ruta, body,{headers: headers});
+  } */
 
 }
 

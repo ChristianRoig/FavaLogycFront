@@ -103,6 +103,7 @@ export class VerLoteComponent implements OnInit {
   };
   
   productos: any [] = [];
+  loteActual: any = {};
 
   constructor(
     private _verLoteService: VerLoteService,
@@ -114,6 +115,7 @@ export class VerLoteComponent implements OnInit {
     //console.log("ver-lote component");
     this.editLote = false;
     this.nombreLote = "Lote 1";
+    //this.loteActual = lote;
     this._activatedRoute.params.subscribe( params => {
       console.log( params['id'] );
       
@@ -123,16 +125,31 @@ export class VerLoteComponent implements OnInit {
   
   getLote(idLote: number){
     this.body.idLote = idLote;
+    this.dataSource2 = ELEMENT_DATA;
+    console.log(this.productos);
     //this._verLoteService.getPedidosLote( this.body, this.busqueda, this.columna, this.order ) .subscribe( data => {
       //this.dataSource2 = data.datos;
-      this.dataSource2 = ELEMENT_DATA;
-      console.log(this.productos);
-    //}); 
+    //}),
+    /* (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
+        } else {
+          let titulo = 'Error al obtener el lote';
+          let mensaje = err.error.message.toString();
+          this.mostrarError(errStatus, titulo, mensaje);
+        }
+      }
+    }) */
   }
 
   editarLote(){
     this.editLote = true;
-
   }
 
   actualizarNombreLote(nombreLoteInput: string){
@@ -141,12 +158,52 @@ export class VerLoteComponent implements OnInit {
       this.nombreLote = nombreLoteInput;
     }
     this.editLote = false;
+
+    /* this._verLoteService.updateNombreLote() .subscribe (data =>  {
+      console.log(data);
+      //this.dataSource2 = data;
+    }),
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
+        } else {
+          let titulo = 'Error al actualizar el nombre';
+          let mensaje = err.error.message.toString();
+          this.mostrarError(errStatus, titulo, mensaje);
+        }
+      }
+    }) */
   }
 
   eliminarLote(){
     this.titulo = "Éste lote se borrará";
     this.mensaje = "Desea realizar ésta acción?";
     this.mostrarError(-1, this.titulo, this.mensaje);
+    /*this._verLoteService.postEliminarLote( this.idLote ) .subscribe( data => {
+      console.log(data);
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status;
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
+        } else {
+          let titulo = 'Error al eliminar lote';
+          let mensaje = err.error.message.toString();
+          this.mostrarError(errStatus, titulo, mensaje);
+        }
+      }
+    });; */
   }
 
   sacarDelLote(){

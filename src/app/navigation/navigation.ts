@@ -31,17 +31,24 @@ export const navigation: FuseNavigation[] = [
                 exactMatch: true,
                 children : [ 
                     {
+                        id        : 'listaLotes',
+                        title     : 'Lotes',
+                        type      : 'item',
+                        url       : '/apps/lotes/lista-lotes',
+                        exactMatch: true
+                    },
+                    {
+                        id        : 'verLote',
+                        title     : 'Ver Lote',
+                        type      : 'item',
+                        url       : '/apps/lotes/lista-lotes/ver-lote/1',
+                        exactMatch: true
+                    },
+                    {
                         id        : 'crearLote',
                         title     : 'Crear Lote',
                         type      : 'item',
                         url       : '/apps/lotes/crear-lote',
-                        exactMatch: true
-                    },
-                    {
-                        id        : 'listaLotes',
-                        title     : 'Lista Lotes',
-                        type      : 'item',
-                        url       : '/apps/lotes/lista-lotes',
                         exactMatch: true
                     }
                 ]

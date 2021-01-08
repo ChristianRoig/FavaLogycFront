@@ -1,30 +1,53 @@
 table {
     width: 100%;
     min-width: 1056px;
-  }
-  
-  td.mat-column-star {
+}
+
+td.mat-column-star {
     width: 20px;
     padding-right: 8px;
-  }
-  
-  th.mat-column-position, td.mat-column-position {
+}
+
+th.mat-column-position,
+td.mat-column-position {
     padding-left: 8px;
-  }
-  
-  .mat-table-sticky:first-child {
+}
+
+.mat-table-sticky:first-child {
     border-right: 1px solid #e0e0e0;
-  }
-  
-  .mat-table-sticky:last-child {
+}
+
+.mat-table-sticky:last-child {
     border-left: 1px solid #e0e0e0;
-  }
+}
 
 a {
     cursor: pointer;
 }
 
 fuse-sidebar {
-  width: unset !important; 
-  max-width: unset !important;
+    width: unset !important;
+    max-width: unset !important;
+}
+
+.controlesBusqueda {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.filtroFecha {
+    width: 150px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btnCrearLote {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 10px;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
 }

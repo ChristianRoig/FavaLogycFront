@@ -35,7 +35,7 @@ export class PedidosAgregarLoteService
         
         let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/lote/`
 
-        let body=   {
+        let body =   {
             "listaIdPedidos": listaIdPedidos,
             "fechaCreacion": fechaCreacion,
             "comentario": comentario

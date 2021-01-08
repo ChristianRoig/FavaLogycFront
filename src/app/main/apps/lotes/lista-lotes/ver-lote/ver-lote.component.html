@@ -1,4 +1,4 @@
-<app-plantilla-fondo-simple titulo='Administrar Lotes'>
+<app-plantilla-fondo-simple titulo='Ver Lote'>
 
     <!-- CONTENIDO -->
     <div contenido>
@@ -6,7 +6,7 @@
         <div fxLayout="column" style="max-width: 100%;">
 
             <!-- Filtros en Pantalla grande -->
-            <div fxLayout="row" class="content-card pb-4 titular ">
+            <div fxLayout="row" class="titular">
 
                 <!-- LOTE -->
                 <!-- <div fxFlex="100" class="fuse-card p-24 mr-8"> -->
@@ -20,18 +20,18 @@
                 </div> -->
 
                 <div *ngIf="this.editLote" class="input-group mb-3">
-                    <input #nombreLoteInput type="text" class="nombreLote" placeholder="Inserte el nuevo nombre del lote">
-                    <button mat-raised-button class="btn btn-outline-secondary" color="light" (click)="actualizarNombreLote(nombreLoteInput.value)" type="button" id="button-addon1">Aplicar</button>
+                    <input #nombreLoteInput type="text" class="nombreLote" placeholder="({{ this.nombreLote }})  -  Inserte el nuevo nombre del lote">
+                    <button mat-raised-button class="btn btn-outline-secondary" color="light" (click)="actualizarNombreLote(nombreLoteInput.value)" type="button" id="button-addon1">Modificar</button>
                 </div>
 
 
-                <button mat-raised-button color="light" class="mt-22 mb-20" (click)="eliminarLote()">Eliminar lote</button>
+                <button mat-raised-button color="light" class="mt-22" (click)="eliminarLote()">Eliminar lote</button>
                 <!-- </div> -->
             </div>
             <!-- / Filtros en Pantalla grande -->
 
             <!-- SECCION ARTICULOS -->
-            <div class="fuse-card my-24" style="max-width: 100%;">
+            <div class="fuse-card my-20" style="max-width: 100%;">
 
                 <!-- TITULO/BUSCADOR/BOTON -->
                 <div fxLayout="row" fxLayoutAlign="space-around">

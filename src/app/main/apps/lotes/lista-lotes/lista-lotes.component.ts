@@ -96,6 +96,8 @@ export class ListaLotesComponent implements OnInit {
   order: string = 'asc';
 
   mensaje: string;
+  //arrowBack: boolean;
+  filtroFechas: boolean;
   
 
   minDateDesdeFiltro: Date;
@@ -114,6 +116,7 @@ export class ListaLotesComponent implements OnInit {
   /*
   Filtros
    */
+
   filtroTipos: any;
   selectedTipo: any = 0;
   
@@ -176,11 +179,10 @@ export class ListaLotesComponent implements OnInit {
     //this.getfiltros();
 
     this.getLotes();
-    
+    this.filtroFechas = false;
+    //this.arrowBack = false;
     // this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
   }
-
-  
   
   buscarLote() {
     let bodyFechas: BodyDetalleFecha  = {
@@ -226,15 +228,17 @@ export class ListaLotesComponent implements OnInit {
           this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
         }
       }); */
-  
+  activarFechas(){
+    this.filtroFechas = !this.filtroFechas;
+  }
 
   getLotes(){
-    /* this._listaLoteService.getAllLotes() .subscribe( data => {
-    this.dataSource2 = data.datos; */
-    this.dataSource2 = ELEMENT_DATA2;
+    /* this.dataSource2 = ELEMENT_DATA2;
     console.log(this.dataSource2);
-    this.length = this.dataSource2.length;
-    /* },
+    this.length = this.dataSource2.length; */
+    this._listaLoteService.getAllLotes() .subscribe( data => {
+      this.dataSource2 = data.datos; 
+    },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
         console.log("Client-side error");
@@ -250,7 +254,7 @@ export class ListaLotesComponent implements OnInit {
           this.mostrarError(errStatus, titulo, mensaje);
         }
       }
-    }); */
+    });
   }
 
   getSoloFecha(fecha: any){
@@ -266,10 +270,9 @@ export class ListaLotesComponent implements OnInit {
   }
 
   getArticulo(id: number){
+    /* let num = Math.floor(Math.random() * (50 - 15)) + 15; */
     id = id + 7;
     return id.toString();
-    
-     /* Math.floor(Math.random() * (50 - 15)) + 15; */
   }
 
   verLote(lote: Lote){ //redireccionar 
@@ -903,5 +906,11 @@ export class ListaLotesComponent implements OnInit {
         this.order = event.direction;
     
     this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
+  }
+
+  redirecCrearLote(){
+    //this._router.navigate();
+    let ruta = `apps/lotes/crear-lote`;
+    this._router.navigate([ruta]);
   }
 }
