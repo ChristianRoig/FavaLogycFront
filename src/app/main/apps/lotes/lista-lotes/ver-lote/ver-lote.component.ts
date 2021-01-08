@@ -44,7 +44,7 @@ export class VerLoteComponent implements OnInit {
   
   @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
 
-  displayedColumns: string[] = ['select', 'codigoArticulo', 'nombreArticulo', 'etapa', 'comprobante'];
+  displayedColumns: string[] = ['select', 'codigoArticulo', 'nombreArticulo', 'tipo', 'etapa', 'comprobante'];
   selection = new SelectionModel<any>(true, []);
   dataSource2: any;
 
@@ -113,7 +113,7 @@ export class VerLoteComponent implements OnInit {
   ngOnInit(): void {
     //console.log("ver-lote component");
     this.editLote = false;
-
+    this.nombreLote = "Lote 1";
     this._activatedRoute.params.subscribe( params => {
       console.log( params['id'] );
       
@@ -123,16 +123,30 @@ export class VerLoteComponent implements OnInit {
   
   getLote(idLote: number){
     this.body.idLote = idLote;
-    this._verLoteService.getPedidosLote( this.body, this.busqueda, this.columna, this.order ) .subscribe( data => {
-      this.dataSource2 = data.datos;
-      //this.productos = ELEMENT_DATA;
-      console.log(this.dataSource2);
-    }); 
+    //this._verLoteService.getPedidosLote( this.body, this.busqueda, this.columna, this.order ) .subscribe( data => {
+      //this.dataSource2 = data.datos;
+      this.dataSource2 = ELEMENT_DATA;
+      console.log(this.productos);
+    //}); 
   }
 
   editarLote(){
     this.editLote = true;
-    
+
+  }
+
+  actualizarNombreLote(nombreLoteInput: string){
+    console.log(nombreLoteInput);
+    if(nombreLoteInput != ''){
+      this.nombreLote = nombreLoteInput;
+    }
+    this.editLote = false;
+  }
+
+  eliminarLote(){
+    this.titulo = "Éste lote se borrará";
+    this.mensaje = "Desea realizar ésta acción?";
+    this.mostrarError(-1, this.titulo, this.mensaje);
   }
 
   sacarDelLote(){

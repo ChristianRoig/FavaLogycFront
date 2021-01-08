@@ -6,12 +6,26 @@
         <div fxLayout="column" style="max-width: 100%;">
 
             <!-- Filtros en Pantalla grande -->
-            <div fxLayout="row" class="content-card pb-4 unaClase">
+            <div fxLayout="row" class="content-card pb-4 titular ">
 
                 <!-- LOTE -->
                 <!-- <div fxFlex="100" class="fuse-card p-24 mr-8"> -->
-                <h1 class="colorText"> Nombre del Lote </h1>
-                <button mat-raised-button color="light" class="mt-22 mb-20">Eliminar lote</button>
+                <h1 class="colorText" *ngIf="!this.editLote"> {{ this.nombreLote }} </h1>
+                <!-- <input *ngIf="!this.editLote" #nombreLote> -->
+                <!-- <div *ngIf="this.editLote" class="inputAndBoton">
+                    <div class="input-group-prepend">
+                        <button mat-raised-button color="light" (click)="actualizarNombreLote(nombreLoteInput.value)" type="button">Aplicar</button>
+                    </div>
+                    <input #nombreLoteInput class="form-control" type="text" placeholder="Inserte el nuevo nombre del lote">
+                </div> -->
+
+                <div *ngIf="this.editLote" class="input-group mb-3">
+                    <input #nombreLoteInput type="text" class="nombreLote" placeholder="Inserte el nuevo nombre del lote">
+                    <button mat-raised-button class="btn btn-outline-secondary" color="light" (click)="actualizarNombreLote(nombreLoteInput.value)" type="button" id="button-addon1">Aplicar</button>
+                </div>
+
+
+                <button mat-raised-button color="light" class="mt-22 mb-20" (click)="eliminarLote()">Eliminar lote</button>
                 <!-- </div> -->
             </div>
             <!-- / Filtros en Pantalla grande -->
@@ -85,27 +99,33 @@
             <!-- id: 1, pedidoCabecera: {…}, articulo: {…}, pedidoDomicilioEntrega: {…}, pedidoEtapa: {…},  -->
             <!-- ['select', 'codigoArticulo', 'nombreArticulo', 'etapa', 'comprobante']; -->
             <ng-container matColumnDef="codigoArticulo">
-                <th mat-sort-header="codigoArticulo" mat-header-cell *matHeaderCellDef> Id </th>
-                <td mat-cell *matCellDef="let producto"> {{ producto.articulo.id }} </td>
-                <!-- <td mat-cell *matCellDef="let producto"> {{ producto.Id }} </td> -->
+                <th mat-sort-header="codigoArticulo" mat-header-cell *matHeaderCellDef> Cod. Articulo </th>
+                <!-- <td mat-cell *matCellDef="let producto"> {{ producto.articulo.id }} </td> -->
+                <td mat-cell *matCellDef="let producto"> {{ producto.Id }} </td>
             </ng-container>
 
             <ng-container matColumnDef="nombreArticulo">
                 <th mat-sort-header="nombreArticulo" mat-header-cell *matHeaderCellDef> Nombre Articulo </th>
-                <td mat-cell *matCellDef="let producto"> {{ producto.articulo.nombre }} </td>
-                <!-- <td mat-cell *matCellDef="let producto"> {{ producto.Nombre }} </td> -->
+                <!-- <td mat-cell *matCellDef="let producto"> {{ producto.articulo.nombre }} </td> -->
+                <td mat-cell *matCellDef="let producto"> {{ producto.Nombre }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="tipo">
+                <th mat-sort-header="tipo" mat-header-cell *matHeaderCellDef> Tipo</th>
+                <!-- <td mat-cell *matCellDef="let producto"> {{ producto.articulo.nombre }} </td> -->
+                <td mat-cell *matCellDef="let producto"> {{ producto.Tipo }} </td>
             </ng-container>
 
             <ng-container matColumnDef="etapa">
                 <th mat-sort-header="etapa" mat-header-cell *matHeaderCellDef> Etapa </th>
-                <td mat-cell *matCellDef="let producto"> {{ producto.pedidoEtapa.nombre }} </td>
-                <!-- <td mat-cell *matCellDef="let producto"> {{ producto.Etapa }} </td> -->
+                <!-- <td mat-cell *matCellDef="let producto"> {{ producto.pedidoEtapa.nombre }} </td> -->
+                <td mat-cell *matCellDef="let producto"> {{ producto.Etapa }} </td>
             </ng-container>
 
             <ng-container matColumnDef="comprobante">
                 <th mat-header-cell *matHeaderCellDef> Comprobante </th>
-                <td mat-cell class="example-button-row" *matCellDef="let producto">{{ producto.pedidoCabecera.pedidoCbte.nroCbte }}</td>
-                <!-- <td mat-cell class="example-button-row" *matCellDef="let producto">{{ producto.Comprobante }}</td> -->
+                <!-- <td mat-cell class="example-button-row" *matCellDef="let producto">{{ producto.pedidoCabecera.pedidoCbte.nroCbte }}</td> -->
+                <td mat-cell class="example-button-row" *matCellDef="let producto">{{ producto.Comprobante }}</td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
