@@ -148,7 +148,7 @@ export class LoteCrearLoteComponent implements OnInit {
 
   ngOnInit(): void {
     
-    // this.resetFiltros();    
+    //this.resetFiltros();    
 
     this.getfiltros();
     
@@ -181,7 +181,10 @@ export class LoteCrearLoteComponent implements OnInit {
   }
 
   getfiltros(){
+    console.log("asd");
     this._loteCrearLoteService.getAllTipos().subscribe(params => {
+      console.log("datos");
+      console.log(params.datos);
       this.filtroTipos = params.datos;
     },
     (err: HttpErrorResponse) => {
@@ -222,6 +225,7 @@ export class LoteCrearLoteComponent implements OnInit {
     })
     
     this._loteCrearLoteService.getAllOrigenes().subscribe(params => {
+      console.log(params.datos);
       this.filtroOrigenes = params.datos;
     },
     (err: HttpErrorResponse) => {
@@ -390,7 +394,7 @@ export class LoteCrearLoteComponent implements OnInit {
     this._loteCrearLoteService.getPedidoDetalle(this.body, busqueda, page, size, columna, order).subscribe(
       data => {
         this.dataSource2 = data.datos;
-        // console.log(this.dataSource2);
+        //console.log(this.dataSource2);
         this.length = data.totalRegistros;
       },
       (err: HttpErrorResponse) => {

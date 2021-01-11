@@ -77,6 +77,7 @@ export class LoteCrearLoteService
 
     getAllTipos(): Observable<any>
     {
+        console.log("llegué");
         let ruta = `${BASE_URL}pedidosatrabajar/pedidotipo/`;
         return this._httpClient.get(ruta);
     }

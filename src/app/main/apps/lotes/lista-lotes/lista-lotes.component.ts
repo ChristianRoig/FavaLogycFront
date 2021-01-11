@@ -175,7 +175,6 @@ export class ListaLotesComponent implements OnInit {
   ngOnInit(): void {
     
     //this.resetFiltros();    
-    
     //this.getfiltros();
 
     this.getLotes();
@@ -238,6 +237,7 @@ export class ListaLotesComponent implements OnInit {
     this.length = this.dataSource2.length; */
     this._listaLoteService.getAllLotes() .subscribe( data => {
       this.dataSource2 = data.datos; 
+      console.log(this.dataSource2);
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
