@@ -16,8 +16,6 @@ import { LoteCrearLoteComponent } from './lote-crear-lote/lote-crear-lote.compon
 import { LoteCrearLoteService } from './lote-crear-lote/lote-crear-lote.service';
 import { ListaLotesComponent } from './lista-lotes/lista-lotes.component';
 import { ListaLotesService } from './lista-lotes/lista-lotes.service';
-//import { BuscarLoteComponent } from './lista-lotes/buscar-lote/buscar-lote.component';
-//import { BuscarLoteService } from './lista-lotes/buscar-lote/buscar-lote.service';
 import { VerImpresorasComponent } from './lista-lotes/ver-impresoras/ver-impresoras.component';
 import { VerImpresorasService } from './lista-lotes/ver-impresoras/ver-impresoras.service';
 import { VerCupasService } from './lista-lotes/ver-cupas/ver-cupas.service';
@@ -42,7 +40,6 @@ const routes: Routes = [
 @NgModule({
     declarations: [
         LoteCrearLoteComponent,
-        //BuscarLoteComponent,
         VerCupasComponent,
         VerImpresorasComponent,
         ListaLotesComponent,
@@ -60,7 +57,6 @@ const routes: Routes = [
     ],
     providers   : [
         LoteCrearLoteService,
-        //BuscarLoteService,
         VerCupasService,
         VerImpresorasService,
         ListaLotesService,
