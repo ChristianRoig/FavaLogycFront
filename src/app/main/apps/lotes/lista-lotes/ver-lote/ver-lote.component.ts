@@ -125,12 +125,12 @@ export class VerLoteComponent implements OnInit {
   
   getLote(idLote: number){
     this.body.idLote = idLote;
-    this.dataSource2 = ELEMENT_DATA;
-    console.log(this.productos);
-    //this._verLoteService.getPedidosLote( this.body, this.busqueda, this.columna, this.order ) .subscribe( data => {
-      //this.dataSource2 = data.datos;
-    //}),
-    /* (err: HttpErrorResponse) => {
+    //this.dataSource2 = ELEMENT_DATA;
+    this._verLoteService.getPedidosLote( this.body, this.busqueda, this.columna, this.order ) .subscribe( data => {
+      this.dataSource2 = data.datos;
+      console.log(this.dataSource2);
+    },
+    (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
         console.log("Client-side error");
       } else {
@@ -145,7 +145,7 @@ export class VerLoteComponent implements OnInit {
           this.mostrarError(errStatus, titulo, mensaje);
         }
       }
-    }) */
+    });
   }
 
   editarLote(){
