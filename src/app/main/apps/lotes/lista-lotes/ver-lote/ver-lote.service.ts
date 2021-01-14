@@ -36,7 +36,8 @@ export class VerLoteService {
    */
   getLote(loteId: number): Observable<any>{
 
-      let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/${ loteId }`;
+      /* let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/${ loteId }`; */
+      let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/1`;
       return this._httpClient.get(ruta);
   }
 
@@ -57,21 +58,7 @@ export class VerLoteService {
       return this._httpClient.post(ruta, body, {headers: headers});
   }
 
-  postEliminarLote(  ): Observable<any> {
-
-    let headers = new HttpHeaders({
-        "Content-Type": "application/json"
-    });
-
-    let body= {
-        
-    }
-    let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/lote/detalle/`;
-
-    return this._httpClient.post(ruta, body, {headers: headers});
-}
-
-  getPedidosLote(body: BodyDetalle, busqueda, columna, order): Observable<any>{
+  getArticulosDeLote(body: BodyDetalle, busqueda, columna, order): Observable<any>{
         
     let headers = new HttpHeaders({
         "Content-Type": "application/json"
@@ -95,6 +82,21 @@ export class VerLoteService {
     let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/lote/imprimir/cupa/${lote}/${impresora}`;
     return this._httpClient.post(ruta, {headers: headers});
   }
+
+  postEliminarLote(  ): Observable<any> {
+
+    let headers = new HttpHeaders({
+        "Content-Type": "application/json"
+    });
+
+    let body= {
+        
+    }
+    let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/lote/detalle/`;
+
+    return this._httpClient.post(ruta, body, {headers: headers});
+}
+
   /* updateNombreLote(nombre, lote){
     
     let headers = new HttpHeaders({
@@ -104,10 +106,10 @@ export class VerLoteService {
     let body = {
       "id": lote.id,
       "nombre": nombre,
-      "fechaAlta": lote.fechaAlta
+      //"fechaAlta": lote.fechaAlta
     }
 
-    let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/lote/imprimir/cupa/${ lote }`;
+    let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/lote/imprimir/cupa/${ lote }`; ?????????
     return this._httpClient.put(ruta, body,{headers: headers});
   } */
 

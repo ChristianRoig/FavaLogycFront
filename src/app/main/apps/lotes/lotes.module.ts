@@ -11,17 +11,25 @@ import { FuseSharedModule } from '@fuse/shared.module';
 import { FuseWidgetModule } from '@fuse/components/widget/widget.module';
 import { FuseSidebarModule } from '@fuse/components';
 
-// modulos lotes
+// componentes
 import { LoteCrearLoteComponent } from './lote-crear-lote/lote-crear-lote.component';
-import { LoteCrearLoteService } from './lote-crear-lote/lote-crear-lote.service';
 import { ListaLotesComponent } from './lista-lotes/lista-lotes.component';
-import { ListaLotesService } from './lista-lotes/lista-lotes.service';
 import { VerImpresorasComponent } from './lista-lotes/ver-impresoras/ver-impresoras.component';
-import { VerImpresorasService } from './lista-lotes/ver-impresoras/ver-impresoras.service';
-import { VerCupasService } from './lista-lotes/ver-cupas/ver-cupas.service';
 import { VerCupasComponent } from './lista-lotes/ver-cupas/ver-cupas.component';
 import { VerLoteComponent } from './lista-lotes/ver-lote/ver-lote.component';
+import { LoteAgregarLoteComponent } from '../lotes/lote-crear-lote/agregar-lote/agregar-lote.component';
+import { ModalDeseaImprimirLoteComponent } from './lote-crear-lote/agregar-lote/modal-confirmacion-borrar/modal-desea-imprimir.component';
+
+
+// servicios
+import { LoteCrearLoteService } from './lote-crear-lote/lote-crear-lote.service';
+import { ListaLotesService } from './lista-lotes/lista-lotes.service';
+import { VerImpresorasService } from './lista-lotes/ver-impresoras/ver-impresoras.service';
+import { VerCupasService } from './lista-lotes/ver-cupas/ver-cupas.service';
 import { VerLoteService } from './lista-lotes/ver-lote/ver-lote.service';
+import { LoteAgregarLoteService } from '../lotes/lote-crear-lote/agregar-lote/agregar-lote.service';
+
+
 
 const routes: Routes = [
     {
@@ -35,7 +43,11 @@ const routes: Routes = [
     {
         path     : 'crear-lote',
         component: LoteCrearLoteComponent
-    }
+    },
+    {
+        path     : 'agregar-lote',
+        component: LoteAgregarLoteComponent
+    },
 ]
 @NgModule({
     declarations: [
@@ -43,7 +55,9 @@ const routes: Routes = [
         VerCupasComponent,
         VerImpresorasComponent,
         ListaLotesComponent,
-        VerLoteComponent
+        VerLoteComponent,
+        LoteAgregarLoteComponent,
+        ModalDeseaImprimirLoteComponent
     ],
     imports     : [
         CommonModule,
@@ -60,7 +74,8 @@ const routes: Routes = [
         VerCupasService,
         VerImpresorasService,
         ListaLotesService,
-        VerLoteService
+        VerLoteService,
+        LoteAgregarLoteService
     ]
 })
 

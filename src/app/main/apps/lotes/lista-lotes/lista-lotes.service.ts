@@ -29,7 +29,7 @@ export class ListaLotesService
     {
     }
 
-    getAllLotes(): Observable<any>{                                   //MIO
+    getAllLotes(): Observable<any>{                                   //MIO 
         //lote hardcodeado al 1 para traer lotes
         let ruta = `${ BASE_URL }pedidosatrabajar/pedidolote/1`;
         return this._httpClient.get(ruta);
@@ -44,7 +44,6 @@ export class ListaLotesService
         });
     
         let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/${ loteId }`;
-        
     
         return this._httpClient.post(ruta, {headers: headers});
     }
@@ -137,7 +136,7 @@ export class ListaLotesService
     }
     
     
-    postEliminarArticuloDeLote(listaIdPedidoDetalle): Observable<any>  // sacar
+  /*   postEliminarArticuloDeLote(listaIdPedidoDetalle): Observable<any>  // sacar
     {
 
         let headers = new HttpHeaders({
@@ -153,7 +152,7 @@ export class ListaLotesService
         console.log(listaIdPedidoDetalle);
 
         return this._httpClient.post(ruta, body, {headers: headers});
-    }
+    } */
 
     imprimir(lote, impresora): Observable<any>{
 
@@ -163,7 +162,7 @@ export class ListaLotesService
     
         let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/lote/imprimir/cupa/${lote}/${impresora}`;
         return this._httpClient.post(ruta, {headers: headers});
-    }
+    } 
 
     getLotesPorFecha(lote: any, body: BodyDetalleFecha): Observable<any>{
 

@@ -114,21 +114,48 @@ export class VerLoteComponent implements OnInit {
   ngOnInit(): void {
     //console.log("ver-lote component");
     this.editLote = false;
-    this.nombreLote = "Lote 1";
+    this.nombreLote = "Nombre lote";
     //this.loteActual = lote;
     this._activatedRoute.params.subscribe( params => {
-      console.log( params['id'] );
-      
-      this.getLote( params['id'] );
+      //console.log( params['id'] );
+
+      //this.getLote( params['id'] );
+      this.getArticulosDeLote( params['id'] );
     });
   }
   
-  getLote(idLote: number){
+  getArticulosDeLote(idLote: number){
     this.body.idLote = idLote;
     //this.dataSource2 = ELEMENT_DATA;
-    this._verLoteService.getPedidosLote( this.body, this.busqueda, this.columna, this.order ) .subscribe( data => {
+    this._verLoteService.getArticulosDeLote( this.body, this.busqueda, this.columna, this.order ) .subscribe( data => {
       this.dataSource2 = data.datos;
+
       console.log(this.dataSource2);
+      console.log(data);
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
+        } else {
+          let titulo = 'Error los articulos del lote';
+          let mensaje = err.error.message.toString();
+          this.mostrarError(errStatus, titulo, mensaje);
+        }
+      }
+    });
+  }
+
+  getLote(idLote: number){                                              //Propuesta de getLote PARA OBTENER Y MODIFICAR EL NOMBRE DE LOTE  
+    this._verLoteService.getLote( idLote ) .subscribe( data => {
+      console.log(data.datos);
+      this.loteActual = data.datos;
+      this.nombreLote = this.loteActual.nombre;
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
@@ -155,11 +182,12 @@ export class VerLoteComponent implements OnInit {
   actualizarNombreLote(nombreLoteInput: string){
     console.log(nombreLoteInput);
     if(nombreLoteInput != ''){
-      this.nombreLote = nombreLoteInput;
+      this.loteActual.nombreLote = nombreLoteInput;
+
     }
     this.editLote = false;
 
-    /* this._verLoteService.updateNombreLote() .subscribe (data =>  {
+    /* this._verLoteService.updateNombreLote(this.loteActual.nombreLote, this.loteActual.id) .subscribe (data =>  {
       console.log(data);
       //this.dataSource2 = data;
     }),
@@ -299,7 +327,7 @@ export class VerLoteComponent implements OnInit {
     
     // console.log(this.body);
 
-    this._verLoteService.getPedidosLote(this.body, busqueda, columna, order).subscribe(
+    this._verLoteService.getArticulosDeLote(this.body, busqueda, columna, order).subscribe(
       data => {
         // console.log(data)
         this.lote = data.datos;

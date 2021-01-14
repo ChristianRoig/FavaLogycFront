@@ -13,6 +13,8 @@ import { VerImpresorasComponent } from './ver-impresoras/ver-impresoras.componen
 import { UsuarioService } from 'app/services/usuario.service';
 import { forEach } from 'lodash';
 import { element } from 'protractor';
+import { VerLoteService } from './ver-lote/ver-lote.service';
+import { VerLoteComponent } from './ver-lote/ver-lote.component';
 
 export interface Articulos {
 
@@ -144,22 +146,27 @@ export class ListaLotesComponent implements OnInit {
   pickerLoteHasta: any   = null;
 
   body: BodyDetalle ={
-    idTipo      : null,
+    idTipo      : 1,
     idTurno     : null,
     idOrigen    : null,
     idEtapa     : null,
-    idProvincia : null,
+    idProvincia : 1,
     idLocalidad : null,
     desdePedido : null,
     hastaPedido : null,
-    idLote        : null
+    idLote      : null
   };
 
+
+
+  
   constructor(private _router: Router, 
               private _fuseSidebarService: FuseSidebarService, 
               private _listaLoteService: ListaLotesService,
-              private _usuarioService: UsuarioService,
-              private _dialog: MatDialog) { 
+              //private _usuarioService: UsuarioService,
+              private _dialog: MatDialog,
+              //private _verLoteComponent: VerLoteComponent
+              ) { 
 
     const currentYear = new Date().getFullYear();
     this.minDateDesdeFiltro = new Date(currentYear - 5, 0, 1);
@@ -262,14 +269,38 @@ export class ListaLotesComponent implements OnInit {
   }
 
   getCantArticulos( id: number ){              //propuesto para usar
-    this._listaLoteService.getLotePorId( id ) .subscribe ( data => {
+    //al solo existir el lote 1 y 2 en la bbdd no puede buscar otra info de lotes con id distintos a esos
+    
+    /* this._verLoteService.getPedidosLote( this.body, this.busqueda, this.columna, this.order ) .subscribe( data => {
+      this.dataSource2 = data.datos;
+      console.log("this.dataSource2.length");
+      console.log(this.dataSource2.length);
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
+        } else {
+          let titulo = 'Error la cantidad de articulos';
+          let mensaje = err.error.message.toString();
+          this.mostrarError(errStatus, titulo, mensaje);
+        }
+      }
+    }); */
+  }
+    /* this._listaLoteService.getLote( id ) .subscribe ( data => {
       console.log(data);
       let nroArticulos = data.length;
       return nroArticulos;
-    });
-  }
+    }); 
+  }*/
 
-  getArticulo(id: number){
+  getArticulo(id: number){                     //para borrar
     /* let num = Math.floor(Math.random() * (50 - 15)) + 15; */
     id = id + 7;
     return id.toString();
@@ -281,107 +312,14 @@ export class ListaLotesComponent implements OnInit {
       this.idLote = lote.id;
       let ruta = `apps/lotes/lista-lotes/ver-lote/${ this.idLote }`;
       //console.log("lote ASD");
+      //this._verLoteComponent.obtenerLote(lote);
       this._router.navigate([ ruta ]);
     }
   }
 
-  sacarDelLote(){
-    let listaIdPedidoDetalle: Array<number> = new Array<number>();
-
-    for (let entry of this.selection.selected) {
-      listaIdPedidoDetalle.push(entry.id);
-    }
-    console.log(listaIdPedidoDetalle);
-    
-    this._listaLoteService.postEliminarArticuloDeLote(listaIdPedidoDetalle).subscribe(params => {
-      console.log("termino Ok");
-      this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
-    },
-    (err: HttpErrorResponse) => {
-      if (err.error instanceof Error) {
-        console.log("Client-side error");
-      } else {
-        let errStatus = err.status
-        if (errStatus == 0){
-          let titulo = 'Error de Servidor';
-          let mensaje = "Por favor comunicarse con Sistemas";
-          this.mostrarError(errStatus, titulo, mensaje);
-        } else {
-          let titulo = 'Error al cargar filtros';
-          let mensaje = err.error.message.toString();
-          this.mostrarError(errStatus, titulo, mensaje);
-        }
-      }
-    })
-    
-  }
-
-  imprimirCupa(){
-
-    let application_name = "Favalogyc";
-    let permission_name = "Impresion_CUPA"
-
-    // let res = await this._usuarioService.checkPermision(application_name, permission_name);
-    console.log('component')
-    // console.log(res)
-    // if (res === false){
-    //   this.mostrarError(1, 'Error de Permisos', `Usted no tiene permisos para realizar la acción: ${permission_name}.`);
-    // } else {
-      if(localStorage.getItem('ImpresoraCUPA')){
-        this.imprimir();
-      } else {
-        this.seleccionarImpresora()
-      }
-    // }   
-  }
 
 
-  imprimir(){
-    let impresora = localStorage.getItem('ImpresoraCUPA');
 
-    this._listaLoteService.imprimir(this.idLote,impresora).subscribe(data => {
-      
-      let titulo = 'Estado de impresión';
-      let mensaje = "Completado correctamente";
-      this.mostrarError(-1, titulo, mensaje);
-      this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
-    },
-    (err: HttpErrorResponse) => {
-      if (err.error instanceof Error) {
-        console.log("Client-side error");
-      } else {
-        let errStatus = err.status
-        if (errStatus == 0){
-          let titulo = 'Error de Servidor';
-          let mensaje = "Por favor comunicarse con Sistemas";
-          this.mostrarError(errStatus, titulo, mensaje);
-        } else {
-          let titulo = 'Error al imprimir';
-          let mensaje = err.error.message.toString();
-          this.mostrarError(errStatus, titulo, mensaje);
-        }
-      }
-    });
-
-  }
-
-  seleccionarImpresora(){
-    let dialogRef = this._dialog.open(VerImpresorasComponent, {
-      data: {
-        pedidos: this.selection,
-        impresora: 'ImpresoraCUPA'
-      }
-    });
-    dialogRef.afterClosed()
-      .subscribe(result => {
-        if(localStorage.getItem('ImpresoraCUPA')){
-          this.imprimir();
-        } else {
-          dialogRef.close();
-          this.seleccionarImpresora();
-        }
-      });
-  }
 
   resetFiltros(){
 
@@ -392,7 +330,7 @@ export class ListaLotesComponent implements OnInit {
     this.order = 'asc';
 
     this.busqueda = "";
-    this.selectedTipo = 0;
+    this.selectedTipo = 1;
     this.selectedTurno = 0;
     this.selectedOrigen = 0;
     this.selectedEtapa = 0;

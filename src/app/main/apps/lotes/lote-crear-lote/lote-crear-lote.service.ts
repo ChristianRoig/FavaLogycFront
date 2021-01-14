@@ -77,7 +77,6 @@ export class LoteCrearLoteService
 
     getAllTipos(): Observable<any>
     {
-        console.log("llegué getAlltipos service");
         let ruta = `${BASE_URL}pedidosatrabajar/pedidotipo/`;
         return this._httpClient.get(ruta);
     }
@@ -106,7 +105,7 @@ export class LoteCrearLoteService
         return this._httpClient.get(ruta);
     }
 
-    getPedidoDetalle(body: BodyDetalle, busqueda, page, size, columna, order): Observable<any>
+    getArticulos(body: BodyDetalle, busqueda, page, size, columna, order): Observable<any>
     {
 
         let headers = new HttpHeaders({
@@ -114,8 +113,9 @@ export class LoteCrearLoteService
         });
 
         let buscar:string = '';
-        if (busqueda !== '')
-            buscar = `/${busqueda}`
+        if (busqueda !== ''){
+            buscar = `/${busqueda}`;
+        }
 
         let ruta = `${BASE_URL}pedidosatrabajar/pedidodetalle/porcomprobanteoarticulo${buscar}/${page}/${size}/${columna}/${order}`;
         

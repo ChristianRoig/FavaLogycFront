@@ -41,7 +41,7 @@ export interface BodyDetalle{
 }
 
 const ELEMENT_DATA: Articulos[] = [
-  {Id: 1,Tipo: "Venta", CodigoArticulo: "ATCLLED110", Nombre: "TCL LED 50\" P8M SMART",    Comprobante: "B0001700006163",    FechaEntrega: "10/05/2020",    Prov: "Bs.As.",    Loc: "Pinamar",    Estado: "INICIAL",       Etapa: "INICIAL",    Lote: 0},
+  {Id: 1,Tipo: "Venta", CodigoArticulo: "ATCLLED110", Nombre: "TCL LED 50 P8M SMART",    Comprobante: "B0001700006163",    FechaEntrega: "10/05/2020",    Prov: "Bs.As.",    Loc: "Pinamar",    Estado: "INICIAL",       Etapa: "INICIAL",    Lote: 0},
   {Id: 2,Tipo: "Venta", CodigoArticulo: "MPLAPLA010", Nombre: "Mueble Madera 1 puerta",    Comprobante: "B0009000012349",    FechaEntrega: "10/05/2020",    Prov: "Bs.As.",    Loc: "Pinamar",    Estado: "INICIAL",       Etapa: "INICIAL",    Lote: 0},
   {Id: 3,Tipo: "Venta", CodigoArticulo: "MPLAPLA010", Nombre: "Mueble Madera 1 puerta",    Comprobante: "B0009000012349",    FechaEntrega: "10/05/2020",    Prov: "Bs.As.",    Loc: "Minamar",    Estado: "EN PROCESO",    Etapa: "EN LOTE",    Lote: 4},
   {Id: 4,Tipo: "Venta", CodigoArticulo: "MPLAPLA010", Nombre: "Mueble Madera 1 puerta",    Comprobante: "B0009000012349",    FechaEntrega: "10/05/2020",    Prov: "Bs.As.",    Loc: "Gesell",     Estado: "EN PROCESO",    Etapa: "ESTANTERIA", Lote: 3},
@@ -116,12 +116,12 @@ export class LoteCrearLoteComponent implements OnInit {
   pickerLoteHasta:any   = null;
 
   body: BodyDetalle ={
-    idTipo      : null,
+    idTipo      : 1,
     idTurno     : null,
     idOrigen    : null,
     idEstado    : null,
     idEtapa     : null,
-    idProvincia : null,
+    idProvincia : 1,
     idLocalidad : null,
     desdePedido : null,
     hastaPedido : null,
@@ -129,6 +129,20 @@ export class LoteCrearLoteComponent implements OnInit {
     desdeLote   : null,
     hastaLote   : null
   };
+
+  /* {
+
+   "idTipo" : 1,
+   "idTurno" : null,
+   "idOrigen" : null,
+   "idEtapa" : null,
+   "idProvincia" : 1,
+   "idLocalidad" : null,
+   "desdePedido" : null,
+   "hastaPedido" : "null",
+   "idLote" : null   
+
+} */
 
   constructor(private _router: Router, 
               private _fuseSidebarService: FuseSidebarService, 
@@ -150,14 +164,14 @@ export class LoteCrearLoteComponent implements OnInit {
     
     //this.resetFiltros();    
 
-    this.getfiltros();
+    //this.getfiltros(); ESTA COMENTADO PARA QUE NO HAGA TANTAS CONSULTAS A LA API
     
-    this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
+    this.getArticulos(this.busqueda, this.page, this.size, this.columna, this.order);
   }
 
   resetFiltros(){
 
-    this.busqueda = ""
+    this.busqueda = "";
     this.page = 0;
     this.size = 10;
     this.columna = 'codigoArticulo';
@@ -182,8 +196,8 @@ export class LoteCrearLoteComponent implements OnInit {
 
   getfiltros(){
     this._loteCrearLoteService.getAllTipos().subscribe(params => {
-      console.log("respuesta de   datos");
-      console.log(params.datos);
+      //console.log("respuesta getFiltros");
+      //console.log(params.datos);
       this.filtroTipos = params.datos;
     },
     (err: HttpErrorResponse) => {
@@ -224,7 +238,7 @@ export class LoteCrearLoteComponent implements OnInit {
     })
     
     this._loteCrearLoteService.getAllOrigenes().subscribe(params => {
-      console.log(params.datos);
+      //console.log(params.datos);
       this.filtroOrigenes = params.datos;
     },
     (err: HttpErrorResponse) => {
@@ -325,7 +339,7 @@ export class LoteCrearLoteComponent implements OnInit {
     })
   }
 
-  getDetalle(busqueda, page, size, columna, order){
+  getArticulos(busqueda, page, size, columna, order){
     let idTipo      :number =null;
     let idTurno     :number =null;
     let idOrigen    :number =null;
@@ -390,11 +404,11 @@ export class LoteCrearLoteComponent implements OnInit {
     
     // console.log(this.body);
 
-    this._loteCrearLoteService.getPedidoDetalle(this.body, busqueda, page, size, columna, order).subscribe(
+    this._loteCrearLoteService.getArticulos(this.body, busqueda, page, size, columna, order).subscribe(
       data => {
         this.dataSource2 = data.datos;
         console.log("getPedidoDetalle");
-        //console.log(this.dataSource2);
+        console.log(this.dataSource2);
         this.length = data.totalRegistros;
       },
       (err: HttpErrorResponse) => {
@@ -430,7 +444,7 @@ export class LoteCrearLoteComponent implements OnInit {
 
             this.resetFiltros();
             this.getfiltros();
-            this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
+            this.getArticulos(this.busqueda, this.page, this.size, this.columna, this.order);
             
           } else {
             this._router.navigate(['']);
@@ -616,7 +630,7 @@ export class LoteCrearLoteComponent implements OnInit {
   }
 
   buscar(){
-    this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
+    this.getArticulos(this.busqueda, this.page, this.size, this.columna, this.order);
   }
 
   @Debounce(1000)  
@@ -627,7 +641,7 @@ export class LoteCrearLoteComponent implements OnInit {
     this.page = 0;
     this.columna = 'id';
 
-    this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
+    this.getArticulos(this.busqueda, this.page, this.size, this.columna, this.order);
 
   }
 
@@ -640,7 +654,7 @@ export class LoteCrearLoteComponent implements OnInit {
     this.page = 0;
     this.columna = 'id';
 
-    this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
+    this.getArticulos(this.busqueda, this.page, this.size, this.columna, this.order);
 
   }
 
@@ -652,11 +666,12 @@ export class LoteCrearLoteComponent implements OnInit {
 
   crearLote() {
 
+    console.log("seleccion");
     console.log(this.selection);
 
     localStorage.setItem('Lote',JSON.stringify(this.selection));
     
-    let ruta = `apps/pedidos/administracion/addLote`;
+    let ruta = `apps/lotes/agregar-lote`;
     this._router.navigate([ruta]);
   }
 
@@ -701,7 +716,7 @@ export class LoteCrearLoteComponent implements OnInit {
     if (event.direction !== "")
         this.order = event.direction;
     
-    this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
+    this.getArticulos(this.busqueda, this.page, this.size, this.columna, this.order);
   }
 
 
@@ -709,6 +724,6 @@ export class LoteCrearLoteComponent implements OnInit {
       this.page = e.pageIndex;
       this.size = e.pageSize;
       
-      this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
+      this.getArticulos(this.busqueda, this.page, this.size, this.columna, this.order);
   }
 }
