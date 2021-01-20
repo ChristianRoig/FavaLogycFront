@@ -257,7 +257,7 @@ export class ListaLotesComponent implements OnInit {
   getCantArticulos( id: number ){  //no para de llamarse
     
       this.body.idLote = id;
-      this._listaLoteService.getPedidosLote( this.body, this.busqueda, this.columna, this.order ) .subscribe( data => {
+      this._listaLoteService.getArticulosDeLote( this.body, this.busqueda, this.columna, this.order ) .subscribe( data => {
         console.log(data.totalRegistros);
         let resultado = data.datos.id;
         console.log(resultado);

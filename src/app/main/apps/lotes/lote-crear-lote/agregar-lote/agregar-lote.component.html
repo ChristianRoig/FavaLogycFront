@@ -62,7 +62,7 @@
         <h2 class="tituloArticulos"> Artículos que conforman el lote</h2>
     </div>
     <!-- [dataSource]="dataSourceArticulos" -->
-    <table mat-table class="mb-8" [dataSource]="dataSourceArticulos" style="width: 100%;">
+    <table mat-table class="mb-8 " [dataSource]="dataSourceArticulos" style="width: 100%;">
 
         <!-- <ng-container matColumnDef="select" sticky>
             <th mat-header-cell *matHeaderCellDef class="px-24">
@@ -78,7 +78,7 @@
         <!-- 'select', 'Tipo', 'CodigoArticulo','NombreArticulo', 'Comprobante', 'Fecha-Entrega', 'Provincia', 'Localidad','Etapa' -->
         <!-- 'select','id','codigoArticulo','nombre','cantidad','estado','etapa' -->
         <!-- Name Column -->
-        <ng-container matColumnDef="id">
+        <ng-container matColumnDef="id" class="espaciado">
             <th mat-header-cell *matHeaderCellDef> Id Artículo </th>
             <td mat-cell *matCellDef="let element"> {{element.id}} </td>
         </ng-container>

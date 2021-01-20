@@ -31,7 +31,7 @@ export class ListaLotesService
 
     getAllLotes(): Observable<any>{                                   //MIO 
         //lote hardcodeado al 1 para traer lotes
-        let ruta = `${ BASE_URL }pedidosatrabajar/pedidolote/lote/0/1`;
+        let ruta = `${ BASE_URL }pedidosatrabajar/pedidolote/lote/0/10`;
         return this._httpClient.get(ruta);
     }
 
@@ -168,5 +168,22 @@ export class ListaLotesService
         let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/pornombreyfechas/${lote}`;
         
         return this._httpClient.post(ruta, body, {headers: headers});
-    }
+      }
+
+      
+        /* PARA TRAER CANT-ARTICULOS */
+      getArticulosDeLote(body: BodyDetalle, busqueda, columna, order): Observable<any>{
+        
+        let headers = new HttpHeaders({
+            "Content-Type": "application/json"
+        });
+      
+        let buscar:string = '';
+        if (busqueda !== '')
+            buscar = `/${busqueda}`
+      
+        let ruta = `${BASE_URL}pedidosatrabajar/pedidodetalle/pedidolote/porcomprobanteoarticulo${buscar}/${columna}/${order}`;
+        
+        return this._httpClient.post(ruta, body, {headers: headers});
+      }
 }
