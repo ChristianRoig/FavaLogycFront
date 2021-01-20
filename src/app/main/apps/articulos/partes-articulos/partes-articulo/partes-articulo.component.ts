@@ -1,11 +1,13 @@
 import {Component, ViewEncapsulation, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { Router } from '@angular/router';
-import { PedidosPartesArticulosService } from './partes-articulo.service';
 import { MatDialog } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 import { Debounce } from 'app/shared/decorators/debounce';
+
+//services
+import { PedidosPartesArticulosService } from './partes-articulo.service';
 
 @Component({
     selector     : 'pedidos-partes-articulo',

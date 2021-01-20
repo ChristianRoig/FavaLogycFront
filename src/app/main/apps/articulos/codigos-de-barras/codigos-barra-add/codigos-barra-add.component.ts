@@ -1,12 +1,16 @@
 import {Component, ViewEncapsulation, OnInit} from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { Router, ActivatedRoute } from '@angular/router';
-import { PedidosCodigosBarraAddService } from './codigos-barra-add.service'
 import { Subscription } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
-import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+
+//components
+import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
+
+//services
+import { PedidosCodigosBarraAddService } from './codigos-barra-add.service'
 
 /**
  * @title Basic use of `<table mat-table>`

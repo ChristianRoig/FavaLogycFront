@@ -2,12 +2,16 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 import { MatDialog } from '@angular/material/dialog';
-import { RemitosConfirmarService } from './remitos-confirmar.service';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Debounce } from 'app/shared/decorators/debounce';
-import { VerImpresorasComponent } from '../../lotes/lista-lotes/ver-impresoras/ver-impresoras.component';
+
+//componentes      
+import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
+//import { VerImpresorasComponent } from '../../lotes/lista-lotes/ver-impresoras/ver-impresoras.component'; 
+
+//services
+import { RemitosConfirmarService } from './remitos-confirmar.service';
 
 export interface PeriodicElement {
   Id: number;
@@ -96,8 +100,6 @@ export class RemitosConfirmarComponent implements OnInit {
     this.selectedDepositoCarga = (event.target as HTMLSelectElement).value;
   }
 
-
-
   getfiltros(){
 
     this._service.getAllDepostitosCarga().subscribe(params => {
@@ -160,12 +162,7 @@ export class RemitosConfirmarComponent implements OnInit {
         }
       }
     })
-
-    
-
-
   }
-
 
   getUltNroTalonario(){
 
@@ -184,7 +181,6 @@ export class RemitosConfirmarComponent implements OnInit {
     });
   }
 
-
   mostrarError(errStatus, titulo, mensaje){
     const dialogRef = this._dialog.open( ModalErrorComponent, { 
       data: {
@@ -192,7 +188,6 @@ export class RemitosConfirmarComponent implements OnInit {
         mensaje: mensaje
       } 
     });
-
     dialogRef.afterClosed()
       .subscribe( () => {
         if (errStatus != 0) {  

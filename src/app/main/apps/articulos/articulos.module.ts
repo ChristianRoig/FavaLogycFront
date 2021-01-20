@@ -1,29 +1,37 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 import { FuseSharedModule } from '@fuse/shared.module';
 import { FuseWidgetModule } from '@fuse/components/widget/widget.module';
 
+import { CustomTagModule } from 'app/main/custom-tags/custom-tag.module';
+import { MaterialDesignModule } from 'app/material-design/material-design.module';
+// import { MaterialDesignModule } from 'app/material-design/material-design.module';
+
+//componentes
 import { PedidosPartesArticuloComponent } from './partes-articulos/partes-articulo/partes-articulo.component';
-import { PedidosPartesArticulosService } from './partes-articulos/partes-articulo/partes-articulo.service';
 import { PedidosPartesArticuloEditarComponent } from './partes-articulos/partes-articulo-editar/partes-articulo-editar.component';
-import { PedidosPartesArticulosEditarService } from './partes-articulos/partes-articulo-editar/partes-articulo-editar.service';
 import { PedidosCodigosBarraComponent } from './codigos-de-barras/codigos-barra/codigos-barra.component';
 import { PedidosCodigosBarraEditarComponent } from './codigos-de-barras/codigos-barra-editar/codigos-barra-editar.component';
 import { PedidosCodigosBarraAddComponent } from './codigos-de-barras/codigos-barra-add/codigos-barra-add.component';
+import { PedidosCodigosBarraArticulosComponent } from './codigos-de-barras/codigos-barra-articulos/codigos-barra-articulos.component';
+import { ModalConfirmacionBorrarComponent } from './codigos-de-barras/codigos-barra/modal-confirmacion-borrar/modal-confirmacion-borrar.component';
+
+//services
+import { PedidosPartesArticulosService } from './partes-articulos/partes-articulo/partes-articulo.service';
+import { PedidosPartesArticulosEditarService } from './partes-articulos/partes-articulo-editar/partes-articulo-editar.service';
 import { PedidosCodigosBarraEditarService } from './codigos-de-barras/codigos-barra-editar/codigos-barra-editar.service';
 import { PedidosCodigosBarraAddService } from './codigos-de-barras/codigos-barra-add/codigos-barra-add.service';
 import { PedidosCodigosBarraService } from './codigos-de-barras/codigos-barra/codigos-barra.service';
-import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
-import { PedidosCodigosBarraArticulosComponent } from './codigos-de-barras/codigos-barra-articulos/codigos-barra-articulos.component';
 import { PedidosCodigosBarraArticulosService } from './codigos-de-barras/codigos-barra-articulos/codigos-barra-articulos.service';
-import { CustomTagModule } from 'app/main/custom-tags/custom-tag.module';
-import { MaterialDesignModule } from 'app/material-design/material-design.module';
-import { ModalConfirmacionBorrarComponent } from './codigos-de-barras/codigos-barra/modal-confirmacion-borrar/modal-confirmacion-borrar.component';
-// import { MaterialDesignModule } from 'app/material-design/material-design.module';
 
 const routes: Routes = [
+    /* {
+        path        : 'administracion',
+        loadChildren: () => import('./administracion/administracion.module').then(m => m.AdministracionModule)
+    }, */
     {
         path     : 'partes-articulo',
         component: PedidosPartesArticuloComponent

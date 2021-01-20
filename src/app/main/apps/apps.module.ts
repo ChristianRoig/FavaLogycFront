@@ -7,7 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 const routes = [
     {
         path        : 'pedidos',
-        loadChildren: () => import('./pedidos-a-trabajar/pedidos.module').then(m => m.PedidosModule)
+        loadChildren: () => import('./pedidos/pedidos.module').then(m => m.PedidosModule)
     },
     {
         path        : 'remitos',

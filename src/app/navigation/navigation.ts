@@ -16,12 +16,49 @@ export const navigation: FuseNavigation[] = [
                 children : [
                     {
                         id        : 'pedidos-lista',
-                        title     : 'Administración Pedidos',
+                        title     : 'Lista Pedidos',
                         type      : 'item',
-                        url       : '/apps/pedidos/administracion/pedidos-lista',
+                        url       : '/apps/pedidos/pedidos-lista',
                         exactMatch: true
-                    }
+                    },
+                    {
+                        id        : 'crear-pedido',
+                        title     : 'Crear Pedido',
+                        type      : 'item',
+                        url       : '/apps/pedidos/crear-pedido',
+                        exactMatch: true
+                    },
                 ]
+            },
+            {
+                id       : 'articulos',
+                title    : 'Articulos',
+                type     : 'collapsable',
+                icon     : 'shopping_cart',
+                children : [
+                    {
+                        id        : 'partes-articulo',
+                        title     : 'Partes de artículo',
+                        type      : 'item',
+                        url       : '/apps/articulos/partes-articulo',
+                        exactMatch: true
+                    },
+                    {
+                        id        : 'codigos-barra',
+                        title     : 'Códigos de Barras',
+                        type      : 'item',
+                        url       : '/apps/articulos/codigos-barra-articulos',
+                        exactMatch: true
+                    },
+                ]
+            },
+            {
+                id        : 'remitos',
+                title     : 'Remitos',
+                type      : 'item',
+                icon      : 'insert_drive_file',
+                url       : '/apps/remitos/remitos',
+                exactMatch: true
             },
             {
                 id        : 'lotes',
@@ -75,37 +112,7 @@ export const navigation: FuseNavigation[] = [
                         exactMatch: true
                     }
                 ]
-            },
-            {
-                id        : 'remitos',
-                title     : 'Remitos',
-                type      : 'item',
-                icon      : 'insert_drive_file',
-                url       : '/apps/remitos/remitos',
-                exactMatch: true
-            },
-            {
-                id       : 'articulos',
-                title    : 'Articulos',
-                type     : 'collapsable',
-                icon     : 'archive',
-                children : [
-                    {
-                        id        : 'partes-articulo',
-                        title     : 'Partes de artículo',
-                        type      : 'item',
-                        url       : '/apps/articulos/partes-articulo',
-                        exactMatch: true
-                    },
-                    {
-                        id        : 'codigos-barra',
-                        title     : 'Códigos de Barras',
-                        type      : 'item',
-                        url       : '/apps/articulos/codigos-barra-articulos',
-                        exactMatch: true
-                    }
-                ]
-            }
+            } 
         ]
     }
 ];

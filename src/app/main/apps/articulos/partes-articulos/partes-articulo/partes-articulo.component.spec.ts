@@ -1,17 +1,17 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { PedidosPartesArticuloComponent } from './partes-articulo.component';
-import { PedidosPartesArticulosService } from './partes-articulo.service';
 
+import { Observable } from 'rxjs';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { ChangeDetectionStrategy } from '@angular/core';
-import { PedidosModule } from '../../pedidos.module';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { Observable } from 'rxjs';
+import { ArticulosModule } from '../../articulos.module';
+import { PedidosPartesArticuloComponent } from './partes-articulo.component';
+import { PedidosPartesArticulosService } from './partes-articulo.service';
 
 class FakeRouter {
     navigate( params ) { }
@@ -60,7 +60,7 @@ describe('PedidosPartesArticuloComponent', () => {
                 BrowserModule,
                 FormsModule,
                 HttpClientModule,
-                PedidosModule,
+                ArticulosModule,
                 BrowserAnimationsModule
             ]
         })

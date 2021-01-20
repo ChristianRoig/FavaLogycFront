@@ -1,13 +1,16 @@
 import {Component, ViewEncapsulation, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { Router, ActivatedRoute } from '@angular/router';
-import { PedidosCodigosBarraArticulosService } from './codigos-barra-articulos.service';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 import { Debounce } from 'app/shared/decorators/debounce';
 
+//components
+import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
+
+//services
+import { PedidosCodigosBarraArticulosService } from './codigos-barra-articulos.service';
 
 /**
  * @title Basic use of `<table mat-table>`

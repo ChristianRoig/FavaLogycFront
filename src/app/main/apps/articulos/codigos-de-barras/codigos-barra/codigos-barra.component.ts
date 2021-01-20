@@ -1,13 +1,17 @@
 import {Component, ViewEncapsulation, OnInit, ChangeDetectorRef, ViewChild, ElementRef} from '@angular/core';
-import { fuseAnimations } from '@fuse/animations';
 import { Router, ActivatedRoute } from '@angular/router';
-import { PedidosCodigosBarraService } from './codigos-barra.service';
 import { Subscription } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { Debounce } from 'app/shared/decorators/debounce';
+import { fuseAnimations } from '@fuse/animations';
+
+//componentes
 import { ModalConfirmacionBorrarComponent } from './modal-confirmacion-borrar/modal-confirmacion-borrar.component';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
-import { Debounce } from 'app/shared/decorators/debounce';
+
+//services
+import { PedidosCodigosBarraService } from './codigos-barra.service';
 
 /**
  * @title Basic use of `<table mat-table>`

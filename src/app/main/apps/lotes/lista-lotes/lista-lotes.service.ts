@@ -34,6 +34,12 @@ export class ListaLotesService
         let ruta = `${ BASE_URL }pedidosatrabajar/pedidolote/lote/0/10`;
         return this._httpClient.get(ruta);
     }
+    
+    getLotesPorNombre( nombreLote ): Observable<any>{                                   //MIO 
+        //lote hardcodeado al 1 para traer lotes
+        let ruta = `${ BASE_URL }pedidosatrabajar/pedidolote/lote/nombre/${ nombreLote }`;
+        return this._httpClient.get(ruta);
+    }
 
     getLotePorId(loteId: number): Observable<any>{                       //PROPUESTA
         /* let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/${ loteId }`;
