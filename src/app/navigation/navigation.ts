@@ -31,36 +31,6 @@ export const navigation: FuseNavigation[] = [
                 ]
             },
             {
-                id       : 'articulos',
-                title    : 'Articulos',
-                type     : 'collapsable',
-                icon     : 'shopping_cart',
-                children : [
-                    {
-                        id        : 'partes-articulo',
-                        title     : 'Partes de artículo',
-                        type      : 'item',
-                        url       : '/apps/articulos/partes-articulo',
-                        exactMatch: true
-                    },
-                    {
-                        id        : 'codigos-barra',
-                        title     : 'Códigos de Barras',
-                        type      : 'item',
-                        url       : '/apps/articulos/codigos-barra-articulos',
-                        exactMatch: true
-                    },
-                ]
-            },
-            {
-                id        : 'remitos',
-                title     : 'Remitos',
-                type      : 'item',
-                icon      : 'insert_drive_file',
-                url       : '/apps/remitos/remitos',
-                exactMatch: true
-            },
-            {
                 id        : 'lotes',
                 title     : 'Lotes',
                 type      : 'collapsable',
@@ -111,6 +81,36 @@ export const navigation: FuseNavigation[] = [
                         url       : '/apps/control/darsena',
                         exactMatch: true
                     }
+                ]
+            },
+            {
+                id        : 'remitos',
+                title     : 'Remitos',
+                type      : 'item',
+                icon      : 'insert_drive_file',
+                url       : '/apps/remitos/remitos',
+                exactMatch: true
+            },
+            {
+                id       : 'articulos',
+                title    : 'Articulos',
+                type     : 'collapsable',
+                icon     : 'shopping_cart',
+                children : [
+                    {
+                        id        : 'partes-articulo',
+                        title     : 'Partes de artículo',
+                        type      : 'item',
+                        url       : '/apps/articulos/partes-articulo',
+                        exactMatch: true
+                    },
+                    {
+                        id        : 'codigos-barra',
+                        title     : 'Códigos de Barras',
+                        type      : 'item',
+                        url       : '/apps/articulos/codigos-barra-articulos',
+                        exactMatch: true
+                    },
                 ]
             } 
         ]
