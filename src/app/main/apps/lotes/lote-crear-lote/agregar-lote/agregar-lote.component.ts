@@ -44,7 +44,7 @@ export class LoteAgregarLoteComponent implements OnInit {
 
   subParametros: Subscription;
   
-  displayedColumnsArticulos: string[] = ['select', 'id', 'codigoArticulo', 'nombre', 'cantidad', 'estado', 'etapa'];
+  displayedColumnsArticulos: string[] = ['id', 'codigoArticulo', 'nombre', 'cantidad', 'etapa'];
   //displayedColumnsArticulos: string[] = ['select', 'Tipo', 'CodigoArticulo','NombreArticulo', 'Comprobante', 'Fecha-Entrega', 'Provincia', 'Localidad','Etapa'];
   
   //['select', 'Tipo', 'CodigoArticulo','NombreArticulo', 'Comprobante', 'Fecha-Entrega', 'Provincia', 'Localidad','Etapa'];
@@ -138,17 +138,14 @@ export class LoteAgregarLoteComponent implements OnInit {
   }
 
   armarArrarIds(){
-    this.picker.getFullYear()
-    let fecha = this.picker.getFullYear()+"-"+(this.picker.getMonth()+1)+"-"+this.picker.getDate();
 
-    
     for (let elemento of this.dataSourceArticulos){
       this.toAdd.push(elemento.id);
     }
-    //console.log("this.toAdd");
-    //console.log(this.toAdd);
+    console.log("this.toAdd");
+    console.log(this.toAdd);
     
-    this._service.postLote(this.toAdd, fecha, this.nombreLote).subscribe(
+    this._service.postLote(this.toAdd, this.nombreLote).subscribe(
       data => {
         let idLote = data.idLote
         this.imprimirCupas(idLote);
@@ -188,9 +185,6 @@ export class LoteAgregarLoteComponent implements OnInit {
         this.volver();  
         
       });
-
-
-      
   }
 
 

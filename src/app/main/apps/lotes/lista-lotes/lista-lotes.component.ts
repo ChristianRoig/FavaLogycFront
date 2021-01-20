@@ -217,23 +217,7 @@ export class ListaLotesComponent implements OnInit {
         }
     }); 
   }
-  /*   let dialogRef = this._dialog.open(BuscarLoteComponent, {
-      data: {
-        lote:       this.lote,
-        fechaDesde: this.pickerLoteDesde,
-        fechaHasta: this.pickerLoteHasta
-      } 
-    });
-    
-    dialogRef.afterClosed()
-      .subscribe(result => {
-        if(localStorage.getItem('Lote')){
-          this.nombreLote = JSON.parse(localStorage.getItem('Lote')).nombre;
-          this.idLote     = JSON.parse(localStorage.getItem('Lote')).id;
-          localStorage.removeItem('Lote');
-          this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
-        }
-      }); */
+
   activarFechas(){
     this.filtroFechas = !this.filtroFechas;
   }
@@ -267,38 +251,37 @@ export class ListaLotesComponent implements OnInit {
   getSoloFecha(fecha: any){
     return fecha.split(' ')[0];
   }
+  
 
-  getCantArticulos( id: number ){              //propuesto para usar
-    //al solo existir el lote 1 y 2 en la bbdd no puede buscar otra info de lotes con id distintos a esos
+
+  getCantArticulos( id: number ){  //no para de llamarse
     
-    /* this._verLoteService.getPedidosLote( this.body, this.busqueda, this.columna, this.order ) .subscribe( data => {
-      this.dataSource2 = data.datos;
-      console.log("this.dataSource2.length");
-      console.log(this.dataSource2.length);
-    },
-    (err: HttpErrorResponse) => {
-      if (err.error instanceof Error) {
-        console.log("Client-side error");
-      } else {
-        let errStatus = err.status
-        if (errStatus == 0){
-          let titulo = 'Error de Servidor';
-          let mensaje = "Por favor comunicarse con Sistemas";
-          this.mostrarError(errStatus, titulo, mensaje);
+      this.body.idLote = id;
+      this._listaLoteService.getPedidosLote( this.body, this.busqueda, this.columna, this.order ) .subscribe( data => {
+        console.log(data.totalRegistros);
+        let resultado = data.datos.id;
+        console.log(resultado);
+        return resultado;
+        //console.log("this.dataSource2.length", this.dataSource2.length);
+        //return this.dataSource2.length;
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error");
         } else {
-          let titulo = 'Error la cantidad de articulos';
-          let mensaje = err.error.message.toString();
-          this.mostrarError(errStatus, titulo, mensaje);
+          let errStatus = err.status
+          if (errStatus == 0){
+            let titulo = 'Error de Servidor';
+            let mensaje = "Por favor comunicarse con Sistemas";
+            this.mostrarError(errStatus, titulo, mensaje);
+          } else {
+            let titulo = 'Error la cantidad de articulos';
+            let mensaje = err.error.message.toString();
+            this.mostrarError(errStatus, titulo, mensaje);
+          }
         }
-      }
-    }); */
+      });
   }
-    /* this._listaLoteService.getLote( id ) .subscribe ( data => {
-      console.log(data);
-      let nroArticulos = data.length;
-      return nroArticulos;
-    }); 
-  }*/
 
   getArticulo(id: number){                     //para borrar
     /* let num = Math.floor(Math.random() * (50 - 15)) + 15; */
@@ -317,12 +300,7 @@ export class ListaLotesComponent implements OnInit {
     }
   }
 
-
-
-
-
   resetFiltros(){
-
     this.busqueda = ""
     this.page = 0;
     this.size = 10;
@@ -777,7 +755,7 @@ export class ListaLotesComponent implements OnInit {
     //console.log(this.lote);
     if(this.lote === ''){
       this.lote = null;
-    }
+    }else{}
 
   }
 

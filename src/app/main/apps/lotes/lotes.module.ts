@@ -19,6 +19,7 @@ import { VerCupasComponent } from './lista-lotes/ver-cupas/ver-cupas.component';
 import { VerLoteComponent } from './lista-lotes/ver-lote/ver-lote.component';
 import { LoteAgregarLoteComponent } from '../lotes/lote-crear-lote/agregar-lote/agregar-lote.component';
 import { ModalDeseaImprimirLoteComponent } from './lote-crear-lote/agregar-lote/modal-confirmacion-borrar/modal-desea-imprimir.component';
+import { ModalConfirmacionBorrarComponent } from './lista-lotes/ver-lote/modal-confirmacion-borrar/modal-confirmacion-borrar.component';
 
 
 // servicios
@@ -57,7 +58,8 @@ const routes: Routes = [
         ListaLotesComponent,
         VerLoteComponent,
         LoteAgregarLoteComponent,
-        ModalDeseaImprimirLoteComponent
+        ModalDeseaImprimirLoteComponent,
+        ModalConfirmacionBorrarComponent
     ],
     imports     : [
         CommonModule,

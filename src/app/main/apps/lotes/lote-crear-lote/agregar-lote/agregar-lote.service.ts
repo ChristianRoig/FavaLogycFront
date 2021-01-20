@@ -26,16 +26,15 @@ export class LoteAgregarLoteService
         return this._httpClient.get(ruta);
     }
 
-    postLote(listaIdPedidos: Array<number>, fechaCreacion: string, comentario: string): Observable<any>{
+    postLote(listaIdPedidos: Array<number>, comentario: string): Observable<any>{
         
-        let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/lote/`
+        let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/lote`
 
         let body =   {
-            "listaIdPedidos": listaIdPedidos,
-            "fechaCreacion": fechaCreacion, // acá se le pone la fecha al nombre del lote
+            "listaIdPedidos": listaIdPedidos, 
             "comentario": comentario
         }
-
+        
         let headers = new HttpHeaders({
             "Content-Type": "application/json"
         });

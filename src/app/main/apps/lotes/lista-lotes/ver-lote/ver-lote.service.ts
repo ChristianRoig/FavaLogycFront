@@ -35,9 +35,7 @@ export class VerLoteService {
    * @returns {Observable} Observable
    */
   getLote(loteId: number): Observable<any>{
-
-      /* let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/${ loteId }`; */
-      let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/1`;
+      let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/${ loteId }`;
       return this._httpClient.get(ruta);
   }
 
@@ -83,35 +81,33 @@ export class VerLoteService {
     return this._httpClient.post(ruta, {headers: headers});
   }
 
-  postEliminarLote(  ): Observable<any> {
+  eliminarLote( idLote ): Observable<any> {
 
     let headers = new HttpHeaders({
         "Content-Type": "application/json"
     });
 
-    let body= {
-        
-    }
-    let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/lote/detalle/`;
+    let body= {}
+    
+    let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/${ idLote }`;
 
-    return this._httpClient.post(ruta, body, {headers: headers});
+    //return this._httpClient.delete(ruta);
+    return this._httpClient.delete(ruta, {headers: headers});
 }
 
-  /* updateNombreLote(nombre, lote){
+  updateNombreLote(nombre, idLote){
     
     let headers = new HttpHeaders({
       "Content-Type": "application/json"
     });
 
     let body = {
-      "id": lote.id,
       "nombre": nombre,
-      //"fechaAlta": lote.fechaAlta
     }
 
-    let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/lote/imprimir/cupa/${ lote }`; ?????????
+    let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/lote/${ idLote }`;
     return this._httpClient.put(ruta, body,{headers: headers});
-  } */
+  }
 
 }
 

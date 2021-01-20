@@ -8,7 +8,7 @@ import { Debounce } from 'app/shared/decorators/debounce';
 
 //componentes
 import { VerImpresorasComponent } from '../ver-impresoras/ver-impresoras.component';
-
+import { ModalConfirmacionBorrarComponent } from './modal-confirmacion-borrar/modal-confirmacion-borrar.component';
 //servicios
 import { VerLoteService } from './ver-lote.service';
 
@@ -44,7 +44,7 @@ export class VerLoteComponent implements OnInit {
   
   @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
 
-  displayedColumns: string[] = ['select', 'codigoArticulo', 'nombreArticulo', 'tipo', 'etapa', 'comprobante'];
+  displayedColumns: string[] = ['select', 'codigoArticulo', 'nombreArticulo', 'etapa', 'comprobante'];
   selection = new SelectionModel<any>(true, []);
   dataSource2: any;
 
@@ -114,12 +114,13 @@ export class VerLoteComponent implements OnInit {
   ngOnInit(): void {
     //console.log("ver-lote component");
     this.editLote = false;
-    this.nombreLote = "Nombre lote";
+    //this.nombreLote = "Nombre lote";
     //this.loteActual = lote;
     this._activatedRoute.params.subscribe( params => {
       //console.log( params['id'] );
 
-      //this.getLote( params['id'] );
+      this.getLote( params['id'] );
+      console.log("id lote -> ", params['id']);
       this.getArticulosDeLote( params['id'] );
     });
   }
@@ -130,8 +131,7 @@ export class VerLoteComponent implements OnInit {
     this._verLoteService.getArticulosDeLote( this.body, this.busqueda, this.columna, this.order ) .subscribe( data => {
       this.dataSource2 = data.datos;
 
-      console.log(this.dataSource2);
-      console.log(data);
+      console.log("articulos -> ", this.dataSource2);
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
@@ -153,9 +153,10 @@ export class VerLoteComponent implements OnInit {
 
   getLote(idLote: number){                                              //Propuesta de getLote PARA OBTENER Y MODIFICAR EL NOMBRE DE LOTE  
     this._verLoteService.getLote( idLote ) .subscribe( data => {
-      console.log(data.datos);
-      this.loteActual = data.datos;
+      console.log(data);
+      this.loteActual = data;
       this.nombreLote = this.loteActual.nombre;
+      this.idLote = this.loteActual.id;
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
@@ -180,17 +181,17 @@ export class VerLoteComponent implements OnInit {
   }
 
   actualizarNombreLote(nombreLoteInput: string){
+
     console.log(nombreLoteInput);
     if(nombreLoteInput != ''){
       this.loteActual.nombreLote = nombreLoteInput;
-
+      this.nombreLote = nombreLoteInput;
     }
     this.editLote = false;
 
-    /* this._verLoteService.updateNombreLote(this.loteActual.nombreLote, this.loteActual.id) .subscribe (data =>  {
-      console.log(data);
-      //this.dataSource2 = data;
-    }),
+    this._verLoteService.updateNombreLote(this.loteActual.nombreLote, this.loteActual.id) .subscribe (data =>  {
+
+    },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
         console.log("Client-side error");
@@ -206,15 +207,30 @@ export class VerLoteComponent implements OnInit {
           this.mostrarError(errStatus, titulo, mensaje);
         }
       }
-    }) */
+    });
+  }
+
+  confirmacionBorrar() {
+    const dialogRef = this._dialog.open( ModalConfirmacionBorrarComponent, { 
+      data: {
+        id: this.loteActual.id,
+        nombre: this.nombreLote,
+        /* codigoArticulo: this.codigoArticulo,
+        codigoDeBarras: codigoDeBarras, 
+        descripcion: descripcion */
+      } 
+    });
+    dialogRef.afterClosed()
+      .subscribe(result => {
+        if ( result )
+          this.eliminarLote()
+      }); 
   }
 
   eliminarLote(){
-    this.titulo = "Éste lote se borrará";
-    this.mensaje = "Desea realizar ésta acción?";
-    this.mostrarError(-1, this.titulo, this.mensaje);
-    /*this._verLoteService.postEliminarLote( this.idLote ) .subscribe( data => {
-      console.log(data);
+    console.log("se eliminará el lote -> ", this.idLote );
+    this._verLoteService.eliminarLote( this.idLote ) .subscribe( data => {
+      console.log("se eliminará el lote -> ", this.idLote );
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
@@ -231,7 +247,7 @@ export class VerLoteComponent implements OnInit {
           this.mostrarError(errStatus, titulo, mensaje);
         }
       }
-    });; */
+    }); 
   }
 
   sacarDelLote(){
