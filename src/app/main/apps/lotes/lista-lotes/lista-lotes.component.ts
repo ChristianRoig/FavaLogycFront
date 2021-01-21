@@ -157,9 +157,6 @@ export class ListaLotesComponent implements OnInit {
     idLote      : null
   };
 
-
-
-  
   constructor(private _router: Router, 
               private _fuseSidebarService: FuseSidebarService, 
               private _listaLoteService: ListaLotesService,
@@ -251,40 +248,8 @@ export class ListaLotesComponent implements OnInit {
   getSoloFecha(fecha: any){
     return fecha.split(' ')[0];
   }
-  
-
-
-  getCantArticulos( id: number ){  //no para de llamarse
-    
-      this.body.idLote = id;
-      this._listaLoteService.getArticulosDeLote( this.body, this.busqueda, this.columna, this.order ) .subscribe( data => {
-        console.log(data.totalRegistros);
-        let resultado = data.datos.id;
-        console.log(resultado);
-        return resultado;
-        //console.log("this.dataSource2.length", this.dataSource2.length);
-        //return this.dataSource2.length;
-      },
-      (err: HttpErrorResponse) => {
-        if (err.error instanceof Error) {
-          console.log("Client-side error");
-        } else {
-          let errStatus = err.status
-          if (errStatus == 0){
-            let titulo = 'Error de Servidor';
-            let mensaje = "Por favor comunicarse con Sistemas";
-            this.mostrarError(errStatus, titulo, mensaje);
-          } else {
-            let titulo = 'Error la cantidad de articulos';
-            let mensaje = err.error.message.toString();
-            this.mostrarError(errStatus, titulo, mensaje);
-          }
-        }
-      });
-  }
 
   getArticulo(id: number){                     //para borrar
-    /* let num = Math.floor(Math.random() * (50 - 15)) + 15; */
     id = id + 7;
     return id.toString();
   }
@@ -667,11 +632,6 @@ export class ListaLotesComponent implements OnInit {
     }
     // this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
   }
-
-  // addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
-
-  //   console.log(event.value);
-  // }
 
   addEvent( tipo, evento ) {
 

@@ -25,25 +25,21 @@ export class ListaLotesService
 {
     constructor(
         private _httpClient: HttpClient
-    )
-    {
-    }
+    ){    }
 
-    getAllLotes(): Observable<any>{                                   //MIO 
-        //lote hardcodeado al 1 para traer lotes
+    getAllLotes(): Observable<any>{  
+        
         let ruta = `${ BASE_URL }pedidosatrabajar/pedidolote/lote/0/10`;
         return this._httpClient.get(ruta);
     }
     
-    getLotesPorNombre( nombreLote ): Observable<any>{                                   //MIO 
-        //lote hardcodeado al 1 para traer lotes
+    getLotesPorNombre( nombreLote ): Observable<any>{    
+        
         let ruta = `${ BASE_URL }pedidosatrabajar/pedidolote/lote/nombre/${ nombreLote }`;
         return this._httpClient.get(ruta);
     }
 
     getLotePorId(loteId: number): Observable<any>{                       //PROPUESTA
-        /* let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/${ loteId }`;
-        return this._httpClient.get(ruta); */
 
         let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/${ loteId }`;
         return this._httpClient.get(ruta);
@@ -121,7 +117,7 @@ export class ListaLotesService
         return this._httpClient.get(ruta);
     }
 
-    getPedidosLote(body: BodyDetalle, busqueda, columna, order): Observable<any>{
+    getPedidosLote(body: BodyDetalle, busqueda, columna, order): Observable<any>{ //este se va
         
         let headers = new HttpHeaders({
             "Content-Type": "application/json"
@@ -135,25 +131,6 @@ export class ListaLotesService
         
         return this._httpClient.post(ruta, body, {headers: headers});
     }
-    
-    
-  /*   postEliminarArticuloDeLote(listaIdPedidoDetalle): Observable<any>  // sacar
-    {
-
-        let headers = new HttpHeaders({
-            "Content-Type": "application/json"
-        });
-
-        let body= {
-            listaIdPedidoDetalle: listaIdPedidoDetalle
-        }
-
-        let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/lote/detalle/`;
-
-        console.log(listaIdPedidoDetalle);
-
-        return this._httpClient.post(ruta, body, {headers: headers});
-    } */
 
     imprimir(lote, impresora): Observable<any>{
 
@@ -174,22 +151,6 @@ export class ListaLotesService
         let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/pornombreyfechas/${lote}`;
         
         return this._httpClient.post(ruta, body, {headers: headers});
-      }
+    }    
 
-      
-        /* PARA TRAER CANT-ARTICULOS */
-      getArticulosDeLote(body: BodyDetalle, busqueda, columna, order): Observable<any>{
-        
-        let headers = new HttpHeaders({
-            "Content-Type": "application/json"
-        });
-      
-        let buscar:string = '';
-        if (busqueda !== '')
-            buscar = `/${busqueda}`
-      
-        let ruta = `${BASE_URL}pedidosatrabajar/pedidodetalle/pedidolote/porcomprobanteoarticulo${buscar}/${columna}/${order}`;
-        
-        return this._httpClient.post(ruta, body, {headers: headers});
-      }
 }
