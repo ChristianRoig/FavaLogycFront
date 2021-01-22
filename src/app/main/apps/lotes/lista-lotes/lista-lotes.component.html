@@ -1,7 +1,39 @@
-<app-plantilla-fondo-simple titulo='Lotes'>
-    <!-- (arrowBack)="this.arrowBack" -->
+<!-- (arrowBack)="this.arrowBack" -->
+<div id="plantilla1" class="page-layout carded fullwidth inner-scroll">
+    <!-- HEADER -->
+    <div class="header accent" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="space-between center">
 
-    <!-- CONTENIDO -->
+        <!-- APP TITLE -->
+        <div class="logo mb-24 mb-md-0" fxLayout="row" fxLayoutAlign="start center">
+
+            <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+            Lista Lotes
+        </span>
+        </div>
+        <!-- / APP TITLE -->
+
+        <!-- SEARCH -->
+        <div class="search-wrapper mx-32 mx-md-0">
+            <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
+                <mat-icon>search</mat-icon>
+                <input #filter placeholder="Buscar un lote" (keyup)="searchLote()">
+            </div>
+            <button mat-raised-button (click)="buscarLote()" class="add-product-button fuse-white mt-24 mt-md-0">
+                <span>Buscar</span>
+            </button>
+        </div>
+
+        <div class="botones">
+            <button mat-raised-button class="add-product-button fuse-white mt-24 mt-md-0">
+            <span>Eliminar seleccionados</span>
+        </button>
+
+            <button mat-raised-button (click)="redirecCrearLote()" class="add-product-button fuse-white mt-24 mt-md-0">
+                <span>Crear Lote</span>
+            </button>
+        </div>
+    </div>
+
     <div contenido>
         <div class="btnCrearLote">
             <button mat-raised-button color="light" (click)="redirecCrearLote()">Crear un lote</button>
@@ -9,20 +41,16 @@
 
         <div fxLayout="column">
 
-            <!-- Filtros en Pantalla grande -->
+
             <div fxLayout="row" class="content-card pb-4">
 
-                <!-- LOTE -->
                 <div fxFlex="100" class="fuse-card p-24 mr-8">
 
                     <ng-container *ngTemplateOutlet="filtrosLote"></ng-container>
-                    <!-- kmt-24 p-8 btn-block -->
+
                     <div class="controlesBusqueda">
                         <button (click)="buscarLote()" [disabled]="!this.lote" mat-raised-button color="primary">Buscar Lote</button>
-                        <!-- <div class="filtros">
-                            <mat-slide-toggle formcontrolname="hidden" type="button" class="mat-slide-toggle"></mat-slide-toggle>
-                            <label>Mostrar inctivos</label>
-                        </div> -->
+
                         <div class="filtros">
                             <div class="btnToggle">
                                 <mat-slide-toggle formcontrolname="hidden" type="button" class="mat-slide-toggle"></mat-slide-toggle>
@@ -37,15 +65,55 @@
                     <ng-container *ngTemplateOutlet="listaLotes ">
                     </ng-container>
                 </div>
-
             </div>
-
         </div>
 
 
     </div>
-    <!-- / CONTENIDO -->
-</app-plantilla-fondo-simple>
+</div>
+<!-- ----------------------------------------------------------------------------------------------------------------------------- -->
+<!-- ------------------------------------ NUEVO HEADER ----------------------------------------------------- -->
+<!-- ----------------------------------------------------------------------------------------------------------------------------- -->
+<!-- <app-plantilla-fondo-simple titulo='Lotes'> -->
+<!-- CONTENIDO -->
+<!-- <div contenido>
+    <div class="btnCrearLote">
+        <button mat-raised-button color="light" (click)="redirecCrearLote()">Crear un lote</button>
+    </div>
+
+    <div fxLayout="column">
+
+
+        <div fxLayout="row" class="content-card pb-4">
+
+            <div fxFlex="100" class="fuse-card p-24 mr-8">
+
+                <ng-container *ngTemplateOutlet="filtrosLote"></ng-container>
+
+                <div class="controlesBusqueda">
+                    <button (click)="buscarLote()" [disabled]="!this.lote" mat-raised-button color="primary">Buscar Lote</button>
+
+                    <div class="filtros">
+                        <div class="btnToggle">
+                            <mat-slide-toggle formcontrolname="hidden" type="button" class="mat-slide-toggle"></mat-slide-toggle>
+                            <label class="paddingLeft">Mostrar inactivos</label>
+                        </div>
+                        <div class="btnToggle">
+                            <mat-slide-toggle formcontrolname="hidden" type="button" (click)="activarFechas()" class="mat-slide-toggle"></mat-slide-toggle>
+                            <label class="paddingLeft">Filtro fecha</label>
+                        </div>
+                    </div>
+                </div>
+                <ng-container *ngTemplateOutlet="listaLotes ">
+                </ng-container>
+            </div>
+        </div>
+    </div>
+
+
+</div> -->
+<!-- / CONTENIDO -->
+<!-- </app-plantilla-fondo-simple> -->
 
 <!-- SIDE BAR -->
 <fuse-sidebar name="sidebarFilter" class="theme-options-sidebar" position="right" [invisibleOverlay]="false">
