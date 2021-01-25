@@ -15,9 +15,9 @@
             <!-- APP TITLE -->
             <div class="logo mb-24 mb-sm-0" fxLayout="row" fxLayoutAlign="start center">
 
-                <!-- <button mat-icon-button (click)="back()">
+                <button arrowBack mat-icon-button *ngIf="this.arrowBack" (click)="back()">
                     <mat-icon>arrow_back</mat-icon>
-                </button> -->
+                </button>
 
                 <span titulo class="logo-text h1 tituloPagina" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">{{ titulo }}</span>
             </div>

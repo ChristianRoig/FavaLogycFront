@@ -8,13 +8,18 @@ import { Location } from '@angular/common';
   styleUrls: ['./plantilla-fondo-simple.component.scss'],
   animations   : fuseAnimations,
 })
+
+
 export class PlantillaFondoSimpleComponent implements OnInit {
-
+  
   @Input('titulo') titulo: string = '';
+  @Input('arrowBack') arrowBack: boolean = false;
 
+  
   constructor(private _location : Location) { }
-
+  
   ngOnInit(): void {
+    
   }
 
   back() {
