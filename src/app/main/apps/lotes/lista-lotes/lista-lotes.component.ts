@@ -167,9 +167,10 @@ export class ListaLotesComponent implements OnInit {
   };
 
   estados: Estados [] = [
-    { valor: "ABIERTO", vista: "Abiertos" },
+    { valor: "REMITIDO", vista: "Remitidos" },
     { valor: "ANULADO", vista: "Anulados" },
-    { valor: "REMITIDO", vista: "Remitidos" }
+    { valor: "ABIERTO", vista: "Abiertos" },
+    { valor: "TODOS", vista: "Todos" },
 
   ];
 
@@ -197,7 +198,7 @@ export class ListaLotesComponent implements OnInit {
     //this.resetFiltros();    
     //this.getfiltros();
 
-    this.getLotes();
+    this.getLotesAbiertos();
     this.filtroFechas = false;
     this.filtroInactivos = false;
     //this.arrowBack = false;
@@ -238,7 +239,7 @@ export class ListaLotesComponent implements OnInit {
     /* console.log(this.lote); */
     if(this.lote == ''){
       this.lote = null;
-      this.getLotes();
+      this.getLotesAbiertos();
     }
     if(this.lote !== '' && this.lote != null){
       let bodyFechas: BodyDetalleFecha  = {
@@ -276,11 +277,12 @@ export class ListaLotesComponent implements OnInit {
     this.filtroInactivos = !this.filtroInactivos;
   }
 
-  getLotes(){
+  getLotesAbiertos(){
     /* this.dataSource2 = ELEMENT_DATA2;
     console.log(this.dataSource2);
     this.length = this.dataSource2.length; */
-    this._listaLoteService.getAllLotes() .subscribe( data => {
+     let estado = "ABIERTO";
+    this._listaLoteService.getLotesPorEstado( estado ) .subscribe( data => {
       this.dataSource2 = data.datos; 
       console.log(this.dataSource2);
     },
@@ -303,26 +305,49 @@ export class ListaLotesComponent implements OnInit {
   }
 
   getLotesPorEstado( estado: string ){
-    this._listaLoteService.getLotesPorEstado( estado ) .subscribe( data => {
-      this.dataSource2 = data.datos; 
-      //console.log(data);
-    },
-    (err: HttpErrorResponse) => {
-      if (err.error instanceof Error) {
-        console.log("Client-side error");
-      } else {
-        let errStatus = err.status
-        if (errStatus == 0){
-          let titulo = 'Error de Servidor';
-          let mensaje = "Por favor comunicarse con Sistemas";
-          this.mostrarError(errStatus, titulo, mensaje);
+    if( estado === 'TODOS'){
+      this._listaLoteService.getAllLotes( ) .subscribe( data => {
+        this.dataSource2 = data.datos; 
+        //console.log(data);
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error");
         } else {
-          let titulo = 'Error al listar';
-          let mensaje = err.error.message.toString();
-          this.mostrarError(errStatus, titulo, mensaje);
+          let errStatus = err.status
+          if (errStatus == 0){
+            let titulo = 'Error de Servidor';
+            let mensaje = "Por favor comunicarse con Sistemas";
+            this.mostrarError(errStatus, titulo, mensaje);
+          } else {
+            let titulo = 'Error al listar';
+            let mensaje = err.error.message.toString();
+            this.mostrarError(errStatus, titulo, mensaje);
+          }
         }
-      }
-    });
+      });
+    }else{
+      this._listaLoteService.getLotesPorEstado( estado ) .subscribe( data => {
+        this.dataSource2 = data.datos; 
+        //console.log(data);
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error");
+        } else {
+          let errStatus = err.status
+          if (errStatus == 0){
+            let titulo = 'Error de Servidor';
+            let mensaje = "Por favor comunicarse con Sistemas";
+            this.mostrarError(errStatus, titulo, mensaje);
+          } else {
+            let titulo = 'Error al listar';
+            let mensaje = err.error.message.toString();
+            this.mostrarError(errStatus, titulo, mensaje);
+          }
+        }
+      });
+    }
   }
 
   getSoloFecha(fecha: any){
