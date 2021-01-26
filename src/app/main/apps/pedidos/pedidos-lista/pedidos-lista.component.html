@@ -2,43 +2,43 @@
 
     <!-- CONTENIDO -->
     <div contenido>
-
+        <div class="btnAddPedidoLote">
+            <button mat-raised-button color="light" (click)="agregarPedido()">Crear Pedido</button>
+        </div>
         <div fxLayout="column">
 
             <!-- SECCION ARTICULOS -->
-            <div class="fuse-card my-24" style="max-width: 100%;">
+            <div class="fuse-card " style="max-width: 100%;">
 
                 <!-- BOTON "FILTROS" -->
-                <span fxLayoutAlign="end">
+                <!-- <span fxLayoutAlign="end">
 
                     <button mat-button (click)="toggleSidebarOpen('sidebarFilter')" class="m-12">
                         <mat-icon>tune</mat-icon>
                         Filtros                
                     </button> 
-                </span>
+                </span> -->
                 <!-- / BOTON "FILTROS" -->
 
 
                 <!-- TITULO/BUSCADOR/BOTON -->
                 <div fxLayout="row" fxLayoutAlign="space-between">
 
-                    <div class="h2 m-24">Artículos</div>
 
-                    <mat-form-field appearance="outline" style="width: 100%;" class="mt-8 mx-12">
+
+                    <mat-form-field appearance="outline" style="width: 80%;" class="mt-8 mx-12">
                         <mat-label>Código de Artículo o Comprobante</mat-label>
                         <input #buscarCbte class="text-uppercase" (keyup)="searchCbte()" matInput value="" placeholder="Buscar Cód. Artículo o comprobante">
                         <mat-icon matSuffix>search</mat-icon>
                     </mat-form-field>
 
-                    <div class="m-24">
+                    <span fxLayoutAlign="end">
+                        <button mat-button (click)="toggleSidebarOpen('sidebarFilter')" class="m-12">
+                            <mat-icon>tune</mat-icon>
+                            Filtros                
+                        </button> 
+                    </span>
 
-                        <button mat-stroked-button (click)="agregarPedido()" color="accent" class="fuse-white">
-
-                            <mat-icon>add</mat-icon>
-                            Agregar Pedido
-                
-                        </button>
-                    </div>
                 </div>
                 <!-- / TITULO/BUSCADOR/BOTON -->
 
@@ -104,10 +104,10 @@
 <!-- TEMPLATE LISTA -->
 <ng-template #articulos>
 
-    <div class="p-24" style="width: 100%; overflow: auto;">
+    <div class="pl-24 pr-24" style="width: 100%; overflow: auto;">
 
         <!-- <table mat-table [dataSource]="dataSource2" class="mb-8"> -->
-        <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="dataSource2" class="mat-elevation-z8" style="width: 100%;">
+        <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="dataSource2" style="width: 100%;">
 
             <ng-container matColumnDef="Tipo">
                 <th mat-header-cell *matHeaderCellDef class="pl-8"> Tipo </th>
@@ -178,11 +178,11 @@
                 <!-- ESTE VA -->
                 <th mat-header-cell *matHeaderCellDef> Ver </th>
                 <td mat-cell class="example-button-row" *matCellDef="let element">
-                    <button mat-stroked-button (click)="consultar(element.pedidoCabecera.id)">Ver</button>
+                    <button mat-stroked-button color="primary" (click)="consultar(element.pedidoCabecera.id)">Ver Pedido</button>
                 </td>
             </ng-container>
 
-            <ng-container matColumnDef="Borrar">
+            <!-- <ng-container matColumnDef="Borrar">
                 <th mat-header-cell *matHeaderCellDef> Anular </th>
                 <td mat-cell class="example-button-row" *matCellDef="let element">
                     <button mat-stroked-button color="warn" (click)="anular(element.pedidoCabecera.id)" [disabled]="element.pedidoEtapa.nombre === 'ANULADO'">
@@ -190,7 +190,7 @@
                         Anular
                     </button>
                 </td>
-            </ng-container>
+            </ng-container> -->
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

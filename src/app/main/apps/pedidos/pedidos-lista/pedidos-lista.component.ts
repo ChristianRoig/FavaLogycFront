@@ -61,8 +61,8 @@ export class PedidosListaComponent implements OnInit {
   @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
   @ViewChild('buscarLote') buscarLoteInput: ElementRef;
 
-  displayedColumns: string[] = ['Tipo', 'CodigoArticulo', 'NombreArticulo', 'Comprobante', 'Fecha-Entrega', 'Provincia', 'Localidad', 'Etapa', 'Lote', 'Ver', 'Borrar'];
-  /* , 'Ver' */
+  displayedColumns: string[] = ['Tipo', 'CodigoArticulo', 'NombreArticulo', 'Comprobante', 'Fecha-Entrega', 'Provincia', 'Localidad', 'Etapa', 'Lote', 'Ver'];
+  /* , 'Borrar' */
   dataSource = ELEMENT_DATA;  
   dataSource2: any;
   selection = new SelectionModel<Articulos>(true, []);
