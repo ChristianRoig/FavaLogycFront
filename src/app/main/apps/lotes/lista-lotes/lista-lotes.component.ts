@@ -214,6 +214,7 @@ export class ListaLotesComponent implements OnInit {
       .subscribe(data => {
         //console.log(data);
         this.dataSource2 = data.datos;
+        //this.length = data.totalRegistros;
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
@@ -249,6 +250,7 @@ export class ListaLotesComponent implements OnInit {
       this._listaLoteService.getLotesPorFecha( this.lote, bodyFechas ).subscribe( data => {
         console.log(data);
         this.dataSource2 = data.datos;
+        //this.length = data.totalRegistros;
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
@@ -283,8 +285,9 @@ export class ListaLotesComponent implements OnInit {
     this.length = this.dataSource2.length; */
      let estado = "ABIERTO";
     this._listaLoteService.getLotesPorEstado( estado ) .subscribe( data => {
+      console.log(data);
       this.dataSource2 = data.datos; 
-      console.log(this.dataSource2);
+      //this.length = data.totalRegistros;
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
@@ -306,8 +309,10 @@ export class ListaLotesComponent implements OnInit {
 
   getLotesPorEstado( estado: string ){
     if( estado === 'TODOS'){
-      this._listaLoteService.getAllLotes( ) .subscribe( data => {
+      //this._listaLoteService.getAllLotes( this.page, this.size ) .subscribe( data => {
+      this._listaLoteService.getAllLotes(  ) .subscribe( data => {
         this.dataSource2 = data.datos; 
+        //this.length = data.totalRegistros;
         //console.log(data);
       },
       (err: HttpErrorResponse) => {
@@ -328,8 +333,9 @@ export class ListaLotesComponent implements OnInit {
       });
     }else{
       this._listaLoteService.getLotesPorEstado( estado ) .subscribe( data => {
+        console.log(data);
         this.dataSource2 = data.datos; 
-        //console.log(data);
+        //this.length = data.totalRegistros;
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
@@ -790,12 +796,6 @@ export class ListaLotesComponent implements OnInit {
       }
     }
 
-
-    // console.log("pickerFiltroDesde: "+this.pickerFiltroDesde);
-    // console.log("pickerFiltroHasta: "+this.pickerFiltroHasta);
-    // console.log("pickerLoteDesde: "+this.pickerLoteDesde);
-    // console.log("pickerLoteHasta: "+this.pickerLoteHasta);
-
   }
 
   buscar(){
@@ -806,14 +806,11 @@ export class ListaLotesComponent implements OnInit {
   searchCbte() {
 
     this.busqueda = this.buscarCbteInput.nativeElement.value;
-
     this.page = 0;
     this.columna = 'id';
 
     this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
-
   }
-
 
   consultar(id){
     let ruta = `apps/pedidos/administracion/visualizacion/${id}`;
@@ -827,7 +824,6 @@ export class ListaLotesComponent implements OnInit {
   }
 
   crearLote() {
-
     console.log(this.selection);
 
     localStorage.setItem('Lote',JSON.stringify(this.selection));
@@ -835,7 +831,6 @@ export class ListaLotesComponent implements OnInit {
     let ruta = `apps/pedidos/administracion/addLote`;
     this._router.navigate([ruta]);
   }
-
 
   isAllSelected() {
     const numSelected = this.selection.selected.length;
@@ -858,7 +853,6 @@ export class ListaLotesComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.Id + 1}`;
   }
 
-
   /**
    * Toggle sidebar open
    *
@@ -870,7 +864,6 @@ export class ListaLotesComponent implements OnInit {
   }  
 
   sortData( event ) {
-      
     this.page = 0;
     this.columna = event.active;
     
@@ -884,5 +877,13 @@ export class ListaLotesComponent implements OnInit {
     //this._router.navigate();
     let ruta = `apps/lotes/crear-lote`;
     this._router.navigate([ruta]);
+  }
+
+  paginar(e: any){
+    console.log(e);
+    this.page = e.pageIndex;
+    this.size = e.pageSize;
+    
+    //this._listaLoteService.getAllLotes( this.page, this.size );  
   }
 }

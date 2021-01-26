@@ -61,7 +61,8 @@ export class PedidosListaComponent implements OnInit {
   @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
   @ViewChild('buscarLote') buscarLoteInput: ElementRef;
 
-  displayedColumns: string[] = ['Tipo', 'CodigoArticulo','NombreArticulo', 'Comprobante', 'Fecha-Entrega', 'Provincia', 'Localidad','Etapa', 'Lote', 'Ver', 'Borrar'];
+  displayedColumns: string[] = ['Tipo', 'CodigoArticulo', 'NombreArticulo', 'Comprobante', 'Fecha-Entrega', 'Provincia', 'Localidad', 'Etapa', 'Lote', 'Ver', 'Borrar'];
+  /* , 'Ver' */
   dataSource = ELEMENT_DATA;  
   dataSource2: any;
   selection = new SelectionModel<Articulos>(true, []);
@@ -160,7 +161,7 @@ export class PedidosListaComponent implements OnInit {
 
   resetFiltros(){
 
-    this.busqueda = ""
+    this.busqueda = "";
     this.page = 0;
     this.size = 10;
     this.columna = 'codigoArticulo';
@@ -398,7 +399,7 @@ export class PedidosListaComponent implements OnInit {
       data => {
         this.dataSource2 = data.datos;
         // console.log(this.dataSource2);
-        this.length = data.totalRegistros;
+        //this.size = data.totalRegistros;
       },
       (err: HttpErrorResponse) => {
         this.length = 0

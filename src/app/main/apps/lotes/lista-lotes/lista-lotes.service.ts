@@ -27,8 +27,9 @@ export class ListaLotesService
         private _httpClient: HttpClient
     ){    }
 
-    getAllLotes(): Observable<any>{  
+    getAllLotes( ): Observable<any>{  
         
+        //let ruta = `${ BASE_URL }pedidosatrabajar/pedidolote/lote/${ page }/${ size }`;
         let ruta = `${ BASE_URL }pedidosatrabajar/pedidolote/lote/0/10`;
         return this._httpClient.get(ruta);
     }
