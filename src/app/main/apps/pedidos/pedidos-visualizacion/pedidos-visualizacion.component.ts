@@ -172,4 +172,10 @@ export class PedidosVisualizacionComponent implements OnInit {
     this._router.navigate([ruta]);
   }
 
+  anular(id){
+    let ruta = `apps/pedidos/anular/${id}`;
+    console.log(ruta);
+    this._router.navigate([ruta]);
+  }
+
 }

@@ -3,6 +3,11 @@
     <!-- CONTENIDO -->
     <div contenido>
 
+        <!-- (click)="confirmacionBorrar()" -->
+        <div class="btnEliminar">
+            <button mat-raised-button (click)="anular(this.idCabecera)" color="light">Eliminar pedido</button>
+        </div>
+
         <div fxLayout="column" class="fuse-card" style="max-width: 100%;">
 
             <div fxLayout="row">
@@ -71,18 +76,12 @@
             </mat-tab-group>
         </div>
     </div>
-
-
-
     <!-- / CONTENIDO -->
-
 
 </app-plantilla-fondo-simple>
 <br>
 <br>
 <br>
-
-
 <ng-template #articulos>
 
     <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="dataSourceArticulos" class="mat-elevation-z8" style="width: 100%;">

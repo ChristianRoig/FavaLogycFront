@@ -9,7 +9,7 @@
         </div>
         <div fxLayout="column">
             <div fxLayout="row" class="content-card pb-4">
-                <div fxFlex="100" class="fuse-card p-24 mr-8">
+                <div fxFlex="100" class="fuse-card pl-24 pr-24 mr-8">
                     <ng-container *ngTemplateOutlet="filtrosLote"></ng-container>
 
                     <ng-container *ngTemplateOutlet="listaLotes"> </ng-container>
@@ -139,11 +139,11 @@
                     <mat-icon matSuffix>search</mat-icon>
                 </mat-form-field>
 
-                <button (click)="buscarLotePorNombre()" [disabled]="!this.lote" mat-raised-button color="primary">Buscar Lote</button>
+                <button (click)="buscarLotePorNombre()" class="btnBuscar" [disabled]="!this.lote" mat-raised-button color="primary">Buscar Lote</button>
 
                 <div class="btnToggle">
                     <mat-slide-toggle formcontrolname="hidden" type="button" (click)="activarFechas()" class="mat-slide-toggle"></mat-slide-toggle>
-                    <label class="paddingLeft">Filtro fecha</label>
+                    <label class="paddingLeft">Filtros</label>
                 </div>
             </div>
 

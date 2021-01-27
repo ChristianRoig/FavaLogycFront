@@ -22,6 +22,13 @@ export const navigation: FuseNavigation[] = [
                         exactMatch: true
                     },
                     {
+                        id        : 'ver-pedido',
+                        title     : 'Ver Pedidos',
+                        type      : 'item',
+                        url       : '/apps/pedidos/ver-pedido/7',
+                        exactMatch: true
+                    },
+                    {
                         id        : 'crear-pedido',
                         title     : 'Crear Pedido',
                         type      : 'item',

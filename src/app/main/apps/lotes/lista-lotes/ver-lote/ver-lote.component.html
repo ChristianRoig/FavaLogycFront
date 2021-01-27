@@ -36,30 +36,26 @@
                 <!-- TITULO/BUSCADOR/BOTON -->
                 <div fxLayout="row" fxLayoutAlign="space-around">
 
-                    <mat-form-field appearance="outline" style="width: 100%;" class="mt-8 mx-12">
-                        <mat-label>Código de Artículo o Comprobante</mat-label>
-                        <input #buscarCbte class="text-uppercase" (keyup)="searchCbte()" matInput value="" placeholder="Buscar Cód. Artículo o comprobante">
-                        <mat-icon matSuffix>search</mat-icon>
-                    </mat-form-field>
+                    <div class="controlesBusqueda">
+                        <mat-form-field appearance="outline" class="mx-12 inputBusqueda">
+                            <mat-label>Código de Artículo o Comprobante</mat-label>
+                            <input #buscarCbte class="text-uppercase" (keyup)="searchCbte()" matInput value="" placeholder="Buscar Cód. Artículo o comprobante">
+                            <mat-icon matSuffix>search</mat-icon>
+                        </mat-form-field>
 
-                    <div class="m-24">
 
-                        <button (click)="sacarDelLote()" mat-raised-button color="primary" [matBadge]="selection.selected.length" [matBadgeHidden]="selection.selected.length===0" matBadgeColor="warn" [disabled]="selection.selected.length===0">
-                                Eliminar Seleccionados
+                        <button (click)="sacarDelLote()" class="btnDelete" mat-raised-button color="primary" [matBadge]="selection.selected.length" [matBadgeHidden]="selection.selected.length===0" matBadgeColor="warn" [disabled]="selection.selected.length===0">
+                                Eliminar Selec.
                         </button>
-                    </div>
-                    <div class="m-24">
 
-                        <button (click)="editarLote()" mat-raised-button color="primary">
-                                Editar Lote 
-                        </button>
-                    </div>
-
-                    <div class="m-24">
-
-                        <button (click)="imprimirCupa()" mat-raised-button color="primary">
+                        <button (click)="imprimirCupa()" class="btnImprimir" mat-raised-button color="primary">
                                 Imprimir CUPA
                         </button>
+
+                        <button (click)="editarLote()" class="btn" mat-raised-button color="primary">
+                                Editar Lote 
+                        </button>
+
                     </div>
                 </div>
 

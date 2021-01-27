@@ -1,36 +1,108 @@
-.titular {
-    justify-content: space-between;
-    align-items: center;
-    height: 30px;
-    width: 100%;
-    /* margin-bottom: 10px; */
-}
-
-.colorText {
-    color: white;
-    padding-left: 50px;
-}
-
-.inputAndBoton {
-    width: 700px;
-    align-items: center;
-    justify-content: space-between;
-    align-items: center;
-    padding-right: 20px;
-}
-
-.nombreLote {
-    width: 450px;
-    height: 35px;
-    border-radius: 5px;
-    margin-right: 20px;
-}
-
-.tabla {
-    justify-content: space-between;
-}
-
-.tablaArticulos {
-    justify-content: space-between;
-    width: 100%;
-}
+    .titular {
+        justify-content: space-between;
+        align-items: center;
+        height: 30px;
+        width: 100%;
+        /* margin-bottom: 10px; */
+    }
+    
+    .colorText {
+        color: white;
+        padding-left: 50px;
+    }
+    
+    .inputAndBoton {
+        width: 700px;
+        align-items: center;
+        justify-content: space-between;
+        align-items: center;
+        padding-right: 20px;
+    }
+    
+    .nombreLote {
+        width: 450px;
+        height: 35px;
+        border-radius: 5px;
+        margin-right: 20px;
+    }
+    
+    .tabla {
+        justify-content: space-between;
+    }
+    
+    .tablaArticulos {
+        justify-content: space-between;
+        width: 100%;
+    }
+    
+    .controlesBusqueda {
+        display: flex;
+        width: 100%;
+        align-items: center !important;
+        justify-content: space-between;
+    }
+    
+    .inputBusqueda {
+        width: 900px;
+        justify-content: flex-start;
+        padding-top: 20px;
+    }
+    
+    .btn {
+        width: 10%;
+        height: 50%;
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-top: 0px;
+    }
+    
+    .btnImprimir {
+        width: 10%;
+        height: 50%;
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-top: 0px;
+    }
+    
+    .btnDelete {
+        width: 15%;
+        height: 50%;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+    /*   @media (max-width: 768px) {
+        .inputBusqueda {
+            width: 10px;
+        }
+    } */
+    
+    @media (max-width: 768px) {
+        .inputBusqueda {
+            width: 400px;
+        }
+        .btn {
+            width: 15%;
+            height: 50%;
+            margin-left: 5px;
+            margin-right: 5px;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+        .btnImprimir {
+            width: 20%;
+            height: 50%;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+        .btnDelete {
+            width: 20%;
+            height: 50%;
+            margin-left: 5px;
+            margin-right: 5px;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+        .controlesBusqueda {
+            margin-top: 0px;
+        }
+    }

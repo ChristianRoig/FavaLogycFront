@@ -655,11 +655,11 @@ export class PedidosListaComponent implements OnInit {
     this._router.navigate([ruta]);
   }
 
-  anular(id){
+/*   anular(id){
     let ruta = `apps/pedidos/anular/${id}`;
     console.log(ruta);
     this._router.navigate([ruta]);
-  }
+  } */
 
   agregarPedido() {
     let ruta = `apps/pedidos/crear-pedido`;

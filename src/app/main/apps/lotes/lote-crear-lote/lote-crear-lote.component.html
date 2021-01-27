@@ -8,33 +8,38 @@
             <div class="fuse-card my-24" style="max-width: 100%;">
 
                 <!-- BOTON "FILTROS" -->
-                <span fxLayoutAlign="end">
+                <!-- <span fxLayoutAlign="end">
 
                     <button mat-button (click)="toggleSidebarOpen('sidebarFilter')" class="m-12">
                         <mat-icon>tune</mat-icon>
                         Filtros                
                     </button> 
-                </span>
+                </span> -->
                 <!-- / BOTON "FILTROS" -->
 
 
                 <!-- TITULO/BUSCADOR/BOTON -->
                 <div fxLayout="row" fxLayoutAlign="space-between">
 
-                    <div class="h2 m-24">Artículos</div>
+                    <div class="controlesBusqueda">
+                        <mat-form-field appearance="outline" style="width: 80%;" class="mt-8 mx-12">
+                            <mat-label>Código de Artículo o Comprobante</mat-label>
+                            <input #buscarCbte class="text-uppercase" (keyup)="searchCbte()" matInput value="" placeholder="Buscar Cód. Artículo o comprobante">
+                            <mat-icon matSuffix>search</mat-icon>
+                        </mat-form-field>
 
-                    <mat-form-field appearance="outline" style="width: 100%;" class="mt-8 mx-12">
-                        <mat-label>Código de Artículo o Comprobante</mat-label>
-                        <input #buscarCbte class="text-uppercase" (keyup)="searchCbte()" matInput value="" placeholder="Buscar Cód. Artículo o comprobante">
-                        <mat-icon matSuffix>search</mat-icon>
-                    </mat-form-field>
-
-                    <div class="m-24">
-
-                        <button (click)="crearLote()" mat-raised-button color="primary" [matBadge]="selection.selected.length" [matBadgeHidden]="selection.selected.length===0" matBadgeColor="warn" [disabled]="selection.selected.length===0">
-                                Crear Lote
+                        <button (click)="crearLote()" class="btnBuscar" mat-raised-button color="primary" [matBadge]="selection.selected.length" [matBadgeHidden]="selection.selected.length===0" matBadgeColor="warn" [disabled]="selection.selected.length===0">
+                            Crear Lote
                         </button>
+                        <span fxLayoutAlign="end">
+                            <button mat-button (click)="toggleSidebarOpen('sidebarFilter')" class="m-12 mb-24">
+                                <mat-icon>tune</mat-icon>
+                                Filtros                
+                            </button> 
+                        </span>
+
                     </div>
+
                 </div>
                 <!-- / TITULO/BUSCADOR/BOTON -->
 

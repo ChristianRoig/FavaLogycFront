@@ -34,7 +34,7 @@ fuse-sidebar {
 .controlesBusqueda {
     display: flex;
     width: 100%;
-    align-items: center;
+    align-items: center !important;
     justify-content: space-between;
 }
 
@@ -66,4 +66,11 @@ fuse-sidebar {
 .inputBuscarLote {
     width: 80%;
     justify-content: flex-start;
+    padding-top: 20px;
+}
+
+.btnBuscar {
+    height: 60px;
+    /* margin-bottom: 27px; */
+    width: 150px;
 }

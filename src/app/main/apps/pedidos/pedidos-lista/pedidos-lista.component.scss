@@ -33,6 +33,18 @@ fuse-sidebar {
 .btnAddPedidoLote {
     display: flex;
     justify-content: flex-end;
-    padding-right: 10px;
+    /* padding-right: 10px; */
     padding-bottom: 15px;
+}
+
+.btnBuscar {
+    margin-top: 12px;
+    margin-bottom: 27px;
+    width: 150px;
+}
+
+.contenedorBuscador {
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
