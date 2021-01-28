@@ -55,7 +55,7 @@ export const navigation: FuseNavigation[] = [
                         id        : 'verLote',
                         title     : 'Ver Lote',
                         type      : 'item',
-                        url       : '/apps/lotes/lista-lotes/ver-lote/62',
+                        url       : '/apps/lotes/lista-lotes/ver-lote/61',
                         exactMatch: true
                     },
                     {

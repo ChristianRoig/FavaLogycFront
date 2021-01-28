@@ -20,10 +20,9 @@ export class PedidosPartesArticulosService
      * Devuelve Partes de Artículos
      * @returns {Observable} Observable
      */
-    getPartesArticulos(search, page, size, columna, order): Observable<any>
-    {
-        let busqueda = ""
-
+    getPartesArticulos(search, page, size, columna, order): Observable<any>{
+        
+        let busqueda = "";
         if(search != ""){
             busqueda = `/${search}`
         }

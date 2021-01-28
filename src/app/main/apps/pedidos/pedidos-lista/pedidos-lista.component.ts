@@ -187,15 +187,15 @@ export class PedidosListaComponent implements OnInit {
   getfiltros(){
     this._pedidosListaService.getAllTipos().subscribe(params => {
       this.filtroTipos = params.datos;
-      console.log(params)
-      this.length = params.totalRegistros
+      console.log(params);
+      this.length = params.totalRegistros;
     },
     (err: HttpErrorResponse) => {
       this.length = 0
       if (err.error instanceof Error) {
         console.log("Client-side error");
       } else {
-        let errStatus = err.status
+        let errStatus = err.status;
         if (errStatus == 0){
           let titulo = 'Error de Servidor';
           let mensaje = "Por favor comunicarse con Sistemas";
@@ -398,7 +398,7 @@ export class PedidosListaComponent implements OnInit {
     this._pedidosListaService.getPedidoDetalle(this.body, busqueda, page, size, columna, order).subscribe(
       data => {
         this.dataSource2 = data.datos;
-        // console.log(this.dataSource2);
+        console.log("asd", this.dataSource2);
         //this.size = data.totalRegistros;
       },
       (err: HttpErrorResponse) => {

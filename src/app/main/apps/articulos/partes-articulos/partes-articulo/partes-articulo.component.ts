@@ -36,7 +36,7 @@ export class PedidosPartesArticuloComponent implements OnInit {
         private _dialog: MatDialog ) { }
 
     ngOnInit(): void{
-        this.busqueda = ""
+        this.busqueda = "";
         this.page = 0;
         this.size = 10;
         this.columna = 'id';
@@ -52,8 +52,10 @@ export class PedidosPartesArticuloComponent implements OnInit {
         }
 
         this._pedidosPartesArticulosService.getPartesArticulos(busqueda, page, size, columna, order).subscribe(data => {
-            this.dataSource2 = data.datos;
-            this.length = data.totalRegistros;
+          console.log(data.totalRegistros);
+          console.log(data);
+          this.dataSource2 = data.datos;
+          this.length = data.totalRegistros;
         },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
@@ -125,10 +127,11 @@ export class PedidosPartesArticuloComponent implements OnInit {
 
 
     paginar(e: any){
-        this.page = e.pageIndex;
-        this.size = e.pageSize;
-        
-        this.buscar(this.busqueda, this.page, this.size, this.columna, this.order);
+      console.log(e);
+      this.page = e.pageIndex;
+      this.size = e.pageSize;
+      
+      this.buscar(this.busqueda, this.page, this.size, this.columna, this.order);
     }
 
     editar(id){

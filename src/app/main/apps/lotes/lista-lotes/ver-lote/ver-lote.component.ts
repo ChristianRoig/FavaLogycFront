@@ -248,7 +248,11 @@ export class VerLoteComponent implements OnInit {
         }
       }
     }); 
+    let ruta = `apps/lotes/lista-lotes`;
+    this._router.navigate([ruta]);
   }
+
+  
 
   sacarDelLote(){
     let listaIdPedidoDetalle: Array<number> = new Array<number>();

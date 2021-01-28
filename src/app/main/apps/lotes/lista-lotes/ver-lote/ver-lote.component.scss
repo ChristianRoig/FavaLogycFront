@@ -39,68 +39,43 @@
         display: flex;
         width: 100%;
         align-items: center !important;
-        justify-content: space-between;
+        justify-content: flex-start;
     }
     
     .inputBusqueda {
-        width: 900px;
+        width: 600px;
         justify-content: flex-start;
         padding-top: 20px;
     }
     
+    .botonesBusqueda {
+        display: flex;
+        width: 400px;
+        align-items: center !important;
+        justify-content: space-around;
+    }
+    
     .btn {
-        width: 10%;
-        height: 50%;
-        margin-left: 10px;
-        margin-right: 10px;
-        margin-top: 0px;
+        height: 40px;
+        /* margin-bottom: 27px; */
+        width: 150px;
+        padding-left: 5px;
+        padding-right: 5px;
+        margin-left: 15px;
+        /* margin-right: 5px; */
     }
-    
-    .btnImprimir {
-        width: 10%;
-        height: 50%;
-        margin-left: 10px;
-        margin-right: 10px;
-        margin-top: 0px;
-    }
-    
-    .btnDelete {
-        width: 15%;
-        height: 50%;
-        margin-left: 10px;
-        margin-right: 10px;
-    }
-    /*   @media (max-width: 768px) {
-        .inputBusqueda {
-            width: 10px;
-        }
-    } */
     
     @media (max-width: 768px) {
         .inputBusqueda {
             width: 400px;
         }
         .btn {
-            width: 15%;
-            height: 50%;
-            margin-left: 5px;
-            margin-right: 5px;
+            height: 60px;
+            width: 150px;
             padding-left: 5px;
             padding-right: 5px;
-        }
-        .btnImprimir {
-            width: 20%;
-            height: 50%;
-            padding-left: 5px;
-            padding-right: 5px;
-        }
-        .btnDelete {
-            width: 20%;
-            height: 50%;
-            margin-left: 5px;
-            margin-right: 5px;
-            padding-left: 5px;
-            padding-right: 5px;
+            margin-left: 6px;
+            margin-right: 3px;
         }
         .controlesBusqueda {
             margin-top: 0px;

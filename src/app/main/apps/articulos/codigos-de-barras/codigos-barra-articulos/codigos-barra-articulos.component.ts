@@ -27,7 +27,7 @@ export class PedidosCodigosBarraArticulosComponent implements OnInit {
 
     @ViewChild('buscar') buscarInput: ElementRef;
 
-    displayedColumns: string[] = ['id', 'codigoArticulo', 'nombre', 'descripcion', 'codigoDeBarras', 'seleccionar'];
+    displayedColumns: string[] = ['id', 'codigoArticulo', 'nombre', 'codigoDeBarras', 'seleccionar'];
     dataSource2: any;
     subParametros: Subscription;
     id:number;
@@ -74,8 +74,9 @@ export class PedidosCodigosBarraArticulosComponent implements OnInit {
 
         this._pedidosCodigosBarraArticulosService.getArticulos(busqueda, page, size, columna, order).subscribe( 
             data => {
-                this.dataSource2 = data.datos;
-                this.length = data.totalRegistros;
+              console.log(data);
+              this.dataSource2 = data.datos;
+              this.length = data.totalRegistros;
             },
             (err: HttpErrorResponse) => {
               if (err.error instanceof Error) {
