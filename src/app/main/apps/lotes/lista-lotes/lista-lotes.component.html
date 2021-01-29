@@ -149,22 +149,24 @@
                 </div>
             </div>
 
-            <div fxLayout="row" class="mt-0" *ngIf="this.filtroFechas">
-                <mat-form-field appearance="outline" fxFlex="40" class="mr-4">
-                    <mat-label>Fecha desde</mat-label>
-                    <input matInput [min]="minDateDesdeLote" [max]="maxDateDesdeLote" [matDatepicker]="pickerLoteDesde" (dateChange)="addEvent('pickerLoteDesde ', $event)">
-                    <mat-datepicker-toggle matSuffix [for]="pickerLoteDesde"></mat-datepicker-toggle>
-                    <mat-datepicker #pickerLoteDesde></mat-datepicker>
-                </mat-form-field>
+            <div fxLayout="row" class="contenedorFiltros" *ngIf="this.filtroFechas">
+                <div class="fechas">
+                    <mat-form-field appearance="outline" fxFlex="40" class="mr-4">
+                        <mat-label>Fecha desde</mat-label>
+                        <input matInput [min]="minDateDesdeLote" [max]="maxDateDesdeLote" [matDatepicker]="pickerLoteDesde" (dateChange)="addEvent('pickerLoteDesde ', $event)">
+                        <mat-datepicker-toggle matSuffix [for]="pickerLoteDesde"></mat-datepicker-toggle>
+                        <mat-datepicker #pickerLoteDesde></mat-datepicker>
+                    </mat-form-field>
 
-                <mat-form-field appearance="outline" fxFlex="40" class="ml-3">
-                    <mat-label>Fecha hasta</mat-label>
-                    <input matInput [min]="minDateHastaLote" [max]="maxDateHastaLote" [matDatepicker]="pickerLoteHasta" (dateChange)="addEvent('pickerLoteHasta ', $event)">
-                    <mat-datepicker-toggle matSuffix [for]="pickerLoteHasta"></mat-datepicker-toggle>
-                    <mat-datepicker #pickerLoteHasta></mat-datepicker>
-                </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="40" class="ml-3">
+                        <mat-label>Fecha hasta</mat-label>
+                        <input matInput [min]="minDateHastaLote" [max]="maxDateHastaLote" [matDatepicker]="pickerLoteHasta" (dateChange)="addEvent('pickerLoteHasta ', $event)">
+                        <mat-datepicker-toggle matSuffix [for]="pickerLoteHasta"></mat-datepicker-toggle>
+                        <mat-datepicker #pickerLoteHasta></mat-datepicker>
+                    </mat-form-field>
+                </div>
 
-                <mat-form-field appearance="outline" fxFlex="20" class="ml-4">
+                <mat-form-field appearance="outline" fxFlex="20" class="ml-4 selectMostrar">
                     <mat-label>Mostrar</mat-label>
                     <mat-select [(ngModel)]="selecccionDeEstado" name="food">
                         <mat-option (click)="getLotesPorEstado( estado.valor )" *ngFor="let estado of estados" [value]="estado.valor">
@@ -176,7 +178,7 @@
                 <!-- <div class="filtroActivos">
                 <mat-slide-toggle formcontrolname="hidden" type="button" (click)="activarFechas()" class="mat-slide-toggle"></mat-slide-toggle>
                 <label>Mostrar inactivos</label>
-            </div> -->
+                </div> -->
             </div>
             <!-- [disabled]="!this.lote" -->
         </div>

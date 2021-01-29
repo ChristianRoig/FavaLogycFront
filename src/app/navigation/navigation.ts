@@ -15,10 +15,10 @@ export const navigation: FuseNavigation[] = [
                 icon     : 'shopping_cart',
                 children : [
                     {
-                        id        : 'pedidos-lista',
+                        id        : 'lista-articulos',
                         title     : 'Lista Pedidos',
                         type      : 'item',
-                        url       : '/apps/pedidos/pedidos-lista',
+                        url       : '/apps/pedidos/lista-articulos',
                         exactMatch: true
                     },
                     {
@@ -55,7 +55,7 @@ export const navigation: FuseNavigation[] = [
                         id        : 'verLote',
                         title     : 'Ver Lote',
                         type      : 'item',
-                        url       : '/apps/lotes/lista-lotes/ver-lote/61',
+                        url       : '/apps/lotes/ver-lote/61',
                         exactMatch: true
                     },
                     {
@@ -120,6 +120,33 @@ export const navigation: FuseNavigation[] = [
                     },
                 ]
             },
+        ]
+    },
+    //-------------------------------------------------------------------------------------
+   
+    {
+        id       : 'infoAuxiliar',
+        title    : 'Info Auxiliar',
+        translate: 'Info Auxiliar',
+        type     : 'group',
+        icon     : 'apps',
+        children : [
+            {
+                id       : 'dashboards',
+                title    : 'Articulos',
+                translate: 'Articulos',
+                type     : 'collapsable',
+                icon     : 'dashboard',
+                
+            },
+            {
+                id       : 'dashboards',
+                title    : 'Comprobantes',
+                translate: 'Comprobantes',
+                type     : 'collapsable',
+                icon     : 'school',
+                
+            }
         ]
     }
 ];

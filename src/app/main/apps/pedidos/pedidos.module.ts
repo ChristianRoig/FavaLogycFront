@@ -33,7 +33,7 @@ import { PedidosCrear2Service } from './pedidos-crear-2/pedidos-crear-2.service'
 
 const routes: Routes = [
     {
-        path     : 'pedidos-lista',
+        path     : 'lista-articulos',
         component: PedidosListaComponent
     },
     {

@@ -368,7 +368,7 @@ export class ListaLotesComponent implements OnInit {
     if( lote != null ){
       //this.idLote = lote.id;
       this.idLote = lote.id;
-      let ruta = `apps/lotes/lista-lotes/ver-lote/${ this.idLote }`;
+      let ruta = `apps/lotes/ver-lote/${ this.idLote }`;
       //console.log("lote ASD");
       //this._verLoteComponent.obtenerLote(lote);
       this._router.navigate([ ruta ]);

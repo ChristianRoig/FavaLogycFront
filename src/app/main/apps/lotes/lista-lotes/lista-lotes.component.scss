@@ -40,9 +40,10 @@
     
     .botonesBusqueda {
         display: flex;
-        width: 300px;
+        width: 900px;
         align-items: center !important;
-        justify-content: space-around;
+        justify-content: space-between;
+        margin-left: 20px;
     }
     
     .filtros {
@@ -89,6 +90,18 @@
         margin: 2px;
     }
     
+    .fechas {
+        width: 745px;
+    }
+    
+    .contenedorFiltros {
+        justify-content: space-between;
+    }
+    
+    .selectMostrar {
+        width: 300px;
+    }
+    
     @media (max-width: 768px) {
         .btnBuscar {
             height: 60px;
@@ -98,8 +111,18 @@
             padding-right: 5px;
         }
         .inputBuscarLote {
-            width: 400px;
+            width: 500px;
             justify-content: flex-start;
             padding-top: 20px;
+        }
+        .botonesBusqueda {
+            width: 400px;
+        }
+        .fechas {
+            width: 100%;
+            width: 430px;
+        }
+        .selectMostrar {
+            width: 200px;
         }
     }
