@@ -2,7 +2,7 @@ import {Component, ViewEncapsulation, OnInit, ElementRef, ViewChild} from '@angu
 import { Debounce } from 'app/shared/decorators/debounce';
 import { SonidoService } from 'app/services/sonidos.service';
 import { ErroresService } from 'app/services/errores.service';
-import { ControlEstanteriaService } from '../control-estanteria/control-estanteria.service';
+import { ControlBusquedaService } from '../control-busqueda/control-busqueda.service';
 import {
   trigger,
   state,
@@ -16,9 +16,9 @@ import { Router } from '@angular/router';
  * @title Basic use of `<table mat-table>`
  */
 @Component({
-    selector     : 'control-estanteria-busqueda',
-    templateUrl  : './control-estanteria-busqueda.component.html',
-    styleUrls    : ['./control-estanteria-busqueda.component.scss'],
+    selector     : 'controlar-lote',
+    templateUrl  : './controlar-lote.component.html',
+    styleUrls    : ['./controlar-lote.component.scss'],
     animations   : [
       trigger('esconder', [
         state('show', style({
@@ -36,7 +36,7 @@ import { Router } from '@angular/router';
     encapsulation: ViewEncapsulation.None
 })
 
-export class ControlEstanteriaBusquedaComponent implements OnInit {
+export class ControlarLoteComponent implements OnInit {
     @ViewChild('buscarCUPA') buscarCUPAInput: ElementRef;
     @ViewChild('buscarCodigoBarras') buscarCodigoBarrasInput: ElementRef;
     @ViewChild('eliminaCupa') eliminaCupaInput: ElementRef;
@@ -50,7 +50,7 @@ export class ControlEstanteriaBusquedaComponent implements OnInit {
 
     constructor(
       private _router: Router,
-      private _controlEstanteriaService: ControlEstanteriaService,
+      private _controlBusquedaService: ControlBusquedaService,
       private _sonido: SonidoService,
       private _erroresServices: ErroresService
     ) {}
@@ -58,17 +58,18 @@ export class ControlEstanteriaBusquedaComponent implements OnInit {
     
 
     ngOnInit(): void{
-      this.arregloDeDetalles = this._controlEstanteriaService.arregloDeDetalles;
-      this.idLote = this._controlEstanteriaService.idLote;
-      this.modo = this._controlEstanteriaService.modo;
+      this.arregloDeDetalles = this._controlBusquedaService.arregloDeDetalles;
+      this.idLote = this._controlBusquedaService.idLote;
+      this.modo = this._controlBusquedaService.modo;
       if(!this.arregloDeDetalles) {
         this._router.navigate(['/apps'])
       }
     }
 
     async buscarDetalleUnico() {
+      console.log("buscarDetalleUnico");
       this.arregloDeDetalles = null;
-      let res = await this._controlEstanteriaService.getDetalleUnico(this.idLote, '', this.modo);
+      let res = await this._controlBusquedaService.getDetalleUnico(this.idLote, '', this.modo);
       this.arregloDeDetalles = res.datos;
       console.log(this.arregloDeDetalles);
     }
@@ -80,7 +81,7 @@ export class ControlEstanteriaBusquedaComponent implements OnInit {
     console.log(this.codigoBarras);
     
 
-    let res = await this._controlEstanteriaService.getCupaCodBarras(this.CUPA, this.idLote, this.codigoBarras, this.modo);
+    let res = await this._controlBusquedaService.getCupaCodBarras(this.CUPA, this.idLote, this.codigoBarras, this.modo);
     console.log(res);
     if(!res) {
       this._sonido.playAudioSuccess();
@@ -129,7 +130,7 @@ export class ControlEstanteriaBusquedaComponent implements OnInit {
   @Debounce(1000)
   async eliminarCupa() {
     
-    let res = await this._controlEstanteriaService.eliminarArticuloDeLotePorCupa(this.eliminaCupaInput.nativeElement.value);
+    let res = await this._controlBusquedaService.eliminarArticuloDeLotePorCupa(this.eliminaCupaInput.nativeElement.value);
     if(!res) {
       this._sonido.playAudioSuccess();
       this.resetCampos();

@@ -18,7 +18,7 @@ const routes = [
         loadChildren: () => import('./lotes/lotes.module').then(m => m.LotesModule)
     },
     {
-        path        : 'control',
+        path        : 'control/lote-en',
         loadChildren: () => import('./control/control.module').then(m => m.ControlModule)
     },
     {

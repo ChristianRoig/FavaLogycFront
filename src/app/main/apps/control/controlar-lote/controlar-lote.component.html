@@ -1,4 +1,4 @@
-<app-plantilla-fondo titulo='Busqueda de Lote'>
+<app-plantilla-fondo titulo='Controlar Lote en Estantería'>
 
 
     <div contenido class="content" fxLayout="row" fxLayoutAlign="center">
@@ -23,15 +23,15 @@
                     <input #buscarCUPA class="text-uppercase" (keyup)="searchCUPA()" matInput value="" placeholder="CUPA">
                     <mat-icon matSuffix>search</mat-icon>
                 </mat-form-field>
+                <div>
+                    <button mat-raised-button color="primary" (click)="agregarEstanteria()">Agregar</button>
+                </div>
+
+                <div>
+                    <button mat-raised-button color="warn" (click)="toggle()">Eliminar</button>
+                </div>
             </div>
 
-            <div class="p-16">
-                <button mat-raised-button color="primary" (click)="agregarEstanteria()" class="p-8" style="width: 100%;">Agregar</button>
-            </div>
-
-            <div class="p-16">
-                <button mat-raised-button color="warn" (click)="toggle()" class="mb-16 p-8" style="width: 100%;">Eliminar</button>
-            </div>
             <div [@esconder]="funcionEsconder" style="width: 100%;">
                 <mat-form-field appearance="outline" style="width: 90%; margin-left: 5%; margin-right: 5%;">
                     <mat-label>Cupa</mat-label>

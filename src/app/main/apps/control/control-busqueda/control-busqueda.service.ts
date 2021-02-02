@@ -20,7 +20,7 @@ export interface BodyDetalle{
   }
 
 @Injectable()
-export class ControlEstanteriaService
+export class ControlBusquedaService
 {
     arregloDeDetalles;
     idLote;
@@ -28,16 +28,17 @@ export class ControlEstanteriaService
     
     constructor( private _httpClient: HttpClient ) {}
 
-    async getDetalleUnico(idLote, codArt, etapaproceso): Promise<any>
-    {
+    async getDetalleUnico(idLote, codArt, etapaproceso): Promise<any>{
 
         let headers = new HttpHeaders({
             "Content-Type": "application/json"
         });
-
-        let ruta = `${BASE_URL}pedidosatrabajar/detalleunico/lote/${idLote}/${etapaproceso}/${codArt}`;
+       console.log(idLote, etapaproceso, codArt);
+        let ruta = `${BASE_URL}pedidosatrabajar/detalleunico/lote/${idLote}/${etapaproceso}/codbarras`;
+        //let ruta = `${BASE_URL}pedidosatrabajar/detalleunico/lote/${idLote}/${etapaproceso}/${codArt}`;
+        //let ruta = `${BASE_URL}pedidosatrabajar/detalleunico/lote/7/estanteria/a/codbarras`;
+        /* /codBarras */
         
-
         return this._httpClient.get(ruta, {headers: headers})
 		.toPromise().then ( (response: any) => {
 
@@ -47,8 +48,7 @@ export class ControlEstanteriaService
     }
 
 
-    async getCupaCodBarras(cupa, idLote, codBarras, modo): Promise<any>
-    {
+    async getCupaCodBarras(cupa, idLote, codBarras, modo): Promise<any>{
 
         let headers = new HttpHeaders({
             "Content-Type": "application/json"

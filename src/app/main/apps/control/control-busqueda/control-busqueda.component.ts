@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
-import { ControlEstanteriaService } from './control-estanteria.service';
+import { ControlBusquedaService } from './control-busqueda.service';
 import { Debounce } from 'app/shared/decorators/debounce';
 import { SonidoService } from 'app/services/sonidos.service';
 import { Subscription } from 'rxjs';
@@ -15,9 +15,9 @@ import {
 } from '@angular/animations';
 
 @Component({  
-  selector: 'app-control-estanteria',  
-  templateUrl: './control-estanteria.component.html',
-  styleUrls: ['./control-estanteria.component.scss'],
+  selector: 'app-control-busqueda',  
+  templateUrl: './control-busqueda.component.html',
+  styleUrls: ['./control-busqueda.component.scss'],
   animations: [
     trigger('esconder', [
       state('show', style({
@@ -56,7 +56,7 @@ export class ControlEstanteriaComponent implements OnInit {
 
   constructor(private _router: Router, 
               private _fuseSidebarService: FuseSidebarService, 
-              private _controlEstanteriaService: ControlEstanteriaService,
+              private _controlBusquedaService: ControlBusquedaService,
               private route: ActivatedRoute,
               private _sonido: SonidoService,
               private _erroresServices: ErroresService,) { 
@@ -64,6 +64,7 @@ export class ControlEstanteriaComponent implements OnInit {
     this.route.params.subscribe(params => {
       
       this.modo = params['modo'];
+      //this.modo = params['modo'];
 
       // agregar refresh
       if(this.titulo) {
@@ -105,7 +106,7 @@ export class ControlEstanteriaComponent implements OnInit {
     if(this.lote === '') {
       this.lote =null;
     }
-    console.log(this.lote);
+    console.log("idLote ->", this.lote);
     
 
   }
@@ -145,15 +146,18 @@ export class ControlEstanteriaComponent implements OnInit {
   }  
 
   async buscarDetalleUnico() {
+    //console.log("asdasdasd");
+
     this.arregloDeDetalles = null;
     // let codArt = this.buscarCbteInput.nativeElement.value ? this.buscarCbteInput.nativeElement.value : '';
-    let res = await this._controlEstanteriaService.getDetalleUnico(this.idLote, '', this.modo);
+    let res = await this._controlBusquedaService.getDetalleUnico(this.idLote, '', this.modo);
     this.arregloDeDetalles = res.datos;
     console.log(this.arregloDeDetalles);
-    this._controlEstanteriaService.arregloDeDetalles = this.arregloDeDetalles;
-    this._controlEstanteriaService.idLote = this.idLote;
-    this._controlEstanteriaService.modo = this.modo;
-    let ruta = `apps/control/${this.modo}/busqueda`;
+    this._controlBusquedaService.arregloDeDetalles = this.arregloDeDetalles;
+    this._controlBusquedaService.idLote = this.idLote;
+    this._controlBusquedaService.modo = this.modo;
+    //let ruta = `apps/control/lote-en/${this.modo}/busqueda`;
+    let ruta = `apps/control/lote-en/${this.modo}/${this.idLote}`;
     this._router.navigate([ruta]);
   }
   
@@ -164,7 +168,7 @@ export class ControlEstanteriaComponent implements OnInit {
     console.log(this.codigoBarras);
     
 
-    let res = await this._controlEstanteriaService.getCupaCodBarras(this.CUPA, this.idLote, this.codigoBarras, this.modo);
+    let res = await this._controlBusquedaService.getCupaCodBarras(this.CUPA, this.idLote, this.codigoBarras, this.modo);
     console.log(res);
     if(!res) {
       this._sonido.playAudioSuccess();
@@ -190,7 +194,7 @@ export class ControlEstanteriaComponent implements OnInit {
   @Debounce(1000)
   async eliminarCupa() {
     
-    let res = await this._controlEstanteriaService.eliminarArticuloDeLotePorCupa(this.eliminaCupaInput.nativeElement.value);
+    let res = await this._controlBusquedaService.eliminarArticuloDeLotePorCupa(this.eliminaCupaInput.nativeElement.value);
     if(!res) {
       this._sonido.playAudioSuccess();
       this.resetCampos();
