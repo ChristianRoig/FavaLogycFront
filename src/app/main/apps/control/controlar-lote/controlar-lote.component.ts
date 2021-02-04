@@ -2,7 +2,8 @@ import {Component, ViewEncapsulation, OnInit, ElementRef, ViewChild} from '@angu
 import { Debounce } from 'app/shared/decorators/debounce';
 import { SonidoService } from 'app/services/sonidos.service';
 import { ErroresService } from 'app/services/errores.service';
-import { ControlBusquedaService } from '../control-busqueda/control-busqueda.service';
+import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
+import { MatDialog } from '@angular/material/dialog';
 import {
   trigger,
   state,
@@ -11,6 +12,8 @@ import {
   transition
 } from '@angular/animations';
 import { Router } from '@angular/router';
+
+import { ControlBusquedaService } from '../control-busqueda/control-busqueda.service';
 
 /**
  * @title Basic use of `<table mat-table>`
@@ -48,11 +51,15 @@ export class ControlarLoteComponent implements OnInit {
     codigoBarras: string = null;
     CUPA: string = null;
 
+    condicion: string = null;
+    endPoint: string = null;
+
     constructor(
       private _router: Router,
       private _controlBusquedaService: ControlBusquedaService,
       private _sonido: SonidoService,
-      private _erroresServices: ErroresService
+      private _erroresServices: ErroresService,
+      private _dialog: MatDialog
     ) {}
 
     
@@ -61,10 +68,49 @@ export class ControlarLoteComponent implements OnInit {
       this.arregloDeDetalles = this._controlBusquedaService.arregloDeDetalles;
       this.idLote = this._controlBusquedaService.idLote;
       this.modo = this._controlBusquedaService.modo;
-      if(!this.arregloDeDetalles) {
-        this._router.navigate(['/apps'])
+
+      console.log("this.arregloDeDetalles", this.arregloDeDetalles);
+      console.log("modo", this.modo);
+      
+      if(!this.arregloDeDetalles || this.arregloDeDetalles.length == 0) {
+        this.arregloVacio();
+      } else {
+        this.setearCondicion();
+        this.verificarEtapas();
       }
     }
+
+    arregloVacio(){
+        let titulo = 'Error de MEJORAR NOMBRE';
+        let mensaje = "El lote con id "+ this.idLote +" no existe o está vacío";
+        let errStatus = 404;
+        this.mostrarError(errStatus, titulo, mensaje);
+        this._router.navigate([`/apps/control/lote-en/${this.modo}`]);
+    }
+    
+    setearCondicion(){
+      if(this.modo === 'estanteria'){
+        this.condicion = 'EN LOTE';
+        this.endPoint = 'estanteria';
+      } else {
+        this.condicion = 'ESTANTERIA';
+        this.endPoint = 'darsena';
+      }
+    }
+
+    verificarEtapas(){
+      for( let i=0; i<this.arregloDeDetalles.length; i++ ){
+        if( this.arregloDeDetalles[i].detalle.pedidoEtapa.nombre != this.condicion ) {
+          let titulo = 'Ubicacion de lote incorrecta';
+          let mensaje = "El CUPA de "+this.arregloDeDetalles[i].detalle.articulo.nombre+" está en estado " 
+            + this.arregloDeDetalles[i].detalle.pedidoEtapa.nombre + " y no se puede utilizar para control de "+this.endPoint;
+          let errStatus = 404;
+          this._router.navigate([`apps/control/lote-en/${this.endPoint}`]);
+          this.mostrarError(errStatus, titulo, mensaje);
+          return;
+        } 
+      } 
+    } 
 
     async buscarDetalleUnico() {
       console.log("buscarDetalleUnico");
@@ -79,11 +125,10 @@ export class ControlarLoteComponent implements OnInit {
     
     console.log(this.CUPA);
     console.log(this.codigoBarras);
-    
 
     let res = await this._controlBusquedaService.getCupaCodBarras(this.CUPA, this.idLote, this.codigoBarras, this.modo);
     console.log(res);
-    if(!res) {
+    if (!res) {
       this._sonido.playAudioSuccess();
       this.resetCampos();
       this.buscarDetalleUnico();
@@ -93,7 +138,6 @@ export class ControlarLoteComponent implements OnInit {
       this.resetCampos();
       await this.buscarDetalleUnico();
     }
-
   }
 
   @Debounce(1000) 
@@ -141,7 +185,24 @@ export class ControlarLoteComponent implements OnInit {
       this.resetCampos();
       await this.buscarDetalleUnico();
     }
-    
   }
 
+  mostrarError(errStatus, titulo, mensaje){
+    const dialogRef = this._dialog.open( ModalErrorComponent, { 
+      data: {
+        titulo: titulo,
+        mensaje: mensaje
+      } 
+    });
+
+    /* dialogRef.afterClosed()
+      .subscribe( () => {
+          if (errStatus != 0) {
+            //this.resetFiltros();
+            
+          } else {
+            this._router.navigate(['']);
+          }
+      });*/
+  } 
 }

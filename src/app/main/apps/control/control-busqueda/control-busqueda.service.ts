@@ -33,7 +33,7 @@ export class ControlBusquedaService
         let headers = new HttpHeaders({
             "Content-Type": "application/json"
         });
-       console.log(idLote, etapaproceso, codArt);
+       console.log('idLote',idLote,"| etapaproceso", etapaproceso,"| codArt", codArt);
         let ruta = `${BASE_URL}pedidosatrabajar/detalleunico/lote/${idLote}/${etapaproceso}/codbarras`;
         //let ruta = `${BASE_URL}pedidosatrabajar/detalleunico/lote/${idLote}/${etapaproceso}/${codArt}`;
         //let ruta = `${BASE_URL}pedidosatrabajar/detalleunico/lote/7/estanteria/a/codbarras`;
@@ -45,6 +45,12 @@ export class ControlBusquedaService
 			return response;
 			
 		});
+    }
+
+    getLotesPorEstado(estado: string, page, size): Observable<any>{  
+        
+        let ruta = `${ BASE_URL }pedidosatrabajar/pedidolote/lote/${ estado }/${ page }/${ size }`;
+        return this._httpClient.get(ruta);
     }
 
 

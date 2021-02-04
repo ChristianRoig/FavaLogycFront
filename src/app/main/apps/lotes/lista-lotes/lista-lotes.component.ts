@@ -281,7 +281,7 @@ export class ListaLotesComponent implements OnInit {
     /* this.dataSource2 = ELEMENT_DATA2;
     console.log(this.dataSource2);
     this.length = this.dataSource2.length; */
-     let estado = "ABIERTO";
+    let estado = "ABIERTO";
     this._listaLoteService.getLotesPorEstado( estado, page, size ) .subscribe( data => {
       console.log(data.totalRegistros);
       console.log(data);
