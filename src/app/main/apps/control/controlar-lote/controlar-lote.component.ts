@@ -73,14 +73,14 @@ export class ControlarLoteComponent implements OnInit {
       console.log("modo", this.modo);
       
       if(!this.arregloDeDetalles || this.arregloDeDetalles.length == 0) {
-        this.arregloVacio();
+        this.alertArregloVacio();
       } else {
         this.setearCondicion();
         this.verificarEtapas();
       }
     }
 
-    arregloVacio(){
+    alertArregloVacio(){
         let titulo = 'Error de MEJORAR NOMBRE';
         let mensaje = "El lote con id "+ this.idLote +" no existe o está vacío";
         let errStatus = 404;

@@ -235,37 +235,9 @@ export class ListaLotesComponent implements OnInit {
 
   searchLote() {
     this.lote = this.buscarLoteInput.nativeElement.value;
-    /* console.log(this.lote); */
     if(this.lote == ''){
       this.lote = null;
       this.getLotesAbiertos( this.page, this.size );
-    }
-    if(this.lote !== '' && this.lote != null){
-      let bodyFechas: BodyDetalleFecha  = {
-        desdeLote   : this.pickerLoteDesde,
-        hastaLote   : this.pickerLoteDesde
-      }
-      this._listaLoteService.getLotesPorFecha( this.lote, bodyFechas ).subscribe( data => {
-        console.log(data);
-        this.dataSource2 = data.datos;
-        //this.length = data.totalRegistros;
-      },
-      (err: HttpErrorResponse) => {
-        if (err.error instanceof Error) {
-          console.log("Client-side error");
-        } else {
-          let errStatus = err.status
-          if (errStatus == 0){
-            let titulo = 'Error de Servidor';
-            let mensaje = "Por favor comunicarse con Sistemas";
-            this.mostrarError(errStatus, titulo, mensaje);
-          } /* else {
-            let titulo = 'Error al listar lotes';
-            let mensaje = err.error.message.toString();
-            this.mostrarError(errStatus, titulo, mensaje);
-          } */
-        }
-      });
     }
   }
 
@@ -276,7 +248,7 @@ export class ListaLotesComponent implements OnInit {
   toggleMostrarInactivos(){
     this.filtroInactivos = !this.filtroInactivos;
   }
-
+  
   getLotesAbiertos( page, size ){
     /* this.dataSource2 = ELEMENT_DATA2;
     console.log(this.dataSource2);

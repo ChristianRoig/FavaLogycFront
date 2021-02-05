@@ -42,8 +42,7 @@ export class ControlBusquedaService
         return this._httpClient.get(ruta, {headers: headers})
 		.toPromise().then ( (response: any) => {
 
-			return response;
-			
+			return response;	
 		});
     }
 
@@ -53,6 +52,20 @@ export class ControlBusquedaService
         return this._httpClient.get(ruta);
     }
 
+    getDetalleLotePorCupa ( cupa, etapa ): Observable<any>{  
+        
+        let ruta = `${ BASE_URL }pedidosatrabajar/detalleunico/cupa/${ cupa }/${ etapa }`;
+        return this._httpClient.get(ruta);
+    }
+
+    getLotePorNombre(lote: any, body): Observable<any>{
+
+        let headers = new HttpHeaders({ "Content-Type": "application/json" });
+    
+        let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/pornombreyfechas/${lote}`;
+        
+        return this._httpClient.post(ruta, body, {headers: headers});
+    } 
 
     async getCupaCodBarras(cupa, idLote, codBarras, modo): Promise<any>{
 

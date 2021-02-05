@@ -44,6 +44,7 @@ export class ControlEstanteriaComponent implements OnInit {
   @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
   @ViewChild('buscarLote') buscarLoteInput: ElementRef;
   @ViewChild('buscarCUPA') buscarCUPAInput: ElementRef;
+  @ViewChild('cupa') buscarLotePorCUPAInput: ElementRef;
   @ViewChild('buscarCodigoBarras') buscarCodigoBarrasInput: ElementRef;
   @ViewChild('eliminaCupa') eliminaCupaInput: ElementRef;
 
@@ -105,22 +106,93 @@ export class ControlEstanteriaComponent implements OnInit {
     this.getLotesAbiertos(this.page, this.size);
   }
 
-  buscarLote() {
+  accederAlLoteById() {
     this.idLote = this.buscarLoteInput.nativeElement.value;
+    console.log(this.idLote);
+    console.log("asd",this.modo);
     this.buscarDetalleUnico();
+  }
+
+  buscarLotePorNombre() {
+    /* let bodyFechas: BodyDetalleFecha  = {
+      desdeLote   : this.pickerLoteDesde,
+      hastaLote   : this.pickerLoteDesde
+    } */
+    let bodyFechas = null;
+    this._controlBusquedaService.getLotePorNombre(this.lote, bodyFechas)
+      .subscribe(data => {
+        //console.log(data);
+        this.dataSource2 = data.datos;
+        //this.length = data.totalRegistros;
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error");
+        } else {
+          let errStatus = err.status
+          if (errStatus == 0){
+            let titulo = 'Error de Servidor';
+            let mensaje = "Por favor comunicarse con Sistemas";
+            this.mostrarError(errStatus, titulo, mensaje);
+          } else {
+            let titulo = 'Error al listar';
+            let mensaje = err.error.message.toString();
+            this.mostrarError(errStatus, titulo, mensaje);
+          }
+        }
+    }); 
   }
 
   searchLote() {
     this.lote = this.buscarLoteInput.nativeElement.value;
-    if(this.lote === '') {
+    if (this.lote === '') {
       this.lote =null;
     }
-    console.log("idLote ->", this.lote);
+  }
+
+  searchCupa() {
+    this.CUPA = this.buscarLotePorCUPAInput.nativeElement.value;
+    if(this.CUPA === '') {
+      this.CUPA = null;
+    }
   }
 
   controlar(lote){
     this.idLote = lote.id;
     this.buscarDetalleUnico()
+  }
+
+  accederAlLote( cupa ){
+    this.CUPA = cupa.value;
+    this._controlBusquedaService.getDetalleLotePorCupa( cupa, this.modo ) .subscribe( data => {
+      console.log(data);
+      console.log(data.datos[0].detalle.pedidoLote.id);
+      this.idLote = data.datos[0].detalle.pedidoLote.id;
+      this.buscarDetalleUnico();  
+      /* this._controlBusquedaService.arregloDeDetalles = data.datos[0];
+      this.idLote = data.datos[0].detalle.pedidoLote.id;
+      this._controlBusquedaService.idLote = data.datos[0].detalle.pedidoLote.id;
+      this._controlBusquedaService.modo = this.modo; */
+      //let ruta = `apps/control/lote-en/${this.modo}/busqueda`;
+      /* let ruta = `apps/control/lote-en/${this.modo}/${this.idLote}`;
+      this._router.navigate([ruta]); */
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
+        } else {
+          let titulo = 'Error al listar';
+          let mensaje = err.error.message.toString();
+          this.mostrarError(errStatus, titulo, mensaje);
+        }
+      }
+    });
   }
 
   getLotesAbiertos( page, size ){
@@ -189,7 +261,7 @@ export class ControlEstanteriaComponent implements OnInit {
     // let codArt = this.buscarCbteInput.nativeElement.value ? this.buscarCbteInput.nativeElement.value : '';
     let res = await this._controlBusquedaService.getDetalleUnico(this.idLote, '', this.modo);
     this.arregloDeDetalles = res.datos;
-    //console.log(this.arregloDeDetalles);
+    console.log(this.arregloDeDetalles);
     this._controlBusquedaService.arregloDeDetalles = this.arregloDeDetalles;
     this._controlBusquedaService.idLote = this.idLote;
     this._controlBusquedaService.modo = this.modo;
