@@ -122,7 +122,7 @@ export class ControlEstanteriaComponent implements OnInit {
       desdeLote   : null,
       hastaLote   : null
     } 
-   this.lote = nombre;
+    this.lote = nombre;
     this._controlBusquedaService.getLotePorNombre(this.lote, bodyFechas)
       .subscribe(data => {
         this.dataSource2 = data.datos;
@@ -211,6 +211,8 @@ export class ControlEstanteriaComponent implements OnInit {
           let titulo = 'Error al listar';
           let mensaje = err.error.message.toString();
           this.mostrarError(errStatus, titulo, mensaje);
+          let ruta = `apps/control/lote-en/${this.modo}`;
+          this._router.navigate([ruta]);
         }
       }
     });
