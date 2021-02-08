@@ -150,7 +150,7 @@ export class ListaLotesService
     } 
 
     getLotesPorFecha(lote: any, body: BodyDetalleFecha): Observable<any>{
-
+        
         let headers = new HttpHeaders({
             "Content-Type": "application/json"
         });

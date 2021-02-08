@@ -60,23 +60,27 @@
                 <mat-icon matSuffix>search</mat-icon>
             </mat-form-field>
 
-            <div class="botonesBusqueda">
+            <div class="botonesBusquedaSup">
                 <!-- [disabled]="!this.cupa" -->
-                <button mat-raised-button [disabled]="!this.CUPA" color="primary" (click)="accederAlLote(cupa.value)">Acceder al Lote</button>
+                <button mat-raised-button [disabled]="!this.CUPA" class="btn" color="primary" (click)="buscarLotePorCUPA(cupa.value)">Buscar Lote</button>
+            </div>
+            <div class="btnToggle">
+                <mat-slide-toggle formcontrolname="hidden" type="button" (click)="toggleBusquedaAutomatica()" class="mat-slide-toggle"></mat-slide-toggle>
+                <label class="paddingLeft">Acceso automático</label>
             </div>
         </div>
 
         <div class="controlesBusqueda">
             <mat-form-field appearance="outline" class="inputBuscarLote">
                 <mat-label>Lote</mat-label>
-                <input #buscarLote (keyup)="searchLote()" matInput value="" placeholder="Buscar lote">
+                <input #buscarLote (keyup)="searchLote()" matInput value="" placeholder="Buscar lote por nombre">
                 <!-- <input matInput value="" placeholder="Buscar lote"> -->
                 <mat-icon matSuffix>search</mat-icon>
             </mat-form-field>
 
             <div class="botonesBusqueda">
-                <button [disabled]="!this.lote" mat-raised-button color="primary" (click)="accederAlLoteById()">Acceder al Lote</button>
-                <button [disabled]="!this.lote" mat-raised-button color="primary" (click)="buscarLotePorNombre()">Buscar Lote</button>
+                <button [disabled]="!this.btnBuscarLote" class="btn" mat-raised-button color="primary" (click)="buscarLotePorNombre(buscarLote.value)">Buscar Lote</button>
+                <button [disabled]="!this.btnControlar" class="btn" mat-raised-button color="primary" (click)="accederAlLoteById()">Controlar Lote</button>
             </div>
         </div>
     </div>

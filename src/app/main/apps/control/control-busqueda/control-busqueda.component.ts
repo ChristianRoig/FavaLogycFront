@@ -54,6 +54,10 @@ export class ControlEstanteriaComponent implements OnInit {
   codigoBarras: string = null;
   CUPA: string = null;
 
+  btnControlar: boolean = false;
+  btnBuscarLote: boolean = false;
+  busquedaAutomatica: boolean = false;
+
   dataSource2: any;
   length: number = 0;
   page: number = 0;
@@ -113,17 +117,15 @@ export class ControlEstanteriaComponent implements OnInit {
     this.buscarDetalleUnico();
   }
 
-  buscarLotePorNombre() {
-    /* let bodyFechas: BodyDetalleFecha  = {
-      desdeLote   : this.pickerLoteDesde,
-      hastaLote   : this.pickerLoteDesde
-    } */
-    let bodyFechas = null;
+  buscarLotePorNombre(nombre: string) {
+    let bodyFechas = {
+      desdeLote   : null,
+      hastaLote   : null
+    } 
+   this.lote = nombre;
     this._controlBusquedaService.getLotePorNombre(this.lote, bodyFechas)
       .subscribe(data => {
-        //console.log(data);
         this.dataSource2 = data.datos;
-        //this.length = data.totalRegistros;
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
@@ -143,10 +145,18 @@ export class ControlEstanteriaComponent implements OnInit {
     }); 
   }
 
+  toggleBusquedaAutomatica(){
+    this.busquedaAutomatica = !this.busquedaAutomatica;
+  }
+
   searchLote() {
     this.lote = this.buscarLoteInput.nativeElement.value;
-    if (this.lote === '') {
-      this.lote =null;
+    if (this.lote === '' || this.lote === null) {
+      this.lote = null;
+      this.btnControlar = false;
+      this.btnBuscarLote = false;
+    } else {
+      this.btnBuscarLote = true;
     }
   }
 
@@ -162,13 +172,24 @@ export class ControlEstanteriaComponent implements OnInit {
     this.buscarDetalleUnico()
   }
 
-  accederAlLote( cupa ){
+  buscarLotePorCUPA( cupa ){
     this.CUPA = cupa.value;
     this._controlBusquedaService.getDetalleLotePorCupa( cupa, this.modo ) .subscribe( data => {
       console.log(data);
       console.log(data.datos[0].detalle.pedidoLote.id);
+      console.log(data.datos[0].detalle.pedidoLote.nombre);
       this.idLote = data.datos[0].detalle.pedidoLote.id;
-      this.buscarDetalleUnico();  
+       if(this.busquedaAutomatica){  // si la busquedaAtomatica es true accede de una al lote
+          this.buscarDetalleUnico();
+      } else {
+          this.btnControlar = true;
+          this.btnBuscarLote = false;
+          this.buscarLoteInput.nativeElement.value = this.idLote;
+          this.buscarLotePorNombre(data.datos[0].detalle.pedidoLote.nombre);
+      }
+      //sino el idLote se pone en el input, se habilita el btn Controlar al lote y aparece el lote en el listado(getLotePorNombre)
+      
+
       /* this._controlBusquedaService.arregloDeDetalles = data.datos[0];
       this.idLote = data.datos[0].detalle.pedidoLote.id;
       this._controlBusquedaService.idLote = data.datos[0].detalle.pedidoLote.id;

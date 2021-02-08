@@ -31,6 +31,7 @@ fuse-sidebar {
 }
 
 .controlesBusqueda {
+    height: 80px;
     display: flex;
     width: 100%;
     align-items: center !important;
@@ -45,8 +46,31 @@ fuse-sidebar {
 
 .botonesBusqueda {
     display: flex;
-    width: 900px;
+    width: 400px;
+    align-items: center !important;
+    justify-content: flex-start;
+}
+
+.btn {
+    height: 40px;
+    /* margin-bottom: 27px; */
+    width: 120px;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-left: 15px;
+    /* margin-right: 5px; */
+}
+
+.btnToggle {
+    width: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.botonesBusquedaSup {
+    display: flex;
+    width: 700px;
     align-items: center !important;
     justify-content: space-between;
-    margin-left: 20px;
 }
