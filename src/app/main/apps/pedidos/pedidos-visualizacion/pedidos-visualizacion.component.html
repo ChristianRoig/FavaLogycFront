@@ -1,7 +1,12 @@
-<app-plantilla-fondo-simple titulo='Actualizar pedidos'>
+<app-plantilla-fondo-simple titulo='Ver Comprobante' arrowBack=true>
 
     <!-- CONTENIDO -->
-    <div contenido >
+    <div contenido>
+
+        <!-- (click)="confirmacionBorrar()" -->
+        <div class="btnEliminar">
+            <button mat-raised-button (click)="anular(this.idCabecera)" color="light">Eliminar pedido</button>
+        </div>
 
         <div fxLayout="column" class="fuse-card" style="max-width: 100%;">
 
@@ -18,87 +23,81 @@
                     <mat-form-field appearance="outline">
                         <mat-label>Tipo</mat-label>
                         <input matInput disabled value="{{this.cabecera ? this.cabecera.pedidoTipo.nombre : ''}}">
-                    </mat-form-field>   
+                    </mat-form-field>
 
                     <mat-form-field appearance="outline">
                         <mat-label>Comprobante</mat-label>
                         <input matInput disabled value="{{this.cabecera ? this.cabecera.pedidoCbte.nroCbte : ''}}">
-                    </mat-form-field> 
+                    </mat-form-field>
 
                 </form>
 
-    
+
                 <div fxLayout="column" class="p-24">
-    
+
                     <mat-card fxLayout="column" class="primary-50-bg p-24 pr-48">
-    
+
                         <span class="mat-title mb-4">Cliente</span>
                         <span class="mat-body-1">{{this.cabecera ? this.cabecera.pedidoCliente.codigo : ''}}</span>
                         <span class="mat-body-1">{{this.cabecera ? this.cabecera.pedidoCliente.nombre : ''}}</span>
-        
+
                         <span class="mat-title mt-24 mb-4">Origen</span>
                         <span class="mat-body-1">{{this.cabecera ? this.cabecera.pedidoOrigen.nombre : ''}}</span>
                     </mat-card>
-    
+
                 </div>
             </div>
 
-            
+
         </div>
-        
+
         <div class="mat-card my-24">
-            
+
             <mat-tab-group class="p-24" color="accent">
-                <mat-tab label="Artículos"> 
+                <mat-tab label="Artículos">
                     <ng-container *ngTemplateOutlet="articulos"></ng-container>
                 </mat-tab>
-        
+
                 <mat-tab label="CUPA">
                     <ng-container *ngTemplateOutlet="cupa"></ng-container>
                 </mat-tab>
-        
+
                 <mat-tab label="Comprobantes">
                     <ng-container *ngTemplateOutlet="comprobantes"></ng-container>
                 </mat-tab>
-        
+
                 <mat-tab label="Datos de entrega">
                     <ng-container *ngTemplateOutlet="datosEntrega"></ng-container>
                 </mat-tab>
-                
+
                 <mat-tab label="Trazabilidad">
                     <ng-container *ngTemplateOutlet="trazabilidad"></ng-container>
                 </mat-tab>
-            </mat-tab-group>            
+            </mat-tab-group>
         </div>
     </div>
-        
-        
-        
     <!-- / CONTENIDO -->
-
 
 </app-plantilla-fondo-simple>
 <br>
 <br>
 <br>
-
-
 <ng-template #articulos>
 
     <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="dataSourceArticulos" class="mat-elevation-z8" style="width: 100%;">
-      
+
         <!-- Position Column -->
         <ng-container matColumnDef="lote">
             <th mat-sort-header="idLote" mat-header-cell *matHeaderCellDef> Lote </th>
             <td mat-cell *matCellDef="let element"> {{ element.pedidoLote ? element.pedidoLote.id : ''}} </td>
         </ng-container>
-      
+
         <!-- Name Column -->
         <ng-container matColumnDef="codigoArticulo">
             <th mat-sort-header="codigoArticulo" mat-header-cell *matHeaderCellDef> Código Artìculo </th>
             <td mat-cell *matCellDef="let element"> {{element.articulo.codigoArticulo}} </td>
         </ng-container>
-      
+
         <!-- Weight Column -->
         <ng-container matColumnDef="nombre">
             <th mat-sort-header="nombreArticulo" mat-header-cell *matHeaderCellDef> Nombre </th>
@@ -110,7 +109,7 @@
             <th mat-header-cell *matHeaderCellDef> Cantidad </th>
             <td mat-cell *matCellDef="let element"> 1 </td>
         </ng-container>
-        
+
         <!-- Symbol Column -->
         <ng-container matColumnDef="estado">
             <th mat-sort-header="estado" mat-header-cell *matHeaderCellDef> Estado </th>
@@ -122,17 +121,13 @@
             <th mat-sort-header="etapa" mat-header-cell *matHeaderCellDef> Etapa </th>
             <td mat-cell *matCellDef="let element"> {{element.pedidoEtapa.nombre}} </td>
         </ng-container>
-      
+
         <tr mat-header-row *matHeaderRowDef="displayedColumnsArticulos"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumnsArticulos;"></tr>
     </table>
 
     <div contenido class=" mb-4">
-        <mat-paginator [length]="length"
-            [pageIndex]="page"
-            [pageSize]="size"
-            [pageSizeOptions]="[5, 10, 15, 100]"
-            (page) = "paginar($event)">
+        <mat-paginator [length]="length" [pageIndex]="page" [pageSize]="size" [pageSizeOptions]="[5, 10, 15, 100]" (page)="paginar($event)">
         </mat-paginator>
     </div>
 </ng-template>
@@ -154,20 +149,20 @@
 
     <!-- 'Fecha', 'Estado', 'Etapa', 'Accion', 'Cupa', 'Codigo Articulo', 'Usuario' -->
     <pedidos-trazabilidad idCabecera='{{this.idCabecera}}'></pedidos-trazabilidad>
-    
+
 </ng-template>
 
 
 <ng-template #articulosPrueba>
 
     <table mat-table [dataSource]="dataSourceArticulos" class="mat-elevation-z8" style="width: 100%;">
-      
+
         <!-- Position Column -->
         <ng-container matColumnDef="lote">
             <th mat-header-cell *matHeaderCellDef> Lote </th>
             <td mat-cell *matCellDef="let element"> 1 </td>
         </ng-container>
-      
+
         <!-- Name Column -->
         <ng-container matColumnDef="codigoArticulo">
             <th mat-header-cell *matHeaderCellDef> Código Artìculo </th>

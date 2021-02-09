@@ -20,7 +20,7 @@ export interface BodyDetalle{
   }
 
 @Injectable()
-export class ControlEstanteriaService
+export class ControlBusquedaService
 {
     arregloDeDetalles;
     idLote;
@@ -28,27 +28,46 @@ export class ControlEstanteriaService
     
     constructor( private _httpClient: HttpClient ) {}
 
-    async getDetalleUnico(idLote, codArt, etapaproceso): Promise<any>
-    {
+    async getDetalleUnico(idLote, codArt, etapaproceso): Promise<any>{
 
         let headers = new HttpHeaders({
             "Content-Type": "application/json"
         });
-
-        let ruta = `${BASE_URL}pedidosatrabajar/detalleunico/lote/${idLote}/${etapaproceso}/${codArt}`;
+       console.log('idLote',idLote,"| etapaproceso", etapaproceso,"| codArt", codArt);
+        let ruta = `${BASE_URL}pedidosatrabajar/detalleunico/lote/${idLote}/${etapaproceso}/codbarras`;
+        //let ruta = `${BASE_URL}pedidosatrabajar/detalleunico/lote/${idLote}/${etapaproceso}/${codArt}`;
+        //let ruta = `${BASE_URL}pedidosatrabajar/detalleunico/lote/7/estanteria/a/codbarras`;
+        /* /codBarras */
         
-
         return this._httpClient.get(ruta, {headers: headers})
 		.toPromise().then ( (response: any) => {
 
-			return response;
-			
+			return response;	
 		});
     }
 
+    getLotesPorEstado(estado: string, page, size): Observable<any>{  
+        
+        let ruta = `${ BASE_URL }pedidosatrabajar/pedidolote/lote/${ estado }/${ page }/${ size }`;
+        return this._httpClient.get(ruta);
+    }
 
-    async getCupaCodBarras(cupa, idLote, codBarras, modo): Promise<any>
-    {
+    getDetalleLotePorCupa ( cupa, etapa ): Observable<any>{  
+        
+        let ruta = `${ BASE_URL }pedidosatrabajar/detalleunico/cupa/${ cupa }/${ etapa }`;
+        return this._httpClient.get(ruta);
+    }
+
+    getLotePorNombre(lote: any, body): Observable<any>{
+
+        let headers = new HttpHeaders({ "Content-Type": "application/json" });
+    
+        let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/pornombreyfechas/${lote}`;
+        
+        return this._httpClient.post(ruta, body, {headers: headers});
+    } 
+
+    async getCupaCodBarras(cupa, idLote, codBarras, modo): Promise<any>{
 
         let headers = new HttpHeaders({
             "Content-Type": "application/json"

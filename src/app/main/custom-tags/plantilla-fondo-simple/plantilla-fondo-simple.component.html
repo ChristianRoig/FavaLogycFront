@@ -1,4 +1,4 @@
-<div id="plantilla1" class="page-layout carded fullwidth inner-scroll">
+<div id="plantilla1" class="page-layout carded fullwidth inner-scroll ">
 
     <!-- TOP BACKGROUND -->
     <div class="top-bg accent"></div>
@@ -10,16 +10,16 @@
 
 
         <!-- HEADER -->
-        <div class="header accent" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
+        <div class="header accent " fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
 
             <!-- APP TITLE -->
             <div class="logo mb-24 mb-sm-0" fxLayout="row" fxLayoutAlign="start center">
 
-                <button mat-icon-button (click)="back()">
+                <button arrowBack mat-icon-button *ngIf="this.arrowBack" (click)="back()">
                     <mat-icon>arrow_back</mat-icon>
                 </button>
 
-                <span titulo class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">{{ titulo }}</span>
+                <span titulo class="logo-text h1 tituloPagina" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">{{ titulo }}</span>
             </div>
             <!-- / APP TITLE -->
 

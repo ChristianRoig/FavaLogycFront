@@ -34,7 +34,7 @@ import { LoteAgregarLoteService } from '../lotes/lote-crear-lote/agregar-lote/ag
 
 const routes: Routes = [
     {
-        path     : 'lista-lotes/ver-lote/:id',
+        path     : 'ver-lote/:id',
         component: VerLoteComponent
     },
     {

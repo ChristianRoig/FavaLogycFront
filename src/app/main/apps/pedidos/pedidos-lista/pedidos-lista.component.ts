@@ -61,7 +61,8 @@ export class PedidosListaComponent implements OnInit {
   @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
   @ViewChild('buscarLote') buscarLoteInput: ElementRef;
 
-  displayedColumns: string[] = ['Tipo', 'CodigoArticulo','NombreArticulo', 'Comprobante', 'Fecha-Entrega', 'Provincia', 'Localidad','Etapa', 'Lote', 'Borrar'];
+  displayedColumns: string[] = ['Tipo', 'CodigoArticulo', 'NombreArticulo', 'Comprobante', 'Fecha-Entrega', 'Provincia', 'Localidad', 'Etapa', 'Lote', 'Ver'];
+  /* , 'Borrar' */
   dataSource = ELEMENT_DATA;  
   dataSource2: any;
   selection = new SelectionModel<Articulos>(true, []);
@@ -160,7 +161,7 @@ export class PedidosListaComponent implements OnInit {
 
   resetFiltros(){
 
-    this.busqueda = ""
+    this.busqueda = "";
     this.page = 0;
     this.size = 10;
     this.columna = 'codigoArticulo';
@@ -186,15 +187,15 @@ export class PedidosListaComponent implements OnInit {
   getfiltros(){
     this._pedidosListaService.getAllTipos().subscribe(params => {
       this.filtroTipos = params.datos;
-      console.log(params)
-      this.length = params.totalRegistros
+      console.log(params);
+      this.length = params.totalRegistros;
     },
     (err: HttpErrorResponse) => {
       this.length = 0
       if (err.error instanceof Error) {
         console.log("Client-side error");
       } else {
-        let errStatus = err.status
+        let errStatus = err.status;
         if (errStatus == 0){
           let titulo = 'Error de Servidor';
           let mensaje = "Por favor comunicarse con Sistemas";
@@ -397,8 +398,8 @@ export class PedidosListaComponent implements OnInit {
     this._pedidosListaService.getPedidoDetalle(this.body, busqueda, page, size, columna, order).subscribe(
       data => {
         this.dataSource2 = data.datos;
-        // console.log(this.dataSource2);
-        this.length = data.totalRegistros;
+        console.log("asd", this.dataSource2);
+        //this.size = data.totalRegistros;
       },
       (err: HttpErrorResponse) => {
         this.length = 0
@@ -654,11 +655,11 @@ export class PedidosListaComponent implements OnInit {
     this._router.navigate([ruta]);
   }
 
-  anular(id){
+/*   anular(id){
     let ruta = `apps/pedidos/anular/${id}`;
     console.log(ruta);
     this._router.navigate([ruta]);
-  }
+  } */
 
   agregarPedido() {
     let ruta = `apps/pedidos/crear-pedido`;

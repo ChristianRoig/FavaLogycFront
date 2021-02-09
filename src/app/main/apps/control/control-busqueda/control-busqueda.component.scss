@@ -30,31 +30,25 @@ fuse-sidebar {
     max-width: unset !important;
 }
 
-.btnAddPedidoLote {
-    display: flex;
-    justify-content: flex-end;
-    /* padding-right: 10px; */
-    padding-bottom: 15px;
-}
-
 .controlesBusqueda {
+    height: 80px;
     display: flex;
     width: 100%;
     align-items: center !important;
     justify-content: flex-start;
 }
 
-.botonesBusqueda {
-    display: flex;
-    width: 300px;
-    align-items: center !important;
-    justify-content: space-around;
-}
-
-.inputBusqueda {
+.inputBuscarLote {
     width: 600px;
     justify-content: flex-start;
     padding-top: 20px;
+}
+
+.botonesBusqueda {
+    display: flex;
+    width: 400px;
+    align-items: center !important;
+    justify-content: flex-start;
 }
 
 .btn {
@@ -67,16 +61,16 @@ fuse-sidebar {
     /* margin-right: 5px; */
 }
 
-@media (max-width: 768px) {
-    .inputBusqueda {
-        width: 400px;
-    }
-    .btn {
-        height: 60px;
-        width: 150px;
-        padding-left: 5px;
-        padding-right: 5px;
-        margin-left: 6px;
-        margin-right: 3px;
-    }
+.btnToggle {
+    width: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.botonesBusquedaSup {
+    display: flex;
+    width: 700px;
+    align-items: center !important;
+    justify-content: space-between;
 }

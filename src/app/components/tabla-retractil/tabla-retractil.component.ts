@@ -18,7 +18,7 @@ export class TablaRetractilComponent implements OnInit {
 
   @Input('arregloDeDetalles') arregloDeDetalles: Array<any>;
   dataSource;
-  columnsToDisplay = ['Check', 'Cod. Art.', 'Nomb. Art.', 'Cant.', 'Etapa'];
+  columnsToDisplay = ['Check', 'Cod. Art.', 'Nomb. Art.', 'Cant.', 'Etapa', 'CodBarra', 'Cupa'];
   ELEMENT_DATA: DetallesTablaRetractil[] = [];
   columnsToDisplay2 = ['Checks', 'Nomb. de Parte', 'Identificador'];
   expandedElement: DetallesTablaRetractil | null;
@@ -36,7 +36,6 @@ export class TablaRetractilComponent implements OnInit {
 
   convertirDatosEnArreglo() {
     for (let index = 0; index < this.arregloDeDetalles.length; index++) {
-
       const element = this.arregloDeDetalles[index];
       
       let cod_art = element.detalle.articulo.codigoArticulo;
@@ -44,12 +43,17 @@ export class TablaRetractilComponent implements OnInit {
       let nom_art = element.detalle.articulo.nombre;
       let etapa = element.detalle.pedidoEtapa.nombre;
       let cant = element.cantidadDeDetallesCheckeados + '/' + element.cantidadDeDetalles;
+      let codBarra = element.articuloCodBarras[0].codigoDeBarras; 
+      let cupa = element.listaPartes[0].codigoUnicoParteArticulo;
+
       let objeto = {
         'Cod. Art.': cod_art,
         Check: check,
         'Nomb. Art.': nom_art,
         'Cant.': cant,
         Etapa: etapa,
+        'CodBarra': codBarra,
+        'Cupa': cupa,
         Detalle: []
       }
       for (let index = 0; index < element.listaPartes.length; index++) {
@@ -62,8 +66,8 @@ export class TablaRetractilComponent implements OnInit {
         objeto.Detalle.push(detalle);
       }
       this.ELEMENT_DATA.push(objeto);
+      //console.log("largo del array", this.ELEMENT_DATA.length);
     }
-
     this.dataSource = this.ELEMENT_DATA;
   }
 

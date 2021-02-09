@@ -27,15 +27,22 @@ export class ListaLotesService
         private _httpClient: HttpClient
     ){    }
 
-    getAllLotes(): Observable<any>{  
+    getAllLotes( page, size ): Observable<any>{  
         
-        let ruta = `${ BASE_URL }pedidosatrabajar/pedidolote/lote/0/10`;
+        let ruta = `${ BASE_URL }pedidosatrabajar/pedidolote/lote/${ page }/${ size }`;
+        //let ruta = `${ BASE_URL }pedidosatrabajar/pedidolote/lote/0/10`;
         return this._httpClient.get(ruta);
     }
     
     getLotesPorNombre( nombreLote ): Observable<any>{    
         
         let ruta = `${ BASE_URL }pedidosatrabajar/pedidolote/lote/nombre/${ nombreLote }`;
+        return this._httpClient.get(ruta);
+    }
+    
+    getLotesPorEstado(estado: string, page, size): Observable<any>{  
+        
+        let ruta = `${ BASE_URL }pedidosatrabajar/pedidolote/lote/${ estado }/${ page }/${ size }`;
         return this._httpClient.get(ruta);
     }
 
@@ -143,7 +150,7 @@ export class ListaLotesService
     } 
 
     getLotesPorFecha(lote: any, body: BodyDetalleFecha): Observable<any>{
-
+        
         let headers = new HttpHeaders({
             "Content-Type": "application/json"
         });

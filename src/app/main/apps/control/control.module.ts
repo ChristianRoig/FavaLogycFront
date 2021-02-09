@@ -15,12 +15,12 @@ import { FuseSidebarModule } from '@fuse/components';
 import { TablaRetractilModule } from 'app/components/tabla-retractil/tabla-retractil.module';
 
 // componentes favalogyc
-import { ControlEstanteriaComponent } from '../control/control-estanteria/control-estanteria.component';
-import { ControlEstanteriaBusquedaComponent } from '../control/control-estanteria-busqueda/control-estanteria-busqueda.component';
+import { ControlEstanteriaComponent } from './control-busqueda/control-busqueda.component';
+import { ControlarLoteComponent } from './controlar-lote/controlar-lote.component';
 
 // servicios favalogyc
-import { ControlEstanteriaService } from '../control/control-estanteria/control-estanteria.service';
-import { ControlEstanteriaBusquedaService } from '../control/control-estanteria-busqueda/control-estanteria-busqueda.service';
+import { ControlBusquedaService } from './control-busqueda/control-busqueda.service';
+import { ControlEstanteriaBusquedaService } from '../control/controlar-lote/controlar-lote.service';
 
 const routes: Routes = [
     {
@@ -28,15 +28,15 @@ const routes: Routes = [
         component: ControlEstanteriaComponent
     },
     {
-        path     : ':modo/busqueda',
-        component: ControlEstanteriaBusquedaComponent
-    }
+        path     : ':modo/:id',
+        component: ControlarLoteComponent
+    }, 
 ];
 
 @NgModule({
     declarations: [
         ControlEstanteriaComponent,
-        ControlEstanteriaBusquedaComponent
+        ControlarLoteComponent
     ],
     imports     : [
         CommonModule,
@@ -50,7 +50,7 @@ const routes: Routes = [
         TablaRetractilModule
     ],
     providers   : [
-        ControlEstanteriaService,
+        ControlBusquedaService,
         ControlEstanteriaBusquedaService
     ]
 })

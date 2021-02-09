@@ -10,6 +10,7 @@ import { Location } from '@angular/common';
 export class PlantillaFondoComponent implements OnInit {
 
   @Input('titulo') titulo: string = '';
+  @Input('arrowBack') arrowBack: boolean = false;
 
   constructor(private _location : Location) { }
 

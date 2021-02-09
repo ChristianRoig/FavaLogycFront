@@ -1,43 +1,36 @@
-<app-plantilla-fondo-simple titulo='Crear Lote'>
+<app-plantilla-fondo-simple titulo='Crear Lote' arrowBack=true>
 
     <!-- CONTENIDO -->
     <div contenido>
 
         <div fxLayout="column">
             <!-- SECCION ARTICULOS -->
-            <div class="fuse-card my-24" style="max-width: 100%;">
-
-                <!-- BOTON "FILTROS" -->
-                <span fxLayoutAlign="end">
-
-                    <button mat-button (click)="toggleSidebarOpen('sidebarFilter')" class="m-12">
-                        <mat-icon>tune</mat-icon>
-                        Filtros                
-                    </button> 
-                </span>
-                <!-- / BOTON "FILTROS" -->
-
+            <div class="fuse-card my-24 pl-24 pr-24" style="max-width: 100%;">
 
                 <!-- TITULO/BUSCADOR/BOTON -->
                 <div fxLayout="row" fxLayoutAlign="space-between">
 
-                    <div class="h2 m-24">Artículos</div>
+                    <div class="controlesBusqueda">
+                        <mat-form-field appearance="outline" class="mt-8 inputBusqueda">
+                            <mat-label>Código de Artículo o Comprobante</mat-label>
+                            <input #buscarCbte class="text-uppercase" (keyup)="searchCbte()" matInput value="" placeholder="Buscar Cód. Artículo o comprobante">
+                            <mat-icon matSuffix>search</mat-icon>
+                        </mat-form-field>
 
-                    <mat-form-field appearance="outline" style="width: 100%;" class="mt-8 mx-12">
-                        <mat-label>Código de Artículo o Comprobante</mat-label>
-                        <input #buscarCbte class="text-uppercase" (keyup)="searchCbte()" matInput value="" placeholder="Buscar Cód. Artículo o comprobante">
-                        <mat-icon matSuffix>search</mat-icon>
-                    </mat-form-field>
-
-                    <div class="m-24">
-
-                        <button (click)="crearLote()" mat-raised-button color="primary" [matBadge]="selection.selected.length" [matBadgeHidden]="selection.selected.length===0" matBadgeColor="warn" [disabled]="selection.selected.length===0">
+                        <div class="botonesBusqueda">
+                            <button (click)="crearLote()" class="btn" mat-raised-button color="primary" [matBadge]="selection.selected.length" [matBadgeHidden]="selection.selected.length===0" matBadgeColor="warn" [disabled]="selection.selected.length===0">
                                 Crear Lote
-                        </button>
+                            </button>
+                            <span fxLayoutAlign="end">
+                                <button mat-button (click)="toggleSidebarOpen('sidebarFilter')" class="m-12 mb-24">
+                                    <mat-icon>tune</mat-icon>
+                                    Filtros                
+                                </button> 
+                            </span>
+                        </div>
                     </div>
                 </div>
                 <!-- / TITULO/BUSCADOR/BOTON -->
-
 
                 <ng-container *ngTemplateOutlet="articulos"></ng-container>
             </div>
@@ -66,34 +59,21 @@
         </span>
         <!-- / BOTON CERRAR -->
 
-
-        <!-- FILTROS LOTE -->
-        <!-- <span class="p-24 pt-8">
-    
-            <ng-container *ngTemplateOutlet="filtrosLote"></ng-container>
-        </span> -->
-        <!-- / FILTROS LOTE -->
-
-
         <!-- FILTROS ARTICULOS -->
         <span class="p-24 pt-8">
     
             <ng-container *ngTemplateOutlet="filtros"></ng-container>
         </span>
         <!-- / FILTRO ARTICULOS -->
-
     </div>
 
 </fuse-sidebar>
 <!-- / SIDE BAR -->
 
-
 <!-- TEMPLATE LISTA -->
 <ng-template #articulos>
 
     <div style="width: 100%; overflow: auto;">
-
-        <!-- <table mat-table [dataSource]="dataSource2" class="mb-8"> -->
         <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="dataSource2" class="mb-8">
 
             <ng-container matColumnDef="select">
@@ -161,7 +141,6 @@
 
 <!-- / TEMPLATE LISTA -->
 
-
 <!-- FILTROS ARTICULOS -->
 <ng-template #filtros>
     <form fxLayout="column" name="form">
@@ -183,18 +162,6 @@
             </select>
         </mat-form-field>
 
-
-        <!-- <div fxLayout="row"> -->
-
-        <!-- <mat-form-field appearance="outline" fxFlex="50" class="mr-4">
-                <mat-label>{{ filtroTurnos ? 'Turno' : 'Cargando...'}}</mat-label>
-                <select matNativeControl (change)="selectTurno($event)" [disabled]="!filtroTurnos">
-                    <option [value]="0">TODOS</option>
-                    <option *ngFor="let turno of filtroTurnos" [value]="turno.id"
-                        [selected]="selectedTurno === turno.id"> {{ turno.nombre }}</option>
-                </select>
-            </mat-form-field>   -->
-
         <mat-form-field appearance="outline">
             <mat-label>{{ filtroOrigenes ? 'Origen' : 'Cargando...'}}</mat-label>
             <select matNativeControl (change)="selectOrigen($event)" [disabled]="!filtroOrigenes">
@@ -205,17 +172,7 @@
         </mat-form-field>
         <!-- </div> -->
 
-
         <div fxLayout="row">
-
-            <!-- <mat-form-field appearance="outline" fxFlex="50" class="mr-4">
-                <mat-label>{{ filtroEstados ? 'Estado' : 'Cargando...'}}</mat-label>
-                <select matNativeControl (change)="selectEstado($event)" [disabled]="!filtroEstados">
-                    <option [value]="0">TODOS</option>
-                    <option *ngFor="let estado of filtroEstados" [value]="estado.id"
-                        [selected]="selectedEstado === estado.id"> {{ estado.nombre }}</option>
-                </select>
-            </mat-form-field>    -->
             <mat-form-field appearance="outline" fxFlex="50" class="mr-4">
                 <mat-label>{{ filtroTurnos ? 'Turno' : 'Cargando...'}}</mat-label>
                 <select matNativeControl (change)="selectTurno($event)" [disabled]="!filtroTurnos">

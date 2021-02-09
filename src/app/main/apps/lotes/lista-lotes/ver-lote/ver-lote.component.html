@@ -1,4 +1,4 @@
-<app-plantilla-fondo-simple titulo='Ver Lote'>
+<app-plantilla-fondo-simple titulo='Ver Lote' arrowBack=true>
 
     <!-- CONTENIDO -->
     <div contenido>
@@ -11,13 +11,6 @@
                 <!-- LOTE -->
                 <!-- <div fxFlex="100" class="fuse-card p-24 mr-8"> -->
                 <h1 class="colorText" *ngIf="!this.editLote"> {{ this.nombreLote }} </h1>
-                <!-- <input *ngIf="!this.editLote" #nombreLote> -->
-                <!-- <div *ngIf="this.editLote" class="inputAndBoton">
-                    <div class="input-group-prepend">
-                        <button mat-raised-button color="light" (click)="actualizarNombreLote(nombreLoteInput.value)" type="button">Aplicar</button>
-                    </div>
-                    <input #nombreLoteInput class="form-control" type="text" placeholder="Inserte el nuevo nombre del lote">
-                </div> -->
 
                 <div *ngIf="this.editLote" class="input-group mb-3">
                     <input #nombreLoteInput type="text" class="nombreLote" placeholder="({{ this.nombreLote }})  -  Inserte el nuevo nombre del lote">
@@ -31,35 +24,31 @@
             <!-- / Filtros en Pantalla grande -->
 
             <!-- SECCION ARTICULOS -->
-            <div class="fuse-card my-20" style="max-width: 100%;">
+            <div class="fuse-card my-20 pl-24 pr-24" style="max-width: 100%;">
 
                 <!-- TITULO/BUSCADOR/BOTON -->
                 <div fxLayout="row" fxLayoutAlign="space-around">
 
-                    <mat-form-field appearance="outline" style="width: 100%;" class="mt-8 mx-12">
-                        <mat-label>Código de Artículo o Comprobante</mat-label>
-                        <input #buscarCbte class="text-uppercase" (keyup)="searchCbte()" matInput value="" placeholder="Buscar Cód. Artículo o comprobante">
-                        <mat-icon matSuffix>search</mat-icon>
-                    </mat-form-field>
+                    <div class="controlesBusqueda">
+                        <mat-form-field appearance="outline" class="inputBusqueda">
+                            <mat-label>Código de Artículo o Comprobante</mat-label>
+                            <input #buscarCbte class="text-uppercase" (keyup)="searchCbte()" matInput value="" placeholder="Buscar Cód. Artículo o comprobante">
+                            <mat-icon matSuffix>search</mat-icon>
+                        </mat-form-field>
 
-                    <div class="m-24">
+                        <div class="botonesBusqueda">
+                            <button (click)="sacarDelLote()" class="btn" mat-raised-button color="primary" [matBadge]="selection.selected.length" [matBadgeHidden]="selection.selected.length===0" matBadgeColor="warn" [disabled]="selection.selected.length===0">
+                                Eliminar Selec.
+                            </button>
 
-                        <button (click)="sacarDelLote()" mat-raised-button color="primary" [matBadge]="selection.selected.length" [matBadgeHidden]="selection.selected.length===0" matBadgeColor="warn" [disabled]="selection.selected.length===0">
-                                Eliminar Seleccionados
-                        </button>
-                    </div>
-                    <div class="m-24">
+                            <button (click)="imprimirCupa()" class="btn" mat-raised-button color="primary">
+                                    Imprimir CUPA
+                            </button>
 
-                        <button (click)="editarLote()" mat-raised-button color="primary">
-                                Editar Lote 
-                        </button>
-                    </div>
-
-                    <div class="m-24">
-
-                        <button (click)="imprimirCupa()" mat-raised-button color="primary">
-                                Imprimir CUPA
-                        </button>
+                            <button (click)="editarLote()" class="btn" mat-raised-button color="primary">
+                                    Editar Lote 
+                            </button>
+                        </div>
                     </div>
                 </div>
 

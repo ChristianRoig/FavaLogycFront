@@ -15,10 +15,17 @@ export const navigation: FuseNavigation[] = [
                 icon     : 'shopping_cart',
                 children : [
                     {
-                        id        : 'pedidos-lista',
+                        id        : 'lista-articulos',
                         title     : 'Lista Pedidos',
                         type      : 'item',
-                        url       : '/apps/pedidos/pedidos-lista',
+                        url       : '/apps/pedidos/lista-articulos',
+                        exactMatch: true
+                    },
+                    {
+                        id        : 'ver-pedido',
+                        title     : 'Ver Pedidos',
+                        type      : 'item',
+                        url       : '/apps/pedidos/ver-pedido/7',
                         exactMatch: true
                     },
                     {
@@ -48,7 +55,7 @@ export const navigation: FuseNavigation[] = [
                         id        : 'verLote',
                         title     : 'Ver Lote',
                         type      : 'item',
-                        url       : '/apps/lotes/lista-lotes/ver-lote/62',
+                        url       : '/apps/lotes/ver-lote/61',
                         exactMatch: true
                     },
                     {
@@ -71,14 +78,14 @@ export const navigation: FuseNavigation[] = [
                         id        : 'control',
                         title     : 'Control Estanteria',
                         type      : 'item',
-                        url       : '/apps/control/estanteria',
+                        url       : '/apps/control/lote-en/estanteria',
                         exactMatch: true
                     },
                     {
                         id        : 'control',
                         title     : 'Control Darsena',
                         type      : 'item',
-                        url       : '/apps/control/darsena',
+                        url       : '/apps/control/lote-en/darsena',
                         exactMatch: true
                     }
                 ]
@@ -113,6 +120,33 @@ export const navigation: FuseNavigation[] = [
                     },
                 ]
             },
+        ]
+    },
+    //-------------------------------------------------------------------------------------
+   
+    {
+        id       : 'infoAuxiliar',
+        title    : 'Info Auxiliar',
+        translate: 'Info Auxiliar',
+        type     : 'group',
+        icon     : 'apps',
+        children : [
+            {
+                id       : 'dashboards',
+                title    : 'Articulos',
+                translate: 'Articulos',
+                type     : 'collapsable',
+                icon     : 'dashboard',
+                
+            },
+            {
+                id       : 'dashboards',
+                title    : 'Comprobantes',
+                translate: 'Comprobantes',
+                type     : 'collapsable',
+                icon     : 'school',
+                
+            }
         ]
     }
 ];

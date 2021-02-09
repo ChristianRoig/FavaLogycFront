@@ -101,7 +101,9 @@ export class LoteAgregarLoteComponent implements OnInit {
     dialogRef.afterClosed()
       .subscribe( () => {
         if (errStatus != 0) {  
-          this.volver(); 
+          /* this.volver(); */ 
+          let ruta = `apps/lotes/lista-lotes`;
+          this._router.navigate([ruta]); 
         } else {
           this._router.navigate(['']);
         }
@@ -167,6 +169,7 @@ export class LoteAgregarLoteComponent implements OnInit {
         }
       }
     )
+   
   }
 
   imprimirCupas(idLote: number){
@@ -181,10 +184,11 @@ export class LoteAgregarLoteComponent implements OnInit {
 
         if ( result ){
           this.imprimirCupa(idLote);
-        } 
-        this.volver();  
+        }
         
       });
+      let ruta = `apps/lotes/lista-lotes`;
+      this._router.navigate([ruta]); 
   }
 
 

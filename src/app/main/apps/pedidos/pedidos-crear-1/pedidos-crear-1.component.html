@@ -1,4 +1,4 @@
-<app-plantilla-fondo-simple titulo='Agregar Pedido Paso 1'>
+<app-plantilla-fondo-simple titulo='Agregar Pedido Paso 1' arrowBack=true>
 
     <!-- CONTENIDO -->
     <div contenido>
@@ -26,7 +26,7 @@
                                 <input #buscarPuntoVenta (keyup)="searchPuntoVenta()" maxlength="6" value="B00074" class="text-uppercase" matInput placeholder="Nombre del Lote">
                             </mat-form-field>
 
-                            <mat-form-field appearance="outline" fxFlex="35%" class="ml-4 mr-4">
+                            <mat-form-field appearance="outline" fxFlex="35%" class="ml-4 mr-4 input">
                                 <mat-label>Comprobante</mat-label>
                                 <!-- value="00024195" -->
                                 <input #buscarCbte (keyup)="searchCbte()" maxlength="8" matInput value="00031378" class="text-uppercase" placeholder="Nombre del Lote">
