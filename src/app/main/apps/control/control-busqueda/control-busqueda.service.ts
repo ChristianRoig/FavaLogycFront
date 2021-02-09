@@ -34,9 +34,9 @@ export class ControlBusquedaService
             "Content-Type": "application/json"
         });
        console.log('idLote',idLote,"| etapaproceso", etapaproceso,"| codArt", codArt);
-        let ruta = `${BASE_URL}pedidosatrabajar/detalleunico/lote/${idLote}/${etapaproceso}/codbarras`;
-        //let ruta = `${BASE_URL}pedidosatrabajar/detalleunico/lote/${idLote}/${etapaproceso}/${codArt}`;
-        //let ruta = `${BASE_URL}pedidosatrabajar/detalleunico/lote/7/estanteria/a/codbarras`;
+        let ruta = `${BASE_URL}pedidos/detalleunico/lote/${idLote}/${etapaproceso}/codbarras`;
+        //let ruta = `${BASE_URL}pedidos/detalleunico/lote/${idLote}/${etapaproceso}/${codArt}`;
+        //let ruta = `${BASE_URL}pedidos/detalleunico/lote/7/estanteria/a/codbarras`;
         /* /codBarras */
         
         return this._httpClient.get(ruta, {headers: headers})
@@ -48,13 +48,13 @@ export class ControlBusquedaService
 
     getLotesPorEstado(estado: string, page, size): Observable<any>{  
         
-        let ruta = `${ BASE_URL }pedidosatrabajar/pedidolote/lote/${ estado }/${ page }/${ size }`;
+        let ruta = `${ BASE_URL }pedidos/pedidolote/lote/${ estado }/${ page }/${ size }`;
         return this._httpClient.get(ruta);
     }
 
     getDetalleLotePorCupa ( cupa, etapa ): Observable<any>{  
         
-        let ruta = `${ BASE_URL }pedidosatrabajar/detalleunico/cupa/${ cupa }/${ etapa }`;
+        let ruta = `${ BASE_URL }pedidos/detalleunico/cupa/${ cupa }/${ etapa }`;
         return this._httpClient.get(ruta);
     }
 
@@ -62,7 +62,7 @@ export class ControlBusquedaService
 
         let headers = new HttpHeaders({ "Content-Type": "application/json" });
     
-        let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/pornombreyfechas/${lote}`;
+        let ruta = `${BASE_URL}pedidos/pedidolote/pornombreyfechas/${lote}`;
         
         return this._httpClient.post(ruta, body, {headers: headers});
     } 
@@ -75,7 +75,7 @@ export class ControlBusquedaService
 
         let pedidoparte = modo === 'darsena' ? '/pedidoparte' : '';
 
-        let ruta = `${BASE_URL}pedidosatrabajar${pedidoparte}/cupa/lote/codbarras/${cupa}/${idLote}/${codBarras}`;
+        let ruta = `${BASE_URL}pedidos${pedidoparte}/cupa/lote/codbarras/${cupa}/${idLote}/${codBarras}`;
         
 
         return this._httpClient.get(ruta, {headers: headers})
@@ -97,7 +97,7 @@ export class ControlBusquedaService
             "Content-Type": "application/json"
         });
 
-        let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/cupa/${cupa}`;
+        let ruta = `${BASE_URL}pedidos/pedidolote/cupa/${cupa}`;
         
 
         return this._httpClient.delete(ruta, {headers: headers})

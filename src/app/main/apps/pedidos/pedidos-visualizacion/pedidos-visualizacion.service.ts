@@ -18,28 +18,28 @@ export class PedidosVisualizacionService
     getCabecera(id): Observable<any>
     {   
 
-        let ruta = `${BASE_URL}pedidosatrabajar/pedidocabecera/${id}`;
+        let ruta = `${BASE_URL}pedidos/pedidocabecera/${id}`;
         // console.log(ruta);
         return this._httpClient.get(ruta);
     }
 
     getDetalle(id, page, size, columna, order): Observable<any>
     {   
-        let ruta = `${BASE_URL}pedidosatrabajar/pedidodetalle/cabecera/${id}/${page}/${size}/${columna}/${order}`;
+        let ruta = `${BASE_URL}pedidos/pedidodetalle/cabecera/${id}/${page}/${size}/${columna}/${order}`;
         // console.log(ruta);
         return this._httpClient.get(ruta);
     }
 
     getTrazabilidad(id, page, size, columna, order): Observable<any>
     {   
-        let ruta = `${BASE_URL}pedidosatrabajar/trazabilidad/gestion/pedidocabecera/${id}/${page}/${size}/${columna}/${order}`;
+        let ruta = `${BASE_URL}pedidos/trazabilidad/gestion/pedidocabecera/${id}/${page}/${size}/${columna}/${order}`;
         // console.log(ruta);
         return this._httpClient.get(ruta);
     }
 
     getDatosEntrega(id, page, size, columna, order): Observable<any>
     {   
-        let ruta = `${BASE_URL}pedidosatrabajar/datosentrega/cabecera/${id}/${page}/${size}/${columna}/${order}`;
+        let ruta = `${BASE_URL}pedidos/datosentrega/cabecera/${id}/${page}/${size}/${columna}/${order}`;
         // console.log(ruta);
         return this._httpClient.get(ruta);
     
@@ -47,14 +47,14 @@ export class PedidosVisualizacionService
 
     getComprobantes(id, page, size, columna, order): Observable<any>
     {   
-        let ruta = `${BASE_URL}pedidosatrabajar/pedidocbte/cabecera/${id}/${page}/${size}/${columna}/${order}`;
+        let ruta = `${BASE_URL}pedidos/pedidocbte/cabecera/${id}/${page}/${size}/${columna}/${order}`;
         console.log(ruta);
         return this._httpClient.get(ruta);
     }
 
     getCUPA(id, page, size, columna, order): Observable<any>
     {   
-        let ruta = `${BASE_URL}pedidosatrabajar/pedidoparte/cabecera/${id}/${page}/${size}/${columna}/${order}`;
+        let ruta = `${BASE_URL}pedidos/pedidoparte/cabecera/${id}/${page}/${size}/${columna}/${order}`;
         console.log(ruta);
         return this._httpClient.get(ruta);
     }

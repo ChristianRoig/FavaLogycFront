@@ -18,14 +18,14 @@ export class PedidosCodigosBarraEditarService
 
     getCodigoBarra(id): Observable<any>
     {
-        let ruta = `${BASE_URL}pedidosatrabajar/codigodebarras/${id}`;
+        let ruta = `${BASE_URL}pedidos/codigodebarras/${id}`;
         return this._httpClient.get(ruta);
     }
 
     putCodigoBarra(id:number, codigoDeBarras:string, descripcion: string): Observable<any>
     {
         
-        let ruta = `${BASE_URL}pedidosatrabajar/codigodebarras/${id}`
+        let ruta = `${BASE_URL}pedidos/codigodebarras/${id}`
 
         let body=  {
             codigoDeBarras: codigoDeBarras,

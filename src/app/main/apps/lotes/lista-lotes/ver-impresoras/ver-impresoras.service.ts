@@ -29,7 +29,7 @@ export class VerImpresorasService
    */
   getImpresoras(): Observable<any>
   {
-      let ruta = `${BASE_URL}pedidosatrabajar/impresora/disponibles/`;
+      let ruta = `${BASE_URL}pedidos/impresora/disponibles/`;
       return this._httpClient.get(ruta);
   }
 

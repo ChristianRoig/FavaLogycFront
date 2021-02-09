@@ -22,13 +22,13 @@ export class PedidosCodigosBarraService
             search = `/${busqueda}`
         }
 
-        let ruta = `${BASE_URL}pedidosatrabajar/codigodebarras/porarticuloycodigodebarrasodescripcion/${codArticulo}${search}/${page}/${size}/${columna}/${order}`;
+        let ruta = `${BASE_URL}pedidos/codigodebarras/porarticuloycodigodebarrasodescripcion/${codArticulo}${search}/${page}/${size}/${columna}/${order}`;
         return this._httpClient.get(ruta);
     }
 
     deleteCodigoBarra(id): Observable<any>
     {
-        let ruta = `${BASE_URL}pedidosatrabajar/codigodebarras/${id}`;
+        let ruta = `${BASE_URL}pedidos/codigodebarras/${id}`;
         return this._httpClient.delete(ruta);
     }
 }

@@ -29,7 +29,7 @@ export class VerCupasService
    */
   getCUPAS(idPedido): Observable<any>
   {
-      let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/${idPedido}`;
+      let ruta = `${BASE_URL}pedidos/pedidolote/${idPedido}`;
       return this._httpClient.get(ruta);
   }
 

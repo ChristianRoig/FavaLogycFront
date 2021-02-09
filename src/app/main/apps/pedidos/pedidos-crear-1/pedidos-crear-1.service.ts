@@ -18,15 +18,15 @@ export class PedidosCrear1Service
     getCabecera(id): Observable<any>
     {   
 
-        let ruta = `${BASE_URL}pedidosatrabajar/pedidocabecera/${id}`;
+        let ruta = `${BASE_URL}pedidos/pedidocabecera/${id}`;
         // console.log(ruta);
         return this._httpClient.get(ruta);
     }
 
     getDetalle(tipoPedido: number, cbte: string): Observable<any>
     {   
-        let ruta = `${BASE_URL}pedidosatrabajar/pedidodetalle/sinremitir/${tipoPedido}/${cbte}`;
-        // let ruta = `${BASE_URL}/pedidosatrabajar/pedidodetalle/sinremitir/1/B0008800024195;
+        let ruta = `${BASE_URL}pedidos/pedidodetalle/sinremitir/${tipoPedido}/${cbte}`;
+        // let ruta = `${BASE_URL}/pedidos/pedidodetalle/sinremitir/1/B0008800024195;
         console.log(ruta);
         return this._httpClient.get(ruta);
     }

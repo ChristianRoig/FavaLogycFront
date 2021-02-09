@@ -35,7 +35,7 @@ export class VerLoteService {
    * @returns {Observable} Observable
    */
   getLote(loteId: number): Observable<any>{
-      let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/${ loteId }`;
+      let ruta = `${BASE_URL}pedidos/pedidolote/${ loteId }`;
       return this._httpClient.get(ruta);
   }
 
@@ -49,7 +49,7 @@ export class VerLoteService {
           listaIdPedidoDetalle: listaIdPedidoDetalle
       }
 
-      let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/lote/detalle/`;
+      let ruta = `${BASE_URL}pedidos/pedidolote/lote/detalle/`;
 
       console.log(listaIdPedidoDetalle);
 
@@ -66,7 +66,7 @@ export class VerLoteService {
     if (busqueda !== '')
         buscar = `/${busqueda}`
   
-    let ruta = `${BASE_URL}pedidosatrabajar/pedidodetalle/pedidolote/porcomprobanteoarticulo${buscar}/${columna}/${order}`;
+    let ruta = `${BASE_URL}pedidos/pedidodetalle/pedidolote/porcomprobanteoarticulo${buscar}/${columna}/${order}`;
     
     return this._httpClient.post(ruta, body, {headers: headers});
   }
@@ -77,7 +77,7 @@ export class VerLoteService {
         "Content-Type": "application/json"
     });
     
-    let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/lote/imprimir/cupa/${lote}/${impresora}`;
+    let ruta = `${BASE_URL}pedidos/pedidolote/lote/imprimir/cupa/${lote}/${impresora}`;
     return this._httpClient.post(ruta, {headers: headers});
   }
 
@@ -89,7 +89,7 @@ export class VerLoteService {
 
     let body= {}
     
-    let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/${ idLote }`;
+    let ruta = `${BASE_URL}pedidos/pedidolote/${ idLote }`;
 
     //return this._httpClient.delete(ruta);
     return this._httpClient.delete(ruta, {headers: headers});
@@ -105,7 +105,7 @@ export class VerLoteService {
       "nombre": nombre,
     }
 
-    let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/lote/${ idLote }`;
+    let ruta = `${BASE_URL}pedidos/pedidolote/lote/${ idLote }`;
     return this._httpClient.put(ruta, body,{headers: headers});
   }
 

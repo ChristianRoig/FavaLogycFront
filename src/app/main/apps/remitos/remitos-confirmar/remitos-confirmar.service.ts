@@ -16,24 +16,24 @@ export class RemitosConfirmarService
 
     getAllTalonarios(): Observable<any>
     {
-        let ruta = `${BASE_URL}pedidosatrabajar/talonario/tipopedido/1`;
+        let ruta = `${BASE_URL}pedidos/talonario/tipopedido/1`;
         return this._httpClient.get(ruta);
     }
 
     getAllTransportes(): Observable<any>
     {
-        let ruta = `${BASE_URL}pedidosatrabajar/transporte/`;
+        let ruta = `${BASE_URL}pedidos/transporte/`;
         return this._httpClient.get(ruta);
     }
 
     getAllDepostitosCarga(): Observable<any>
     {
-        let ruta = `${BASE_URL}pedidosatrabajar/deposito/`;
+        let ruta = `${BASE_URL}pedidos/deposito/`;
         return this._httpClient.get(ruta);
     }
 
     getUltimoNroCbte(id){
-        let ruta = `${BASE_URL}pedidosatrabajar/talonario/${id}`;
+        let ruta = `${BASE_URL}pedidos/talonario/${id}`;
         return this._httpClient.get(ruta);
     }
 

@@ -288,7 +288,8 @@ export class PedidosCrear2Component implements OnInit {
     this._service.postPedidos(this.dataSourceDatosDeEntrega.datos, 1, this.dataSourceDatosDeEntrega.datos[0].listaPedidoDetalle[0].numeroCbte).subscribe(data => {
       console.log(data);
       // this.dataSourceDatosDeEntrega = params;
-      let ruta = `apps/pedidos/pedidos-lista`;
+
+      let ruta = `apps/pedidos/lista-articulos`;
       localStorage.removeItem('AddPedido');
       localStorage.removeItem('datoEntrega');
       localStorage.removeItem('IsTipo');

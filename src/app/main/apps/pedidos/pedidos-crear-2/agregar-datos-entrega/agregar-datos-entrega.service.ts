@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { DATOS_ENTREGA, RootObject, LISTA_PEDIDOS } from '../../../../interfaces/datos-entrega';
+import { DATOS_ENTREGA, RootObject, LISTA_PEDIDOS } from '../../../interfaces/datos-entrega';
 import { map } from 'rxjs/operators';
 //import { map } from 'lodash';
 
@@ -14,7 +14,7 @@ export class AgregarDatosEntregaService {
 
   getDatosEntrega() {
 
-    return this.http.get('http://192.168.100.191:8080/api_favalogyc/pedidosatrabajar/datosentrega/cabecera/38')
+    return this.http.get('http://192.168.100.191:8080/api_favalogyc/pedidos/datosentrega/cabecera/38')
       .pipe(
         map( (resp: RootObject) => {
 

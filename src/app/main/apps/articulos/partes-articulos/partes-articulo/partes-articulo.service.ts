@@ -27,7 +27,7 @@ export class PedidosPartesArticulosService
             busqueda = `/${search}`
         }
 
-        let ruta = `${BASE_URL}pedidosatrabajar/articuloparte/porcodigoonombre${busqueda}/${page}/${size}/${columna}/${order}`;
+        let ruta = `${BASE_URL}pedidos/articuloparte/porcodigoonombre${busqueda}/${page}/${size}/${columna}/${order}`;
         return this._httpClient.get(ruta);
     }
 }

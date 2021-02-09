@@ -21,6 +21,6 @@ export class PedidosCodigosBarraArticulosService
         if(busqueda != ""){
             search = `/${busqueda}`
         }   
-        return this._httpClient.get(`${BASE_URL}pedidosatrabajar/codigodebarras/porcodigoarticuloonombre${search}/${page}/${size}/${columna}/${order}`);
+        return this._httpClient.get(`${BASE_URL}pedidos/codigodebarras/porcodigoarticuloonombre${search}/${page}/${size}/${columna}/${order}`);
     }
 }

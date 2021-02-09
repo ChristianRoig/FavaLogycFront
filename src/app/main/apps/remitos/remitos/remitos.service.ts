@@ -24,13 +24,13 @@ export class RemitoService
 
     getAllTipos(): Observable<any>
     {
-        let ruta = `${BASE_URL}pedidosatrabajar/pedidotipo/`;
+        let ruta = `${BASE_URL}pedidos/pedidotipo/`;
         return this._httpClient.get(ruta);
     }
 
     getAllDarsena(): Observable<any>
     {
-        let ruta = `${BASE_URL}pedidosatrabajar/darsena/`;
+        let ruta = `${BASE_URL}pedidos/darsena/`;
         return this._httpClient.get(ruta);
     }
 
@@ -45,7 +45,7 @@ export class RemitoService
         if (busqueda !== '')
             buscar = `/${busqueda}`
 
-        let ruta = `${BASE_URL}pedidosatrabajar/pedidodetalle/etapadarsena/porcomprobanteoarticulo${buscar}/${columna}/${order}`;
+        let ruta = `${BASE_URL}pedidos/pedidodetalle/etapadarsena/porcomprobanteoarticulo${buscar}/${columna}/${order}`;
         
 
         return this._httpClient.post(ruta, body, {headers: headers});

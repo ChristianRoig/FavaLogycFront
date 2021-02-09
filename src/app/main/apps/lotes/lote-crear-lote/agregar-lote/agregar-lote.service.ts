@@ -15,20 +15,20 @@ export class LoteAgregarLoteService
 
     getCabecera(id): Observable<any> {   
 
-        let ruta = `${BASE_URL}pedidosatrabajar/pedidocabecera/${id}`;
+        let ruta = `${BASE_URL}pedidos/pedidocabecera/${id}`;
         // console.log(ruta);
         return this._httpClient.get(ruta);
     }
 
     getDetalle(id, page, size, columna, order): Observable<any> {   
-        let ruta = `${BASE_URL}pedidosatrabajar/pedidodetalle/cabecera/${id}/${page}/${size}/${columna}/${order}`;
+        let ruta = `${BASE_URL}pedidos/pedidodetalle/cabecera/${id}/${page}/${size}/${columna}/${order}`;
         // console.log(ruta);
         return this._httpClient.get(ruta);
     }
 
     postLote(listaIdPedidos: Array<number>, comentario: string): Observable<any>{
         
-        let ruta = `${BASE_URL}pedidosatrabajar/pedidolote/lote`
+        let ruta = `${BASE_URL}pedidos/pedidolote/lote`
 
         let body =   {
             "listaIdPedidos": listaIdPedidos, 

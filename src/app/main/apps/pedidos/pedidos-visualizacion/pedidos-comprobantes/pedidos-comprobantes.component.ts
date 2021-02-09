@@ -57,6 +57,8 @@ export class PedidosComprobantesComponent implements OnInit {
   buscarComprobantes(page, size, columna, order){
     this._service.getComprobantes(this.idCabecera,page, size, columna, order).subscribe(paramsArt => {
       if(paramsArt){
+        console.log("LALALALA");
+        console.log(paramsArt);
         this.dataSourceComprobantes = paramsArt.datos;
         this.length = paramsArt.totalRegistros;
       }

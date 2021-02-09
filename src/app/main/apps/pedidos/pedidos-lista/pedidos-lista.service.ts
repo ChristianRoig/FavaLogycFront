@@ -34,74 +34,74 @@ export class PedidosListaService
 
     getAllEtapasPorId(id:number): Observable<any>
     {
-        let ruta = `${BASE_URL}pedidosatrabajar/pedidoetapa/estado/${id}`;
+        let ruta = `${BASE_URL}pedidos/pedidoetapa/estado/${id}`;
         return this._httpClient.get(ruta);
     }
 
     getAllEtapas(): Observable<any>
     {
-        let ruta = `${BASE_URL}pedidosatrabajar/pedidoetapa/`;
+        let ruta = `${BASE_URL}pedidos/pedidoetapa/`;
         return this._httpClient.get(ruta);
     }
 
     getAllTurnos(): Observable<any>
     {
-        let ruta = `${BASE_URL}pedidosatrabajar/pedidoturno/`;
+        let ruta = `${BASE_URL}pedidos/pedidoturno/`;
         return this._httpClient.get(ruta);
     }
 
 
     getAllTransportes(): Observable<any>
     {
-        let ruta = `${BASE_URL}pedidosatrabajar/transporte/`;
+        let ruta = `${BASE_URL}pedidos/transporte/`;
         return this._httpClient.get(ruta);
     }
 
     /* getAllEstadosPorId(id:number): Observable<any>
     {
-        let ruta = `${BASE_URL}pedidosatrabajar/pedidoestado/etapa/${id}`;
+        let ruta = `${BASE_URL}pedidos/pedidoestado/etapa/${id}`;
         return this._httpClient.get(ruta);
     }
  */
    /*  getAllEstados(): Observable<any>
     {
-        let ruta = `${BASE_URL}pedidosatrabajar/pedidoestado/`;
+        let ruta = `${BASE_URL}pedidos/pedidoestado/`;
         return this._httpClient.get(ruta);
     } */
 
     getAllOrigenes(): Observable<any>
     {
-        let ruta = `${BASE_URL}pedidosatrabajar/pedidoorigen/`;
+        let ruta = `${BASE_URL}pedidos/pedidoorigen/`;
         return this._httpClient.get(ruta);
     }
 
     getAllTipos(): Observable<any>
     {
-        let ruta = `${BASE_URL}pedidosatrabajar/pedidotipo/`;
+        let ruta = `${BASE_URL}pedidos/pedidotipo/`;
         return this._httpClient.get(ruta);
     }
 
     getAllLocalidades(): Observable<any>
     {
-        let ruta = `${BASE_URL}pedidosatrabajar/localidad/domicilio/`;
+        let ruta = `${BASE_URL}pedidos/localidad/domicilio/`;
         return this._httpClient.get(ruta);
     }
 
     getAllLocalidadesPorProvincia(id:number): Observable<any>
     {
-        let ruta = `${BASE_URL}pedidosatrabajar/localidad/domicilio/provincia/${id}`;
+        let ruta = `${BASE_URL}pedidos/localidad/domicilio/provincia/${id}`;
         return this._httpClient.get(ruta);
     }
 
     getAllProvincias(): Observable<any>
     {
-        let ruta = `${BASE_URL}pedidosatrabajar/provincia/domicilio/`;
+        let ruta = `${BASE_URL}pedidos/provincia/domicilio/`;
         return this._httpClient.get(ruta);
     }
 
     getProvinciaPorLocalidad(id:number): Observable<any>
     {
-        let ruta = `${BASE_URL}pedidosatrabajar/provincia/localidad/${id}`;
+        let ruta = `${BASE_URL}pedidos/provincia/localidad/${id}`;
         return this._httpClient.get(ruta);
     }
 
@@ -112,11 +112,11 @@ export class PedidosListaService
             "Content-Type": "application/json"
         });
 
-        let buscar:string = '';
-        if (busqueda !== '')
+        let buscar: string = '';
+        if ( busqueda !== '' )
             buscar = `/${busqueda}`
 
-        let ruta = `${BASE_URL}pedidosatrabajar/pedidodetalle/porcomprobanteoarticulo${buscar}/${page}/${size}/${columna}/${order}`;
+        let ruta = `${BASE_URL}pedidos/pedidodetalle/porcomprobanteoarticulo${buscar}/${page}/${size}/${columna}/${order}`;
         
 
         return this._httpClient.post(ruta, body, {headers: headers});
