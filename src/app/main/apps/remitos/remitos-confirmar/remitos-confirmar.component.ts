@@ -40,7 +40,7 @@ export class RemitosConfirmarComponent implements OnInit {
 
   subParametros: Subscription;
   
-  displayedColumns: string[] = ['select', 'CodigoArticulo', 'Comprobante', 'Fecha-Entrega', 'Cliente'];
+  displayedColumns: string[] = ['select', 'CodigoArticulo', 'Comprobante', 'Fecha-Entrega', 'Cliente', 'Localidad', 'Dir. de entrega'];
 
 
   dataSource2: any;

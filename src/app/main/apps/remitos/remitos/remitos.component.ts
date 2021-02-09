@@ -50,11 +50,12 @@ export class RemitosComponent implements OnInit {
   @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
   @ViewChild('buscarLote') buscarLoteInput: ElementRef;
 
-  displayedColumns: string[] = ['select', 'CodigoArticulo', 'Comprobante', 'Fecha-Entrega', 'Cliente'];
+  displayedColumns: string[] = ['select', 'CodigoArticulo', 'Comprobante', 'Fecha-Entrega', 'Cliente', 'Localidad', 'Dir. de entrega'];
   dataSource = ELEMENT_DATA;  
   dataSource2: any;
-  selection = new SelectionModel<Articulos>(true, []);
-
+  selection = new SelectionModel<any>(true, []);
+  mostrarFecha = false;
+  mostrarTipo = false;
   lote: string = null;
   busqueda: string = "";
   length: number = 0;
@@ -318,7 +319,7 @@ export class RemitosComponent implements OnInit {
 
   isAllSelected() {
     const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.length;
+    const numRows = this.dataSource2.length;
     return numSelected === numRows;
   }
 
@@ -326,7 +327,7 @@ export class RemitosComponent implements OnInit {
   masterToggle() {
     this.isAllSelected() ?
         this.selection.clear() :
-        this.dataSource.forEach(row => this.selection.select(row));
+        this.dataSource2.forEach(row => this.selection.select(row));
   }
 
   /** The label for the checkbox on the passed row */
@@ -357,5 +358,13 @@ export class RemitosComponent implements OnInit {
         this.order = event.direction;
     
     this.getDetalle(this.busqueda, this.columna, this.order);
+  }
+
+  activarFecha(){
+    this.mostrarFecha = !this.mostrarFecha;
+  }
+
+  activarTipo(){
+    this.mostrarTipo = !this.mostrarTipo;
   }
 }
