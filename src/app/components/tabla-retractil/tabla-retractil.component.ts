@@ -18,7 +18,8 @@ export class TablaRetractilComponent implements OnInit {
 
   @Input('arregloDeDetalles') arregloDeDetalles: Array<any>;
   dataSource;
-  columnsToDisplay = ['Check', 'Cod. Art.', 'Nomb. Art.', 'Cant.', 'Etapa', 'CodBarra', 'Cupa'];
+  //'Check', 
+  columnsToDisplay = ['Cod. Art.', 'Nomb. Art.', 'Cant.', 'Etapa', 'CodBarra', 'Cupa'];
   ELEMENT_DATA: DetallesTablaRetractil[] = [];
   columnsToDisplay2 = ['Checks', 'Nomb. de Parte', 'Identificador'];
   expandedElement: DetallesTablaRetractil | null;

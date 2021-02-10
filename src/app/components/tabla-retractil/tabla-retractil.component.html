@@ -5,9 +5,9 @@
             <ng-container *ngIf="column !== 'Check'">
                 {{element[column]}}
             </ng-container>
-            <ng-container *ngIf="column === 'Check'">
-                <mat-checkbox class="example-margin" [checked]="element[column]" [disabled]="true"></mat-checkbox>
-            </ng-container>
+            <!-- <ng-container *ngIf="column === 'Check'">
+                <mat-checkbox class="example-margin" [checked]="element[column]"></mat-checkbox>
+            </ng-container> -->
         </td>
     </ng-container>
 
