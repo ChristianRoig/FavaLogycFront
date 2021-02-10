@@ -11,8 +11,7 @@ const BASE_URL = environment.server + environment.baseUrl;
 export class PedidosCrear2Service
 {
     constructor(
-        private _httpClient: HttpClient
-    )
+        private _httpClient: HttpClient)
     {
     }
 
@@ -20,7 +19,7 @@ export class PedidosCrear2Service
     getDatosDeEntregaUpd(cabecera: number): Observable<any>
     {   
 
-        let ruta = `${BASE_URL}pedidosatrabajar/datosentrega/cabecera/${cabecera}`;
+        let ruta = `${BASE_URL}pedidos/datosentrega/cabecera/${cabecera}`;
         // console.log(ruta);
         return this._httpClient.get(ruta)
         .pipe(
@@ -76,7 +75,7 @@ export class PedidosCrear2Service
 
     postPedidos(listaDatosDeEntrega, idTipo , numerocbte): Observable<any>
     {   
-        let ruta = `${BASE_URL}pedidosatrabajar/pedidodetalle/sinremitir/datoentrega/${idTipo}/${numerocbte}`;
+        let ruta = `${BASE_URL}pedidos/pedidodetalle/sinremitir/datoentrega/${idTipo}/${numerocbte}`;
         
         let body=   {
             listaDatosDeEntrega: listaDatosDeEntrega
@@ -94,7 +93,7 @@ export class PedidosCrear2Service
 
     putPedidos(listaDatosDeEntrega): Observable<any>
     {   
-        let ruta = `${BASE_URL}pedidosatrabajar/datosentrega`;
+        let ruta = `${BASE_URL}pedidos/datosentrega`;
         
         let body=   {
             "listaDatosDeEntrega": listaDatosDeEntrega

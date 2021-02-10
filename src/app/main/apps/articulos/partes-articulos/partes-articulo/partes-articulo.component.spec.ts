@@ -36,7 +36,7 @@ describe('PedidosPartesArticuloComponent', () => {
     let err = {
         error: "NOT_FOUND",
         message: "Lista de partes de articulos no encontrada.",
-        path: "http://192.168.100.191:8080/api_favalogyc/pedidosatrabajar/articuloparte/porcodigoonombre/gssgsgfh/0/10/id/asc",
+        path: "http://192.168.100.191:8080/api_favalogyc/pedidos/articuloparte/porcodigoonombre/gssgsgfh/0/10/id/asc",
         status: 404,
         timeStamp: 1594220031733 
     };
