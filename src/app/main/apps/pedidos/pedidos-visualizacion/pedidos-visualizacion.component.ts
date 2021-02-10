@@ -101,9 +101,9 @@ export class PedidosVisualizacionComponent implements OnInit {
   buscarDetalle(page, size, columna, order){
     this._service.getDetalle(this.idCabecera,page, size, columna, order).subscribe(paramsArt => {
       if(paramsArt){
+        console.log(paramsArt.datos);
         this.dataSourceArticulos = paramsArt.datos;
         this.length = paramsArt.totalRegistros;
-        // console.log(this.dataSourceArticulos);
       }
     },
     (err: HttpErrorResponse) => {

@@ -1,5 +1,4 @@
-<ng-container
-  *ngIf="this.length > 0; then hasComprobantes; else notHasComprobantes">
+<ng-container *ngIf="this.length > 0; then hasComprobantes; else notHasComprobantes">
 </ng-container>
 
 
@@ -9,42 +8,38 @@
 
 <ng-template #hasComprobantes>
 
-    <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="dataSourceComprobantes" class="mat-elevation-z8" style="width: 100%;">
-        
+    <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="dataSourceComprobantes" class="mat-z8" style="width: 100%;">
+
         <!-- tipoCbte Column -->
         <ng-container matColumnDef="codigoArticulo">
             <th mat-sort-header="codigoArticulo" mat-header-cell *matHeaderCellDef> Código Artículo </th>
-            <td mat-cell *matCellDef="let element"> {{element.pedidoDetalle.articulo.codigoArticulo}} </td>
+            <td mat-cell *matCellDef="let element"> {{element[1].articulo.codigoArticulo}} </td>
         </ng-container>
-        
+
         <!-- tipoCbte Column -->
         <ng-container matColumnDef="codigoCbte">
             <th mat-sort-header="codigoCbte" mat-header-cell *matHeaderCellDef> Tipo Cbte </th>
-            <td mat-cell *matCellDef="let element"> {{element.pedidoCbte.pedidoTipoCbte.codigoCbte}} </td>
+            <td mat-cell *matCellDef="let element"> {{element[0].pedidoTipoCbte.codigoCbte}} </td>
         </ng-container>
-        
+
         <!-- nroCbte Column -->
         <ng-container matColumnDef="nroCbte">
             <th mat-sort-header="nroCbte" mat-header-cell *matHeaderCellDef> Nro Cbte </th>
-            <td mat-cell *matCellDef="let element"> {{element.pedidoCbte.nroCbte}} </td>
+            <td mat-cell *matCellDef="let element"> {{element[0].nroCbte}} </td>
         </ng-container>
-        
+
         <!-- nroCbte Column -->
         <ng-container matColumnDef="fechaCbte">
             <th mat-sort-header="fechaCbte" mat-header-cell *matHeaderCellDef> Fecha Cbte </th>
-            <td mat-cell *matCellDef="let element"> {{element.pedidoCbte.fechaCbte}} </td>
+            <td mat-cell *matCellDef="let element"> {{element[0].fechaCbte}} </td>
         </ng-container>
-        
+
         <tr mat-header-row *matHeaderRowDef="displayedColumnsCbts"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumnsCbts;"></tr>
     </table>
 
     <div contenido class=" mb-4">
-        <mat-paginator [length]="length"
-        [pageIndex]="page"
-        [pageSize]="size"
-        [pageSizeOptions]="[5, 10, 15, 100]"
-        (page) = "paginar($event)">
-    </mat-paginator>
+        <mat-paginator [length]="length" [pageIndex]="page" [pageSize]="size" [pageSizeOptions]="[5, 10, 15, 100]" (page)="paginar($event)">
+        </mat-paginator>
     </div>
 </ng-template>

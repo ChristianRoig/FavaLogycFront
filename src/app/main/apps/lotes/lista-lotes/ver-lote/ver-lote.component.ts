@@ -118,7 +118,7 @@ export class VerLoteComponent implements OnInit {
     //this.loteActual = lote;
     this._activatedRoute.params.subscribe( params => {
       //console.log( params['id'] );
-
+      this.idLote = params['id'];
       this.getLote( params['id'] );
       console.log("id lote -> ", params['id']);
       this.getArticulosDeLote( params['id'] );
@@ -282,6 +282,7 @@ export class VerLoteComponent implements OnInit {
         }
       }
     });
+    this.getArticulosDeLote(this.idLote);
   }
 
   getDetalle(busqueda, page, size, columna, order){

@@ -50,11 +50,12 @@ export class PedidosPartesArticuloEditarComponent implements OnInit {
 
         this._pedidosPartesArticulosEditarService.getArticulo(this.id).subscribe( 
             data => {
+              console.log(data);
                 this.dataSource2 = data;
-                this.cantidad = this.dataSource2.cantidad;
-                this.codigoArticulo = this.dataSource2.articulo.codigoArticulo;
-                this.nombre = this.dataSource2.articulo.nombre;
-                this.descripcion = this.dataSource2.articulo.descripcion;
+                this.cantidad = this.dataSource2.partes;
+                this.codigoArticulo = this.dataSource2.codigoArticulo;
+                this.nombre = this.dataSource2.nombre;
+                this.descripcion = this.dataSource2.descripcion;
             },
             (err: HttpErrorResponse) => {
                 if (err.error instanceof Error) {

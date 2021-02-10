@@ -18,7 +18,7 @@ export class PedidosPartesArticulosEditarService
      */
     getArticulo(id): Observable<any>
     {
-        return this._httpClient.get(`${BASE_URL}pedidos/articuloparte/${id}`);
+        return this._httpClient.get(`${BASE_URL}pedidos/articulo/${id}`);
     }
 
 
@@ -33,7 +33,7 @@ export class PedidosPartesArticulosEditarService
             cantidad: cantidad
         }
 
-        let ruta = `${BASE_URL}pedidos/articuloparte/${id}`
+        let ruta = `${BASE_URL}pedidos/articulo/${id}`
         let headers = new HttpHeaders({
             "Content-Type": "application/json"
         });
