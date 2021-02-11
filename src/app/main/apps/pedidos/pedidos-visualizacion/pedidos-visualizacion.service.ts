@@ -45,15 +45,13 @@ export class PedidosVisualizacionService
     
     }
 
-    getComprobantes(id, page, size, columna, order): Observable<any>
-    {   
+    getComprobantes(id, page, size, columna, order): Observable<any> {   
         let ruta = `${BASE_URL}pedidos/pedidocbte/cabecera/${id}/${page}/${size}/${columna}/${order}`;
         console.log(ruta);
         return this._httpClient.get(ruta);
     }
 
-    getCUPA(id, page, size, columna, order): Observable<any>
-    {   
+    getCUPA(id, page, size, columna, order): Observable<any> {   
         let ruta = `${BASE_URL}pedidos/pedidoparte/cabecera/${id}/${page}/${size}/${columna}/${order}`;
         console.log(ruta);
         return this._httpClient.get(ruta);
