@@ -398,6 +398,7 @@ export class PedidosListaComponent implements OnInit {
     this._pedidosListaService.getPedidoDetalle(this.body, busqueda, page, size, columna, order).subscribe(
       data => {
         this.dataSource2 = data.datos;
+        this.length = data.totalRegistros;
         console.log("asd", this.dataSource2);
         //this.size = data.totalRegistros;
       },

@@ -142,8 +142,8 @@ export const navigation: FuseNavigation[] = [
             {
                 id       : 'dashboards',
                 title    : 'Comprobantes',
-                translate: 'Comprobantes',
-                type     : 'collapsable',
+                type     : 'item',
+                url       : '/apps/comprobantes/lista-comprobantes',
                 icon     : 'school',
                 
             }

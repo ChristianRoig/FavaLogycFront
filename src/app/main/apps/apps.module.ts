@@ -24,6 +24,10 @@ const routes = [
     {
         path        : 'articulos',
         loadChildren: () => import('./articulos/articulos.module').then(m => m.ArticulosModule)
+    },
+    {
+        path        : 'comprobantes',
+        loadChildren: () => import('./comprobantes/comprobantes.module').then(m => m.ComprobantesModule)
     }
     
 ];
