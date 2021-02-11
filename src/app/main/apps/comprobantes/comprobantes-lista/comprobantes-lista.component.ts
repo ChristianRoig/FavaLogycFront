@@ -90,15 +90,7 @@ export class ComprobantesListaComponent implements OnInit {
               private _comprobantesListaService: ComprobantesListaService,
               private _dialog: MatDialog ) { 
 
-    const currentYear = new Date().getFullYear();
-    this.minDateDesdeFiltro = new Date(currentYear - 5, 0, 1);
-    this.maxDateDesdeFiltro = new Date(currentYear + 1, 11, 31);
-    this.minDateHastaFiltro = new Date(currentYear - 5, 0, 1);
-    this.maxDateHastaFiltro = new Date(currentYear + 1, 11, 31);
-    this.minDateDesdeLote   = new Date(currentYear - 5, 0, 1);
-    this.maxDateDesdeLote   = new Date(currentYear + 1, 11, 31);
-    this.minDateHastaLote   = new Date(currentYear - 5, 0, 1);
-    this.maxDateHastaLote   = new Date(currentYear + 1, 11, 31);
+
   }
 
   ngOnInit(): void { 
