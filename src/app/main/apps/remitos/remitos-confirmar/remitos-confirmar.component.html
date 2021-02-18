@@ -80,7 +80,7 @@
 
 <ng-template #articulos>
 
-    <<<<<<< HEAD <div style="width: 100%; overflow: auto;">
+    <div style="width: 100%; overflow: auto;">
         <table mat-table [dataSource]="dataSource2" class="mb-8">
 
             <ng-container matColumnDef="select">
@@ -123,11 +123,10 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-        </div>
-        =======
-        <table mat-table [dataSource]="dataSource2" class="mb-8">
+    </div>
+    <!-- <table mat-table [dataSource]="dataSource2" class="mb-8">
 
-            <!-- 'select', 'CodigoArticulo', 'Comprobante', 'Fecha-Entrega', 'Cliente' -->
+
 
 
             <ng-container matColumnDef="select" sticky>
@@ -148,7 +147,7 @@
             </ng-container>
 
             <ng-container matColumnDef="Comprobante">
-                <th mat-header-cell *matHeaderCellDef> Comprobante </th> -->
+                <th mat-header-cell *matHeaderCellDef> Comprobante </th>
                 <td mat-cell *matCellDef="let element"> {{element.pedidoCabecera.pedidoCbte.nroCbte}} </td>
             </ng-container>
 
@@ -164,6 +163,6 @@
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-        >>>>>>> origin/refactor-2021-01-controlEstanteriaDarsena-octavio
+        </table> -->
+
 </ng-template>

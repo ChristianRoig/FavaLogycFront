@@ -28,12 +28,13 @@ export class ControlBusquedaService
     
     constructor( private _httpClient: HttpClient ) {}
 
-    async getDetalleUnico(idLote, codArt, etapaproceso): Promise<any>{
+    async getDetalleUnico( idLote, codArt, etapaproceso ): Promise<any>{
 
         let headers = new HttpHeaders({
             "Content-Type": "application/json"
         });
-       console.log('idLote',idLote,"| etapaproceso", etapaproceso,"| codArt", codArt);
+
+       console.log('idLote', idLote, "| etapaproceso", etapaproceso, "| codArt", codArt);
         let ruta = `${BASE_URL}pedidos/detalleunico/lote/${idLote}/${etapaproceso}/codbarras`;
         //let ruta = `${BASE_URL}pedidos/detalleunico/lote/${idLote}/${etapaproceso}/${codArt}`;
         //let ruta = `${BASE_URL}pedidos/detalleunico/lote/7/estanteria/a/codbarras`;
