@@ -20,7 +20,7 @@
                     </mat-form-field>
 
                     <div class="botonesBusqueda">
-                        <button (click)="searchCbte()" [disabled]="!this.busqueda" class="btn" mat-raised-button color="primary">Buscar</button>
+                        <button (click)="buscar()" [disabled]="!this.busqueda" class="btn" mat-raised-button color="primary">Buscar</button>
                         <span fxLayoutAlign="end">
                             <button mat-button (click)="toggleSidebarOpen('sidebarFilter')" class="m-12 ">
                                 <mat-icon>tune</mat-icon>
@@ -94,31 +94,31 @@
 
             <ng-container matColumnDef="Tipo">
                 <th mat-header-cell *matHeaderCellDef class="pl-8"> Tipo </th>
-                <td mat-cell *matCellDef="let element" class="pl-8"> {{element.pedidoCabecera.pedidoTipo.nombre}} </td>
+                <td mat-cell *matCellDef="let element" class="pl-8 pr-12"> {{element.pedidoCabecera.pedidoTipo.nombre}} </td>
             </ng-container>
 
             <ng-container matColumnDef="CodigoArticulo">
                 <th mat-sort-header="codigoArticulo" mat-header-cell *matHeaderCellDef> Cód. Artículo </th>
-                <td mat-cell *matCellDef="let element"> {{element.articulo.codigoArticulo}}</td>
+                <td mat-cell *matCellDef="let element" class="dato"> {{element.articulo.codigoArticulo}}</td>
             </ng-container>
 
             <ng-container matColumnDef="NombreArticulo">
                 <th mat-sort-header="nombreArticulo" mat-header-cell *matHeaderCellDef> Nombre Artículo </th>
-                <td mat-cell *matCellDef="let element">{{element.articulo.nombre}} </td>
+                <td mat-cell *matCellDef="let element" class="dato">{{element.articulo.nombre}} </td>
             </ng-container>
 
             <ng-container matColumnDef="Comprobante">
                 <th mat-header-cell *matHeaderCellDef> Comprobante </th>
-                <td mat-cell *matCellDef="let element">
+                <td mat-cell *matCellDef="let element" class="dato">
 
                     {{element.pedidoCabecera.pedidoCbte.nroCbte}}
                     <!-- </a> -->
                 </td>
             </ng-container>
 
-            <ng-container matColumnDef="Fecha-Entrega">
+            <ng-container matColumnDef="Fecha-Entrega" class="dato">
                 <th mat-sort-header="fechaDeEntrega" mat-header-cell *matHeaderCellDef> Fecha Entrega </th>
-                <td mat-cell *matCellDef="let element"> {{element.pedidoDomicilioEntrega.fechaDeEntrega | date:'shortDate'}} </td>
+                <td mat-cell *matCellDef="let element" class="pl-16"> {{element.pedidoDomicilioEntrega.fechaDeEntrega | date:'shortDate'}} </td>
             </ng-container>
 
             <ng-container matColumnDef="Provincia">
@@ -133,12 +133,12 @@
 
             <ng-container matColumnDef="Etapa">
                 <th mat-sort-header="etapa" mat-header-cell *matHeaderCellDef> Etapa </th>
-                <td mat-cell *matCellDef="let element"> {{element.pedidoEtapa.nombre}} </td>
+                <td mat-cell *matCellDef="let element" class="dato"> {{element.pedidoEtapa.nombre}} </td>
             </ng-container>
 
             <ng-container matColumnDef="Lote">
                 <th mat-sort-header="idLote" mat-header-cell *matHeaderCellDef> Lote </th>
-                <td mat-cell *matCellDef="let element"> {{ element.pedidoLote.id ? element.pedidoLote.id : '' }} </td>
+                <td mat-cell *matCellDef="let element" class="pl-8"> {{ element.pedidoLote.id ? element.pedidoLote.id : '' }} </td>
             </ng-container>
 
             <ng-container matColumnDef="Ver">

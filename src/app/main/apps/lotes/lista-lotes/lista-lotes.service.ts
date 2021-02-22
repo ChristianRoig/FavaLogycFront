@@ -29,7 +29,7 @@ export class ListaLotesService
 
     getAllLotes( page, size ): Observable<any>{  
         
-        let ruta = `${ BASE_URL }pedidos/pedidolote/lote/${ page }/${ size }`;
+        let ruta = `${ BASE_URL }pedidos/pedidolote/lote/v2/${ page }/${ size }`;
         //let ruta = `${ BASE_URL }pedidos/pedidolote/lote/0/10`;
         return this._httpClient.get(ruta);
     }
@@ -42,7 +42,7 @@ export class ListaLotesService
     
     getLotesPorEstado(estado: string, page, size): Observable<any>{  
         
-        let ruta = `${ BASE_URL }pedidos/pedidolote/lote/${ estado }/${ page }/${ size }`;
+        let ruta = `${ BASE_URL }pedidos/pedidolote/lote/v2/${ estado }/${ page }/${ size }`;
         return this._httpClient.get(ruta);
     }
 

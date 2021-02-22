@@ -58,6 +58,7 @@ export class ControlEstanteriaComponent implements OnInit {
   btnBuscarLote: boolean = false;
   busquedaAutomatica: boolean = false;
 
+  datos: any = [];
   dataSource2: any;
   length: number = 0;
   page: number = 0;
@@ -66,6 +67,7 @@ export class ControlEstanteriaComponent implements OnInit {
   arregloDeDetalles;
 
   modo: string = '';
+  estado: string = '';
   subParametros: Subscription;
   titulo: string;
   eliminar: boolean = false;
@@ -96,9 +98,13 @@ export class ControlEstanteriaComponent implements OnInit {
       switch (this.modo) {
         case "estanteria":
           this.titulo = "Estantería";
+          this.estado = 'ESTANTERIA';
+          this.getLotesPorEstado( this.page, this.size);
           break;
-        case "darsena":
-          this.titulo = "Dársena";
+          case "darsena":
+            this.titulo = "Dársena";
+            this.estado = 'DARSENA';
+            this.getLotesPorEstado( this.page, this.size);
           break;
       }
 
@@ -107,7 +113,8 @@ export class ControlEstanteriaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getLotesAbiertos(this.page, this.size);
+    //console.log(this.estado);
+    //this.getLotesPorEstado( this.page, this.size);
   }
 
   accederAlLoteById() {
@@ -168,7 +175,7 @@ export class ControlEstanteriaComponent implements OnInit {
   }
 
   controlar(lote){
-    this.idLote = lote.id;
+    this.idLote = lote;
     this.buscarDetalleUnico()
   }
 
@@ -185,18 +192,10 @@ export class ControlEstanteriaComponent implements OnInit {
           this.btnControlar = true;
           this.btnBuscarLote = false;
           this.buscarLoteInput.nativeElement.value = this.idLote;
-          this.buscarLotePorNombre(data.datos[0].detalle.pedidoLote.nombre);
+          this.buscarLotePorId( this.idLote );
       }
       //sino el idLote se pone en el input, se habilita el btn Controlar al lote y aparece el lote en el listado(getLotePorNombre)
-      
 
-      /* this._controlBusquedaService.arregloDeDetalles = data.datos[0];
-      this.idLote = data.datos[0].detalle.pedidoLote.id;
-      this._controlBusquedaService.idLote = data.datos[0].detalle.pedidoLote.id;
-      this._controlBusquedaService.modo = this.modo; */
-      //let ruta = `apps/control/lote-en/${this.modo}/busqueda`;
-      /* let ruta = `apps/control/lote-en/${this.modo}/${this.idLote}`;
-      this._router.navigate([ruta]); */
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
@@ -218,9 +217,9 @@ export class ControlEstanteriaComponent implements OnInit {
     });
   }
 
-  getLotesAbiertos( page, size ){
-    let estado = "ABIERTO";
-    this._controlBusquedaService.getLotesPorEstado( estado, page, size ) .subscribe( data => {
+  getLotesPorEstado(page, size ){
+  
+    this._controlBusquedaService.getLotesPorEstado( this.estado, page, size ) .subscribe( data => {
       console.log(data);
       this.dataSource2 = data.datos; 
       this.length = data.totalRegistros;
@@ -241,6 +240,33 @@ export class ControlEstanteriaComponent implements OnInit {
         }
       }
     });
+  }
+
+  buscarLotePorId(id: number){
+    this._controlBusquedaService.getLotePorId( id ) .subscribe( data => {
+      this.datos.push(data);
+      console.log(this.datos);
+      this.dataSource2 = this.datos; 
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
+        } else {
+          let titulo = 'Error al listar';
+          let mensaje = err.error.message.toString();
+          this.mostrarError(errStatus, titulo, mensaje);
+        }
+      }
+    });
+  }
+  getSoloFecha(fecha: any){
+    return fecha.split(' ')[0];
   }
 
   @Debounce(1000) 
@@ -366,6 +392,6 @@ export class ControlEstanteriaComponent implements OnInit {
     this.size = e.pageSize;
     
     //this._listaLoteService.getAllLotes( this.page, this.size ); 
-    this.getLotesAbiertos( this.page, this.size ); 
+    this.getLotesPorEstado( this.page, this.size ); 
   }
 }

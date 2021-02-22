@@ -61,22 +61,6 @@ export interface BodyDetalleFecha{
   hastaLote : string;
 }
 
-const ELEMENT_DATA: Articulos[] = [
-  {Id: 1,Tipo: "Venta", CodigoArticulo: "ATCLLED110", Nombre: "TCL LED 50\" P8M SMART",    Comprobante: "B0001700006163",    FechaEntrega: "10/05/2020",    Prov: "Bs.As.",    Loc: "Pinamar",    Estado: "INICIAL",       Etapa: "INICIAL",    Lote: 1},
-  {Id: 2,Tipo: "Venta", CodigoArticulo: "MPLAPLA010", Nombre: "Mueble Madera 1 puerta",    Comprobante: "B0009000012349",    FechaEntrega: "10/05/2020",    Prov: "Bs.As.",    Loc: "Pinamar",    Estado: "INICIAL",       Etapa: "INICIAL",    Lote: 1},
-  {Id: 3,Tipo: "Venta", CodigoArticulo: "MPLAPLA010", Nombre: "Mueble Madera 1 puerta",    Comprobante: "B0009000012349",    FechaEntrega: "10/05/2020",    Prov: "Bs.As.",    Loc: "Minamar",    Estado: "EN PROCESO",    Etapa: "EN LOTE",    Lote: 1},
-  {Id: 4,Tipo: "Venta", CodigoArticulo: "MPLAPLA010", Nombre: "Mueble Madera 1 puerta",    Comprobante: "B0009000012349",    FechaEntrega: "10/05/2020",    Prov: "Bs.As.",    Loc: "Gesell",     Estado: "EN PROCESO",    Etapa: "ESTANTERIA", Lote: 1},
-  {Id: 5,Tipo: "Venta", CodigoArticulo: "MPLAPLA010", Nombre: "Mueble Madera 1 puerta",    Comprobante: "B0009000012349",    FechaEntrega: "10/05/2020",    Prov: "Bs.As.",    Loc: "Gesell",     Estado: "ANULADO",       Etapa: "SIN STOCK",  Lote: 1},
-];
-
-const ELEMENT_DATA2: any[] = [
-  {id: 1, nombre: "Lote 1",  fechaAlta: "10/05/2020 20:05:00"},
-  {id: 2, nombre: "Lote 2",  fechaAlta: "10/05/2020 20:05:00"},
-  {id: 3, nombre: "Lote 3",  fechaAlta: "10/05/2020 20:05:00"},
-  {id: 4, nombre: "Lote 4",  fechaAlta: "10/05/2020 20:05:00"},
-  {id: 5, nombre: "Lote 5",  fechaAlta: "10/05/2020 20:05:00"},
-];
-
 @Component({  
   selector: 'app-lista-lotes',  
   templateUrl: './lista-lotes.component.html',
@@ -90,7 +74,6 @@ export class ListaLotesComponent implements OnInit {
 
   // displayedColumns: string[] = ['select', 'Tipo', 'CodigoArticulo','NombreArticulo', 'Comprobante', 'Fecha-Entrega', 'Provincia', 'Localidad','Etapa', 'Lote', 'Borrar'];
   displayedColumns: string[] = ['id', 'nombre', 'fechaAlta', 'cantArticulos', 'estado', 'seleccionar'];
-  dataSource = ELEMENT_DATA;  
   dataSource2: any;
   selection = new SelectionModel<any>(true, []);
   selecccionDeEstado: string;
@@ -166,10 +149,15 @@ export class ListaLotesComponent implements OnInit {
     idLote      : null
   };
 
+  estado: string = 'TODOS';
+
   estados: Estados [] = [
-    { valor: "REMITIDO", vista: "Remitidos" },
+    { valor: "NUEVO", vista: "Nuevos" },
     { valor: "ANULADO", vista: "Anulados" },
-    { valor: "ABIERTO", vista: "Abiertos" },
+    { valor: "REMITIDO", vista: "Remitidos" },
+    { valor: "TRANSPORTE", vista: "Transporte" },
+    { valor: "ESTANTERIA", vista: "Estantería" },
+    { valor: "DARSENA", vista: "Dársena" },
     { valor: "TODOS", vista: "Todos" }
   ];
 
@@ -197,7 +185,7 @@ export class ListaLotesComponent implements OnInit {
     //this.resetFiltros();    
     //this.getfiltros();
 
-    this.getLotesAbiertos( this.page, this.size );
+    this.getLotesPorEstado( this.estado, this.page, this.size );
     this.filtroFechas = false;
     this.filtroInactivos = false;
     //this.arrowBack = false;
@@ -211,7 +199,7 @@ export class ListaLotesComponent implements OnInit {
     }
     this._listaLoteService.getLotesPorFecha(this.lote, bodyFechas)
       .subscribe(data => {
-        //console.log(data);
+        console.log(data);
         this.dataSource2 = data.datos;
         //this.length = data.totalRegistros;
       },
@@ -237,7 +225,7 @@ export class ListaLotesComponent implements OnInit {
     this.lote = this.buscarLoteInput.nativeElement.value;
     if(this.lote == ''){
       this.lote = null;
-      this.getLotesAbiertos( this.page, this.size );
+      this.getLotesPorEstado( this.estado, this.page, this.size );
     }
   }
 
@@ -249,42 +237,12 @@ export class ListaLotesComponent implements OnInit {
     this.filtroInactivos = !this.filtroInactivos;
   }
   
-  getLotesAbiertos( page, size ){
-    /* this.dataSource2 = ELEMENT_DATA2;
-    console.log(this.dataSource2);
-    this.length = this.dataSource2.length; */
-    let estado = "ABIERTO";
-    this._listaLoteService.getLotesPorEstado( estado, page, size ) .subscribe( data => {
-      console.log(data.totalRegistros);
-      console.log(data);
-      this.dataSource2 = data.datos; 
-      this.length = data.totalRegistros;
-    },
-    (err: HttpErrorResponse) => {
-      if (err.error instanceof Error) {
-        console.log("Client-side error");
-      } else {
-        let errStatus = err.status
-        if (errStatus == 0){
-          let titulo = 'Error de Servidor';
-          let mensaje = "Por favor comunicarse con Sistemas";
-          this.mostrarError(errStatus, titulo, mensaje);
-        } else {
-          let titulo = 'Error al listar';
-          let mensaje = err.error.message.toString();
-          this.mostrarError(errStatus, titulo, mensaje);
-        }
-      }
-    });
-  }
-
   getLotesPorEstado( estado: string, page, size ){
     if( estado === 'TODOS'){
       this._listaLoteService.getAllLotes( this.page, this.size ) .subscribe( data => {
-      //this._listaLoteService.getAllLotes(  ) .subscribe( data => {
         this.dataSource2 = data.datos; 
-        //this.length = data.totalRegistros;
-        //console.log(data);
+        this.length = data.totalRegistros;
+        console.log(data);
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
@@ -303,10 +261,11 @@ export class ListaLotesComponent implements OnInit {
         }
       });
     } else {
+      this.estado = estado;
       this._listaLoteService.getLotesPorEstado( estado, this.page, this.size ) .subscribe( data => {
         console.log(data);
         this.dataSource2 = data.datos; 
-        //this.length = data.totalRegistros;
+        this.length = data.totalRegistros;
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
@@ -738,13 +697,15 @@ export class ListaLotesComponent implements OnInit {
           this.pickerLoteDesde = fecha;
           this.minDateHastaLote = evento.value;
           break;
-        case "pickerLoteHasta":
-          this.pickerLoteHasta = fecha;
-          this.maxDateDesdeLote = evento.value;
-          break;
-      }
+          case "pickerLoteHasta":
+            this.pickerLoteHasta = fecha;
+            this.maxDateDesdeLote = evento.value;
+            console.log(this.pickerLoteHasta);
+            break;
+          }
+          
     } else {
-      
+      console.log("llego al else");
       const currentYear = new Date().getFullYear();
 
       switch (tipo) {
@@ -856,6 +817,6 @@ export class ListaLotesComponent implements OnInit {
     this.size = e.pageSize;
     
     //this._listaLoteService.getAllLotes( this.page, this.size ); 
-    this.getLotesAbiertos( this.page, this.size ); 
+    this.getLotesPorEstado( this.estado, this.page, this.size ); 
   }
 }

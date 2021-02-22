@@ -49,7 +49,7 @@ export class ControlBusquedaService
 
     getLotesPorEstado(estado: string, page, size): Observable<any>{  
         
-        let ruta = `${ BASE_URL }pedidos/pedidolote/lote/${ estado }/${ page }/${ size }`;
+        let ruta = `${ BASE_URL }pedidos/pedidolote/lote/v2/${ estado }/${ page }/${ size }`;
         return this._httpClient.get(ruta);
     }
 
@@ -67,6 +67,12 @@ export class ControlBusquedaService
         
         return this._httpClient.post(ruta, body, {headers: headers});
     } 
+
+    getLotePorId( id: number ){
+
+        let ruta = `${ BASE_URL }pedidos/pedidolote/${ id }`;
+        return this._httpClient.get(ruta);
+    }
 
     async getCupaCodBarras(cupa, idLote, codBarras, modo): Promise<any>{
 

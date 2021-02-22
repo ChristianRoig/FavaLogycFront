@@ -72,22 +72,22 @@ export class ControlarLoteComponent implements OnInit {
       console.log("this.arregloDeDetalles", this.arregloDeDetalles);
       console.log("modo", this.modo);
       
-      if(!this.arregloDeDetalles || this.arregloDeDetalles.length == 0) {
+      if( !this.arregloDeDetalles || this.arregloDeDetalles.length == 0 ) {
         this.alertArregloVacio();
-      } else {
+      } /* else {
         this.setearCondicion();
         this.verificarEtapas();
-      }
+      } */
     }
 
-    alertArregloVacio(){
-        let titulo = 'Error de MEJORAR NOMBRE';
+     alertArregloVacio(){
+        let titulo = 'Algo salió mal';
         let mensaje = "El lote con id "+ this.idLote +" no existe o está vacío";
         let errStatus = 404;
         this.mostrarError(errStatus, titulo, mensaje);
         this._router.navigate([`/apps/control/lote-en/${this.modo}`]);
     }
-    
+    /*
     setearCondicion(){
       if(this.modo === 'estanteria'){
         this.condicion = 'EN LOTE';
@@ -96,9 +96,9 @@ export class ControlarLoteComponent implements OnInit {
         this.condicion = 'ESTANTERIA';
         this.endPoint = 'darsena';
       }
-    }
+    } */
 
-    verificarEtapas(){
+    /* verificarEtapas(){
       for( let i=0; i<this.arregloDeDetalles.length; i++ ){
         if( this.arregloDeDetalles[i].detalle.pedidoEtapa.nombre != this.condicion ) {
           let titulo = 'Ubicacion de lote incorrecta';
@@ -110,7 +110,7 @@ export class ControlarLoteComponent implements OnInit {
           return;
         } 
       } 
-    } 
+    } */ 
 
     async buscarDetalleUnico() {
       console.log("buscarDetalleUnico");

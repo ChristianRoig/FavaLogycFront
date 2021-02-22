@@ -104,8 +104,8 @@ export class ComprobantesListaComponent implements OnInit {
       data => {
         this.dataSource2 = data.datos;
         this.length = data.totalRegistros;
-        console.log(data.totalRegistros);
-        console.log("asd", this.dataSource2);
+        console.log(data);
+        /*console.log("asd", this.dataSource2); */
         //this.size = data.totalRegistros;
       },
       (err: HttpErrorResponse) => {
@@ -153,7 +153,7 @@ export class ComprobantesListaComponent implements OnInit {
       data => {
         this.dataSource2 = data.datos;
         this.length = data.totalRegistros;
-        console.log(data.totalRegistros);
+        console.log(data);
         console.log("asd", this.dataSource2);
         //this.size = data.totalRegistros;
       },
@@ -178,18 +178,17 @@ export class ComprobantesListaComponent implements OnInit {
     );
   }
 
-  @Debounce(1000)  
+ 
   searchCbte() {
     
     this.busqueda = this.buscarCbteInput.nativeElement.value;
     this.page = 0;
     this.columna = 'id';
-    if(this.busqueda ==='' || this.busqueda == null)
-    this.getDetalles(this.busqueda, this.page, this.size, this.columna, this.order);
-
-
+    console.log(this.busqueda);
+    if( this.busqueda === '' || this.busqueda == null){
+      this.getDetalles(this.busqueda, this.page, this.size, this.columna, this.order);
+    }
     //this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
-
   }
 
   @Debounce(1000)  

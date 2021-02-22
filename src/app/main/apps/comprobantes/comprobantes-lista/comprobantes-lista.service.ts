@@ -47,6 +47,9 @@ export class ComprobantesListaService
 
     getPedidosDetalles( body: BodyDetalle, busqueda, page, size, columna, order ): Observable<any> {
 
+        columna = 'idCbte';
+        order = 'desc';
+
         let headers = new HttpHeaders({
             "Content-Type": "application/json"
         });
@@ -54,6 +57,8 @@ export class ComprobantesListaService
         let buscar: string = '';
         if ( busqueda !== '' )
             buscar = `/${busqueda}`
+        
+        console.log(columna);
 
         //getOne?
         //let ruta = `${BASE_URL}pedidos/pedidodetalle/comprobantes-con-pedidos/${ comprobante }/${ page }/${ size }/${ sortBy }/${ order }`;

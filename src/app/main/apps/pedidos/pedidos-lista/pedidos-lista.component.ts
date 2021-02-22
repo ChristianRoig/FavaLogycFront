@@ -634,7 +634,7 @@ export class PedidosListaComponent implements OnInit {
     this.page = 0;
     this.columna = 'id';
 
-    this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
+    //this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
 
   }
 
