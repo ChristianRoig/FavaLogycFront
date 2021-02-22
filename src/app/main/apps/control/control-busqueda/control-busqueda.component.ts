@@ -186,6 +186,7 @@ export class ControlEstanteriaComponent implements OnInit {
       console.log(data.datos[0].detalle.pedidoLote.id);
       console.log(data.datos[0].detalle.pedidoLote.nombre);
       this.idLote = data.datos[0].detalle.pedidoLote.id;
+      this.lote = data.datos[0].detalle.pedidoLote.nombre;
        if(this.busquedaAutomatica){  // si la busquedaAtomatica es true accede de una al lote
           this.buscarDetalleUnico();
       } else {
@@ -194,8 +195,6 @@ export class ControlEstanteriaComponent implements OnInit {
           this.buscarLoteInput.nativeElement.value = this.idLote;
           this.buscarLotePorId( this.idLote );
       }
-      //sino el idLote se pone en el input, se habilita el btn Controlar al lote y aparece el lote en el listado(getLotePorNombre)
-
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
