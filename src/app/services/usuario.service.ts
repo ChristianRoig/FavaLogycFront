@@ -3,8 +3,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
 
-const url_node = environment.url_node;
-const url_tomcat = environment.url_tomcat;
+const url_node = 'http://localhost:3000';
+const url_tomcat = 'https://192.168.100.101:8443/apiOnboard_trb/rest/';
+/* const url_node = environment.url_node;
+const url_tomcat = environment.url_tomcat; */
 
 @Injectable({
   providedIn: 'root'
