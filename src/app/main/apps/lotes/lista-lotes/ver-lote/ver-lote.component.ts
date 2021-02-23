@@ -189,7 +189,7 @@ export class VerLoteComponent implements OnInit {
     }
     this.editLote = false;
 
-    this._verLoteService.updateNombreLote(this.loteActual.nombreLote, this.loteActual.id) .subscribe (data =>  {
+    this._verLoteService.updateNombreLote(this.loteActual.nombreLote, this.loteActual.idLote) .subscribe (data =>  {
 
     },
     (err: HttpErrorResponse) => {
