@@ -38,7 +38,7 @@ interface Estados{
 
 
 export interface Lote {
-  id: number;
+  idLote: number;
   Nombre: string;
   FechaAlta: string;
 }
@@ -296,9 +296,10 @@ export class ListaLotesComponent implements OnInit {
   }
 
   verLote(lote: Lote){ //redireccionar 
+    //console.log(lote.idLote);
     if( lote != null ){
       //this.idLote = lote.id;
-      this.idLote = lote.id;
+      this.idLote = lote.idLote;
       let ruta = `apps/lotes/ver-lote/${ this.idLote }`;
       //console.log("lote ASD");
       //this._verLoteComponent.obtenerLote(lote);
