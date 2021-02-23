@@ -133,14 +133,6 @@ export const navigation: FuseNavigation[] = [
         children : [
             {
                 id       : 'dashboards',
-                title    : 'Articulos',
-                translate: 'Articulos',
-                type     : 'collapsable',
-                icon     : 'dashboard',
-                
-            },
-            {
-                id       : 'dashboards',
                 title    : 'Comprobantes',
                 type     : 'item',
                 url       : '/apps/comprobantes/lista-comprobantes',
