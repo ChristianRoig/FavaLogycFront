@@ -156,7 +156,7 @@ export class VerLoteComponent implements OnInit {
       console.log(data);
       this.loteActual = data;
       this.nombreLote = this.loteActual.nombre;
-      this.idLote = this.loteActual.id;
+      this.idLote = this.loteActual.idLote;
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
@@ -213,7 +213,7 @@ export class VerLoteComponent implements OnInit {
   confirmacionBorrar() {
     const dialogRef = this._dialog.open( ModalConfirmacionBorrarComponent, { 
       data: {
-        id: this.loteActual.id,
+        id: this.loteActual.idLote,
         nombre: this.nombreLote,
         /* codigoArticulo: this.codigoArticulo,
         codigoDeBarras: codigoDeBarras, 
