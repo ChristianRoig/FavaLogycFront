@@ -171,8 +171,7 @@ export class ControlarLoteComponent implements OnInit {
       return this.eliminar ? 'show' : 'hide'
     }
 
-  @Debounce(1000)
-  async eliminarCupa() {
+  async borrar() {
     
     let res = await this._controlBusquedaService.eliminarArticuloDeLotePorCupa(this.eliminaCupaInput.nativeElement.value);
     if(!res) {

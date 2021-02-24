@@ -3,14 +3,14 @@
 
     <div contenido class="content" fxLayout="row" fxLayoutAlign="center">
 
-        <div class="my-24" style="width: 90%;">
+        <div class="my-24" style="width: 100%;">
 
             <div fxLayout="row" fxLayoutAlign="space-between">
 
                 <!-- <div class="h2 m-24">{{this.nombreLote}}</div> -->
             </div>
 
-            <div fxLayout="row" class="controlesBusqueda">
+            <div fxLayout="row" class="controlesBusquedaF">
 
                 <mat-form-field appearance="outline" class="inputBusqueda">
                     <mat-label>Código de Barras</mat-label>
@@ -30,11 +30,13 @@
                 </div>
             </div>
 
-            <div [@esconder]="funcionEsconder" style="width: 100%;">
-                <mat-form-field appearance="outline" style="width: 90%; margin-left: 5%; margin-right: 5%;">
+            <div [@esconder]="funcionEsconder" class="botonesBusqueda" style="width: 100%;">
+                <mat-form-field appearance="outline" class="inputBusquedaBorrar">
                     <mat-label>Cupa</mat-label>
-                    <input #eliminaCupa class="text-uppercase" (keyup)="eliminarCupa()" matInput value="" placeholder="Cupa">
+                    <input #eliminaCupa class="text-uppercase" matInput value="" placeholder="Cupa">
+                    <mat-icon matSuffix>search</mat-icon>
                 </mat-form-field>
+                <button mat-raised-button class="btnBorrar" color="warn" (click)="borrar()">Borrar</button>
             </div>
 
             <app-tabla-retractil *ngIf="this.arregloDeDetalles" [arregloDeDetalles]='this.arregloDeDetalles'></app-tabla-retractil>

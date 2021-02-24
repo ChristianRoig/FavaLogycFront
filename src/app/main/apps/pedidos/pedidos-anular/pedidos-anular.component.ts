@@ -201,9 +201,6 @@ export class PedidosAnularComponent implements OnInit {
     this._router.navigate([ruta]);
   }
 
-
-
-
   armarArrarIds(){
     for (let elemento of this.selection.selected){
       this.toDelete.push(elemento.id);
