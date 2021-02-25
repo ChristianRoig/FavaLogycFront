@@ -51,6 +51,7 @@ export class ControlEstanteriaComponent implements OnInit {
   displayedColumns: string[] = ['id', 'nombre', 'fechaAlta', 'cantArticulos', 'estado', 'seleccionar'];
   idLote: number = null;
   lote: string = null;
+  estadoLote: string = '';
   codigoBarras: string = null;
   CUPA: string = null;
 
@@ -67,7 +68,7 @@ export class ControlEstanteriaComponent implements OnInit {
   arregloDeDetalles;
 
   modo: string = '';
-  estado: string = '';
+  condiciónDeEstadoLote: string = '';
   subParametros: Subscription;
   titulo: string;
   eliminar: boolean = false;
@@ -98,12 +99,12 @@ export class ControlEstanteriaComponent implements OnInit {
       switch (this.modo) {
         case "estanteria":
           this.titulo = "Estantería";
-          this.estado = 'ESTANTERIA';
+          this.condiciónDeEstadoLote = 'NUEVO'; // QUE CONTROL VA ACÁ?
           this.getLotesPorEstado( this.page, this.size);
           break;
           case "darsena":
             this.titulo = "Dársena";
-            this.estado = 'DARSENA';
+            this.condiciónDeEstadoLote = 'ESTANTERIA';
             this.getLotesPorEstado( this.page, this.size);
           break;
       }
@@ -113,7 +114,7 @@ export class ControlEstanteriaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //console.log(this.estado);
+    //console.log(this.condiciónDeEstadoLote);
     //this.getLotesPorEstado( this.page, this.size);
   }
 
@@ -175,50 +176,80 @@ export class ControlEstanteriaComponent implements OnInit {
   }
 
   controlar(lote){
-    this.idLote = lote;
-    this.buscarDetalleUnico()
+    console.log(lote.estado.toLowerCase(), this.modo);
+    if(lote.estado.toLowerCase() === this.modo){
+      this.estadoLote = lote.estado.toLowerCase();
+      this.idLote = lote.idLote;
+      this.buscarDetalleUnico()
+    } else{
+      let errStatus = 0;
+      let titulo = 'El lote '+lote.nombre+' no se encuentra en la etapa '+this.modo;
+      let mensaje = "Realice el control en Control "+this.modo;
+      this.mostrarError(errStatus, titulo, mensaje);
+      let ruta = `apps/control/lote-en/${this.modo}`;
+      this._router.navigate([ruta]);
+    }
   }
 
   buscarLotePorCUPA( cupa ){
     this.CUPA = cupa.value;
     this._controlBusquedaService.getDetalleLotePorCupa( cupa, this.modo ) .subscribe( data => {
-      console.log(data);
-      console.log(data.datos[0].detalle.pedidoLote.id);
-      console.log(data.datos[0].detalle.pedidoLote.nombre);
-      this.idLote = data.datos[0].detalle.pedidoLote.id;
-      this.lote = data.datos[0].detalle.pedidoLote.nombre;
-       if(this.busquedaAutomatica){  // si la busquedaAtomatica es true accede de una al lote
-          this.buscarDetalleUnico();
-      } else {
-          this.btnControlar = true;
-          this.btnBuscarLote = false;
-          this.buscarLoteInput.nativeElement.value = this.idLote;
-          this.buscarLotePorId( this.idLote );
-      }
-    },
-    (err: HttpErrorResponse) => {
-      if (err.error instanceof Error) {
-        console.log("Client-side error");
-      } else {
-        let errStatus = err.status
-        if (errStatus == 0){
-          let titulo = 'Error de Servidor';
-          let mensaje = "Por favor comunicarse con Sistemas";
-          this.mostrarError(errStatus, titulo, mensaje);
-        } else {
-          let titulo = 'Error al listar';
-          let mensaje = err.error.message.toString();
+        console.log(data);
+        /*
+        console.log(data.datos[0].detalle.pedidoLote.id);
+        console.log(data.datos[0].detalle.pedidoLote.nombre); 
+        console.log(data.datos[0].detalle.pedidoEtapa.nombre);
+        */
+
+        this.idLote = data.datos[0].detalle.pedidoLote.id;
+        this.lote = data.datos[0].detalle.pedidoLote.nombre;
+        this.estadoLote = data.datos[0].detalle.pedidoEtapa.nombre;
+      
+        if( this.estadoLote.toLowerCase() != this.modo ){
+          let errStatus = 0;
+          let titulo = 'El lote '+this.lote+' no se encuentra en la etapa '+this.modo;
+          let mensaje = "Realice el control en control "+this.modo;
           this.mostrarError(errStatus, titulo, mensaje);
           let ruta = `apps/control/lote-en/${this.modo}`;
           this._router.navigate([ruta]);
         }
-      }
-    });
+        else{
+          if(this.busquedaAutomatica){  // si la busquedaAtomatica es true accede de una al lote
+              this.buscarDetalleUnico();
+          }
+          else {
+            this.btnControlar = true;
+            this.btnBuscarLote = false;
+            this.buscarLoteInput.nativeElement.value = this.idLote;
+            this.buscarLotePorId( this.idLote );
+          }
+        }
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error");
+        } 
+        else {
+          let errStatus = err.status
+          if (errStatus == 0){
+            let titulo = 'Error de Servidor';
+            let mensaje = "Por favor comunicarse con Sistemas";
+            this.mostrarError(errStatus, titulo, mensaje);
+          }
+          else {
+            let titulo = 'Error al listar';
+            let mensaje = err.error.message.toString();
+            this.mostrarError(errStatus, titulo, mensaje);
+            let ruta = `apps/control/lote-en/${this.modo}`;
+            this._router.navigate([ruta]);
+          }
+        }
+      });
   }
 
   getLotesPorEstado(page, size ){
-  
-    this._controlBusquedaService.getLotesPorEstado( this.estado, page, size ) .subscribe( data => {
+    console.log(this.condiciónDeEstadoLote);
+    this._controlBusquedaService.getLotesPorEstado( this.condiciónDeEstadoLote, page, size ) .subscribe( data => {
       console.log(data);
       this.dataSource2 = data.datos; 
       this.length = data.totalRegistros;
@@ -303,7 +334,6 @@ export class ControlEstanteriaComponent implements OnInit {
   }  
 
   async buscarDetalleUnico() {
-    //console.log("asdasdasd");
 
     this.arregloDeDetalles = null;
     // let codArt = this.buscarCbteInput.nativeElement.value ? this.buscarCbteInput.nativeElement.value : '';

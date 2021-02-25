@@ -190,7 +190,8 @@ export class PedidosDatosEntregaComponent implements OnInit {
   }
 
   editar(){
-    let ruta = `apps/pedidos/addPedido2/${this.idCabecera}`;
+    //let ruta = `apps/pedidos/addPedido2/${this.idCabecera}`;
+    let ruta = `apps/pedidos/crear-pedido2/${this.idCabecera}`;
 
     this._router.navigate([ruta]);
   }

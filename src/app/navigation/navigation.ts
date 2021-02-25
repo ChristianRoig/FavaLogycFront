@@ -23,7 +23,7 @@ export const navigation: FuseNavigation[] = [
                     },
                     {
                         id        : 'ver-pedido',
-                        title     : 'Ver Pedidos',
+                        title     : 'Ver Pedido',
                         type      : 'item',
                         url       : '/apps/pedidos/ver-pedido/7',
                         exactMatch: true
