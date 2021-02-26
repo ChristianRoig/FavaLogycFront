@@ -76,6 +76,12 @@ fuse-sidebar {
     padding-left: 0px;
 }
 
+.tabTables {
+    margin-top: 10px;
+    flex: 1 1 auto;
+    max-width: 100%;
+}
+
 @media (max-width: 768px) {
     .inputBusqueda {
         width: 400px;

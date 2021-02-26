@@ -148,16 +148,6 @@
                 </td>
             </ng-container>
 
-            <!-- <ng-container matColumnDef="Borrar">
-                <th mat-header-cell *matHeaderCellDef> Anular </th>
-                <td mat-cell class="example-button-row" *matCellDef="let element">
-                    <button mat-stroked-button color="warn" (click)="anular(element.pedidoCabecera.id)" [disabled]="element.pedidoEtapa.nombre === 'ANULADO'">
-                        <mat-icon>delete_outline</mat-icon>
-                        Anular
-                    </button>
-                </td>
-            </ng-container> -->
-
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>

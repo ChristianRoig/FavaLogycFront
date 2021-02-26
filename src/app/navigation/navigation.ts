@@ -15,8 +15,15 @@ export const navigation: FuseNavigation[] = [
                 icon     : 'shopping_cart',
                 children : [
                     {
+                        id        : 'crear-pedido',
+                        title     : 'Crear Pedido',
+                        type      : 'item',
+                        url       : '/apps/pedidos/crear-pedido',
+                        exactMatch: true
+                    },
+                    {
                         id        : 'lista-articulos',
-                        title     : 'Lista Pedidos',
+                        title     : 'Pedidos',
                         type      : 'item',
                         url       : '/apps/pedidos/lista-articulos',
                         exactMatch: true
@@ -27,14 +34,7 @@ export const navigation: FuseNavigation[] = [
                         type      : 'item',
                         url       : '/apps/pedidos/ver-pedido/7',
                         exactMatch: true
-                    },
-                    {
-                        id        : 'crear-pedido',
-                        title     : 'Crear Pedido',
-                        type      : 'item',
-                        url       : '/apps/pedidos/crear-pedido',
-                        exactMatch: true
-                    },
+                    }
                 ]
             },
             {
@@ -44,6 +44,13 @@ export const navigation: FuseNavigation[] = [
                 icon      : 'apps',
                 exactMatch: true,
                 children : [ 
+                    {
+                        id        : 'crearLote',
+                        title     : 'Crear Lote',
+                        type      : 'item',
+                        url       : '/apps/lotes/crear-lote',
+                        exactMatch: true
+                    },
                     {
                         id        : 'listaLotes',
                         title     : 'Lotes',
@@ -55,14 +62,7 @@ export const navigation: FuseNavigation[] = [
                         id        : 'verLote',
                         title     : 'Ver Lote',
                         type      : 'item',
-                        url       : '/apps/lotes/ver-lote/61',
-                        exactMatch: true
-                    },
-                    {
-                        id        : 'crearLote',
-                        title     : 'Crear Lote',
-                        type      : 'item',
-                        url       : '/apps/lotes/crear-lote',
+                        url       : '/apps/lotes/ver-lote/105',
                         exactMatch: true
                     }
                 ]
@@ -93,11 +93,43 @@ export const navigation: FuseNavigation[] = [
             {
                 id        : 'remitos',
                 title     : 'Remitos',
+                type      : 'collapsable',
+                icon      : 'insert_drive_file',
+                exactMatch: true,
+                children : [ 
+                    {
+                        id        : 'remitos',
+                        title     : 'Crear Remito',
+                        type      : 'item',
+                        url       : '/apps/remitos/crear-remitos',
+                        exactMatch: true
+                    },
+                    {
+                        id        : 'remitos',
+                        title     : 'Remitos',
+                        type      : 'item',
+                        url       : '/apps/remitos/lista-remitos',
+                        exactMatch: true
+                    }, 
+                    {
+                        id        : 'remitos',
+                        title     : 'Ver Remito',
+                        type      : 'item',
+                        url       : '/apps/remitos/ver-remito/105',
+                        exactMatch: true
+                    }
+                ]
+            },
+            ////////////////////////////////////// 
+           /*  {
+                id        : 'remitos',
+                title     : 'Crear Remitos',
                 type      : 'item',
                 icon      : 'insert_drive_file',
                 url       : '/apps/remitos/remitos',
                 exactMatch: true
-            },
+            }, */
+            ////////////////////////////////////// 
             {
                 id       : 'articulos',
                 title    : 'Articulos',

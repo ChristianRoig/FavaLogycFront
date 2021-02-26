@@ -7,21 +7,30 @@ import { HttpClientModule } from '@angular/common/http';
 import { CustomTagModule } from 'app/main/custom-tags/custom-tag.module';
 import { MaterialDesignModule } from 'app/material-design/material-design.module';
 
-
+//components
 import { RemitosComponent } from './remitos/remitos.component';
+import { ListaRemitosComponent } from './lista-remitos/lista-remitos.component';
+import { VerRemitoComponent } from './lista-remitos/ver-remito/ver-remito.component';
 import { RemitosConfirmarComponent } from './remitos-confirmar/remitos-confirmar.component';
 
-
+//services
 import { RemitoService } from './remitos/remitos.service';
 import { RemitosConfirmarService } from './remitos-confirmar/remitos-confirmar.service';
-
-
-
+import { ListaRemitosService } from './lista-remitos/lista-remitos.service';
+import { VerRemitoService } from './lista-remitos/ver-remito/ver-remito.service';
 
 const routes: Routes = [
     {
-        path     : 'remitos',
+        path     : 'crear-remitos',
         component: RemitosComponent
+    },
+    {
+        path     : 'lista-remitos',
+        component: ListaRemitosComponent
+    },
+    {
+        path     : 'ver-remito/:id',
+        component: VerRemitoComponent
     },
     {
         path     : 'remitos-conf',
@@ -32,7 +41,9 @@ const routes: Routes = [
 @NgModule({
     declarations: [
         RemitosComponent,
-        RemitosConfirmarComponent
+        RemitosConfirmarComponent,
+        ListaRemitosComponent,
+        VerRemitoComponent
     ],
     imports     : [
         CommonModule,
@@ -48,7 +59,9 @@ const routes: Routes = [
     ],
     providers   : [
         RemitoService,
-        RemitosConfirmarService
+        RemitosConfirmarService,
+        ListaRemitosService,
+        VerRemitoService
     ]
 })
 export class RemitosModule
