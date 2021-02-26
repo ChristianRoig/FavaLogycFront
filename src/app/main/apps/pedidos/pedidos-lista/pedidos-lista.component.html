@@ -238,6 +238,7 @@
             <mat-form-field appearance="outline" fxFlex="50" class="ml-4">
                 <mat-label>{{ filtroEtapas ? 'Etapa' : 'Cargando...'}}</mat-label>
                 <select matNativeControl (change)="selectEtapa($event)" [disabled]="!filtroEtapas">
+                    <option [value]="-1">ACTIVOS</option>
                     <option [value]="0">TODOS</option>
                     <option *ngFor="let etapa of filtroEtapas" [value]="etapa.id"
                         [selected]="selectedEtapa === etapa.id"> {{ etapa.nombre }}</option>

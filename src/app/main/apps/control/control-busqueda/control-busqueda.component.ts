@@ -99,7 +99,7 @@ export class ControlEstanteriaComponent implements OnInit {
       switch (this.modo) {
         case "estanteria":
           this.titulo = "Estantería";
-          this.condiciónDeEstadoLote = 'NUEVO'; // QUE CONTROL VA ACÁ?
+          this.condiciónDeEstadoLote = 'NUEVO'; 
           this.getLotesPorEstado( this.page, this.size);
           break;
           case "darsena":

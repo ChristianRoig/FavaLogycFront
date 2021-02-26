@@ -205,7 +205,7 @@ export class PedidosAnularComponent implements OnInit {
     for (let elemento of this.selection.selected){
       this.toDelete.push(elemento.id);
     }
-
+    console.log(this.toDelete);
     this._service.deletePedido(this.motivo, this.toDelete)
     .subscribe(
       data => {
@@ -225,8 +225,8 @@ export class PedidosAnularComponent implements OnInit {
             let mensaje = "Por favor comunicarse con Sistemas";
             this.mostrarError(errStatus, titulo, mensaje);
           } else {
-            let titulo = 'Error al eliminar';
-            let mensaje = err.error.message.toString();
+            let titulo = 'Fallo al borrar';
+            let mensaje = "Debe seleccionar los articulos a anular";
             this.mostrarError(errStatus, titulo, mensaje);
           }
         }

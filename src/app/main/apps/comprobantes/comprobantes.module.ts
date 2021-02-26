@@ -13,9 +13,11 @@ import { TablaRetractilModule } from 'app/components/tabla-retractil/tabla-retra
 
 //components
 import { ComprobantesListaComponent } from './comprobantes-lista/comprobantes-lista.component';
+import { TableComprobantesComponent } from './table-comprobantes/table-comprobantes.component';
 
 //services
 import { ComprobantesListaService } from './comprobantes-lista/comprobantes-lista.service';
+import { TableComprobantesService } from './table-comprobantes/table-comprobantes.service';
 
 const routes: Routes = [
     {
@@ -26,7 +28,8 @@ const routes: Routes = [
 
 @NgModule({
     declarations: [
-        ComprobantesListaComponent
+        ComprobantesListaComponent,
+        TableComprobantesComponent
     ],
     imports     : [
         CommonModule,
@@ -41,7 +44,8 @@ const routes: Routes = [
         TablaRetractilModule
     ],
     providers   : [
-        ComprobantesListaService
+        ComprobantesListaService,
+        TableComprobantesService
     ]
 })
 

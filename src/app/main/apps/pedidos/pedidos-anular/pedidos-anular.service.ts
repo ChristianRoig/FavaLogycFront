@@ -30,8 +30,7 @@ export class PedidosAnularService
         return this._httpClient.get(ruta);
     }
 
-    deletePedido(motivo:string, lista: Array<number>): Observable<any>
-    {
+    deletePedido(motivo:string, lista: Array<number>): Observable<any> {
         
         let ruta = `${BASE_URL}pedidos/pedidodetalle/cabecera/`
 
