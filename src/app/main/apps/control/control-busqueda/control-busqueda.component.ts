@@ -100,11 +100,13 @@ export class ControlEstanteriaComponent implements OnInit {
         case "estanteria":
           this.titulo = "Estantería";
           this.condiciónDeEstadoLote = 'NUEVO'; 
+          //this.condiciónDeEstadoArticulos = 'EN LOTE'; 
           this.getLotesPorEstado( this.page, this.size);
           break;
           case "darsena":
             this.titulo = "Dársena";
             this.condiciónDeEstadoLote = 'ESTANTERIA';
+            //this.condiciónDeEstadoArticulos = 'ESTANTERIA'; 
             this.getLotesPorEstado( this.page, this.size);
           break;
       }
@@ -177,8 +179,8 @@ export class ControlEstanteriaComponent implements OnInit {
 
   controlar(lote){
     console.log(lote.estado.toLowerCase(), this.modo);
-    if(lote.estado.toLowerCase() === this.modo || lote.estado.toLowerCase() ==='nuevo'){
-      this.estadoLote = lote.estado.toLowerCase();
+    if(lote.estado === this.condiciónDeEstadoLote){
+      this.estadoLote = lote.estado;
       this.idLote = lote.idLote;
       this.buscarDetalleUnico()
     } else{
@@ -203,11 +205,12 @@ export class ControlEstanteriaComponent implements OnInit {
 
         this.idLote = data.datos[0].detalle.pedidoLote.id;
         this.lote = data.datos[0].detalle.pedidoLote.nombre;
-        this.estadoLote = data.datos[0].detalle.pedidoEtapa.nombre;
-      
-        if( this.estadoLote.toLowerCase() != this.modo ){
+        this.estadoLote = data.datos[0].detalle.pedidoLote.estado.nombre;
+        
+        console.log(this.estadoLote, "|", this.condiciónDeEstadoLote );
+        if( this.estadoLote != this.condiciónDeEstadoLote ){
           let errStatus = 0;
-          let titulo = 'El lote '+this.lote+' no se encuentra en la etapa '+this.modo;
+          let titulo = 'El lote '+this.lote+' no se encuentra en la etapa '+this.condiciónDeEstadoLote;
           let mensaje = "Realice el control en control "+this.modo;
           this.mostrarError(errStatus, titulo, mensaje);
           let ruta = `apps/control/lote-en/${this.modo}`;
