@@ -177,7 +177,7 @@ export class ControlEstanteriaComponent implements OnInit {
 
   controlar(lote){
     console.log(lote.estado.toLowerCase(), this.modo);
-    if(lote.estado.toLowerCase() === this.modo){
+    if(lote.estado.toLowerCase() === this.modo || lote.estado.toLowerCase() ==='nuevo'){
       this.estadoLote = lote.estado.toLowerCase();
       this.idLote = lote.idLote;
       this.buscarDetalleUnico()
