@@ -27,13 +27,6 @@ export const navigation: FuseNavigation[] = [
                         type      : 'item',
                         url       : '/apps/pedidos/lista-articulos',
                         exactMatch: true
-                    },
-                    {
-                        id        : 'ver-pedido',
-                        title     : 'Ver Pedido',
-                        type      : 'item',
-                        url       : '/apps/pedidos/ver-pedido/7',
-                        exactMatch: true
                     }
                 ]
             },
@@ -56,13 +49,6 @@ export const navigation: FuseNavigation[] = [
                         title     : 'Lotes',
                         type      : 'item',
                         url       : '/apps/lotes/lista-lotes',
-                        exactMatch: true
-                    },
-                    {
-                        id        : 'verLote',
-                        title     : 'Ver Lote',
-                        type      : 'item',
-                        url       : '/apps/lotes/ver-lote/105',
                         exactMatch: true
                     }
                 ]
@@ -110,13 +96,6 @@ export const navigation: FuseNavigation[] = [
                         type      : 'item',
                         url       : '/apps/remitos/lista-remitos',
                         exactMatch: true
-                    }, 
-                    {
-                        id        : 'remitos',
-                        title     : 'Ver Remito',
-                        type      : 'item',
-                        url       : '/apps/remitos/ver-remito/105',
-                        exactMatch: true
                     }
                 ]
             },
@@ -130,11 +109,61 @@ export const navigation: FuseNavigation[] = [
                 exactMatch: true
             }, */
             ////////////////////////////////////// 
+            
+            {
+                id       : 'distribucion',
+                title    : 'Distribucion',
+                type     : 'collapsable',
+                icon     : 'call_split',
+                children : [
+                    {
+                        id        : 'crear-orden-distribucion',
+                        title     : 'Crear Orden Distribución',
+                        type      : 'item',
+                        url       : '/apps/distribucion/crear-orden-distribucion',
+                        exactMatch: true
+                    },
+                    {
+                        id        : 'ordenes-distribucion',
+                        title     : 'Ordenes de Distribución',
+                        type      : 'item',
+                        url       : '/apps/distribucion/ordenes-distribucion',
+                        exactMatch: true
+                    }
+                ]
+            },
+            {
+                id        : 'envio',
+                title     : 'Carga',
+                type      : 'collapsable',
+                icon      : 'add_shopping_cart',
+                exactMatch: true,
+                children : [
+                    {
+                        id        : 'crear-orden-distribucion',
+                        title     : 'Control de Carga',
+                        type      : 'item',
+                        url       : '/apps/envios/envio',
+                        exactMatch: true
+                    }
+                ]
+            }, 
+        ]
+    },
+    //-------------------------------------------------------------------------------------
+   
+    {
+        id       : 'infoAuxiliar',
+        title    : 'Info Auxiliar',
+        translate: 'Info Auxiliar',
+        type     : 'group',
+        icon     : 'apps',
+        children : [
             {
                 id       : 'articulos',
                 title    : 'Articulos',
                 type     : 'collapsable',
-                icon     : 'shopping_cart',
+                icon     : 'dashboard',
                 children : [
                     {
                         id        : 'partes-articulo',
@@ -152,54 +181,6 @@ export const navigation: FuseNavigation[] = [
                     },
                 ]
             },
-            {
-                id       : 'distribucion',
-                title    : 'Distribucion',
-                type     : 'collapsable',
-                icon     : 'shopping_cart',
-                children : [
-                    {
-                        id        : 'crear-orden-distribucion',
-                        title     : 'Crear Orden Distribución',
-                        type      : 'item',
-                        url       : '/apps/distribucion/crear-orden-distribucion',
-                        exactMatch: true
-                    },
-                    {
-                        id        : 'ordenes-distribucion',
-                        title     : 'Ordenes de Distribución',
-                        type      : 'item',
-                        url       : '/apps/distribucion/ordenes-distribucion',
-                        exactMatch: true
-                    },
-                    {
-                        id        : 'ver-orden-distribucion',
-                        title     : 'Ver Orden de Distribución',
-                        type      : 'item',
-                        url       : '/apps/distribucion/ver-orden-distribucion/105',
-                        exactMatch: true
-                    }
-                ]
-            },
-            {
-                id        : 'envio',
-                title     : 'Envios',
-                type      : 'item',
-                icon      : 'assignment',
-                url       : '/apps/envios/envio',
-                exactMatch: true
-            }, 
-        ]
-    },
-    //-------------------------------------------------------------------------------------
-   
-    {
-        id       : 'infoAuxiliar',
-        title    : 'Info Auxiliar',
-        translate: 'Info Auxiliar',
-        type     : 'group',
-        icon     : 'apps',
-        children : [
             {
                 id       : 'dashboards',
                 title    : 'Comprobantes',
