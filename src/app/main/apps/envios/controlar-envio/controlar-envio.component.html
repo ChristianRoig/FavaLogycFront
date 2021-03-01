@@ -1,0 +1,50 @@
+<app-plantilla-fondo titulo='Controlar Lote en Estantería'>
+
+
+    <div contenido class="content" fxLayout="row" fxLayoutAlign="center">
+
+        <div class="my-24" style="width: 100%;">
+
+            <div fxLayout="row" fxLayoutAlign="space-between">
+
+                <!-- <div class="h2 m-24">{{this.nombreLote}}</div> -->
+            </div>
+
+            <div fxLayout="row" class="controlesBusquedaF">
+
+                <mat-form-field appearance="outline" class="inputBusqueda">
+                    <mat-label>Código de Barras</mat-label>
+                    <input #buscarCodigoBarras class="text-uppercase" (keyup)="searchCodigoBarras()" matInput value="" placeholder="Código de Barras">
+                    <mat-icon matSuffix>search</mat-icon>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="inputBusqueda">
+                    <mat-label>CUPA</mat-label>
+                    <input #buscarCUPA class="text-uppercase" (keyup)="searchCUPA()" matInput value="" placeholder="CUPA">
+                    <mat-icon matSuffix>search</mat-icon>
+                </mat-form-field>
+                <div class="botonesBusqueda">
+                    <button mat-raised-button class="btn" color="primary" (click)="agregarEstanteria()">Agregar</button>
+
+                    <button mat-raised-button class="btn" color="warn" (click)="toggle()">Eliminar</button>
+                </div>
+            </div>
+
+            <div [@esconder]="funcionEsconder" class="botonesBusqueda" style="width: 100%;">
+                <mat-form-field appearance="outline" class="inputBusquedaBorrar">
+                    <mat-label>Cupa</mat-label>
+                    <input #eliminaCupa class="text-uppercase" matInput value="" placeholder="Cupa">
+                    <mat-icon matSuffix>search</mat-icon>
+                </mat-form-field>
+                <button mat-raised-button class="btnBorrar" color="warn" (click)="borrar()">Borrar</button>
+            </div>
+
+            <app-tabla-retractil *ngIf="this.arregloDeDetalles" [arregloDeDetalles]='this.arregloDeDetalles'></app-tabla-retractil>
+
+            <br>
+            <br>
+
+        </div>
+
+    </div>
+</app-plantilla-fondo>

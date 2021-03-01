@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { VerRemitoComponent } from '../ver-remito.component';
+import { VerOrdenDistribucionComponent } from '../ver-orden-distribucion.component';
 
 @Component({
   selector: 'app-modal-confirmacion-borrar',
@@ -8,7 +8,7 @@ import { VerRemitoComponent } from '../ver-remito.component';
 })
 export class ModalConfirmacionBorrarComponent implements OnInit {
 
-  constructor( public dialogRef: MatDialogRef<VerRemitoComponent>,
+  constructor( public dialogRef: MatDialogRef<VerOrdenDistribucionComponent>,
     @Inject(MAT_DIALOG_DATA) public data:any) { }
 
   ngOnInit(): void {

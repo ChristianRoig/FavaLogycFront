@@ -6,16 +6,17 @@ import { Debounce } from 'app/shared/decorators/debounce';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 import { HttpErrorResponse } from '@angular/common/http';
-import { forEach } from 'lodash';
 import { element } from 'protractor';
+import { forEach } from 'lodash';
 
 //import { BuscarLoteComponent } from './buscar-lote/buscar-lote.component';
-//import { VerImpresorasComponent } from './ver-impresoras/ver-impresoras.component';
+import { VerImpresorasComponent } from './ver-impresoras/ver-impresoras.component';
 import { VerRemitoComponent } from './ver-remito/ver-remito.component';
 
+//services
+import { VerRemitoService } from './ver-remito/ver-remito.service';
 import { UsuarioService } from 'app/services/usuario.service';
 import { ListaRemitosService } from './lista-remitos.service';
-import { VerRemitoService } from './ver-remito/ver-remito.service';
 
 export interface Articulos {
 
@@ -63,7 +64,7 @@ export interface BodyDetalleFecha{
 }
 
 @Component({  
-  selector: 'app-lista-lotes',  
+  selector: 'app-lista-remitos',  
   templateUrl: './lista-remitos.component.html',
   styleUrls: ['./lista-remitos.component.scss']
 })
@@ -164,7 +165,7 @@ export class ListaRemitosComponent implements OnInit {
 
   constructor(private _router: Router, 
               private _fuseSidebarService: FuseSidebarService, 
-              private _listaRemitosService: ListaRemitosService,
+              private _listaLoteService: ListaRemitosService,
               //private _usuarioService: UsuarioService,
               private _dialog: MatDialog,
               //private _verLoteComponent: VerLoteComponent
@@ -198,7 +199,7 @@ export class ListaRemitosComponent implements OnInit {
       desdeLote   : this.pickerLoteDesde,
       hastaLote   : this.pickerLoteDesde
     }
-    this._listaRemitosService.getLotesPorFecha(this.lote, bodyFechas)
+    this._listaLoteService.getLotesPorFecha(this.lote, bodyFechas)
       .subscribe(data => {
         console.log(data);
         this.dataSource2 = data.datos;
@@ -240,7 +241,7 @@ export class ListaRemitosComponent implements OnInit {
   
   getLotesPorEstado( estado: string, page, size ){
     if( estado === 'TODOS'){
-      this._listaRemitosService.getAllLotes( this.page, this.size ) .subscribe( data => {
+      this._listaLoteService.getAllLotes( this.page, this.size ) .subscribe( data => {
         this.dataSource2 = data.datos; 
         this.length = data.totalRegistros;
         console.log(data);
@@ -263,7 +264,7 @@ export class ListaRemitosComponent implements OnInit {
       });
     } else {
       this.estado = estado;
-      this._listaRemitosService.getLotesPorEstado( estado, this.page, this.size ) .subscribe( data => {
+      this._listaLoteService.getLotesPorEstado( estado, this.page, this.size ) .subscribe( data => {
         console.log(data);
         this.dataSource2 = data.datos; 
         this.length = data.totalRegistros;
@@ -301,7 +302,7 @@ export class ListaRemitosComponent implements OnInit {
     if( lote != null ){
       //this.idLote = lote.id;
       this.idLote = lote.idLote;
-      let ruta = `apps/remitos/ver-remito/${ this.idLote }`;
+      let ruta = `apps/lotes/ver-lote/${ this.idLote }`;
       //console.log("lote ASD");
       //this._verLoteComponent.obtenerLote(lote);
       this._router.navigate([ ruta ]);
@@ -331,7 +332,7 @@ export class ListaRemitosComponent implements OnInit {
   }
 
   getfiltros(){
-    this._listaRemitosService.getAllTipos().subscribe(params => {
+    this._listaLoteService.getAllTipos().subscribe(params => {
       this.filtroTipos = params.datos;
     },
     (err: HttpErrorResponse) => {
@@ -351,7 +352,7 @@ export class ListaRemitosComponent implements OnInit {
       }
     })
     
-    this._listaRemitosService.getAllTurnos().subscribe(params => {
+    this._listaLoteService.getAllTurnos().subscribe(params => {
       this.filtroTurnos = params.datos;
     },
     (err: HttpErrorResponse) => {
@@ -371,7 +372,7 @@ export class ListaRemitosComponent implements OnInit {
       }
     })
     
-    this._listaRemitosService.getAllOrigenes().subscribe(params => {
+    this._listaLoteService.getAllOrigenes().subscribe(params => {
       this.filtroOrigenes = params.datos;
     },
     (err: HttpErrorResponse) => {
@@ -391,7 +392,7 @@ export class ListaRemitosComponent implements OnInit {
       }
     })
 
-    this._listaRemitosService.getAllEtapas().subscribe(params => {
+    this._listaLoteService.getAllEtapas().subscribe(params => {
       this.filtroEtapas = params.datos;
     },
     (err: HttpErrorResponse) => {
@@ -411,7 +412,7 @@ export class ListaRemitosComponent implements OnInit {
       }
     })
 
-    this._listaRemitosService.getAllProvincias().subscribe(params => {
+    this._listaLoteService.getAllProvincias().subscribe(params => {
       this.filtroProvincias = params.datos;
     },
     (err: HttpErrorResponse) => {
@@ -431,7 +432,7 @@ export class ListaRemitosComponent implements OnInit {
       }
     })
 
-    this._listaRemitosService.getAllLocalidades().subscribe(params => {
+    this._listaLoteService.getAllLocalidades().subscribe(params => {
       this.filtroLocalidades = params.datos;
     },
     (err: HttpErrorResponse) => {
@@ -515,7 +516,7 @@ export class ListaRemitosComponent implements OnInit {
     
     // console.log(this.body);
 
-    this._listaRemitosService.getPedidosLote(this.body, busqueda, columna, order).subscribe(
+    this._listaLoteService.getPedidosLote(this.body, busqueda, columna, order).subscribe(
       data => {
         // console.log(data)
         this.dataSource2 = data.datos;
@@ -605,7 +606,7 @@ export class ListaRemitosComponent implements OnInit {
     this.selectedProvincia = (event.target as HTMLSelectElement).value;
     if(this.selectedProvincia > 0){
       this.selectedLocalidad = 0;
-      this._listaRemitosService.getAllLocalidadesPorProvincia(this.selectedProvincia).subscribe(params => {
+      this._listaLoteService.getAllLocalidadesPorProvincia(this.selectedProvincia).subscribe(params => {
         this.filtroLocalidades = params.datos;
       },
       (err: HttpErrorResponse) => {
@@ -626,7 +627,7 @@ export class ListaRemitosComponent implements OnInit {
       })
     } else {
       this.selectedLocalidad = 0;
-      this._listaRemitosService.getAllLocalidades().subscribe(params => {
+      this._listaLoteService.getAllLocalidades().subscribe(params => {
         this.filtroLocalidades = params.datos;
       },
       (err: HttpErrorResponse) => {
@@ -652,7 +653,7 @@ export class ListaRemitosComponent implements OnInit {
   selectLocalidad(event: Event) {
     this.selectedLocalidad = (event.target as HTMLSelectElement).value;
     if(this.selectedLocalidad > 0){
-      this._listaRemitosService.getProvinciaPorLocalidad(this.selectedLocalidad).subscribe( params => {
+      this._listaLoteService.getProvinciaPorLocalidad(this.selectedLocalidad).subscribe( params => {
         this.selectedProvincia = params.id;
         console.log("Provincia: "+this.selectedProvincia);
       },
@@ -818,7 +819,7 @@ export class ListaRemitosComponent implements OnInit {
     this.page = e.pageIndex;
     this.size = e.pageSize;
     
-    //this._listaRemitosService.getAllLotes( this.page, this.size ); 
+    //this._listaLoteService.getAllLotes( this.page, this.size ); 
     this.getLotesPorEstado( this.estado, this.page, this.size ); 
   }
 }

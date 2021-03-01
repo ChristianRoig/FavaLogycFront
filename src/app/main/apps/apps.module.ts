@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-
+import { MatDialogModule } from '@angular/material/dialog';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -28,6 +28,14 @@ const routes = [
     {
         path        : 'comprobantes',
         loadChildren: () => import('./comprobantes/comprobantes.module').then(m => m.ComprobantesModule)
+    },
+    {
+        path        : 'distribucion',
+        loadChildren: () => import('./distribucion/distribucion.module').then(m => m.DistribucionModule)
+    },
+    {
+        path        : 'envios',
+        loadChildren: () => import('./envios/envios.module').then(m => m.EnviosModule)
     }
     
 ];
@@ -37,7 +45,8 @@ const routes = [
         RouterModule.forChild(routes),
         FuseSharedModule,
         HttpClientModule
-    ]
+    ],
+    entryComponents:[ MatDialogModule ]
 })
 export class AppsModule
 {

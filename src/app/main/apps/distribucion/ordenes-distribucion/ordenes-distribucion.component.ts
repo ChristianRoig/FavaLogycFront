@@ -11,12 +11,12 @@ import { forEach } from 'lodash';
 
 //import { BuscarLoteComponent } from './buscar-lote/buscar-lote.component';
 import { VerImpresorasComponent } from './ver-impresoras/ver-impresoras.component';
-import { VerLoteComponent } from './ver-lote/ver-lote.component';
+import { VerOrdenDistribucionComponent } from './ver-orden-distribucion/ver-orden-distribucion.component';
 
 //services
-import { VerLoteService } from './ver-lote/ver-lote.service';
+import { VerOrdenDistribucionService } from './ver-orden-distribucion/ver-orden-distribucion.service';
 import { UsuarioService } from 'app/services/usuario.service';
-import { ListaLotesService } from './lista-lotes.service';
+import { OrdenesDistribucionService } from './ordenes-distribucion.service';
 
 export interface Articulos {
 
@@ -64,12 +64,12 @@ export interface BodyDetalleFecha{
 }
 
 @Component({  
-  selector: 'app-lista-lotes',  
-  templateUrl: './lista-lotes.component.html',
-  styleUrls: ['./lista-lotes.component.scss']
+  selector: 'app-ordenes-distribucion',  
+  templateUrl: './ordenes-distribucion.component.html',
+  styleUrls: ['./ordenes-distribucion.component.scss']
 })
 
-export class ListaLotesComponent implements OnInit {
+export class OrdenesDistribucionComponent implements OnInit {
 
   @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
   @ViewChild('buscarLote') buscarLoteInput: ElementRef;
@@ -165,7 +165,7 @@ export class ListaLotesComponent implements OnInit {
 
   constructor(private _router: Router, 
               private _fuseSidebarService: FuseSidebarService, 
-              private _listaLoteService: ListaLotesService,
+              private _ordenesDistribucionService: OrdenesDistribucionService,
               //private _usuarioService: UsuarioService,
               private _dialog: MatDialog,
               //private _verLoteComponent: VerLoteComponent
@@ -199,7 +199,7 @@ export class ListaLotesComponent implements OnInit {
       desdeLote   : this.pickerLoteDesde,
       hastaLote   : this.pickerLoteDesde
     }
-    this._listaLoteService.getLotesPorFecha(this.lote, bodyFechas)
+    this._ordenesDistribucionService.getLotesPorFecha(this.lote, bodyFechas)
       .subscribe(data => {
         console.log(data);
         this.dataSource2 = data.datos;
@@ -241,7 +241,7 @@ export class ListaLotesComponent implements OnInit {
   
   getLotesPorEstado( estado: string, page, size ){
     if( estado === 'TODOS'){
-      this._listaLoteService.getAllLotes( this.page, this.size ) .subscribe( data => {
+      this._ordenesDistribucionService.getAllLotes( this.page, this.size ) .subscribe( data => {
         this.dataSource2 = data.datos; 
         this.length = data.totalRegistros;
         console.log(data);
@@ -264,7 +264,7 @@ export class ListaLotesComponent implements OnInit {
       });
     } else {
       this.estado = estado;
-      this._listaLoteService.getLotesPorEstado( estado, this.page, this.size ) .subscribe( data => {
+      this._ordenesDistribucionService.getLotesPorEstado( estado, this.page, this.size ) .subscribe( data => {
         console.log(data);
         this.dataSource2 = data.datos; 
         this.length = data.totalRegistros;
@@ -332,7 +332,7 @@ export class ListaLotesComponent implements OnInit {
   }
 
   getfiltros(){
-    this._listaLoteService.getAllTipos().subscribe(params => {
+    this._ordenesDistribucionService.getAllTipos().subscribe(params => {
       this.filtroTipos = params.datos;
     },
     (err: HttpErrorResponse) => {
@@ -352,7 +352,7 @@ export class ListaLotesComponent implements OnInit {
       }
     })
     
-    this._listaLoteService.getAllTurnos().subscribe(params => {
+    this._ordenesDistribucionService.getAllTurnos().subscribe(params => {
       this.filtroTurnos = params.datos;
     },
     (err: HttpErrorResponse) => {
@@ -372,7 +372,7 @@ export class ListaLotesComponent implements OnInit {
       }
     })
     
-    this._listaLoteService.getAllOrigenes().subscribe(params => {
+    this._ordenesDistribucionService.getAllOrigenes().subscribe(params => {
       this.filtroOrigenes = params.datos;
     },
     (err: HttpErrorResponse) => {
@@ -392,7 +392,7 @@ export class ListaLotesComponent implements OnInit {
       }
     })
 
-    this._listaLoteService.getAllEtapas().subscribe(params => {
+    this._ordenesDistribucionService.getAllEtapas().subscribe(params => {
       this.filtroEtapas = params.datos;
     },
     (err: HttpErrorResponse) => {
@@ -412,7 +412,7 @@ export class ListaLotesComponent implements OnInit {
       }
     })
 
-    this._listaLoteService.getAllProvincias().subscribe(params => {
+    this._ordenesDistribucionService.getAllProvincias().subscribe(params => {
       this.filtroProvincias = params.datos;
     },
     (err: HttpErrorResponse) => {
@@ -432,7 +432,7 @@ export class ListaLotesComponent implements OnInit {
       }
     })
 
-    this._listaLoteService.getAllLocalidades().subscribe(params => {
+    this._ordenesDistribucionService.getAllLocalidades().subscribe(params => {
       this.filtroLocalidades = params.datos;
     },
     (err: HttpErrorResponse) => {
@@ -516,7 +516,7 @@ export class ListaLotesComponent implements OnInit {
     
     // console.log(this.body);
 
-    this._listaLoteService.getPedidosLote(this.body, busqueda, columna, order).subscribe(
+    this._ordenesDistribucionService.getPedidosLote(this.body, busqueda, columna, order).subscribe(
       data => {
         // console.log(data)
         this.dataSource2 = data.datos;
@@ -606,7 +606,7 @@ export class ListaLotesComponent implements OnInit {
     this.selectedProvincia = (event.target as HTMLSelectElement).value;
     if(this.selectedProvincia > 0){
       this.selectedLocalidad = 0;
-      this._listaLoteService.getAllLocalidadesPorProvincia(this.selectedProvincia).subscribe(params => {
+      this._ordenesDistribucionService.getAllLocalidadesPorProvincia(this.selectedProvincia).subscribe(params => {
         this.filtroLocalidades = params.datos;
       },
       (err: HttpErrorResponse) => {
@@ -627,7 +627,7 @@ export class ListaLotesComponent implements OnInit {
       })
     } else {
       this.selectedLocalidad = 0;
-      this._listaLoteService.getAllLocalidades().subscribe(params => {
+      this._ordenesDistribucionService.getAllLocalidades().subscribe(params => {
         this.filtroLocalidades = params.datos;
       },
       (err: HttpErrorResponse) => {
@@ -653,7 +653,7 @@ export class ListaLotesComponent implements OnInit {
   selectLocalidad(event: Event) {
     this.selectedLocalidad = (event.target as HTMLSelectElement).value;
     if(this.selectedLocalidad > 0){
-      this._listaLoteService.getProvinciaPorLocalidad(this.selectedLocalidad).subscribe( params => {
+      this._ordenesDistribucionService.getProvinciaPorLocalidad(this.selectedLocalidad).subscribe( params => {
         this.selectedProvincia = params.id;
         console.log("Provincia: "+this.selectedProvincia);
       },
@@ -819,7 +819,7 @@ export class ListaLotesComponent implements OnInit {
     this.page = e.pageIndex;
     this.size = e.pageSize;
     
-    //this._listaLoteService.getAllLotes( this.page, this.size ); 
+    //this._ordenesDistribucionService.getAllLotes( this.page, this.size ); 
     this.getLotesPorEstado( this.estado, this.page, this.size ); 
   }
 }

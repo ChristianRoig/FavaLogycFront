@@ -152,6 +152,43 @@ export const navigation: FuseNavigation[] = [
                     },
                 ]
             },
+            {
+                id       : 'distribucion',
+                title    : 'Distribucion',
+                type     : 'collapsable',
+                icon     : 'shopping_cart',
+                children : [
+                    {
+                        id        : 'crear-orden-distribucion',
+                        title     : 'Crear Orden Distribución',
+                        type      : 'item',
+                        url       : '/apps/distribucion/crear-orden-distribucion',
+                        exactMatch: true
+                    },
+                    {
+                        id        : 'ordenes-distribucion',
+                        title     : 'Ordenes de Distribución',
+                        type      : 'item',
+                        url       : '/apps/distribucion/ordenes-distribucion',
+                        exactMatch: true
+                    },
+                    {
+                        id        : 'ver-orden-distribucion',
+                        title     : 'Ver Orden de Distribución',
+                        type      : 'item',
+                        url       : '/apps/distribucion/ver-orden-distribucion/105',
+                        exactMatch: true
+                    }
+                ]
+            },
+            {
+                id        : 'envio',
+                title     : 'Envios',
+                type      : 'item',
+                icon      : 'assignment',
+                url       : '/apps/envios/envio',
+                exactMatch: true
+            }, 
         ]
     },
     //-------------------------------------------------------------------------------------

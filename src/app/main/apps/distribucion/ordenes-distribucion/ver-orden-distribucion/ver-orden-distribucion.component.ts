@@ -11,7 +11,7 @@ import { VerImpresorasComponent } from '../ver-impresoras/ver-impresoras.compone
 import { ModalConfirmacionBorrarComponent } from './modal-confirmacion-borrar/modal-confirmacion-borrar.component';
 
 //servicios
-import { VerRemitoService } from './ver-remito.service';
+import { VerOrdenDistribucionService } from './ver-orden-distribucion.service';
 
 export interface BodyDetalle{
 
@@ -35,13 +35,13 @@ const ELEMENT_DATA: any[] = [
 ];
 
 @Component({
-  selector: 'app-ver-remito',
-  templateUrl: './ver-remito.component.html',
-  styleUrls: ['./ver-remito.component.scss']
+  selector: 'app-ver-orden-distribucion',
+  templateUrl: './ver-orden-distribucion.component.html',
+  styleUrls: ['./ver-orden-distribucion.component.scss']
 })
 
 
-export class VerRemitoComponent implements OnInit {
+export class VerOrdenDistribucionComponent implements OnInit {
   
   @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
 
@@ -107,7 +107,7 @@ export class VerRemitoComponent implements OnInit {
   loteActual: any = {};
 
   constructor(
-    private _verRemitoService: VerRemitoService,
+    private _verOrdenDistribucion: VerOrdenDistribucionService,
     private _dialog: MatDialog,
     private _router: Router,
     private _activatedRoute: ActivatedRoute) {}
@@ -129,7 +129,7 @@ export class VerRemitoComponent implements OnInit {
   getArticulosDeLote(idLote: number){
     this.body.idLote = idLote;
     //this.dataSource2 = ELEMENT_DATA;
-    this._verRemitoService.getArticulosDeLote( this.body, this.busqueda, this.columna, this.order ) .subscribe( data => {
+    this._verOrdenDistribucion.getArticulosDeLote( this.body, this.busqueda, this.columna, this.order ) .subscribe( data => {
       this.dataSource2 = data.datos;
 
       console.log("articulos -> ", this.dataSource2);
@@ -153,7 +153,7 @@ export class VerRemitoComponent implements OnInit {
   }
 
   getLote(idLote: number){                                              //Propuesta de getLote PARA OBTENER Y MODIFICAR EL NOMBRE DE LOTE  
-    this._verRemitoService.getLote( idLote ) .subscribe( data => {
+    this._verOrdenDistribucion.getLote( idLote ) .subscribe( data => {
       console.log(data);
       this.loteActual = data;
       this.nombreLote = this.loteActual.nombre;
@@ -190,7 +190,7 @@ export class VerRemitoComponent implements OnInit {
     }
     this.editLote = false;
 
-    this._verRemitoService.updateNombreLote(this.loteActual.nombreLote, this.loteActual.idLote) .subscribe (data =>  {
+    this._verOrdenDistribucion.updateNombreLote(this.loteActual.nombreLote, this.loteActual.idLote) .subscribe (data =>  {
 
     },
     (err: HttpErrorResponse) => {
@@ -230,7 +230,7 @@ export class VerRemitoComponent implements OnInit {
 
   eliminarLote(){
     console.log("se eliminará el lote -> ", this.idLote );
-    this._verRemitoService.eliminarLote( this.idLote ) .subscribe( data => {
+    this._verOrdenDistribucion.eliminarLote( this.idLote ) .subscribe( data => {
       console.log("se eliminará el lote -> ", this.idLote );
     },
     (err: HttpErrorResponse) => {
@@ -263,7 +263,7 @@ export class VerRemitoComponent implements OnInit {
     }
     console.log(listaIdPedidoDetalle);
     
-    this._verRemitoService.postEliminarArticuloDeLote(listaIdPedidoDetalle).subscribe(params => {
+    this._verOrdenDistribucion.postEliminarArticuloDeLote(listaIdPedidoDetalle).subscribe(params => {
       console.log("termino Ok");
       this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
     },
@@ -349,7 +349,7 @@ export class VerRemitoComponent implements OnInit {
     
     // console.log(this.body);
 
-    this._verRemitoService.getArticulosDeLote(this.body, busqueda, columna, order).subscribe(
+    this._verOrdenDistribucion.getArticulosDeLote(this.body, busqueda, columna, order).subscribe(
       data => {
         // console.log(data)
         this.lote = data.datos;
@@ -470,7 +470,7 @@ export class VerRemitoComponent implements OnInit {
   imprimir(){
     let impresora = localStorage.getItem('ImpresoraCUPA');
 
-    this._verRemitoService.imprimir(this.idLote,impresora).subscribe(data => {
+    this._verOrdenDistribucion.imprimir(this.idLote,impresora).subscribe(data => {
       
       let titulo = 'Estado de impresión';
       let mensaje = "Completado correctamente";
