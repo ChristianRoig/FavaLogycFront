@@ -61,7 +61,7 @@ export class PedidosListaComponent implements OnInit {
   @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
   @ViewChild('buscarLote') buscarLoteInput: ElementRef;
 
-  displayedColumns: string[] = ['Tipo', 'CodigoArticulo', 'NombreArticulo', 'Comprobante', 'Fecha-Entrega', 'Provincia', 'Localidad', 'Etapa', 'Lote', 'Ver'];
+  displayedColumns: string[] = ['Tipo', 'Comprobante', 'CodigoArticulo', 'NombreArticulo', 'Fecha-Entrega', 'Localidad', 'Provincia', 'Etapa', 'Lote', 'Ver'];
   /* , 'Borrar' */
   dataSource = ELEMENT_DATA;  
   dataSource2: any;
@@ -72,8 +72,8 @@ export class PedidosListaComponent implements OnInit {
   length: number = 0;
   page: number = 0;
   size: number = 10;
-  columna: string = 'codigoArticulo';
-  order: string = 'asc';
+  columna: string = 'id'; // 'codigoArticulo';
+  order: string = 'desc'; // 'asc';
 
   mensaje: string;
 

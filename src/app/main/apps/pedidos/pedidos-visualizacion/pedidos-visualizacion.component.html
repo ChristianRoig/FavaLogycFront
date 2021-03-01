@@ -58,20 +58,20 @@
                     <ng-container *ngTemplateOutlet="articulos"></ng-container>
                 </mat-tab>
 
-                <mat-tab label="CUPA">
-                    <ng-container *ngTemplateOutlet="cupa"></ng-container>
-                </mat-tab>
-
-                <mat-tab label="Comprobantes">
-                    <ng-container *ngTemplateOutlet="comprobantes"></ng-container>
-                </mat-tab>
-
                 <mat-tab label="Datos de entrega">
                     <ng-container *ngTemplateOutlet="datosEntrega"></ng-container>
                 </mat-tab>
 
+                <mat-tab label="CUPA">
+                    <ng-container *ngTemplateOutlet="cupa"></ng-container>
+                </mat-tab>
+
                 <mat-tab label="Trazabilidad">
                     <ng-container *ngTemplateOutlet="trazabilidad"></ng-container>
+                </mat-tab>
+
+                <mat-tab label="Comprobantes">
+                    <ng-container *ngTemplateOutlet="comprobantes"></ng-container>
                 </mat-tab>
             </mat-tab-group>
         </div>
@@ -132,17 +132,12 @@
     </div>
 </ng-template>
 
-<ng-template #cupa>
-    <pedidos-cupa idCabecera='{{this.idCabecera}}'></pedidos-cupa>
-</ng-template>
-
-
-<ng-template #comprobantes>
-    <pedidos-comprobantes idCabecera='{{this.idCabecera}}'></pedidos-comprobantes>
-</ng-template>
-
 <ng-template #datosEntrega>
     <pedidos-datos-entrega idCabecera='{{this.idCabecera}}'></pedidos-datos-entrega>
+</ng-template>
+
+<ng-template #cupa>
+    <pedidos-cupa idCabecera='{{this.idCabecera}}'></pedidos-cupa>
 </ng-template>
 
 <ng-template #trazabilidad>
@@ -152,6 +147,9 @@
 
 </ng-template>
 
+<ng-template #comprobantes>
+    <pedidos-comprobantes idCabecera='{{this.idCabecera}}'></pedidos-comprobantes>
+</ng-template>
 
 <ng-template #articulosPrueba>
 
