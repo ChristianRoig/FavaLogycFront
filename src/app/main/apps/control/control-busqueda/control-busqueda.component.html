@@ -70,7 +70,7 @@
             </div>
         </div>
 
-        <div class="controlesBusqueda">
+        <div class="controlesBusqueda" *ngIf="!this.busquedaAutomatica">
             <mat-form-field appearance="outline" class="inputBuscarLote">
                 <mat-label>Lote</mat-label>
                 <input #buscarLote (keyup)="searchLote()" matInput value="" placeholder="Buscar lote por nombre">
