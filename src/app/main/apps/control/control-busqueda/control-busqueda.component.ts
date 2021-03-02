@@ -71,6 +71,7 @@ export class ControlEstanteriaComponent implements OnInit {
   condiciónDeEstadoLote: string = '';
   subParametros: Subscription;
   titulo: string;
+  seccionOpuesta: string;
   eliminar: boolean = false;
 
   constructor(private _router: Router, 
@@ -99,13 +100,15 @@ export class ControlEstanteriaComponent implements OnInit {
       switch (this.modo) {
         case "estanteria":
           this.titulo = "Estantería";
-          this.condiciónDeEstadoLote = 'NUEVO'; 
+          this.condiciónDeEstadoLote = 'NUEVO';
+          this.seccionOpuesta = "dársena";
           //this.condiciónDeEstadoArticulos = 'EN LOTE'; 
           this.getLotesPorEstado( this.page, this.size);
           break;
           case "darsena":
             this.titulo = "Dársena";
             this.condiciónDeEstadoLote = 'ESTANTERIA';
+            this.seccionOpuesta = "estanteria";
             //this.condiciónDeEstadoArticulos = 'ESTANTERIA'; 
             this.getLotesPorEstado( this.page, this.size);
           break;
@@ -186,7 +189,7 @@ export class ControlEstanteriaComponent implements OnInit {
     } else{
       let errStatus = 0;
       let titulo = 'El lote '+lote.nombre+' no se encuentra en la etapa '+this.modo;
-      let mensaje = "Realice el control en Control "+this.modo;
+      let mensaje = "Realice el control en control "+this.seccionOpuesta;
       this.mostrarError(errStatus, titulo, mensaje);
       let ruta = `apps/control/lote-en/${this.modo}`;
       this._router.navigate([ruta]);
@@ -211,7 +214,7 @@ export class ControlEstanteriaComponent implements OnInit {
         if( this.estadoLote != this.condiciónDeEstadoLote ){
           let errStatus = 0;
           let titulo = 'El lote '+this.lote+' no se encuentra en la etapa '+this.condiciónDeEstadoLote;
-          let mensaje = "Realice el control en control "+this.modo;
+          let mensaje = "Realice el control en control "+this.seccionOpuesta;
           this.mostrarError(errStatus, titulo, mensaje);
           let ruta = `apps/control/lote-en/${this.modo}`;
           this._router.navigate([ruta]);
