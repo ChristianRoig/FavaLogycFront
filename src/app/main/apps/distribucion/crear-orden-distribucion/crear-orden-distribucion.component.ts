@@ -36,14 +36,15 @@ export class CrearOrdenDistribucionComponent implements OnInit {
   selection = new SelectionModel<any>(true, []);
   mostrarFecha = false;
   mostrarTipo = false;
-  lote: string = null;
   busqueda: string = "";
+
   length: number = 0;
   page: number = 0;
   size: number = 10;
   columna: string = 'nroCbte';
   order: string = 'asc';
-
+  
+  toAdd = new Array<number>();
 
 
   /* body: BodyDetalle = {
@@ -113,12 +114,37 @@ export class CrearOrdenDistribucionComponent implements OnInit {
   }
 
 
-  remitir() {
+  crearOrdenDeDistribucion() {
+    for (let elemento of this.dataSource2){
+      this.toAdd.push(elemento.id);
+    }
+    console.log(this.toAdd);
 
-    localStorage.setItem('Remitir',JSON.stringify(this.selection));
+    let body = { 
+      nombre : "Mi distribucion",
+      listaId: this.toAdd 
+    }
+
+    this._crearOrdenDistribucionService.crearOrdenDeDistribucion( body ).subscribe( params => {
+      console.log("entró");
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
+        } else {
+          let titulo = 'Error al crear remito';
+          let mensaje = err.error.message.toString();
+          this.mostrarError(errStatus, titulo, mensaje);
+        }
+      }
+    });
     
-    let ruta = `apps/remitos/remitos-conf`;
-    this._router.navigate([ruta]);
   }
 
 

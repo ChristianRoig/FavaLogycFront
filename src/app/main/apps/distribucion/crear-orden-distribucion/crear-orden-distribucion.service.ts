@@ -25,4 +25,14 @@ export class CrearOrdenDistribucionService
         let ruta = `${ BASE_URL }pedidos/pedidocbte/remito/a-distribuir/${ page }/${ size }/${ columna }/${ order }`;
         return this._httpClient.get(ruta);
     }
+
+    crearOrdenDeDistribucion( body ){
+
+        let headers = new HttpHeaders({
+            "Content-Type": "application/json"
+        });
+
+        let ruta = `${BASE_URL}pedidos/distribucion`;
+        return this._httpClient.post(ruta, body, {headers: headers});
+    }
 }
