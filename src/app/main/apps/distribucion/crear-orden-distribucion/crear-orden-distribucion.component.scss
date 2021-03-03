@@ -59,3 +59,24 @@ fuse-sidebar {
     min-width: 100px !important;
     padding: 5px;
 }
+
+.inputBuscarLote {
+    width: 600px;
+    justify-content: flex-start;
+    padding-top: 20px;
+}
+
+.controlesBusqueda {
+    display: flex;
+    width: 100%;
+    align-items: center !important;
+    justify-content: flex-start;
+}
+
+.botonesBusqueda {
+    display: flex;
+    width: 900px;
+    align-items: center !important;
+    justify-content: space-between;
+    margin-left: 20px;
+}
