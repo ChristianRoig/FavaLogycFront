@@ -80,3 +80,21 @@ fuse-sidebar {
     justify-content: space-between;
     margin-left: 20px;
 }
+
+@media (max-width: 768px) {
+    .btn {
+        height: 60px;
+        /* margin-bottom: 27px; */
+        width: 200px;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+    .botonesBusqueda {
+        margin-left: 50px;
+    }
+    .inputBuscarLote {
+        width: 600px;
+        justify-content: flex-start;
+        padding-top: 20px;
+    }
+}

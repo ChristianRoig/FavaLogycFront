@@ -26,14 +26,6 @@ export interface BodyDetalle{
   idLote : number;
 }
 
-const ELEMENT_DATA: any[] = [
-  {Id: 1,Tipo: "Venta", CodigoArticulo: "ATCLLED110", Nombre: "TCL LED 50 P8M SMART",    Comprobante: "B0001700006163",    FechaEntrega: "10/05/2020",    Prov: "Bs.As.",    Loc: "Pinamar",    Estado: "INICIAL",       Etapa: "INICIAL",    Lote: 1},
-  {Id: 2,Tipo: "Venta", CodigoArticulo: "MPLAPLA010", Nombre: "Mueble Madera 1 puerta",    Comprobante: "B0009000012349",    FechaEntrega: "10/05/2020",    Prov: "Bs.As.",    Loc: "Pinamar",    Estado: "INICIAL",       Etapa: "INICIAL",    Lote: 1},
-  {Id: 3,Tipo: "Venta", CodigoArticulo: "MPLAPLA010", Nombre: "Mueble Madera 1 puerta",    Comprobante: "B0009000012349",    FechaEntrega: "10/05/2020",    Prov: "Bs.As.",    Loc: "Minamar",    Estado: "EN PROCESO",    Etapa: "EN LOTE",    Lote: 1},
-  {Id: 4,Tipo: "Venta", CodigoArticulo: "MPLAPLA010", Nombre: "Mueble Madera 1 puerta",    Comprobante: "B0009000012349",    FechaEntrega: "10/05/2020",    Prov: "Bs.As.",    Loc: "Gesell",     Estado: "EN PROCESO",    Etapa: "ESTANTERIA", Lote: 1},
-  {Id: 5,Tipo: "Venta", CodigoArticulo: "MPLAPLA010", Nombre: "Mueble Madera 1 puerta",    Comprobante: "B0009000012349",    FechaEntrega: "10/05/2020",    Prov: "Bs.As.",    Loc: "Gesell",     Estado: "ANULADO",       Etapa: "SIN STOCK",  Lote: 1},
-];
-
 @Component({
   selector: 'app-ver-orden-distribucion',
   templateUrl: './ver-orden-distribucion.component.html',
@@ -44,12 +36,12 @@ const ELEMENT_DATA: any[] = [
 export class VerOrdenDistribucionComponent implements OnInit {
   
   @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
-
-  displayedColumns: string[] = ['select', 'codigoArticulo', 'nombreArticulo', 'etapa', 'comprobante'];
+  
+  displayedColumns: string[] = ['select', 'id', 'codComprobante', 'fechaAlta', 'cantArticulos'];
   selection = new SelectionModel<any>(true, []);
   dataSource2: any;
 
-  idLote: number = null;
+  idOrdenDist: number = null;
   lote: string = null;
   nombreLote: string = null;
   busqueda: string = "";
@@ -62,8 +54,8 @@ export class VerOrdenDistribucionComponent implements OnInit {
   mensaje: string;
   titulo: string;
   editLote: boolean;
+  mostrarRemitos: boolean = false;
   
-
   //filtroTipos: any;
   selectedTipo: any = 0;
   
@@ -91,7 +83,7 @@ export class VerOrdenDistribucionComponent implements OnInit {
   pickerLoteHasta: any   = null;
 
 
-  body: BodyDetalle ={
+  /* body: BodyDetalle ={
     idTipo      : null,
     idTurno     : null,
     idOrigen    : null,
@@ -100,8 +92,8 @@ export class VerOrdenDistribucionComponent implements OnInit {
     idLocalidad : null,
     desdePedido : null,
     hastaPedido : null,
-    idLote        : null
-  };
+    idOrdenDist : null
+  }; */
   
   productos: any [] = [];
   loteActual: any = {};
@@ -113,22 +105,18 @@ export class VerOrdenDistribucionComponent implements OnInit {
     private _activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
-    //console.log("ver-lote component");
     this.editLote = false;
-    //this.nombreLote = "Nombre lote";
-    //this.loteActual = lote;
+
     this._activatedRoute.params.subscribe( params => {
-      //console.log( params['id'] );
-      this.idLote = params['id'];
-      this.getLote( params['id'] );
+      this.idOrdenDist = params['id'];
+      //this.getLote( params['id'] );
       console.log("id lote -> ", params['id']);
-      this.getArticulosDeLote( params['id'] );
+      //this.getArticulosDeLote( params['id'] );
     });
   }
   
-  getArticulosDeLote(idLote: number){
-    this.body.idLote = idLote;
-    //this.dataSource2 = ELEMENT_DATA;
+  /* getRemitosDeOrdenDistribucion (idOrdenDist: number){
+    //this.body.idOrdenDist = idOrdenDist;
     this._verOrdenDistribucion.getArticulosDeLote( this.body, this.busqueda, this.columna, this.order ) .subscribe( data => {
       this.dataSource2 = data.datos;
 
@@ -150,14 +138,14 @@ export class VerOrdenDistribucionComponent implements OnInit {
         }
       }
     });
-  }
+  } */
 
-  getLote(idLote: number){                                              //Propuesta de getLote PARA OBTENER Y MODIFICAR EL NOMBRE DE LOTE  
-    this._verOrdenDistribucion.getLote( idLote ) .subscribe( data => {
+  /* getLote(idOrdenDist: number){                                              //Propuesta de getLote PARA OBTENER Y MODIFICAR EL NOMBRE DE LOTE  
+    this._verOrdenDistribucion.getLote( idOrdenDist ) .subscribe( data => {
       console.log(data);
       this.loteActual = data;
       this.nombreLote = this.loteActual.nombre;
-      this.idLote = this.loteActual.idLote;
+      this.idOrdenDist = this.loteActual.idOrdenDist;
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
@@ -175,9 +163,9 @@ export class VerOrdenDistribucionComponent implements OnInit {
         }
       }
     });
-  }
+  } */
 
-  editarLote(){
+  editarOrden(){
     this.editLote = true;
   }
 
@@ -190,7 +178,7 @@ export class VerOrdenDistribucionComponent implements OnInit {
     }
     this.editLote = false;
 
-    this._verOrdenDistribucion.updateNombreLote(this.loteActual.nombreLote, this.loteActual.idLote) .subscribe (data =>  {
+    this._verOrdenDistribucion.updateNombreLote(this.loteActual.nombreLote, this.loteActual.idOrdenDist) .subscribe (data =>  {
 
     },
     (err: HttpErrorResponse) => {
@@ -214,7 +202,7 @@ export class VerOrdenDistribucionComponent implements OnInit {
   confirmacionBorrar() {
     const dialogRef = this._dialog.open( ModalConfirmacionBorrarComponent, { 
       data: {
-        id: this.loteActual.idLote,
+        id: this.loteActual.idOrdenDist,
         nombre: this.nombreLote,
         /* codigoArticulo: this.codigoArticulo,
         codigoDeBarras: codigoDeBarras, 
@@ -224,14 +212,72 @@ export class VerOrdenDistribucionComponent implements OnInit {
     dialogRef.afterClosed()
       .subscribe(result => {
         if ( result )
-          this.eliminarLote()
+          this.eliminarOrdenDeDistribucion()
       }); 
   }
 
-  eliminarLote(){
-    console.log("se eliminará el lote -> ", this.idLote );
-    this._verOrdenDistribucion.eliminarLote( this.idLote ) .subscribe( data => {
-      console.log("se eliminará el lote -> ", this.idLote );
+  agregarRemito(){
+    this.mostrarRemitos = !this.mostrarRemitos;
+    this.getAllRemitosSinDistribucion();
+  }
+
+  getAllRemitosSinDistribucion( ){
+    this._verOrdenDistribucion.getRemitosSinDistribucion( this.page, this.size, this.columna, this.order ) .subscribe( data => {
+      console.log(data);
+      console.log(data.totalRegistros);
+      this.dataSource2 = data.datos;
+      this.length = data.totalRegistros;
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
+        } else {
+          let titulo = 'Error al listar';
+          let mensaje = err.error.message.toString();
+          this.mostrarError(errStatus, titulo, mensaje);
+        }
+      }
+    });
+  }
+  
+  addRemitosAorden( ){
+    localStorage.setItem('Orden',JSON.stringify(this.selection));
+
+    let body ={
+      "listaId" : this.selection
+    }
+    console.log(body);
+    this._verOrdenDistribucion.addRemitosAorden( body, this.idOrdenDist ) .subscribe( data => {
+      console.log("remitos añadidos");
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
+        } else {
+          let titulo = 'Error al agregar remitos a la orden';
+          let mensaje = err.error.message.toString();
+          this.mostrarError(errStatus, titulo, mensaje);
+        }
+      }
+    });
+  }
+
+  eliminarOrdenDeDistribucion(){
+    console.log("se eliminará el lote -> ", this.idOrdenDist );
+    this._verOrdenDistribucion.eliminarOrdenDeDistribucion( this.idOrdenDist ) .subscribe( data => {
+      console.log("se eliminará el lote -> ", this.idOrdenDist );
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
@@ -249,23 +295,21 @@ export class VerOrdenDistribucionComponent implements OnInit {
         }
       }
     }); 
-    let ruta = `apps/lotes/lista-lotes`;
+    let ruta = `apps/distribucion/ordenes-distribucion`;
     this._router.navigate([ruta]);
   }
 
-  
-
-  sacarDelLote(){
-    let listaIdPedidoDetalle: Array<number> = new Array<number>();
+  sacarDeLaOrden(){
+    let listaIdRemitos: Array<number> = new Array<number>();
 
     for (let entry of this.selection.selected) {
-      listaIdPedidoDetalle.push(entry.id);
+      listaIdRemitos.push(entry.id);
     }
-    console.log(listaIdPedidoDetalle);
+    console.log(listaIdRemitos);
     
-    this._verOrdenDistribucion.postEliminarArticuloDeLote(listaIdPedidoDetalle).subscribe(params => {
+    this._verOrdenDistribucion.postEliminarArticuloDeLote( listaIdRemitos ).subscribe(params => {
       console.log("termino Ok");
-      this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
+      //this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
@@ -283,10 +327,10 @@ export class VerOrdenDistribucionComponent implements OnInit {
         }
       }
     });
-    this.getArticulosDeLote(this.idLote);
+    //this.getRemitosDeOrdenDistribucion(this.idOrdenDist);
   }
 
-  getDetalle(busqueda, page, size, columna, order){
+ /*getDetalle(busqueda, page, size, columna, order){
     let idTipo      :number =null;
     let idTurno     :number =null;
     let idOrigen    :number =null;
@@ -374,7 +418,7 @@ export class VerOrdenDistribucionComponent implements OnInit {
         }
       }
     );
-  }
+  } */
 
   @Debounce(1000)  
   searchCbte() {
@@ -383,7 +427,7 @@ export class VerOrdenDistribucionComponent implements OnInit {
     this.page = 0;
     this.columna = 'id';
 
-    this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
+    //this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
   }
 
   mostrarError(errStatus, titulo, mensaje){
@@ -406,24 +450,6 @@ export class VerOrdenDistribucionComponent implements OnInit {
             this._router.navigate(['']);
           }
       });
-  }
-
-  imprimirCupa(){
-
-    let application_name = "Favalogyc";
-    let permission_name = "Impresion_CUPA"
-
-    // let res = await this._usuarioService.checkPermision(application_name, permission_name);
-    console.log('component')
-    // console.log(res)
-    // if (res === false){
-    //   this.mostrarError(1, 'Error de Permisos', `Usted no tiene permisos para realizar la acción: ${permission_name}.`);
-    // } else {
-      if(localStorage.getItem('ImpresoraCUPA')){
-        this.imprimir();
-      } else {
-        this.seleccionarImpresora()
-      }
   }
 
   resetFiltros(){
@@ -449,33 +475,15 @@ export class VerOrdenDistribucionComponent implements OnInit {
     this.buscarCbteInput.nativeElement.value = '';
   }
 
-  seleccionarImpresora(){
-    let dialogRef = this._dialog.open(VerImpresorasComponent, {
-      data: {
-        pedidos: this.selection,
-        impresora: 'ImpresoraCUPA'
-      }
-    });
-    dialogRef.afterClosed()
-      .subscribe(result => {
-        if(localStorage.getItem('ImpresoraCUPA')){
-          this.imprimir();
-        } else {
-          dialogRef.close();
-          this.seleccionarImpresora();
-        }
-      });
-  }
-
-  imprimir(){
+  /* imprimir(){
     let impresora = localStorage.getItem('ImpresoraCUPA');
 
-    this._verOrdenDistribucion.imprimir(this.idLote,impresora).subscribe(data => {
+    this._verOrdenDistribucion.imprimir(this.idOrdenDist,impresora).subscribe(data => {
       
       let titulo = 'Estado de impresión';
       let mensaje = "Completado correctamente";
       this.mostrarError(-1, titulo, mensaje);
-      this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
+      //this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
@@ -493,7 +501,7 @@ export class VerOrdenDistribucionComponent implements OnInit {
         }
       }
     });
-  }
+  } */
   
   sortData( event ) {
       
@@ -503,7 +511,7 @@ export class VerOrdenDistribucionComponent implements OnInit {
     if (event.direction !== "")
         this.order = event.direction;
     
-    this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
+    //this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
   }
 
   isAllSelected() {

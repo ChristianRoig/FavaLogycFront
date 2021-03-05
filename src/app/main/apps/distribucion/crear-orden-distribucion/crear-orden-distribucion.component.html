@@ -1,4 +1,4 @@
-<app-plantilla-fondo-simple titulo='Crear Orden a Distribuir'>
+<app-plantilla-fondo-simple titulo='Crear Orden de Distribucion'>
 
     <!-- CONTENIDO -->
     <div contenido>
@@ -15,13 +15,13 @@
                             <mat-form-field appearance="outline" class="inputBuscarLote">
                                 <mat-label>Código de Artículo o Comprobante</mat-label>
                                 <!-- (keyup)="searchCbte()" -->
-                                <input #buscarCbte class="text-uppercase" matInput value="" placeholder="Buscar Cód. Artículo o comprobante">
+                                <input #buscarOrden class="text-uppercase" matInput value="" placeholder="Buscar Cód. Artículo o comprobante">
                                 <mat-icon matSuffix>search</mat-icon>
                             </mat-form-field>
 
                             <div class="botonesBusqueda">
 
-                                <button (click)="crearOrdenDeDistribucion()" mat-raised-button color="primary" [matBadge]="selection.selected.length" [disabled]="selection.selected.length===0" matBadgeColor="warn">
+                                <button (click)="crearOrdenDeDistribucion()" class="btn" mat-raised-button color="primary" [matBadge]="selection.selected.length" [disabled]="selection.selected.length===0" matBadgeColor="warn">
                                     Crear orden de distribución
                                 </button>
                             </div>

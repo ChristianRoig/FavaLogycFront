@@ -81,7 +81,7 @@ export class VerOrdenDistribucionService {
     return this._httpClient.post(ruta, {headers: headers});
   }
 
-  eliminarLote( idLote ): Observable<any> {
+  eliminarOrdenDeDistribucion( idOrden ): Observable<any> {
 
     let headers = new HttpHeaders({
         "Content-Type": "application/json"
@@ -89,11 +89,11 @@ export class VerOrdenDistribucionService {
 
     let body= {}
     
-    let ruta = `${BASE_URL}pedidos/pedidolote/${ idLote }`;
+    let ruta = `${BASE_URL}pedidos/distribucion/${ idOrden }`;
 
     //return this._httpClient.delete(ruta);
     return this._httpClient.delete(ruta, {headers: headers});
-}
+  }
 
   updateNombreLote(nombre, idLote){
     
@@ -107,6 +107,22 @@ export class VerOrdenDistribucionService {
 
     let ruta = `${BASE_URL}pedidos/pedidolote/lote/${ idLote }`;
     return this._httpClient.put(ruta, body,{headers: headers});
+  }
+  
+  addRemitosAorden( body ,idOrden ){
+    
+    let headers = new HttpHeaders({
+      "Content-Type": "application/json"
+    });
+
+    let ruta = `${BASE_URL}pedidos/distribucion/${ idOrden }`;
+    return this._httpClient.put(ruta, body,{headers: headers});
+  }
+
+  getRemitosSinDistribucion(page, size, columna, order): Observable<any>{  
+        
+    let ruta = `${ BASE_URL }pedidos/pedidocbte/remito/a-distribuir/${ page }/${ size }/${ columna }/${ order }`;
+    return this._httpClient.get(ruta);
   }
 
 }

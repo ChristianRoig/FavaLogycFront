@@ -12,7 +12,7 @@
 
                         <div fxLayout="row">
 
-                            <mat-form-field appearance="outline" fxFlex="30%" class="ml-4 mr-4">
+                            <mat-form-field appearance="outline" fxFlex="15%" class="ml-4 mr-4">
                                 <mat-label>{{ filtroTipos ? 'Tipos' : 'Cargando...'}}</mat-label>
                                 <select matNativeControl (change)="selectTipo($event)" [disabled]="!filtroTipos">
                                     <option *ngFor="let tipo of filtroTipos" [value]="tipo.id"
@@ -26,14 +26,14 @@
                                 <input #buscarPuntoVenta (keyup)="searchPuntoVenta()" maxlength="6" value="B00074" class="text-uppercase" matInput placeholder="Nombre del Lote">
                             </mat-form-field>
 
-                            <mat-form-field appearance="outline" fxFlex="35%" class="ml-4 mr-4 input">
+                            <mat-form-field appearance="outline" fxFlex="15%" class="ml-4 mr-4 input">
                                 <mat-label>Comprobante</mat-label>
                                 <!-- value="00024195" -->
                                 <input #buscarCbte (keyup)="searchCbte()" maxlength="8" matInput value="00031378" class="text-uppercase" placeholder="Nombre del Lote">
                             </mat-form-field>
 
-                            <div appearance="outline" fxFlex="20%" class="m-12">
-                                <button mat-stroked-button (click)="buscar()" [disabled]="!this.puntoVenta || !this.cbte" color="accent" class="fuse-white">
+                            <div appearance="outline" fxFlex="20%" class="ml-12">
+                                <button mat-stroked-button (click)="buscar()" [disabled]="!this.puntoVenta || !this.cbte" color="accent" class="fuse-white btnBuscar">
                                     <mat-icon>search</mat-icon>
                                     Buscar
                                 </button>

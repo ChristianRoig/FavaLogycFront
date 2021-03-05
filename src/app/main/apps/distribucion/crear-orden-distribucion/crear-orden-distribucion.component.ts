@@ -46,7 +46,6 @@ export class CrearOrdenDistribucionComponent implements OnInit {
   
   toAdd = new Array<number>();
 
-
   /* body: BodyDetalle = {
     idTipo    : null,
     idDarsena : null,
@@ -101,7 +100,6 @@ export class CrearOrdenDistribucionComponent implements OnInit {
         mensaje: mensaje
       } 
     });
-
     dialogRef.afterClosed()
       .subscribe( () => {
           if (errStatus != 0) {
@@ -144,7 +142,6 @@ export class CrearOrdenDistribucionComponent implements OnInit {
         }
       }
     });
-    
   }
 
 

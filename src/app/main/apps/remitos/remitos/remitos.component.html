@@ -58,7 +58,6 @@
 
 
                     <div fxLayout="row">
-                        <div class="h2 m-24">Pedidos</div>
 
                         <mat-form-field appearance="outline" style="width: 75%;" class="mt-8 mx-12">
                             <mat-label>Código de Artículo o Comprobante</mat-label>
@@ -66,12 +65,10 @@
                             <mat-icon matSuffix>search</mat-icon>
                         </mat-form-field>
 
-                        <div class="m-24">
+                        <button (click)="remitir()" class="btn" mat-raised-button color="primary" [matBadge]="selection.selected.length" [disabled]="selection.selected.length===0" matBadgeColor="warn">
+                            Remitir
+                        </button>
 
-                            <button (click)="remitir()" mat-raised-button color="primary" [matBadge]="selection.selected.length" [disabled]="selection.selected.length===0" matBadgeColor="warn">
-                                Remitir
-                            </button>
-                        </div>
                     </div>
 
                 </form>

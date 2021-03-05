@@ -86,8 +86,6 @@ export class LoteAgregarLoteComponent implements OnInit {
   searchNombreLote() {
 
     this.nombreLote = this.buscarNombreLote.nativeElement.value;
-
-
   }
 
   mostrarError(errStatus, titulo, mensaje){

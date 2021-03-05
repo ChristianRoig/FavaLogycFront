@@ -1,3 +1,16 @@
-.input {
-    width: 80px;
+.btnBuscar {
+    height: 40px;
+    margin-top: 15px;
+}
+
+@media (max-width: 600px) {
+    .inputTipo {
+        display: flex;
+        width: 40px;
+        margin-right: 170px;
+    }
+    .btnBuscar {
+        height: 60px;
+        margin-top: 4px;
+    }
 }

@@ -105,8 +105,7 @@
     @media (max-width: 768px) {
         .btnBuscar {
             height: 60px;
-            /* margin-bottom: 27px; */
-            width: 150px;
+            width: 120px;
             padding-left: 5px;
             padding-right: 5px;
         }
@@ -124,5 +123,11 @@
         }
         .selectMostrar {
             width: 200px;
+        }
+        .btnToggle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-left: 10px;
         }
     }
