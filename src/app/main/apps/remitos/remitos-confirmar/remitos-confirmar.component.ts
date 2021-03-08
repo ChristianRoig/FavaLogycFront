@@ -220,7 +220,8 @@ export class RemitosConfirmarComponent implements OnInit {
   }
 
   remitir(){
-    alert("remitir");
+    console.log(this.dataSource2);
+    //alert("remitir");
   }
 
   volver(){

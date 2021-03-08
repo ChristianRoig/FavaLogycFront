@@ -34,8 +34,8 @@ export class VerOrdenDistribucionService {
    * Devuelve Partes de Artículos
    * @returns {Observable} Observable
    */
-  getLote(loteId: number): Observable<any>{
-      let ruta = `${BASE_URL}pedidos/pedidolote/${ loteId }`;
+  getRemitosDeOrdenDistribucion( idOrdenDist ): Observable<any>{
+      let ruta = `${BASE_URL}pedidos/distribucion/${ idOrdenDist }`;
       return this._httpClient.get(ruta);
   }
 
@@ -54,21 +54,6 @@ export class VerOrdenDistribucionService {
       console.log(listaIdPedidoDetalle);
 
       return this._httpClient.post(ruta, body, {headers: headers});
-  }
-
-  getArticulosDeLote(body: BodyDetalle, busqueda, columna, order): Observable<any>{
-        
-    let headers = new HttpHeaders({
-        "Content-Type": "application/json"
-    });
-  
-    let buscar:string = '';
-    if (busqueda !== '')
-        buscar = `/${busqueda}`
-  
-    let ruta = `${BASE_URL}pedidos/pedidodetalle/pedidolote/porcomprobanteoarticulo${buscar}/${columna}/${order}`;
-    
-    return this._httpClient.post(ruta, body, {headers: headers});
   }
 
   imprimir(lote, impresora): Observable<any>{
@@ -109,14 +94,18 @@ export class VerOrdenDistribucionService {
     return this._httpClient.put(ruta, body,{headers: headers});
   }
   
-  addRemitosAorden( body ,idOrden ){
+  addRemitosAorden( idRemito ,idOrden ){
     
     let headers = new HttpHeaders({
       "Content-Type": "application/json"
     });
 
+    let body = {
+      "listaId" : [ idRemito ]
+    }
+
     let ruta = `${BASE_URL}pedidos/distribucion/${ idOrden }`;
-    return this._httpClient.put(ruta, body,{headers: headers});
+    return this._httpClient.post(ruta, body, {headers: headers});
   }
 
   getRemitosSinDistribucion(page, size, columna, order): Observable<any>{  

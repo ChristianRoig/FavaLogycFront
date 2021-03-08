@@ -12,10 +12,10 @@
 
                 <div *ngIf="this.editLote" class="input-group mb-3">
                     <input #nombreLoteInput type="text" class="nombreLote" placeholder="({{ this.nombreLote }})  -  Inserte el nuevo nombre del lote">
-                    <button mat-raised-button class="btn btn-outline-secondary" color="light" (click)="actualizarNombreLote(nombreLoteInput.value)" type="button" id="button-addon1">Modificar</button>
+                    <button mat-raised-button class="btn btn-outline-secondary" color="light" (click)="actualizarNombreOrden(nombreLoteInput.value)" type="button" id="button-addon1">Modificar</button>
                 </div>
 
-                <button mat-raised-button color="light" class="mt-22" (click)="eliminarOrdenDeDistribucion()">Eliminar lote</button>
+                <button mat-raised-button color="light" class="mt-22" (click)="eliminarOrdenDeDistribucion()">Eliminar orden</button>
                 <!-- </div> -->
             </div>
             <!-- SECCION ARTICULOS -->
@@ -32,16 +32,16 @@
                         </mat-form-field>
 
                         <div class="botonesBusqueda">
-                            <button class="btn" mat-raised-button color="primary" [matBadge]="selection.selected.length" [matBadgeHidden]="selection.selected.length===0" matBadgeColor="warn" [disabled]="selection.selected.length===0">
+                            <button class="btn" (click)="sacarRemitoDeOrden()" mat-raised-button color="primary" [matBadge]="selection.selected.length" [matBadgeHidden]="selection.selected.length===0" matBadgeColor="warn" [disabled]="selection.selected.length===0">
                                 Eliminar Selec.
                             </button>
-                            <!-- (click)="sacarDelLote()" -->
 
                             <button (click)="editarOrden()" class="btn" mat-raised-button color="primary">
-                                    Editar Orden 
+                                Editar Orden 
                             </button>
-                            <button (ngModel)="agregarRemito()" class="btn" mat-raised-button color="primary">
-                                    Agregar Remitos 
+
+                            <button [(ngModel)]="mostrarRemitos" (click)="activarAgregarRemitos()" class="btn" mat-raised-button color="primary">
+                                {{ textoBtnAddRemitos }}
                             </button>
                         </div>
                     </div>
@@ -73,7 +73,7 @@
                     </mat-checkbox>
                 </td>
             </ng-container>
-
+            <!-- Id	Codigo Comprobante	Nro Comprobante	Fecha Alta	Cant Articulos	Seleccionar -->
             <ng-container matColumnDef="id">
                 <th mat-header-cell mat-sort-header="id" *matHeaderCellDef> Id </th>
                 <td mat-cell *matCellDef="let remito"> {{ remito.id }} </td>
@@ -81,7 +81,7 @@
 
             <ng-container matColumnDef="codComprobante">
                 <th mat-header-cell mat-sort-header="nombre" *matHeaderCellDef> Codigo Comprobante </th>
-                <td mat-cell *matCellDef="let remito"> {{ remito.pedidoTipoCbte.codigoCbte }} </td>
+                <td mat-cell *matCellDef="let remito"> REM </td>
             </ng-container>
 
             <ng-container matColumnDef="nroComprobante">
@@ -97,6 +97,14 @@
             <ng-container matColumnDef="cantArticulos">
                 <th mat-header-cell mat-sort-header="cantArticulos" *matHeaderCellDef> Cant Articulos </th>
                 <td mat-cell class="example-button-row" *matCellDef="let remito">{{ remito.pedidoDetalles.length }} </td>
+            </ng-container>
+
+            <ng-container *ngIf="this.mostrarRemitos == true" matColumnDef="accion">
+                <th mat-header-cell *matHeaderCellDef> Acción </th>
+                <td mat-cell class="example-button-row" *matCellDef="let remito">
+                    <!-- [(ngModel)]="mostrarRemitos" -->
+                    <button mat-stroked-button color="accent" (click)="addRemitosAorden(remito)"> Agregar </button>
+                </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
