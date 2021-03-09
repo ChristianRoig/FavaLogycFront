@@ -305,8 +305,6 @@ export class VerOrdenDistribucionComponent implements OnInit {
     this.getRemitosDeOrdenDistribucion( this.idOrdenDist );
   }
 
-
-
   mostrarError(errStatus, titulo, mensaje){
     const dialogRef = this._dialog.open( ModalErrorComponent, { 
       data: {
@@ -318,11 +316,7 @@ export class VerOrdenDistribucionComponent implements OnInit {
     dialogRef.afterClosed()
       .subscribe( () => {
           if (errStatus != 0) {
-
-            //this.resetFiltros();
-            // this.getfiltros();
-            // this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
-            
+            this.getRemitosDeOrdenDistribucion( this.idOrdenDist );
           } else {
             this._router.navigate(['']);
           }
