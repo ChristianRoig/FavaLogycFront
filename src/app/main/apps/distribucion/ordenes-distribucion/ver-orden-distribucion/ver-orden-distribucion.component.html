@@ -8,7 +8,7 @@
             <div fxLayout="row" class="titular">
                 <!-- LOTE -->
                 <!-- <div fxFlex="100" class="fuse-card p-24 mr-8"> -->
-                <h1 class="colorText" *ngIf="!this.editLote"> {{ this.nombreLote }} </h1>
+                <h1 class="colorText" *ngIf="!this.editLote"> Orden {{ this.idOrdenDist }}</h1>
 
                 <div *ngIf="this.editLote" class="input-group mb-3">
                     <input #nombreLoteInput type="text" class="nombreLote" placeholder="({{ this.nombreLote }})  -  Inserte el nuevo nombre del lote">
@@ -26,19 +26,20 @@
 
                     <div class="controlesBusqueda">
                         <mat-form-field appearance="outline" class="inputBusqueda">
-                            <mat-label>Código de Artículo o Comprobante</mat-label>
-                            <input #buscarCbte class="text-uppercase" (keyup)="searchCbte()" matInput value="" placeholder="Buscar Cód. Artículo o comprobante">
+                            <mat-label>Buscar Remito</mat-label>
+                            <input #buscarCbte class="text-uppercase" (keyup)="searchRemito()" matInput value="" placeholder="Buscar remito por id">
                             <mat-icon matSuffix>search</mat-icon>
                         </mat-form-field>
 
                         <div class="botonesBusqueda">
-                            <button class="btn" (click)="sacarRemitoDeOrden()" mat-raised-button color="primary" [matBadge]="selection.selected.length" [matBadgeHidden]="selection.selected.length===0" matBadgeColor="warn" [disabled]="selection.selected.length===0">
+                            <button (click)="getRemitoPorId()" class="btn" mat-raised-button color="primary">
+                                Buscar 
+                            </button>
+
+                            <button class="btn" (click)="eliminarRemitoDeOrden()" mat-raised-button color="primary" [matBadge]="selection.selected.length" [matBadgeHidden]="selection.selected.length===0" matBadgeColor="warn" [disabled]="selection.selected.length===0">
                                 Eliminar Selec.
                             </button>
 
-                            <button (click)="editarOrden()" class="btn" mat-raised-button color="primary">
-                                Editar Orden 
-                            </button>
 
                             <button [(ngModel)]="mostrarRemitos" (click)="activarAgregarRemitos()" class="btn" mat-raised-button color="primary">
                                 {{ textoBtnAddRemitos }}

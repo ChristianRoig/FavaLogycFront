@@ -1,67 +1,22 @@
 import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
-import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { Debounce } from 'app/shared/decorators/debounce';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 import { HttpErrorResponse } from '@angular/common/http';
-import { element } from 'protractor';
-import { forEach } from 'lodash';
 
-//import { BuscarLoteComponent } from './buscar-lote/buscar-lote.component';
-import { VerImpresorasComponent } from './ver-impresoras/ver-impresoras.component';
-import { VerOrdenDistribucionComponent } from './ver-orden-distribucion/ver-orden-distribucion.component';
+//fuse
+import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 
 //services
-import { VerOrdenDistribucionService } from './ver-orden-distribucion/ver-orden-distribucion.service';
-import { UsuarioService } from 'app/services/usuario.service';
 import { OrdenesDistribucionService } from './ordenes-distribucion.service';
-
-/* export interface Articulos {
-
-  Id: number;
-  Tipo: string;
-  CodigoArticulo: string;
-  Nombre: string;
-  Comprobante: string;
-  FechaEntrega: string;
-  Prov: string;
-  Loc: string;
-  Estado: string;
-  Etapa: string;
-  Lote: number;
-} */
-
-/* interface Estados{
-  valor: string;
-  vista: string;
-} */
-
 
 export interface Orden {
   id: number;
   Nombre: string;
   FechaAlta: string;
 }
-
-/* export interface BodyDetalle{
-
-  idTipo : number;
-  idTurno : number;
-  idOrigen : number;
-  idEtapa : number;
-  idProvincia : number;
-  idLocalidad : number;
-  desdePedido : string;
-  hastaPedido : string;
-  idLote : number;
-} */
-/* export interface BodyDetalleFecha{
-
-  desdeLote : string;
-  hastaLote : string;
-} */
 
 @Component({  
   selector: 'app-ordenes-distribucion',  
@@ -89,22 +44,8 @@ export class OrdenesDistribucionComponent implements OnInit {
   order: string = 'asc';
 
   mensaje: string;
-  //arrowBack: boolean;
   filtroFechas: boolean;
   filtroInactivos: boolean;
-
-/*   body: BodyDetalle ={
-    idTipo      : 1,
-    idTurno     : null,
-    idOrigen    : null,
-    idEtapa     : null,
-    idProvincia : 1,
-    idLocalidad : null,
-    desdePedido : null,
-    hastaPedido : null,
-    idLote      : null
-  }; */
-
 
   constructor(private _router: Router, 
               private _fuseSidebarService: FuseSidebarService, 
@@ -115,21 +56,15 @@ export class OrdenesDistribucionComponent implements OnInit {
   ngOnInit(): void {
     
     this.getAllOrdenes();
-    
-    //this.resetFiltros();    
-    //this.getfiltros();
-
-    //this.filtroFechas = false;
-    //this.filtroInactivos = false;
-    //this.arrowBack = false;
-    //this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
   }
   
   buscarOrdenPorId() {
+    let resultado: any = [];
     this._ordenesDistribucionService.getOrdenById( this.idOrdenDist ).subscribe( data => {
         console.log(data);
-        //this.dataSource2 = data.datos;
-        //this.length = data.totalRegistros;
+        resultado.push(data);
+        this.dataSource2 = resultado;
+        this.length = resultado.length;
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
@@ -173,7 +108,7 @@ export class OrdenesDistribucionComponent implements OnInit {
     }); 
   }
 
-  eliminarOrden() {
+  /* eliminarOrden() {
     this._ordenesDistribucionService.eliminarOrden( this.idOrdenDist ).subscribe( data => {
         console.log(data);
         //this.dataSource2 = data.datos;
@@ -195,13 +130,15 @@ export class OrdenesDistribucionComponent implements OnInit {
           }
         }
     }); 
-  }
+  } */
 
-  searchLOrden() {
-    this.orden = this.buscarOrdenInput.nativeElement.value;
-    if( this.orden === '' || this.orden ==null ){
-      this.orden = null;
-      //this.getOrdenes( this.page, this.size );
+  @Debounce(1000)
+  searchOrden() {
+    this.idOrdenDist = this.buscarOrdenInput.nativeElement.value;
+    console.log(this.idOrdenDist);
+    if( this.idOrdenDist === 0 || this.idOrdenDist === null){
+      this.idOrdenDist = null;
+      this.getAllOrdenes();
     }
   }
 
@@ -237,36 +174,11 @@ export class OrdenesDistribucionComponent implements OnInit {
     dialogRef.afterClosed()
       .subscribe( () => {
           if (errStatus != 0) {
-
-            //this.resetFiltros();
-            // this.getfiltros();
-            // this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
-            
+            this.getAllOrdenes;       
           } else {
             this._router.navigate(['']);
           }
       });
-  }
-
-  @Debounce(1000)  
-  searchCbte() {
-
-    this.busqueda = this.buscarOrdenInput.nativeElement.value;
-    this.page = 0;
-    this.columna = 'id';
-
-    //this.getOrdenes(this.busqueda, this.page, this.size, this.columna, this.order);
-  }
-
-  consultar(id){
-    let ruta = `apps/pedidos/administracion/visualizacion/${id}`;
-    this._router.navigate([ruta]);
-  }
-
-  anular(id){
-    let ruta = `apps/pedidos/administracion/anular/${id}`;
-    console.log(ruta);
-    this._router.navigate([ruta]);
   }
 
   crearOrden() {
@@ -305,9 +217,8 @@ export class OrdenesDistribucionComponent implements OnInit {
    *
    * @param key
    */
-  toggleSidebarOpen(key): void
-  {
-      this._fuseSidebarService.getSidebar(key).toggleOpen();
+  toggleSidebarOpen(key): void {
+    this._fuseSidebarService.getSidebar(key).toggleOpen();
   }  
 
   sortData( event ) {
@@ -317,19 +228,19 @@ export class OrdenesDistribucionComponent implements OnInit {
     if (event.direction !== "")
         this.order = event.direction;
     
-    //this.getOrdenes(this.busqueda, this.page, this.size, this.columna, this.order);
+    this.getAllOrdenes() 
   }
 
-  /* redirecCrearLote(){
-    let ruta = `apps/lotes/crear-lote`;
+  redirecCrearOrden(){
+    let ruta = `apps/distribucion/crear-orden-distribucion`;
     this._router.navigate([ruta]);
-  } */
+  }
 
   paginar(e: any){
     console.log(e);
     this.page = e.pageIndex;
     this.size = e.pageSize;
     
-    //this.getOrdenes( this.page, this.size ); 
+    this.getAllOrdenes() 
   }
 }

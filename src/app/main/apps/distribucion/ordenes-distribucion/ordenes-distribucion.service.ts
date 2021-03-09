@@ -40,10 +40,10 @@ export class OrdenesDistribucionService
         return this._httpClient.get(ruta);
     }
     
-    eliminarOrden ( idOrdenDist: number ): Observable<any>{    
+    /* eliminarOrden ( idOrdenDist: number ): Observable<any>{    
         
         let ruta = `${ BASE_URL }pedidos/distribucion/${ idOrdenDist }`;
         return this._httpClient.get(ruta);
-    }
+    } */
 
 }

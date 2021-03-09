@@ -39,31 +39,23 @@ export class VerOrdenDistribucionService {
       return this._httpClient.get(ruta);
   }
 
-  postEliminarArticuloDeLote( listaIdPedidoDetalle ): Observable<any>{
-
-      let headers = new HttpHeaders({
-          "Content-Type": "application/json"
-      });
-
-      let body= {
-          listaIdPedidoDetalle: listaIdPedidoDetalle
-      }
-
-      let ruta = `${BASE_URL}pedidos/pedidolote/lote/detalle/`;
-
-      console.log(listaIdPedidoDetalle);
-
-      return this._httpClient.post(ruta, body, {headers: headers});
-  }
-
-  imprimir(lote, impresora): Observable<any>{
+  postEliminarRemitoDeOrden( listaIdRemitos ): Observable<any>{
 
     let headers = new HttpHeaders({
         "Content-Type": "application/json"
     });
-    
-    let ruta = `${BASE_URL}pedidos/pedidolote/lote/imprimir/cupa/${lote}/${impresora}`;
-    return this._httpClient.post(ruta, {headers: headers});
+
+    let body = { listaId : [ listaIdRemitos ] } 
+
+    let ruta = `${BASE_URL}pedidos/distribucion/remito`;
+
+    //return this._httpClient.delete(ruta, body,{ headers: headers });
+    return this._httpClient.post(ruta, body,{ headers: headers });
+  }
+
+  getRemitoPorId( idRemito: number ){
+    let ruta = `${BASE_URL}pedidos/pedidocbte/remito/por-idremito/${ idRemito }`;
+      return this._httpClient.get(ruta);
   }
 
   eliminarOrdenDeDistribucion( idOrden ): Observable<any> {
@@ -71,12 +63,9 @@ export class VerOrdenDistribucionService {
     let headers = new HttpHeaders({
         "Content-Type": "application/json"
     });
-
-    let body= {}
     
     let ruta = `${BASE_URL}pedidos/distribucion/${ idOrden }`;
 
-    //return this._httpClient.delete(ruta);
     return this._httpClient.delete(ruta, {headers: headers});
   }
 

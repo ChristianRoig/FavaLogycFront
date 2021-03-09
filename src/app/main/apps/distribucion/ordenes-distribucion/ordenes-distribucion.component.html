@@ -4,14 +4,13 @@
 <app-plantilla-fondo-simple titulo='Ordenes de Distribucion'>
     <!-- CONTENIDO -->
     <div contenido>
-        <div class="btnCrearLote">
-            <button mat-raised-button color="light">Crear un lote</button>
-            <!-- (click)="redirecCrearLote()" -->
+        <div class="btnCrear">
+            <button mat-raised-button (click)="redirecCrearOrden()" color="light">Crear orden</button>
         </div>
         <div fxLayout="column">
             <div fxLayout="row" class="content-card pb-4">
                 <div fxFlex="100" class="fuse-card pl-24 pr-24 mr-8">
-                    <ng-container *ngTemplateOutlet="filtrosLote"></ng-container>
+                    <ng-container *ngTemplateOutlet="busquedaOrden"></ng-container>
 
                     <ng-container *ngTemplateOutlet="listaOrdenes"> </ng-container>
                 </div>
@@ -31,111 +30,25 @@
                 <mat-icon>close</mat-icon>
             </button> 
         </span>
-            <span class="p-24 pt-8">                    
-            <ng-container *ngTemplateOutlet="filtros"></ng-container>
-        </span>
             <!-- / FILTRO ARTICULOS -->
         </div>
     </fuse-sidebar>
     <!-- / SIDE BAR -->
 
-    <!-- FILTROS ARTICULOS -->
-    <ng-template #filtros>
-        <form fxLayout="column" name="form">
-            <span fxLayoutAlign="space-between">
-            <div class="h2 mb-24">
-                Filtros por Artículos
-            </div>
-        </span>
-            <mat-form-field appearance="outline">
-                <mat-label>{{ filtroTipos ? 'Tipos ' : 'Cargando... '}}</mat-label>
-                <select matNativeControl (change)="selectTipo($event)" [disabled]="!filtroTipos">
-                <option [value]="0">TODOS</option>
-                <option *ngFor="let tipo of filtroTipos" [value]="tipo.id"
-                    [selected]="selectedTipo === tipo.id"> {{ tipo.nombre }} </option>
-            </select>
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>{{ filtroOrigenes ? 'Origen ' : 'Cargando... '}}</mat-label>
-                <select matNativeControl (change)="selectOrigen($event)" [disabled]="!filtroOrigenes">
-                    <option [value]="0">TODOS</option>
-                    <option *ngFor="let origen of filtroOrigenes" [value]="origen.id"
-                    [selected]="selectedOrigen === origen.id"> {{ origen.nombre }}</option>
-                </select>
-            </mat-form-field>
-            <!-- </div> -->
-
-
-            <div fxLayout="row" *ngIf="this.filtros">
-                <mat-form-field appearance="outline" fxFlex="50" class="mr-4">
-                    <mat-label>Desde</mat-label>
-                    <input matInput [min]="minDateDesdeFiltro" [max]="maxDateDesdeFiltro" [matDatepicker]="pickerFiltroDesde" (dateChange)="addEvent('pickerFiltroDesde ', $event)">
-                    <mat-datepicker-toggle matSuffix [for]="pickerFiltroDesde"></mat-datepicker-toggle>
-                    <mat-datepicker #pickerFiltroDesde></mat-datepicker>
-                </mat-form-field>
-
-                <mat-form-field appearance="outline" fxFlex="50" class="ml-4">
-                    <mat-label>Hasta</mat-label>
-                    <input matInput [min]="minDateHastaFiltro" [max]="maxDateHastaFiltro" [matDatepicker]="pickerFiltroHasta" (dateChange)="addEvent('pickerFiltroHasta ', $event)">
-                    <mat-datepicker-toggle matSuffix [for]="pickerFiltroHasta"></mat-datepicker-toggle>
-                    <mat-datepicker #pickerFiltroHasta></mat-datepicker>
-                </mat-form-field>
-
-            </div>
-
-            <button mat-stroked-button color="accent" (click)="buscar()" class="mt-0">
-            Aplicar Filtros
-        </button>
-        </form>
-    </ng-template>
-    <!-- / FILTROS ARTICULOS -->
-
     <!-- FILTROS LOTE -->
-    <ng-template #filtrosLote>
+    <ng-template #busquedaOrden>
         <div fxLayout="column">
             <div class="controlesBusqueda">
 
-                <mat-form-field appearance="outline" class="inputBuscarLote">
+                <mat-form-field appearance="outline" class="inputBuscar">
                     <mat-label>Orden</mat-label>
-                    <input #buscarOrden (keyup)="searchLote()" matInput value="" placeholder="Buscar lote por nombre">
+                    <input #buscarOrden (keyup)="searchOrden()" matInput value="" placeholder="Buscar orden por id">
                     <mat-icon matSuffix>search</mat-icon>
                 </mat-form-field>
 
                 <div class="botonesBusqueda">
-                    <button (click)="buscarOrdenPorId()" class="btnBuscar" [disabled]="!this.orden" mat-raised-button color="primary">Buscar Orden</button>
-
-                    <div class="btnToggle">
-                        <mat-slide-toggle formcontrolname="hidden" type="button" (click)="activarFechas()" class="mat-slide-toggle"></mat-slide-toggle>
-                        <label class="paddingLeft">Filtros</label>
-                    </div>
+                    <button (click)="buscarOrdenPorId()" class="btnBuscar" [disabled]="!this.idOrdenDist" mat-raised-button color="primary">Buscar Orden</button>
                 </div>
-            </div>
-
-            <div fxLayout="row" class="contenedorFiltros" *ngIf="this.filtroFechas">
-                <div class="fechas">
-                    <mat-form-field appearance="outline" fxFlex="40" class="mr-4">
-                        <mat-label>Fecha desde</mat-label>
-                        <input matInput [min]="minDateDesdeLote" [max]="maxDateDesdeLote" [matDatepicker]="pickerLoteDesde" (dateChange)="addEvent('pickerLoteDesde', $event)">
-                        <mat-datepicker-toggle matSuffix [for]="pickerLoteDesde"></mat-datepicker-toggle>
-                        <mat-datepicker #pickerLoteDesde></mat-datepicker>
-                    </mat-form-field>
-
-                    <mat-form-field appearance="outline" fxFlex="40" class="ml-3">
-                        <mat-label>Fecha hasta</mat-label>
-                        <input matInput [min]="minDateHastaLote" [max]="maxDateHastaLote" [matDatepicker]="pickerLoteHasta" (dateChange)="addEvent('pickerLoteHasta', $event)">
-                        <mat-datepicker-toggle matSuffix [for]="pickerLoteHasta"></mat-datepicker-toggle>
-                        <mat-datepicker #pickerLoteHasta></mat-datepicker>
-                    </mat-form-field>
-                </div>
-
-                <mat-form-field appearance="outline" fxFlex="20" class="ml-4 selectMostrar">
-                    <mat-label>Mostrar</mat-label>
-                    <mat-select [(ngModel)]="selecccionDeEstado" name="food">
-                        <mat-option (click)="getLotesPorEstado( estado.valor )" *ngFor="let estado of estados" [value]="estado.valor">
-                            {{estado.vista}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
 
             </div>
         </div>

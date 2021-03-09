@@ -16,16 +16,13 @@ import { CrearOrdenDistribucionComponent } from './crear-orden-distribucion/crea
 import { OrdenesDistribucionComponent } from './ordenes-distribucion/ordenes-distribucion.component';
 import { VerOrdenDistribucionComponent } from './ordenes-distribucion/ver-orden-distribucion/ver-orden-distribucion.component';
 import { DistribucionConfirmarComponent } from './distribucion-confirmar/distribucion-confirmar.component';
-import { VerImpresorasComponent } from './ordenes-distribucion/ver-impresoras/ver-impresoras.component';
-import { VerCupasComponent } from './ordenes-distribucion/ver-cupas/ver-cupas.component';
 
 //services
 import { CrearOrdenDistribucionService } from './crear-orden-distribucion/crear-orden-distribucion.service';
 import { DistribucionConfirmarService } from './distribucion-confirmar/distribucion-confirmar.service';
 import { OrdenesDistribucionService } from './ordenes-distribucion/ordenes-distribucion.service';
 import { VerOrdenDistribucionService } from './ordenes-distribucion/ver-orden-distribucion/ver-orden-distribucion.service';
-import { VerImpresorasService } from './ordenes-distribucion/ver-impresoras/ver-impresoras.service';
-import { VerCupasService } from './ordenes-distribucion/ver-cupas/ver-cupas.service';
+
 
 const routes: Routes = [
     {
@@ -51,9 +48,7 @@ const routes: Routes = [
         CrearOrdenDistribucionComponent,
         DistribucionConfirmarComponent,
         OrdenesDistribucionComponent,
-        VerOrdenDistribucionComponent,
-        VerCupasComponent,
-        VerImpresorasComponent
+        VerOrdenDistribucionComponent
     ],
     imports     : [
         CommonModule,
@@ -69,9 +64,7 @@ const routes: Routes = [
         CrearOrdenDistribucionService,
         DistribucionConfirmarService,
         OrdenesDistribucionService,
-        VerOrdenDistribucionService,
-        VerImpresorasService,
-        VerCupasService
+        VerOrdenDistribucionService
     ],
     entryComponents: [ MatDialogModule ]
 })

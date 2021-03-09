@@ -26,6 +26,12 @@ export interface PeriodicElement {
   Etapa: string;
   Lote: number;
 }
+export interface BodyRemito {
+  idTransporte: number,
+  idDeposito: number,
+  idTalonario: number,
+  listaIdDetalle: number []
+}
 
 @Component({
   selector: 'app-remitos-confirmar',
@@ -65,7 +71,7 @@ export class RemitosConfirmarComponent implements OnInit {
   nombreLote: string;
 
   constructor(private _router: Router,
-              private _service: RemitosConfirmarService,
+              private _serviceRemitosConfirmar: RemitosConfirmarService,
               private route: ActivatedRoute,
               private _dialog: MatDialog) { }
 
@@ -89,20 +95,23 @@ export class RemitosConfirmarComponent implements OnInit {
 
   selectTransporte(event: Event) {
     this.selectedTransporte = (event.target as HTMLSelectElement).value;
+    console.log(this.selectedTransporte);
   }
-
+  
   selectTalonario(event: Event) {
     this.selectedTalonario = (event.target as HTMLSelectElement).value;
     this.getUltNroTalonario();
+    console.log(this.selectedTalonario);
   }
   
   selectDepositoCarga(event: Event) {
     this.selectedDepositoCarga = (event.target as HTMLSelectElement).value;
+    console.log(this.selectedDepositoCarga);
   }
 
   getfiltros(){
 
-    this._service.getAllDepostitosCarga().subscribe(params => {
+    this._serviceRemitosConfirmar.getAllDepostitosCarga().subscribe(params => {
       this.filtroDepositosCarga = params.datos;
     },
     (err: HttpErrorResponse) => {
@@ -122,7 +131,7 @@ export class RemitosConfirmarComponent implements OnInit {
       }
     })
     
-    this._service.getAllTalonarios().subscribe(params => {
+    this._serviceRemitosConfirmar.getAllTalonarios().subscribe(params => {
       this.filtroTalonarios = params.datos;
       this.proxCbte = '';
     },
@@ -143,7 +152,7 @@ export class RemitosConfirmarComponent implements OnInit {
       }
     })
 
-    this._service.getAllTransportes().subscribe(params => {
+    this._serviceRemitosConfirmar.getAllTransportes().subscribe(params => {
       this.filtroTransportes = params.datos;
     },
     (err: HttpErrorResponse) => {
@@ -221,7 +230,40 @@ export class RemitosConfirmarComponent implements OnInit {
 
   remitir(){
     console.log(this.dataSource2);
-    //alert("remitir");
+    for (let elemento of this.dataSource2){
+      this.toAdd.push(elemento.id);
+    }   
+    let idTransporte = parseInt(this.selectedTransporte, 10);
+    let idTalonario = parseInt(this.selectedTalonario, 10);
+    let idDeposito = parseInt(this.selectedDepositoCarga, 10);
+
+    let body: BodyRemito = {
+      idTransporte: idTransporte,
+      idDeposito: idDeposito,
+      idTalonario: idTalonario,
+      listaIdDetalle: this.toAdd
+    }
+    console.log(body);
+
+    /* this._serviceRemitosConfirmar.generarRemito( body ).subscribe(params => {
+      console.log("entró");
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
+        } else {
+          let titulo = 'Error al crear remito';
+          let mensaje = err.error.message.toString();
+          this.mostrarError(errStatus, titulo, mensaje);
+        }
+      }
+    }); */
   }
 
   volver(){

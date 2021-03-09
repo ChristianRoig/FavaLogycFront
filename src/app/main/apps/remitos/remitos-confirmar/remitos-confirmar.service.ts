@@ -5,6 +5,13 @@ import { environment } from 'environments/environment';
 
 const BASE_URL = environment.server + environment.baseUrl;
 
+export interface BodyRemito {
+    idTransporte: number,
+    idDeposito: number,
+    idTalonario: number,
+    listaIdDetalle: number []
+  }
+
 @Injectable()
 export class RemitosConfirmarService
 {
@@ -36,5 +43,14 @@ export class RemitosConfirmarService
         let ruta = `${BASE_URL}pedidos/talonario/${id}`;
         return this._httpClient.get(ruta);
     }
+    
+    generarRemito( body: BodyRemito ){
 
+        let headers = new HttpHeaders({
+            "Content-Type": "application/json"
+        });
+
+        let ruta = `${BASE_URL}pedidos/remito`;
+        return this._httpClient.post(ruta, body, {headers: headers});
+    }
 }
