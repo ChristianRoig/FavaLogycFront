@@ -15,28 +15,28 @@ import { FuseSidebarModule } from '@fuse/components';
 import { TablaRetractilModule } from 'app/components/tabla-retractil/tabla-retractil.module';
 
 // componentes favalogyc
-import { ControlEnviosComponent } from './control-envios/control-envios.component';
-import { ControlarEnvioComponent } from './controlar-envio/controlar-envio.component';
+import { ControlCargasComponent } from './control-cargas/control-cargas.component';
+import { ControlarCargaComponent } from './controlar-carga/controlar-carga.component';
 
 // servicios favalogyc
-import { ControlEnviosService } from './control-envios/control-envios.service';
-import { ControlEnvioService } from './controlar-envio/controlar-envio.service';
+import { ControlCargasService } from './control-cargas/control-cargas.service';
+import { ControlCargaService } from './controlar-carga/controlar-carga.service';
 
 const routes: Routes = [
     {
         path     : ':modo',
-        component: ControlEnviosComponent
+        component: ControlCargasComponent
     },
     {
         path     : ':modo/:id',
-        component: ControlarEnvioComponent
+        component: ControlarCargaComponent
     }, 
 ];
 
 @NgModule({
     declarations: [
-        ControlEnviosComponent,
-        ControlarEnvioComponent
+        ControlCargasComponent,
+        ControlarCargaComponent
     ],
     imports     : [
         CommonModule,
@@ -50,11 +50,11 @@ const routes: Routes = [
         TablaRetractilModule
     ],
     providers   : [
-        ControlEnviosService,
-        ControlEnvioService
+        ControlCargasService,
+        ControlCargaService
     ]
 })
 
-export class EnviosModule
+export class CargaModule
 {
 }

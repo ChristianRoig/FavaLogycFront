@@ -34,8 +34,8 @@ const routes = [
         loadChildren: () => import('./distribucion/distribucion.module').then(m => m.DistribucionModule)
     },
     {
-        path        : 'envios',
-        loadChildren: () => import('./envios/envios.module').then(m => m.EnviosModule)
+        path        : 'carga',
+        loadChildren: () => import('./carga/carga.module').then(m => m.CargaModule)
     }
     
 ];

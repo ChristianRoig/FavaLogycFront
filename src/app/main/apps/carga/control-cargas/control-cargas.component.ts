@@ -17,12 +17,12 @@ import {
 } from '@angular/animations';
 
 //services
-import { ControlEnviosService } from './control-envios.service';
+import { ControlCargasService } from './control-cargas.service';
 
 @Component({  
-  selector: 'app-control-envios',  
-  templateUrl: './control-envios.component.html',
-  styleUrls: ['./control-envios.component.scss'],
+  selector: 'app-control-cargas',  
+  templateUrl: './control-cargas.component.html',
+  styleUrls: ['./control-cargas.component.scss'],
   animations: [
     trigger('esconder', [
       state('show', style({
@@ -39,7 +39,7 @@ import { ControlEnviosService } from './control-envios.service';
   ]
 })
 
-export class ControlEnviosComponent implements OnInit {
+export class ControlCargasComponent implements OnInit {
 
   @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
   @ViewChild('buscarLote') buscarLoteInput: ElementRef;
@@ -75,7 +75,7 @@ export class ControlEnviosComponent implements OnInit {
 
   constructor(private _router: Router, 
               private _fuseSidebarService: FuseSidebarService, 
-              private _controlEnviosService: ControlEnviosService,
+              private _controlCargasService: ControlCargasService,
               private route: ActivatedRoute,
               private _sonido: SonidoService,
               private _erroresServices: ErroresService,
@@ -97,8 +97,8 @@ export class ControlEnviosComponent implements OnInit {
       }
       
       switch (this.modo) {
-        case "envio":
-          this.titulo = "Envios";
+        case "carga":
+          this.titulo = "Carga";
           this.condiciónDeEstadoLote = 'NUEVO'; 
           //this.condiciónDeEstadoArticulos = 'EN LOTE'; 
           this.getLotesPorEstado( this.page, this.size);
@@ -127,7 +127,7 @@ export class ControlEnviosComponent implements OnInit {
       hastaLote   : null
     } 
     this.lote = nombre;
-    this._controlEnviosService.getLotePorNombre(this.lote, bodyFechas)
+    this._controlCargasService.getLotePorNombre(this.lote, bodyFechas)
       .subscribe(data => {
         this.dataSource2 = data.datos;
       },
@@ -192,7 +192,7 @@ export class ControlEnviosComponent implements OnInit {
 
   buscarLotePorCUPA( cupa ){
     this.CUPA = cupa.value;
-    this._controlEnviosService.getDetalleLotePorCupa( cupa, this.modo ) .subscribe( data => {
+    this._controlCargasService.getDetalleLotePorCupa( cupa, this.modo ) .subscribe( data => {
         console.log(data);
         /*
         console.log(data.datos[0].detalle.pedidoLote.id);
@@ -249,7 +249,7 @@ export class ControlEnviosComponent implements OnInit {
 
   getLotesPorEstado(page, size ){
     console.log(this.condiciónDeEstadoLote);
-    this._controlEnviosService.getLotesPorEstado( this.condiciónDeEstadoLote, page, size ) .subscribe( data => {
+    this._controlCargasService.getLotesPorEstado( this.condiciónDeEstadoLote, page, size ) .subscribe( data => {
       console.log(data);
       this.dataSource2 = data.datos; 
       this.length = data.totalRegistros;
@@ -273,7 +273,7 @@ export class ControlEnviosComponent implements OnInit {
   }
 
   buscarLotePorId(id: number){
-    this._controlEnviosService.getLotePorId( id ) .subscribe( data => {
+    this._controlCargasService.getLotePorId( id ) .subscribe( data => {
       this.datos.push(data);
       console.log(this.datos);
       this.dataSource2 = this.datos; 
@@ -337,12 +337,12 @@ export class ControlEnviosComponent implements OnInit {
 
     this.arregloDeDetalles = null;
     // let codArt = this.buscarCbteInput.nativeElement.value ? this.buscarCbteInput.nativeElement.value : '';
-    let res = await this._controlEnviosService.getDetalleUnico(this.idLote, '', this.modo);
+    let res = await this._controlCargasService.getDetalleUnico(this.idLote, '', this.modo);
     this.arregloDeDetalles = res.datos;
     console.log(this.arregloDeDetalles);
-    this._controlEnviosService.arregloDeDetalles = this.arregloDeDetalles;
-    this._controlEnviosService.idLote = this.idLote;
-    this._controlEnviosService.modo = this.modo;
+    this._controlCargasService.arregloDeDetalles = this.arregloDeDetalles;
+    this._controlCargasService.idLote = this.idLote;
+    this._controlCargasService.modo = this.modo;
     //let ruta = `apps/control/lote-en/${this.modo}/busqueda`;
     let ruta = `apps/control/lote-en/${this.modo}/${this.idLote}`;
     this._router.navigate([ruta]);
@@ -355,7 +355,7 @@ export class ControlEnviosComponent implements OnInit {
     console.log(this.codigoBarras);
     
 
-    let res = await this._controlEnviosService.getCupaCodBarras(this.CUPA, this.idLote, this.codigoBarras, this.modo);
+    let res = await this._controlCargasService.getCupaCodBarras(this.CUPA, this.idLote, this.codigoBarras, this.modo);
     console.log(res);
     if(!res) {
       this._sonido.playAudioSuccess();
@@ -381,7 +381,7 @@ export class ControlEnviosComponent implements OnInit {
   @Debounce(1000)
   async eliminarCupa() {
     
-    let res = await this._controlEnviosService.eliminarArticuloDeLotePorCupa(this.eliminaCupaInput.nativeElement.value);
+    let res = await this._controlCargasService.eliminarArticuloDeLotePorCupa(this.eliminaCupaInput.nativeElement.value);
     if(!res) {
       this._sonido.playAudioSuccess();
       this.resetCampos();

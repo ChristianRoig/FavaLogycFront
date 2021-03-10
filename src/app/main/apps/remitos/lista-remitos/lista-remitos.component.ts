@@ -78,7 +78,7 @@ export class ListaRemitosComponent implements OnInit {
   
   getRemitoPorId(){
     let resultado: any = [];
-    console.log("busqueda", this.busqueda);
+    console.log( "busqueda", this.busqueda );
     this._listaRemitosService.getRemitoPorId( this.busqueda ).subscribe( data => {
       resultado.push( data );
       console.log( resultado );

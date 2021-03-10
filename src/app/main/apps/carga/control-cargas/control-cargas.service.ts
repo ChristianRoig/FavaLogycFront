@@ -20,7 +20,7 @@ export interface BodyDetalle{
   }
 
 @Injectable()
-export class ControlEnviosService {
+export class ControlCargasService {
     arregloDeDetalles;
     idLote;
     modo;

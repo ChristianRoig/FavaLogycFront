@@ -13,15 +13,15 @@ import {
 } from '@angular/animations';
 import { Router } from '@angular/router';
 
-import { ControlEnviosService } from '../control-envios/control-envios.service';
+import { ControlCargasService } from '../control-cargas/control-cargas.service';
 
 /**
  * @title Basic use of `<table mat-table>`
  */
 @Component({
-    selector     : 'controlar-envio',
-    templateUrl  : './controlar-envio.component.html',
-    styleUrls    : ['./controlar-envio.component.scss'],
+    selector     : 'controlar-carga',
+    templateUrl  : './controlar-carga.component.html',
+    styleUrls    : ['./controlar-carga.component.scss'],
     animations   : [
       trigger('esconder', [
         state('show', style({
@@ -39,7 +39,7 @@ import { ControlEnviosService } from '../control-envios/control-envios.service';
     encapsulation: ViewEncapsulation.None
 })
 
-export class ControlarEnvioComponent implements OnInit {
+export class ControlarCargaComponent implements OnInit {
     @ViewChild('buscarCUPA') buscarCUPAInput: ElementRef;
     @ViewChild('buscarCodigoBarras') buscarCodigoBarrasInput: ElementRef;
     @ViewChild('eliminaCupa') eliminaCupaInput: ElementRef;
@@ -56,7 +56,7 @@ export class ControlarEnvioComponent implements OnInit {
 
     constructor(
       private _router: Router,
-      private _controlEnviosService: ControlEnviosService,
+      private _controlCargasService: ControlCargasService,
       private _sonido: SonidoService,
       private _erroresServices: ErroresService,
       private _dialog: MatDialog
@@ -65,9 +65,9 @@ export class ControlarEnvioComponent implements OnInit {
     
 
     ngOnInit(): void{
-      this.arregloDeDetalles = this._controlEnviosService.arregloDeDetalles;
-      this.idLote = this._controlEnviosService.idLote;
-      this.modo = this._controlEnviosService.modo;
+      this.arregloDeDetalles = this._controlCargasService.arregloDeDetalles;
+      this.idLote = this._controlCargasService.idLote;
+      this.modo = this._controlCargasService.modo;
 
       console.log("this.arregloDeDetalles", this.arregloDeDetalles);
       console.log("modo", this.modo);
@@ -115,7 +115,7 @@ export class ControlarEnvioComponent implements OnInit {
     async buscarDetalleUnico() {
       console.log("buscarDetalleUnico");
       this.arregloDeDetalles = null;
-      let res = await this._controlEnviosService.getDetalleUnico(this.idLote, '', this.modo);
+      let res = await this._controlCargasService.getDetalleUnico(this.idLote, '', this.modo);
       this.arregloDeDetalles = res.datos;
       console.log(this.arregloDeDetalles);
     }
@@ -126,7 +126,7 @@ export class ControlarEnvioComponent implements OnInit {
     console.log(this.CUPA);
     console.log(this.codigoBarras);
 
-    let res = await this._controlEnviosService.getCupaCodBarras(this.CUPA, this.idLote, this.codigoBarras, this.modo);
+    let res = await this._controlCargasService.getCupaCodBarras(this.CUPA, this.idLote, this.codigoBarras, this.modo);
     console.log(res);
     if (!res) {
       this._sonido.playAudioSuccess();
@@ -173,7 +173,7 @@ export class ControlarEnvioComponent implements OnInit {
 
   async borrar() {
     
-    let res = await this._controlEnviosService.eliminarArticuloDeLotePorCupa(this.eliminaCupaInput.nativeElement.value);
+    let res = await this._controlCargasService.eliminarArticuloDeLotePorCupa(this.eliminaCupaInput.nativeElement.value);
     if(!res) {
       this._sonido.playAudioSuccess();
       this.resetCampos();

@@ -143,7 +143,7 @@ export const navigation: FuseNavigation[] = [
                         id        : 'crear-orden-distribucion',
                         title     : 'Control de Carga',
                         type      : 'item',
-                        url       : '/apps/envios/envio',
+                        url       : '/apps/carga/carga',
                         exactMatch: true
                     }
                 ]
