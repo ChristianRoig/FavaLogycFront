@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'environments/environment';
 import { map } from 'rxjs/operators';
-import { RootObject, DATOS_ENTREGA, LISTA_PEDIDOS } from 'app/main/apps/interfaces/datos-entrega';
+import { RootObject, DATOS_ENTREGA, LISTA_PEDIDOS } from 'app/interfaces/datos-entrega';
 
 const BASE_URL = environment.server + environment.baseUrl;
 

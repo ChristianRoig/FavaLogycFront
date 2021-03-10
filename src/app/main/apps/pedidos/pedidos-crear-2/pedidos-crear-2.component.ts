@@ -7,7 +7,7 @@ import { MatTable } from '@angular/material/table';
 import { indexOf } from 'lodash';
 import { coerceNumberProperty } from '@angular/cdk/coercion';
 import { HttpErrorResponse } from '@angular/common/http';
-import { DATOS_ENTREGA } from 'app/main/apps/interfaces/datos-entrega';
+import { DATOS_ENTREGA } from 'app/interfaces/datos-entrega';
 
 import { Articulos } from '../pedidos-lista/pedidos-lista.component';
 import { AgregarDatosEntregaComponent } from './agregar-datos-entrega/agregar-datos-entrega.component';

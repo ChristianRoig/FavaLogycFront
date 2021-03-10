@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { DATOS_ENTREGA, RootObject, LISTA_PEDIDOS } from '../../../interfaces/datos-entrega';
+//import { DATOS_ENTREGA, RootObject, LISTA_PEDIDOS } from '../../../interfaces/datos-entrega';
+import { DATOS_ENTREGA, RootObject, LISTA_PEDIDOS } from '../../../../../../app/interfaces/datos-entrega';
 import { map } from 'rxjs/operators';
 //import { map } from 'lodash';
 
