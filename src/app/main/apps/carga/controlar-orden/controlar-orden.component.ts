@@ -13,15 +13,15 @@ import {
 } from '@angular/animations';
 import { Router } from '@angular/router';
 
-import { ControlCargasService } from '../control-cargas/control-cargas.service';
+import { ControlDeCargaService } from '../control-de-carga/control-de-carga.service';
 
 /**
  * @title Basic use of `<table mat-table>`
  */
 @Component({
-    selector     : 'controlar-carga',
-    templateUrl  : './controlar-carga.component.html',
-    styleUrls    : ['./controlar-carga.component.scss'],
+    selector     : 'app-controlar-orden',
+    templateUrl  : './controlar-orden.component.html',
+    styleUrls    : ['./controlar-orden.component.scss'],
     animations   : [
       trigger('esconder', [
         state('show', style({
@@ -56,7 +56,7 @@ export class ControlarCargaComponent implements OnInit {
 
     constructor(
       private _router: Router,
-      private _controlCargasService: ControlCargasService,
+      private _controlDeCargaService: ControlDeCargaService,
       private _sonido: SonidoService,
       private _erroresServices: ErroresService,
       private _dialog: MatDialog
@@ -65,9 +65,9 @@ export class ControlarCargaComponent implements OnInit {
     
 
     ngOnInit(): void{
-      this.arregloDeDetalles = this._controlCargasService.arregloDeDetalles;
-      this.idLote = this._controlCargasService.idLote;
-      this.modo = this._controlCargasService.modo;
+      this.arregloDeDetalles = this._controlDeCargaService.arregloDeDetalles;
+      this.idLote = this._controlDeCargaService.idLote;
+      this.modo = this._controlDeCargaService.modo;
 
       console.log("this.arregloDeDetalles", this.arregloDeDetalles);
       console.log("modo", this.modo);
@@ -115,7 +115,7 @@ export class ControlarCargaComponent implements OnInit {
     async buscarDetalleUnico() {
       console.log("buscarDetalleUnico");
       this.arregloDeDetalles = null;
-      let res = await this._controlCargasService.getDetalleUnico(this.idLote, '', this.modo);
+      let res = await this._controlDeCargaService.getDetalleUnico(this.idLote, '', this.modo);
       this.arregloDeDetalles = res.datos;
       console.log(this.arregloDeDetalles);
     }
@@ -126,7 +126,7 @@ export class ControlarCargaComponent implements OnInit {
     console.log(this.CUPA);
     console.log(this.codigoBarras);
 
-    let res = await this._controlCargasService.getCupaCodBarras(this.CUPA, this.idLote, this.codigoBarras, this.modo);
+    let res = await this._controlDeCargaService.getCupaCodBarras(this.CUPA, this.idLote, this.codigoBarras, this.modo);
     console.log(res);
     if (!res) {
       this._sonido.playAudioSuccess();
@@ -173,7 +173,7 @@ export class ControlarCargaComponent implements OnInit {
 
   async borrar() {
     
-    let res = await this._controlCargasService.eliminarArticuloDeLotePorCupa(this.eliminaCupaInput.nativeElement.value);
+    let res = await this._controlDeCargaService.eliminarArticuloDeLotePorCupa(this.eliminaCupaInput.nativeElement.value);
     if(!res) {
       this._sonido.playAudioSuccess();
       this.resetCampos();

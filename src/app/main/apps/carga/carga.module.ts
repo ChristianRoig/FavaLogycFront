@@ -15,17 +15,17 @@ import { FuseSidebarModule } from '@fuse/components';
 import { TablaRetractilModule } from 'app/components/tabla-retractil/tabla-retractil.module';
 
 // componentes favalogyc
-import { ControlCargasComponent } from './control-cargas/control-cargas.component';
-import { ControlarCargaComponent } from './controlar-carga/controlar-carga.component';
+import { ControlDeCargaComponent } from './control-de-carga/control-de-carga.component';
+import { ControlarCargaComponent } from './controlar-orden/controlar-orden.component';
 
 // servicios favalogyc
-import { ControlCargasService } from './control-cargas/control-cargas.service';
-import { ControlCargaService } from './controlar-carga/controlar-carga.service';
+import { ControlDeCargaService } from './control-de-carga/control-de-carga.service';
+import { ControlCargaService } from './controlar-orden/controlar-orden.service';
 
 const routes: Routes = [
     {
         path     : ':modo',
-        component: ControlCargasComponent
+        component: ControlDeCargaComponent
     },
     {
         path     : ':modo/:id',
@@ -35,7 +35,7 @@ const routes: Routes = [
 
 @NgModule({
     declarations: [
-        ControlCargasComponent,
+        ControlDeCargaComponent,
         ControlarCargaComponent
     ],
     imports     : [
@@ -50,7 +50,7 @@ const routes: Routes = [
         TablaRetractilModule
     ],
     providers   : [
-        ControlCargasService,
+        ControlDeCargaService,
         ControlCargaService
     ]
 })
