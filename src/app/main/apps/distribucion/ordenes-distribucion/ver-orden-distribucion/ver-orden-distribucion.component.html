@@ -6,22 +6,12 @@
         <div fxLayout="column" style="max-width: 100%;">
 
             <div fxLayout="row" class="titular">
-                <!-- LOTE -->
-                <!-- <div fxFlex="100" class="fuse-card p-24 mr-8"> -->
-                <h1 class="colorText" *ngIf="!this.editLote"> Orden {{ this.idOrdenDist }}</h1>
-
-                <div *ngIf="this.editLote" class="input-group mb-3">
-                    <input #nombreLoteInput type="text" class="nombreLote" placeholder="({{ this.nombreLote }})  -  Inserte el nuevo nombre del lote">
-                    <button mat-raised-button class="btn btn-outline-secondary" color="light" (click)="actualizarNombreOrden(nombreLoteInput.value)" type="button" id="button-addon1">Modificar</button>
-                </div>
-
+                <h1 class="colorText"> Orden {{ this.idOrdenDist }}</h1>
                 <button mat-raised-button color="light" class="mt-22" (click)="eliminarOrdenDeDistribucion()">Eliminar orden</button>
-                <!-- </div> -->
             </div>
-            <!-- SECCION ARTICULOS -->
+
             <div class="fuse-card my-20 pl-24 pr-24" style="max-width: 100%;">
 
-                <!-- TITULO/BUSCADOR/BOTON -->
                 <div fxLayout="row" fxLayoutAlign="space-around">
 
                     <div class="controlesBusqueda">
@@ -48,13 +38,12 @@
                     </div>
                 </div>
 
-                <!-- / TITULO/BUSCADOR/BOTON -->
                 <ng-container *ngTemplateOutlet="remitos" class="tablaArticulos"></ng-container>
             </div>
-            <!-- / SECCION ARTICULOS -->
+
         </div>
     </div>
-    <!-- / CONTENIDO -->
+
 </app-plantilla-fondo-simple>
 <!-- ------------------------------------------------------------------------------------------------------------------------------ -->
 <ng-template #remitos>
@@ -74,7 +63,7 @@
                     </mat-checkbox>
                 </td>
             </ng-container>
-            <!-- Id	Codigo Comprobante	Nro Comprobante	Fecha Alta	Cant Articulos	Seleccionar -->
+
             <ng-container matColumnDef="id">
                 <th mat-header-cell mat-sort-header="id" *matHeaderCellDef> Id </th>
                 <td mat-cell *matCellDef="let remito"> {{ remito.id }} </td>
@@ -82,7 +71,7 @@
 
             <ng-container matColumnDef="codComprobante">
                 <th mat-header-cell mat-sort-header="nombre" *matHeaderCellDef> Codigo Comprobante </th>
-                <td mat-cell *matCellDef="let remito"> REM </td>
+                <td mat-cell class="pl-32" *matCellDef="let remito"> REM </td>
             </ng-container>
 
             <ng-container matColumnDef="nroComprobante">
@@ -97,11 +86,11 @@
 
             <ng-container matColumnDef="cantArticulos">
                 <th mat-header-cell mat-sort-header="cantArticulos" *matHeaderCellDef> Cant Articulos </th>
-                <td mat-cell class="example-button-row" *matCellDef="let remito">{{ remito.pedidoDetalles.length }} </td>
+                <td mat-cell class="example-button-row pl-32" *matCellDef="let remito">{{ remito.pedidoDetalles.length }} </td>
             </ng-container>
 
             <ng-container *ngIf="this.mostrarRemitos == true" matColumnDef="accion">
-                <th mat-header-cell *matHeaderCellDef> Acción </th>
+                <th mat-header-cell class="pl-20" *matHeaderCellDef> Acción </th>
                 <td mat-cell class="example-button-row" *matCellDef="let remito">
                     <!-- [(ngModel)]="mostrarRemitos" -->
                     <button mat-stroked-button color="accent" (click)="addRemitosAorden(remito)"> Agregar </button>
@@ -112,7 +101,5 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
     </div>
-    <!-- </app-plantilla-fondo-simple> -->
 
-    <!-- <ng-template #articulos>-->
 </ng-template>

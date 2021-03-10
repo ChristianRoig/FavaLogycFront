@@ -41,13 +41,13 @@
             <div class="controlesBusqueda">
 
                 <mat-form-field appearance="outline" class="inputBuscar">
-                    <mat-label>Orden</mat-label>
-                    <input #buscarOrden (keyup)="searchOrden()" matInput value="" placeholder="Buscar orden por id">
+                    <mat-label>Buscar Orden</mat-label>
+                    <input #buscarOrden (keyup)="searchOrden()" matInput value="" placeholder="Ingrese un id orden">
                     <mat-icon matSuffix>search</mat-icon>
                 </mat-form-field>
 
                 <div class="botonesBusqueda">
-                    <button (click)="buscarOrdenPorId()" class="btnBuscar" [disabled]="!this.idOrdenDist" mat-raised-button color="primary">Buscar Orden</button>
+                    <button (click)="buscarOrdenPorId()" class="btnBuscar" [disabled]="!this.idOrdenDist" mat-raised-button color="primary">Buscar</button>
                 </div>
 
             </div>
@@ -84,7 +84,7 @@
                 </ng-container>
                 <ng-container matColumnDef="cantArticulosACargar">
                     <th mat-header-cell *matHeaderCellDef> Articulos a Cargar</th>
-                    <td mat-cell class="example-button-row pl-28" *matCellDef="let orden">{{ orden.cantArticulosACargar }} </td>
+                    <td mat-cell class="example-button-row pl-36" *matCellDef="let orden">{{ orden.cantArticulosACargar }} </td>
                 </ng-container>
                 <ng-container matColumnDef="cantRemitos">
                     <th mat-header-cell *matHeaderCellDef> Remitos</th>
@@ -97,7 +97,7 @@
                 </ng-container>
 
                 <ng-container matColumnDef="seleccionar">
-                    <th mat-header-cell *matHeaderCellDef> Seleccionar </th>
+                    <th mat-header-cell class="pl-16" *matHeaderCellDef> Seleccionar </th>
                     <td mat-cell class="example-button-row" *matCellDef="let orden">
                         <button mat-stroked-button color="primary" (click)="verOrden(orden)"> Ver Orden </button>
                     </td>

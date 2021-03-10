@@ -13,7 +13,6 @@ import { ModalConfirmacionBorrarComponent } from './modal-confirmacion-borrar/mo
 import { VerOrdenDistribucionService } from './ver-orden-distribucion.service';
 
 export interface Remito{
-  //'id', 'codComprobante', 'nroComprobante', 'fechaAlta', 'cantArticulos'
   id: number;
   codComprobante: number;
   nroComprobante: string;
@@ -49,7 +48,7 @@ export class VerOrdenDistribucionComponent implements OnInit {
 
   mensaje: string;
   titulo: string;
-  editLote: boolean;
+  editRemito: boolean;
   mostrarRemitos: boolean = false;
   textoBtnAddRemitos: string = "Agregar Remitos";
 
@@ -60,8 +59,7 @@ export class VerOrdenDistribucionComponent implements OnInit {
     private _activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.editLote = false;
-
+    this.editRemito = false;
     this._activatedRoute.params.subscribe( params => {
       this.idOrdenDist = params['id'];
     });
@@ -70,7 +68,7 @@ export class VerOrdenDistribucionComponent implements OnInit {
   
   getRemitosDeOrdenDistribucion (idOrdenDist: number) {
     this._verOrdenDistribucion.getRemitosDeOrdenDistribucion( idOrdenDist ) .subscribe( data => {
-      console.log(data.remitos);
+      //console.log(data.remitos);
       this.remitosDeOrden = data.remitos;
       this.dataSource2 = data.remitos;
     },
@@ -84,7 +82,7 @@ export class VerOrdenDistribucionComponent implements OnInit {
           let mensaje = "Por favor comunicarse con Sistemas";
           this.mostrarError(errStatus, titulo, mensaje);
         } else {
-          let titulo = 'Error los articulos del lote';
+          let titulo = 'Error al listar remitos de orden ' + this.idOrdenDist;
           let mensaje = err.error.message.toString();
           this.mostrarError(errStatus, titulo, mensaje);
         }
@@ -189,9 +187,9 @@ export class VerOrdenDistribucionComponent implements OnInit {
   }
 
   eliminarOrdenDeDistribucion(){
-    console.log("se eliminará el lote -> ", this.idOrdenDist );
+    console.log("se eliminará la orden -> ", this.idOrdenDist );
     this._verOrdenDistribucion.eliminarOrdenDeDistribucion( this.idOrdenDist ) .subscribe( data => {
-      console.log("se eliminará el lote -> ", this.idOrdenDist );
+      console.log("hecho");
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
@@ -261,7 +259,7 @@ export class VerOrdenDistribucionComponent implements OnInit {
     });
   }
 
-  @Debounce(1000)  
+  @Debounce(50)  
   searchRemito() {
     this.busqueda = this.buscarCbteInput.nativeElement.value;
     console.log(this.busqueda);
@@ -274,7 +272,7 @@ export class VerOrdenDistribucionComponent implements OnInit {
     }
   }
 
-  eliminarRemitoDeOrden(){
+  eliminarRemitoDeOrden(){   // NO ANDA --> REVISAR
     let listaIdRemitos: Array<number> = new Array<number>();
 
     for (let entry of this.selection.selected) {
@@ -284,7 +282,6 @@ export class VerOrdenDistribucionComponent implements OnInit {
     this._verOrdenDistribucion.postEliminarRemitoDeOrden( listaIdRemitos ).subscribe(params => {
       console.log("eliminado ");
       this.getRemitosDeOrdenDistribucion( this.idOrdenDist );
-      //this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {

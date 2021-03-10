@@ -31,12 +31,11 @@ export class ListaRemitosService
         let ruta = `${ BASE_URL }pedidos/pedidocbte/remito/a-distribuir/${ page }/${ size }/${ columna }/${ order }`;
         return this._httpClient.get(ruta);
     }
-
-    /* getLotePorId(loteId: number): Observable<any>{                       //PROPUESTA
-
-        let ruta = `${BASE_URL}pedidos/pedidolote/${ loteId }`;
+    
+    getRemitoPorId( idRemito: number ){
+        let ruta = `${BASE_URL}pedidos/pedidocbte/remito/por-idremito/${ idRemito }`;
         return this._httpClient.get(ruta);
-    } */
+    }
 
   
 

@@ -16,22 +16,16 @@ import { RemitosComponent } from './remitos/remitos.component';
 import { ListaRemitosComponent } from './lista-remitos/lista-remitos.component';
 import { VerRemitoComponent } from './lista-remitos/ver-remito/ver-remito.component';
 import { RemitosConfirmarComponent } from './remitos-confirmar/remitos-confirmar.component';
-import { VerImpresorasComponent } from './lista-remitos/ver-impresoras/ver-impresoras.component';
-import { VerCupasComponent } from './lista-remitos/ver-cupas/ver-cupas.component';
-
 
 //services
 import { RemitoService } from './remitos/remitos.service';
 import { RemitosConfirmarService } from './remitos-confirmar/remitos-confirmar.service';
 import { ListaRemitosService } from './lista-remitos/lista-remitos.service';
 import { VerRemitoService } from './lista-remitos/ver-remito/ver-remito.service';
-import { VerImpresorasService } from './lista-remitos/ver-impresoras/ver-impresoras.service';
-import { VerCupasService } from './lista-remitos/ver-cupas/ver-cupas.service';
-
 
 const routes: Routes = [
     {
-        path     : 'crear-remitos',
+        path     : 'crear-remito',
         component: RemitosComponent
     },
     {
@@ -53,9 +47,7 @@ const routes: Routes = [
         RemitosComponent,
         RemitosConfirmarComponent,
         ListaRemitosComponent,
-        VerRemitoComponent,
-        VerCupasComponent,
-        VerImpresorasComponent
+        VerRemitoComponent
     ],
     imports     : [
         CommonModule,
@@ -71,9 +63,7 @@ const routes: Routes = [
         RemitoService,
         RemitosConfirmarService,
         ListaRemitosService,
-        VerRemitoService,
-        VerImpresorasService,
-        VerCupasService
+        VerRemitoService
     ],
     entryComponents:[ MatDialogModule ]
 })

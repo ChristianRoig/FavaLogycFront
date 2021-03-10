@@ -163,10 +163,11 @@ export class PedidosCodigosBarraComponent implements OnInit {
   agregar(){
       let ruta = `apps/articulos/codigos-barra-add/${this.codigoArticulo}`;
       this._router.navigate([ruta]);
-  }
-
-  volver(){
-      this._router.navigate(['apps/articulos/codigos-barra-articulos']);
+    }
+    
+    volver(){
+    let ruta = `apps/articulos/codigos-barra-articulos`;
+      this._router.navigate([ruta]);
   }
 
   

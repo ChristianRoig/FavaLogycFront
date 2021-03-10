@@ -39,17 +39,16 @@ export class VerOrdenDistribucionService {
       return this._httpClient.get(ruta);
   }
 
-  postEliminarRemitoDeOrden( listaIdRemitos ): Observable<any>{
+  postEliminarRemitoDeOrden( listaIdRemitos ): Observable<any>{  // REVISAR
 
     let headers = new HttpHeaders({
-        "Content-Type": "application/json"
+      "Content-Type": "application/json"
     });
-
-    let body = { listaId : [ listaIdRemitos ] } 
-
-    let ruta = `${BASE_URL}pedidos/distribucion/remito`;
-
-    //return this._httpClient.delete(ruta, body,{ headers: headers });
+    console.log( listaIdRemitos );
+    let body = { "listaId" : [ listaIdRemitos ] } 
+    console.log( body );
+    
+    let ruta = `${BASE_URL}pedidos/distribucion/remito`;    
     return this._httpClient.post(ruta, body,{ headers: headers });
   }
 

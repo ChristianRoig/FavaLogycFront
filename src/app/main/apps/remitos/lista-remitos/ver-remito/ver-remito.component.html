@@ -1,75 +1,46 @@
 <app-plantilla-fondo-simple titulo='Ver Lote' arrowBack=true>
 
-    <!-- CONTENIDO -->
     <div contenido>
 
         <div fxLayout="column" style="max-width: 100%;">
 
-            <!-- Filtros en Pantalla grande -->
             <div fxLayout="row" class="titular">
-
-                <!-- LOTE -->
-                <!-- <div fxFlex="100" class="fuse-card p-24 mr-8"> -->
-                <h1 class="colorText" *ngIf="!this.editLote"> {{ this.nombreLote }} </h1>
-
-                <div *ngIf="this.editLote" class="input-group mb-3">
-                    <input #nombreLoteInput type="text" class="nombreLote" placeholder="({{ this.nombreLote }})  -  Inserte el nuevo nombre del lote">
-                    <button mat-raised-button class="btn btn-outline-secondary" color="light" (click)="actualizarNombreLote(nombreLoteInput.value)" type="button" id="button-addon1">Modificar</button>
-                </div>
-
-
-                <button mat-raised-button color="light" class="mt-22" (click)="confirmacionBorrar()">Eliminar lote</button>
-                <!-- </div> -->
+                <h1 class="colorText"> Remito {{ this.idRemito }} </h1>
+                <button mat-raised-button color="light" class="mt-22" (click)="confirmacionBorrar()">Eliminar remito</button>
             </div>
-            <!-- / Filtros en Pantalla grande -->
 
-            <!-- SECCION ARTICULOS -->
             <div class="fuse-card my-20 pl-24 pr-24" style="max-width: 100%;">
 
-                <!-- TITULO/BUSCADOR/BOTON -->
                 <div fxLayout="row" fxLayoutAlign="space-around">
-
                     <div class="controlesBusqueda">
                         <mat-form-field appearance="outline" class="inputBusqueda">
-                            <mat-label>Código de Artículo o Comprobante</mat-label>
-                            <input #buscarCbte class="text-uppercase" (keyup)="searchCbte()" matInput value="" placeholder="Buscar Cód. Artículo o comprobante">
+                            <mat-label>Buscar comprobate</mat-label>
+                            <input #buscarCbte class="text-uppercase" (keyup)="searchCbte()" matInput value="" placeholder="iIngrese un nro comprobante">
                             <mat-icon matSuffix>search</mat-icon>
                         </mat-form-field>
 
                         <div class="botonesBusqueda">
-                            <button (click)="sacarDelLote()" class="btn" mat-raised-button color="primary" [matBadge]="selection.selected.length" [matBadgeHidden]="selection.selected.length===0" matBadgeColor="warn" [disabled]="selection.selected.length===0">
+                            <!-- (click)="editarLote()" -->
+                            <button class="btn" mat-raised-button color="primary">
+                                Buscar
+                            </button>
+                            <!-- (click)="sacarDelLote()" -->
+                            <button class="btn" mat-raised-button color="primary" [matBadge]="selection.selected.length" [matBadgeHidden]="selection.selected.length===0" matBadgeColor="warn" [disabled]="selection.selected.length===0">
                                 Eliminar Selec.
                             </button>
 
-                            <button (click)="imprimirCupa()" class="btn" mat-raised-button color="primary">
-                                    Imprimir CUPA
-                            </button>
-
-                            <button (click)="editarLote()" class="btn" mat-raised-button color="primary">
-                                    Editar Lote 
-                            </button>
                         </div>
                     </div>
                 </div>
 
-                <!-- / TITULO/BUSCADOR/BOTON -->
-
-                <ng-container *ngTemplateOutlet="articulos" class="tablaArticulos"></ng-container>
+                <ng-container *ngTemplateOutlet="comprobantes" class="tablaArticulos"></ng-container>
             </div>
-            <!-- / SECCION ARTICULOS -->
         </div>
-
-
-
     </div>
-    <!-- / CONTENIDO -->
 </app-plantilla-fondo-simple>
 
 <!-- ------------------------------------------------------------------------------------------------------------------------------ -->
-
-
-<ng-template #articulos>
-
+<ng-template #comprobantes>
     <div style="width: 100%; overflow: auto;">
         <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="dataSource2" class="mb-8 tablaArticulos">
 
@@ -85,44 +56,42 @@
                     </mat-checkbox>
                 </td>
             </ng-container>
-            <!-- id: 1, pedidoCabecera: {…}, articulo: {…}, pedidoDomicilioEntrega: {…}, pedidoEtapa: {…},  -->
-            <!-- ['select', 'codigoArticulo', 'nombreArticulo', 'etapa', 'comprobante']; -->
-            <ng-container matColumnDef="codigoArticulo">
-                <th mat-sort-header="codigoArticulo" mat-header-cell *matHeaderCellDef> Cod. Articulo </th>
-                <!-- <td mat-cell *matCellDef="let producto"> {{ producto.articulo.id }} </td> -->
-                <td mat-cell *matCellDef="let producto"> {{ producto.articulo.codigoArticulo }} </td>
+            <!--  id,codComprobante, nroComprobante, fechaAlta, cantArticulos -->
+            <ng-container matColumnDef="id">
+                <th mat-header-cell mat-sort-header="id" *matHeaderCellDef> Id </th>
+                <td mat-cell *matCellDef="let comprobante"> {{ comprobante.id }} </td>
             </ng-container>
 
-            <ng-container matColumnDef="nombreArticulo">
-                <th mat-sort-header="nombreArticulo" mat-header-cell *matHeaderCellDef> Nombre Articulo </th>
-                <!-- <td mat-cell *matCellDef="let producto"> {{ producto.articulo.nombre }} </td> -->
-                <td mat-cell *matCellDef="let producto"> {{ producto.articulo.nombre }} </td>
+            <ng-container matColumnDef="codComprobante">
+                <th mat-header-cell mat-sort-header="nombre" *matHeaderCellDef> Codigo Comprobante </th>
+                <td mat-cell class="pl-32" *matCellDef="let comprobante"> REM </td>
             </ng-container>
 
-            <!-- <ng-container matColumnDef="tipo">
-                <th mat-sort-header="tipo" mat-header-cell *matHeaderCellDef> Tipo</th> -->
-            <!-- <td mat-cell *matCellDef="let producto"> {{ producto.pedidoCabecera.pedidoTipo.nombre }} </td>-->
-            <!-- DEBERIA SER ASI PERO EL DATO NO ESTÁ -->
-            <!-- <td mat-cell *matCellDef="let producto"> {{ producto.Tipo }} </td>
+            <ng-container matColumnDef="nroComprobante">
+                <th mat-header-cell mat-sort-header="nroComprobante" *matHeaderCellDef> Nro Comprobante </th>
+                <td mat-cell *matCellDef="let comprobante"> {{ comprobante.nroCbte }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="fechaAlta">
+                <th mat-header-cell mat-sort-header="fechaAlta" *matHeaderCellDef> Fecha Alta </th>
+                <td mat-cell *matCellDef="let comprobante"> {{ getSoloFecha(comprobante.fechaCbte) }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="cantArticulos">
+                <th mat-header-cell mat-sort-header="cantArticulos" *matHeaderCellDef> Cant Articulos </th>
+                <td mat-cell class="example-button-row pl-32" *matCellDef="let comprobante">{{ comprobante.pedidoDetalles.length }} </td>
+            </ng-container>
+
+            <!-- <ng-container *ngIf="this.mostrarRemitos == true" matColumnDef="accion">
+                <th mat-header-cell class="pl-20" *matHeaderCellDef> Acción </th>
+                <td mat-cell class="example-button-row" *matCellDef="let comprobante">
+                    <button mat-stroked-button color="accent" (click)="addComprobanteAorden(comprobante)"> Agregar </button>
+                </td>
             </ng-container> -->
-
-            <ng-container matColumnDef="etapa">
-                <th mat-sort-header="etapa" mat-header-cell *matHeaderCellDef> Etapa </th>
-                <!-- <td mat-cell *matCellDef="let producto"> {{ producto.pedidoEtapa.nombre }} </td> -->
-                <td mat-cell *matCellDef="let producto"> {{ producto.pedidoEtapa.nombre }} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="comprobante">
-                <th mat-header-cell *matHeaderCellDef> Comprobante </th>
-                <!-- <td mat-cell class="example-button-row" *matCellDef="let producto">{{ producto.pedidoCabecera.pedidoCbte.nroCbte }}</td> -->
-                <td mat-cell class="example-button-row" *matCellDef="let producto">{{ producto.pedidoCabecera.pedidoCbte.nroCbte }}</td>
-            </ng-container>
+            <!-- [(ngModel)]="mostrarRemitos" -->
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
     </div>
-    <!-- </app-plantilla-fondo-simple> -->
-
-    <!-- <ng-template #articulos>-->
 </ng-template>

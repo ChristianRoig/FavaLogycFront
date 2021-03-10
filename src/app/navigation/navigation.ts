@@ -87,7 +87,7 @@ export const navigation: FuseNavigation[] = [
                         id        : 'remitos',
                         title     : 'Crear Remito',
                         type      : 'item',
-                        url       : '/apps/remitos/crear-remitos',
+                        url       : '/apps/remitos/crear-remito',
                         exactMatch: true
                     },
                     {

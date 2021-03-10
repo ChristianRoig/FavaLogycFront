@@ -3,34 +3,12 @@ import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { Debounce } from 'app/shared/decorators/debounce';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 import { HttpErrorResponse } from '@angular/common/http';
-import { element } from 'protractor';
-import { forEach } from 'lodash';
-
-//import { BuscarLoteComponent } from './buscar-lote/buscar-lote.component';
-import { VerImpresorasComponent } from './ver-impresoras/ver-impresoras.component';
-import { VerRemitoComponent } from './ver-remito/ver-remito.component';
 
 //services
-import { VerRemitoService } from './ver-remito/ver-remito.service';
-import { UsuarioService } from 'app/services/usuario.service';
 import { ListaRemitosService } from './lista-remitos.service';
-
-
-export interface BodyDetalle{
-
-  idTipo : number;
-  idTurno : number;
-  idOrigen : number;
-  idEtapa : number;
-  idProvincia : number;
-  idLocalidad : number;
-  desdePedido : string;
-  hastaPedido : string;
-  idLote : number;
-}
 
 @Component({  
   selector: 'app-lista-remitos',  
@@ -40,58 +18,41 @@ export interface BodyDetalle{
 
 export class ListaRemitosComponent implements OnInit {
 
-  @ViewChild('buscarLote') buscarLoteInput: ElementRef;
+  @ViewChild('buscarRemito') buscarRemitoInput: ElementRef;
 
   displayedColumns: string[] = ['id', 'codComprobante', 'nroComprobante', 'fechaAlta', 'cantArticulos', 'seleccionar'];
   dataSource2: any;
   selection = new SelectionModel<any>(true, []);
-  selecccionDeEstado: string;
 
-  busqueda: string = "";
+  busqueda: number = null;
   length: number = 0;
   page: number = 0;
   size: number = 10;
   columna: string = 'nroCbte';
   order: string = 'asc';
 
-
-  body: BodyDetalle ={
-    idTipo      : 1,
-    idTurno     : null,
-    idOrigen    : null,
-    idEtapa     : null,
-    idProvincia : 1,
-    idLocalidad : null,
-    desdePedido : null,
-    hastaPedido : null,
-    idLote      : null
-  };
-
   constructor(private _router: Router, 
               private _fuseSidebarService: FuseSidebarService, 
-              private _listaLoteService: ListaRemitosService,
+              private _listaRemitosService: ListaRemitosService,
               private _dialog: MatDialog,
               ) {  }
 
   ngOnInit(): void {
 
     this.getAllRemitosSinDistribucion();
-
-    //this.arrowBack = false;
-    // this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
   }
 
-  /* searchLote() {
-    this.lote = this.buscarLoteInput.nativeElement.value;
-    if(this.lote == ''){
-      this.lote = null;
-      this.getLotesPorEstado( this.estado, this.page, this.size );
+  @Debounce(50)  
+  searchRemito() {
+    this.busqueda = this.buscarRemitoInput.nativeElement.value;
+    if(this.busqueda < 1 ){
+      this.busqueda = null;
+      this.getAllRemitosSinDistribucion( );
     }
-  } */
-
+  }
   
   getAllRemitosSinDistribucion( ){
-    this._listaLoteService.getRemitosSinDistribucion( this.page, this.size, this.columna, this.order ) .subscribe( data => {
+    this._listaRemitosService.getRemitosSinDistribucion( this.page, this.size, this.columna, this.order ) .subscribe( data => {
       console.log(data);
       console.log(data.totalRegistros);
       this.dataSource2 = data.datos;
@@ -115,25 +76,26 @@ export class ListaRemitosComponent implements OnInit {
     });
   }
   
-  getRemitoById(  ){   // PEDIENTE GET REMITO BY _ _ _ _ _ _ _
-    this._listaLoteService.getRemitosSinDistribucion( this.page, this.size, this.columna, this.order ) .subscribe( data => {
-      console.log(data);
-      console.log(data.totalRegistros);
-      this.dataSource2 = data.datos;
-      this.length = data.totalRegistros;
+  getRemitoPorId(){
+    let resultado: any = [];
+    console.log("busqueda", this.busqueda);
+    this._listaRemitosService.getRemitoPorId( this.busqueda ).subscribe( data => {
+      resultado.push( data );
+      console.log( resultado );
+      this.dataSource2 = resultado;
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
         console.log("Client-side error");
       } else {
-        let errStatus = err.status
+        let errStatus = err.status;
         if (errStatus == 0){
           let titulo = 'Error de Servidor';
           let mensaje = "Por favor comunicarse con Sistemas";
           this.mostrarError(errStatus, titulo, mensaje);
         } else {
-          let titulo = 'Error al listar';
-          let mensaje = err.error.message.toString();
+          let titulo = 'No encontrado';
+          let mensaje = "El remito no existe";
           this.mostrarError(errStatus, titulo, mensaje);
         }
       }
@@ -144,19 +106,13 @@ export class ListaRemitosComponent implements OnInit {
     return fecha.split(' ')[0];
   }
 
-  getArticulo(id: number){                     //para borrar
-    id = id + 7;
-    return id.toString();
-  }
-
-  /* verLote(lote: Lote){ //redireccionar 
-    if( lote != null ){
-      this.idLote = lote.idLote;
-      let ruta = `apps/lotes/ver-lote/${ this.idLote }`;
+  verRemito( remito ){ //redireccionar 
+    if( remito != null ){
+      let idRemito = remito.id;
+      let ruta = `apps/remitos/ver-remito/${ idRemito }`;
       this._router.navigate([ ruta ]);
     }
-  } */
-
+  }
 
   mostrarError(errStatus, titulo, mensaje){
     const dialogRef = this._dialog.open( ModalErrorComponent, { 
@@ -175,21 +131,21 @@ export class ListaRemitosComponent implements OnInit {
       });
   }
 
-  consultar(id){
+  /* consultar(id){
     let ruta = `apps/pedidos/administracion/visualizacion/${id}`;
     this._router.navigate([ruta]);
-  }
+  } */
 
-  anular(id){
+  /* anular(id){
     let ruta = `apps/pedidos/administracion/anular/${id}`;
     console.log(ruta);
     this._router.navigate([ruta]);
-  }
+  } */
 
-  crearLote() {
+  crearRemito() {
     console.log(this.selection);
-    localStorage.setItem('Lote',JSON.stringify(this.selection));
-    let ruta = `apps/pedidos/administracion/addLote`;
+    localStorage.setItem('Remito',JSON.stringify(this.selection));
+    let ruta = `apps/remitos/crear-remito`;
     this._router.navigate([ruta]);
   }
 

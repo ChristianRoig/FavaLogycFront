@@ -224,7 +224,7 @@ export class DistribucionConfirmarComponent implements OnInit {
   }
 
   volver(){
-    let ruta = `apps/remitos/crear-remitos`;
+    let ruta = `apps/remitos/crear-remito`;
     this._router.navigate([ruta]);
   }
 
