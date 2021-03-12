@@ -133,17 +133,17 @@ export const navigation: FuseNavigation[] = [
                 ]
             },
             {
-                id        : 'envio',
+                id        : 'carga',
                 title     : 'Carga',
                 type      : 'collapsable',
                 icon      : 'add_shopping_cart',
                 exactMatch: true,
                 children : [
                     {
-                        id        : 'crear-orden-distribucion',
+                        id        : 'control-de-carga',
                         title     : 'Control de Carga',
                         type      : 'item',
-                        url       : '/apps/carga/carga',
+                        url       : '/apps/carga/control-de-carga',
                         exactMatch: true
                     }
                 ]

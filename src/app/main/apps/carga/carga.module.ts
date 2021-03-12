@@ -20,15 +20,15 @@ import { ControlarCargaComponent } from './controlar-orden/controlar-orden.compo
 
 // servicios favalogyc
 import { ControlDeCargaService } from './control-de-carga/control-de-carga.service';
-import { ControlCargaService } from './controlar-orden/controlar-orden.service';
+import { ControlarOrdenService } from './controlar-orden/controlar-orden.service';
 
 const routes: Routes = [
     {
-        path     : ':modo',
+        path     : 'control-de-carga',
         component: ControlDeCargaComponent
     },
     {
-        path     : ':modo/:id',
+        path     : 'controlar-orden/:id',
         component: ControlarCargaComponent
     }, 
 ];
@@ -51,7 +51,7 @@ const routes: Routes = [
     ],
     providers   : [
         ControlDeCargaService,
-        ControlCargaService
+        ControlarOrdenService
     ]
 })
 

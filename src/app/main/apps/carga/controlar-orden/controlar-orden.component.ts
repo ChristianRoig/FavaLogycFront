@@ -1,19 +1,14 @@
 import {Component, ViewEncapsulation, OnInit, ElementRef, ViewChild} from '@angular/core';
 import { Debounce } from 'app/shared/decorators/debounce';
-import { SonidoService } from 'app/services/sonidos.service';
 import { ErroresService } from 'app/services/errores.service';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 import { MatDialog } from '@angular/material/dialog';
-import {
-  trigger,
-  state,
-  style,
-  animate,
-  transition
-} from '@angular/animations';
-import { Router } from '@angular/router';
+import { trigger, state, style, animate, transition } from '@angular/animations';
+import { ActivatedRoute, Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
-import { ControlDeCargaService } from '../control-de-carga/control-de-carga.service';
+//service
+import { ControlarOrdenService } from './controlar-orden.service';
 
 /**
  * @title Basic use of `<table mat-table>`
@@ -40,150 +35,74 @@ import { ControlDeCargaService } from '../control-de-carga/control-de-carga.serv
 })
 
 export class ControlarCargaComponent implements OnInit {
-    @ViewChild('buscarCUPA') buscarCUPAInput: ElementRef;
-    @ViewChild('buscarCodigoBarras') buscarCodigoBarrasInput: ElementRef;
-    @ViewChild('eliminaCupa') eliminaCupaInput: ElementRef;
-    arregloDeDetalles = [];
-    modo: string = '';
-    idLote : number;
-    nombreLote: string = '';
-    eliminar: boolean = false;
-    codigoBarras: string = null;
-    CUPA: string = null;
 
-    condicion: string = null;
-    endPoint: string = null;
+  @ViewChild('buscarCupa') buscarCupaInput: ElementRef;
+  //<!-- id, codComprobante, nroComprobante, fechaAlta,   , cantArticulos -->
+  displayedColumns: string[] = ['id', 'codComprobante', 'nroComprobante', 'fechaAlta', 'cantArticulos'];
+  dataSource2: any;
+
+  idOrdenDist: number = null;
+  cupa : number = null;
+
+  length: number = 0;
+  page: number = 0;
+  size: number = 10;
+  columna: string = 'nroCbte';
+  order: string = 'asc';
 
     constructor(
+      private _controlarOrdenService: ControlarOrdenService,
+      private _dialog: MatDialog,
       private _router: Router,
-      private _controlDeCargaService: ControlDeCargaService,
-      private _sonido: SonidoService,
-      private _erroresServices: ErroresService,
-      private _dialog: MatDialog
+      private _activatedRoute: ActivatedRoute
     ) { }
 
     
 
-    ngOnInit(): void{
-      this.arregloDeDetalles = this._controlDeCargaService.arregloDeDetalles;
-      this.idLote = this._controlDeCargaService.idLote;
-      this.modo = this._controlDeCargaService.modo;
+  ngOnInit(): void{
+    this._activatedRoute.params.subscribe( params => {
+    this.idOrdenDist = params['id'];
+    });
+    this.getRemitosDeOrdenDistribucion(this.idOrdenDist);
+  }
 
-      console.log("this.arregloDeDetalles", this.arregloDeDetalles);
-      console.log("modo", this.modo);
-      
-      if( !this.arregloDeDetalles || this.arregloDeDetalles.length == 0 ) {
-        this.alertArregloVacio();
-      } /* else {
-        this.setearCondicion();
-        this.verificarEtapas();
-      } */
-    }
-
-     alertArregloVacio(){
-        let titulo = 'Algo salió mal';
-        let mensaje = "El lote con id "+ this.idLote +" no existe o está vacío";
-        let errStatus = 404;
-        this.mostrarError(errStatus, titulo, mensaje);
-        this._router.navigate([`/apps/control/lote-en/${this.modo}`]);
-    }
-    /*
-    setearCondicion(){
-      if(this.modo === 'estanteria'){
-        this.condicion = 'EN LOTE';
-        this.endPoint = 'estanteria';
+  getRemitosDeOrdenDistribucion (idOrdenDist: number) {
+    this._controlarOrdenService.getRemitosDeOrdenDistribucion( idOrdenDist ) .subscribe( data => {
+      //console.log(data.remitos);
+      //this.remitosDeOrden = data.remitos;
+      this.dataSource2 = data.remitos;
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
       } else {
-        this.condicion = 'ESTANTERIA';
-        this.endPoint = 'darsena';
-      }
-    } */
-
-    /* verificarEtapas(){
-      for( let i=0; i<this.arregloDeDetalles.length; i++ ){
-        if( this.arregloDeDetalles[i].detalle.pedidoEtapa.nombre != this.condicion ) {
-          let titulo = 'Ubicacion de lote incorrecta';
-          let mensaje = "El CUPA de "+this.arregloDeDetalles[i].detalle.articulo.nombre+" está en estado " 
-            + this.arregloDeDetalles[i].detalle.pedidoEtapa.nombre + " y no se puede utilizar para control de "+this.endPoint;
-          let errStatus = 404;
-          this._router.navigate([`apps/control/lote-en/${this.endPoint}`]);
+        let errStatus = err.status
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
           this.mostrarError(errStatus, titulo, mensaje);
-          return;
-        } 
-      } 
-    } */ 
+        } else {
+          let titulo = 'Error al listar remitos de orden ' + this.idOrdenDist;
+          let mensaje = err.error.message.toString();
+          this.mostrarError(errStatus, titulo, mensaje);
+        }
+      }
+    });
+  }
 
-    async buscarDetalleUnico() {
-      console.log("buscarDetalleUnico");
-      this.arregloDeDetalles = null;
-      let res = await this._controlDeCargaService.getDetalleUnico(this.idLote, '', this.modo);
-      this.arregloDeDetalles = res.datos;
-      console.log(this.arregloDeDetalles);
-    }
 
-  @Debounce(1000) 
-  async agregarEstanteria() {
-    
-    console.log(this.CUPA);
-    console.log(this.codigoBarras);
-
-    let res = await this._controlDeCargaService.getCupaCodBarras(this.CUPA, this.idLote, this.codigoBarras, this.modo);
-    console.log(res);
-    if (!res) {
-      this._sonido.playAudioSuccess();
-      this.resetCampos();
-      this.buscarDetalleUnico();
-    } else {
-      this._erroresServices.error(res);
+  @Debounce(50)  
+  searchRemito() {
+    this.cupa = this.buscarCupaInput.nativeElement.value;
+    console.log(this.cupa);
+    if( this.cupa < 1 ){
+      this.cupa = null;
       
-      this.resetCampos();
-      await this.buscarDetalleUnico();
     }
   }
 
-  @Debounce(1000) 
-  searchCodigoBarras() {
-
-    this.codigoBarras = this.buscarCodigoBarrasInput.nativeElement.value;
-    this.buscarCUPAInput.nativeElement.focus();
-  }
-
-  @Debounce(1000) 
-  searchCUPA() {
-
-    this.CUPA = this.buscarCUPAInput.nativeElement.value;
-    this.agregarEstanteria();
-  }
-
-    resetCampos(){
-      this.buscarCodigoBarrasInput.nativeElement.value = '';
-      this.buscarCUPAInput.nativeElement.value = '';
-      this.codigoBarras = '';
-      this.CUPA = '';
-      this.eliminar = false;
-      this.buscarCodigoBarrasInput.nativeElement.focus();
-    }
-
-    toggle() {
-      this.eliminar = !this.eliminar;
-    }
-
-    get funcionEsconder() {
-      return this.eliminar ? 'show' : 'hide'
-    }
-
-  async borrar() {
-    
-    let res = await this._controlDeCargaService.eliminarArticuloDeLotePorCupa(this.eliminaCupaInput.nativeElement.value);
-    if(!res) {
-      this._sonido.playAudioSuccess();
-      this.resetCampos();
-      await this.buscarDetalleUnico();
-    } else {
-      this._erroresServices.error(res);
-      
-      this.resetCampos();
-      await this.buscarDetalleUnico();
-    }
+  getSoloFecha(fecha: any){
+    return fecha.split(' ')[0];
   }
 
   mostrarError(errStatus, titulo, mensaje){
@@ -193,15 +112,25 @@ export class ControlarCargaComponent implements OnInit {
         mensaje: mensaje
       } 
     });
-
-    /* dialogRef.afterClosed()
+    dialogRef.afterClosed()
       .subscribe( () => {
           if (errStatus != 0) {
-            //this.resetFiltros();
-            
+            this.getRemitosDeOrdenDistribucion( this.idOrdenDist );
           } else {
             this._router.navigate(['']);
           }
-      });*/
-  } 
+      });
+  }
+
+  /* sortData( event ) {
+      
+    this.page = 0;
+    this.columna = event.active;
+    
+    if (event.direction !== "")
+        this.order = event.direction;
+    
+    this.getRemitosDeOrdenDistribucion( this.idOrdenDist );
+  } */
+    
 }

@@ -5,19 +5,6 @@ import { environment } from 'environments/environment';
 
 const BASE_URL = environment.server + environment.baseUrl;
 
-export interface BodyDetalle{
-
-  idTipo : number;
-  idTurno : number;
-  idOrigen : number;
-  idEtapa : number;
-  idProvincia : number;
-  idLocalidad : number;
-  desdePedido : string;
-  hastaPedido : string;
-  idLote : number;
-}
-
 @Injectable({
   providedIn: 'root'
 })

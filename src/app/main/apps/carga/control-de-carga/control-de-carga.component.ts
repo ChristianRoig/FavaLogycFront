@@ -1,20 +1,11 @@
 import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { Debounce } from 'app/shared/decorators/debounce';
-import { SonidoService } from 'app/services/sonidos.service';
-import { Subscription } from 'rxjs';
-import { ErroresService } from 'app/services/errores.service';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog} from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
-import {
-  trigger,
-  state,
-  style,
-  animate,
-  transition
-} from '@angular/animations';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 //services
 import { ControlDeCargaService } from './control-de-carga.service';
@@ -41,95 +32,36 @@ import { ControlDeCargaService } from './control-de-carga.service';
 
 export class ControlDeCargaComponent implements OnInit {
 
-  @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
-  @ViewChild('buscarLote') buscarLoteInput: ElementRef;
-  @ViewChild('buscarCUPA') buscarCUPAInput: ElementRef;
-  @ViewChild('cupa') buscarLotePorCUPAInput: ElementRef;
-  @ViewChild('buscarCodigoBarras') buscarCodigoBarrasInput: ElementRef;
-  @ViewChild('eliminaCupa') eliminaCupaInput: ElementRef;
-
-  displayedColumns: string[] = ['id', 'nombre', 'fechaAlta', 'cantArticulos', 'estado', 'seleccionar'];
-  idLote: number = null;
-  lote: string = null;
-  estadoLote: string = '';
-  codigoBarras: string = null;
-  CUPA: string = null;
-
-  btnControlar: boolean = false;
-  btnBuscarLote: boolean = false;
-  busquedaAutomatica: boolean = false;
-
-  datos: any = [];
+  @ViewChild('buscar') buscarOrdenInput: ElementRef;
+  // cantArticulos: cantArticulosACargar: cantRemitos: estado: fecha: id: nombre:  
+  displayedColumns: string[] = ['id', 'nombre', 'fecha', 'estado', 'cantArticulos', 'cantArticulosACargar', 'cantRemitos', 'seleccionar'];
   dataSource2: any;
+  
   length: number = 0;
   page: number = 0;
   size: number = 10;
-
-  arregloDeDetalles;
-
-  modo: string = '';
-  condiciónDeEstadoLote: string = '';
-  subParametros: Subscription;
-  titulo: string;
-  eliminar: boolean = false;
+  columna: string = 'id';
+  order: string = 'asc';
+  
+  idOrdenDist: number = null;
+  titulo: string = '';
+  btnBuscar: boolean = false;
 
   constructor(private _router: Router, 
               private _fuseSidebarService: FuseSidebarService, 
               private _controlDeCargaService: ControlDeCargaService,
-              private route: ActivatedRoute,
-              private _sonido: SonidoService,
-              private _erroresServices: ErroresService,
-              private _dialog: MatDialog,) { 
-
-    this.route.params.subscribe(params => {
-      
-      this.modo = params['modo'];
-      //this.modo = params['modo'];
-
-      // agregar refresh
-      if(this.titulo) {
-        if(this.titulo !== this.modo) {
-          // location.reload();
-          this.lote = '';
-          this.buscarLoteInput.nativeElement.value = '';
-          // this.buscarCbteInput.nativeElement.value = '';
-        }
-      }
-      
-      switch (this.modo) {
-        case "carga":
-          this.titulo = "Carga";
-          this.condiciónDeEstadoLote = 'NUEVO'; 
-          //this.condiciónDeEstadoArticulos = 'EN LOTE'; 
-          this.getLotesPorEstado( this.page, this.size);
-          break;
-      }
-
-    });
-    
-  }
+              private _dialog: MatDialog,) {  }
 
   ngOnInit(): void {
     //console.log(this.condiciónDeEstadoLote);
-    //this.getLotesPorEstado( this.page, this.size);
+    this.getAllOrdenes();
   }
 
-  accederAlLoteById() {
-    this.idLote = this.buscarLoteInput.nativeElement.value;
-    console.log(this.idLote);
-    console.log("asd",this.modo);
-    this.buscarDetalleUnico();
-  }
-
-  buscarLotePorNombre(nombre: string) {
-    let bodyFechas = {
-      desdeLote   : null,
-      hastaLote   : null
-    } 
-    this.lote = nombre;
-    this._controlDeCargaService.getLotePorNombre(this.lote, bodyFechas)
-      .subscribe(data => {
+  getAllOrdenes() {
+    this._controlDeCargaService.getAllOrdenes( this.page, this.size, this.columna, this.order ).subscribe( data => {
+        console.log("data", data);
         this.dataSource2 = data.datos;
+        this.length = data.totalRegistros;
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
@@ -141,7 +73,7 @@ export class ControlDeCargaComponent implements OnInit {
             let mensaje = "Por favor comunicarse con Sistemas";
             this.mostrarError(errStatus, titulo, mensaje);
           } else {
-            let titulo = 'Error al listar';
+            let titulo = 'Error al buscar una orden';
             let mensaje = err.error.message.toString();
             this.mostrarError(errStatus, titulo, mensaje);
           }
@@ -149,250 +81,53 @@ export class ControlDeCargaComponent implements OnInit {
     }); 
   }
 
-  toggleBusquedaAutomatica(){
-    this.busquedaAutomatica = !this.busquedaAutomatica;
-  }
-
-  searchLote() {
-    this.lote = this.buscarLoteInput.nativeElement.value;
-    if (this.lote === '' || this.lote === null) {
-      this.lote = null;
-      this.btnControlar = false;
-      this.btnBuscarLote = false;
-    } else {
-      this.btnBuscarLote = true;
-    }
-  }
-
-  searchCupa() {
-    this.CUPA = this.buscarLotePorCUPAInput.nativeElement.value;
-    if(this.CUPA === '') {
-      this.CUPA = null;
-    }
-  }
-
-  controlarEnvio(lote){
-    console.log("hola");
-    let ruta = `apps/envios/envio/100`;
-    this._router.navigate([ruta]);
-    /* console.log(lote.estado.toLowerCase(), this.modo);
-    if(lote.estado === this.condiciónDeEstadoLote){
-      this.estadoLote = lote.estado;
-      this.idLote = lote.idLote;
-      this.buscarDetalleUnico()
+  @Debounce(50)
+  searchOrden() {
+    this.idOrdenDist = this.buscarOrdenInput.nativeElement.value;
+    if (this.idOrdenDist >= 1) {
+      this.btnBuscar = true;
     } else{
-      let errStatus = 0;
-      let titulo = 'El lote '+lote.nombre+' no se encuentra en la etapa '+this.modo;
-      let mensaje = "Realice el control en Control "+this.modo;
-      this.mostrarError(errStatus, titulo, mensaje);
-      let ruta = `apps/envios/envio/100`;
-      this._router.navigate([ruta]);
-    } */
+      this.idOrdenDist = null;
+      this.getAllOrdenes();
+    } 
   }
 
-  buscarLotePorCUPA( cupa ){
-    this.CUPA = cupa.value;
-    this._controlDeCargaService.getDetalleLotePorCupa( cupa, this.modo ) .subscribe( data => {
+  buscarOrdenPorId() {
+    let resultado: any = [];
+    this._controlDeCargaService.getOrdenById( this.idOrdenDist ).subscribe( data => {
         console.log(data);
-        /*
-        console.log(data.datos[0].detalle.pedidoLote.id);
-        console.log(data.datos[0].detalle.pedidoLote.nombre); 
-        console.log(data.datos[0].detalle.pedidoEtapa.nombre);
-        */
-
-        this.idLote = data.datos[0].detalle.pedidoLote.id;
-        this.lote = data.datos[0].detalle.pedidoLote.nombre;
-        this.estadoLote = data.datos[0].detalle.pedidoLote.estado.nombre;
-        
-        console.log(this.estadoLote, "|", this.condiciónDeEstadoLote );
-        if( this.estadoLote != this.condiciónDeEstadoLote ){
-          let errStatus = 0;
-          let titulo = 'El lote '+this.lote+' no se encuentra en la etapa '+this.condiciónDeEstadoLote;
-          let mensaje = "Realice el control en control "+this.modo;
-          this.mostrarError(errStatus, titulo, mensaje);
-          let ruta = `apps/control/lote-en/${this.modo}`;
-          this._router.navigate([ruta]);
-        }
-        else{
-          if(this.busquedaAutomatica){  // si la busquedaAtomatica es true accede de una al lote
-              this.buscarDetalleUnico();
-          }
-          else {
-            this.btnControlar = true;
-            this.btnBuscarLote = false;
-            this.buscarLoteInput.nativeElement.value = this.idLote;
-            this.buscarLotePorId( this.idLote );
-          }
-        }
+        resultado.push(data);
+        this.dataSource2 = resultado;
+        this.length = resultado.length;
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
           console.log("Client-side error");
-        } 
-        else {
+        } else {
           let errStatus = err.status
           if (errStatus == 0){
             let titulo = 'Error de Servidor';
             let mensaje = "Por favor comunicarse con Sistemas";
             this.mostrarError(errStatus, titulo, mensaje);
-          }
-          else {
-            let titulo = 'Error al listar';
+          } else {
+            let titulo = 'Error al buscar una orden';
             let mensaje = err.error.message.toString();
             this.mostrarError(errStatus, titulo, mensaje);
-            let ruta = `apps/control/lote-en/${this.modo}`;
-            this._router.navigate([ruta]);
           }
         }
-      });
+    }); 
   }
 
-  getLotesPorEstado(page, size ){
-    console.log(this.condiciónDeEstadoLote);
-    this._controlDeCargaService.getLotesPorEstado( this.condiciónDeEstadoLote, page, size ) .subscribe( data => {
-      console.log(data);
-      this.dataSource2 = data.datos; 
-      this.length = data.totalRegistros;
-    },
-    (err: HttpErrorResponse) => {
-      if (err.error instanceof Error) {
-        console.log("Client-side error");
-      } else {
-        let errStatus = err.status
-        if (errStatus == 0){
-          let titulo = 'Error de Servidor';
-          let mensaje = "Por favor comunicarse con Sistemas";
-          this.mostrarError(errStatus, titulo, mensaje);
-        } else {
-          let titulo = 'Error al listar';
-          let mensaje = err.error.message.toString();
-          this.mostrarError(errStatus, titulo, mensaje);
-        }
-      }
-    });
-  }
-
-  buscarLotePorId(id: number){
-    this._controlDeCargaService.getLotePorId( id ) .subscribe( data => {
-      this.datos.push(data);
-      console.log(this.datos);
-      this.dataSource2 = this.datos; 
-    },
-    (err: HttpErrorResponse) => {
-      if (err.error instanceof Error) {
-        console.log("Client-side error");
-      } else {
-        let errStatus = err.status
-        if (errStatus == 0){
-          let titulo = 'Error de Servidor';
-          let mensaje = "Por favor comunicarse con Sistemas";
-          this.mostrarError(errStatus, titulo, mensaje);
-        } else {
-          let titulo = 'Error al listar';
-          let mensaje = err.error.message.toString();
-          this.mostrarError(errStatus, titulo, mensaje);
-        }
-      }
-    });
-  }
   getSoloFecha(fecha: any){
     return fecha.split(' ')[0];
   }
 
-  @Debounce(1000) 
-  searchCodigoBarras() {
-
-    this.codigoBarras = this.buscarCodigoBarrasInput.nativeElement.value;
-    this.buscarCUPAInput.nativeElement.focus();
-  }
-
-  @Debounce(1000) 
-  searchCUPA() {
-
-    this.CUPA = this.buscarCUPAInput.nativeElement.value;
-    this.agregarEstanteria();
-  }
-
-  // @Debounce(1000) 
-  resetCampos(){
-    this.buscarCodigoBarrasInput.nativeElement.value = '';
-    this.buscarCUPAInput.nativeElement.value = '';
-    this.codigoBarras = '';
-    this.CUPA = '';
-    this.eliminar = false;
-    this.buscarCodigoBarrasInput.nativeElement.focus();
-  }
-
-  /**
-   * Toggle sidebar open
-   *
-   * @param key
-   */
-  toggleSidebarOpen(key): void
-  {
-      this._fuseSidebarService.getSidebar(key).toggleOpen();
-  }  
-
-  async buscarDetalleUnico() {
-
-    this.arregloDeDetalles = null;
-    // let codArt = this.buscarCbteInput.nativeElement.value ? this.buscarCbteInput.nativeElement.value : '';
-    let res = await this._controlDeCargaService.getDetalleUnico(this.idLote, '', this.modo);
-    this.arregloDeDetalles = res.datos;
-    console.log(this.arregloDeDetalles);
-    this._controlDeCargaService.arregloDeDetalles = this.arregloDeDetalles;
-    this._controlDeCargaService.idLote = this.idLote;
-    this._controlDeCargaService.modo = this.modo;
-    //let ruta = `apps/control/lote-en/${this.modo}/busqueda`;
-    let ruta = `apps/control/lote-en/${this.modo}/${this.idLote}`;
-    this._router.navigate([ruta]);
-  }
-  
-  @Debounce(1000) 
-  async agregarEstanteria() {
-    
-    console.log(this.CUPA);
-    console.log(this.codigoBarras);
-    
-
-    let res = await this._controlDeCargaService.getCupaCodBarras(this.CUPA, this.idLote, this.codigoBarras, this.modo);
-    console.log(res);
-    if(!res) {
-      this._sonido.playAudioSuccess();
-      this.resetCampos();
-      await this.buscarDetalleUnico();
-    } else {
-      this._erroresServices.error(res);
-      
-      this.resetCampos();
-      await this.buscarDetalleUnico();
+  verOrden( orden ){
+    if( orden != null ){
+      this.idOrdenDist = orden.id;
+      let ruta = `apps/carga/controlar-orden/${ this.idOrdenDist }`;
+      this._router.navigate([ ruta ]);
     }
-
-  }
-
-  get funcionEsconder() {
-    return this.eliminar ? 'show' : 'hide'
-  }
-
-  toggle() {
-    this.eliminar = !this.eliminar;
-  }
-
-  @Debounce(1000)
-  async eliminarCupa() {
-    
-    let res = await this._controlDeCargaService.eliminarArticuloDeLotePorCupa(this.eliminaCupaInput.nativeElement.value);
-    if(!res) {
-      this._sonido.playAudioSuccess();
-      this.resetCampos();
-      await this.buscarDetalleUnico();
-    } else {
-      this._erroresServices.error(res);
-      
-      this.resetCampos();
-      await this.buscarDetalleUnico();
-    }
-    
   }
 
   mostrarError(errStatus, titulo, mensaje){
@@ -420,7 +155,6 @@ export class ControlDeCargaComponent implements OnInit {
     this.page = e.pageIndex;
     this.size = e.pageSize;
     
-    //this._listaLoteService.getAllLotes( this.page, this.size ); 
-    this.getLotesPorEstado( this.page, this.size ); 
+    this.getAllOrdenes(); 
   }
 }

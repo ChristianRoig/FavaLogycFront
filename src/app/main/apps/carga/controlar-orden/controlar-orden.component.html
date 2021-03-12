@@ -1,50 +1,77 @@
-<app-plantilla-fondo titulo='Controlar Lote en Estantería'>
+<!-- ---------------------------------sadasdasdasd---------------- -->
+<app-plantilla-fondo-simple titulo='Controlar Orden' arrowBack=true>
 
+    <!-- CONTENIDO -->
+    <div contenido>
 
-    <div contenido class="content" fxLayout="row" fxLayoutAlign="center">
+        <div fxLayout="column" style="max-width: 100%;">
 
-        <div class="my-24" style="width: 100%;">
-
-            <div fxLayout="row" fxLayoutAlign="space-between">
-
-                <!-- <div class="h2 m-24">{{this.nombreLote}}</div> -->
+            <div fxLayout="row" class="titular">
+                <h1 class="colorText"> Orden {{ this.idOrdenDist }}</h1>
             </div>
 
-            <div fxLayout="row" class="controlesBusquedaF">
+            <div class="fuse-card my-20 pl-24 pr-24" style="max-width: 100%;">
 
-                <mat-form-field appearance="outline" class="inputBusqueda">
-                    <mat-label>Código de Barras</mat-label>
-                    <input #buscarCodigoBarras class="text-uppercase" (keyup)="searchCodigoBarras()" matInput value="" placeholder="Código de Barras">
-                    <mat-icon matSuffix>search</mat-icon>
-                </mat-form-field>
+                <div fxLayout="row" fxLayoutAlign="space-around">
 
-                <mat-form-field appearance="outline" class="inputBusqueda">
-                    <mat-label>CUPA</mat-label>
-                    <input #buscarCUPA class="text-uppercase" (keyup)="searchCUPA()" matInput value="" placeholder="CUPA">
-                    <mat-icon matSuffix>search</mat-icon>
-                </mat-form-field>
-                <div class="botonesBusqueda">
-                    <button mat-raised-button class="btn" color="primary" (click)="agregarEstanteria()">Agregar</button>
+                    <div class="controlesBusqueda">
+                        <mat-form-field appearance="outline" class="inputBusqueda">
+                            <mat-label>Cambiar estado de articulo por CUPA</mat-label>
+                            <!-- (keyup)="searchCUPA()" -->
+                            <input #buscarCupa matInput value="" placeholder="Ingrese el CUPA de un articulo">
+                            <mat-icon matSuffix>search</mat-icon>
+                        </mat-form-field>
 
-                    <button mat-raised-button class="btn" color="warn" (click)="toggle()">Eliminar</button>
+                        <div class="botonesBusqueda">
+                            <!-- (click)="getRemitoPorId()" -->
+                            <button class="btn" mat-raised-button color="primary">
+                                    Ingresar 
+                                </button>
+
+                        </div>
+                    </div>
                 </div>
+
+                <ng-container *ngTemplateOutlet="remitos" class="tablaArticulos"></ng-container>
             </div>
-
-            <div [@esconder]="funcionEsconder" class="botonesBusqueda" style="width: 100%;">
-                <mat-form-field appearance="outline" class="inputBusquedaBorrar">
-                    <mat-label>Cupa</mat-label>
-                    <input #eliminaCupa class="text-uppercase" matInput value="" placeholder="Cupa">
-                    <mat-icon matSuffix>search</mat-icon>
-                </mat-form-field>
-                <button mat-raised-button class="btnBorrar" color="warn" (click)="borrar()">Borrar</button>
-            </div>
-
-            <app-tabla-retractil *ngIf="this.arregloDeDetalles" [arregloDeDetalles]='this.arregloDeDetalles'></app-tabla-retractil>
-
-            <br>
-            <br>
-
         </div>
-
     </div>
-</app-plantilla-fondo>
+
+</app-plantilla-fondo-simple>
+<!-- ------------------------------------------------------------------------------------------------------------------------------ -->
+<ng-template #remitos>
+
+    <div style="width: 100%; overflow: auto;">
+        <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="dataSource2" class="mb-8 tablaArticulos">
+
+            <ng-container matColumnDef="id">
+                <th mat-header-cell mat-sort-header="id" *matHeaderCellDef> Id </th>
+                <td mat-cell *matCellDef="let remito"> {{ remito.id }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="codComprobante">
+                <th mat-header-cell mat-sort-header="nombre" *matHeaderCellDef> Codigo Comprobante </th>
+                <td mat-cell class="pl-32" *matCellDef="let remito"> REM </td>
+            </ng-container>
+
+            <ng-container matColumnDef="nroComprobante">
+                <th mat-header-cell mat-sort-header="nroComprobante" *matHeaderCellDef> Nro Comprobante </th>
+                <td mat-cell *matCellDef="let remito"> {{ remito.nroCbte }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="fechaAlta">
+                <th mat-header-cell mat-sort-header="fechaAlta" *matHeaderCellDef> Fecha Alta </th>
+                <td mat-cell *matCellDef="let remito"> {{ getSoloFecha(remito.fechaCbte) }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="cantArticulos">
+                <th mat-header-cell mat-sort-header="cantArticulos" *matHeaderCellDef> Cant Articulos </th>
+                <td mat-cell class="example-button-row pl-32" *matCellDef="let remito">{{ remito.pedidoDetalles.length }} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+
+</ng-template>
