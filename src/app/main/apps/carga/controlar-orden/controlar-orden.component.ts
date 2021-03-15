@@ -36,7 +36,7 @@ import { ControlarOrdenService } from './controlar-orden.service';
 
 export class ControlarCargaComponent implements OnInit {
 
-  @ViewChild('buscarCupa') buscarCupaInput: ElementRef;
+  @ViewChild('controlarCupa') buscarCupaInput: ElementRef;
   //<!-- id, codComprobante, nroComprobante, fechaAlta,   , cantArticulos -->
   displayedColumns: string[] = ['id', 'codComprobante', 'nroComprobante', 'fechaAlta', 'cantArticulos'];
   dataSource2: any;
@@ -63,12 +63,38 @@ export class ControlarCargaComponent implements OnInit {
     this._activatedRoute.params.subscribe( params => {
     this.idOrdenDist = params['id'];
     });
-    this.getRemitosDeOrdenDistribucion(this.idOrdenDist);
+    this.getArticulosDeRemitosDeOrdenDistribucion(this.idOrdenDist);
   }
 
-  getRemitosDeOrdenDistribucion (idOrdenDist: number) {
-    this._controlarOrdenService.getRemitosDeOrdenDistribucion( idOrdenDist ) .subscribe( data => {
-      //console.log(data.remitos);
+  getArticulosDeRemitosDeOrdenDistribucion( idOrdenDist: number ) {
+    this._controlarOrdenService.getArticulosDeRemitosDeOrdenDistribucion( idOrdenDist ) .subscribe( data => {
+      console.log(data.remitos);
+      //console.log(data.remitos[0].pedidoDetalles[0].articulo);
+      //this.remitosDeOrden = data.remitos;
+      this.dataSource2 = data.remitos;
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
+        } else {
+          let titulo = 'Error al listar remitos de orden ' + this.idOrdenDist;
+          let mensaje = err.error.message.toString();
+          this.mostrarError(errStatus, titulo, mensaje);
+        }
+      }
+    });
+  }
+
+  controlarArticuloPorCupa(){
+    this._controlarOrdenService.controlarArticuloPorCupa( this.idOrdenDist, this.cupa ) .subscribe( data => {
+      console.log(data.remitos);
+      //console.log(data.remitos[0].pedidoDetalles[0].articulo);
       //this.remitosDeOrden = data.remitos;
       this.dataSource2 = data.remitos;
     },
@@ -115,7 +141,7 @@ export class ControlarCargaComponent implements OnInit {
     dialogRef.afterClosed()
       .subscribe( () => {
           if (errStatus != 0) {
-            this.getRemitosDeOrdenDistribucion( this.idOrdenDist );
+            this.getArticulosDeRemitosDeOrdenDistribucion( this.idOrdenDist );
           } else {
             this._router.navigate(['']);
           }

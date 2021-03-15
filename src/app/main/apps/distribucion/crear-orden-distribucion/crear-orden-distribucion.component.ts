@@ -44,7 +44,7 @@ export class CrearOrdenDistribucionComponent implements OnInit {
   columna: string = 'nroCbte';
   order: string = 'asc';
   
-  toAdd = new Array<number>();
+  toAdd = new Array();
 
   /* body: BodyDetalle = {
     idTipo    : null,
@@ -67,7 +67,7 @@ export class CrearOrdenDistribucionComponent implements OnInit {
   getAllRemitosSinDistribucion( ){
     this._crearOrdenDistribucionService.getRemitosSinDistribucion( this.page, this.size, this.columna, this.order ) .subscribe( data => {
       console.log(data);
-      console.log(data.totalRegistros);
+      //console.log(data.totalRegistros);
       this.dataSource2 = data.datos;
       this.length = data.totalRegistros;
     },
@@ -113,14 +113,27 @@ export class CrearOrdenDistribucionComponent implements OnInit {
 
 
   crearOrdenDeDistribucion() {
-    for (let elemento of this.dataSource2){
-      this.toAdd.push(elemento.id);
-    }
-    console.log(this.toAdd);
 
+    let seleccionados= [];
+
+    console.log(this.selection);
+
+    localStorage.setItem('Orden',JSON.stringify(this.selection));
+    this.toAdd = JSON.parse(localStorage.getItem('Orden'))._selected;
+    
+    console.log(this.toAdd);
+    for(let i=0; i<this.toAdd.length; i++){
+      seleccionados.push(this.toAdd[i].id);
+    }
+
+    /* for (let elemento of this.toAdd){
+      console.log(elemento.id);
+      this.toAdd.push(elemento.id);
+    } */
+    
     let body = { 
       nombre : "Mi distribucion",
-      listaId: this.toAdd 
+      listaId: seleccionados
     }
 
     this._crearOrdenDistribucionService.crearOrdenDeDistribucion( body ).subscribe( params => {
@@ -142,6 +155,10 @@ export class CrearOrdenDistribucionComponent implements OnInit {
         }
       }
     });
+
+    setTimeout(() => {                          
+      this.getAllRemitosSinDistribucion( );
+      }, 1000);
   }
 
 
@@ -172,8 +189,7 @@ export class CrearOrdenDistribucionComponent implements OnInit {
    *
    * @param key
    */
-  toggleSidebarOpen(key): void
-  {
+  toggleSidebarOpen(key): void {
       this._fuseSidebarService.getSidebar(key).toggleOpen();
   }  
 

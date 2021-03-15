@@ -68,7 +68,7 @@ export class VerOrdenDistribucionComponent implements OnInit {
   
   getRemitosDeOrdenDistribucion (idOrdenDist: number) {
     this._verOrdenDistribucion.getRemitosDeOrdenDistribucion( idOrdenDist ) .subscribe( data => {
-      //console.log(data.remitos);
+      console.log(data.remitos);
       this.remitosDeOrden = data.remitos;
       this.dataSource2 = data.remitos;
     },
@@ -201,14 +201,17 @@ export class VerOrdenDistribucionComponent implements OnInit {
           let mensaje = "Por favor comunicarse con Sistemas";
           this.mostrarError(errStatus, titulo, mensaje);
         } else {
-          let titulo = 'Error al eliminar lote';
-          let mensaje = err.error.message.toString();
+          let titulo = 'Error al eliminar la orden '+ this.idOrdenDist;
+          let mensaje = " ";
           this.mostrarError(errStatus, titulo, mensaje);
         }
       }
-    }); 
-    let ruta = `apps/distribucion/ordenes-distribucion`;
-    this._router.navigate([ruta]);
+    });
+
+    setTimeout(() => {                          
+      let ruta = `apps/distribucion/ordenes-distribucion`;
+      this._router.navigate([ruta]);
+      }, 1000);
   }
 
   remitoYaEstaEnOrden(remitoBuscado){

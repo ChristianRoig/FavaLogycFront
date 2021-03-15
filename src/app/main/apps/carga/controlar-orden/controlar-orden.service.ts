@@ -21,8 +21,13 @@ export class ControlarOrdenService{
    * Devuelve Partes de Artículos
    * @returns {Observable} Observable
    */
-  getRemitosDeOrdenDistribucion( idOrdenDist ): Observable<any>{
+  getArticulosDeRemitosDeOrdenDistribucion( idOrdenDist ): Observable<any>{
     let ruta = `${BASE_URL}pedidos/distribucion/${ idOrdenDist }`;
+    return this._httpClient.get(ruta);
+  }
+
+  controlarArticuloPorCupa( idOrdenDist: number, cupa: number ): Observable<any>{
+    let ruta = `${BASE_URL}pedidos/distribucion/cupa/${ idOrdenDist }/${ cupa }`;
     return this._httpClient.get(ruta);
   }
 }

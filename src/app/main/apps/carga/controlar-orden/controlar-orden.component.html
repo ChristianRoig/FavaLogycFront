@@ -16,17 +16,17 @@
 
                     <div class="controlesBusqueda">
                         <mat-form-field appearance="outline" class="inputBusqueda">
-                            <mat-label>Cambiar estado de articulo por CUPA</mat-label>
+                            <mat-label>Controlar un articulo por CUPA</mat-label>
                             <!-- (keyup)="searchCUPA()" -->
-                            <input #buscarCupa matInput value="" placeholder="Ingrese el CUPA de un articulo">
+                            <input #controlarCupa matInput value="" placeholder="Ingrese el CUPA de un articulo">
                             <mat-icon matSuffix>search</mat-icon>
                         </mat-form-field>
 
                         <div class="botonesBusqueda">
                             <!-- (click)="getRemitoPorId()" -->
-                            <button class="btn" mat-raised-button color="primary">
-                                    Ingresar 
-                                </button>
+                            <button class="btn" mat-raised-button color="primary" (click)="controlarArticuloPorCupa()">
+                                Controlar 
+                            </button>
 
                         </div>
                     </div>
@@ -40,22 +40,22 @@
 </app-plantilla-fondo-simple>
 <!-- ------------------------------------------------------------------------------------------------------------------------------ -->
 <ng-template #remitos>
-
+    <mat-card-subtitle class="pl-16">Articulos que componen la orden</mat-card-subtitle>
     <div style="width: 100%; overflow: auto;">
         <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="dataSource2" class="mb-8 tablaArticulos">
-
+            <!-- codigoArticulo, id, nombre, partes, codigoUnicoParteArticulo -->
             <ng-container matColumnDef="id">
                 <th mat-header-cell mat-sort-header="id" *matHeaderCellDef> Id </th>
                 <td mat-cell *matCellDef="let remito"> {{ remito.id }} </td>
             </ng-container>
 
             <ng-container matColumnDef="codComprobante">
-                <th mat-header-cell mat-sort-header="nombre" *matHeaderCellDef> Codigo Comprobante </th>
+                <th mat-header-cell mat-sort-header="nombre" *matHeaderCellDef> Nombre </th>
                 <td mat-cell class="pl-32" *matCellDef="let remito"> REM </td>
             </ng-container>
 
             <ng-container matColumnDef="nroComprobante">
-                <th mat-header-cell mat-sort-header="nroComprobante" *matHeaderCellDef> Nro Comprobante </th>
+                <th mat-header-cell mat-sort-header="nroComprobante" *matHeaderCellDef> Codigo Articulo </th>
                 <td mat-cell *matCellDef="let remito"> {{ remito.nroCbte }} </td>
             </ng-container>
 
