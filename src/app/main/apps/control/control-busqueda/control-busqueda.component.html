@@ -65,7 +65,7 @@
                 <button mat-raised-button [disabled]="!this.CUPA" class="btn" color="primary" (click)="buscarLotePorCUPA(cupa.value)">Buscar Lote</button>
             </div>
             <div class="btnToggle">
-                <mat-slide-toggle formcontrolname="hidden" type="button" (click)="toggleBusquedaAutomatica" class="mat-slide-toggle"></mat-slide-toggle>
+                <mat-slide-toggle [checked]="this.busquedaAutomatica" formcontrolname="hidden" type="button" (change)="toggleBusquedaAutomatica()" class="mat-slide-toggle"></mat-slide-toggle>
                 <label class="paddingLeft">Acceso automático</label>
             </div>
         </div>

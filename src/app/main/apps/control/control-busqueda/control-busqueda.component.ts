@@ -57,7 +57,7 @@ export class ControlEstanteriaComponent implements OnInit {
 
   btnControlar: boolean = false;
   btnBuscarLote: boolean = false;
-  busquedaAutomatica: boolean = false;
+  busquedaAutomatica: boolean = true;
 
   datos: any = [];
   dataSource2: any;
@@ -157,6 +157,7 @@ export class ControlEstanteriaComponent implements OnInit {
 
   toggleBusquedaAutomatica(){
     this.busquedaAutomatica = !this.busquedaAutomatica;
+    console.log(this.busquedaAutomatica);
   }
 
   searchLote() {
