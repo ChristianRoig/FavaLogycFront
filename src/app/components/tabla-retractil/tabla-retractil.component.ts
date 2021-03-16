@@ -21,7 +21,7 @@ export class TablaRetractilComponent implements OnInit {
   //'Check', 
   columnsToDisplay = ['Cod. Art.', 'Nomb. Art.', 'Cant.', 'Etapa', 'CodBarra', 'Cupa'];
   ELEMENT_DATA: DetallesTablaRetractil[] = [];
-  columnsToDisplay2 = ['Checks', 'Nomb. de Parte', 'Identificador'];
+  columnsToDisplay2 = ['Checks', 'Nomb. de Parte', 'Identificador', 'CUPA'];
   expandedElement: DetallesTablaRetractil | null;
 
   constructor() { }
@@ -70,7 +70,8 @@ export class TablaRetractilComponent implements OnInit {
         let detalle = {
           Checks: elemento.checkEstanteria,
           Nomb_de_Parte: elemento.pedidoDetalle.articulo.nombre,
-          Identificador: elemento.id
+          Identificador: elemento.id,
+          CUPA: elemento.codigoUnicoParteArticulo
         }
         objeto.Detalle.push(detalle);
       }
