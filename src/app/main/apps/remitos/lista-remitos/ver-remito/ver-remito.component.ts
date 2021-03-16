@@ -31,7 +31,8 @@ export class VerRemitoComponent implements OnInit {
   
   @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
 
-  displayedColumns: string[] = ['select', 'id', 'codComprobante', 'nroComprobante', 'fechaAlta', 'cantArticulos'];
+  //displayedColumns: string[] = ['select', 'id', 'codComprobante', 'nroComprobante', 'fechaAlta', 'cantArticulos'];
+  displayedColumns: string[] = ['select', 'id', 'codigoArticulo', 'nombre', 'cantPartes', 'localidad', 'direccion', 'fechaDeEntrega'];
   selection = new SelectionModel<any>(true, []);
   dataSource2: any;
 
@@ -69,9 +70,10 @@ export class VerRemitoComponent implements OnInit {
     let resultado: any = [];
     console.log("busqueda", this.busqueda);
     this._verRemitoService.getRemitoPorId( idRemito ).subscribe( data => {
+      console.log( "acá" ,data );
       resultado.push( data );
-      console.log( resultado );
-      this.dataSource2 = resultado;
+      console.log( resultado[0].pedidoDetalles );
+      this.dataSource2 = resultado[0].pedidoDetalles;
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {

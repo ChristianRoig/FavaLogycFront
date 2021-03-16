@@ -41,7 +41,7 @@ export class ControlDeCargaComponent implements OnInit {
   page: number = 0;
   size: number = 10;
   columna: string = 'id';
-  order: string = 'asc';
+  order: string = 'desc';
   
   idOrdenDist: number = null;
   titulo: string = '';

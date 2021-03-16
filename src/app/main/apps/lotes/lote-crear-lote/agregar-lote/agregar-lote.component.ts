@@ -167,6 +167,8 @@ export class LoteAgregarLoteComponent implements OnInit {
         }
       }
     )
+
+    this.esperarYnavegarAlotes();
    
   }
 
@@ -254,6 +256,17 @@ export class LoteAgregarLoteComponent implements OnInit {
           this.seleccionarImpresora(idLote);
         }
       });
+  }
+
+  esperarYnavegarAlotes(){
+    setTimeout(() => {                          
+      this.navegarAlistaLotes( );
+    }, 1000);
+  }
+
+  navegarAlistaLotes(){
+    let ruta = `apps/lotes/lista-lotes`;
+    this._router.navigate([ruta]);
   }
 
   volver(){

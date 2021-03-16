@@ -47,8 +47,7 @@ export class ControlBusquedaService
 		});
     }
 
-    getLotesPorEstado(estado: string, page, size): Observable<any>{  
-        
+    getLotesPorEstado(estado: string, page, size): Observable<any>{      
         let ruta = `${ BASE_URL }pedidos/pedidolote/lote/v2/${ estado }/${ page }/${ size }`;
         return this._httpClient.get(ruta);
     }

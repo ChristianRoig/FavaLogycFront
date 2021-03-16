@@ -157,10 +157,14 @@ export class CrearOrdenDistribucionComponent implements OnInit {
     });
 
     setTimeout(() => {                          
-      this.getAllRemitosSinDistribucion( );
+      this.navegarAlistaOrdenes();
       }, 1000);
   }
 
+  navegarAlistaOrdenes(){
+    let ruta = `apps/distribucion/ordenes-distribucion`;
+      this._router.navigate([ruta]);
+  }
 
   isAllSelected() {
     const numSelected = this.selection.selected.length;

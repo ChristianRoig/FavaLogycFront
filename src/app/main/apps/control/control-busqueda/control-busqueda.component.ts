@@ -91,7 +91,7 @@ export class ControlEstanteriaComponent implements OnInit {
         if(this.titulo !== this.modo) {
           // location.reload();
           this.lote = '';
-          this.buscarLoteInput.nativeElement.value = '';
+          //this.buscarLoteInput.nativeElement.value = '';
           // this.buscarCbteInput.nativeElement.value = '';
         }
       }
@@ -251,7 +251,7 @@ export class ControlEstanteriaComponent implements OnInit {
       });
   }
 
-  getLotesPorEstado(page, size ){
+  getLotesPorEstado( page, size ){
     console.log(this.condiciónDeEstadoLote);
     this._controlBusquedaService.getLotesPorEstado( this.condiciónDeEstadoLote, page, size ) .subscribe( data => {
       console.log(data);

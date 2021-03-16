@@ -45,53 +45,65 @@
         <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="dataSource2" class="mb-8 tablaArticulos">
 
             <ng-container matColumnDef="select" sticky>
-                <th mat-header-cell *matHeaderCellDef class="px-24">
+                <th mat-header-cell *matHeaderCellDef class="px-8">
                     <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() 
                         && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
                     </mat-checkbox>
                 </th>
 
-                <td mat-cell *matCellDef="let row" class="px-24">
+                <td mat-cell *matCellDef="let row" class="px-8">
                     <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
                     </mat-checkbox>
                 </td>
             </ng-container>
-            <!--  id,codComprobante, nroComprobante, fechaAlta, cantArticulos -->
+
+            <!-- id, codigoArticulo, nombre, fechaDeEntrega -->
             <ng-container matColumnDef="id">
-                <th mat-header-cell mat-sort-header="id" *matHeaderCellDef> Id </th>
-                <td mat-cell *matCellDef="let comprobante"> {{ comprobante.id }} </td>
+                <th mat-header-cell *matHeaderCellDef class="px-8"> Id </th>
+                <td mat-cell *matCellDef="let articulo" class="px-8"> {{ articulo.articulo.id }} </td>
             </ng-container>
 
-            <ng-container matColumnDef="codComprobante">
-                <th mat-header-cell mat-sort-header="nombre" *matHeaderCellDef> Codigo Comprobante </th>
-                <td mat-cell class="pl-32" *matCellDef="let comprobante"> REM </td>
+            <ng-container matColumnDef="codigoArticulo">
+                <th mat-header-cell *matHeaderCellDef> Código Articulo </th>
+                <td mat-cell *matCellDef="let articulo">{{ articulo.articulo.codigoArticulo }}</td>
             </ng-container>
 
-            <ng-container matColumnDef="nroComprobante">
-                <th mat-header-cell mat-sort-header="nroComprobante" *matHeaderCellDef> Nro Comprobante </th>
-                <td mat-cell *matCellDef="let comprobante"> {{ comprobante.nroCbte }} </td>
+            <ng-container matColumnDef="nombre">
+                <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                <td mat-cell *matCellDef="let articulo "> {{ articulo.articulo.nombre }} </td>
             </ng-container>
 
-            <ng-container matColumnDef="fechaAlta">
-                <th mat-header-cell mat-sort-header="fechaAlta" *matHeaderCellDef> Fecha Alta </th>
-                <td mat-cell *matCellDef="let comprobante"> {{ getSoloFecha(comprobante.fechaCbte) }} </td>
+            <ng-container matColumnDef="cantPartes">
+                <th mat-header-cell *matHeaderCellDef> Cant Partes </th>
+                <td mat-cell class="example-button-row pl-16" *matCellDef="let articulo">{{ articulo.listaPedidoDetalleParte.length }} </td>
             </ng-container>
 
-            <ng-container matColumnDef="cantArticulos">
-                <th mat-header-cell mat-sort-header="cantArticulos" *matHeaderCellDef> Cant Articulos </th>
-                <td mat-cell class="example-button-row pl-32" *matCellDef="let comprobante">{{ comprobante.pedidoDetalles.length }} </td>
+            <ng-container matColumnDef="localidad">
+                <th mat-header-cell *matHeaderCellDef> Localidad </th>
+                <td mat-cell class="example-button-row" *matCellDef="let articulo">{{ articulo.pedidoDomicilioEntrega.sysLocalidad.nombre }} </td>
             </ng-container>
 
-            <!-- <ng-container *ngIf="this.mostrarRemitos == true" matColumnDef="accion">
-                <th mat-header-cell class="pl-20" *matHeaderCellDef> Acción </th>
-                <td mat-cell class="example-button-row" *matCellDef="let comprobante">
-                    <button mat-stroked-button color="accent" (click)="addComprobanteAorden(comprobante)"> Agregar </button>
+            <ng-container matColumnDef="direccion">
+                <th mat-header-cell *matHeaderCellDef> direccion </th>
+                <td mat-cell *matCellDef="let articulo "> {{ articulo.pedidoDomicilioEntrega.direccion }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="fechaDeEntrega">
+                <th mat-header-cell *matHeaderCellDef> Fecha Entrega </th>
+                <td mat-cell *matCellDef="let articulo "> {{ articulo.pedidoDomicilioEntrega.fechaDeEntrega }} </td>
+            </ng-container>
+
+
+            <!-- <ng-container *ngIf="this.mostrarRemitos==t rue " matColumnDef="accion ">
+                <th mat-header-cell class="pl-20 " *matHeaderCellDef> Acción </th>
+                <td mat-cell class="example-button-row " *matCellDef="let comprobante ">
+                    <button mat-stroked-button color="accent " (click)="addComprobanteAorden(comprobante) "> Agregar </button>
                 </td>
             </ng-container> -->
-            <!-- [(ngModel)]="mostrarRemitos" -->
+            <!-- [(ngModel)]="mostrarRemitos " -->
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns "></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns; "></tr>
         </table>
     </div>
 </ng-template>

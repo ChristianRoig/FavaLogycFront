@@ -85,6 +85,7 @@ export class OrdenesDistribucionComponent implements OnInit {
   }
 
   getAllOrdenes() {
+    this.order = 'desc';
     this._ordenesDistribucionService.getAllOrdenes( this.page, this.size, this.columna, this.order ).subscribe( data => {
         console.log(data);
         this.dataSource2 = data.datos;

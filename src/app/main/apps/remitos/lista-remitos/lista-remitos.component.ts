@@ -52,6 +52,8 @@ export class ListaRemitosComponent implements OnInit {
   }
   
   getAllRemitosSinDistribucion( ){
+    this.columna = 'id';
+    this.order = 'desc';
     this._listaRemitosService.getRemitosSinDistribucion( this.page, this.size, this.columna, this.order ) .subscribe( data => {
       console.log(data);
       console.log(data.totalRegistros);
