@@ -21,12 +21,13 @@ export class ControlarOrdenService{
    * Devuelve Partes de Artículos
    * @returns {Observable} Observable
    */
-  getArticulosDeRemitosDeOrdenDistribucion( idOrdenDist ): Observable<any>{
-    let ruta = `${BASE_URL}pedidos/distribucion/${ idOrdenDist }`;
+  getArticulosDeOrdenDistribucion( idOrdenDist ): Observable<any>{
+    let ruta = `${BASE_URL}pedidos/distribucion/articulos-de/${ idOrdenDist }`;
     return this._httpClient.get(ruta);
   }
 
   controlarArticuloPorCupa( idOrdenDist: number, cupa: number ): Observable<any>{
+    console.log(idOrdenDist," - " ,cupa);
     let ruta = `${BASE_URL}pedidos/distribucion/cupa/${ idOrdenDist }/${ cupa }`;
     return this._httpClient.get(ruta);
   }

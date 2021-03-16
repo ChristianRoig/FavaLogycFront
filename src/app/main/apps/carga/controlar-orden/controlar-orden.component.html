@@ -18,7 +18,7 @@
                         <mat-form-field appearance="outline" class="inputBusqueda">
                             <mat-label>Controlar un articulo por CUPA</mat-label>
                             <!-- (keyup)="searchCUPA()" -->
-                            <input #controlarCupa matInput value="" placeholder="Ingrese el CUPA de un articulo">
+                            <input #controlarCupa (keyup)="searchCupa()" matInput value="" placeholder="Ingrese el CUPA de un articulo">
                             <mat-icon matSuffix>search</mat-icon>
                         </mat-form-field>
 
@@ -40,33 +40,56 @@
 </app-plantilla-fondo-simple>
 <!-- ------------------------------------------------------------------------------------------------------------------------------ -->
 <ng-template #remitos>
-    <mat-card-subtitle class="pl-16">Articulos que componen la orden</mat-card-subtitle>
+
+    <!-- <mat-icon aria-hidden="true" class="material-icons color_white ">info</mat-icon> -->
+    <mat-card-subtitle class="pl-24">Articulos que componen la orden</mat-card-subtitle>
+    <!-- "nombreTipoCbte"| nroParte| -->
+    <!-- idArticulo|nombreArticulo|codigoArticulo|codigoUnicoParteArticulo|etapa|nroParte|nroCbte|checkTransporte -->
     <div style="width: 100%; overflow: auto;">
+        <!-- <p></p> -->
         <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="dataSource2" class="mb-8 tablaArticulos">
             <!-- codigoArticulo, id, nombre, partes, codigoUnicoParteArticulo -->
-            <ng-container matColumnDef="id">
-                <th mat-header-cell mat-sort-header="id" *matHeaderCellDef> Id </th>
-                <td mat-cell *matCellDef="let remito"> {{ remito.id }} </td>
+            <ng-container matColumnDef="idArticulo">
+                <th mat-header-cell *matHeaderCellDef> Id Articulo </th>
+                <td mat-cell class="pl-32 " *matCellDef="let articulo"> {{ articulo.idArticulo }} </td>
             </ng-container>
 
-            <ng-container matColumnDef="codComprobante">
-                <th mat-header-cell mat-sort-header="nombre" *matHeaderCellDef> Nombre </th>
-                <td mat-cell class="pl-32" *matCellDef="let remito"> REM </td>
+            <ng-container matColumnDef="nombreArticulo">
+                <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                <td mat-cell class="espaciado" *matCellDef="let articulo">{{ articulo.nombreArticulo }}</td>
             </ng-container>
 
-            <ng-container matColumnDef="nroComprobante">
-                <th mat-header-cell mat-sort-header="nroComprobante" *matHeaderCellDef> Codigo Articulo </th>
-                <td mat-cell *matCellDef="let remito"> {{ remito.nroCbte }} </td>
+            <ng-container matColumnDef="codigoArticulo">
+                <th mat-header-cell *matHeaderCellDef> Codigo Articulo </th>
+                <td mat-cell *matCellDef="let articulo"> {{ articulo.codigoArticulo }} </td>
             </ng-container>
 
-            <ng-container matColumnDef="fechaAlta">
-                <th mat-header-cell mat-sort-header="fechaAlta" *matHeaderCellDef> Fecha Alta </th>
-                <td mat-cell *matCellDef="let remito"> {{ getSoloFecha(remito.fechaCbte) }} </td>
+            <ng-container matColumnDef="codigoUnicoParteArticulo">
+                <th mat-header-cell *matHeaderCellDef> CUPA </th>
+                <td mat-cell class="example-button-row" *matCellDef="let articulo">{{ articulo.codigoUnicoParteArticulo }} </td>
             </ng-container>
 
-            <ng-container matColumnDef="cantArticulos">
-                <th mat-header-cell mat-sort-header="cantArticulos" *matHeaderCellDef> Cant Articulos </th>
-                <td mat-cell class="example-button-row pl-32" *matCellDef="let remito">{{ remito.pedidoDetalles.length }} </td>
+            <ng-container matColumnDef="etapa">
+                <th mat-header-cell *matHeaderCellDef> Etapa </th>
+                <td mat-cell class="example-button-row" *matCellDef="let articulo">{{ articulo.etapa }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="nroCbte">
+                <th mat-header-cell *matHeaderCellDef> Nro Comprobante </th>
+                <td mat-cell *matCellDef="let articulo"> {{ articulo.nroCbte }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="nroParte">
+                <th mat-header-cell *matHeaderCellDef> Nro Parte </th>
+                <td mat-cell class="example-button-row pl-16" *matCellDef="let articulo">{{ articulo.nroParte }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="checkTransporte">
+                <th mat-header-cell *matHeaderCellDef> Chequeo </th>
+                <td mat-cell class="example-button-row pl-16" *matCellDef="let articulo">
+                    <mat-icon *ngIf="articulo.checkTransporte" class="active-icon green-600">check</mat-icon>
+                    <mat-icon *ngIf="!articulo.checkTransporte" class="active-icon red-500">close</mat-icon>
+                </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

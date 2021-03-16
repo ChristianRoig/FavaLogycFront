@@ -95,18 +95,18 @@ export class RemitosConfirmarComponent implements OnInit {
 
   selectTransporte(event: Event) {
     this.selectedTransporte = (event.target as HTMLSelectElement).value;
-    console.log(this.selectedTransporte);
+    console.log("this.selectedTransporte",this.selectedTransporte);
   }
   
   selectTalonario(event: Event) {
     this.selectedTalonario = (event.target as HTMLSelectElement).value;
     this.getUltNroTalonario();
-    console.log(this.selectedTalonario);
+    console.log("this.selectedTalonario",this.selectedTalonario);
   }
   
   selectDepositoCarga(event: Event) {
     this.selectedDepositoCarga = (event.target as HTMLSelectElement).value;
-    console.log(this.selectedDepositoCarga);
+    console.log("this.selectedDepositoCarga", this.selectedDepositoCarga);
   }
 
   getfiltros(){
@@ -245,7 +245,7 @@ export class RemitosConfirmarComponent implements OnInit {
     }
     console.log(body);
 
-    /* this._serviceRemitosConfirmar.generarRemito( body ).subscribe(params => {
+    this._serviceRemitosConfirmar.generarRemito( body ).subscribe(params => {
       console.log("entró");
     },
     (err: HttpErrorResponse) => {
@@ -263,7 +263,7 @@ export class RemitosConfirmarComponent implements OnInit {
           this.mostrarError(errStatus, titulo, mensaje);
         }
       }
-    }); */
+    });
   }
 
   volver(){

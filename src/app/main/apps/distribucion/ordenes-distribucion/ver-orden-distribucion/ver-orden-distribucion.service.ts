@@ -32,11 +32,12 @@ export class VerOrdenDistribucionService {
       "Content-Type": "application/json"
     });
     console.log( listaIdRemitos );
-    let body = { "listaId" : [ listaIdRemitos ] } 
+    let body = { "listaId" :  listaIdRemitos  } 
+
     console.log( body );
     
     let ruta = `${BASE_URL}pedidos/distribucion/remito`;    
-    return this._httpClient.post(ruta, body,{ headers: headers });
+    return this._httpClient.post( ruta, body,{ headers: headers });
   }
 
   getRemitoPorId( idRemito: number ){

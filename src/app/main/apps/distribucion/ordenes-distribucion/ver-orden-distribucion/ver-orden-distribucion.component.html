@@ -46,7 +46,7 @@
 </app-plantilla-fondo-simple>
 <!-- ------------------------------------------------------------------------------------------------------------------------------ -->
 <ng-template #remitos>
-
+    <mat-card-subtitle class="pl-16">Remitos que componen la orden</mat-card-subtitle>
     <div style="width: 100%; overflow: auto;">
         <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="dataSource2" class="mb-8 tablaArticulos">
 

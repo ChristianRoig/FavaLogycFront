@@ -282,6 +282,7 @@ export class VerOrdenDistribucionComponent implements OnInit {
       listaIdRemitos.push(entry.id);
     }
     console.log(listaIdRemitos);
+
     this._verOrdenDistribucion.postEliminarRemitoDeOrden( listaIdRemitos ).subscribe(params => {
       console.log("eliminado ");
       this.getRemitosDeOrdenDistribucion( this.idOrdenDist );
@@ -302,7 +303,10 @@ export class VerOrdenDistribucionComponent implements OnInit {
         }
       }
     });
-    this.getRemitosDeOrdenDistribucion( this.idOrdenDist );
+
+    setTimeout(() => {                          
+      this.getRemitosDeOrdenDistribucion( this.idOrdenDist );
+      }, 1000);
   }
 
   mostrarError(errStatus, titulo, mensaje){

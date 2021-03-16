@@ -37,8 +37,8 @@ import { ControlarOrdenService } from './controlar-orden.service';
 export class ControlarCargaComponent implements OnInit {
 
   @ViewChild('controlarCupa') buscarCupaInput: ElementRef;
-  //<!-- id, codComprobante, nroComprobante, fechaAlta,   , cantArticulos -->
-  displayedColumns: string[] = ['id', 'codComprobante', 'nroComprobante', 'fechaAlta', 'cantArticulos'];
+  //'idArticulo','nombreArticulo','codigoArticulo','codigoUnicoParteArticulo','etapa','nroParte','nroCbte','checkTransporte'
+  displayedColumns: string[] = ['idArticulo','nombreArticulo','codigoArticulo','codigoUnicoParteArticulo','etapa','nroParte','nroCbte','checkTransporte'];
   dataSource2: any;
 
   idOrdenDist: number = null;
@@ -63,15 +63,15 @@ export class ControlarCargaComponent implements OnInit {
     this._activatedRoute.params.subscribe( params => {
     this.idOrdenDist = params['id'];
     });
-    this.getArticulosDeRemitosDeOrdenDistribucion(this.idOrdenDist);
+    this.getArticulosDeOrdenDistribucion(this.idOrdenDist);
   }
 
-  getArticulosDeRemitosDeOrdenDistribucion( idOrdenDist: number ) {
-    this._controlarOrdenService.getArticulosDeRemitosDeOrdenDistribucion( idOrdenDist ) .subscribe( data => {
-      console.log(data.remitos);
+  getArticulosDeOrdenDistribucion( idOrdenDist: number ) {
+    this._controlarOrdenService.getArticulosDeOrdenDistribucion( idOrdenDist ) .subscribe( data => {
+      console.log(data);
       //console.log(data.remitos[0].pedidoDetalles[0].articulo);
       //this.remitosDeOrden = data.remitos;
-      this.dataSource2 = data.remitos;
+      this.dataSource2 = data.datos;
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
@@ -93,10 +93,11 @@ export class ControlarCargaComponent implements OnInit {
 
   controlarArticuloPorCupa(){
     this._controlarOrdenService.controlarArticuloPorCupa( this.idOrdenDist, this.cupa ) .subscribe( data => {
-      console.log(data.remitos);
+      console.log(data);
+      console.log("controlado");
       //console.log(data.remitos[0].pedidoDetalles[0].articulo);
       //this.remitosDeOrden = data.remitos;
-      this.dataSource2 = data.remitos;
+      //this.dataSource2 = data;
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
@@ -114,21 +115,24 @@ export class ControlarCargaComponent implements OnInit {
         }
       }
     });
+    this.esperarYactualizarDatos();
+  }
+
+  esperarYactualizarDatos(){
+    setTimeout(() => {                          
+      this.getArticulosDeOrdenDistribucion( this.idOrdenDist );
+    }, 3000);
   }
 
 
-  @Debounce(50)  
-  searchRemito() {
+  @Debounce(1000)  
+  searchCupa() {
     this.cupa = this.buscarCupaInput.nativeElement.value;
     console.log(this.cupa);
     if( this.cupa < 1 ){
       this.cupa = null;
       
     }
-  }
-
-  getSoloFecha(fecha: any){
-    return fecha.split(' ')[0];
   }
 
   mostrarError(errStatus, titulo, mensaje){
@@ -141,7 +145,7 @@ export class ControlarCargaComponent implements OnInit {
     dialogRef.afterClosed()
       .subscribe( () => {
           if (errStatus != 0) {
-            this.getArticulosDeRemitosDeOrdenDistribucion( this.idOrdenDist );
+            this.getArticulosDeOrdenDistribucion( this.idOrdenDist );
           } else {
             this._router.navigate(['']);
           }

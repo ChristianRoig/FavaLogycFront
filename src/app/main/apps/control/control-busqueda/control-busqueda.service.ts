@@ -84,7 +84,6 @@ export class ControlBusquedaService
 
         let ruta = `${BASE_URL}pedidos${pedidoparte}/cupa/lote/codbarras/${cupa}/${idLote}/${codBarras}`;
         
-
         return this._httpClient.get(ruta, {headers: headers})
 		.toPromise().then ( (response: any) => {
 
