@@ -352,7 +352,7 @@ export class ControlEstanteriaComponent implements OnInit {
     this._router.navigate([ruta]);
   }
   
-  @Debounce(1000) 
+  //@Debounce(1000) 
   async agregarEstanteria() {
     
     console.log(this.CUPA);

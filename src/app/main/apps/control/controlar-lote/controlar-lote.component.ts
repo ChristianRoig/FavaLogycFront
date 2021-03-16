@@ -151,7 +151,7 @@ export class ControlarLoteComponent implements OnInit {
   searchCUPA() {
 
     this.CUPA = this.buscarCUPAInput.nativeElement.value;
-    this.agregarEstanteria();
+    //this.agregarEstanteria();
   }
 
     resetCampos(){

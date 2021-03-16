@@ -264,8 +264,17 @@ export class RemitosConfirmarComponent implements OnInit {
         }
       }
     });
-  }
 
+    setTimeout(() => {                          
+      this.navegarAlistaRemitos();
+      }, 1000);
+  }
+  
+  navegarAlistaRemitos(){
+    let ruta = `apps/remitos/lista-remitos`;
+    this._router.navigate([ruta]);
+  }
+  
   volver(){
     let ruta = `apps/remitos/crear-remito`;
     this._router.navigate([ruta]);
