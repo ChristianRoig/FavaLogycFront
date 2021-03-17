@@ -10,11 +10,16 @@ import { HttpErrorResponse } from '@angular/common/http';
 //services
 import { ListaRemitosService } from './lista-remitos.service';
 
+interface Estados{
+  valor: string;
+  vista: string;
+}
 @Component({  
   selector: 'app-lista-remitos',  
   templateUrl: './lista-remitos.component.html',
   styleUrls: ['./lista-remitos.component.scss']
 })
+
 
 export class ListaRemitosComponent implements OnInit {
 
@@ -30,6 +35,14 @@ export class ListaRemitosComponent implements OnInit {
   size: number = 10;
   columna: string = 'nroCbte';
   order: string = 'asc';
+
+  estados: Estados [] = [
+    { valor: "NUEVO", vista: "Nuevos" },
+    { valor: "ANULADO", vista: "Anulados" },
+    { valor: "ESTANTERIA", vista: "Estantería" },
+    { valor: "DARSENA", vista: "Dársena" },
+    { valor: "TODOS", vista: "Todos" }
+  ];
 
   constructor(private _router: Router, 
               private _fuseSidebarService: FuseSidebarService, 

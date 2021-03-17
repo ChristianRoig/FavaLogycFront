@@ -156,8 +156,6 @@ export class ListaLotesComponent implements OnInit {
   estados: Estados [] = [
     { valor: "NUEVO", vista: "Nuevos" },
     { valor: "ANULADO", vista: "Anulados" },
-    { valor: "REMITIDO", vista: "Remitidos" },
-    { valor: "TRANSPORTE", vista: "Transporte" },
     { valor: "ESTANTERIA", vista: "Estantería" },
     { valor: "DARSENA", vista: "Dársena" },
     { valor: "TODOS", vista: "Todos" }

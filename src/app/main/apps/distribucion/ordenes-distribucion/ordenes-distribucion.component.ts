@@ -18,6 +18,11 @@ export interface Orden {
   FechaAlta: string;
 }
 
+interface Estados{
+  valor: string;
+  vista: string;
+}
+
 @Component({  
   selector: 'app-ordenes-distribucion',  
   templateUrl: './ordenes-distribucion.component.html',
@@ -46,6 +51,14 @@ export class OrdenesDistribucionComponent implements OnInit {
   mensaje: string;
   filtroFechas: boolean;
   filtroInactivos: boolean;
+
+  estados: Estados [] = [
+    { valor: "NUEVO", vista: "Nuevos" },
+    { valor: "ANULADO", vista: "Anulados" },
+    { valor: "ESTANTERIA", vista: "Estantería" },
+    { valor: "DARSENA", vista: "Dársena" },
+    { valor: "TODOS", vista: "Todos" }
+  ];
 
   constructor(private _router: Router, 
               private _fuseSidebarService: FuseSidebarService, 
@@ -83,6 +96,32 @@ export class OrdenesDistribucionComponent implements OnInit {
         }
     }); 
   }
+
+  /* buscarOrdenPorCUPA() {
+    let resultado: any = [];
+    this._ordenesDistribucionService.getOrdenById( this.idOrdenDist ).subscribe( data => {
+        console.log(data);
+        resultado.push(data);
+        this.dataSource2 = resultado;
+        this.length = resultado.length;
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error");
+        } else {
+          let errStatus = err.status
+          if (errStatus == 0){
+            let titulo = 'Error de Servidor';
+            let mensaje = "Por favor comunicarse con Sistemas";
+            this.mostrarError(errStatus, titulo, mensaje);
+          } else {
+            let titulo = 'Error al buscar una orden';
+            let mensaje = err.error.message.toString();
+            this.mostrarError(errStatus, titulo, mensaje);
+          }
+        }
+    }); 
+  } */
 
   getAllOrdenes() {
     this.order = 'desc';

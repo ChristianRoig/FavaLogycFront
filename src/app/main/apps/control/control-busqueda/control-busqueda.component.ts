@@ -199,9 +199,9 @@ export class ControlEstanteriaComponent implements OnInit {
     this._controlBusquedaService.getDetalleLotePorCupa( cupa, this.modo ) .subscribe( data => {
         console.log(data);
         /*
-        console.log(data.datos[0].detalle.pedidoLote.id);
-        console.log(data.datos[0].detalle.pedidoLote.nombre); 
-        console.log(data.datos[0].detalle.pedidoEtapa.nombre);
+        //console.log(data.datos[0].detalle.pedidoLote.id);
+        //console.log(data.datos[0].detalle.pedidoLote.nombre); 
+        //console.log(data.datos[0].detalle.pedidoEtapa.nombre);
         */
 
         this.idLote = data.datos[0].detalle.pedidoLote.id;

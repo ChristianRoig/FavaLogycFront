@@ -200,7 +200,7 @@ export class RemitosComponent implements OnInit {
     this._loteCrearLoteService.getPedidoDetalle(this.body, busqueda, columna, order).subscribe(
       data => {
         this.dataSource2 = data.datos;
-        // console.log(this.dataSource2);
+        console.log(this.dataSource2);
         this.length = data.totalRegistros;
       },
       (err: HttpErrorResponse) => {
