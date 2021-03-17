@@ -24,7 +24,7 @@
                         <option *ngFor="let localidad of filtroLocalidades" 
                             [value]="localidad.id"
                             [selected]="selectedLocalidad === localidad.id"> {{ localidad.nombre }}</option>
-                    </select>
+                </select>
             </mat-form-field>
 
             <mat-form-field appearance="fill">
@@ -100,11 +100,11 @@
 </mat-dialog-content>
 
 <mat-dialog-actions *ngIf="this.data.option === 'add'" fxLayoutAlign="space-between">
-    <button mat-raised-button [mat-dialog-close]="true" color="accent" [disabled]="this.selectedTurno < 1 || this.selectedTransporte < 1" (click)="agregar()">Agregar</button>
+    <button mat-raised-button [mat-dialog-close]="true" color="accent" [disabled]="!this.estanTodosLosDatos" (click)="agregar()">Agregar</button>
     <button mat-stroked-button mat-dialog-close>Cancelar</button>
 </mat-dialog-actions>
 <mat-dialog-actions *ngIf="this.data.option === 'upd'" fxLayoutAlign="space-between">
-    <button mat-raised-button [mat-dialog-close]="true" color="accent" [disabled]="this.selectedTurno < 1 || this.selectedTransporte < 1" (click)="agregar()">Modificar</button>
+    <button mat-raised-button [mat-dialog-close]="true" color="accent" [disabled]="!this.estanTodosLosDatos" (click)="agregar()">Modificar</button>
     <button mat-stroked-button mat-dialog-close>Cancelar</button>
 </mat-dialog-actions>
 <mat-dialog-actions *ngIf="this.data.option === 'view'" fxLayoutAlign="end center">

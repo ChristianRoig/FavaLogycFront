@@ -110,6 +110,7 @@ export class AgregarDatosEntregaComponent implements OnInit{
     telefono:string      = '';
 
     id: number = null;
+    estanTodosLosDatos: boolean = false;
 
     ngOnInit(): void {
       this.getfiltros();
@@ -134,7 +135,6 @@ export class AgregarDatosEntregaComponent implements OnInit{
     }
 
     agregar(){
-
       this.datoEntrega.contacto                     = this.contacto;
       this.datoEntrega.direccion                    = this.direccion;
       this.datoEntrega.fechaDeEntrega               = this.picker;
@@ -150,8 +150,18 @@ export class AgregarDatosEntregaComponent implements OnInit{
 
       // console.log(this.datoEntrega);
       localStorage.setItem('datoEntrega', JSON.stringify(this.datoEntrega));
-
       this.dialogRef.close();
+    }
+
+    controlarExistenDatos(){
+      //console.log("this.picker - ", this.picker, " | ","this.selectedTurno - ", this.selectedTurno, " | ","this.selectedTransporte - ", this.selectedTransporte   );
+      if( this.picker != undefined && this.selectedTurno != 0 ){
+        if( this.selectedTransporte != 0 ){
+          this.estanTodosLosDatos = true;  
+        }
+      }else{
+        this.estanTodosLosDatos = false;  
+      }
     }
 
     getDatoEntrega(){
@@ -172,7 +182,7 @@ export class AgregarDatosEntregaComponent implements OnInit{
 
       console.log(this.picker);
       console.log(this.data.item.fechaDeEntrega);
-
+  
     }
 
     getfiltros(){
@@ -363,11 +373,13 @@ export class AgregarDatosEntregaComponent implements OnInit{
     selectTurno(event: Event) {
       this.selectedTurno = (event.target as HTMLSelectElement).value;
       console.log(this.selectedTurno);
+      this.controlarExistenDatos();
     }
     
     selectTransporte(event: Event) {
       this.selectedTransporte = (event.target as HTMLSelectElement).value;
       console.log(this.selectedTransporte);
+      this.controlarExistenDatos();
     }
 
     addEvent( evento ) {
@@ -376,9 +388,9 @@ export class AgregarDatosEntregaComponent implements OnInit{
         let fecha = evento.value._i.year+"-"+(evento.value._i.month+1)+"-"+evento.value._i.date;
         console.log(fecha);
 
-            this.picker = fecha;
-            
+        this.picker = fecha;   
       }
+      this.controlarExistenDatos();
     }
 
     mostrarError(errStatus, titulo, mensaje){
