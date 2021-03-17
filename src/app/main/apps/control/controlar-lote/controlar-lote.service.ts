@@ -26,7 +26,7 @@ export class ControlarLoteService {
         return this._httpClient.get(ruta, {headers: headers});
     }
 
-    chequearArticulo(cupa, idLote, codBarras, modo): Observable<any> {
+    controlarEtapaArticulo(cupa, idLote, codBarras, modo): Observable<any> {
 
         let pedidoparte = modo === 'darsena' ? '/pedidoparte' : '';
     

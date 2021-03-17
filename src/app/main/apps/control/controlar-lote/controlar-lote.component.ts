@@ -70,9 +70,9 @@ export class ControlarLoteComponent implements OnInit {
 
   ngOnInit(): void{
     this._activatedRoute.params.subscribe( params => {
-      console.log( params );
-      console.log( params['modo'] );
-      console.log( params['id'] );
+      //console.log( params );
+      //console.log( params['modo'] );
+      //console.log( params['id'] );
       this.modo = params['modo'];
       this.idLote = params['id'];
     });
@@ -146,17 +146,23 @@ export class ControlarLoteComponent implements OnInit {
     } */
   }
 
-  chequearArticulo() {
+  esperarYactualizarDatos(){
+    setTimeout(() => {                          
+      this.getArticulosDeLote();
+    }, 1000);
+  }
+
+  controlarEtapaArticulo() {
     // al chequear el articulo la etapa del articulo cambia
     console.log(this.cupa);
     console.log(this.codigoBarras);
 
-    this._controlarLoteService.chequearArticulo( this.cupa, this.idLote, this.codigoBarras, this.modo )
+    this._controlarLoteService.controlarEtapaArticulo( this.cupa, this.idLote, this.codigoBarras, this.modo )
       .subscribe( data => {
         //this.dataSource2 = data.datos;
         console.log("chequearArticulo");
         console.log(data);
-        this.articulos = data.datos;
+        //this.articulos = data.datos;
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
@@ -174,6 +180,7 @@ export class ControlarLoteComponent implements OnInit {
           }
         }
       });
+    this.esperarYactualizarDatos();
   }
 
 

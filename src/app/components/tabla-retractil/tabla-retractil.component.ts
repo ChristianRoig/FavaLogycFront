@@ -28,7 +28,7 @@ export class TablaRetractilComponent implements OnInit {
 
   ngOnInit(): void { 
 
-    console.log("appretractil ", this.arregloDeDetalles);
+    //console.log("appretractil ", this.arregloDeDetalles);
     
     this.convertirDatosEnArreglo();
 
@@ -48,7 +48,7 @@ export class TablaRetractilComponent implements OnInit {
       if( element.articuloCodBarras[0] === undefined ){
         codBarra = 0; 
       } else{
-        console.log(element.articuloCodBarras.lenght);
+        //console.log(element.articuloCodBarras.lenght);
         codBarra = element.articuloCodBarras[0].codigoDeBarras; 
       }
       //let codBarra = 0; 
@@ -72,7 +72,7 @@ export class TablaRetractilComponent implements OnInit {
           Identificador: elemento.id,
           CUPA: elemento.codigoUnicoParteArticulo
         }
-        console.log( "asd", detalle.Identificador, "|", detalle.CUPA);
+        //console.log( "asd", detalle.Identificador, "|", detalle.CUPA);
         objeto.Detalle.push(detalle);
       }
       this.ELEMENT_DATA.push(objeto);
