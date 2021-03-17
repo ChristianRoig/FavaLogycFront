@@ -49,7 +49,7 @@ export interface BodyDetalle{
 
 export class LoteCrearLoteComponent implements OnInit {
 
-  @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
+
   @ViewChild('buscarLote') buscarLoteInput: ElementRef;
 
   displayedColumns: string[] = ['select', 'Tipo', 'CodigoArticulo','NombreArticulo', 'Comprobante', 'Fecha-Entrega', 'Provincia', 'Localidad','Etapa'];
@@ -158,7 +158,7 @@ export class LoteCrearLoteComponent implements OnInit {
 
     //this.getfiltros(); ESTA COMENTADO PARA QUE NO HAGA TANTAS CONSULTAS A LA API
     
-    this.getArticulos(this.busqueda, this.page, this.size, this.columna, this.order);
+    this.getArticulos();
   }
 
   resetFiltros(){
@@ -182,7 +182,6 @@ export class LoteCrearLoteComponent implements OnInit {
     this.pickerLoteDesde  = null;
     this.pickerLoteHasta  = null;
     this.lote = null;
-    this.buscarCbteInput.nativeElement.value = '';
     this.buscarLoteInput.nativeElement.value = '';
   }
 
@@ -331,7 +330,7 @@ export class LoteCrearLoteComponent implements OnInit {
     })
   }
 
-  getArticulos(busqueda, page, size, columna, order){
+  getArticulos(){
     let idTipo      :number =null;
     let idTurno     :number =null;
     let idOrigen    :number =null;
@@ -396,7 +395,7 @@ export class LoteCrearLoteComponent implements OnInit {
     
     // console.log(this.body);
 
-    this._loteCrearLoteService.getArticulos(this.body, busqueda, page, size, columna, order).subscribe(
+    this._loteCrearLoteService.getArticulos(this.body, this.busqueda, this.page, this.size, this.columna, this.order).subscribe(
       data => {
         this.dataSource2 = data.datos;
         console.log("getPedidoDetalle");
@@ -436,7 +435,7 @@ export class LoteCrearLoteComponent implements OnInit {
 
             this.resetFiltros();
             this.getfiltros();
-            this.getArticulos(this.busqueda, this.page, this.size, this.columna, this.order);
+            this.getArticulos();
             
           } else {
             this._router.navigate(['']);
@@ -622,31 +621,23 @@ export class LoteCrearLoteComponent implements OnInit {
   }
 
   buscar(){
-    this.getArticulos(this.busqueda, this.page, this.size, this.columna, this.order);
+    this.getArticulos();
   }
 
-  @Debounce(1000)  
-  searchCbte() {
-
-    this.busqueda = this.buscarCbteInput.nativeElement.value;
-
-    this.page = 0;
-    this.columna = 'id';
-
-    this.getArticulos(this.busqueda, this.page, this.size, this.columna, this.order);
-
-  }
 
   @Debounce(1000)  
   searchLote() {
-
-    this.lote = this.buscarLoteInput.nativeElement.value;
-    if(this.lote === '')
-      this.lote =null;
+    
     this.page = 0;
     this.columna = 'id';
 
-    this.getArticulos(this.busqueda, this.page, this.size, this.columna, this.order);
+    this.busqueda = this.buscarLoteInput.nativeElement.value;
+    if(this.busqueda === '' || this.busqueda == null){
+      this.busqueda = "";
+      this.getArticulos();
+    }
+
+    //this.getArticulos();
 
   }
 
@@ -708,7 +699,7 @@ export class LoteCrearLoteComponent implements OnInit {
     if (event.direction !== "")
         this.order = event.direction;
     
-    this.getArticulos(this.busqueda, this.page, this.size, this.columna, this.order);
+    this.getArticulos();
   }
 
 
@@ -716,6 +707,6 @@ export class LoteCrearLoteComponent implements OnInit {
       this.page = e.pageIndex;
       this.size = e.pageSize;
       
-      this.getArticulos(this.busqueda, this.page, this.size, this.columna, this.order);
+      this.getArticulos();
   }
 }

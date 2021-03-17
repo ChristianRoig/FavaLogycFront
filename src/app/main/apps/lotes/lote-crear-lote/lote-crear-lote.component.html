@@ -12,12 +12,15 @@
 
                     <div class="controlesBusqueda">
                         <mat-form-field appearance="outline" class="mt-8 inputBusqueda">
-                            <mat-label>Código de Artículo o Comprobante</mat-label>
-                            <input #buscarCbte class="text-uppercase" (keyup)="searchCbte()" matInput value="" placeholder="Buscar Cód. Artículo o comprobante">
+                            <mat-label>Buscar un Artículo</mat-label>
+                            <input #buscarLote class="text-uppercase" (keyup)="searchLote()" matInput value="" placeholder="Ingrese un Código de Artículo o Comprobante">
                             <mat-icon matSuffix>search</mat-icon>
                         </mat-form-field>
 
                         <div class="botonesBusqueda">
+                            <button (click)="getArticulos()" class="btn" mat-raised-button color="primary" [disabled]="!this.busqueda">
+                                Buscar
+                            </button>
                             <button (click)="crearLote()" class="btn" mat-raised-button color="primary" [matBadge]="selection.selected.length" [matBadgeHidden]="selection.selected.length===0" matBadgeColor="warn" [disabled]="selection.selected.length===0">
                                 Crear Lote
                             </button>
