@@ -55,32 +55,32 @@
 
         <div class="controlesBusqueda">
             <mat-form-field appearance="outline" class="inputBuscarLote">
-                <mat-label>CUPA</mat-label>
-                <input #cupa matInput (keyup)="searchCupa()" value="" placeholder="Acceder a un Lote a partir de un CUPA">
+                <mat-label>Buscar Lote por CUPA</mat-label>
+                <input #cupa matInput (keyup)="searchCupa()" value="" placeholder="Ingrese un CUPA">
                 <mat-icon matSuffix>search</mat-icon>
             </mat-form-field>
 
             <div class="botonesBusquedaSup">
                 <!-- [disabled]="!this.cupa" -->
-                <button mat-raised-button [disabled]="!this.CUPA" class="btn" color="primary" (click)="buscarLotePorCUPA(cupa.value)">Buscar Lote</button>
+                <button mat-raised-button [disabled]="!this.CUPA" class="btn" color="primary" (click)="buscarLotePorCUPA(cupa.value)">Buscar</button>
             </div>
             <div class="btnToggle">
-                <mat-slide-toggle [checked]="this.busquedaAutomatica" formcontrolname="hidden" type="button" (change)="toggleBusquedaAutomatica()" class="mat-slide-toggle"></mat-slide-toggle>
+                <mat-slide-toggle formcontrolname="hidden" type="button" (click)="toggleBusquedaAutomatica()" class="mat-slide-toggle"></mat-slide-toggle>
                 <label class="paddingLeft">Acceso automático</label>
             </div>
         </div>
 
         <div class="controlesBusqueda" *ngIf="!this.busquedaAutomatica">
             <mat-form-field appearance="outline" class="inputBuscarLote">
-                <mat-label>Lote</mat-label>
+                <mat-label>Buscar Lote</mat-label>
                 <input #buscarLote (keyup)="searchLote()" matInput value="" placeholder="Buscar lote por nombre">
                 <!-- <input matInput value="" placeholder="Buscar lote"> -->
                 <mat-icon matSuffix>search</mat-icon>
             </mat-form-field>
 
             <div class="botonesBusqueda">
-                <button [disabled]="!this.btnBuscarLote" class="btn" mat-raised-button color="primary" (click)="buscarLotePorNombre(buscarLote.value)">Buscar Lote</button>
-                <button [disabled]="!this.btnControlar" class="btn" mat-raised-button color="primary" (click)="accederAlLoteById()">Controlar Lote</button>
+                <button [disabled]="!this.btnBuscarLote" class="btn" mat-raised-button color="primary" (click)="buscarLotePorNombre(buscarLote.value)">Buscar</button>
+                <button [disabled]="!this.btnControlar" class="btn" mat-raised-button color="primary" (click)="accederAcontrolarLoteById()">Controlar Lote</button>
             </div>
         </div>
     </div>

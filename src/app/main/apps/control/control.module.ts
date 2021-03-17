@@ -20,7 +20,7 @@ import { ControlarLoteComponent } from './controlar-lote/controlar-lote.componen
 
 // servicios favalogyc
 import { ControlBusquedaService } from './control-busqueda/control-busqueda.service';
-import { ControlEstanteriaBusquedaService } from '../control/controlar-lote/controlar-lote.service';
+import { ControlarLoteService } from '../control/controlar-lote/controlar-lote.service';
 
 const routes: Routes = [
     {
@@ -51,7 +51,7 @@ const routes: Routes = [
     ],
     providers   : [
         ControlBusquedaService,
-        ControlEstanteriaBusquedaService
+        ControlarLoteService
     ]
 })
 

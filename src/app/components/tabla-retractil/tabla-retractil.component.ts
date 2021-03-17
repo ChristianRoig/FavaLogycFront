@@ -28,12 +28,11 @@ export class TablaRetractilComponent implements OnInit {
 
   ngOnInit(): void { 
 
-    console.log(this.arregloDeDetalles);
+    console.log("appretractil ", this.arregloDeDetalles);
     
     this.convertirDatosEnArreglo();
 
   }
-
 
   convertirDatosEnArreglo() {
     for (let index = 0; index < this.arregloDeDetalles.length; index++) {
@@ -73,6 +72,7 @@ export class TablaRetractilComponent implements OnInit {
           Identificador: elemento.id,
           CUPA: elemento.codigoUnicoParteArticulo
         }
+        console.log( "asd", detalle.Identificador, "|", detalle.CUPA);
         objeto.Detalle.push(detalle);
       }
       this.ELEMENT_DATA.push(objeto);
@@ -82,6 +82,3 @@ export class TablaRetractilComponent implements OnInit {
   }
 
 }
-
-
-
