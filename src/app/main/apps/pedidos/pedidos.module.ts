@@ -22,6 +22,7 @@ import { PedidosCrear1Component } from './pedidos-crear-1/pedidos-crear-1.compon
 import { PedidosCrear2Component } from './pedidos-crear-2/pedidos-crear-2.component';
 import { PedidosCupaComponent } from './pedidos-visualizacion/pedidos-cupa/pedidos-cupa.component';
 import { AgregarDatosEntregaComponent } from './pedidos-crear-2/agregar-datos-entrega/agregar-datos-entrega.component';
+import { FiltrosComponent } from './pedidos-lista/filtros/filtros.component';
 
 //services
 import { PedidosListaService } from './pedidos-lista/pedidos-lista.service';
@@ -29,7 +30,7 @@ import { PedidosVisualizacionService } from './pedidos-visualizacion/pedidos-vis
 import { PedidosAnularService } from './pedidos-anular/pedidos-anular.service';
 import { PedidosCrear1Service } from './pedidos-crear-1/pedidos-crear-1.service';
 import { PedidosCrear2Service } from './pedidos-crear-2/pedidos-crear-2.service';
-
+import { FiltrosService } from './pedidos-lista/filtros/filtros.service';
 
 const routes: Routes = [
     {
@@ -66,6 +67,7 @@ const routes: Routes = [
         PedidosCrear1Component,
         PedidosCrear2Component,
         AgregarDatosEntregaComponent,
+        FiltrosComponent
     ],
     imports     : [
         CommonModule,
@@ -85,6 +87,7 @@ const routes: Routes = [
         PedidosAnularService,
         PedidosCrear1Service,
         PedidosCrear2Service,
+        FiltrosService
     ]
 })
 

@@ -48,29 +48,28 @@ export interface DatosDeEntrega {
 }
 
 
-export interface ListaDatosDeEntrega 
-    {
+export interface ListaDatosDeEntrega {
+  id: number,
+  direccion: string,
+  fechaDeEntrega: string,
+  telefono: string,
+  mail: string,
+  contacto: string,
+  observaciones: string,
+  sysLocalidad: {
       id: number,
-      direccion: string,
-      fechaDeEntrega: string,
-      telefono: string,
-      mail: string,
-      contacto: string,
-      observaciones: string,
-      sysLocalidad: {
+      sysProvincia: {
           id: number,
-          sysProvincia: {
-              id: number,
-          }
-      },
-      sysTransporte: {
-          id: number,
-      },
-      pedidoTurno: {
-          id: number,
-      },
-      listaPedidoDetalle: Array <Articulo>
-    }
+      }
+  },
+  sysTransporte: {
+      id: number,
+  },
+  pedidoTurno: {
+      id: number,
+  },
+  listaPedidoDetalle: Array <Articulo>
+}
 
 @Component({
   selector: 'app-pedidos-agregar-pedido-2',
