@@ -39,6 +39,12 @@ export class OrdenesDistribucionService
         let ruta = `${ BASE_URL }pedidos/distribucion/${ idOrdenDist }`;
         return this._httpClient.get(ruta);
     }
+
+    getOrdenByCupa ( cupa: number ): Observable<any>{    
+        
+        let ruta = `${ BASE_URL }pedidos/distribucion/cupa/${ cupa }`;
+        return this._httpClient.get(ruta);
+    }
     
     /* eliminarOrden ( idOrdenDist: number ): Observable<any>{    
         

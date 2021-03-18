@@ -75,7 +75,7 @@
 
 <!-- TEMPLATE LISTA -->
 <ng-template #articulos>
-
+    <mat-card-subtitle class="pl-24">Lista de Articulos</mat-card-subtitle>
     <div style="width: 100%; overflow: auto;">
         <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="dataSource2" class="mb-8">
 

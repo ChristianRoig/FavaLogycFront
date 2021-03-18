@@ -32,7 +32,7 @@ interface Estados{
 export class OrdenesDistribucionComponent implements OnInit {
 
   //@ViewChild('buscarCbte') buscarCbteInput: ElementRef;
-  @ViewChild('buscarOrden') buscarOrdenInput: ElementRef;
+  @ViewChild('buscarOrdenPorCupa') buscarOrdenPorCupaInput: ElementRef;
 
   displayedColumns: string[] = ['id', 'nombre', 'fecha', 'cantArticulos', 'cantArticulosACargar', 'cantRemitos', 'estado', 'seleccionar'];
   dataSource2: any;
@@ -40,6 +40,7 @@ export class OrdenesDistribucionComponent implements OnInit {
   selecccionDeEstado: string;
 
   idOrdenDist: number = null;
+  cupa: number = null;
   orden: string = null;
   busqueda: string = "";
   length: number = 0;
@@ -97,13 +98,13 @@ export class OrdenesDistribucionComponent implements OnInit {
     }); 
   }
 
-  /* buscarOrdenPorCUPA() {
+  buscarOrdenPorCUPA() {
     let resultado: any = [];
-    this._ordenesDistribucionService.getOrdenById( this.idOrdenDist ).subscribe( data => {
+    this._ordenesDistribucionService.getOrdenByCupa( this.cupa ).subscribe( data => {
         console.log(data);
         resultado.push(data);
         this.dataSource2 = resultado;
-        this.length = resultado.length;
+        this.length = resultado.length; 
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
@@ -121,7 +122,7 @@ export class OrdenesDistribucionComponent implements OnInit {
           }
         }
     }); 
-  } */
+  } 
 
   getAllOrdenes() {
     this.order = 'desc';
@@ -174,10 +175,10 @@ export class OrdenesDistribucionComponent implements OnInit {
 
   @Debounce(1000)
   searchOrden() {
-    this.idOrdenDist = this.buscarOrdenInput.nativeElement.value;
-    console.log(this.idOrdenDist);
-    if( this.idOrdenDist === 0 || this.idOrdenDist === null){
-      this.idOrdenDist = null;
+    this.cupa = this.buscarOrdenPorCupaInput.nativeElement.value;
+    console.log(this.cupa);
+    if( this.cupa < 1 || this.cupa === null ) {
+      this.cupa = null;
       this.getAllOrdenes();
     }
   }

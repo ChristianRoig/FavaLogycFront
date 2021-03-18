@@ -106,6 +106,7 @@
 
 <ng-template #hasDetalle>
     <div style="width: 100%; overflow: auto;">
+        <mat-card-subtitle class="pl-24">Lista de Pedidos</mat-card-subtitle>
         <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="dataSource2" class="mb-24">
 
             <ng-container matColumnDef="select">

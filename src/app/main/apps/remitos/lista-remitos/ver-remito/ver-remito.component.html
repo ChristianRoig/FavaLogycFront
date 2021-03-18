@@ -42,6 +42,7 @@
 <!-- ------------------------------------------------------------------------------------------------------------------------------ -->
 <ng-template #comprobantes>
     <div style="width: 100%; overflow: auto;">
+        <mat-card-subtitle class="pl-24">Lista de Articulos</mat-card-subtitle>
         <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="dataSource2" class="mb-8 tablaArticulos">
 
             <ng-container matColumnDef="select" sticky>

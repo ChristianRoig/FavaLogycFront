@@ -42,15 +42,22 @@
 
                 <mat-form-field appearance="outline" class="inputBuscar">
                     <mat-label>Buscar Orden</mat-label>
-                    <input #buscarOrden (keyup)="searchOrden()" matInput value="" placeholder="Ingrese un id orden">
+                    <input #buscarOrdenPorCupa (keyup)="searchOrden()" matInput value="" placeholder="Ingrese un cupa">
                     <mat-icon matSuffix>search</mat-icon>
                 </mat-form-field>
 
                 <div class="botonesBusqueda">
-                    <button (click)="buscarOrdenPorId()" class="btnBuscar" [disabled]="!this.idOrdenDist" mat-raised-button color="primary">Buscar</button>
+                    <button (click)="buscarOrdenPorCUPA()" class="btnBuscar" [disabled]="!this.cupa" mat-raised-button color="primary">Buscar</button>
                 </div>
 
-
+                <mat-form-field appearance="outline" fxFlex="20" class="ml-4 mt-16 selectMostrar">
+                    <mat-label>Filtrar por</mat-label>
+                    <mat-select [(ngModel)]="selecccionDeEstado" name="food">
+                        <mat-option *ngFor="let estado of estados" [value]="estado.valor">
+                            {{estado.vista}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
 
             </div>
         </div>

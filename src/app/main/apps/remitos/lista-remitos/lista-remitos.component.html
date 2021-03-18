@@ -46,7 +46,7 @@
                 </div>
 
                 <mat-form-field appearance="outline" fxFlex="20" class="ml-4 mt-16 selectMostrar">
-                    <mat-label>Mostrar</mat-label>
+                    <mat-label>Filtrar por</mat-label>
                     <mat-select [(ngModel)]="selecccionDeEstado" name="food">
                         <mat-option *ngFor="let estado of estados" [value]="estado.valor">
                             {{estado.vista}}
