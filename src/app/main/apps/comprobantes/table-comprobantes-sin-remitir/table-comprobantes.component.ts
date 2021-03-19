@@ -82,10 +82,7 @@ export class TableComprobantesSinRemitirComponent implements OnInit {
   constructor(private _router: Router, 
               private _fuseSidebarService: FuseSidebarService, 
               private _tableComprobantesService: TableComprobantesSinRemitirService,
-              private _dialog: MatDialog ) { 
-
-
-  }
+              private _dialog: MatDialog ) { }
 
   ngOnInit(): void { 
     
@@ -96,9 +93,9 @@ export class TableComprobantesSinRemitirComponent implements OnInit {
 
     this._tableComprobantesService.getPedidosDetalles(this.body, busqueda, page, size, columna, order).subscribe(
       data => {
+        console.log("data ->",data);
         this.dataSource2 = data.datos;
         this.length = data.totalRegistros;
-        console.log(data);
         /*console.log("asd", this.dataSource2); */
         //this.size = data.totalRegistros;
       },
