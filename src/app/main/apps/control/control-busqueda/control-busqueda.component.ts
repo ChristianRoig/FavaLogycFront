@@ -73,6 +73,7 @@ export class ControlEstanteriaComponent implements OnInit {
   condiciónDeEstadoLote: string = '';
   subParametros: Subscription;
   titulo: string;
+  seccionOpuesta: string;
   eliminar: boolean = false;
 
   constructor(  private _router: Router, 
@@ -211,7 +212,7 @@ export class ControlEstanteriaComponent implements OnInit {
         if( this.estadoLote != this.condiciónDeEstadoLote ){
           let errStatus = 0;
           let titulo = 'El lote '+this.lote+' no se encuentra en la etapa '+this.condiciónDeEstadoLote;
-          let mensaje = "Realice el control en control "+this.modo;
+          let mensaje = "Realice el control en control "+this.seccionOpuesta;
           this.mostrarError(errStatus, titulo, mensaje);
           let ruta = `apps/control/lote-en/${this.modo}`;
           this._router.navigate([ruta]);

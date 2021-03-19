@@ -14,10 +14,12 @@ import { TablaRetractilModule } from 'app/components/tabla-retractil/tabla-retra
 //components
 import { ComprobantesListaComponent } from './comprobantes-lista/comprobantes-lista.component';
 import { TableComprobantesComponent } from './table-comprobantes/table-comprobantes.component';
+import { TableComprobantesSinRemitirComponent } from './table-comprobantes-sin-remitir/table-comprobantes.component';
 
 //services
 import { ComprobantesListaService } from './comprobantes-lista/comprobantes-lista.service';
 import { TableComprobantesService } from './table-comprobantes/table-comprobantes.service';
+import { TableComprobantesSinRemitirService } from './table-comprobantes-sin-remitir/table-comprobantes.service';
 
 const routes: Routes = [
     {
@@ -29,7 +31,8 @@ const routes: Routes = [
 @NgModule({
     declarations: [
         ComprobantesListaComponent,
-        TableComprobantesComponent
+        TableComprobantesComponent,
+        TableComprobantesSinRemitirComponent
     ],
     imports     : [
         CommonModule,
@@ -45,7 +48,8 @@ const routes: Routes = [
     ],
     providers   : [
         ComprobantesListaService,
-        TableComprobantesService
+        TableComprobantesService,
+        TableComprobantesSinRemitirService
     ]
 })
 
