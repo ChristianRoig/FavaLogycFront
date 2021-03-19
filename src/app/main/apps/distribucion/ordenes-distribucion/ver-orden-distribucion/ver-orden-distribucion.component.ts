@@ -190,6 +190,7 @@ export class VerOrdenDistribucionComponent implements OnInit {
     console.log("se eliminará la orden -> ", this.idOrdenDist );
     this._verOrdenDistribucion.eliminarOrdenDeDistribucion( this.idOrdenDist ) .subscribe( data => {
       console.log("hecho");
+      this.esperarYnavegarAordenes();
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
@@ -207,7 +208,9 @@ export class VerOrdenDistribucionComponent implements OnInit {
         }
       }
     });
+  }
 
+  esperarYnavegarAordenes(){
     setTimeout(() => {                          
       let ruta = `apps/distribucion/ordenes-distribucion`;
       this._router.navigate([ruta]);
@@ -285,7 +288,7 @@ export class VerOrdenDistribucionComponent implements OnInit {
 
     this._verOrdenDistribucion.postEliminarRemitoDeOrden( listaIdRemitos ).subscribe(params => {
       console.log("eliminado ");
-      this.getRemitosDeOrdenDistribucion( this.idOrdenDist );
+      this.esperarYactualizar();
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
@@ -303,10 +306,12 @@ export class VerOrdenDistribucionComponent implements OnInit {
         }
       }
     });
+  }
 
+  esperarYactualizar(){
     setTimeout(() => {                          
       this.getRemitosDeOrdenDistribucion( this.idOrdenDist );
-      }, 1000);
+      }, 2000);
   }
 
   mostrarError(errStatus, titulo, mensaje){

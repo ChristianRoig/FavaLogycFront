@@ -11,9 +11,7 @@ export class DATOS_ENTREGA {
     observaciones?: any;
     
     listaPedidoDetalle: LISTA_PEDIDOS[];
-
 }
-
 
 export class LISTA_PEDIDOS {
     id: number;
@@ -25,8 +23,6 @@ export class LISTA_PEDIDOS {
     codigoDeBarras: string;
     nombreArticulo: string;
 }
-
-
 
 /**
  * Automatico, lo recibo del GET
@@ -102,3 +98,4 @@ interface PedidoTurno {
   id: number;
   nombre: string;
 }
+
