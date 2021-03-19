@@ -531,10 +531,12 @@ export class FiltrosComponent implements OnInit {
   searchLote() {
 
     this.lote = this.buscarLoteInput.nativeElement.value;
-    if(this.lote === '')
+    if(this.lote === '' || this.lote == null){
       this.lote =null;
+    }
     this.page = 0;
     this.columna = 'id';
+    this.body.lote = this.lote;
   } 
 
   buscar(){
