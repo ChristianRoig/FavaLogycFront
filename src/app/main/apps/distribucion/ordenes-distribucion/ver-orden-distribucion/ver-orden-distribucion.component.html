@@ -1,0 +1,104 @@
+<app-plantilla-fondo-simple titulo='Ver Orden de Distribucion' arrowBack=true>
+
+    <!-- CONTENIDO -->
+    <div contenido>
+
+        <div fxLayout="column" style="max-width: 100%;">
+
+            <div fxLayout="row" class="titular">
+                <h1 class="colorText"> Orden {{ this.idOrdenDist }}</h1>
+                <button mat-raised-button color="light" class="mt-22" (click)="eliminarOrdenDeDistribucion()">Eliminar orden</button>
+            </div>
+
+            <div class="fuse-card my-20 pl-24 pr-24" style="max-width: 100%;">
+
+                <div fxLayout="row" fxLayoutAlign="space-around">
+
+                    <div class="controlesBusqueda">
+                        <mat-form-field appearance="outline" class="inputBusqueda">
+                            <mat-label>Buscar Remito</mat-label>
+                            <input #buscarCbte class="text-uppercase" (keyup)="searchRemito()" matInput value="" placeholder="Buscar remito por id">
+                            <mat-icon matSuffix>search</mat-icon>
+                        </mat-form-field>
+
+                        <div class="botonesBusqueda">
+                            <button (click)="getRemitoPorId()" class="btn" mat-raised-button color="primary">
+                                Buscar 
+                            </button>
+
+                            <button class="btn" (click)="eliminarRemitoDeOrden()" mat-raised-button color="primary" [matBadge]="selection.selected.length" [matBadgeHidden]="selection.selected.length===0" matBadgeColor="warn" [disabled]="selection.selected.length===0">
+                                Eliminar Selec.
+                            </button>
+
+
+                            <button [(ngModel)]="mostrarRemitos" (click)="activarAgregarRemitos()" class="btn" mat-raised-button color="primary">
+                                {{ textoBtnAddRemitos }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <ng-container *ngTemplateOutlet="remitos" class="tablaArticulos"></ng-container>
+            </div>
+        </div>
+    </div>
+
+</app-plantilla-fondo-simple>
+<!-- ------------------------------------------------------------------------------------------------------------------------------ -->
+<ng-template #remitos>
+    <mat-card-subtitle class="pl-16">Remitos que componen la orden</mat-card-subtitle>
+    <div style="width: 100%; overflow: auto;">
+        <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="dataSource2" class="mb-8 tablaArticulos">
+
+            <ng-container matColumnDef="select" sticky>
+                <th mat-header-cell *matHeaderCellDef class="px-24">
+                    <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() 
+                        && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
+                    </mat-checkbox>
+                </th>
+
+                <td mat-cell *matCellDef="let row" class="px-24">
+                    <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
+                    </mat-checkbox>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="id">
+                <th mat-header-cell mat-sort-header="id" *matHeaderCellDef> Id </th>
+                <td mat-cell *matCellDef="let remito"> {{ remito.id }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="codComprobante">
+                <th mat-header-cell mat-sort-header="nombre" *matHeaderCellDef> Codigo Comprobante </th>
+                <td mat-cell class="pl-32" *matCellDef="let remito"> REM </td>
+            </ng-container>
+
+            <ng-container matColumnDef="nroComprobante">
+                <th mat-header-cell mat-sort-header="nroComprobante" *matHeaderCellDef> Nro Comprobante </th>
+                <td mat-cell *matCellDef="let remito"> {{ remito.nroCbte }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="fechaAlta">
+                <th mat-header-cell mat-sort-header="fechaAlta" *matHeaderCellDef> Fecha Alta </th>
+                <td mat-cell *matCellDef="let remito"> {{ getSoloFecha(remito.fechaCbte) }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="cantArticulos">
+                <th mat-header-cell mat-sort-header="cantArticulos" *matHeaderCellDef> Cant Articulos </th>
+                <td mat-cell class="example-button-row pl-32" *matCellDef="let remito">{{ remito.pedidoDetalles.length }} </td>
+            </ng-container>
+
+            <ng-container *ngIf="this.mostrarRemitos == true" matColumnDef="accion">
+                <th mat-header-cell class="pl-20" *matHeaderCellDef> Acción </th>
+                <td mat-cell class="example-button-row" *matCellDef="let remito">
+                    <!-- [(ngModel)]="mostrarRemitos" -->
+                    <button mat-stroked-button color="accent" (click)="addRemitosAorden(remito)"> Agregar </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+
+</ng-template>

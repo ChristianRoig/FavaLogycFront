@@ -1,0 +1,97 @@
+table {
+    width: 100%;
+    min-width: 1056px;
+}
+
+td.mat-column-star {
+    width: 20px;
+    padding-right: 8px;
+}
+
+th.mat-column-position,
+td.mat-column-position {
+    padding-left: 8px;
+}
+
+.mat-table-sticky:first-child {
+    border-right: 1px solid #e0e0e0;
+}
+
+.mat-table-sticky:last-child {
+    border-left: 1px solid #e0e0e0;
+}
+
+a {
+    cursor: pointer;
+}
+
+fuse-sidebar {
+    width: unset !important;
+    max-width: unset !important;
+}
+
+.btnAddPedidoLote {
+    display: flex;
+    justify-content: flex-end;
+    /* padding-right: 10px; */
+    padding-bottom: 15px;
+}
+
+.controlesBusqueda {
+    display: flex;
+    width: 100%;
+    align-items: center !important;
+    justify-content: flex-start;
+}
+
+.botonesBusqueda {
+    display: flex;
+    width: 300px;
+    align-items: center !important;
+    justify-content: space-around;
+}
+
+.inputBusqueda {
+    width: 600px;
+    justify-content: flex-start;
+    padding-top: 20px;
+}
+
+.btn {
+    height: 40px;
+    /* margin-bottom: 27px; */
+    width: 120px;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-left: 15px;
+    /* margin-right: 5px; */
+}
+
+.dato {
+    //padding-left: 10px;
+    padding-right: 10px;
+}
+
+.titulo {
+    padding-left: 0px;
+}
+
+.tabTables {
+    margin-top: 10px;
+    flex: 1 1 auto;
+    max-width: 100%;
+}
+
+@media (max-width: 768px) {
+    .inputBusqueda {
+        width: 400px;
+    }
+    .btn {
+        height: 60px;
+        width: 150px;
+        padding-left: 5px;
+        padding-right: 5px;
+        margin-left: 6px;
+        margin-right: 3px;
+    }
+}

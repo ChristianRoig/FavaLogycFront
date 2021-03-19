@@ -1,0 +1,75 @@
+<!-- <ng-template #comprobantes> -->
+<div style="width: 100%; overflow: auto;">
+
+    <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="dataSource2" style="width: 100%;">
+        <!-- Las columnas deben ser: Comprobante (VTA-B00065-00004525 segun mejora#2), F. Entrega,
+             1er. Dirección, (+D), Localidad, Provincia, 1er. Cod., 1er. Artículo, (+A), Estado, Etapa, (+E) -->
+        <ng-container matColumnDef="Tipo">
+            <th mat-header-cell *matHeaderCellDef class="titulo"> Tipo </th>
+            <td mat-cell *matCellDef="let element" class="pl-8"> {{element.pedidoTipo}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="idComprobante">
+            <th mat-header-cell *matHeaderCellDef> Id Cbte </th>
+            <td mat-cell *matCellDef="let element" class="pl-8"> {{element.idCbt}} </td>
+        </ng-container>
+        <ng-container matColumnDef="cantArticulos">
+            <th mat-sort-header="codigoArticulo" class="pl-8" mat-header-cell *matHeaderCellDef> Cant Art. </th>
+            <td mat-cell *matCellDef="let element" class="dato pl-16"> {{element.cantArticulos}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="NombreArticulo">
+            <th mat-sort-header="nombreArticulo" mat-header-cell *matHeaderCellDef> Nombre Artículo </th>
+            <td mat-cell *matCellDef="let element" class="dato">{{ element.priNombreArticulo }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Comprobante">
+            <th mat-header-cell *matHeaderCellDef> Comprobante </th>
+            <td mat-cell *matCellDef="let element" class="dato"> {{ element.nroCbte }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Fecha-Entrega">
+            <th mat-sort-header="fechaDeEntrega" mat-header-cell *matHeaderCellDef> Fecha Entrega </th>
+            <td mat-cell *matCellDef="let element" class="pl-8"> {{ element.fechaDeEntrega | date:'shortDate' }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="CantDirecEntrega">
+            <th mat-sort-header="CantDirecEntrega" mat-header-cell *matHeaderCellDef> Cant. Direc. Entrega </th>
+            <td mat-cell *matCellDef="let element" class="pl-36"> {{ element.cantDireccionEntrega }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="priDireccion">
+            <th mat-sort-header="priDireccion" mat-header-cell *matHeaderCellDef> Primer Direccion </th>
+            <td mat-cell *matCellDef="let element"> {{ element.priDireccion }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Provincia">
+            <th mat-sort-header="provincia" mat-header-cell *matHeaderCellDef> Provincia </th>
+            <td mat-cell *matCellDef="let element"> {{ element.priProvincia }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Localidad">
+            <th mat-sort-header="localidad" mat-header-cell *matHeaderCellDef> Localidad </th>
+            <td mat-cell *matCellDef="let element"> {{element.priLocalidad}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="cantEtapa">
+            <th mat-sort-header="cantEtapa" mat-header-cell *matHeaderCellDef> Etapa </th>
+            <td mat-cell *matCellDef="let element" class="pl-16"> {{ element.cantEtapa }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="priEtapa">
+            <th mat-sort-header="etapa" mat-header-cell *matHeaderCellDef> Etapa </th>
+            <td mat-cell *matCellDef="let element"> {{ element.priEtapa }} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <div contenido class=" mb-4">
+        <mat-paginator [length]="length" [pageIndex]="page" [pageSize]="size" [pageSizeOptions]="[5, 10, 15, 500]" (page)="paginar($event)">
+        </mat-paginator>
+    </div>
+</div>
+<!-- </ng-template> -->

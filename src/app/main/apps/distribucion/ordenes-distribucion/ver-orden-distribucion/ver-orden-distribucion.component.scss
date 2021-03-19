@@ -1,0 +1,83 @@
+    .titular {
+        justify-content: space-between;
+        align-items: center;
+        height: 30px;
+        width: 100%;
+        /* margin-bottom: 10px; */
+    }
+    
+    .colorText {
+        color: white;
+        padding-left: 50px;
+    }
+    
+    .inputAndBoton {
+        width: 700px;
+        align-items: center;
+        justify-content: space-between;
+        align-items: center;
+        padding-right: 20px;
+    }
+    
+    .nombreLote {
+        width: 450px;
+        height: 35px;
+        border-radius: 5px;
+        margin-right: 20px;
+    }
+    
+    .tabla {
+        justify-content: space-between;
+    }
+    
+    .tablaArticulos {
+        justify-content: space-between;
+        width: 100%;
+    }
+    
+    .controlesBusqueda {
+        display: flex;
+        width: 100%;
+        align-items: center !important;
+        justify-content: flex-start;
+    }
+    
+    .inputBusqueda {
+        width: 600px;
+        justify-content: flex-start;
+        padding-top: 20px;
+    }
+    
+    .botonesBusqueda {
+        display: flex;
+        width: 450px;
+        align-items: center !important;
+        justify-content: space-around;
+    }
+    
+    .btn {
+        height: 40px;
+        /* margin-bottom: 27px; */
+        width: 150px;
+        padding-left: 5px;
+        padding-right: 5px;
+        margin-left: 15px;
+        /* margin-right: 5px; */
+    }
+    
+    @media (max-width: 768px) {
+        .inputBusqueda {
+            width: 400px;
+        }
+        .btn {
+            height: 60px;
+            width: 80px;
+            padding-left: 5px;
+            padding-right: 5px;
+            margin-left: 6px;
+            margin-right: 3px;
+        }
+        .controlesBusqueda {
+            margin-top: 0px;
+        }
+    }

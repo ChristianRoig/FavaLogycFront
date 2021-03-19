@@ -1,0 +1,144 @@
+<app-plantilla-fondo-simple *ngIf="titulo" titulo='Control de {{this.titulo}}'>
+
+    <!-- CONTENIDO -->
+    <div contenido>
+
+        <div fxLayout="column">
+
+            <!-- Filtros en Pantalla grande -->
+            <div fxLayout="row" class="content-card pb-4">
+
+                <!-- LOTE -->
+                <div fxFlex="100" class="fuse-card p-24 mr-8">
+
+                    <ng-container *ngTemplateOutlet="filtrosLote"></ng-container>
+
+                </div>
+
+            </div>
+            <div>
+                <ng-container *ngTemplateOutlet="listaLotes"> </ng-container>
+            </div>
+            <!-- / Filtros en Pantalla grande -->
+
+            <!-- SECCION ARTICULOS -->
+
+            <!-- / SECCION ARTICULOS -->
+        </div>
+    </div>
+    <!-- / CONTENIDO -->
+</app-plantilla-fondo-simple>
+
+<!-- SIDE BAR -->
+<fuse-sidebar name="sidebarFilter" class="theme-options-sidebar" position="right" [invisibleOverlay]="false">
+
+    <div fxLayout="column">
+
+        <!-- BOTON CERRAR -->
+        <span fxLayoutAlign="start">
+
+            <button fxHide.gt-sm mat-button (click)="toggleSidebarOpen('sidebarFilter')" class="mb-24">
+                <mat-icon>close</mat-icon>
+            </button> 
+        </span>
+        <!-- / BOTON CERRAR -->
+
+    </div>
+
+</fuse-sidebar>
+<!-- / SIDE BAR -->
+
+<!-- FILTROS LOTE -->
+<ng-template #filtrosLote>
+
+    <div fxLayout="column">
+
+        <div class="controlesBusqueda">
+            <mat-form-field appearance="outline" class="inputBuscarLote">
+                <mat-label>Buscar Lote por CUPA</mat-label>
+                <input #cupa matInput (keyup)="searchCupa()" value="" placeholder="Ingrese un CUPA">
+                <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+
+            <div class="botonesBusquedaSup">
+                <!-- [disabled]="!this.cupa" -->
+                <button mat-raised-button [disabled]="!this.CUPA" class="btn" color="primary" (click)="buscarLotePorCUPA(cupa.value)">Buscar</button>
+            </div>
+            <div class="btnToggle">
+                <mat-slide-toggle formcontrolname="hidden" type="button" (click)="toggleBusquedaAutomatica()" class="mat-slide-toggle"></mat-slide-toggle>
+                <label class="paddingLeft">Acceso automático</label>
+            </div>
+        </div>
+
+        <div class="controlesBusqueda" *ngIf="!this.busquedaAutomatica">
+            <mat-form-field appearance="outline" class="inputBuscarLote">
+                <mat-label>Buscar Lote</mat-label>
+                <input #buscarLote (keyup)="searchLote()" matInput value="" placeholder="Buscar lote por nombre">
+                <!-- <input matInput value="" placeholder="Buscar lote"> -->
+                <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+
+            <div class="botonesBusqueda">
+                <button [disabled]="!this.btnBuscarLote" class="btn" mat-raised-button color="primary" (click)="buscarLotePorNombre(buscarLote.value)">Buscar</button>
+                <button [disabled]="!this.btnControlar" class="btn" mat-raised-button color="primary" (click)="accederAcontrolarLoteById()">Controlar Lote</button>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<!-- / FILTROS LOTE -->
+<ng-template #listaLotes>
+    <!-- Lista de Lotes -->
+    <div style="width: 100%; overflow: auto;">
+        <!-- <h4>Todos los lote en estado abierto</h4> -->
+        <table mat-table matSort [dataSource]="dataSource2" class="mb-8">
+            <!-- (matSortChange)="sortData($event)" -->
+
+            <ng-container matColumnDef="id">
+                <!-- mat-sort-header="id" -->
+                <th mat-header-cell *matHeaderCellDef> Id </th>
+                <td mat-cell *matCellDef="let lote"> {{ lote.idLote }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="nombre">
+                <!-- mat-sort-header="nombre" -->
+                <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                <td mat-cell *matCellDef="let lote"> {{ lote.nombre }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="fechaAlta">
+                <!-- mat-sort-header="fechaAlta" -->
+                <th mat-header-cell *matHeaderCellDef> Fecha Alta </th>
+                <td mat-cell *matCellDef="let lote"> {{ getSoloFecha(lote.fechaAlta) }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="cantArticulos">
+                <th mat-header-cell *matHeaderCellDef> Cant Articulos</th>
+                <td mat-cell class="example-button-row" *matCellDef="let lote">{{ lote.cantART }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="estado">
+                <th mat-header-cell *matHeaderCellDef> Estado</th>
+                <td mat-cell class="example-button-row" *matCellDef="let lote">{{ lote.estado }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="seleccionar">
+                <th mat-header-cell *matHeaderCellDef> Seleccionar </th>
+                <td mat-cell class="example-button-row" *matCellDef="let lote">
+                    <!-- (click)="controlar(lote)" -->
+                    <button mat-stroked-button (click)="controlar(lote)" color="primary"> Controlar Lote </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <div contenido class=" mb-4 ">
+            <!-- (page)="paginar($event) " -->
+            <mat-paginator (page)="paginar($event)" [length]="length" [pageIndex]="page" [pageSize]="size" [pageSizeOptions]="[5, 10, 15, 500]">
+            </mat-paginator>
+
+            <!-- <mat-paginator [length]="length" [pageIndex]="page" [pageSize]="size" [pageSizeOptions]="[5, 10, 15, 500]" (page)="paginar($event)">
+            </mat-paginator> -->
+        </div>
+    </div>
+</ng-template>
