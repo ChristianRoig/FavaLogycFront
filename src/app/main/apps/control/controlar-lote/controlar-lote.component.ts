@@ -1,7 +1,5 @@
 import {Component, ViewEncapsulation, OnInit, ElementRef, ViewChild} from '@angular/core';
 import { Debounce } from 'app/shared/decorators/debounce';
-import { SonidoService } from 'app/services/sonidos.service';
-import { ErroresService } from 'app/services/errores.service';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -13,7 +11,6 @@ import {
 } from '@angular/animations';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { ControlBusquedaService } from '../control-busqueda/control-busqueda.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ControlarLoteService } from './controlar-lote.service';
 
@@ -62,7 +59,6 @@ export class ControlarLoteComponent implements OnInit {
 
   constructor(
     private _router: Router,
-    private _controlBusquedaService: ControlBusquedaService,
     private _controlarLoteService: ControlarLoteService,
     private _dialog: MatDialog,
     private _activatedRoute: ActivatedRoute
@@ -116,6 +112,10 @@ export class ControlarLoteComponent implements OnInit {
     this._router.navigate([ruta]);
   }
 
+  actualizar(){
+    window.location.reload();
+  }
+
   getArticulosDeLote() {
     this._controlarLoteService.getArticulosDeLote(this.idLote, '', this.modo).subscribe( data => {
       console.log( data );
@@ -149,6 +149,7 @@ export class ControlarLoteComponent implements OnInit {
   esperarYactualizarDatos(){
     setTimeout(() => {                          
       this.getArticulosDeLote();
+      //this.actualizar();
     }, 1000);
   }
 
@@ -156,13 +157,14 @@ export class ControlarLoteComponent implements OnInit {
     // al chequear el articulo la etapa del articulo cambia
     console.log(this.cupa);
     console.log(this.codigoBarras);
+    this.articulos = null;
 
     this._controlarLoteService.controlarEtapaArticulo( this.cupa, this.idLote, this.codigoBarras, this.modo )
       .subscribe( data => {
-        //this.dataSource2 = data.datos;
-        console.log("chequearArticulo");
-        console.log(data);
-        //this.articulos = data.datos;
+        console.log("control exitoso");
+
+        this.esperarYactualizarDatos();
+        
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
@@ -180,8 +182,8 @@ export class ControlarLoteComponent implements OnInit {
           }
         }
       });
-    this.esperarYactualizarDatos();
-  }
+    }
+    //this.esperarYactualizarDatos();
 
 
   @Debounce(1000) 

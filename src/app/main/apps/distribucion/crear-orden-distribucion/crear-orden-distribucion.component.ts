@@ -42,7 +42,7 @@ export class CrearOrdenDistribucionComponent implements OnInit {
   page: number = 0;
   size: number = 10;
   columna: string = 'nroCbte';
-  order: string = 'asc';
+  order: string = 'desc';
   
   toAdd = new Array();
 
@@ -214,5 +214,12 @@ export class CrearOrdenDistribucionComponent implements OnInit {
 
   activarTipo(){
     this.mostrarTipo = !this.mostrarTipo;
+  }
+
+  paginar(e: any){
+    this.page = e.pageIndex;
+    this.size = e.pageSize;
+    
+    this.getAllRemitosSinDistribucion();
   }
 }

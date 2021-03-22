@@ -9,29 +9,12 @@ import { coerceNumberProperty } from '@angular/cdk/coercion';
 import { HttpErrorResponse } from '@angular/common/http';
 import { DATOS_ENTREGA } from 'app/interfaces/datos-entrega';
 
-import { Articulos } from '../pedidos-lista/pedidos-lista.component';
 import { AgregarDatosEntregaComponent } from './agregar-datos-entrega/agregar-datos-entrega.component';
-import { PedidosDatosEntregaComponent } from '../pedidos-visualizacion/pedidos-datos-entrega/pedidos-datos-entrega.component';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 
-import { PedidosListaService } from '../pedidos-lista/pedidos-lista.service';
 import { PedidosCrear2Service } from './pedidos-crear-2.service';
 
-export interface PeriodicElement {
-  Id: number;
-  Tipo: string;
-  CodigoArticulo: string;
-  Nombre: string;
-  Comprobante: string;
-  FechaEntrega: string;
-  Prov: string;
-  Loc: string;
-  Estado: string;
-  Etapa: string;
-  Lote: number;
-}
-
-export interface Articulo {
+export interface Articulo {  // se usa 
   id: number,
   codigoArticulo: string,
   codigoCliente: string,
@@ -42,11 +25,9 @@ export interface Articulo {
   tipoCbte: string
 }
 
-
-export interface DatosDeEntrega {
+export interface DatosDeEntrega { // se usa
   datos : Array< ListaDatosDeEntrega>
 }
-
 
 export interface ListaDatosDeEntrega {
   id: number,
@@ -94,111 +75,6 @@ export class PedidosCrear2Component implements OnInit {
   codigoCliente: string;
   nombreCliente: string;
 
-  listaArticulos: Array<Articulo> = [{
-    id: 114,
-    codigoArticulo: "MGENMES032",
-    codigoCliente: "MK995",
-    codigoDeBarras: "MGENMES032",
-    nombreArticulo: "Lapiz",
-    nombreCliente: "KREPCHUK MARTIN",
-    numeroCbte: "B0008800024195",
-    tipoCbte: "FAC"
-  },
-  {
-    id: 115,
-    codigoArticulo: "MGENMES032",
-    codigoCliente: "MK995",
-    codigoDeBarras: "MGENMES032",
-    nombreArticulo: "Goma",
-    nombreCliente: "KREPCHUK MARTIN",
-    numeroCbte: "B0008800024195",
-    tipoCbte: "FAC"
-  }];
-
-  listaDatos: DatosDeEntrega = {
-    datos: [
-      {
-        id: 1,
-        direccion: "Calle falsa 123",
-        fechaDeEntrega: "15/08/2020 12:36:00",
-        telefono: "060606",
-        mail: "pepe@grillojr",
-        contacto: "chespirito",
-        observaciones: "Prueba 2",
-        sysLocalidad: {
-            id: 6,
-            sysProvincia: {
-                id: 1
-            }
-        },
-        sysTransporte: {
-            id: 3
-        },
-        pedidoTurno: {
-            id: 2
-        },
-        listaPedidoDetalle: [
-            
-            {
-              id: 117,
-              codigoArticulo: "MGENMES032",
-              codigoCliente: "MK995",
-              codigoDeBarras: "MGENMES032",
-              nombreArticulo: "Cartuchera",
-              nombreCliente: "KREPCHUK MARTIN",
-              numeroCbte: "B0008800024195",
-              tipoCbte: "FAC"
-            }
-            
-        ]
-      },
-        {
-            id: 3,
-            direccion: "Avenida Siempre Viva 742",
-            fechaDeEntrega: "13/08/2020 12:36:00",
-            telefono: "123",
-            mail: "pepe@grillojr",
-            contacto: "prueba",
-            observaciones: "ejemplo de  prueba nueva api",
-            sysLocalidad: {
-                id: 1468,
-                sysProvincia: {
-                    id: 1
-                }
-            },
-            sysTransporte: {
-                id: 3
-            },
-            pedidoTurno: {
-                id: 2
-            },
-            listaPedidoDetalle: [
-                {
-                    id: 114,
-                    codigoArticulo: "MGENMES032",
-                    codigoCliente: "MK995",
-                    codigoDeBarras: "MGENMES032",
-                    nombreArticulo: "Regla",
-                    nombreCliente: "KREPCHUK MARTIN",
-                    numeroCbte: "B0008800024195",
-                    tipoCbte: "FAC"
-                },
-                {
-                  id: 115,
-                  codigoArticulo: "MGENMES032",
-                  codigoCliente: "MK995",
-                  codigoDeBarras: "MGENMES032",
-                  nombreArticulo: "Sacapuntas",
-                  nombreCliente: "KREPCHUK MARTIN",
-                  numeroCbte: "B0008800024195",
-                  tipoCbte: "FAC"
-                }
-            ]
-        }
-      ]
-  };
-  
-
   listaDatosVacia: DatosDeEntrega = {
     datos: []
   };
@@ -206,14 +82,12 @@ export class PedidosCrear2Component implements OnInit {
   displayedColumnsArticulos: string[] = ['select','codigoArticulo','nombre'];
   displayedColumnsPedidoDetalle: string[] = ['codigoArticulo','nombre', 'mover'];
 
-
   // dataSourceArticulos = ELEMENT_DATA_ARTICULOS;
   dataSourceArticulos: Array<Articulo> = [];
   dataSourceDatosDeEntrega: DatosDeEntrega;
 
   constructor(private _router: Router,
               private _service: PedidosCrear2Service, 
-              private _pedidosListaService: PedidosListaService,
               private route: ActivatedRoute,
               private _dialog: MatDialog) { }
 
@@ -242,7 +116,6 @@ export class PedidosCrear2Component implements OnInit {
       this.getDatosDeEntrga();
     }
   }
-  
   
   getDatosDeEntrga(){
     this._service.getDatosDeEntregaUpd(this.modo).subscribe((params) => {
@@ -282,7 +155,6 @@ export class PedidosCrear2Component implements OnInit {
     }
   }
 
-
   agregar(){
     this._service.postPedidos(this.dataSourceDatosDeEntrega.datos, 1, this.dataSourceDatosDeEntrega.datos[0].listaPedidoDetalle[0].numeroCbte).subscribe(data => {
       console.log(data);
@@ -311,11 +183,8 @@ export class PedidosCrear2Component implements OnInit {
         }
       }
     });
-
   }
   
-
-
   modificar(){
     this._service.putPedidos(this.dataSourceDatosDeEntrega.datos).subscribe(data => {
       console.log(data);
@@ -343,10 +212,7 @@ export class PedidosCrear2Component implements OnInit {
       }
     });
   }
-
-
-
-
+  
   moverDesdeDatosEntrega(event: Event, element: any, indexItem:any, indexElement: any){
     
     let indexTo = (event.target as HTMLSelectElement).value;

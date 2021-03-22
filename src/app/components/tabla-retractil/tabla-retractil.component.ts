@@ -17,6 +17,7 @@ import { DetallesTablaRetractil } from 'app/interfaces/detalles-tabla-retractil'
 export class TablaRetractilComponent implements OnInit {
 
   @Input('arregloDeDetalles') arregloDeDetalles: Array<any>;
+
   dataSource;
   //'Check', 
   columnsToDisplay = ['Cod. Art.', 'Nomb. Art.', 'Cant.', 'Etapa', 'CodBarra', 'Cupa'];
@@ -29,9 +30,7 @@ export class TablaRetractilComponent implements OnInit {
   ngOnInit(): void { 
 
     //console.log("appretractil ", this.arregloDeDetalles);
-    
     this.convertirDatosEnArreglo();
-
   }
 
   convertirDatosEnArreglo() {

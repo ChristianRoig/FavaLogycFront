@@ -20,8 +20,8 @@ export class CrearOrdenDistribucionService
         private _httpClient: HttpClient
     ){ }
 
-    getRemitosSinDistribucion(page, size, columna, order): Observable<any>{  
-        
+    getRemitosSinDistribucion(page, size, columna, order): Observable<any> {  
+        console.log("datos-> ", page, size, columna, order);
         let ruta = `${ BASE_URL }pedidos/pedidocbte/remito/a-distribuir/${ page }/${ size }/${ columna }/${ order }`;
         return this._httpClient.get(ruta);
     }
