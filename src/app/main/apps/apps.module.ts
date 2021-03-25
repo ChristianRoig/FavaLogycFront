@@ -36,8 +36,17 @@ const routes = [
     {
         path        : 'carga',
         loadChildren: () => import('./carga/carga.module').then(m => m.CargaModule)
+    },
+    {
+        path        : 'dashboard',
+        loadChildren: () => import('./dashboard/project.module').then(m => m.ProjectDashboardModule)
     }
-    
+    /* {
+        path        : 'apps/dashboard', // creo que no necesito
+        loadChildren: () => import('./main/apps/dashboard/project.module').then(m => m.ProjectDashboardModule),
+        //loadChildren: () => import('./main/apps/dashboard/dashboard.module').then(m => m.ProjectDashboardModule),
+        component   : ProjectDashboardComponent
+    }, */
 ];
 
 @NgModule({

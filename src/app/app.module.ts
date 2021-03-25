@@ -27,11 +27,14 @@ import { SonidoService } from './services/sonidos.service';
 import { UsuarioGuard } from './guards/usuario.guard';
 import { LoginModule } from './main/pages/login/login.module';
 import { LoginComponent } from './main/pages/login/login.component';
+import { ProjectDashboardComponent } from './main/apps/dashboard/project.component';
 
 const appRoutes: Routes = [
+    
     {
         path        : 'apps',
         loadChildren: () => import('./main/apps/apps.module').then(m => m.AppsModule),
+        //component   : ProjectDashboardComponent
         // canLoad: [UsuarioGuard]
     },
     {
