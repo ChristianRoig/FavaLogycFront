@@ -342,32 +342,32 @@
                         <!-- / WIDGET 6 -->
 
                         <!-- WIDGET 7 -->
-                        <fuse-widget [@animate]="{value: '*',params:{y: '100%'}} " class="widget " fxLayout="column " fxFlex="100 " fxFlex.gt-sm="50 ">
+                        <fuse-widget [@animate]="{value: '*',params:{y: '100%'}}" class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-sm="50">
 
                             <!-- Front -->
-                            <div class="fuse-widget-front ">
+                            <div class="fuse-widget-front">
 
-                                <div class="px-16 py-8 border-bottom " fxLayout="row " fxLayoutAlign="space-between center ">
+                                <div class="px-16 py-8 border-bottom" fxLayout="row" fxLayoutAlign="space-between center">
                                     <div class="h3 ">{{widgets[6].widget7.title}}</div>
                                     <mat-form-field>
-                                        <mat-select class="simplified " [(ngModel)]="widget7.currentRange " aria-label="Change range ">
-                                            <mat-option *ngFor="let range of widgets[6].widget7.ranges | keys " [value]="range.key ">
+                                        <mat-select class="simplified" [(ngModel)]="widget7.currentRange" aria-label="Change range">
+                                            <mat-option *ngFor="let range of widgets[6].widget7.ranges | keys" [value]="range.key">
                                                 {{range.value}}
                                             </mat-option>
                                         </mat-select>
                                     </mat-form-field>
                                 </div>
 
-                                <div class="p-16 " fxLayout="row " fxLayoutAlign="space-between center " *ngFor="let event of widgets[6].widget7.schedule[widget7.currentRange] ">
+                                <div class="p-16" fxLayout="row" fxLayoutAlign="space-between center" *ngFor="let event of widgets[6].widget7.schedule[widget7.currentRange]">
                                     <div>
-                                        <div class="h3 ">{{event.title}}</div>
+                                        <div class="h3">{{event.title}}</div>
                                         <div>
-                                            <span class="secondary-text ">{{event.time}}</span>
-                                            <span *ngIf="event.location ">, {{event.location}}</span>
+                                            <span class="secondary-text">{{event.time}}</span>
+                                            <span *ngIf="event.location">, {{event.location}}</span>
                                         </div>
                                     </div>
 
-                                    <button mat-icon-button aria-label="More information ">
+                                    <button mat-icon-button aria-label="More information">
                                         <mat-icon>more_vert</mat-icon>
                                     </button>
                                 </div>
@@ -383,24 +383,24 @@
 
                 </mat-tab>
 
-                <mat-tab label="Resumen ">
+                <mat-tab label="Resumen">
 
                     <!-- WIDGET GROUP -->
-                    <div class="widget-group " fxLayout="row wrap " fxFlex="100 " *fuseIfOnDom [@animateStagger]="{value: '50'} ">
+                    <div class="widget-group" fxLayout="row wrap" fxFlex="100" *fuseIfOnDom [@animateStagger]="{value: '50'}">
 
                         <!-- WIDGET 8 -->
-                        <fuse-widget [@animate]="{value: '*',params:{y: '100%'}} " class="widget " fxLayout="column " fxFlex="100 " fxFlex.gt-sm="50 ">
+                        <fuse-widget [@animate]="{value: '*',params:{y: '100%'}}" class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-sm="50">
 
                             <!-- Front -->
-                            <div class="fuse-widget-front ">
-                                <div class="h3 px-16 py-24 ">
+                            <div class="fuse-widget-front">
+                                <div class="h3 px-16 py-24">
                                     widgetswidget8title
                                 </div>
 
                                 <mat-divider></mat-divider>
 
                                 <div class="h-400 ">
-                                    <ngx-charts-pie-chart *fuseIfOnDom [scheme]="widget8.scheme " [results]="widgets.widget8.mainChart " [legend]="widget8.legend " [explodeSlices]="widget8.explodeSlices " [labels]="widget8.labels " [doughnut]="widget8.doughnut" [gradient]="widget8.gradient "
+                                    <ngx-charts-pie-chart *fuseIfOnDom [scheme]="widget8.scheme" [results]="widgets.widget8.mainChart" [legend]="widget8.legend" [explodeSlices]="widget8.explodeSlices" [labels]="widget8.labels" [doughnut]="widget8.doughnut" [gradient]="widget8.gradient"
                                         (select)="widget8.onSelect($event) ">
                                     </ngx-charts-pie-chart>
                                 </div>
@@ -412,71 +412,71 @@
                         <!-- / WIDGET 8 -->
 
                         <!-- WIDGET 9 -->
-                        <fuse-widget [@animate]="{value: '*',params:{y: '100%'}} " class="widget " fxLayout="column " fxFlex="100 " fxFlex.gt-sm="50 ">
+                        <fuse-widget [@animate]="{value: '*',params:{y: '100%'}}" class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-sm="50">
 
                             <!-- Front -->
-                            <div class="fuse-widget-front ">
-                                <div class="px-16 py-12 border-bottom " fxLayout="row " fxLayoutAlign="space-between center ">
+                            <div class="fuse-widget-front">
+                                <div class="px-16 py-12 border-bottom" fxLayout="row" fxLayoutAlign="space-between center">
                                     <div class="h3 ">widgewidget9title</div>
                                     <mat-form-field>
-                                        <mat-select [(ngModel)]="widget9.currentRange " aria-label="Change range ">
+                                        <mat-select [(ngModel)]="widget9.currentRange" aria-label="Change range ">
                                             <!-- *ngFor="let range of widgets.widget9.ranges | keys "  -->
-                                            <mat-option [value]="0 ">
+                                            <mat-option [value]="0">
                                                 range.value
                                             </mat-option>
                                         </mat-select>
                                     </mat-form-field>
                                 </div>
 
-                                <div class="px-16 py-24 " fxLayout="column " fxLayoutAlign="center " fxLayout.gt-xs="row " fxLayoutAlign.gt-xs="space-between end ">
-                                    <div fxFlex="0 1 auto ">
-                                        <div class="h4 secondary-text ">widgetswidget9weeklySpenttitle</div>
-                                        <div class="pt-8 mat-display-1 m-0 font-weight-300 text-nowrap ">
-                                            <span class="secondary-text ">$asd</span>
+                                <div class="px-16 py-24" fxLayout="column" fxLayoutAlign="center" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between end">
+                                    <div fxFlex="0 1 auto">
+                                        <div class="h4 secondary-text">widgetswidget9weeklySpenttitle</div>
+                                        <div class="pt-8 mat-display-1 m-0 font-weight-300 text-nowrap">
+                                            <span class="secondary-text">$asd</span>
                                             <span>currentRange</span>
                                         </div>
                                     </div>
                                     <div class="h-52 " fxFlex>
-                                        <ngx-charts-area-chart *fuseIfOnDom [results]="widgets.widget9.weeklySpent.chart[widget9.currentRange] " [scheme]="widget9.scheme " [gradient]="widget9.gradient " [xAxis]="widget9.xAxis " [yAxis]="widget9.yAxis" [legend]="widget9.legend " [showXAxisLabel]="widget9.showXAxisLabel "
-                                            [showYAxisLabel]="widget9.showYAxisLabel " [xAxisLabel]="widget9.xAxisLabel " [yAxisLabel]="widget9.yAxisLabel " [curve]="widget9.curve ">
+                                        <ngx-charts-area-chart *fuseIfOnDom [results]="widgets.widget9.weeklySpent.chart[widget9.currentRange]" [scheme]="widget9.scheme" [gradient]="widget9.gradient" [xAxis]="widget9.xAxis" [yAxis]="widget9.yAxis" [legend]="widget9.legend" [showXAxisLabel]="widget9.showXAxisLabel"
+                                            [showYAxisLabel]="widget9.showYAxisLabel" [xAxisLabel]="widget9.xAxisLabel" [yAxisLabel]="widget9.yAxisLabel" [curve]="widget9.curve">
                                         </ngx-charts-area-chart>
                                     </div>
                                 </div>
 
-                                <div class="px-16 py-24 " fxLayout="column " fxLayoutAlign="center " fxLayout.gt-xs="row " fxLayoutAlign.gt-xs="space-between end ">
-                                    <div fxFlex="0 1 auto ">
-                                        <div class="h4 secondary-text ">widgetstitle</div>
-                                        <div class="pt-8 mat-display-1 m-0 font-weight-300 text-nowrap ">
-                                            <span class="secondary-text ">$</span>
+                                <div class="px-16 py-24" fxLayout="column" fxLayoutAlign="center" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between end">
+                                    <div fxFlex="0 1 auto">
+                                        <div class="h4 secondary-text">widgetstitle</div>
+                                        <div class="pt-8 mat-display-1 m-0 font-weight-300 text-nowrap">
+                                            <span class="secondary-text">$</span>
                                             <span>widget9currentRange</span>
                                         </div>
                                     </div>
-                                    <div class="h-52 " fxFlex>
-                                        <ngx-charts-area-chart *fuseIfOnDom [results]="widgets.widget9.totalSpent.chart[widget9.currentRange] " [scheme]="widget9.scheme " [gradient]="widget9.gradient " [xAxis]="widget9.xAxis " [yAxis]="widget9.yAxis" [legend]="widget9.legend " [showXAxisLabel]="widget9.showXAxisLabel "
-                                            [showYAxisLabel]="widget9.showYAxisLabel " [xAxisLabel]="widget9.xAxisLabel " [yAxisLabel]="widget9.yAxisLabel " [curve]="widget9.curve ">
+                                    <div class="h-52" fxFlex>
+                                        <ngx-charts-area-chart *fuseIfOnDom [results]="widgets.widget9.totalSpent.chart[widget9.currentRange]" [scheme]="widget9.scheme" [gradient]="widget9.gradient" [xAxis]="widget9.xAxis" [yAxis]="widget9.yAxis" [legend]="widget9.legend" [showXAxisLabel]="widget9.showXAxisLabel"
+                                            [showYAxisLabel]="widget9.showYAxisLabel" [xAxisLabel]="widget9.xAxisLabel" [yAxisLabel]="widget9.yAxisLabel" [curve]="widget9.curve">
                                         </ngx-charts-area-chart>
                                     </div>
                                 </div>
 
-                                <div class="px-16 py-24 " fxLayout="column " fxLayoutAlign="center " fxLayout.gt-xs="row " fxLayoutAlign.gt-xs="space-between end ">
-                                    <div fxFlex="0 1 auto ">
-                                        <div class="h4 secondary-text ">widgetstitle</div>
-                                        <div class="pt-8 mat-display-1 m-0 font-weight-300 text-nowrap ">
-                                            <span class="secondary-text ">$</span>
+                                <div class="px-16 py-24" fxLayout="column" fxLayoutAlign="center" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between end">
+                                    <div fxFlex="0 1 auto">
+                                        <div class="h4 secondary-text">widgetstitle</div>
+                                        <div class="pt-8 mat-display-1 m-0 font-weight-300 text-nowrap">
+                                            <span class="secondary-text">$</span>
                                             <span>widgets.widget9.remaining.count[widget9.currentRange]</span>
                                         </div>
                                     </div>
                                     <div class="h-52 " fxFlex>
-                                        <ngx-charts-area-chart *fuseIfOnDom [results]="widgets.widget9.remaining.chart[widget9.currentRange] " [scheme]="widget9.scheme " [gradient]="widget9.gradient " [xAxis]="widget9.xAxis " [yAxis]="widget9.yAxis" [legend]="widget9.legend " [showXAxisLabel]="widget9.showXAxisLabel "
-                                            [showYAxisLabel]="widget9.showYAxisLabel " [xAxisLabel]="widget9.xAxisLabel " [yAxisLabel]="widget9.yAxisLabel " [curve]="widget9.curve ">
+                                        <ngx-charts-area-chart *fuseIfOnDom [results]="widgets.widget9.remaining.chart[widget9.currentRange]" [scheme]="widget9.scheme" [gradient]="widget9.gradient" [xAxis]="widget9.xAxis" [yAxis]="widget9.yAxis" [legend]="widget9.legend" [showXAxisLabel]="widget9.showXAxisLabel"
+                                            [showYAxisLabel]="widget9.showYAxisLabel" [xAxisLabel]="widget9.xAxisLabel" [yAxisLabel]="widget9.yAxisLabel" [curve]="widget9.curve">
                                         </ngx-charts-area-chart>
                                     </div>
                                 </div>
 
-                                <div class="px-16 py-24 border-top ">
-                                    <div class="h4 secondary-text ">widgetstitle</div>
-                                    <div class="pt-8 mat-display-1 m-0 font-weight-300 ">
-                                        <span class="secondary-text ">$</span>
+                                <div class="px-16 py-24 border-top">
+                                    <div class="h4 secondary-text">widgetstitle</div>
+                                    <div class="pt-8 mat-display-1 m-0 font-weight-300">
+                                        <span class="secondary-text">$</span>
                                         <span>widgetscount</span>
                                     </div>
                                 </div>
@@ -488,33 +488,33 @@
                         <!-- / WIDGET 9 -->
 
                         <!-- WIDGET 10 -->
-                        <fuse-widget [@animate]="{value: '*',params:{y: '100%'}} " class="widget " fxLayout="row " fxFlex="100 ">
+                        <fuse-widget [@animate]="{value: '*',params:{y: '100%'}} " class="widget " fxLayout="row " fxFlex="100">
 
                             <!-- Front -->
-                            <div class="fuse-widget-front ">
+                            <div class="fuse-widget-front">
 
-                                <div class="simple-table-container " ms-responsive-table>
-                                    <div class=" table-title ">
+                                <div class="simple-table-container" ms-responsive-table>
+                                    <div class=" table-title">
                                         {{widgets.widget10.title}}
                                     </div>
 
-                                    <table class="simple ">
+                                    <table class="simple">
 
                                         <thead>
                                             <tr>
-                                                <th *ngFor="let column of widgets.widget10.table.columns ">
+                                                <th *ngFor="let column of widgets.widget10.table.columns">
                                                     {{column.title}}
                                                 </th>
                                             </tr>
                                         </thead>
 
                                         <tbody>
-                                            <tr *ngFor="let row of widgets.widget10.table.rows ">
-                                                <td *ngFor="let cell of row ">
-                                                    <span class="p-4 " [ngClass]="cell.classes ">
+                                            <tr *ngFor="let row of widgets.widget10.table.rows">
+                                                <td *ngFor="let cell of row">
+                                                    <span class="p-4 " [ngClass]="cell.classes">
                                                         {{cell.value}}
                                                     </span>
-                                                    <mat-icon *ngIf="cell.icon " class="s-16 ">{{cell.icon}}
+                                                    <mat-icon *ngIf="cell.icon" class="s-16">{{cell.icon}}
                                                     </mat-icon>
                                                 </td>
                                             </tr>
