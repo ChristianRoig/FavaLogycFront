@@ -52,7 +52,8 @@ export class TableComprobantesComponent implements OnInit {
 
 /*  displayedColumns: string[] = ['Comprobante', 'Fecha-Entrega', 'priDireccion', ' cantDatosEntrega -1','Localidad', 'Provincia','priCod',
                                   'priArtículo', cantArticulos -1, Estado, Etapa, 'cantEtapas -1' ]; */
-  displayedColumns: string[] = ['Tipo', 'idComprobante', 'cantArticulos', 'NombreArticulo', 'Comprobante', 'Fecha-Entrega', 'CantDirecEntrega', 'priDireccion', 'Provincia', 'Localidad', 'cantEtapa', 'priEtapa'];  
+  displayedColumns: string[] = ['idComprobante', 'Comprobante', 'Fecha-Entrega', 'Tipo', 'NombreArticulo', 'priDireccion', 'priEtapa'];  
+  //displayedColumns: string[] = ['Comprobante', 'Fecha-Entrega', 'Tipo', 'idComprobante', 'cantArticulos', 'NombreArticulo', 'CantDirecEntrega', 'priDireccion', 'Provincia', 'Localidad', 'cantEtapa', 'priEtapa'];  
   dataSource2: any;
 
   lote: string = null;

@@ -1,4 +1,77 @@
 {
+    "datos": {
+        "totalRegistros": 4,
+        "datos": [{
+                "idCbt": 6,
+                "nroCbte": "VTA-B00024-00004550",
+                "pedidoTipo": "FACTURA VENTA",
+                "cantArticulos": 3,
+                "priNombreArticulo": "LG MINICOMPONENTE* CM9960",
+                "cantDireccionEntrega": 1,
+                "priDireccion": "Catamarca 144",
+                "fechaDeEntrega": 1614729600000,
+                "priProvincia": "BA",
+                "priLocalidad": "MAR DEL PLATA",
+                "cantEtapa": 1,
+                "priEtapa": "SIN REMITIR",
+                "priEtapaOrd": 4,
+                "estadoCeDIS": "SIN DATOS DE ENTREGA",
+                "primerCod": "MR0B123B4"
+            },
+            {
+                "idCbt": 4,
+                "nroCbte": "REP-B00075-00009860",
+                "pedidoTipo": "FACTURA VENTA",
+                "cantArticulos": 1,
+                "priNombreArticulo": "SAIAR TERMO A/REC.30LTS DE PIE",
+                "cantDireccionEntrega": 2,
+                "priDireccion": "Cybertron 123",
+                "fechaDeEntrega": 1617386349000,
+                "priProvincia": "BA",
+                "priLocalidad": "MAR DEL PLATA",
+                "cantEtapa": 1,
+                "priEtapa": "SIN REMITIR",
+                "priEtapaOrd": 2,
+                "estadoCeDIS": "A DESPACHAR",
+                "primerCod": "MR0B123B3"
+            },
+            {
+                "idCbt": 3,
+                "nroCbte": "REP-B00066-00087111",
+                "pedidoTipo": "FACTURA VENTA",
+                "cantArticulos": 2,
+                "priNombreArticulo": "PIERO COLCH SPRING 190x140x26",
+                "cantDireccionEntrega": 2,
+                "priDireccion": "Rodriguez 550 Piso 7 Dto C",
+                "fechaDeEntrega": 1614729600000,
+                "priProvincia": "BA",
+                "priLocalidad": "MAR DEL PLATA",
+                "cantEtapa": 2,
+                "priEtapa": "SIN REMITIR",
+                "priEtapaOrd": 2,
+                "estadoCeDIS": "EN PROCESO",
+                "primerCod": "MR0B123A1"
+            },
+            {
+                "idCbt": 2,
+                "nroCbte": "VTA-A00085-00000053",
+                "pedidoTipo": "FACTURA VENTA",
+                "cantArticulos": 1,
+                "priNombreArticulo": "ESCORIAL COCINA CANDOR S2 GE",
+                "cantDireccionEntrega": 1,
+                "priDireccion": "Luro 573",
+                "fechaDeEntrega": 1616112000000,
+                "priProvincia": "BA",
+                "priLocalidad": "MAR DEL PLATA",
+                "cantEtapa": 1,
+                "priEtapa": "SIN REMITIR",
+                "priEtapaOrd": 5,
+                "estadoCeDIS": "DESPACHADO",
+                "primerCod": "MR0B123A2"
+            }
+        ]
+    },
+
     "widgets": [{
             "widget1": {
                 "ranges": {
