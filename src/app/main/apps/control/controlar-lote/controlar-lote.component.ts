@@ -2,6 +2,7 @@ import {Component, ViewEncapsulation, OnInit, ElementRef, ViewChild} from '@angu
 import { Debounce } from 'app/shared/decorators/debounce';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 import { MatDialog } from '@angular/material/dialog';
+import { SonidoService } from 'app/services/sonidos.service';
 import {
   trigger,
   state,
@@ -53,6 +54,7 @@ export class ControlarLoteComponent implements OnInit {
   eliminar: boolean = false;
   codigoBarras: string = null;
   cupa: string = null;
+  controlado: boolean = false;
 
   condicion: string = null;
   endPoint: string = null;
@@ -61,6 +63,7 @@ export class ControlarLoteComponent implements OnInit {
     private _router: Router,
     private _controlarLoteService: ControlarLoteService,
     private _dialog: MatDialog,
+    private _sonido: SonidoService,
     private _activatedRoute: ActivatedRoute
   ) {}
 
@@ -161,6 +164,8 @@ export class ControlarLoteComponent implements OnInit {
 
     this._controlarLoteService.controlarEtapaArticulo( this.cupa, this.idLote, this.codigoBarras, this.modo )
       .subscribe( data => {
+        this.controlado = true;
+        this._sonido.playAudioSuccess();
         console.log("control exitoso");
 
         this.esperarYactualizarDatos();
@@ -170,6 +175,7 @@ export class ControlarLoteComponent implements OnInit {
         if (err.error instanceof Error) {
           console.log("Client-side error");
         } else {
+          this._sonido.playAudioAlert();
           let errStatus = err.status
           if (errStatus == 0){
             let titulo = 'Error de Servidor';
