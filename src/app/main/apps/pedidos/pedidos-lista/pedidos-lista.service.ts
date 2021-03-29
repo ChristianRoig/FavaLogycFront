@@ -83,7 +83,8 @@ export class PedidosListaService
 
     getAllLocalidades(): Observable<any>
     {
-        let ruta = `${BASE_URL}pedidos/localidad/domicilio/`;
+        let ruta = `${BASE_URL}pedidos/localidad/domicilio/`; //este esta llamando a "Get All Localidad filtrado por Domicilio De Entrega"
+        //let ruta = `${BASE_URL}pedidos/localidad/`; //getAllLocalidad
         return this._httpClient.get(ruta);
     }
 
