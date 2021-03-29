@@ -38,7 +38,7 @@ const routes = [
         loadChildren: () => import('./carga/carga.module').then(m => m.CargaModule)
     },
     {
-        path        : 'dashboard',
+        path        : 'inicio',
         loadChildren: () => import('./dashboard/project.module').then(m => m.ProjectDashboardModule)
     }
     /* {
