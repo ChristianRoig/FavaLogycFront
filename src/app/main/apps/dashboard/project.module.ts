@@ -19,7 +19,7 @@ import { ProjectDashboardService } from './project.service';
 
 const routes: Routes = [
     {
-        path     : 'tablero',
+        path     : '',
         component: ProjectDashboardComponent,
         /* resolve  : {
             data: ProjectDashboardService

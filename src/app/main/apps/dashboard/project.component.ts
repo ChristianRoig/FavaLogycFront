@@ -4,10 +4,13 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import * as shape from 'd3-shape';
 
 import { fuseAnimations } from '@fuse/animations';
-
-import { ProjectDashboardService } from './project.service';
+import { MatDialog } from '@angular/material/dialog';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
+
+//service
+import { ProjectDashboardService } from './project.service';
 
 @Component({
     selector     : 'project-dashboard',
@@ -29,7 +32,22 @@ export class ProjectDashboardComponent implements OnInit {
     widget9: any = {};
     widget11: any = {};
 
+    resumen: any = [];
+    tipo_resumen = 1;
+
+    length: number = 0;
+    mensaje: string;
+
     dateNow = Date.now();
+    fechaHoy = Date();
+    fechaString = "aaaa-mm-dd";
+    
+
+    estados = [
+        { valor: 0, texto:"A remitir" },
+        { valor: 1, texto:"En Proceso" },
+        { valor: 2, texto:"Despachados" }
+    ];
 
     /**
      * Constructor
@@ -39,7 +57,8 @@ export class ProjectDashboardComponent implements OnInit {
      */
     constructor (
         private _fuseSidebarService: FuseSidebarService,
-        private _projectDashboardService: ProjectDashboardService
+        private _projectDashboardService: ProjectDashboardService,
+        private _dialog: MatDialog
     )
     {
         /**
@@ -144,7 +163,7 @@ export class ProjectDashboardComponent implements OnInit {
         }, 1000);
 
     }
-
+    
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
     // -----------------------------------------------------------------------------------------------------
@@ -162,6 +181,10 @@ export class ProjectDashboardComponent implements OnInit {
         this.widget11.onContactsChanged.next(this.widgets.widget11.table.rows);
         this.widget11.dataSource = new FilesDataSource(this.widget11); */ 
     }
+    
+    /* convertirFecha(){
+        let dia = this.fechaHoy.getDate();
+    } */
 
    /*  setInterval(() => {
         this.dateNow = Date.now();
@@ -176,7 +199,7 @@ export class ProjectDashboardComponent implements OnInit {
             },
             (err: HttpErrorResponse) => {
                 console.log("error");
-              /* this.length = 0
+              this.length = 0
               if (err.error instanceof Error) {
                 console.log("Client-side error");
               } else {
@@ -191,12 +214,14 @@ export class ProjectDashboardComponent implements OnInit {
                   this.mensaje = mensaje;
                   // this.mostrarError(errStatus, titulo, mensaje);
                 }
-              } */
+              }
             }
         );
     }
 
     getWidgets(){
+        //console.log( "dateNow",this.hoy);
+        //this._projectDashboardService.getWidgets().subscribe(
         this._projectDashboardService.getWidgets().subscribe(
             data => {
               console.log("Widgets ->", data);
@@ -205,7 +230,7 @@ export class ProjectDashboardComponent implements OnInit {
             },
             (err: HttpErrorResponse) => {
                 console.log("error");
-              /* this.length = 0
+              this.length = 0
               if (err.error instanceof Error) {
                 console.log("Client-side error");
               } else {
@@ -220,10 +245,27 @@ export class ProjectDashboardComponent implements OnInit {
                   this.mensaje = mensaje;
                   // this.mostrarError(errStatus, titulo, mensaje);
                 }
-              } */
+              }
             }
         );
     }
+
+    mostrarError(errStatus, titulo, mensaje){
+        const dialogRef = this._dialog.open( ModalErrorComponent, { 
+          data: {
+            titulo: titulo,
+            mensaje: mensaje
+          } 
+        });
+        dialogRef.afterClosed()
+          .subscribe( () => {
+              if (errStatus != 0) {
+                
+              } else {
+                //this._router.navigate(['']);
+              }
+          });
+      }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods

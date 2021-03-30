@@ -71,8 +71,36 @@
             }
         ]
     },
+    "resumen": [{
+            "estado": "A Remitir",
+            "count": {
+                "articulos": 30,
+                "pedidos": null,
+                "comprobantes": 0,
+                "localidades": null
+            }
+        },
+        {
+            "estado": "En Proceso",
+            "count": {
+                "articulos": 54,
+                "pedidos": null,
+                "comprobantes": 24,
+                "localidades": 4
+            }
+        },
+        {
+            "estado": "Despachados",
+            "count": {
+                "articulos": 6,
+                "pedidos": null,
+                "comprobantes": 6,
+                "localidades": 1
+            }
+        }
+    ],
 
-    "widgets": [{
+    "resumenes": [{
             "widget1": {
                 "ranges": {
                     "DY": "A Remitir(hoy)",

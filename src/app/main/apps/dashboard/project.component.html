@@ -35,296 +35,315 @@
         <!-- CONTENT -->
         <div class="content">
 
-            <mat-tab-group dynamicHeight>
+            <!-- <mat-tab-group dynamicHeight> -->
 
-                <mat-tab label="Inicio ">
+            <!-- <mat-tab label="Inicio "> -->
 
-                    <div class="widget-group p-12" fxLayout="row wrap" fxFlex="100" *fuseIfOnDom [@animateStagger]="{value: '50'}">
+            <div class="widget-group p-12" fxLayout="row wrap" fxFlex="100" *fuseIfOnDom [@animateStagger]="{value: '50'}">
 
-                        <!-- WIDGET 1 -->
-                        <fuse-widget [@animate]="{value: '*',params:{y: '100%'}}" class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="25">
+                <!-- WIDGET 1 -->
+                <fuse-widget [@animate]="{value: '*',params:{y: '100%'}}" class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="25">
 
-                            <!-- Front -->
-                            <div class="fuse-widget-front ">
-                                <div class="pl-16 pr-8 py-16 h-52" fxLayout="row" fxLayoutAlign="space-between center">
-                                    <mat-form-field>
-                                        <!-- [(ngModel)]="widgets.widget1.currentRange " -->
-                                        <mat-select class="simplified font-size-16" *ngIf="this.widgets" [(ngModel)]="widgets[0].widget1.currentRange" aria-label="Change range">
-                                            <!-- *ngFor="let range of widgets.widget1.ranges | keys " -->
-                                            <mat-option *ngFor="let range of widgets[0].widget1.ranges | keys" [value]="range.key">
-                                                {{range.value}}
-                                                <!-- {{range.value}} -->
-                                            </mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                    <button mat-icon-button fuseWidgetToggle aria-label="more">
+                    <!-- Front -->
+                    <div class="fuse-widget-front ">
+                        <div class="pl-16 pr-8 py-16 h-52" fxLayout="row" fxLayoutAlign="space-between center">
+                            <mat-form-field>
+                                <!-- [(ngModel)]="widgets.widget1.currentRange " -->
+                                <mat-select class="simplified font-size-16" *ngIf="this.widgets" [(ngModel)]="widgets[0].widget1.currentRange" aria-label="Change range">
+                                    <!-- *ngFor="let range of widgets[0].widget1.ranges | keys" -->
+                                    <!-- *ngFor="let estado of estados | keys" -->
+                                    <mat-option *ngFor="let range of widgets[0].widget1.ranges | keys" [value]="range.key">
+                                        {{range.value}}
+                                        <!-- {{estado.value}} -->
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <!-- <button mat-icon-button fuseWidgetToggle aria-label="more">   !!! boton deshabilitado hasta que se defina que va atras
                                         <mat-icon>more_vert</mat-icon>
-                                    </button>
-                                </div>
+                            </button> -->
+                        </div>
 
-                                <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="center center">
-                                    <div class="light-blue-fg font-size-72 line-height-72" *ngIf="this.widgets">
-                                        {{widgets[0].widget1.data.count[widgets[0].widget1.currentRange]}}
-                                    </div>
-                                    <div class="h3 secondary-text font-weight-500" *ngIf="this.widgets">{{widgets[0].widget1.data.label}}
-                                    </div>
-                                </div>
+                        <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="center center">
+                            <!-- resumen[0].count.articulos.value -->
+                            <div class="light-blue-fg font-size-72 line-height-72" *ngIf="this.widgets">
+                                {{widgets[0].widget1.data.count[widgets[0].widget1.currentRange]}}
+                                <!-- {{resumen[tipo_reumen] }}  -->
+                            </div>
+                            <!-- resumen[0].count.articulos -->
+                            <div class="h3 secondary-text font-weight-500" *ngIf="this.widgets">
+                                {{widgets[0].widget1.data.label}}
+                            </div>
+                        </div>
 
-                                <div class="p-16 border-top" fxLayout="row" fxLayoutAlign="start center">
-                                    <span class="h4 secondary-text text-truncate" *ngIf="this.widgets">
+                        <div class="p-16 border-top" fxLayout="row" fxLayoutAlign="start center">
+                            <!-- despachados resumen[0].estado | {{widgets[0].widget1.data.extra.label}}:-->
+                            <span class="h4 secondary-text text-truncate" *ngIf="this.widgets">
+                                        <!--  resumen[2].estado.value -->
                                         {{widgets[0].widget1.data.extra.label}}:
                                     </span>
-                                    <span class="h4 ml-8" *ngIf="this.widgets">
+                            <!-- despachados {{widgets[0].widget1.data.extra.count[widgets[0].widget1.currentRange]}}-->
+                            <span class="h4 ml-8" *ngIf="this.widgets">
+                                    <!-- resumen[2].count.articulos.value -->
                                         {{widgets[0].widget1.data.extra.count[widgets[0].widget1.currentRange]}}
                                     </span>
-                                    <span class="h4 secondary-text text-truncate" *ngIf="this.widgets">
-                                        {{widgets[0].widget1.data.extra.label2}}:
+                            <!-- {{widgets[0].widget1.data.extra.label2}}: -->
+                            <span class="h4 secondary-text text-truncate" *ngIf="this.widgets">
+                                        , Ayer:
                                     </span>
-                                    <span class="h4 ml-8" *ngIf="this.widgets">
-                                        {{widgets[0].widget1.data.extra.count2[widgets[0].widget1.currentRange]}}
+                            <!-- {{widgets[0].widget1.data.extra.count2[widgets[0].widget1.currentRange]}} -->
+                            <span class="h4 ml-8" *ngIf="this.widgets">
+                                        22
                                     </span>
-                                </div>
-                            </div>
-                            <!-- / Front -->
+                        </div>
+                    </div>
+                    <!-- / Front -->
 
-                            <!-- Back -->
-                            <div class="fuse-widget-back p-16 pt-32">
-                                <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button" aria-label="Flip widget">
+                    <!-- Back -->
+                    <div class="fuse-widget-back p-16 pt-32">
+                        <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button" aria-label="Flip widget">
                                     <mat-icon class="s-16">close</mat-icon>
                                 </button>
 
-                                <div *ngIf="this.widgets">
-                                    {{widgets[0].widget1.detail}}
-                                </div>
-                            </div>
-                            <!-- / Back -->
+                        <div *ngIf="this.widgets">
+                            Informacion extra
+                        </div>
+                    </div>
+                    <!-- / Back -->
 
-                        </fuse-widget>
-                        <!-- / WIDGET 1 -->
+                </fuse-widget>
+                <!-- / WIDGET 1 -->
 
-                        <!-- WIDGET 2 -->
-                        <fuse-widget [@animate]="{value: '*',params:{y: '100%'}}" class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="25">
+                <!-- WIDGET 2 -->
+                <fuse-widget [@animate]="{value: '*',params:{y: '100%'}}" class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="25">
 
-                            <!-- Front -->
-                            <div class="fuse-widget-front">
-                                <div class="pl-16 pr-8 py-16 h-52" fxLayout="row " fxLayoutAlign="space-between center">
-                                    <div class="h3" *ngIf="this.widgets">{{widgets[1].widget2.title}}</div>
+                    <!-- Front -->
+                    <div class="fuse-widget-front">
+                        <div class="pl-16 pr-8 py-16 h-52" fxLayout="row " fxLayoutAlign="space-between center">
+                            <div class="h3" *ngIf="this.widgets">{{widgets[1].widget2.title}}</div>
 
-                                    <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button" aria-label="more">
+                            <!-- <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button" aria-label="more">
                                         <mat-icon>more_vert</mat-icon>
-                                    </button>
-                                </div>
+                                    </button> -->
+                        </div>
 
-                                <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="center center">
-                                    <div class="red-fg font-size-72 line-height-72" *ngIf="this.widgets">
-                                        {{widgets[1].widget2.data.count}}
-                                    </div>
-                                    <div class="h3 secondary-text font-weight-500" *ngIf="this.widgets">{{widgets[1].widget2.data.label}}
-                                    </div>
-                                </div>
+                        <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="center center">
+                            <!-- resumen[0].count.pedido.value | - -->
+                            <div class="red-fg font-size-72 line-height-72" *ngIf="this.widgets">
+                                {{widgets[1].widget2.data.count}}
+                            </div>
+                            <!-- resumen[0].count.pedido | - -->
+                            <div class="h3 secondary-text font-weight-500" *ngIf="this.widgets">
+                                {{widgets[1].widget2.data.label}}
+                            </div>
+                        </div>
 
-                                <div class="p-16 border-top" fxLayout="row" fxLayoutAlign="start center">
-                                    <span class="h4 secondary-text text-truncate" *ngIf="this.widgets">
+                        <div class="p-16 border-top" fxLayout="row" fxLayoutAlign="start center">
+                            <span class="h4 secondary-text text-truncate" *ngIf="this.widgets">
+                                        <!-- resumen[2].estado.value -->
                                         {{widgets[1].widget2.data.extra.label}}:
                                     </span>
-                                    <span class="h4 ml-8" *ngIf="this.widgets">{{widgets[1].widget2.data.extra.count}}</span>
-                                    <span class="h4 secondary-text text-truncate" *ngIf="this.widgets">
-                                        {{widgets[1].widget2.data.extra.label2}}:
+                            <span class="h4 ml-8" *ngIf="this.widgets">
+                                        <!-- resumen[2].count.pedidos.value | - -->
+                                        {{widgets[1].widget2.data.extra.count}}
                                     </span>
-                                    <span class="h4 ml-8" *ngIf="this.widgets">{{widgets[1].widget2.data.extra.count2}}</span>
-                                </div>
-                            </div>
-                            <!-- / Front -->
+                            <span class="h4 secondary-text text-truncate" *ngIf="this.widgets">
+                                        <!-- {{widgets[1].widget2.data.extra.label2}}: -->
+                                        , Ayer:
+                                    </span>
+                            <span class="h4 ml-8" *ngIf="this.widgets">
+                                        <!-- {{widgets[1].widget2.data.extra.count2}} -->
+                                        11
+                                    </span>
+                        </div>
+                    </div>
+                    <!-- / Front -->
 
-                            <!-- Back -->
-                            <div class="fuse-widget-back p-16 pt-32">
-                                <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button" aria-label="Flip widget">
+                    <!-- Back -->
+                    <div class="fuse-widget-back p-16 pt-32">
+                        <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button" aria-label="Flip widget">
                                     <mat-icon class="s-16">close</mat-icon>
                                 </button>
 
-                                <div *ngIf="this.widgets">
-                                    {{widgets[1].widget2.detail}}
-                                </div>
+                        <div *ngIf="this.widgets">
+                            Info extra
+                        </div>
+                    </div>
+                    <!-- / Back -->
+
+                </fuse-widget>
+                <!-- / WIDGET 2 -->
+
+                <!-- WIDGET 3 -->
+                <fuse-widget [@animate]="{value: '*',params:{y: '100%'}}" class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="25">
+
+                    <!-- Front -->
+                    <div class="fuse-widget-front">
+                        <div class="pl-16 pr-8 py-16 h-52" fxLayout="row" fxLayoutAlign="space-between center">
+                            <div class="h3" *ngIf="this.widgets">
+                                {{widgets[2].widget3.title}}
                             </div>
-                            <!-- / Back -->
 
-                        </fuse-widget>
-                        <!-- / WIDGET 2 -->
-
-                        <!-- WIDGET 3 -->
-                        <fuse-widget [@animate]="{value: '*',params:{y: '100%'}}" class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="25">
-
-                            <!-- Front -->
-                            <div class="fuse-widget-front">
-                                <div class="pl-16 pr-8 py-16 h-52" fxLayout="row" fxLayoutAlign="space-between center">
-                                    <div class="h3" *ngIf="this.widgets">{{widgets[2].widget3.title}}</div>
-
-                                    <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button" aria-label="more">
+                            <!-- <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button" aria-label="more">
                                         <mat-icon>more_vert</mat-icon>
-                                    </button>
-                                </div>
+                                    </button> -->
+                        </div>
 
-                                <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="center center">
-                                    <div class="orange-fg font-size-72 line-height-72" *ngIf="this.widgets">
-                                        {{widgets[2].widget3.data.count}}
-                                    </div>
-                                    <div class="h3 secondary-text font-weight-500" *ngIf="this.widgets">{{widgets[2].widget3.data.label}}
-                                    </div>
-                                </div>
+                        <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="center center">
+                            <div class="orange-fg font-size-72 line-height-72" *ngIf="this.widgets">
+                                <!-- resumen[0].count.comprobantes.value | - -->
+                                {{widgets[2].widget3.data.count}}
+                            </div>
+                            <div class="h3 secondary-text font-weight-500" *ngIf="this.widgets">
+                                <!-- resumen[0].count.comprobantes | - -->
+                                {{widgets[2].widget3.data.label}}
+                            </div>
+                        </div>
 
-                                <div class="p-16 border-top" fxLayout="row" fxLayoutAlign="start center">
-                                    <span class="h4 secondary-text text-truncate" *ngIf="this.widgets">
+                        <div class="p-16 border-top" fxLayout="row" fxLayoutAlign="start center">
+                            <span class="h4 secondary-text text-truncate" *ngIf="this.widgets">
                                         {{widgets[2].widget3.data.extra.label}}:
+                                        <!-- resumen[2].estado.value -->
                                     </span>
-                                    <span class="h4 ml-8" *ngIf="this.widgets">{{widgets[2].widget3.data.extra.count}}</span>
-                                    <span class="h4 secondary-text text-truncate" *ngIf="this.widgets">
+                            <span class="h4 ml-8" *ngIf="this.widgets">
+                                        {{widgets[2].widget3.data.extra.count}}
+                                        <!-- resumen[2].count.comprobantes.value -->
+                                    </span>
+                            <span class="h4 secondary-text text-truncate" *ngIf="this.widgets">
                                         {{widgets[2].widget3.data.extra.label2}}:
+                                        <!-- , Ayer: -->
                                     </span>
-                                    <span class="h4 ml-8" *ngIf="this.widgets">{{widgets[2].widget3.data.extra.count2}}</span>
-                                </div>
-                            </div>
-                            <!-- / Front -->
+                            <span class="h4 ml-8" *ngIf="this.widgets">
+                                        {{widgets[2].widget3.data.extra.count2}}
+                                    </span>
+                        </div>
+                    </div>
+                    <!-- / Front -->
 
-                            <!-- Back -->
-                            <div class="fuse-widget-back p-16 pt-32">
-                                <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button" aria-label="Flip widget">
+                    <!-- Back -->
+                    <div class="fuse-widget-back p-16 pt-32">
+                        <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button" aria-label="Flip widget">
                                     <mat-icon class="s-16">close</mat-icon>
                                 </button>
 
-                                <div *ngIf="this.widgets">
-                                    {{widgets[2].widget3.detail}}
-                                </div>
-                            </div>
-                            <!-- / Back -->
+                        <div *ngIf="this.widgets">
+                            {{widgets[2].widget3.detail}}
+                        </div>
+                    </div>
+                    <!-- / Back -->
 
-                        </fuse-widget>
-                        <!-- / WIDGET 3 -->
+                </fuse-widget>
+                <!-- / WIDGET 3 -->
 
-                        <!-- WIDGET 4 -->
-                        <fuse-widget [@animate]="{value: '*',params:{y: '100%'}}" class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="25">
+                <!-- WIDGET 4 -->
+                <fuse-widget [@animate]="{value: '*',params:{y: '100%'}}" class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="25">
 
-                            <!-- Front -->
-                            <div class="fuse-widget-front">
-                                <div class="pl-16 pr-8 py-16 h-52" fxLayout="row" fxLayoutAlign="space-between center">
-                                    <div class="h3" *ngIf="this.widgets">{{widgets[3].widget4.title}}</div>
+                    <!-- Front -->
+                    <div class="fuse-widget-front">
+                        <div class="pl-16 pr-8 py-16 h-52" fxLayout="row" fxLayoutAlign="space-between center">
+                            <div class="h3" *ngIf="this.widgets">{{widgets[3].widget4.title}}</div>
 
-                                    <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button" aria-label="more">
+                            <!-- <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button" aria-label="more">
                                         <mat-icon>more_vert</mat-icon>
-                                    </button>
-                                </div>
+                                    </button> -->
+                        </div>
 
-                                <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="center center">
-                                    <div class="blue-grey-fg font-size-72 line-height-72" *ngIf="this.widgets">
-                                        {{widgets[3].widget4.data.count}}
-                                    </div>
-                                    <div class="h3 secondary-text font-weight-500" *ngIf="this.widgets">{{widgets[3].widget4.data.label}}
-                                    </div>
-                                </div>
-
-                                <div class="p-16 border-top" fxLayout="row" fxLayoutAlign="start center">
-                                    <span class="h4 secondary-text text-truncate" *ngIf="this.widgets">
-                                        {{widgets[3].widget4.data.extra.label}}:
-                                    </span>
-                                    <span class="h4 ml-8" *ngIf="this.widgets">{{widgets[3].widget4.data.extra.count}}</span>
-                                </div>
+                        <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="center center">
+                            <div class="blue-grey-fg font-size-72 line-height-72" *ngIf="this.widgets">
+                                <!-- resumen[0].count.localidades.value | - -->
+                                {{widgets[3].widget4.data.count}}
                             </div>
-                            <!-- / Front -->
+                            <div class="h3 secondary-text font-weight-500" *ngIf="this.widgets">
+                                <!-- resumen[0].count.localidades | - -->
+                                {{widgets[3].widget4.data.label}}
+                            </div>
+                        </div>
 
-                            <!-- Back -->
-                            <div class="fuse-widget-back p-16 pt-32">
-                                <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button" aria-label="Flip widget">
+                        <div class="p-16 border-top" fxLayout="row" fxLayoutAlign="start center">
+                            <span class="h4 secondary-text text-truncate" *ngIf="this.widgets">
+                                    <!-- {{widgets[3].widget4.data.extra.label}}: -->
+                                    Ayer:
+                            </span>
+                            <span class="h4 ml-8" *ngIf="this.widgets">
+                                <!-- {{widgets[3].widget4.data.extra.count}} -->
+                                23
+                            </span>
+                        </div>
+                    </div>
+                    <!-- / Front -->
+
+                    <!-- Back -->
+                    <div class="fuse-widget-back p-16 pt-32">
+                        <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button" aria-label="Flip widget">
                                     <mat-icon class="s-16">close</mat-icon>
                                 </button>
 
-                                <div *ngIf="this.widgets">
-                                    {{widgets[3].widget4.detail}}
-                                </div>
-                            </div>
-                            <!-- / Back -->
+                        <div *ngIf="this.widgets">
+                            {{widgets[3].widget4.detail}}
+                        </div>
+                    </div>
+                    <!-- / Back -->
 
-                        </fuse-widget>
-                        <!-- / WIDGET 4 -->
+                </fuse-widget>
+                <!-- / WIDGET 4 -->
 
-                        <!-- WIDGET 5 -->
-                        <fuse-widget [@animate]="{value: '*',params:{y: '100%'}}" fxLayout="row" fxFlex="100" class="widget widget5">
+                <!-- WIDGET 5 -->
+                <fuse-widget [@animate]="{value: '*',params:{y: '100%'}}" fxLayout="row" fxFlex="100" class="widget widget5">
 
-                            <!-- Front -->
-                            <div class="fuse-widget-front">
+                    <!-- Front -->
+                    <div class="fuse-widget-front">
 
-                                <div class="px-16 border-bottom" fxLayout="row wrap" fxLayoutAlign="space-between center">
+                        <div class="px-16 border-bottom" fxLayout="row wrap" fxLayoutAlign="space-between center">
 
-                                    <div fxFlex class="py-16 h3">{{widgets[4].widget5.title}}</div>
+                            <div fxFlex class="py-16 h3">{{widgets[4].widget5.title}}</div>
 
-                                    <div fxFlex="0 1 auto" class="py-16" fxLayout="row">
-                                        <button mat-button class="px-16" *ngFor="let range of widgets[4].widget5.ranges | keys" (click)="widget5.currentRange= range.key" [ngClass]="{ 'accent' : widget5.currentRange== range.key} ">
+                            <div fxFlex="0 1 auto" class="py-16" fxLayout="row">
+                                <button mat-button class="px-16" *ngFor="let range of widgets[4].widget5.ranges | keys" (click)="widget5.currentRange= range.key" [ngClass]="{ 'accent' : widget5.currentRange== range.key} ">
                                             {{range.value}}
                                         </button>
-                                    </div>
-                                </div>
+                            </div>
+                        </div>
 
-                                <div fxLayout="row wrap" fxLayoutAlign="start start">
+                        <div fxLayout="row wrap" fxLayoutAlign="start start">
 
-                                    <div class="h-420 my-16" fxLayout="row" fxFlex="100" fxFlex.gt-sm="50">
-                                        <ngx-charts-bar-vertical-stacked *fuseIfOnDom [scheme]="widget5.scheme" [results]="this.widgets[4].widget5.mainChart[this.widget5.currentRange]" [gradient]="widget5.gradient " [xAxis]="widget5.xAxis" [yAxis]="widget5.yAxis " [legend]="widget5.legend "
-                                            [showXAxisLabel]="widget5.showXAxisLabel " [showYAxisLabel]="widget5.showYAxisLabel " [xAxisLabel]="widget5.xAxisLabel " [yAxisLabel]="widget5.yAxisLabel " (select)="widget5.onSelect($event) ">
-                                        </ngx-charts-bar-vertical-stacked>
-                                    </div>
+                            <div class="h-420 my-16" fxLayout="row" fxFlex="100" fxFlex.gt-sm="50">
+                                <ngx-charts-bar-vertical-stacked *fuseIfOnDom [scheme]="widget5.scheme" [results]="this.widgets[4].widget5.mainChart[this.widget5.currentRange]" [gradient]="widget5.gradient " [xAxis]="widget5.xAxis" [yAxis]="widget5.yAxis " [legend]="widget5.legend "
+                                    [showXAxisLabel]="widget5.showXAxisLabel " [showYAxisLabel]="widget5.showYAxisLabel " [xAxisLabel]="widget5.xAxisLabel " [yAxisLabel]="widget5.yAxisLabel " (select)="widget5.onSelect($event) ">
+                                </ngx-charts-bar-vertical-stacked>
+                            </div>
 
-                                    <div class="my-16" fxFlex="100" fxLayout="row wrap" fxFlex.gt-sm="50">
-                                        <!-- *ngFor="let widget of widgets.widget5.supporting | keys " -->
-                                        <div fxLayout="column" *ngFor="let widget of widgets[4].widget5.supporting | keys" fxFlex="100" fxFlex.gt-sm="50" fxLayoutAlign="center" class="mb-24">
+                            <div class="my-16" fxFlex="100" fxLayout="row wrap" fxFlex.gt-sm="50">
+                                <!-- *ngFor="let widget of widgets.widget5.supporting | keys " -->
+                                <div fxLayout="column" *ngFor="let widget of widgets[4].widget5.supporting | keys" fxFlex="100" fxFlex.gt-sm="50" fxLayoutAlign="center" class="mb-24">
 
-                                            <div class="px-24">
-                                                <div class="h4 secondary-text">{{widget.value.label}}</div>
-                                                <div class="mat-display-1 m-0">
-                                                    {{widget.value.count[widget5.currentRange]}}
-                                                </div>
-                                            </div>
-
-                                            <div class="h-64">
-                                                <ngx-charts-area-chart *fuseIfOnDom [results]="widget.value.chart[widget5.currentRange]" [scheme]="widget5.supporting.scheme" [gradient]="widget5.supporting.gradient" [xAxis]="widget5.supporting.xAxis" [yAxis]="widget5.supporting.yAxis" [legend]="widget5.supporting.legend"
-                                                    [showXAxisLabel]="widget5.supporting.showXAxisLabel" [showYAxisLabel]="widget5.supporting.showYAxisLabel" [xAxisLabel]="widget5.supporting.xAxisLabel" [yAxisLabel]="widget5.supporting.yAxisLabel" [curve]="widget5.supporting.curve">
-                                                </ngx-charts-area-chart>
-                                            </div>
+                                    <div class="px-24">
+                                        <div class="h4 secondary-text">{{widget.value.label}}</div>
+                                        <div class="mat-display-1 m-0">
+                                            {{widget.value.count[widget5.currentRange]}}
                                         </div>
+                                    </div>
+
+                                    <div class="h-64">
+                                        <ngx-charts-area-chart *fuseIfOnDom [results]="widget.value.chart[widget5.currentRange]" [scheme]="widget5.supporting.scheme" [gradient]="widget5.supporting.gradient" [xAxis]="widget5.supporting.xAxis" [yAxis]="widget5.supporting.yAxis" [legend]="widget5.supporting.legend"
+                                            [showXAxisLabel]="widget5.supporting.showXAxisLabel" [showYAxisLabel]="widget5.supporting.showYAxisLabel" [xAxisLabel]="widget5.supporting.xAxisLabel" [yAxisLabel]="widget5.supporting.yAxisLabel" [curve]="widget5.supporting.curve">
+                                        </ngx-charts-area-chart>
                                     </div>
                                 </div>
                             </div>
-                            <!-- / Front -->
-
-                        </fuse-widget>
-                        <!-- / WIDGET 5 -->
-
-
+                        </div>
                     </div>
-                    <!-- / WIDGET GROUP -->
+                    <!-- / Front -->
 
-                </mat-tab>
+                </fuse-widget>
+                <!-- / WIDGET 5 -->
 
-                <mat-tab label="Resumen">
 
-                    <!-- WIDGET GROUP -->
-                    <div class="widget-group" fxLayout="row wrap" fxFlex="100" *fuseIfOnDom [@animateStagger]="{value: '50'}">
+            </div>
+            <!-- / WIDGET GROUP -->
 
-                        <!-- WIDGET 8... -->
+            <!-- </mat-tab> -->
 
-                    </div>
-                    <!-- / WIDGET GROUP -->
 
-                </mat-tab>
-
-                <mat-tab label="Novedades ">
-
-                    <!-- WIDGET GROUP -->
-                    <div class="widget-group " fxLayout="row wrap " fxFlex="100 " *fuseIfOnDom [@animateStagger]="{value: '50'} ">
-
-                        <!-- WIDGET 11... -->
-
-                    </div>
-                    <!-- / WIDGET GROUP -->
-
-                </mat-tab>
-            </mat-tab-group>
+            <!-- </mat-tab-group> -->
 
         </div>
         <!-- / CONTENT -->

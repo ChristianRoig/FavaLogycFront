@@ -32,7 +32,8 @@ export class ProjectDashboardService {
 
     getWidgets( ): Observable<any> {
 
-    let ruta = `http://localhost:3000/widgets`; 
+    let ruta = `http://localhost:3000/resumenes`; 
+    //let ruta = `${ BASE_URL }pedidos/resumen/2021-03-15/SALON/${ fecha }/${ lugar }`;
     
     return this._httpClient.get(ruta);
     }
