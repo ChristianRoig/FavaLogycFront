@@ -12,8 +12,7 @@ import { ModalConfirmacionBorrarComponent } from './modal-confirmacion-borrar/mo
 //servicios
 import { VerLoteService } from './ver-lote.service';
 
-export interface BodyDetalle{
-
+export interface FiltroLote{
   idTipo : number;
   idTurno : number;
   idOrigen : number;
@@ -24,14 +23,6 @@ export interface BodyDetalle{
   hastaPedido : string;
   idLote : number;
 }
-
-const ELEMENT_DATA: any[] = [
-  {Id: 1,Tipo: "Venta", CodigoArticulo: "ATCLLED110", Nombre: "TCL LED 50\" P8M SMART",    Comprobante: "B0001700006163",    FechaEntrega: "10/05/2020",    Prov: "Bs.As.",    Loc: "Pinamar",    Estado: "INICIAL",       Etapa: "INICIAL",    Lote: 1},
-  {Id: 2,Tipo: "Venta", CodigoArticulo: "MPLAPLA010", Nombre: "Mueble Madera 1 puerta",    Comprobante: "B0009000012349",    FechaEntrega: "10/05/2020",    Prov: "Bs.As.",    Loc: "Pinamar",    Estado: "INICIAL",       Etapa: "INICIAL",    Lote: 1},
-  {Id: 3,Tipo: "Venta", CodigoArticulo: "MPLAPLA010", Nombre: "Mueble Madera 1 puerta",    Comprobante: "B0009000012349",    FechaEntrega: "10/05/2020",    Prov: "Bs.As.",    Loc: "Minamar",    Estado: "EN PROCESO",    Etapa: "EN LOTE",    Lote: 1},
-  {Id: 4,Tipo: "Venta", CodigoArticulo: "MPLAPLA010", Nombre: "Mueble Madera 1 puerta",    Comprobante: "B0009000012349",    FechaEntrega: "10/05/2020",    Prov: "Bs.As.",    Loc: "Gesell",     Estado: "EN PROCESO",    Etapa: "ESTANTERIA", Lote: 1},
-  {Id: 5,Tipo: "Venta", CodigoArticulo: "MPLAPLA010", Nombre: "Mueble Madera 1 puerta",    Comprobante: "B0009000012349",    FechaEntrega: "10/05/2020",    Prov: "Bs.As.",    Loc: "Gesell",     Estado: "ANULADO",       Etapa: "SIN STOCK",  Lote: 1},
-];
 
 @Component({
   selector: 'app-ver-lote',
@@ -90,7 +81,7 @@ export class VerLoteComponent implements OnInit {
   pickerLoteHasta: any   = null;
 
 
-  body: BodyDetalle ={
+  filtroLote: FiltroLote ={
     idTipo      : null,
     idTurno     : null,
     idOrigen    : null,
@@ -126,9 +117,9 @@ export class VerLoteComponent implements OnInit {
   }
   
   getArticulosDeLote(idLote: number){
-    this.body.idLote = idLote;
+    this.filtroLote.idLote = idLote;
     //this.dataSource2 = ELEMENT_DATA;
-    this._verLoteService.getArticulosDeLote( this.body, this.busqueda, this.columna, this.order ) .subscribe( data => {
+    this._verLoteService.getArticulosDeLote( this.filtroLote, this.busqueda, this.columna, this.order ) .subscribe( data => {
       this.dataSource2 = data.datos;
 
       console.log("articulos -> ", this.dataSource2);
@@ -336,19 +327,19 @@ export class VerLoteComponent implements OnInit {
     if (this.pickerLoteHasta)
       hastaLote = this.pickerLoteHasta;
 
-    this.body.idTipo      = idTipo;
-    this.body.idTurno     = idTurno;
-    this.body.idOrigen    = idOrigen;
-    this.body.idEtapa     = idEtapa;
-    this.body.idProvincia = idProvincia;
-    this.body.idLocalidad = idLocalidad;
-    this.body.desdePedido = desdePedido;
-    this.body.hastaPedido = hastaPedido;
-    this.body.idLote      = idLote;
+    this.filtroLote.idTipo      = idTipo;
+    this.filtroLote.idTurno     = idTurno;
+    this.filtroLote.idOrigen    = idOrigen;
+    this.filtroLote.idEtapa     = idEtapa;
+    this.filtroLote.idProvincia = idProvincia;
+    this.filtroLote.idLocalidad = idLocalidad;
+    this.filtroLote.desdePedido = desdePedido;
+    this.filtroLote.hastaPedido = hastaPedido;
+    this.filtroLote.idLote      = idLote;
     
-    // console.log(this.body);
+    // console.log(this.filtroLote);
 
-    this._verLoteService.getArticulosDeLote(this.body, busqueda, columna, order).subscribe(
+    this._verLoteService.getArticulosDeLote(this.filtroLote, busqueda, columna, order).subscribe(
       data => {
         // console.log(data)
         this.lote = data.datos;

@@ -23,23 +23,6 @@ export interface PeriodicElement {
   Lote: number;
 }
 
-export interface Articulos {
-
-  lote: number;
-  codigoArticulo: string;
-  nombre: string;
-  descripcion: string;
-  cantidad: number;
-  estado: string;
-  etapa: string;
-}
-
-const ELEMENT_DATA_ARTICULOS: Articulos[] = [
-  {lote: 1,codigoArticulo: "HCTZCAB030",nombre: "CTZ CALEFACTOR 6000	",          descripcion: "12 MESES DE GARANTIA",cantidad: 1,estado: "INICIAL",etapa: "INICIAL"},
-  {lote: 1,codigoArticulo: "HCTZACC010",nombre: "CTZ ACCESORIO TB	",              descripcion: "12 MESES DE GARANTIA",cantidad: 1,estado: "INICIAL",etapa: "INICIAL"},
-  {lote: 1,codigoArticulo: "HMOUFRE050",nombre: "MOULINEX FREIDORA AF134DAR/D59	",descripcion: "12 MESES DE GARANTIA",cantidad: 1,estado: "INICIAL",etapa: "INICIAL"}
-];
-
 @Component({
   selector: 'app-pedidos-anular',
   templateUrl: './pedidos-anular.component.html',

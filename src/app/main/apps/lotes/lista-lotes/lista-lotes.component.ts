@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { Debounce } from 'app/shared/decorators/debounce';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { element } from 'protractor';
@@ -45,8 +45,7 @@ export interface Lote {
   FechaAlta: string;
 }
 
-export interface BodyDetalle{
-
+export interface FiltroDeLote{
   idTipo : number;
   idTurno : number;
   idOrigen : number;
@@ -57,8 +56,8 @@ export interface BodyDetalle{
   hastaPedido : string;
   idLote : number;
 }
-export interface BodyDetalleFecha{
 
+export interface BodyDetalleFecha{
   desdeLote : string;
   hastaLote : string;
 }
@@ -139,7 +138,7 @@ export class ListaLotesComponent implements OnInit {
   pickerLoteDesde: any   = null;
   pickerLoteHasta: any   = null;
 
-  body: BodyDetalle ={
+  filtroLote: FiltroDeLote ={
     idTipo      : 1,
     idTurno     : null,
     idOrigen    : null,
@@ -502,19 +501,19 @@ export class ListaLotesComponent implements OnInit {
     if (this.pickerLoteHasta)
       hastaLote = this.pickerLoteHasta;
 
-    this.body.idTipo      = idTipo;
-    this.body.idTurno     = idTurno;
-    this.body.idOrigen    = idOrigen;
-    this.body.idEtapa     = idEtapa;
-    this.body.idProvincia = idProvincia;
-    this.body.idLocalidad = idLocalidad;
-    this.body.desdePedido = desdePedido;
-    this.body.hastaPedido = hastaPedido;
-    this.body.idLote      = idLote;
+    this.filtroLote.idTipo      = idTipo;
+    this.filtroLote.idTurno     = idTurno;
+    this.filtroLote.idOrigen    = idOrigen;
+    this.filtroLote.idEtapa     = idEtapa;
+    this.filtroLote.idProvincia = idProvincia;
+    this.filtroLote.idLocalidad = idLocalidad;
+    this.filtroLote.desdePedido = desdePedido;
+    this.filtroLote.hastaPedido = hastaPedido;
+    this.filtroLote.idLote      = idLote;
     
-    // console.log(this.body);
+    // console.log(this.filtroLote);
 
-    this._listaLoteService.getPedidosLote(this.body, busqueda, columna, order).subscribe(
+    this._listaLoteService.getPedidosLote(this.filtroLote, busqueda, columna, order).subscribe(
       data => {
         // console.log(data)
         this.dataSource2 = data.datos;
