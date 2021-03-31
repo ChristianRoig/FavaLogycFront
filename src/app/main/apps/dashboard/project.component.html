@@ -37,7 +37,7 @@
 
             <!-- <mat-tab-group dynamicHeight> -->
 
-            <!-- <mat-tab label="Inicio "> -->
+            <!-- <mat-tab label="Inicio"> -->
 
             <div class="widget-group p-12" fxLayout="row wrap" fxFlex="100" *fuseIfOnDom [@animateStagger]="{value: '50'}">
 
@@ -48,13 +48,9 @@
                     <div class="fuse-widget-front ">
                         <div class="pl-16 pr-8 py-16 h-52" fxLayout="row" fxLayoutAlign="space-between center">
                             <mat-form-field>
-                                <!-- [(ngModel)]="widgets.widget1.currentRange " -->
-                                <mat-select class="simplified font-size-16" *ngIf="this.widgets" [(ngModel)]="widgets[0].widget1.currentRange" aria-label="Change range">
-                                    <!-- *ngFor="let range of widgets[0].widget1.ranges | keys" -->
-                                    <!-- *ngFor="let estado of estados | keys" -->
-                                    <mat-option *ngFor="let range of widgets[0].widget1.ranges | keys" [value]="range.key">
-                                        {{range.value}}
-                                        <!-- {{estado.value}} -->
+                                <mat-select class="simplified font-size-16" aria-label="Change range">
+                                    <mat-option *ngFor="let estado of estados" [value]="estado.valor" (click)="setValor()">
+                                        {{ estado.texto }}
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
@@ -64,50 +60,48 @@
                         </div>
 
                         <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="center center">
-                            <!-- resumen[0].count.articulos.value -->
-                            <div class="light-blue-fg font-size-72 line-height-72" *ngIf="this.widgets">
-                                {{widgets[0].widget1.data.count[widgets[0].widget1.currentRange]}}
-                                <!-- {{resumen[tipo_reumen] }}  -->
+                            <div class="light-blue-fg font-size-72 line-height-72" *ngIf="this.resumen">
+                                <!--  {{widgets[0].widget1.data.count[widgets[0].widget1.currentRange]}} -->
+                                {{resumen[numEstado].count.articulos}}
                             </div>
-                            <!-- resumen[0].count.articulos -->
-                            <div class="h3 secondary-text font-weight-500" *ngIf="this.widgets">
-                                {{widgets[0].widget1.data.label}}
+                            <div class="h3 secondary-text font-weight-500">
+                                ARTICULOS
                             </div>
                         </div>
 
                         <div class="p-16 border-top" fxLayout="row" fxLayoutAlign="start center">
                             <!-- despachados resumen[0].estado | {{widgets[0].widget1.data.extra.label}}:-->
-                            <span class="h4 secondary-text text-truncate" *ngIf="this.widgets">
-                                        <!--  resumen[2].estado.value -->
-                                        {{widgets[0].widget1.data.extra.label}}:
-                                    </span>
+                            <span class="h4 secondary-text text-truncate">
+                                Despachados:
+                                <!-- {{widgets[0].widget1.data.extra.label}}: -->
+                            </span>
                             <!-- despachados {{widgets[0].widget1.data.extra.count[widgets[0].widget1.currentRange]}}-->
-                            <span class="h4 ml-8" *ngIf="this.widgets">
-                                    <!-- resumen[2].count.articulos.value -->
-                                        {{widgets[0].widget1.data.extra.count[widgets[0].widget1.currentRange]}}
-                                    </span>
+                            <span class="h4 ml-8" *ngIf="this.resumen">
+                                {{resumen[2].count.articulos}}
+                                <!-- {{widgets[0].widget1.data.extra.count[widgets[0].widget1.currentRange]}} -->
+                            </span>
                             <!-- {{widgets[0].widget1.data.extra.label2}}: -->
-                            <span class="h4 secondary-text text-truncate" *ngIf="this.widgets">
-                                        , Ayer:
-                                    </span>
+                            <!-- <span class="h4 secondary-text text-truncate">
+                                , Ayer:
+                            </span> -->
                             <!-- {{widgets[0].widget1.data.extra.count2[widgets[0].widget1.currentRange]}} -->
-                            <span class="h4 ml-8" *ngIf="this.widgets">
-                                        22
-                                    </span>
+                            <!-- <span class="h4 ml-8">
+                                22
+                            </span> -->
                         </div>
                     </div>
                     <!-- / Front -->
 
                     <!-- Back -->
-                    <div class="fuse-widget-back p-16 pt-32">
+                    <!-- <div class="fuse-widget-back p-16 pt-32">
                         <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button" aria-label="Flip widget">
                                     <mat-icon class="s-16">close</mat-icon>
                                 </button>
 
-                        <div *ngIf="this.widgets">
+                        <div >
                             Informacion extra
                         </div>
-                    </div>
+                    </div> -->
                     <!-- / Back -->
 
                 </fuse-widget>
@@ -119,7 +113,7 @@
                     <!-- Front -->
                     <div class="fuse-widget-front">
                         <div class="pl-16 pr-8 py-16 h-52" fxLayout="row " fxLayoutAlign="space-between center">
-                            <div class="h3" *ngIf="this.widgets">{{widgets[1].widget2.title}}</div>
+                            <div class="h3">En</div>
 
                             <!-- <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button" aria-label="more">
                                         <mat-icon>more_vert</mat-icon>
@@ -127,47 +121,44 @@
                         </div>
 
                         <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="center center">
-                            <!-- resumen[0].count.pedido.value | - -->
-                            <div class="red-fg font-size-72 line-height-72" *ngIf="this.widgets">
-                                {{widgets[1].widget2.data.count}}
+                            <div class="red-fg font-size-72 line-height-72" *ngIf="this.resumen">
+                                {{resumen[numEstado].count.pedidos}}
                             </div>
-                            <!-- resumen[0].count.pedido | - -->
-                            <div class="h3 secondary-text font-weight-500" *ngIf="this.widgets">
-                                {{widgets[1].widget2.data.label}}
+                            <div class="h3 secondary-text font-weight-500">
+                                PEDIDOS
+                                <!-- {{resumen[numEstado].count.pedido}} -->
+                                <!-- {{widgets[1].widget2.data.label}} -->
                             </div>
                         </div>
 
                         <div class="p-16 border-top" fxLayout="row" fxLayoutAlign="start center">
-                            <span class="h4 secondary-text text-truncate" *ngIf="this.widgets">
-                                        <!-- resumen[2].estado.value -->
-                                        {{widgets[1].widget2.data.extra.label}}:
-                                    </span>
-                            <span class="h4 ml-8" *ngIf="this.widgets">
-                                        <!-- resumen[2].count.pedidos.value | - -->
-                                        {{widgets[1].widget2.data.extra.count}}
-                                    </span>
-                            <span class="h4 secondary-text text-truncate" *ngIf="this.widgets">
-                                        <!-- {{widgets[1].widget2.data.extra.label2}}: -->
-                                        , Ayer:
-                                    </span>
-                            <span class="h4 ml-8" *ngIf="this.widgets">
-                                        <!-- {{widgets[1].widget2.data.extra.count2}} -->
-                                        11
-                                    </span>
+                            <span class="h4 secondary-text text-truncate">
+                                Despachados:
+                            </span>
+                            <span class="h4 ml-8" *ngIf="this.resumen">
+                                {{resumen[2].count.pedidos}}
+                                <!-- {{widgets[1].widget2.data.extra.count}} -->
+                            </span>
+                            <!-- <span class="h4 secondary-text text-truncate">
+                                texto
+                            </span> -->
+                            <!-- <span class="h4 ml-8">
+                                datos
+                            </span> -->
                         </div>
                     </div>
                     <!-- / Front -->
 
                     <!-- Back -->
-                    <div class="fuse-widget-back p-16 pt-32">
+                    <!-- <div class="fuse-widget-back p-16 pt-32">
                         <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button" aria-label="Flip widget">
                                     <mat-icon class="s-16">close</mat-icon>
                                 </button>
 
-                        <div *ngIf="this.widgets">
+                        <div>
                             Info extra
                         </div>
-                    </div>
+                    </div> -->
                     <!-- / Back -->
 
                 </fuse-widget>
@@ -179,56 +170,51 @@
                     <!-- Front -->
                     <div class="fuse-widget-front">
                         <div class="pl-16 pr-8 py-16 h-52" fxLayout="row" fxLayoutAlign="space-between center">
-                            <div class="h3" *ngIf="this.widgets">
-                                {{widgets[2].widget3.title}}
+                            <div class="h3">
+                                De
                             </div>
 
                             <!-- <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button" aria-label="more">
-                                        <mat-icon>more_vert</mat-icon>
-                                    </button> -->
+                                <mat-icon>more_vert</mat-icon>
+                            </button> -->
                         </div>
 
                         <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="center center">
-                            <div class="orange-fg font-size-72 line-height-72" *ngIf="this.widgets">
-                                <!-- resumen[0].count.comprobantes.value | - -->
-                                {{widgets[2].widget3.data.count}}
+                            <div class="orange-fg font-size-72 line-height-72" *ngIf="this.resumen">
+                                {{resumen[numEstado].count.comprobantes}}
                             </div>
-                            <div class="h3 secondary-text font-weight-500" *ngIf="this.widgets">
-                                <!-- resumen[0].count.comprobantes | - -->
-                                {{widgets[2].widget3.data.label}}
+                            <div class="h3 secondary-text font-weight-500">
+                                COMPROBANTES
                             </div>
                         </div>
 
                         <div class="p-16 border-top" fxLayout="row" fxLayoutAlign="start center">
-                            <span class="h4 secondary-text text-truncate" *ngIf="this.widgets">
-                                        {{widgets[2].widget3.data.extra.label}}:
-                                        <!-- resumen[2].estado.value -->
-                                    </span>
-                            <span class="h4 ml-8" *ngIf="this.widgets">
-                                        {{widgets[2].widget3.data.extra.count}}
-                                        <!-- resumen[2].count.comprobantes.value -->
-                                    </span>
-                            <span class="h4 secondary-text text-truncate" *ngIf="this.widgets">
-                                        {{widgets[2].widget3.data.extra.label2}}:
-                                        <!-- , Ayer: -->
-                                    </span>
-                            <span class="h4 ml-8" *ngIf="this.widgets">
-                                        {{widgets[2].widget3.data.extra.count2}}
-                                    </span>
+                            <span class="h4 secondary-text text-truncate">
+                                Despachados:
+                            </span>
+                            <span class="h4 ml-8" *ngIf="this.resumen">
+                                {{resumen[2].count.comprobantes}}
+                            </span>
+                            <!-- <span class="h4 secondary-text text-truncate">
+                                texto
+                            </span>
+                            <span class="h4 ml-8">
+                                data
+                            </span> -->
                         </div>
                     </div>
                     <!-- / Front -->
 
                     <!-- Back -->
-                    <div class="fuse-widget-back p-16 pt-32">
+                    <!-- <div class="fuse-widget-back p-16 pt-32">
                         <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button" aria-label="Flip widget">
                                     <mat-icon class="s-16">close</mat-icon>
                                 </button>
 
-                        <div *ngIf="this.widgets">
+                        <div >
                             {{widgets[2].widget3.detail}}
                         </div>
-                    </div>
+                    </div> -->
                     <!-- / Back -->
 
                 </fuse-widget>
@@ -240,47 +226,44 @@
                     <!-- Front -->
                     <div class="fuse-widget-front">
                         <div class="pl-16 pr-8 py-16 h-52" fxLayout="row" fxLayoutAlign="space-between center">
-                            <div class="h3" *ngIf="this.widgets">{{widgets[3].widget4.title}}</div>
+                            <div class="h3">Para</div>
 
                             <!-- <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button" aria-label="more">
-                                        <mat-icon>more_vert</mat-icon>
-                                    </button> -->
+                                <mat-icon>more_vert</mat-icon>
+                            </button> -->
                         </div>
 
                         <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="center center">
-                            <div class="blue-grey-fg font-size-72 line-height-72" *ngIf="this.widgets">
-                                <!-- resumen[0].count.localidades.value | - -->
-                                {{widgets[3].widget4.data.count}}
+                            <div class="blue-grey-fg font-size-72 line-height-72" *ngIf="this.resumen">
+                                {{resumen[numEstado].count.localidades}}
                             </div>
-                            <div class="h3 secondary-text font-weight-500" *ngIf="this.widgets">
-                                <!-- resumen[0].count.localidades | - -->
-                                {{widgets[3].widget4.data.label}}
+                            <div class="h3 secondary-text font-weight-500">
+                                LOCALIDADES
                             </div>
                         </div>
 
                         <div class="p-16 border-top" fxLayout="row" fxLayoutAlign="start center">
-                            <span class="h4 secondary-text text-truncate" *ngIf="this.widgets">
-                                    <!-- {{widgets[3].widget4.data.extra.label}}: -->
-                                    Ayer:
+                            <span class="h4 secondary-text text-truncate">
+                                <!-- {{widgets[3].widget4.data.extra.label}}: -->
+                                A definir que va aca
                             </span>
-                            <span class="h4 ml-8" *ngIf="this.widgets">
+                            <span class="h4 ml-8">
                                 <!-- {{widgets[3].widget4.data.extra.count}} -->
-                                23
                             </span>
                         </div>
                     </div>
                     <!-- / Front -->
 
                     <!-- Back -->
-                    <div class="fuse-widget-back p-16 pt-32">
+                    <!-- <div class="fuse-widget-back p-16 pt-32">
                         <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button" aria-label="Flip widget">
                                     <mat-icon class="s-16">close</mat-icon>
                                 </button>
 
-                        <div *ngIf="this.widgets">
+                        <div>
                             {{widgets[3].widget4.detail}}
                         </div>
-                    </div>
+                    </div> -->
                     <!-- / Back -->
 
                 </fuse-widget>
@@ -294,12 +277,14 @@
 
                         <div class="px-16 border-bottom" fxLayout="row wrap" fxLayoutAlign="space-between center">
 
-                            <div fxFlex class="py-16 h3">{{widgets[4].widget5.title}}</div>
+                            <div fxFlex class="py-16 h3">
+                                <!-- {{widgets[4].widget5.title}} -->
+                                asd</div>
 
-                            <div fxFlex="0 1 auto" class="py-16" fxLayout="row">
+                            <div fxFlex="0 1 auto" class="py-16" *ngIf="this.widgets" fxLayout="row">
                                 <button mat-button class="px-16" *ngFor="let range of widgets[4].widget5.ranges | keys" (click)="widget5.currentRange= range.key" [ngClass]="{ 'accent' : widget5.currentRange== range.key} ">
-                                            {{range.value}}
-                                        </button>
+                                    {{range.value}}
+                                </button>
                             </div>
                         </div>
 
@@ -311,7 +296,7 @@
                                 </ngx-charts-bar-vertical-stacked>
                             </div>
 
-                            <div class="my-16" fxFlex="100" fxLayout="row wrap" fxFlex.gt-sm="50">
+                            <div class="my-16" fxFlex="100" fxLayout="row wrap" *ngIf="this.widgets" fxFlex.gt-sm="50">
                                 <!-- *ngFor="let widget of widgets.widget5.supporting | keys " -->
                                 <div fxLayout="column" *ngFor="let widget of widgets[4].widget5.supporting | keys" fxFlex="100" fxFlex.gt-sm="50" fxLayoutAlign="center" class="mb-24">
 

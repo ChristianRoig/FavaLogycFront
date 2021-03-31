@@ -44,9 +44,9 @@ export class TableComprobantesSinRemitirService
 
         //getOne?
         //let ruta = `${BASE_URL}pedidos/pedidodetalle/comprobantes-con-pedidos/${ comprobante }/${ page }/${ size }/${ sortBy }/${ order }`;
-        //let ruta = `${BASE_URL}pedidos/pedidodetalle/sinremitir/comprobantes-sin-pedidos/A0006/0/11/nroCbte/asc`;
+        let ruta = `${BASE_URL}pedidos/pedidodetalle/sinremitir/comprobantes-sin-pedidos/0/10/nroCbte/asc`;
         //getAll 
-        let ruta = `http://localhost:3000/datos`; 
+        //let ruta = `http://localhost:3000/datos`; 
 
         return this._httpClient.get(ruta);
     }

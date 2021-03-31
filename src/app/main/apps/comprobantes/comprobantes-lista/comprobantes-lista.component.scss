@@ -82,6 +82,30 @@ fuse-sidebar {
     max-width: 100%;
 }
 
+
+/* mat-tab-labels {
+    width: 100px;
+    display: flex;
+    justify-content: flex-start;
+} */
+
+.mat-tab-labels {
+    display: flex;
+    justify-content: flex-start !important;
+    margin-right: 500x;
+}
+
+.asd {
+    justify-content: flex-start !important;
+}
+
+
+/* .titulosTabs {
+    width: 100px;
+    display: flex;
+    justify-content: flex-start;
+} */
+
 @media (max-width: 768px) {
     .inputBusqueda {
         width: 400px;

@@ -33,14 +33,13 @@ export class ProjectDashboardComponent implements OnInit {
     widget11: any = {};
 
     resumen: any = [];
-    tipo_resumen = 1;
+    numEstado: number = 0;
 
     length: number = 0;
     mensaje: string;
 
     dateNow = Date.now();
-    fechaHoy = Date();
-    fechaString = "aaaa-mm-dd";
+  
     
 
     estados = [
@@ -176,19 +175,19 @@ export class ProjectDashboardComponent implements OnInit {
 
         this.getProyectos();
         this.getWidgets();
-
+        this.getResumen();
         /* this.widget11.onContactsChanged = new BehaviorSubject({});
         this.widget11.onContactsChanged.next(this.widgets.widget11.table.rows);
         this.widget11.dataSource = new FilesDataSource(this.widget11); */ 
     }
-    
-    /* convertirFecha(){
-        let dia = this.fechaHoy.getDate();
-    } */
 
    /*  setInterval(() => {
         this.dateNow = Date.now();
     }, 1000); */
+    setValor(num){
+        console.log(num);
+        this.numEstado = num;
+    }
 
     getProyectos(){
         this._projectDashboardService.getProjects().subscribe(
@@ -227,6 +226,35 @@ export class ProjectDashboardComponent implements OnInit {
               console.log("Widgets ->", data);
               this.widgets = data;
               
+            },
+            (err: HttpErrorResponse) => {
+                console.log("error");
+              this.length = 0
+              if (err.error instanceof Error) {
+                console.log("Client-side error");
+              } else {
+                let errStatus = err.status
+                if (errStatus == 0){
+                  let titulo = 'Error de Servidor';
+                  let mensaje = "Por favor comunicarse con Sistemas";
+                  this.mostrarError(errStatus, titulo, mensaje);
+                } else {
+                  let titulo = 'Error al cargar filtros';
+                  let mensaje = err.error.message.toString();
+                  this.mensaje = mensaje;
+                  // this.mostrarError(errStatus, titulo, mensaje);
+                }
+              }
+            }
+        );
+    }
+    getResumen(){
+        //console.log( "dateNow",this.hoy);
+        //this._projectDashboardService.getWidgets().subscribe(
+        this._projectDashboardService.getResumen().subscribe(
+            data => {
+              console.log("resumen ->", data.resumen);
+              this.resumen = data.resumen; 
             },
             (err: HttpErrorResponse) => {
                 console.log("error");
