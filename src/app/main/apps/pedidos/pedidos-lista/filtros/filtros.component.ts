@@ -230,26 +230,6 @@ export class FiltrosComponent implements OnInit {
       }
     })
 
-    /* this._filtrosService.getAllEstados().subscribe(params => {
-      this.filtroEstados = params.datos;
-    },
-    (err: HttpErrorResponse) => {
-      if (err.error instanceof Error) {
-        console.log("Client-side error");
-      } else {
-        let errStatus = err.status
-        if (errStatus == 0){
-          let titulo = 'Error de Servidor';
-          let mensaje = "Por favor comunicarse con Sistemas";
-          this.mostrarError(errStatus, titulo, mensaje);
-        } else {
-          let titulo = 'Error al cargar filtros';
-          let mensaje = err.error.message.toString();
-          this.mostrarError(errStatus, titulo, mensaje);
-        }
-      }
-    }); */
-
     this._filtrosService.getAllEtapas().subscribe(params => {
       this.filtroEtapas = params.datos;
     },

@@ -15,11 +15,13 @@ import { TablaRetractilModule } from 'app/components/tabla-retractil/tabla-retra
 import { ComprobantesListaComponent } from './comprobantes-lista/comprobantes-lista.component';
 import { TableComprobantesComponent } from './table-comprobantes/table-comprobantes.component';
 import { TableComprobantesSinRemitirComponent } from './table-comprobantes-sin-remitir/table-comprobantes.component';
+import { TableArticulosComponent } from './table-articulos/table-articulos.component';
 
 //services
 import { ComprobantesListaService } from './comprobantes-lista/comprobantes-lista.service';
 import { TableComprobantesService } from './table-comprobantes/table-comprobantes.service';
 import { TableComprobantesSinRemitirService } from './table-comprobantes-sin-remitir/table-comprobantes.service';
+import { TableArticulosService } from './table-articulos/table-articulos.service';
 
 const routes: Routes = [
     {
@@ -32,7 +34,8 @@ const routes: Routes = [
     declarations: [
         ComprobantesListaComponent,
         TableComprobantesComponent,
-        TableComprobantesSinRemitirComponent
+        TableComprobantesSinRemitirComponent,
+        TableArticulosComponent
     ],
     imports     : [
         CommonModule,
@@ -49,7 +52,8 @@ const routes: Routes = [
     providers   : [
         ComprobantesListaService,
         TableComprobantesService,
-        TableComprobantesSinRemitirService
+        TableComprobantesSinRemitirService,
+        TableArticulosService
     ]
 })
 

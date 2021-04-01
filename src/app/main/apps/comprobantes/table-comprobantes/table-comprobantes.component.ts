@@ -9,20 +9,6 @@ import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.componen
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { TableComprobantesService } from './table-comprobantes.service';
 
-export interface Articulos {
-  Id: number;
-  Tipo: string;
-  CodigoArticulo: string;
-  Nombre: string;
-  Comprobante: string;
-  FechaEntrega: string;
-  Prov: string;
-  Loc: string;
-  Estado: string;
-  Etapa: string;
-  Lote: number;
-}
-
 export interface BodyDetalle{
   idTipo : number;
   idTurno : number;
@@ -97,7 +83,6 @@ export class TableComprobantesComponent implements OnInit {
   }
 
   getDetalles(busqueda, page, size, columna, order){
-
     this._tableComprobantesService.getPedidosDetalles(this.body, busqueda, page, size, columna, order).subscribe(
       data => {
         this.dataSource2 = data.datos;
@@ -184,7 +169,7 @@ export class TableComprobantesComponent implements OnInit {
     this.columna = 'id';
     console.log(this.busqueda);
     if( this.busqueda === '' || this.busqueda == null){
-      this.getDetalles(this.busqueda, this.page, this.size, this.columna, this.order);
+      this.getDetalles(this.busqueda, this.page, this.size, this.columna, this.order); // revisar ésto
     }
     //this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
   }

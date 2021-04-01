@@ -1,30 +1,13 @@
-import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input, Output, EventEmitter} from '@angular/core';
 import { Router } from '@angular/router';
 import { Debounce } from 'app/shared/decorators/debounce';
 import { MatDialog } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
-
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
-
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
-import { ComprobantesListaService } from './comprobantes-lista.service';
-
-export interface Articulos {
-  Id: number;
-  Tipo: string;
-  CodigoArticulo: string;
-  Nombre: string;
-  Comprobante: string;
-  FechaEntrega: string;
-  Prov: string;
-  Loc: string;
-  Estado: string;
-  Etapa: string;
-  Lote: number;
-}
+import { TablePedidosService } from './table-pedidos.service';
 
 export interface BodyDetalle{
-
   idTipo : number;
   idTurno : number;
   idOrigen : number;
@@ -40,35 +23,46 @@ export interface BodyDetalle{
 }
 
 @Component({  
-  selector: 'app-comprobantes-lista',  
-  templateUrl: './comprobantes-lista.component.html',
-  styleUrls: ['./comprobantes-lista.component.scss']
+  selector: 'app-table-pedidos',  
+  templateUrl: './table-pedidos.component.html',
+  styleUrls: ['./table-pedidos.component.scss']
 })
 
-export class ComprobantesListaComponent implements OnInit {
+export class TablePedidosComponent implements OnInit {
+
+  @Input() busqueda: string = "";
+  @Output() cantArt: EventEmitter<number>;
 
   @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
   @ViewChild('buscarLote') buscarLoteInput: ElementRef;
 
-   displayedColumns: string[] = ['Tipo', 'idComprobante', 'cantArticulos', 'NombreArticulo', 'Comprobante', 'Fecha-Entrega', 'CantDirecEntrega', 'priDireccion', 'Provincia', 'Localidad', 'cantEtapa', 'priEtapa'];
-   /* displayedColumns: string[] = ['Tipo, idComprobante']; */
-  /* , 'Borrar' */
-   
+  displayedColumns: string[] = ['comprobante', 'pedidoTipo','codigoArt', 'nombreArticulo', 'fechaDeEntrega', 'direccion', 'etapa'];  
   dataSource2: any;
 
   lote: string = null;
-  busqueda: string = "";
+  //busqueda: string = "";
   length: number = 0;
   page: number = 0;
   size: number = 10;
-  columna: string = 'idCbte';
-  order: string = 'desc';
-  numero: number = null;
+  columna: string = 'nombreArticulo';
+  order: string = 'asc';
 
   mensaje: string;
 
   maxDateHastaLote: Date;
 
+  body = {
+    "idTipo" : null,
+    "idTurno" : null,
+    "idOrigen" : null,
+    "idEtapa" : null,
+    "idProvincia" : 1,
+    "idLocalidad" : null,
+    "desdePedido" : null,
+    "hastaPedido" : "null",
+    "idLote" : null
+  }
+/* 
   body: BodyDetalle = {
     idTipo      : null,
     idTurno     : null,
@@ -82,27 +76,27 @@ export class ComprobantesListaComponent implements OnInit {
     lote        : null,
     desdeLote   : null,
     hastaLote   : null
-  };
+  }; */
 
   constructor(private _router: Router, 
               private _fuseSidebarService: FuseSidebarService, 
-              private _comprobantesListaService: ComprobantesListaService,
-              private _dialog: MatDialog ) { }
+              private _tablePedidosServiceService: TablePedidosService,
+              private _dialog: MatDialog ) { 
+
+                this.cantArt = new EventEmitter();
+              }
 
   ngOnInit(): void { 
-    
-    this.getComprobantes(this.busqueda, this.page, this.size, this.columna, this.order);
+    this.getArticulosDePedidos(this.page, this.size, this.columna, this.order);
   }
 
-  getComprobantes(busqueda, page, size, columna, order){
-
-    this._comprobantesListaService.getComprobantes(this.body, busqueda, page, size, columna, order).subscribe(
+  getArticulosDePedidos( page, size, columna, order ){
+    this._tablePedidosServiceService.getArticulosDePedidos( this.body, this.page, this.size, this.columna, this.order ).subscribe(
       data => {
+        console.log("data articulos de pedidos -> ", data);
         this.dataSource2 = data.datos;
         this.length = data.totalRegistros;
-        console.log(data);
-        /*console.log("asd", this.dataSource2); */
-        //this.size = data.totalRegistros;
+        this.cantArt.emit( this.length ); //devuelvo el total de Articulos
       },
       (err: HttpErrorResponse) => {
         this.length = 0
@@ -115,10 +109,10 @@ export class ComprobantesListaComponent implements OnInit {
             let mensaje = "Por favor comunicarse con Sistemas";
             this.mostrarError(errStatus, titulo, mensaje);
           } else {
-            let titulo = 'Error al cargar filtros';
+            let titulo = 'Error al listar los articulos';
             let mensaje = err.error.message.toString();
             this.mensaje = mensaje;
-            // this.mostrarError(errStatus, titulo, mensaje);
+            this.mostrarError(errStatus, titulo, mensaje);
           }
         }
       }
@@ -136,7 +130,7 @@ export class ComprobantesListaComponent implements OnInit {
     dialogRef.afterClosed()
       .subscribe( () => {
           if (errStatus != 0) {
-            this.getComprobantes(this.busqueda, this.page, this.size, this.columna, this.order);
+            this.getArticulosDePedidos( this.page, this.size, this.columna, this.order );
             
           } else {
             this._router.navigate(['']);
@@ -144,14 +138,12 @@ export class ComprobantesListaComponent implements OnInit {
       });
   }
 
-  buscar(busqueda){
-    this._comprobantesListaService.getComprobante(this.body, busqueda, this.page, this.size, this.columna, this.order).subscribe(
+  buscar( busqueda ){ //getArticuloDePedido
+    this._tablePedidosServiceService.getArticuloDePedido(this.body, busqueda, this.page, this.size, this.columna, this.order).subscribe(
       data => {
-        this.dataSource2 = data.datos;
-        this.length = data.totalRegistros;
-        console.log(data);
-        console.log("asd", this.dataSource2);
-        //this.size = data.totalRegistros;
+        console.log("respuesta de buscar", data);
+        //this.dataSource2 = data.datos;
+        //this.length = data.totalRegistros;
       },
       (err: HttpErrorResponse) => {
         this.length = 0
@@ -164,50 +156,14 @@ export class ComprobantesListaComponent implements OnInit {
             let mensaje = "Por favor comunicarse con Sistemas";
             this.mostrarError(errStatus, titulo, mensaje);
           } else {
-            let titulo = 'Error al buscar un comprobante';
+            let titulo = 'Error al buscar un articulo';
             let mensaje = err.error.message.toString();
             this.mensaje = mensaje;
-            // this.mostrarError(errStatus, titulo, mensaje);
+            this.mostrarError(errStatus, titulo, mensaje);
           }
         }
       }
     );
-  }
-
- 
-  searchCbte() {
-    
-    this.busqueda = this.buscarCbteInput.nativeElement.value;
-    this.page = 0;
-    this.columna = 'id';
-    console.log(this.busqueda);
-    if( this.busqueda === '' || this.busqueda == null){
-      this.busqueda = null;
-    }
-  }
-
-  @Debounce(1000)  
-  searchLote() {
-
-    this.lote = this.buscarLoteInput.nativeElement.value;
-    if(this.lote === '')
-      this.lote =null;
-    this.page = 0;
-    this.columna = 'id';
-
-    this.getComprobantes(this.busqueda, this.page, this.size, this.columna, this.order);
-
-  }
-
-  consultar(id){
-    let ruta = `apps/pedidos/ver-pedido/${id}`;
-    this._router.navigate([ruta]);
-  }
-
-  agregarPedido() {
-    let ruta = `apps/pedidos/crear-pedido`;
-    console.log(ruta);
-    this._router.navigate([ruta]);
   }
 
   /**
@@ -228,14 +184,13 @@ export class ComprobantesListaComponent implements OnInit {
     if (event.direction !== "")
         this.order = event.direction;
     
-    this.getComprobantes(this.busqueda, this.page, this.size, this.columna, this.order);
+    this.getArticulosDePedidos(this.page, this.size, this.columna, this.order);
   }
-
 
   paginar(e: any){
       this.page = e.pageIndex;
       this.size = e.pageSize;
       
-      this.getComprobantes(this.busqueda, this.page, this.size, this.columna, this.order);
+      this.getArticulosDePedidos(this.page, this.size, this.columna, this.order);
   }
 }

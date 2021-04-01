@@ -45,10 +45,7 @@ export class ComprobantesListaService
     {
     }
 
-    getPedidosDetalles( body: BodyDetalle, busqueda, page, size, columna, order ): Observable<any> {
-
-        columna = 'idCbte';
-        order = 'desc';
+    getComprobantes( body: BodyDetalle, busqueda, page, size, columna, order ): Observable<any> {
 
         let headers = new HttpHeaders({
             "Content-Type": "application/json"
@@ -58,17 +55,14 @@ export class ComprobantesListaService
         if ( busqueda !== '' )
             buscar = `/${busqueda}`
         
-        console.log(columna);
+        //console.log(columna);
 
-        //getOne?
-        //let ruta = `${BASE_URL}pedidos/pedidodetalle/comprobantes-con-pedidos/${ comprobante }/${ page }/${ size }/${ sortBy }/${ order }`;
-        //getAll
         let ruta = `${BASE_URL}pedidos/pedidodetalle/comprobantes-con-pedidos/${ page }/${ size }/${ columna }/${ order }`; 
 
         return this._httpClient.post(ruta, body, {headers: headers});
     }
 
-    getPedidoDetalle( body: BodyDetalle, busqueda, page, size, columna, order ): Observable<any> {
+    getComprobante( body: BodyDetalle, busqueda, page, size, columna, order ): Observable<any> {
 
         let headers = new HttpHeaders({
             "Content-Type": "application/json"
@@ -78,10 +72,7 @@ export class ComprobantesListaService
         if ( busqueda !== '' )
             buscar = `/${busqueda}`
 
-        //getOne?
-        let ruta = `${BASE_URL}pedidos/pedidodetalle/comprobantes-con-pedidos/${ busqueda }/0/10/nroCbte/asc`;
-        //getAll
-        //let ruta = `${BASE_URL}pedidos/pedidodetalle/comprobantes-con-pedidos/${ page }/${ size }/${ columna }/${ order }`; 
+        let ruta = `${BASE_URL}pedidos/pedidodetalle/comprobantes-con-pedidos/${ busqueda }${ page }/${ size }/${ columna }/${ order }`;
 
         return this._httpClient.post(ruta, body, {headers: headers});
     }
