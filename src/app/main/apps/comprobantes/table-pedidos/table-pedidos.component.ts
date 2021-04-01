@@ -36,7 +36,7 @@ export class TablePedidosComponent implements OnInit {
   @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
   @ViewChild('buscarLote') buscarLoteInput: ElementRef;
 
-  displayedColumns: string[] = ['comprobante', 'pedidoTipo','codigoArt', 'nombreArticulo', 'fechaDeEntrega', 'direccion', 'etapa'];  
+  displayedColumns: string[] = ['idCbte', 'comprobante', 'pedidoTipo', 'nombreArticulo', 'fechaDeEntrega', 'direccion', 'etapa'];   
   dataSource2: any;
 
   lote: string = null;
@@ -44,7 +44,7 @@ export class TablePedidosComponent implements OnInit {
   length: number = 0;
   page: number = 0;
   size: number = 10;
-  columna: string = 'nombreArticulo';
+  columna: string = 'idDetalle';
   order: string = 'asc';
 
   mensaje: string;
@@ -87,11 +87,11 @@ export class TablePedidosComponent implements OnInit {
               }
 
   ngOnInit(): void { 
-    this.getArticulosDePedidos(this.page, this.size, this.columna, this.order);
+    this.getPedidos(this.page, this.size, this.columna, this.order);
   }
 
-  getArticulosDePedidos( page, size, columna, order ){
-    this._tablePedidosServiceService.getArticulosDePedidos( this.body, this.page, this.size, this.columna, this.order ).subscribe(
+  getPedidos( page, size, columna, order ){
+    this._tablePedidosServiceService.getPedidos( this.body, this.page, this.size, this.columna, this.order ).subscribe(
       data => {
         console.log("data articulos de pedidos -> ", data);
         this.dataSource2 = data.datos;
@@ -130,7 +130,7 @@ export class TablePedidosComponent implements OnInit {
     dialogRef.afterClosed()
       .subscribe( () => {
           if (errStatus != 0) {
-            this.getArticulosDePedidos( this.page, this.size, this.columna, this.order );
+            this.getPedidos( this.page, this.size, this.columna, this.order );
             
           } else {
             this._router.navigate(['']);
@@ -139,7 +139,7 @@ export class TablePedidosComponent implements OnInit {
   }
 
   buscar( busqueda ){ //getArticuloDePedido
-    this._tablePedidosServiceService.getArticuloDePedido(this.body, busqueda, this.page, this.size, this.columna, this.order).subscribe(
+    this._tablePedidosServiceService.getPedido(this.body, busqueda, this.page, this.size, this.columna, this.order).subscribe(
       data => {
         console.log("respuesta de buscar", data);
         //this.dataSource2 = data.datos;
@@ -166,6 +166,10 @@ export class TablePedidosComponent implements OnInit {
     );
   }
 
+  getSoloFecha(fecha: any){
+    return fecha.split(' ')[0];
+  }
+
   /**
    * Toggle sidebar open
    *
@@ -184,13 +188,13 @@ export class TablePedidosComponent implements OnInit {
     if (event.direction !== "")
         this.order = event.direction;
     
-    this.getArticulosDePedidos(this.page, this.size, this.columna, this.order);
+    this.getPedidos(this.page, this.size, this.columna, this.order);
   }
 
   paginar(e: any){
       this.page = e.pageIndex;
       this.size = e.pageSize;
       
-      this.getArticulosDePedidos(this.page, this.size, this.columna, this.order);
+      this.getPedidos(this.page, this.size, this.columna, this.order);
   }
 }

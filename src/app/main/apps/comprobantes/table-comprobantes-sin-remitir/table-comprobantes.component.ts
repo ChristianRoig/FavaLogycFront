@@ -57,7 +57,7 @@ export class TableComprobantesSinRemitirComponent implements OnInit {
   length: number = 0;
   page: number = 0;
   size: number = 10;
-  columna: string = 'codigoArticulo';
+  columna: string = 'nroCbte';
   order: string = 'asc';
 
   mensaje: string;
@@ -86,12 +86,11 @@ export class TableComprobantesSinRemitirComponent implements OnInit {
 
   ngOnInit(): void { 
     
-    this.getDetalles(this.busqueda, this.page, this.size, this.columna, this.order);
+    this.getComprobantesSinRemitir(this.busqueda, this.page, this.size, this.columna, this.order);
   }
 
-  getDetalles(busqueda, page, size, columna, order){
-
-    this._tableComprobantesService.getPedidosDetalles(this.body, busqueda, page, size, columna, order).subscribe(
+  getComprobantesSinRemitir( busqueda, page, size, columna, order ){
+    this._tableComprobantesService.getComprobantesSinRemitir(this.body, busqueda, page, size, columna, order).subscribe(
       data => {
         console.log("data ->",data);
         this.dataSource2 = data.datos;
@@ -131,7 +130,7 @@ export class TableComprobantesSinRemitirComponent implements OnInit {
     dialogRef.afterClosed()
       .subscribe( () => {
           if (errStatus != 0) {
-            this.getDetalles(this.busqueda, this.page, this.size, this.columna, this.order);
+            this.getComprobantesSinRemitir(this.busqueda, this.page, this.size, this.columna, this.order);
             
           } else {
             this._router.navigate(['']);
@@ -140,7 +139,7 @@ export class TableComprobantesSinRemitirComponent implements OnInit {
   }
 
   buscar(busqueda){
-    this._tableComprobantesService.getPedidoDetalle(this.body, busqueda, this.page, this.size, this.columna, this.order).subscribe(
+    this._tableComprobantesService.getComprobanteSinRemitir(this.body, busqueda, this.page, this.size, this.columna, this.order).subscribe(
       data => {
         this.dataSource2 = data.datos;
         this.length = data.totalRegistros;
@@ -177,7 +176,7 @@ export class TableComprobantesSinRemitirComponent implements OnInit {
     this.columna = 'id';
     console.log(this.busqueda);
     if( this.busqueda === '' || this.busqueda == null){
-      this.getDetalles(this.busqueda, this.page, this.size, this.columna, this.order);
+      this.getComprobantesSinRemitir(this.busqueda, this.page, this.size, this.columna, this.order);
     }
     //this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
   }
@@ -191,7 +190,7 @@ export class TableComprobantesSinRemitirComponent implements OnInit {
     this.page = 0;
     this.columna = 'id';
 
-    this.getDetalles(this.busqueda, this.page, this.size, this.columna, this.order);
+    this.getComprobantesSinRemitir(this.busqueda, this.page, this.size, this.columna, this.order);
 
   }
 
@@ -224,7 +223,7 @@ export class TableComprobantesSinRemitirComponent implements OnInit {
     if (event.direction !== "")
         this.order = event.direction;
     
-    this.getDetalles(this.busqueda, this.page, this.size, this.columna, this.order);
+    this.getComprobantesSinRemitir(this.busqueda, this.page, this.size, this.columna, this.order);
   }
 
 
@@ -232,6 +231,6 @@ export class TableComprobantesSinRemitirComponent implements OnInit {
       this.page = e.pageIndex;
       this.size = e.pageSize;
       
-      this.getDetalles(this.busqueda, this.page, this.size, this.columna, this.order);
+      this.getComprobantesSinRemitir(this.busqueda, this.page, this.size, this.columna, this.order);
   }
 }

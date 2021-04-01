@@ -3,6 +3,11 @@
 
     <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="dataSource2" style="width: 100%;">
 
+        <ng-container matColumnDef="idCbte">
+            <th mat-sort-header="idCbt" mat-header-cell *matHeaderCellDef> Id Cbt </th>
+            <td mat-cell *matCellDef="let element" class="pl-32"> {{ element.idCbt }} </td>
+        </ng-container>
+
         <ng-container matColumnDef="comprobante">
             <th mat-header-cell *matHeaderCellDef style="width: 60px; padding: 15px !important;"> Comprobante </th>
             <td mat-cell *matCellDef="let element" class="dato" style="width: 60px; padding: 15px !important;"> {{ element.nroCbte }} </td>
@@ -13,31 +18,31 @@
             <td mat-cell *matCellDef="let element" class="pl-8"> {{ element.pedidoTipo }} </td>
         </ng-container>
 
-        <ng-container matColumnDef="codigoArt">
-            <th mat-sort-header="codigoArt" mat-header-cell *matHeaderCellDef> Código Art. </th>
-            <td mat-cell *matCellDef="let element" class="pl-8"> {{ element.codigoArticulo }} </td>
-        </ng-container>
-
         <ng-container matColumnDef="nombreArticulo">
-            <th mat-sort-header="nombreArticulo" mat-header-cell *matHeaderCellDef> Nombre Art. </th>
-            <td mat-cell *matCellDef="let element" class="pl-8"> {{ element.nombreArticulo }} </td>
+            <th mat-sort-header="nombreArticulo" mat-header-cell *matHeaderCellDef> Artículo </th>
+            <td mat-cell *matCellDef="let element" class="dato">
+                <span *ngIf="element.cantArticulos > 1" [matBadge]="'+' + (element.cantArticulos -1)" matBadgeOverlap="false"> {{ element.priNombreArticulo }}</span>
+                <span *ngIf="element.cantArticulos <= 1">{{ element.priNombreArticulo }}</span>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="fechaDeEntrega">
-            <th mat-sort-header="fechaDeEntrega" mat-header-cell *matHeaderCellDef> F. Entrega </th>
-            <td mat-cell *matCellDef="let element" class="pl-8"> {{ element.fechaDeEntrega | date:'shortDate' }} </td>
+            <th mat-sort-header="fechaDeEntrega" mat-header-cell *matHeaderCellDef> Fecha Entrega </th>
+            <td mat-cell *matCellDef="let element" class="pl-8"> {{ getSoloFecha(element.fechaDeEntrega) }} </td>
+            <!-- | date:'shortDate' -->
         </ng-container>
+
 
         <ng-container matColumnDef="direccion">
             <th mat-sort-header="direccion" mat-header-cell *matHeaderCellDef> Dirección </th>
             <td mat-cell *matCellDef="let element">
-                <span>{{ element.direccion }}, {{ element.localidad }}, {{ element.provincia }}</span>
+                <span>{{ element.direccion }}, {{element.localidad}}, {{ element.provincia }}</span>
             </td>
         </ng-container>
 
         <ng-container matColumnDef="etapa">
             <th mat-sort-header="etapa" mat-header-cell *matHeaderCellDef> Etapa </th>
-            <td mat-cell *matCellDef="let element"> {{ element.etapa }} </td>
+            <td mat-cell *matCellDef="let element"> {{ element.priEtapa }} </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

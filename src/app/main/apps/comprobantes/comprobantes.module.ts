@@ -22,6 +22,8 @@ import { ComprobantesListaService } from './comprobantes-lista/comprobantes-list
 import { TableComprobantesService } from './table-comprobantes/table-comprobantes.service';
 import { TableComprobantesSinRemitirService } from './table-comprobantes-sin-remitir/table-comprobantes.service';
 import { TableArticulosService } from './table-articulos/table-articulos.service';
+import { TablePedidosComponent } from './table-pedidos/table-pedidos.component';
+import { TablePedidosService } from './table-pedidos/table-pedidos.service';
 
 const routes: Routes = [
     {
@@ -35,7 +37,8 @@ const routes: Routes = [
         ComprobantesListaComponent,
         TableComprobantesComponent,
         TableComprobantesSinRemitirComponent,
-        TableArticulosComponent
+        TableArticulosComponent,
+        TablePedidosComponent
     ],
     imports     : [
         CommonModule,
@@ -53,7 +56,8 @@ const routes: Routes = [
         ComprobantesListaService,
         TableComprobantesService,
         TableComprobantesSinRemitirService,
-        TableArticulosService
+        TableArticulosService,
+        TablePedidosService
     ]
 })
 

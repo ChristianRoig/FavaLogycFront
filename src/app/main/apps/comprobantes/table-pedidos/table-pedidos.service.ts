@@ -12,19 +12,19 @@ export class TablePedidosService
     constructor(
         private _httpClient: HttpClient) { }
 
-    getArticulosDePedidos( body ,page, size, columna, order ): Observable<any> {
+        getPedidos( body ,page, size, columna, order ): Observable<any> {
         
         let headers = new HttpHeaders({
             "Content-Type": "application/json"
         });
 
-        let ruta = `${BASE_URL}pedidos/pedidodetalle/articulos-de-pedidos/${ page }/${ size }/${ columna }/${ order }`;
+        let ruta = `${BASE_URL}pedidos/pedidodetalle/${ page }/${ size }/${ columna }/${ order }`;
 
         //return this._httpClient.post(ruta, {headers: headers});
         return this._httpClient.post(ruta, body, {headers: headers});
     }
 
-    getArticuloDePedido( body, busqueda, page, size, columna, order ): Observable<any> {
+    getPedido( body, busqueda, page, size, columna, order ): Observable<any> {
 
         let headers = new HttpHeaders({
             "Content-Type": "application/json"
