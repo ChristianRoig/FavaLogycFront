@@ -171,6 +171,7 @@ export class TableComprobantesSinRemitirComponent implements OnInit {
   @Debounce(1000) 
   searchCbte() {
     this.busqueda = this.buscarCbteInput.nativeElement.value;
+    this.busqueda = this.busqueda.toLocaleUpperCase();
     if( this.busqueda === '' || this.busqueda == null){
       this.getComprobantesSinRemitir( );
     }

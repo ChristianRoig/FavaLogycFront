@@ -24,7 +24,7 @@
                 </button>
 
                 <mat-menu #projectsMenu="matMenu">
-                    <button mat-menu-item *ngFor="let project of projects" (click)="selectedProject= project">
+                    <button mat-menu-item *ngFor="let project of projects" (click)="selectedProject = project">
                         <span>{{project.name}}</span>
                     </button>
                 </mat-menu>
@@ -49,7 +49,7 @@
                         <div class="pl-16 pr-8 py-16 h-52" fxLayout="row" fxLayoutAlign="space-between center">
                             <mat-form-field>
                                 <mat-select class="simplified font-size-16" aria-label="Change range">
-                                    <mat-option *ngFor="let estado of estados" [value]="estado.valor" (click)="setValor()">
+                                    <mat-option *ngFor="let estado of estados" [value]="estado.valor" (click)="setValor(estado.valor)">
                                         {{ estado.texto }}
                                     </mat-option>
                                 </mat-select>
@@ -302,10 +302,8 @@
                                 <div fxLayout="column" *ngFor="let widget of widgets[4].widget5.supporting | keys" fxFlex="100" fxFlex.gt-sm="50" fxLayoutAlign="center" class="mb-24">
 
                                     <div class="px-24">
-                                        <div class="h4 secondary-text">{{widget.value.label}}</div>
-                                        <div class="mat-display-1 m-0">
-                                            {{widget.value.count[widget5.currentRange]}}
-                                        </div>
+                                        <div class="h4 secondary-text"> {{widget.value.label}} </div>
+                                        <div class="mat-display-1 m-0"> {{widget.value.count[widget5.currentRange]}} </div>
                                     </div>
 
                                     <div class="h-64">
