@@ -44,8 +44,8 @@ export class TableComprobantesComponent implements OnInit {
   length: number = 0;
   page: number = 0;
   size: number = 10;
-  columna: string = 'codigoArticulo';
-  order: string = 'asc';
+  columna: string = 'idCbte';
+  order: string = 'desc';
 
   mensaje: string;
 
@@ -71,11 +71,11 @@ export class TableComprobantesComponent implements OnInit {
 
   ngOnInit(): void { 
     
-    this.getComprobantesConPedidos(this.busqueda, this.page, this.size, this.columna, this.order);
+    this.getComprobantesConPedidos( this.page, this.size, this.columna, this.order);
   }
 
-  getComprobantesConPedidos(busqueda, page, size, columna, order){
-    this._tableComprobantesService.getComprobantesConPedidos(this.body, busqueda, page, size, columna, order).subscribe(
+  getComprobantesConPedidos( page, size, columna, order){
+    this._tableComprobantesService.getComprobantesConPedidos( this.body, page, size, columna, order ).subscribe(
       data => {
         this.dataSource2 = data.datos;
         this.length = data.totalRegistros;
@@ -115,7 +115,7 @@ export class TableComprobantesComponent implements OnInit {
     dialogRef.afterClosed()
       .subscribe( () => {
           if (errStatus != 0) {
-            this.getComprobantesConPedidos(this.busqueda, this.page, this.size, this.columna, this.order);
+            this.getComprobantesConPedidos(this.page, this.size, this.columna, this.order);
             
           } else {
             this._router.navigate(['']);
@@ -123,8 +123,8 @@ export class TableComprobantesComponent implements OnInit {
       });
   }
 
-  getComprobanteConPedido(busqueda){
-    this._tableComprobantesService.getComprobanteConPedido(this.body, busqueda, this.page, this.size, this.columna, this.order).subscribe(
+  getComprobanteConPedido(){
+    this._tableComprobantesService.getComprobanteConPedido(this.body, this.busqueda, this.page, this.size, this.columna, this.order).subscribe(
       data => {
         this.dataSource2 = data.datos;
         this.length = data.totalRegistros;
@@ -156,9 +156,10 @@ export class TableComprobantesComponent implements OnInit {
   @Debounce(1000)  
   searchCbte() {
     this.busqueda = this.buscarCbteInput.nativeElement.value;
+    this.busqueda = this.busqueda.toLocaleUpperCase();
     console.log(this.busqueda);
     if( this.busqueda === '' || this.busqueda == null){
-      this.getComprobantesConPedidos(this.busqueda, this.page, this.size, this.columna, this.order); // revisar ésto
+      this.getComprobantesConPedidos( this.page, this.size, this.columna, this.order); // revisar ésto
     }
   }
 
@@ -191,7 +192,7 @@ export class TableComprobantesComponent implements OnInit {
     if (event.direction !== "")
         this.order = event.direction;
     
-    this.getComprobantesConPedidos(this.busqueda, this.page, this.size, this.columna, this.order);
+    this.getComprobantesConPedidos( this.page, this.size, this.columna, this.order);
   }
 
 
@@ -199,6 +200,6 @@ export class TableComprobantesComponent implements OnInit {
       this.page = e.pageIndex;
       this.size = e.pageSize;
       
-      this.getComprobantesConPedidos(this.busqueda, this.page, this.size, this.columna, this.order);
+      this.getComprobantesConPedidos( this.page, this.size, this.columna, this.order);
   }
 }

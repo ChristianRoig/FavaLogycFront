@@ -83,20 +83,20 @@ export class TablePedidosComponent implements OnInit {
               private _tablePedidosServiceService: TablePedidosService,
               private _dialog: MatDialog ) { 
 
-                this.cantArt = new EventEmitter();
+                //this.cantArt = new EventEmitter();
               }
 
   ngOnInit(): void { 
-    this.getPedidos(this.page, this.size, this.columna, this.order);
+    this.getPedidos();
   }
 
-  getPedidos( page, size, columna, order ){
+  getPedidos( ){
     this._tablePedidosServiceService.getPedidos( this.body, this.page, this.size, this.columna, this.order ).subscribe(
       data => {
         console.log("data articulos de pedidos -> ", data);
         this.dataSource2 = data.datos;
         this.length = data.totalRegistros;
-        this.cantArt.emit( this.length ); //devuelvo el total de Articulos
+        //this.cantArt.emit( this.length ); //devuelvo el total de Articulos
       },
       (err: HttpErrorResponse) => {
         this.length = 0
@@ -130,7 +130,7 @@ export class TablePedidosComponent implements OnInit {
     dialogRef.afterClosed()
       .subscribe( () => {
           if (errStatus != 0) {
-            this.getPedidos( this.page, this.size, this.columna, this.order );
+            this.getPedidos(  );
             
           } else {
             this._router.navigate(['']);
@@ -138,12 +138,12 @@ export class TablePedidosComponent implements OnInit {
       });
   }
 
-  buscar( busqueda ){ //getArticuloDePedido
-    this._tablePedidosServiceService.getPedido(this.body, busqueda, this.page, this.size, this.columna, this.order).subscribe(
+  getPedido( ){ //getArticuloDePedido
+    this._tablePedidosServiceService.getPedido( this.body, this.busqueda, this.page, this.size, this.columna, this.order).subscribe(
       data => {
         console.log("respuesta de buscar", data);
-        //this.dataSource2 = data.datos;
-        //this.length = data.totalRegistros;
+        this.dataSource2 = data.datos;
+        this.length = data.totalRegistros;
       },
       (err: HttpErrorResponse) => {
         this.length = 0
@@ -164,6 +164,16 @@ export class TablePedidosComponent implements OnInit {
         }
       }
     );
+  }
+
+  @Debounce(1000)  
+  searchCbte() {
+    this.busqueda = this.buscarCbteInput.nativeElement.value;
+    this.busqueda = this.busqueda.toLocaleUpperCase();
+    console.log(this.busqueda);
+    if( this.busqueda === '' || this.busqueda == null){
+      this.getPedidos( ); // revisar ésto
+    }
   }
 
   getSoloFecha(fecha: any){
@@ -188,13 +198,13 @@ export class TablePedidosComponent implements OnInit {
     if (event.direction !== "")
         this.order = event.direction;
     
-    this.getPedidos(this.page, this.size, this.columna, this.order);
+    this.getPedidos();
   }
 
   paginar(e: any){
       this.page = e.pageIndex;
       this.size = e.pageSize;
       
-      this.getPedidos(this.page, this.size, this.columna, this.order);
+      this.getPedidos();
   }
 }

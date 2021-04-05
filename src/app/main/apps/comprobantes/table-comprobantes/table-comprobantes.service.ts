@@ -18,17 +18,6 @@ export interface BodyDetalle{
     hastaPedido : string;
     idLote : number;
   }
-  /* {
-   "idTipo" : 1,
-   "idTurno" : null,
-   "idOrigen" : null,
-   "idEtapa" : null,
-   "idProvincia" : 1,
-   "idLocalidad" : null,
-   "desdePedido" : null,
-   "hastaPedido" : "null",
-   "idLote" : null
-} */
 
 @Injectable()
 export class TableComprobantesService
@@ -36,20 +25,11 @@ export class TableComprobantesService
     constructor(
         private _httpClient: HttpClient) { }
 
-    getComprobantesConPedidos( body: BodyDetalle, busqueda, page, size, columna, order ): Observable<any> {
-
-        columna = 'idCbte';
-        order = 'desc';
+    getComprobantesConPedidos( body: BodyDetalle, page, size, columna, order ): Observable<any> {
 
         let headers = new HttpHeaders({
             "Content-Type": "application/json"
         });
-
-        let buscar: string = '';
-        if ( busqueda !== '' )
-            buscar = `/${busqueda}`
-        
-        console.log(columna);
 
         //getAll
         let ruta = `${BASE_URL}pedidos/pedidodetalle/comprobantes-con-pedidos/${ page }/${ size }/${ columna }/${ order }`; 

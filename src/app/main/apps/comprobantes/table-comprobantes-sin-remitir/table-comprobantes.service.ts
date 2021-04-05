@@ -27,34 +27,21 @@ export class TableComprobantesSinRemitirService
     constructor(
         private _httpClient: HttpClient) { }
 
-    getComprobantesSinRemitir( body: BodyDetalle, busqueda, page, size, columna, order ): Observable<any> {
+    getComprobantesSinRemitir( page, size, columna, order ): Observable<any> {
 
-        let headers = new HttpHeaders({
-            "Content-Type": "application/json"
-        });
-
-        let buscar: string = '';
-        if ( busqueda !== '' )
-            buscar = `/${busqueda}`
-        
-        console.log(columna);
         let ruta = `${BASE_URL}pedidos/pedidodetalle/sinremitir/comprobantes-sin-pedidos/${ page }/${ size }/${ columna }/${ order }`;
 
         return this._httpClient.get(ruta);
     }
 
-    getComprobanteSinRemitir( body: BodyDetalle, busqueda, page, size, columna, order ): Observable<any> {
-
-        let headers = new HttpHeaders({
-            "Content-Type": "application/json"
-        });
+    getComprobanteSinRemitir( busqueda, page, size, columna, order ): Observable<any> {
 
         let buscar: string = '';
         if ( busqueda !== '' )
             buscar = `/${busqueda}`
 
-        let ruta = `${BASE_URL}pedidos/pedidodetalle/comprobantes-con-pedidos/${ busqueda }/${ page }/${ size }/${ columna }/${ order }`;
+        let ruta = `${BASE_URL}pedidos/pedidodetalle/sinremitir/comprobantes-sin-pedidos/${ busqueda }/${ page }/${ size }/${ columna }/${ order }`;
 
-        return this._httpClient.post(ruta, body, {headers: headers});
+        return this._httpClient.get(ruta);
     }
 }

@@ -32,17 +32,16 @@ export interface BodyDetalle{
 
 export class TableArticulosComponent implements OnInit {
 
-  @Input() busqueda: string = "";
-  @Output() cantArt: EventEmitter<number>;
+  //@Output() cantArt: EventEmitter<number>;
 
-  @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
-  @ViewChild('buscarLote') buscarLoteInput: ElementRef;
+  @ViewChild('buscarArticulo') buscarArticuloInput: ElementRef;
+
 
   displayedColumns: string[] = ['comprobante', 'pedidoTipo','codigoArt', 'nombreArticulo', 'fechaDeEntrega', 'direccion', 'etapa'];  
   dataSource2: any;
 
   lote: string = null;
-  //busqueda: string = "";
+  busqueda: string = "";
   length: number = 0;
   page: number = 0;
   size: number = 10;
@@ -83,22 +82,19 @@ export class TableArticulosComponent implements OnInit {
   constructor(private _router: Router, 
               private _fuseSidebarService: FuseSidebarService, 
               private _tableArticulosService: TableArticulosService,
-              private _dialog: MatDialog ) { 
-
-                this.cantArt = new EventEmitter();
-              }
+              private _dialog: MatDialog ) { }
 
   ngOnInit(): void { 
-    this.getArticulosDePedidos(this.page, this.size, this.columna, this.order);
+    this.getArticulosDePedidos( );
   }
 
-  getArticulosDePedidos( page, size, columna, order ){
+  getArticulosDePedidos( ){
     this._tableArticulosService.getArticulosDePedidos( this.body, this.page, this.size, this.columna, this.order ).subscribe(
       data => {
         console.log("data articulos de pedidos -> ", data);
         this.dataSource2 = data.datos;
         this.length = data.totalRegistros;
-        this.cantArt.emit( this.length ); //devuelvo el total de Articulos
+        //this.cantArt.emit( this.length ); //devuelvo el total de Articulos
       },
       (err: HttpErrorResponse) => {
         this.length = 0
@@ -132,7 +128,7 @@ export class TableArticulosComponent implements OnInit {
     dialogRef.afterClosed()
       .subscribe( () => {
           if (errStatus != 0) {
-            this.getArticulosDePedidos( this.page, this.size, this.columna, this.order );
+            this.getArticulosDePedidos(  );
             
           } else {
             this._router.navigate(['']);
@@ -140,12 +136,22 @@ export class TableArticulosComponent implements OnInit {
       });
   }
 
-  buscar( busqueda ){ //getArticuloDePedido        PENDIENTE ! (ver como pasarle busqueda desde el padre y llamar la funcion ésta desde ahí)
-    this._tableArticulosService.getArticuloDePedido(this.body, busqueda, this.page, this.size, this.columna, this.order).subscribe(
+  @Debounce(1000)  
+  searchArticulo() {
+    this.busqueda = this.buscarArticuloInput.nativeElement.value;
+    this.busqueda = this.busqueda.toLocaleUpperCase();
+    console.log(this.busqueda);
+    if( this.busqueda === '' || this.busqueda == null){
+      this.getArticulosDePedidos( ); 
+    }
+  }
+
+  getArticulo( ){ 
+    this._tableArticulosService.getArticuloDePedido(this.body, this.busqueda, this.page, this.size, this.columna, this.order).subscribe(
       data => {
         console.log("respuesta de buscar", data);
-        //this.dataSource2 = data.datos;
-        //this.length = data.totalRegistros;
+        this.dataSource2 = data.datos;
+        this.length = data.totalRegistros;
       },
       (err: HttpErrorResponse) => {
         this.length = 0
@@ -186,13 +192,13 @@ export class TableArticulosComponent implements OnInit {
     if (event.direction !== "")
         this.order = event.direction;
     
-    this.getArticulosDePedidos(this.page, this.size, this.columna, this.order);
+    this.getArticulosDePedidos( );
   }
 
   paginar(e: any){
       this.page = e.pageIndex;
       this.size = e.pageSize;
       
-      this.getArticulosDePedidos(this.page, this.size, this.columna, this.order);
+      this.getArticulosDePedidos( );
   }
 }

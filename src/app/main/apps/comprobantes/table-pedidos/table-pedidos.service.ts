@@ -12,7 +12,7 @@ export class TablePedidosService
     constructor(
         private _httpClient: HttpClient) { }
 
-        getPedidos( body ,page, size, columna, order ): Observable<any> {
+    getPedidos( body ,page, size, columna, order ): Observable<any> {
         
         let headers = new HttpHeaders({
             "Content-Type": "application/json"
@@ -34,9 +34,7 @@ export class TablePedidosService
         if ( busqueda !== '' )
             buscar = `/${busqueda}`
 
-        let ruta = `${BASE_URL}pedidos/pedidodetalle/comprobantes-con-pedidos/${ busqueda }/0/10/nroCbte/asc`;
-        //getAll
-        //let ruta = `${BASE_URL}pedidos/pedidodetalle/comprobantes-con-pedidos/${ page }/${ size }/${ columna }/${ order }`; 
+        let ruta = `${BASE_URL}pedidos/pedidodetalle/${ busqueda }/${ page }/${ size }/${ columna }/${ order }`;
 
         return this._httpClient.post(ruta, body, {headers: headers});
     }

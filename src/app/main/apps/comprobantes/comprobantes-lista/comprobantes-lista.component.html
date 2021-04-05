@@ -5,13 +5,13 @@
         <!-- <div class="btnAddPedidoLote">
             <button mat-raised-button color="light" (click)="agregarPedido()">Crear Pedido</button>
         </div> -->
-        <div fxLayout="column">
+        <!-- <div fxLayout="column"> -->
 
-            <!-- SECCION ARTICULOS -->
-            <!-- <div class="fuse-card  pl-24 pr-24" style="max-width: 100%;"> -->
+        <!-- SECCION ARTICULOS -->
+        <!-- <div class="fuse-card  pl-24 pr-24" style="max-width: 100%;"> -->
 
-            <!-- TITULO/BUSCADOR/BOTON -->
-            <!-- <div fxLayout="row" class="controlesBusqueda ">
+        <!-- TITULO/BUSCADOR/BOTON -->
+        <!-- <div fxLayout="row" class="controlesBusqueda ">
 
                     <mat-form-field appearance="outline" class="inputBusqueda">
                         <mat-label>Código de Artículo o Comprobante</mat-label>
@@ -21,36 +21,37 @@
 
                     <div class="botonesBusqueda">
                         <button (click)="buscar(buscarCbte.value)" [disabled]="!this.busqueda" class="btn" mat-raised-button color="primary">Buscar</button> -->
-            <!-- <span fxLayoutAlign="end">
+        <!-- <span fxLayoutAlign="end">
                             <button mat-button (click)="toggleSidebarOpen('sidebarFilter')" class="m-12 ">
                                 <mat-icon>tune</mat-icon>
                                 Filtros                
                             </button> 
                         </span> -->
-            <!--   </div>
+        <!--   </div>
                 </div> -->
-            <!-- / TITULO/BUSCADOR/BOTON -->
+        <!-- / TITULO/BUSCADOR/BOTON -->
 
-            <!-- <ng-container *ngIf="this.length > 0; then articulos;  else notHasDetalle"></ng-container> -->
+        <!-- <ng-container *ngIf="this.length > 0; then articulos;  else notHasDetalle"></ng-container> -->
 
-            <!-- </div> -->
-            <!-- / SECCION ARTICULOS -->
-        </div>
+        <!-- </div> -->
+        <!-- / SECCION ARTICULOS -->
+        <!-- </div> -->
 
         <div class="fuse-card tabTables" style="max-width: 100%;">
             <!-- fxLayout="column" fxFlex -->
             <mat-tab-group>
-                <mat-tab label="Comprobantes(79)">
+                <mat-tab label="Comprobantes sin Remitir">
+                    <app-table-comprobantes-sin-remitir></app-table-comprobantes-sin-remitir>
+                </mat-tab>
+                <mat-tab label="Comprobantes">
                     <app-table-comprobantes></app-table-comprobantes>
                 </mat-tab>
-                <mat-tab label="Articulos(173)" (cantArt)="numero ">
-                    <app-table-articulos [busqueda]="this.busqueda "></app-table-articulos>
-                </mat-tab>
-                <mat-tab label="Pedidos(121) ">
+                <mat-tab label="Pedidos">
                     <app-table-pedidos></app-table-pedidos>
                 </mat-tab>
-                <mat-tab label="Comprobantes sin Remitir(4) ">
-                    <app-table-comprobantes-sin-remitir></app-table-comprobantes-sin-remitir>
+                <mat-tab label="Articulos">
+                    <!-- (cantArt)="numero " -->
+                    <app-table-articulos></app-table-articulos>
                 </mat-tab>
             </mat-tab-group>
         </div>

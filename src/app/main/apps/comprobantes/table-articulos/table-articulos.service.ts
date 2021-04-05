@@ -34,7 +34,7 @@ export class TableArticulosService
         if ( busqueda !== '' )
             buscar = `/${busqueda}`
 
-        let ruta = `${BASE_URL}pedidos/pedidodetalle/comprobantes-con-pedidos/${ busqueda }/0/10/nroCbte/asc`;
+        let ruta = `${BASE_URL}pedidos/pedidodetalle/articulos-de-pedidos/${ busqueda }/${ page }/${ size }/${ columna }/${ order }`;
         //getAll
         //let ruta = `${BASE_URL}pedidos/pedidodetalle/comprobantes-con-pedidos/${ page }/${ size }/${ columna }/${ order }`; 
 

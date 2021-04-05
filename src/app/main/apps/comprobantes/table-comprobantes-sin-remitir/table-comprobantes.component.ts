@@ -86,13 +86,13 @@ export class TableComprobantesSinRemitirComponent implements OnInit {
 
   ngOnInit(): void { 
     
-    this.getComprobantesSinRemitir(this.busqueda, this.page, this.size, this.columna, this.order);
+    this.getComprobantesSinRemitir( );
   }
 
-  getComprobantesSinRemitir( busqueda, page, size, columna, order ){
-    this._tableComprobantesService.getComprobantesSinRemitir(this.body, busqueda, page, size, columna, order).subscribe(
+  getComprobantesSinRemitir( ){
+    this._tableComprobantesService.getComprobantesSinRemitir( this.page, this.size, this.columna, this.order).subscribe(
       data => {
-        console.log("data ->",data);
+        console.log("getComprobantesSinRemitir ->",data);
         this.dataSource2 = data.datos;
         this.length = data.totalRegistros;
         /*console.log("asd", this.dataSource2); */
@@ -130,7 +130,7 @@ export class TableComprobantesSinRemitirComponent implements OnInit {
     dialogRef.afterClosed()
       .subscribe( () => {
           if (errStatus != 0) {
-            this.getComprobantesSinRemitir(this.busqueda, this.page, this.size, this.columna, this.order);
+            this.getComprobantesSinRemitir( );
             
           } else {
             this._router.navigate(['']);
@@ -138,8 +138,8 @@ export class TableComprobantesSinRemitirComponent implements OnInit {
       });
   }
 
-  buscar(busqueda){
-    this._tableComprobantesService.getComprobanteSinRemitir(this.body, busqueda, this.page, this.size, this.columna, this.order).subscribe(
+  getComprobanteSinRemitir(){
+    this._tableComprobantesService.getComprobanteSinRemitir( this.busqueda, this.page, this.size, this.columna, this.order ).subscribe(
       data => {
         this.dataSource2 = data.datos;
         this.length = data.totalRegistros;
@@ -161,37 +161,19 @@ export class TableComprobantesSinRemitirComponent implements OnInit {
             let titulo = 'Error al buscar un comprobante';
             let mensaje = err.error.message.toString();
             this.mensaje = mensaje;
-            // this.mostrarError(errStatus, titulo, mensaje);
+            this.mostrarError(errStatus, titulo, mensaje);
           }
         }
       }
     );
   }
 
- 
+  @Debounce(1000) 
   searchCbte() {
-    
     this.busqueda = this.buscarCbteInput.nativeElement.value;
-    this.page = 0;
-    this.columna = 'id';
-    console.log(this.busqueda);
     if( this.busqueda === '' || this.busqueda == null){
-      this.getComprobantesSinRemitir(this.busqueda, this.page, this.size, this.columna, this.order);
+      this.getComprobantesSinRemitir( );
     }
-    //this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
-  }
-
-  @Debounce(1000)  
-  searchLote() {
-
-    this.lote = this.buscarLoteInput.nativeElement.value;
-    if(this.lote === '')
-      this.lote =null;
-    this.page = 0;
-    this.columna = 'id';
-
-    this.getComprobantesSinRemitir(this.busqueda, this.page, this.size, this.columna, this.order);
-
   }
 
   consultar(id){
@@ -223,7 +205,7 @@ export class TableComprobantesSinRemitirComponent implements OnInit {
     if (event.direction !== "")
         this.order = event.direction;
     
-    this.getComprobantesSinRemitir(this.busqueda, this.page, this.size, this.columna, this.order);
+    this.getComprobantesSinRemitir();
   }
 
 
@@ -231,6 +213,6 @@ export class TableComprobantesSinRemitirComponent implements OnInit {
       this.page = e.pageIndex;
       this.size = e.pageSize;
       
-      this.getComprobantesSinRemitir(this.busqueda, this.page, this.size, this.columna, this.order);
+      this.getComprobantesSinRemitir();
   }
 }

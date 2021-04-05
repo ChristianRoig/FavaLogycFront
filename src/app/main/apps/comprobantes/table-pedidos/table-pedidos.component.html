@@ -1,4 +1,15 @@
-<!-- <ng-template #comprobantes> -->
+<div fxLayout="row" class="controlesBusqueda ">
+
+    <mat-form-field appearance="outline" class="inputBusqueda">
+        <mat-label>Buscar un Comprobante</mat-label>
+        <input #buscarCbte (keyup)="searchCbte()" matInput value="" placeholder="Ingrese un pedido">
+        <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+
+    <div class="botonesBusqueda">
+        <button class="btn" (click)="getPedido()" [disabled]="!this.busqueda" mat-raised-button color="primary">Buscar</button>
+    </div>
+</div>
 <div style="width: 100%; overflow: auto;">
 
     <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="dataSource2" style="width: 100%;">
