@@ -16,10 +16,19 @@ export interface BodyDetalle{
     idLocalidad : number;
     desdePedido : string;
     hastaPedido : string;
-    lote : string;
-    desdeLote : string;
-    hastaLote : string;
+    idLote : number;
   }
+  /* {
+   "idTipo" : 1,
+   "idTurno" : null,
+   "idOrigen" : null,
+   "idEtapa" : null,
+   "idProvincia" : 1,
+   "idLocalidad" : null,
+   "desdePedido" : null,
+   "hastaPedido" : "null",
+   "idLote" : null
+} */
 
 @Injectable()
 export class TableComprobantesService
@@ -27,7 +36,7 @@ export class TableComprobantesService
     constructor(
         private _httpClient: HttpClient) { }
 
-    getPedidosDetalles( body: BodyDetalle, busqueda, page, size, columna, order ): Observable<any> {
+    getComprobantesConPedidos( body: BodyDetalle, busqueda, page, size, columna, order ): Observable<any> {
 
         columna = 'idCbte';
         order = 'desc';
@@ -42,15 +51,13 @@ export class TableComprobantesService
         
         console.log(columna);
 
-        //getOne?
-        //let ruta = `${BASE_URL}pedidos/pedidodetalle/comprobantes-con-pedidos/${ comprobante }/${ page }/${ size }/${ sortBy }/${ order }`;
         //getAll
         let ruta = `${BASE_URL}pedidos/pedidodetalle/comprobantes-con-pedidos/${ page }/${ size }/${ columna }/${ order }`; 
 
         return this._httpClient.post(ruta, body, {headers: headers});
     }
 
-    getPedidoDetalle( body: BodyDetalle, busqueda, page, size, columna, order ): Observable<any> {
+    getComprobanteConPedido( body: BodyDetalle, busqueda, page, size, columna, order ): Observable<any> {
 
         let headers = new HttpHeaders({
             "Content-Type": "application/json"
@@ -60,10 +67,8 @@ export class TableComprobantesService
         if ( busqueda !== '' )
             buscar = `/${busqueda}`
 
-        //getOne?
-        let ruta = `${BASE_URL}pedidos/pedidodetalle/comprobantes-con-pedidos/${ busqueda }/0/10/nroCbte/asc`;
-        //getAll
-        //let ruta = `${BASE_URL}pedidos/pedidodetalle/comprobantes-con-pedidos/${ page }/${ size }/${ columna }/${ order }`; 
+        //getOne
+        let ruta = `${BASE_URL}pedidos/pedidodetalle/comprobantes-con-pedidos/${ busqueda }/${ page }/${ size }/${ columna }/${ order }`;
 
         return this._httpClient.post(ruta, body, {headers: headers});
     }

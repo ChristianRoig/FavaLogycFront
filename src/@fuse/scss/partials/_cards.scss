@@ -41,9 +41,15 @@
     // Tabs
     .mat-tab-labels {
         justify-content: flex-start;
+        background-color: rgb(236, 236, 236);
     }
     .mat-tab-label {
         min-width: 0 !important;
+        //background-color: lightgrey;
+    }
+    .mat-tab-label.mat-tab-label-active {
+        //background-color: lightgrey;
+        background-color: white;
     }
     // Divider
     .card-divider {

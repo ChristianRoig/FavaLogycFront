@@ -19,9 +19,7 @@ export interface BodyDetalle{
   idLocalidad : number;
   desdePedido : string;
   hastaPedido : string;
-  lote : string;
-  desdeLote : string;
-  hastaLote : string;
+  idLote : number;
 }
 
 @Component({  
@@ -33,7 +31,6 @@ export interface BodyDetalle{
 export class TableComprobantesComponent implements OnInit {
 
   @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
-  @ViewChild('buscarLote') buscarLoteInput: ElementRef;
   /*Comprobante (VTA-B00065-00004525 segun mejora#2), F. Entrega, 1er. Dirección, (+D), Localidad, Provincia, 1er. Cod., 1er. Artículo, (+A), Estado, Etapa, (+E) */
 
 /*  displayedColumns: string[] = ['Comprobante', 'Fecha-Entrega', 'priDireccion', ' cantDatosEntrega -1','Localidad', 'Provincia','priCod',
@@ -64,26 +61,21 @@ export class TableComprobantesComponent implements OnInit {
     idLocalidad : null,
     desdePedido : null,
     hastaPedido : null,
-    lote        : null,
-    desdeLote   : null,
-    hastaLote   : null
+    idLote      : null,
   };
 
   constructor(private _router: Router, 
               private _fuseSidebarService: FuseSidebarService, 
               private _tableComprobantesService: TableComprobantesService,
-              private _dialog: MatDialog ) { 
-
-
-  }
+              private _dialog: MatDialog ) { }
 
   ngOnInit(): void { 
     
-    this.getDetalles(this.busqueda, this.page, this.size, this.columna, this.order);
+    this.getComprobantesConPedidos(this.busqueda, this.page, this.size, this.columna, this.order);
   }
 
-  getDetalles(busqueda, page, size, columna, order){
-    this._tableComprobantesService.getPedidosDetalles(this.body, busqueda, page, size, columna, order).subscribe(
+  getComprobantesConPedidos(busqueda, page, size, columna, order){
+    this._tableComprobantesService.getComprobantesConPedidos(this.body, busqueda, page, size, columna, order).subscribe(
       data => {
         this.dataSource2 = data.datos;
         this.length = data.totalRegistros;
@@ -123,7 +115,7 @@ export class TableComprobantesComponent implements OnInit {
     dialogRef.afterClosed()
       .subscribe( () => {
           if (errStatus != 0) {
-            this.getDetalles(this.busqueda, this.page, this.size, this.columna, this.order);
+            this.getComprobantesConPedidos(this.busqueda, this.page, this.size, this.columna, this.order);
             
           } else {
             this._router.navigate(['']);
@@ -131,13 +123,13 @@ export class TableComprobantesComponent implements OnInit {
       });
   }
 
-  buscar(busqueda){
-    this._tableComprobantesService.getPedidoDetalle(this.body, busqueda, this.page, this.size, this.columna, this.order).subscribe(
+  getComprobanteConPedido(busqueda){
+    this._tableComprobantesService.getComprobanteConPedido(this.body, busqueda, this.page, this.size, this.columna, this.order).subscribe(
       data => {
         this.dataSource2 = data.datos;
         this.length = data.totalRegistros;
-        console.log(data);
-        console.log("asd", this.dataSource2);
+        /* console.log(data);
+        console.log("ComprobanteConPedido ->", this.dataSource2); */
         //this.size = data.totalRegistros;
       },
       (err: HttpErrorResponse) => {
@@ -161,30 +153,13 @@ export class TableComprobantesComponent implements OnInit {
     );
   }
 
- 
+  @Debounce(1000)  
   searchCbte() {
-    
     this.busqueda = this.buscarCbteInput.nativeElement.value;
-    this.page = 0;
-    this.columna = 'id';
     console.log(this.busqueda);
     if( this.busqueda === '' || this.busqueda == null){
-      this.getDetalles(this.busqueda, this.page, this.size, this.columna, this.order); // revisar ésto
+      this.getComprobantesConPedidos(this.busqueda, this.page, this.size, this.columna, this.order); // revisar ésto
     }
-    //this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
-  }
-
-  @Debounce(1000)  
-  searchLote() {
-
-    this.lote = this.buscarLoteInput.nativeElement.value;
-    if(this.lote === '')
-      this.lote =null;
-    this.page = 0;
-    this.columna = 'id';
-
-    this.getDetalles(this.busqueda, this.page, this.size, this.columna, this.order);
-
   }
 
   consultar(id){
@@ -216,7 +191,7 @@ export class TableComprobantesComponent implements OnInit {
     if (event.direction !== "")
         this.order = event.direction;
     
-    this.getDetalles(this.busqueda, this.page, this.size, this.columna, this.order);
+    this.getComprobantesConPedidos(this.busqueda, this.page, this.size, this.columna, this.order);
   }
 
 
@@ -224,6 +199,6 @@ export class TableComprobantesComponent implements OnInit {
       this.page = e.pageIndex;
       this.size = e.pageSize;
       
-      this.getDetalles(this.busqueda, this.page, this.size, this.columna, this.order);
+      this.getComprobantesConPedidos(this.busqueda, this.page, this.size, this.columna, this.order);
   }
 }
