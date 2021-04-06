@@ -45,19 +45,24 @@
                 <fuse-widget [@animate]="{value: '*',params:{y: '100%'}}" class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="25">
 
                     <!-- Front -->
-                    <div class="fuse-widget-front ">
-                        <div class="pl-16 pr-8 py-16 h-52" fxLayout="row" fxLayoutAlign="space-between center">
-                            <mat-form-field appearance="outline" fxFlex="20" class="ml-4 selector">
-                                <mat-label>A remitir</mat-label>
-                                <mat-select class="simplified font-size-16" aria-label="Change range">
+                    <div class="fuse-widget-front">
+                        <div fxLayout="row" fxLayoutAlign="space-between center">
+                            <mat-form-field appearance="outline" class="selector">
+                                <mat-label>Elegir</mat-label>
+                                <mat-select class="simplified font-size-16 selector" aria-label="Change range">
                                     <mat-option *ngFor="let estado of estados" [value]="estado.valor" (click)="setValor(estado.valor)">
                                         {{ estado.texto }}
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
-                            <!-- <button mat-icon-button fuseWidgetToggle aria-label="more">   !!! boton deshabilitado hasta que se defina que va atras
-                                        <mat-icon>more_vert</mat-icon>
-                            </button> -->
+                            <!-- <mat-form-field appearance="outline" fxFlex="20" class="ml-4 selectMostrar">
+                                <mat-label>Filtrar por</mat-label>
+                                <mat-select [(ngModel)]="selecccionDeEstado" name="food">
+                                    <mat-option (click)="getLotesPorEstado( estado.valor )" *ngFor="let estado of estados" [value]="estado.valor">
+                                        {{estado.vista}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field> -->
                         </div>
 
                         <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="center center">
@@ -246,7 +251,7 @@
                         <div class="p-16 border-top" fxLayout="row" fxLayoutAlign="start center">
                             <span class="h4 secondary-text text-truncate">
                                 <!-- {{widgets[3].widget4.data.extra.label}}: -->
-                                A definir que va aca
+                                
                             </span>
                             <span class="h4 ml-8">
                                 <!-- {{widgets[3].widget4.data.extra.count}} -->
