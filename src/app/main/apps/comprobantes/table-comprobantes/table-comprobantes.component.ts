@@ -33,10 +33,8 @@ export class TableComprobantesComponent implements OnInit {
   @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
   /*Comprobante (VTA-B00065-00004525 segun mejora#2), F. Entrega, 1er. Dirección, (+D), Localidad, Provincia, 1er. Cod., 1er. Artículo, (+A), Estado, Etapa, (+E) */
 
-/*  displayedColumns: string[] = ['Comprobante', 'Fecha-Entrega', 'priDireccion', ' cantDatosEntrega -1','Localidad', 'Provincia','priCod',
-                                  'priArtículo', cantArticulos -1, Estado, Etapa, 'cantEtapas -1' ]; */
-  displayedColumns: string[] = ['idComprobante', 'Comprobante', 'Fecha-Entrega', 'Tipo', 'NombreArticulo', 'priDireccion', 'priEtapa'];  
-  //displayedColumns: string[] = ['Comprobante', 'Fecha-Entrega', 'Tipo', 'idComprobante', 'cantArticulos', 'NombreArticulo', 'CantDirecEntrega', 'priDireccion', 'Provincia', 'Localidad', 'cantEtapa', 'priEtapa'];  
+  //Comprobante, fecha de entrega, direccion, articulo, etapa
+  displayedColumns: string[] = ['Comprobante', 'Fecha-Entrega', 'priDireccion', 'NombreArticulo', 'priEtapa'];  
   dataSource2: any;
 
   lote: string = null;

@@ -37,7 +37,7 @@ export class TableArticulosComponent implements OnInit {
   @ViewChild('buscarArticulo') buscarArticuloInput: ElementRef;
 
 
-  displayedColumns: string[] = ['comprobante', 'pedidoTipo','codigoArt', 'nombreArticulo', 'fechaDeEntrega', 'direccion', 'etapa'];  
+  displayedColumns: string[] = ['comprobante', 'fechaDeEntrega','codigoArt', 'nombreArticulo', 'direccion', 'etapa'];  
   dataSource2: any;
 
   lote: string = null;

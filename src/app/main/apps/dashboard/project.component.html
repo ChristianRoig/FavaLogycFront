@@ -47,7 +47,8 @@
                     <!-- Front -->
                     <div class="fuse-widget-front ">
                         <div class="pl-16 pr-8 py-16 h-52" fxLayout="row" fxLayoutAlign="space-between center">
-                            <mat-form-field>
+                            <mat-form-field appearance="outline" fxFlex="20" class="ml-4 selector">
+                                <mat-label>A remitir</mat-label>
                                 <mat-select class="simplified font-size-16" aria-label="Change range">
                                     <mat-option *ngFor="let estado of estados" [value]="estado.valor" (click)="setValor(estado.valor)">
                                         {{ estado.texto }}

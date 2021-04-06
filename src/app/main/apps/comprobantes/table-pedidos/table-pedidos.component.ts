@@ -35,8 +35,8 @@ export class TablePedidosComponent implements OnInit {
 
   @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
   @ViewChild('buscarLote') buscarLoteInput: ElementRef;
-
-  displayedColumns: string[] = ['idCbte', 'comprobante', 'pedidoTipo', 'nombreArticulo', 'fechaDeEntrega', 'direccion', 'etapa'];   
+//Comprobante, fecha de entrega, direccion, articulo, etapa
+  displayedColumns: string[] = ['comprobante', 'fechaDeEntrega', 'direccion', 'nombreArticulo', 'etapa'];   
   dataSource2: any;
 
   lote: string = null;

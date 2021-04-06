@@ -77,6 +77,30 @@ fuse-sidebar {
     padding-left: 0px;
 }
 
+.cantArticulos {
+    padding-left: 5px;
+    padding-right: 5px;
+    background-color: #039be6;
+    border-radius: 50%;
+    font-weight: bold;
+    color: white;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.estados {
+    padding: 4px;
+    font-weight: bold;
+    border-radius: 5px;
+    color: white;
+    background-color: #039be6;
+    text-transform: uppercase;
+    width: 80px;
+}
+
 @media (max-width: 768px) {
     .inputBusqueda {
         width: 400px;

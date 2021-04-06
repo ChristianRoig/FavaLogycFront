@@ -7,7 +7,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
-import { TableComprobantesSinRemitirService } from './table-comprobantes.service';
+import { TableComprobantesSinRemitirService } from './table-comprobantesSR.service';
 
 export interface Articulos {
   Id: number;
@@ -39,9 +39,9 @@ export interface BodyDetalle{
 }
 
 @Component({  
-  selector: 'app-table-comprobantes-sin-remitir',  
-  templateUrl: './table-comprobantes.component.html',
-  styleUrls: ['./table-comprobantes.component.scss']
+  selector: 'app-table-comprobantesSR',  
+  templateUrl: './table-comprobantesSR.component.html',
+  styleUrls: ['./table-comprobantesSR.component.scss']
 })
 
 export class TableComprobantesSinRemitirComponent implements OnInit {
@@ -49,7 +49,7 @@ export class TableComprobantesSinRemitirComponent implements OnInit {
   @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
   @ViewChild('buscarLote') buscarLoteInput: ElementRef;
 
-  displayedColumns: string[] = ['Comprobante', 'fechaDeEntrega', 'priDireccion', 'NombreArticulo', 'estadoCeDIS', 'priEtapa'];  
+  displayedColumns: string[] = ['Comprobante', 'cantArticulos', 'NombreArticulo', 'estadoCeDIS', 'priEtapa'];  
   dataSource2: any;
 
   lote: string = null;
