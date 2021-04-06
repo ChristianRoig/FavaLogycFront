@@ -101,6 +101,126 @@ fuse-sidebar {
     width: 80px;
 }
 
+.estadoInicial {
+    padding-left: 10px;
+    padding-right: 45px;
+    font-weight: bold;
+    border-radius: 5px;
+    color: white;
+    background-color: #03a9f4;
+    text-transform: uppercase;
+    width: 110px;
+    height: 20px;
+}
+
+.estadoTransporte {
+    padding-left: 10px;
+    padding-right: 45px;
+    font-weight: bold;
+    border-radius: 5px;
+    color: white;
+    background-color: #8bc34a;
+    text-transform: uppercase;
+    width: 110px;
+    height: 20px;
+}
+
+.estadoReingreso {
+    padding-left: 10px;
+    padding-right: 45px;
+    font-weight: bold;
+    border-radius: 5px;
+    color: white;
+    background-color: #7986cb;
+    text-transform: uppercase;
+    width: 110px;
+    height: 20px;
+}
+
+.estadoStandBy {
+    padding-left: 10px;
+    padding-right: 45px;
+    font-weight: bold;
+    border-radius: 5px;
+    color: black;
+    background-color: #fff176;
+    text-transform: uppercase;
+    width: 110px;
+    height: 20px;
+}
+
+.estadoAnulado {
+    padding-left: 10px;
+    padding-right: 45px;
+    font-weight: bold;
+    border-radius: 5px;
+    color: black;
+    background-color: #ff9800;
+    text-transform: uppercase;
+    width: 110px;
+    height: 20px;
+}
+
+.estadoDarsena {
+    padding-left: 10px;
+    padding-right: 45px;
+    font-weight: bold;
+    border-radius: 5px;
+    color: black;
+    background-color: #b2dfdb;
+    text-transform: uppercase;
+    width: 110px;
+    height: 20px;
+}
+
+.estadoDistribucion {
+    padding-left: 10px;
+    padding-right: 45px;
+    font-weight: bold;
+    border-radius: 5px;
+    color: black;
+    background-color: #aed581;
+    text-transform: uppercase;
+    width: 110px;
+    height: 20px;
+}
+
+.estadoEstanteria {
+    padding-left: 10px;
+    padding-right: 45px;
+    font-weight: bold;
+    border-radius: 5px;
+    color: black;
+    background-color: #b3e5fc;
+    text-transform: uppercase;
+    width: 110px;
+    height: 20px;
+}
+
+.estadoEnLote {
+    padding-left: 10px;
+    padding-right: 20px;
+    font-weight: bold;
+    border-radius: 5px;
+    color: white;
+    background-color: #4fc3f7;
+    text-transform: uppercase;
+    width: 110px;
+    height: 20px;
+}
+
+.estadoAremitir {
+    padding-left: 10px;
+    padding-right: 20px;
+    font-weight: bold;
+    border-radius: 5px;
+    color: black;
+    background-color: #dcedc8;
+    text-transform: uppercase;
+    width: 110px;
+    height: 20px;
+}
+
 @media (max-width: 768px) {
     .inputBusqueda {
         width: 400px;
