@@ -49,7 +49,7 @@ export class TableComprobantesSinRemitirComponent implements OnInit {
   @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
   @ViewChild('buscarLote') buscarLoteInput: ElementRef;
 
-  displayedColumns: string[] = ['Comprobante', 'cantArticulos', 'NombreArticulo', 'estadoCeDIS', 'priEtapa'];  
+  displayedColumns: string[] = ['Comprobante', 'fechaEntrega', 'NombreArticulo', 'cantArticulos', 'estadoCeDIS', 'priEtapa'];  
   dataSource2: any;
 
   lote: string = null;
