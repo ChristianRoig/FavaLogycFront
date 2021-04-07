@@ -19,7 +19,8 @@
             <th mat-header-cell *matHeaderCellDef style="width: 60px; padding: 15px !important;"> Comprobante </th>
             <td mat-cell *matCellDef="let element" class="dato" style="width: 60px; padding: 15px !important;"> {{ element.nroCbte }} </td>
         </ng-container>
-
+        <!-- "nroCbte": "B0003800043778",
+            "cantidadDeArticulos": 1 -->
         <ng-container matColumnDef="fechaEntrega" class="ml-24">
             <th mat-sort-header="fechaDeEntrega" mat-header-cell *matHeaderCellDef> Fecha Entrega </th>
             <td mat-cell *matCellDef="let element" class="pl-8"> 05/10/2021
@@ -31,17 +32,17 @@
         <ng-container matColumnDef="cantArticulos">
             <th mat-header-cell *matHeaderCellDef> Articulos </th>
             <td mat-cell *matCellDef="let element" class="dato pl-16">
-                <p class="cantArticulos">{{ element.cantArticulos }}</p>
+                <p class="cantArticulos">{{ element.cantidadDeArticulos }}</p>
             </td>
         </ng-container>
 
-        <ng-container matColumnDef="NombreArticulo">
+        <!--<ng-container matColumnDef="NombreArticulo">
             <th mat-sort-header="nombreArticulo" mat-header-cell *matHeaderCellDef> Artículo </th>
             <td mat-cell *matCellDef="let element" class="dato">
                 <span *ngIf="element.cantArticulos > 1" [matBadge]="'+' + (element.cantArticulos -1)" matBadgeOverlap="false">{{ element.primerCod }} - {{ element.priNombreArticulo }}</span>
                 <span *ngIf="element.cantArticulos <= 1">{{ element.primerCod }} - {{ element.priNombreArticulo }}</span>
             </td>
-        </ng-container>
+        </ng-container> -->
 
         <ng-container matColumnDef="estadoCeDIS">
             <th mat-sort-header="estadoCeDIS" mat-header-cell *matHeaderCellDef> Estado </th>
@@ -51,13 +52,13 @@
             </td>
         </ng-container>
 
-        <ng-container matColumnDef="priEtapa">
+        <!-- <ng-container matColumnDef="priEtapa">
             <th mat-sort-header="etapa" mat-header-cell *matHeaderCellDef> Etapa </th>
             <td mat-cell *matCellDef="let element">
                 <span *ngIf="element.cantEtapa > 1" [matBadge]="'+' + (element.cantEtapa -1)" matBadgeOverlap="false">{{ element.priEtapa }}</span>
                 <span *ngIf="element.cantEtapa <= 1"> {{ element.priEtapa }}</span>
             </td>
-        </ng-container>
+        </ng-container> -->
 
         <ng-container matColumnDef="seleccionar">
             <th mat-header-cell *matHeaderCellDef> Seleccionar </th>

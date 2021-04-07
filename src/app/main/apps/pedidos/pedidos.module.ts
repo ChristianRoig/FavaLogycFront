@@ -32,6 +32,21 @@ import { PedidosCrear1Service } from './pedidos-crear-1/pedidos-crear-1.service'
 import { PedidosCrear2Service } from './pedidos-crear-2/pedidos-crear-2.service';
 import { FiltrosService } from './pedidos-lista/filtros/filtros.service';
 
+
+//components
+import { ComprobantesListaComponent } from './comprobantes/comprobantes-lista/comprobantes-lista.component';
+import { TableComprobantesComponent } from './comprobantes/table-comprobantes/table-comprobantes.component';
+import { TableComprobantesSinRemitirComponent } from './comprobantes/table-comprobantes-sin-remitir/table-comprobantesSR.component';
+import { TableArticulosComponent } from './comprobantes/table-articulos/table-articulos.component';
+
+//services
+import { ComprobantesListaService } from './comprobantes/comprobantes-lista/comprobantes-lista.service';
+import { TableComprobantesService } from './comprobantes/table-comprobantes/table-comprobantes.service';
+import { TableComprobantesSinRemitirService } from './comprobantes/table-comprobantes-sin-remitir/table-comprobantesSR.service';
+import { TableArticulosService } from './comprobantes/table-articulos/table-articulos.service';
+import { TablePedidosComponent } from './comprobantes/table-pedidos/table-pedidos.component';
+import { TablePedidosService } from './comprobantes/table-pedidos/table-pedidos.service';
+
 const routes: Routes = [
     {
         path     : 'lista-articulos',
@@ -52,6 +67,10 @@ const routes: Routes = [
     {
         path     : 'crear-pedido2/:modo',
         component: PedidosCrear2Component
+    },
+    {
+        path     : 'lista-comprobantes',
+        component: ComprobantesListaComponent
     }
 ];
 
@@ -67,7 +86,12 @@ const routes: Routes = [
         PedidosCrear1Component,
         PedidosCrear2Component,
         AgregarDatosEntregaComponent,
-        FiltrosComponent
+        FiltrosComponent,
+        ComprobantesListaComponent,
+        TableComprobantesComponent,
+        TableComprobantesSinRemitirComponent,
+        TableArticulosComponent,
+        TablePedidosComponent
     ],
     imports     : [
         CommonModule,
@@ -87,7 +111,12 @@ const routes: Routes = [
         PedidosAnularService,
         PedidosCrear1Service,
         PedidosCrear2Service,
-        FiltrosService
+        FiltrosService,
+        ComprobantesListaService,
+        TableComprobantesService,
+        TableComprobantesSinRemitirService,
+        TableArticulosService,
+        TablePedidosService
     ]
 })
 

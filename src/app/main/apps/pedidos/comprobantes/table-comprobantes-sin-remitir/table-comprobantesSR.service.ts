@@ -29,7 +29,8 @@ export class TableComprobantesSinRemitirService
 
     getComprobantesSinRemitir( page, size, columna, order ): Observable<any> {
 
-        let ruta = `${BASE_URL}pedidos/pedidodetalle/sinremitir/comprobantes-sin-pedidos/${ page }/${ size }/${ columna }/${ order }`;
+        //let ruta = `${BASE_URL}pedidos/pedidodetalle/sinremitir/comprobantes-sin-pedidos/${ page }/${ size }/${ columna }/${ order }`;
+        let ruta = `${BASE_URL}pedidos/pedidodetalle/sinremitir`;
 
         return this._httpClient.get(ruta);
     }

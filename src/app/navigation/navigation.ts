@@ -22,6 +22,15 @@ export const navigation: FuseNavigation[] = [
                 type     : 'collapsable',
                 icon     : 'shopping_cart',
                 children : [
+                    
+                    {
+                        id       : 'comprobantes',
+                        title    : 'Comprobantes',
+                        type     : 'item',
+                        url       : '/apps/pedidos/lista-comprobantes',
+                        exactMatch: true
+                        
+                    },
                     {
                         id        : 'crear-pedido',
                         title     : 'Crear Pedido',
@@ -188,7 +197,7 @@ export const navigation: FuseNavigation[] = [
                         exactMatch: true
                     },
                 ]
-            },
+            }/* ,
             {
                 id       : 'dashboards',
                 title    : 'Comprobantes',
@@ -196,7 +205,7 @@ export const navigation: FuseNavigation[] = [
                 url       : '/apps/comprobantes/lista-comprobantes',
                 icon     : 'school',
                 
-            }
+            } */
         ]
     }
 ];
