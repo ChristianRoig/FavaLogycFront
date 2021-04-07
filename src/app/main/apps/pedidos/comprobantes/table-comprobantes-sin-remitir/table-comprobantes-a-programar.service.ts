@@ -22,7 +22,7 @@ export interface BodyDetalle{
   }
 
 @Injectable()
-export class TableComprobantesSinRemitirService
+export class TableComprobantesAprogramarService
 {
     constructor(
         private _httpClient: HttpClient) { }

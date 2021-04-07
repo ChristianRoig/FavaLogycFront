@@ -47,9 +47,12 @@
                     <!-- Front -->
                     <div class="fuse-widget-front">
                         <div fxLayout="row" fxLayoutAlign="space-between center">
-                            <mat-form-field class="selector">
-                                <mat-select class=" selector" aria-label="Change range">
-                                    <mat-option *ngFor="let estado of estados" [value]="estado.valor" (click)="setValor(estado.valor)">
+                            <mat-form-field class="sdasda">
+                                <!-- class="selector" -->
+                                <mat-select class="selector" aria-label="Change range" [value]="this.valorFijo">
+                                    <!--<mat-select class="selector" aria-label="Change range"> -->
+                                    <!-- [value]="estado.valor" -->
+                                    <mat-option *ngFor="let estado of estados" [value]="this.valorFijo" (click)="setValor(estado.valor)">
                                         {{ estado.texto }}
                                     </mat-option>
                                 </mat-select>

@@ -14,8 +14,8 @@ import { FuseSharedModule } from '@fuse/shared.module';
 import { FuseSidebarModule } from '@fuse/components';
 import { FuseWidgetModule } from '@fuse/components/widget/widget.module';
 
-import { ProjectDashboardComponent } from './project.component';
-import { ProjectDashboardService } from './project.service';
+import { ProjectDashboardComponent } from './tablero.component';
+import { TableroService } from './tablero.service';
 
 const routes: Routes = [
     {
@@ -50,10 +50,10 @@ const routes: Routes = [
         FuseWidgetModule
     ],
     providers   : [
-        ProjectDashboardService
+        TableroService
     ]
 })
-export class ProjectDashboardModule
+export class TableroModule
 {
 }
 

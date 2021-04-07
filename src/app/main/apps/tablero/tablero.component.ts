@@ -10,12 +10,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 
 //service
-import { ProjectDashboardService } from './project.service';
+import { TableroService } from './tablero.service';
 
 @Component({
-    selector     : 'project-dashboard',
-    templateUrl  : './project.component.html',
-    styleUrls    : ['./project.component.scss'],
+    selector     : 'app-tablero',
+    templateUrl  : './tablero.component.html',
+    styleUrls    : ['./tablero.component.scss'],
     encapsulation: ViewEncapsulation.None,
     animations   : fuseAnimations
 })
@@ -37,6 +37,7 @@ export class ProjectDashboardComponent implements OnInit {
 
     length: number = 0;
     mensaje: string;
+    valorFijo: string = 'A remitir';
 
     dateNow = Date.now();
   
@@ -52,11 +53,11 @@ export class ProjectDashboardComponent implements OnInit {
      * Constructor
      *
      * @param {FuseSidebarService} _fuseSidebarService
-     * @param {ProjectDashboardService} _projectDashboardService
+     * @param {TableroService} _tableroService
      */
     constructor (
         private _fuseSidebarService: FuseSidebarService,
-        private _projectDashboardService: ProjectDashboardService,
+        private _tableroService: TableroService,
         private _dialog: MatDialog
     )
     {
@@ -190,7 +191,7 @@ export class ProjectDashboardComponent implements OnInit {
     }
 
     getProyectos(){
-        this._projectDashboardService.getProjects().subscribe(
+        this._tableroService.getProjects().subscribe(
             data => {
               console.log("Projects ->", data);
               this.projects = data;
@@ -220,8 +221,8 @@ export class ProjectDashboardComponent implements OnInit {
 
     getWidgets(){
         //console.log( "dateNow",this.hoy);
-        //this._projectDashboardService.getWidgets().subscribe(
-        this._projectDashboardService.getWidgets().subscribe(
+        //this._tableroService.getWidgets().subscribe(
+        this._tableroService.getWidgets().subscribe(
             data => {
               console.log("Widgets ->", data);
               this.widgets = data;
@@ -250,8 +251,8 @@ export class ProjectDashboardComponent implements OnInit {
     }
     getResumen(){
         //console.log( "dateNow",this.hoy);
-        //this._projectDashboardService.getWidgets().subscribe(
-        this._projectDashboardService.getResumen().subscribe(
+        //this._tableroService.getWidgets().subscribe(
+        this._tableroService.getResumen().subscribe(
             data => {
               console.log("resumen ->", data.resumen);
               this.resumen = data.resumen; 
@@ -277,6 +278,7 @@ export class ProjectDashboardComponent implements OnInit {
             }
         );
     }
+    
 
     mostrarError(errStatus, titulo, mensaje){
         const dialogRef = this._dialog.open( ModalErrorComponent, { 

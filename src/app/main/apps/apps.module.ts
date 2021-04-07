@@ -39,7 +39,7 @@ const routes = [
     },
     {
         path        : '',
-        loadChildren: () => import('./dashboard/project.module').then(m => m.ProjectDashboardModule)
+        loadChildren: () => import('./tablero/tablero.module').then(m => m.TableroModule)
     }
     
     /* ,

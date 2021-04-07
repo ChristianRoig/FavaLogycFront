@@ -36,13 +36,13 @@ import { FiltrosService } from './pedidos-lista/filtros/filtros.service';
 //components
 import { ComprobantesListaComponent } from './comprobantes/comprobantes-lista/comprobantes-lista.component';
 import { TableComprobantesComponent } from './comprobantes/table-comprobantes/table-comprobantes.component';
-import { TableComprobantesSinRemitirComponent } from './comprobantes/table-comprobantes-sin-remitir/table-comprobantesSR.component';
+import { TableComprobantesAprogramarComponent } from './comprobantes/table-comprobantes-sin-remitir/table-comprobantes-a-programar.component';
 import { TableArticulosComponent } from './comprobantes/table-articulos/table-articulos.component';
 
 //services
 import { ComprobantesListaService } from './comprobantes/comprobantes-lista/comprobantes-lista.service';
 import { TableComprobantesService } from './comprobantes/table-comprobantes/table-comprobantes.service';
-import { TableComprobantesSinRemitirService } from './comprobantes/table-comprobantes-sin-remitir/table-comprobantesSR.service';
+import { TableComprobantesAprogramarService } from './comprobantes/table-comprobantes-sin-remitir/table-comprobantes-a-programar.service';
 import { TableArticulosService } from './comprobantes/table-articulos/table-articulos.service';
 import { TablePedidosComponent } from './comprobantes/table-pedidos/table-pedidos.component';
 import { TablePedidosService } from './comprobantes/table-pedidos/table-pedidos.service';
@@ -89,7 +89,7 @@ const routes: Routes = [
         FiltrosComponent,
         ComprobantesListaComponent,
         TableComprobantesComponent,
-        TableComprobantesSinRemitirComponent,
+        TableComprobantesAprogramarComponent,
         TableArticulosComponent,
         TablePedidosComponent
     ],
@@ -114,7 +114,7 @@ const routes: Routes = [
         FiltrosService,
         ComprobantesListaService,
         TableComprobantesService,
-        TableComprobantesSinRemitirService,
+        TableComprobantesAprogramarService,
         TableArticulosService,
         TablePedidosService
     ]

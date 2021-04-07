@@ -7,7 +7,7 @@ import { environment } from 'environments/environment';
 const BASE_URL = environment.server + environment.baseUrl;
 
 @Injectable()
-export class ProjectDashboardService {
+export class TableroService {
     /* projects: any[];
     widgets: any[]; */
     

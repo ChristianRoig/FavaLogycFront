@@ -7,7 +7,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
-import { TableComprobantesSinRemitirService } from './table-comprobantesSR.service';
+import { TableComprobantesAprogramarService } from './table-comprobantes-a-programar.service';
 
 export interface Articulos {
   Id: number;
@@ -39,12 +39,12 @@ export interface BodyDetalle{
 }
 
 @Component({  
-  selector: 'app-table-comprobantesSR',  
-  templateUrl: './table-comprobantesSR.component.html',
-  styleUrls: ['./table-comprobantesSR.component.scss']
+  selector: 'app-table-comprobantes-a-programar',  
+  templateUrl: './table-comprobantes-a-programar.component.html',
+  styleUrls: ['./table-comprobantes-a-programar.component.scss']
 })
 
-export class TableComprobantesSinRemitirComponent implements OnInit {
+export class TableComprobantesAprogramarComponent implements OnInit {
 
   @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
   @ViewChild('buscarLote') buscarLoteInput: ElementRef;
@@ -81,7 +81,7 @@ export class TableComprobantesSinRemitirComponent implements OnInit {
 
   constructor(private _router: Router, 
               private _fuseSidebarService: FuseSidebarService, 
-              private _tableComprobantesService: TableComprobantesSinRemitirService,
+              private _tableComprobantesAprogramarService: TableComprobantesAprogramarService,
               private _dialog: MatDialog ) { }
 
   ngOnInit(): void { 
@@ -90,7 +90,7 @@ export class TableComprobantesSinRemitirComponent implements OnInit {
   }
 
   getComprobantesSinRemitir( ){
-    this._tableComprobantesService.getComprobantesSinRemitir( this.page, this.size, this.columna, this.order).subscribe(
+    this._tableComprobantesAprogramarService.getComprobantesSinRemitir( this.page, this.size, this.columna, this.order).subscribe(
       data => {
         console.log("getComprobantesSinRemitir ->",data);
         this.dataSource2 = data.datos;
@@ -139,7 +139,7 @@ export class TableComprobantesSinRemitirComponent implements OnInit {
   }
 
   getComprobanteSinRemitir(){
-    this._tableComprobantesService.getComprobanteSinRemitir( this.busqueda, this.page, this.size, this.columna, this.order ).subscribe(
+    this._tableComprobantesAprogramarService.getComprobanteSinRemitir( this.busqueda, this.page, this.size, this.columna, this.order ).subscribe(
       data => {
         this.dataSource2 = data.datos;
         this.length = data.totalRegistros;
