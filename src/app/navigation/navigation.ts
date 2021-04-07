@@ -31,7 +31,7 @@ export const navigation: FuseNavigation[] = [
                     },
                     {
                         id        : 'lista-articulos',
-                        title     : 'Pedidos',
+                        title     : 'Pedidos (viejo)',
                         type      : 'item',
                         url       : '/apps/pedidos/lista-articulos',
                         exactMatch: true

@@ -34,7 +34,7 @@ export class TableComprobantesComponent implements OnInit {
   /*Comprobante (VTA-B00065-00004525 segun mejora#2), F. Entrega, 1er. Dirección, (+D), Localidad, Provincia, 1er. Cod., 1er. Artículo, (+A), Estado, Etapa, (+E) */
 
   //Comprobante, fecha de entrega, direccion, articulo, etapa
-  displayedColumns: string[] = ['Comprobante', 'Fecha-Entrega', 'priDireccion', 'NombreArticulo', 'priEtapa'];  
+  displayedColumns: string[] = ['Comprobante', 'Fecha-Entrega', 'priDireccion', 'NombreArticulo', 'priEtapa', 'seleccionar'];  
   dataSource2: any;
 
   lote: string = null;

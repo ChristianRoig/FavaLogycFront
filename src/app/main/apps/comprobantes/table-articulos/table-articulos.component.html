@@ -18,7 +18,9 @@
 
         <ng-container matColumnDef="comprobante">
             <th mat-header-cell *matHeaderCellDef style="width: 60px; padding: 15px !important;"> Comprobante </th>
-            <td mat-cell *matCellDef="let element" class="dato" style="width: 60px; padding: 15px !important;">{{ element.pedidoTipo }} -{{ element.nroCbte }} </td>
+            <td mat-cell *matCellDef="let element" class="dato" style="width: 250px; padding: 15px !important;">
+                {{ element.pedidoTipo }} - {{ element.nroCbte }}
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="codigoArt">
@@ -56,6 +58,13 @@
                 <p *ngIf="element.etapa ==='REINGRESADO'" class="h5 estadoReingresado">{{ element.etapa }}</p>
                 <p *ngIf="element.etapa ==='STAND BY'" class="h5 estadoStandBy">{{ element.etapa }}</p>
                 <p *ngIf="element.etapa ==='ANULADO'" class="h5 estadoAnulado">{{ element.etapa }}</p>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="seleccionar">
+            <th mat-header-cell *matHeaderCellDef> Seleccionar </th>
+            <td mat-cell class="example-button-row" *matCellDef="let element">
+                <button mat-stroked-button color="primary"> Abrir </button>
             </td>
         </ng-container>
 
