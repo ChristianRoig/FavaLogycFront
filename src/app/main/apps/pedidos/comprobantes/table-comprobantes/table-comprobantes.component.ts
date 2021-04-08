@@ -78,7 +78,7 @@ export class TableComprobantesComponent implements OnInit {
         this.dataSource2 = data.datos;
         this.length = data.totalRegistros;
         console.log(data);
-        /*console.log("asd", this.dataSource2); */
+        console.log("comprobantes con pedidos", this.dataSource2);
         //this.size = data.totalRegistros;
       },
       (err: HttpErrorResponse) => {
@@ -100,6 +100,11 @@ export class TableComprobantesComponent implements OnInit {
         }
       }
     );
+  }
+
+  abrir( nroCbte: number ){
+    let ruta = `apps/pedidos/ver-comprobante/${ nroCbte }`;
+    this._router.navigate([ ruta ]);
   }
 
   mostrarError(errStatus, titulo, mensaje){

@@ -68,7 +68,8 @@
         <ng-container matColumnDef="seleccionar">
             <th mat-header-cell *matHeaderCellDef> Seleccionar </th>
             <td mat-cell class="example-button-row" *matCellDef="let element">
-                <button mat-stroked-button color="primary"> Abrir </button>
+                <!-- (click)="abrir( element.idCbt )" -->
+                <button mat-stroked-button color="primary" (click)="abrir(element.nroCbte)"> Abrir </button>
             </td>
         </ng-container>
 

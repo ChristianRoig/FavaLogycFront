@@ -117,7 +117,7 @@ export class PedidosListaService
         if ( busqueda !== '' )
             buscar = `/${busqueda}`
 
-        let ruta = `${BASE_URL}pedidos/pedidodetalle/porcomprobanteoarticulo${buscar}/${page}/${size}/${columna}/${order}`;
+        let ruta = `${BASE_URL}pedidos/pedidodetalle/porcomprobanteoarticulo/${buscar}/${page}/${size}/${columna}/${order}`;
         
 
         return this._httpClient.post(ruta, body, {headers: headers});

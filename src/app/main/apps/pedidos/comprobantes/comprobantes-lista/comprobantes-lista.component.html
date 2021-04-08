@@ -38,7 +38,8 @@
         <!-- </div> -->
 
         <div class="fuse-card tabTables" style="max-width: 100%;">
-            <!-- fxLayout="column" fxFlex -->
+
+            <!-- <mat-tab-group (selectedTabChange)="tabChanged($event)"> -->
             <mat-tab-group>
                 <mat-tab label="Comprobantes a programar">
                     <app-table-comprobantes-a-programar></app-table-comprobantes-a-programar>
@@ -50,7 +51,8 @@
                     <app-table-pedidos></app-table-pedidos>
                 </mat-tab>
                 <mat-tab label="Articulos">
-                    <!-- (cantArt)="numero " -->
+                    <!-- <app-table-articulos [numero]="index"></app-table-articulos> -->
+                    <!-- <app-table-articulos *ngIf="this.index === 3" [numero]="index"></app-table-articulos> -->
                     <app-table-articulos></app-table-articulos>
                 </mat-tab>
             </mat-tab-group>

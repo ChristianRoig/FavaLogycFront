@@ -35,7 +35,7 @@ export class TablePedidosComponent implements OnInit {
 
   @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
   @ViewChild('buscarLote') buscarLoteInput: ElementRef;
-//Comprobante, fecha de entrega, direccion, articulo, etapa
+
   displayedColumns: string[] = ['comprobante', 'fechaDeEntrega', 'direccion', 'nombreArticulo', 'etapa', 'seleccionar'];   
   dataSource2: any;
 
@@ -93,7 +93,7 @@ export class TablePedidosComponent implements OnInit {
   getPedidos( ){
     this._tablePedidosServiceService.getPedidos( this.body, this.page, this.size, this.columna, this.order ).subscribe(
       data => {
-        console.log("data articulos de pedidos -> ", data);
+        console.log("data pedidos -> ", data);
         this.dataSource2 = data.datos;
         this.length = data.totalRegistros;
         //this.cantArt.emit( this.length ); //devuelvo el total de Articulos
@@ -165,6 +165,12 @@ export class TablePedidosComponent implements OnInit {
       }
     );
   }
+
+  abrir( idPedido: number ){
+    let ruta = `apps/pedidos/ver-pedido/${ idPedido }`;
+    this._router.navigate([ ruta ]);
+  }
+  
 
   @Debounce(1000)  
   searchCbte() {

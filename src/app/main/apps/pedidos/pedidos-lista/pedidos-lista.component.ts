@@ -142,9 +142,9 @@ export class PedidosListaComponent implements OnInit {
     this.columna = 'id';
   }
 
-  consultar(id){
-    let ruta = `apps/pedidos/ver-pedido/${id}`;
-    this._router.navigate([ruta]);
+  consultar( id ){
+    let ruta = `apps/pedidos/ver-pedido/${ id }`;
+    this._router.navigate([ ruta ]);
   }
 
 /*   anular(id){

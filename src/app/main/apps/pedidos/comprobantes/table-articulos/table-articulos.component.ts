@@ -32,7 +32,7 @@ export interface BodyDetalle{
 
 export class TableArticulosComponent implements OnInit {
 
-  //@Output() cantArt: EventEmitter<number>;
+  //@Input() numero: number;
 
   @ViewChild('buscarArticulo') buscarArticuloInput: ElementRef;
 
@@ -63,8 +63,8 @@ export class TableArticulosComponent implements OnInit {
     "hastaPedido" : "null",
     "idLote" : null
   }
-/* 
-  body: BodyDetalle = {
+  
+  /* body: BodyDetalle = {
     idTipo      : null,
     idTurno     : null,
     idOrigen    : null,
@@ -82,16 +82,30 @@ export class TableArticulosComponent implements OnInit {
   constructor(private _router: Router, 
               private _fuseSidebarService: FuseSidebarService, 
               private _tableArticulosService: TableArticulosService,
-              private _dialog: MatDialog ) { }
-
+              private _dialog: MatDialog ) {
+              }
+              
   ngOnInit(): void { 
-    this.getArticulosDePedidos( );
+   //console.log(this.numero);
+    this.getArticulosDePedidos();
+  }
+
+  /* verActivacion(){
+    if(this.numero === 3)
+      return true;
+    else
+      return false;
+  } */
+
+  abrir( idPedido: number ){
+    let ruta = `apps/pedidos/ver-pedido/${ idPedido }`;
+    this._router.navigate([ ruta ]);
   }
 
   getArticulosDePedidos( ){
     this._tableArticulosService.getArticulosDePedidos( this.body, this.page, this.size, this.columna, this.order ).subscribe(
       data => {
-        console.log("data articulos de pedidos -> ", data);
+        console.log("data articulos -> ", data);
         this.dataSource2 = data.datos;
         this.length = data.totalRegistros;
         //this.cantArt.emit( this.length ); //devuelvo el total de Articulos

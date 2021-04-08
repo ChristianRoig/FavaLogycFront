@@ -92,9 +92,9 @@ export class TableComprobantesAprogramarComponent implements OnInit {
   getComprobantesSinRemitir( ){
     this._tableComprobantesAprogramarService.getComprobantesSinRemitir( this.page, this.size, this.columna, this.order).subscribe(
       data => {
-        console.log("getComprobantesSinRemitir ->",data);
         this.dataSource2 = data.datos;
         this.length = data.totalRegistros;
+        console.log("comprobantes a programar ->",data.datos);
         /*console.log("asd", this.dataSource2); */
         //this.size = data.totalRegistros;
       },

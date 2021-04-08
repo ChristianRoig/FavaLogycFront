@@ -85,7 +85,8 @@
 
             <ng-container matColumnDef="Fecha-Entrega" class="dato">
                 <th mat-sort-header="fechaDeEntrega" mat-header-cell *matHeaderCellDef> Fecha Entrega </th>
-                <td mat-cell *matCellDef="let element" class="pl-16"> {{element.pedidoDomicilioEntrega.fechaDeEntrega | date:'shortDate'}} </td>
+                <td mat-cell *matCellDef="let element" class="pl-16"> {{element.pedidoDomicilioEntrega.fechaDeEntrega}} </td>
+                <!-- | date:'shortDate' -->
             </ng-container>
 
             <ng-container matColumnDef="Provincia">

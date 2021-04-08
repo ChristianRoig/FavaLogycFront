@@ -36,16 +36,18 @@ import { FiltrosService } from './pedidos-lista/filtros/filtros.service';
 //components
 import { ComprobantesListaComponent } from './comprobantes/comprobantes-lista/comprobantes-lista.component';
 import { TableComprobantesComponent } from './comprobantes/table-comprobantes/table-comprobantes.component';
-import { TableComprobantesAprogramarComponent } from './comprobantes/table-comprobantes-sin-remitir/table-comprobantes-a-programar.component';
+import { TableComprobantesAprogramarComponent } from './comprobantes/table-comprobantes-a-programar/table-comprobantes-a-programar.component';
 import { TableArticulosComponent } from './comprobantes/table-articulos/table-articulos.component';
+import { VerComprobanteComponent } from './comprobantes/ver-comprobante/ver-comprobante.component';
 
 //services
 import { ComprobantesListaService } from './comprobantes/comprobantes-lista/comprobantes-lista.service';
 import { TableComprobantesService } from './comprobantes/table-comprobantes/table-comprobantes.service';
-import { TableComprobantesAprogramarService } from './comprobantes/table-comprobantes-sin-remitir/table-comprobantes-a-programar.service';
+import { TableComprobantesAprogramarService } from './comprobantes/table-comprobantes-a-programar/table-comprobantes-a-programar.service';
 import { TableArticulosService } from './comprobantes/table-articulos/table-articulos.service';
 import { TablePedidosComponent } from './comprobantes/table-pedidos/table-pedidos.component';
 import { TablePedidosService } from './comprobantes/table-pedidos/table-pedidos.service';
+import { VerComprobanteService } from './comprobantes/ver-comprobante/ver-comprobante.service';
 
 const routes: Routes = [
     {
@@ -71,6 +73,10 @@ const routes: Routes = [
     {
         path     : 'lista-comprobantes',
         component: ComprobantesListaComponent
+    },
+    {
+        path     : 'ver-comprobante/:id',
+        component: VerComprobanteComponent
     }
 ];
 
@@ -91,7 +97,8 @@ const routes: Routes = [
         TableComprobantesComponent,
         TableComprobantesAprogramarComponent,
         TableArticulosComponent,
-        TablePedidosComponent
+        TablePedidosComponent,
+        VerComprobanteComponent
     ],
     imports     : [
         CommonModule,
@@ -116,7 +123,8 @@ const routes: Routes = [
         TableComprobantesService,
         TableComprobantesAprogramarService,
         TableArticulosService,
-        TablePedidosService
+        TablePedidosService,
+        VerComprobanteService
     ]
 })
 
