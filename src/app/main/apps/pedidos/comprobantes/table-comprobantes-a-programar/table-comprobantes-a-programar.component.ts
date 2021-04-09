@@ -168,6 +168,50 @@ export class TableComprobantesAprogramarComponent implements OnInit {
     );
   }
 
+  getPedidoDeArticuloSinRemitir( comprobante: string ){
+    this._tableComprobantesAprogramarService.getPedidoDeArticuloSinRemitir( comprobante ).subscribe(
+      data => {
+        this.dataSource2 = data.datos;
+        this.length = data.totalRegistros;
+        console.log("getPedidoDeArticuloSinRemitir ->", this.dataSource2);
+        
+        this.stringifyDatos();
+        this.navegarAcrearPedido2();
+      },
+      (err: HttpErrorResponse) => {
+        this.length = 0
+        if (err.error instanceof Error) {
+          console.log("Client-side error");
+        } else {
+          let errStatus = err.status
+          if (errStatus == 0){
+            let titulo = 'Error de Servidor';
+            let mensaje = "Por favor comunicarse con Sistemas";
+            this.mostrarError(errStatus, titulo, mensaje);
+          } else {
+            let titulo = 'Error al buscar un comprobante';
+            let mensaje = err.error.message.toString();
+            this.mensaje = mensaje;
+            this.mostrarError(errStatus, titulo, mensaje);
+          }
+        }
+      }
+    );
+    console.log(this.dataSource2);
+
+  }
+
+  stringifyDatos(){
+    localStorage.setItem('AddPedido',JSON.stringify(this.dataSource2)); //hago un stringify de los datos
+    localStorage.setItem('IdTipo',JSON.stringify(1));
+  }
+
+  navegarAcrearPedido2(){
+    let ruta = `apps/pedidos/crear-pedido2/0`;
+    this._router.navigate([ruta]);
+  }
+
+
   @Debounce(1000) 
   searchCbte() {
     this.busqueda = this.buscarCbteInput.nativeElement.value;

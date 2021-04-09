@@ -80,8 +80,10 @@ export class PedidosCrear1Component implements OnInit {
   }
 
   agregar(){
-    localStorage.setItem('AddPedido',JSON.stringify(this.selection));
-    localStorage.setItem('IdTipo',JSON.stringify(this.selectedTipo));
+    console.log("this.selection", this.selection);
+    console.log("this.selectedTipo", this.selectedTipo);
+    localStorage.setItem('AddPedido',JSON.stringify( this.selection ));
+    localStorage.setItem('IdTipo',JSON.stringify( this.selectedTipo ));
     
     let ruta = `apps/pedidos/crear-pedido2/0`;
 

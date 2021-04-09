@@ -167,6 +167,7 @@ export class TablePedidosComponent implements OnInit {
   }
 
   abrir( idPedido: number ){
+    console.log("idPedido",idPedido);
     let ruta = `apps/pedidos/ver-pedido/${ idPedido }`;
     this._router.navigate([ ruta ]);
   }

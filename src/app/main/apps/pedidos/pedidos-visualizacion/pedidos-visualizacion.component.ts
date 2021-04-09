@@ -54,6 +54,7 @@ export class PedidosVisualizacionComponent implements OnInit {
 
     this.subParametros = this.route.params.subscribe(params => {
       this.idCabecera = params['id'];
+      console.log(this.idCabecera);
     })
 
     this._service.getCabecera(this.idCabecera).subscribe(params => {

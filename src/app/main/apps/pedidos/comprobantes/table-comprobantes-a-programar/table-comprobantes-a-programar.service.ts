@@ -29,8 +29,8 @@ export class TableComprobantesAprogramarService
 
     getComprobantesSinRemitir( page, size, columna, order ): Observable<any> {
 
-        //let ruta = `${BASE_URL}pedidos/pedidodetalle/sinremitir/comprobantes-sin-pedidos/${ page }/${ size }/${ columna }/${ order }`;
-        let ruta = `${BASE_URL}pedidos/pedidodetalle/sinremitir`;
+        let ruta = `${BASE_URL}pedidos/pedidodetalle/sinremitir/comprobantes-sin-pedidos/${ page }/${ size }/${ columna }/${ order }`;
+        //let ruta = `${BASE_URL}pedidos/pedidodetalle/sinremitir`;
 
         return this._httpClient.get(ruta);
     }
@@ -42,6 +42,12 @@ export class TableComprobantesAprogramarService
             buscar = `/${busqueda}`
 
         let ruta = `${BASE_URL}pedidos/pedidodetalle/sinremitir/comprobantes-sin-pedidos/${ busqueda }/${ page }/${ size }/${ columna }/${ order }`;
+
+        return this._httpClient.get(ruta);
+    }
+
+    getPedidoDeArticuloSinRemitir( comprobante ): Observable<any> {
+        let ruta = `${BASE_URL}pedidos/pedidodetalle/sinremitir/1/${ comprobante }`;
 
         return this._httpClient.get(ruta);
     }

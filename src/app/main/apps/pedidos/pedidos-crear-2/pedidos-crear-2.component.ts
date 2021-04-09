@@ -99,7 +99,9 @@ export class PedidosCrear2Component implements OnInit {
     
     if(this.modo < 1) {
       this.titulo = 'Agregar Pedido'
-      this.dataSourceArticulos = JSON.parse(localStorage.getItem('AddPedido'))._selected;
+      //this.dataSourceArticulos = JSON.parse(localStorage.getItem('AddPedido'))._selected;
+      this.dataSourceArticulos = JSON.parse(localStorage.getItem('AddPedido'));
+      console.log(this.dataSourceArticulos);
       this.dataSourceDatosDeEntrega = this.listaDatosVacia;
       
       this.idTipoCbte = JSON.parse(localStorage.getItem('IdTipo'));
