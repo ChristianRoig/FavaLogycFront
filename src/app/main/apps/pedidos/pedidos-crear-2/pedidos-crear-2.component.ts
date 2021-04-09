@@ -327,7 +327,8 @@ export class PedidosCrear2Component implements OnInit {
   }
 
   volverIns(){
-    let ruta = `apps/pedidos/crear-pedido`;
+    //let ruta = `apps/pedidos/crear-pedido`;
+    let ruta = `apps/pedidos/lista-comprobantes`;
     localStorage.removeItem('AddPedido');
     this._router.navigate([ruta]);
   }

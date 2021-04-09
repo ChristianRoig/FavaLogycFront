@@ -52,7 +52,7 @@ export class PedidosVisualizacionComponent implements OnInit {
     this.columna = 'id';
     this.order = 'asc';
 
-    this.subParametros = this.route.params.subscribe(params => {
+    this.subParametros = this.route.params.subscribe( params => {
       this.idCabecera = params['id'];
       console.log(this.idCabecera);
     })
@@ -60,7 +60,7 @@ export class PedidosVisualizacionComponent implements OnInit {
     this._service.getCabecera(this.idCabecera).subscribe(params => {
       if(params){
         this.cabecera = params;
-        // console.log(this.cabecera)
+        console.log("cabecera", this.cabecera);
         this.buscarDetalle(this.page, this.size, this.columna, this.order);
       }
     },
@@ -82,10 +82,10 @@ export class PedidosVisualizacionComponent implements OnInit {
     });
   }
 
-  buscarDetalle(page, size, columna, order){
+  buscarDetalle(page, size, columna, order) {
     this._service.getDetalle(this.idCabecera,page, size, columna, order).subscribe(paramsArt => {
       if(paramsArt){
-        console.log(paramsArt.datos);
+        console.log("buscarDetalle", paramsArt.datos);
         this.dataSourceArticulos = paramsArt.datos;
         this.length = paramsArt.totalRegistros;
       }

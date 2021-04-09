@@ -131,7 +131,7 @@
 
             <ng-container matColumnDef="Fecha-Entrega">
                 <th mat-sort-header="fechaDeEntrega" mat-header-cell *matHeaderCellDef> Fecha Entrega </th>
-                <td mat-cell *matCellDef="let element"> {{element.pedidoDomicilioEntrega.fechaDeEntrega | date:'shortDate'}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.pedidoDomicilioEntrega.fechaDeEntrega}} </td>
             </ng-container>
             <ng-container matColumnDef="Cliente">
                 <th mat-sort-header="codigoCliente" mat-header-cell *matHeaderCellDef> Cliente </th>
