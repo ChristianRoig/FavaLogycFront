@@ -1,0 +1,27 @@
+@import "src/@fuse/scss/fuse";
+
+/* .divTabla {
+    position: relative;
+    height: 600px;
+    overflow: auto;
+} */
+
+table {
+    width: 100%;
+    overflow: auto;
+}
+
+.fuse-card {
+    width: 800px !important;
+    height: 700px !important;
+}
+
+.btnRemitir {
+    margin-left: 40px;
+    width: 140px;
+}
+
+.btnCancelar {
+    margin-right: 40px;
+    width: 140px;
+}

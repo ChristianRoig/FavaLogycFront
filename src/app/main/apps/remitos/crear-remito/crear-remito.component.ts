@@ -320,29 +320,23 @@ export class RemitosComponent implements OnInit {
     /* antes */
     localStorage.setItem('Remitir',JSON.stringify(this.selection));
     
-    let ruta = `apps/remitos/remitos-conf`;
-    this._router.navigate([ruta]);
+    /* let ruta = `apps/remitos/remitos-conf`;
+    this._router.navigate([ruta]); */
 
 
     /* ahora */
-    const dialogRef = this._dialog.open( ConfirmarRemitoComponent, { 
-      /* data: {
-        titulo: titulo,
-        mensaje: mensaje
-      }  */
-    });
+    const dialogRef = this._dialog.open( ConfirmarRemitoComponent, {});
 
     dialogRef.afterClosed()
       .subscribe( () => {
           /* if (errStatus != 0) {
 
-            this.resetFiltros();
-            this.getfiltros();
-            this.getPedidosSinRemitir(this.busqueda, this.columna, this.order);
+             let ruta = `apps/remitos/lista-remitos`;
+              this._router.navigate([ruta]); 
             
           } else {
+            this._router.navigate(['']);
           } */
-          this._router.navigate(['']);
         });
   }
 
