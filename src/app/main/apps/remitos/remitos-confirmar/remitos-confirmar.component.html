@@ -11,22 +11,25 @@
                     <div fxLayout="row">
 
                         <mat-form-field appearance="outline" fxFlex="50" class="mr-4">
+                            <mat-label>{{ filtroTransportes ? 'Transporte' : 'Cargando...'}}</mat-label>
+                            <select matNativeControl (change)="selectTransporte($event)" [disabled]="!filtroTransportes">
+                                <option [value]="0">Seleccionar Transporte</option>
+                                
+                                <option *ngFor="let transporte of filtroTransportes" [value]="transporte.id"
+                                    [selected]="selectedTransporte === transporte.id"> {{ transporte.nombre }}</option>
+                                <!-- [value]="transporte[0].nombre"  -->
+                            </select>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" fxFlex="50" class="ml-4">
                             <mat-label>{{ filtroDepositosCarga ? 'Depositos Carga' : 'Cargando...'}}</mat-label>
                             <select matNativeControl (change)="selectDepositoCarga($event)" [disabled]="!filtroDepositosCarga">
-                                <option [value]="0">Seleccionar Depósito Carga</option>
+                                <!-- <option [value]="0">Seleccionar Depósito Carga</option> -->
                                 <option *ngFor="let deposito of filtroDepositosCarga" [value]="deposito.id"
                                     [selected]="selectedDepositoCarga === deposito.id"> {{ deposito.nombre }}</option>
                             </select>
                         </mat-form-field>
 
-                        <mat-form-field appearance="outline" fxFlex="50" class="ml-4">
-                            <mat-label>{{ filtroTransportes ? 'Transporte' : 'Cargando...'}}</mat-label>
-                            <select matNativeControl (change)="selectTransporte($event)" [disabled]="!filtroTransportes">
-                                <option [value]="0">Seleccionar Transporte</option>
-                                <option *ngFor="let transporte of filtroTransportes" [value]="transporte.id"
-                                    [selected]="selectedTransporte === transporte.id"> {{ transporte.nombre }}</option>
-                            </select>
-                        </mat-form-field>
                     </div>
 
                     <div fxLayout="row">
@@ -34,7 +37,7 @@
                         <mat-form-field appearance="outline" fxFlex="50" class="mr-4">
                             <mat-label>{{ filtroTalonarios ? 'Talonarios' : 'Cargando...'}}</mat-label>
                             <select matNativeControl (change)="selectTalonario($event)" [disabled]="!filtroTalonarios">
-                                <option [value]="0">Seleccionar Talonario</option>
+                                <!-- <option [value]="0">Seleccionar Talonario</option> -->
                                 <option *ngFor="let talonario of filtroTalonarios" [value]="talonario.nroTalonario"
                                     [selected]="selectedTalonario === talonario.nroTalonario"> {{ talonario.alias }}</option>
                             </select>
@@ -93,6 +96,7 @@
                     </mat-checkbox>
                 </td>
             </ng-container>
+
             <ng-container matColumnDef="CodigoArticulo">
                 <th mat-header-cell *matHeaderCellDef> Cód. Artículo </th>
                 <td mat-cell *matCellDef="let element"> {{element.articulo.codigoArticulo}}</td>

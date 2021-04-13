@@ -6,7 +6,8 @@ import { Debounce } from 'app/shared/decorators/debounce';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 import { HttpErrorResponse } from '@angular/common/http';
-import { RemitoService } from './remitos.service';
+import { RemitoService } from './crear-remito.service';
+import { ConfirmarRemitoComponent } from './confirmar-remito/confirmar-remito.component';
 
 export interface Articulos {
 
@@ -40,9 +41,9 @@ const ELEMENT_DATA: Articulos[] = [
 ];
 
 @Component({  
-  selector: 'remitos',  
-  templateUrl: './remitos.component.html',
-  styleUrls: ['./remitos.component.scss']
+  selector: 'crear-remito',  
+  templateUrl: './crear-remito.component.html',
+  styleUrls: ['./crear-remito.component.scss']
 })
 
 export class RemitosComponent implements OnInit {
@@ -110,7 +111,7 @@ export class RemitosComponent implements OnInit {
 
     this.getfiltros();
     
-    this.getDetalle(this.busqueda, this.columna, this.order);
+    this.getPedidosSinRemitir( this.busqueda, this.columna, this.order );
   }
 
   resetFiltros(){
@@ -172,11 +173,11 @@ export class RemitosComponent implements OnInit {
 
   }
 
-  getDetalle(busqueda, columna, order){
-    let idTipo      :number =null;
-    let idDarsena   :number =null;
-    let desde       :string =null;
-    let hasta       :string =null;
+  getPedidosSinRemitir( busqueda, columna, order ){
+    let idTipo      :number = null;
+    let idDarsena   :number = null;
+    let desde       :string = null;
+    let hasta       :string = null;
 
     if (this.selectedTipo > 0 )
       idTipo = this.selectedTipo;
@@ -197,7 +198,7 @@ export class RemitosComponent implements OnInit {
     
     console.log(this.body);
 
-    this._loteCrearLoteService.getPedidoDetalle(this.body, busqueda, columna, order).subscribe(
+    this._loteCrearLoteService.getPedidosSinRemitir(this.body, busqueda, columna, order).subscribe(
       data => {
         this.dataSource2 = data.datos;
         console.log(this.dataSource2);
@@ -237,7 +238,7 @@ export class RemitosComponent implements OnInit {
 
             this.resetFiltros();
             this.getfiltros();
-            this.getDetalle(this.busqueda, this.columna, this.order);
+            this.getPedidosSinRemitir(this.busqueda, this.columna, this.order);
             
           } else {
             this._router.navigate(['']);
@@ -247,13 +248,20 @@ export class RemitosComponent implements OnInit {
 
   selectTipo(event: Event) {
     this.selectedTipo = (event.target as HTMLSelectElement).value;
-    this.getDetalle(this.busqueda, this.columna, this.order);
+    this.getPedidosSinRemitir(this.busqueda, this.columna, this.order);
   }
 
   selectDarsena(event: Event) {
     this.selectedDarsena = (event.target as HTMLSelectElement).value;
+    console.log( "this.selectedDarsena", this.selectedDarsena );
+    if( this.selectedDarsena === '0'){
+      this.displayedColumns = ['select', 'CodigoArticulo', 'Comprobante', 'Fecha-Entrega', 'Cliente', 'Localidad', 'Dir. de entrega', 'darsena'];
+    }
+    else{
+      this.displayedColumns = ['select', 'CodigoArticulo', 'Comprobante', 'Fecha-Entrega', 'Cliente', 'Localidad', 'Dir. de entrega'];
+    }
     console.log(this.selectedDarsena);
-    this.getDetalle(this.busqueda, this.columna, this.order);
+    this.getPedidosSinRemitir(this.busqueda, this.columna, this.order);
   }
 
   addEvent( tipo, evento ) {
@@ -288,12 +296,12 @@ export class RemitosComponent implements OnInit {
     }
 
 
-    this.getDetalle(this.busqueda, this.columna, this.order);
+    this.getPedidosSinRemitir(this.busqueda, this.columna, this.order);
 
   }
 
   buscar(){
-    this.getDetalle(this.busqueda,this.columna, this.order);
+    this.getPedidosSinRemitir(this.busqueda,this.columna, this.order);
   }
 
   @Debounce(1000)  
@@ -304,18 +312,39 @@ export class RemitosComponent implements OnInit {
     this.page = 0;
     this.columna = 'id';
 
-    this.getDetalle(this.busqueda, this.columna, this.order);
-
+    this.getPedidosSinRemitir(this.busqueda, this.columna, this.order);
   }
 
   remitir() {
 
+    /* antes */
     localStorage.setItem('Remitir',JSON.stringify(this.selection));
     
     let ruta = `apps/remitos/remitos-conf`;
     this._router.navigate([ruta]);
-  }
 
+
+    /* ahora */
+    const dialogRef = this._dialog.open( ConfirmarRemitoComponent, { 
+      /* data: {
+        titulo: titulo,
+        mensaje: mensaje
+      }  */
+    });
+
+    dialogRef.afterClosed()
+      .subscribe( () => {
+          /* if (errStatus != 0) {
+
+            this.resetFiltros();
+            this.getfiltros();
+            this.getPedidosSinRemitir(this.busqueda, this.columna, this.order);
+            
+          } else {
+          } */
+          this._router.navigate(['']);
+        });
+  }
 
   isAllSelected() {
     const numSelected = this.selection.selected.length;
@@ -355,9 +384,9 @@ export class RemitosComponent implements OnInit {
     this.columna = event.active;
     
     if (event.direction !== "")
-        this.order = event.direction;
+      this.order = event.direction;
     
-    this.getDetalle(this.busqueda, this.columna, this.order);
+    this.getPedidosSinRemitir(this.busqueda, this.columna, this.order);
   }
 
   activarFecha(){

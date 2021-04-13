@@ -88,6 +88,13 @@
                 <td mat-cell class="example-button-row pl-32" *matCellDef="let remito">{{ remito.pedidoDetalles.length }} </td>
             </ng-container>
 
+            <ng-container matColumnDef="direccion">
+                <th mat-header-cell mat-sort-header="direccion" *matHeaderCellDef> Direccion </th>
+                <td mat-cell class="example-button-row" *matCellDef="let remito">
+                    {{ remito.pedidoDetalles[0].pedidoDomicilioEntrega.direccion }}
+                </td>
+            </ng-container>
+
             <ng-container *ngIf="this.mostrarRemitos == true" matColumnDef="accion">
                 <th mat-header-cell class="pl-20" *matHeaderCellDef> Acción </th>
                 <td mat-cell class="example-button-row" *matCellDef="let remito">

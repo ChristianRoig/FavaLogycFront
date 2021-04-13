@@ -29,6 +29,7 @@
                             <select matNativeControl (change)="selectDarsena($event)" [disabled]="!filtroDarsena">
                                 <option *ngFor="let darsena of filtroDarsena" [value]="darsena.id"
                                     [selected]="selectedDarsena === darsena.id"> {{ darsena.nombre }}</option>
+                                <option *ngIf="this.filtroDarsena" [value]="0">TODAS</option> <!-- [value]="TODAS" -->
                             </select>
                         </mat-form-field>
 
@@ -66,7 +67,7 @@
                         </mat-form-field>
 
                         <button (click)="remitir()" class="btn" mat-raised-button color="primary" [matBadge]="selection.selected.length" [disabled]="selection.selected.length===0" matBadgeColor="warn">
-                            Remitir
+                            Crear Remito
                         </button>
 
                     </div>
@@ -119,6 +120,7 @@
                     </mat-checkbox>
                 </td>
             </ng-container>
+
             <ng-container matColumnDef="CodigoArticulo">
                 <th mat-sort-header="codigoArticulo" mat-header-cell *matHeaderCellDef> Cód. Artículo </th>
                 <td mat-cell *matCellDef="let element"> {{element.articulo.codigoArticulo}}</td>
@@ -133,21 +135,30 @@
                 <th mat-sort-header="fechaDeEntrega" mat-header-cell *matHeaderCellDef> Fecha Entrega </th>
                 <td mat-cell *matCellDef="let element"> {{element.pedidoDomicilioEntrega.fechaDeEntrega}} </td>
             </ng-container>
+
             <ng-container matColumnDef="Cliente">
                 <th mat-sort-header="codigoCliente" mat-header-cell *matHeaderCellDef> Cliente </th>
                 <td mat-cell *matCellDef="let element"> {{element.pedidoCabecera.pedidoCliente.codigo}} </td>
             </ng-container>
+
             <ng-container matColumnDef="Localidad">
                 <th mat-sort-header="codigoLocalidad" mat-header-cell *matHeaderCellDef> Localidad </th>
                 <td mat-cell *matCellDef="let element"> Mar del Plata </td>
             </ng-container>
+
             <ng-container matColumnDef="Dir. de entrega">
                 <th mat-sort-header="codigoDireccion" mat-header-cell *matHeaderCellDef> Dir. de entrega </th>
                 <td mat-cell *matCellDef="let element"> 25 de Mayo </td>
             </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <ng-container matColumnDef="darsena" *ngIf="this.selectedDarsena === '0'">
+                <th mat-sort-header="darsena" mat-header-cell *matHeaderCellDef> Darsena </th>
+                <td mat-cell *matCellDef="let element"> Darsena {{element.pedidoDomicilioEntrega.sysLocalidad.darsena.id}}</td>
+                <!-- {{element.pedidoDomicilioEntrega.sysLocalidad.darsena.id}} -->
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns "></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns; "></tr>
         </table>
     </div>
 </ng-template>

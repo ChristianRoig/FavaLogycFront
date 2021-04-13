@@ -110,7 +110,7 @@ export class ControlEstanteriaComponent implements OnInit {
 
   navegarAlote(){
     let ruta = `apps/control/lote-en/${ this.modo }/${ this.idLote }`;
-    this._router.navigate([ruta])
+    this._router.navigate([ruta]);
   }
 
   buscarLotePorNombre(nombre: string) {

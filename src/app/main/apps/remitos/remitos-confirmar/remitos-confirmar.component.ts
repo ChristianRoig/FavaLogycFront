@@ -43,11 +43,9 @@ export class RemitosConfirmarComponent implements OnInit {
 
   @ViewChild('buscarNombreLote') buscarNombreLote: ElementRef;
 
-
   subParametros: Subscription;
   
   displayedColumns: string[] = ['select', 'CodigoArticulo', 'Comprobante', 'Fecha-Entrega', 'Cliente', 'Localidad', 'Dir. de entrega'];
-
 
   dataSource2: any;
   cantidad: number;
@@ -55,7 +53,6 @@ export class RemitosConfirmarComponent implements OnInit {
   picker: Date;
   selection = new SelectionModel<any>(true, []);
   toAdd = new Array<number>();
-
   
   filtroTransportes: any;
   selectedTransporte: any = 0;
@@ -83,8 +80,9 @@ export class RemitosConfirmarComponent implements OnInit {
     console.log(this.dataSource2);
 
     this.cantidad = this.dataSource2.length;
-
     this.picker =  new Date();
+    //selecciono, por default, todas las filas
+    this.dataSource2.forEach(row => this.selection.select(row));
   }
   
   searchNombreLote() {
@@ -110,7 +108,6 @@ export class RemitosConfirmarComponent implements OnInit {
   }
 
   getfiltros(){
-
     this._serviceRemitosConfirmar.getAllDepostitosCarga().subscribe(params => {
       this.filtroDepositosCarga = params.datos;
     },
@@ -174,7 +171,6 @@ export class RemitosConfirmarComponent implements OnInit {
   }
 
   getUltNroTalonario(){
-
     this.filtroTalonarios.forEach( (talonario: any) => {
       
       console.log(talonario.nroTalonario.toString());
