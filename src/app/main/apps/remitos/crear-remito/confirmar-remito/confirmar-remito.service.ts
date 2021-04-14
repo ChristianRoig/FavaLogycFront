@@ -47,8 +47,11 @@ export class ConfirmarRemitoService
         let headers = new HttpHeaders({
             "Content-Type": "application/json"
         });
+
         console.log("body en service", body);
+
         let ruta = `${BASE_URL}pedidos/remito`;
+        
         return this._httpClient.post(ruta, body, {headers: headers});
     }
 }

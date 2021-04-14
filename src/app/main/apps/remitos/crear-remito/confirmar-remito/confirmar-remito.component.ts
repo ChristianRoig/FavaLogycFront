@@ -22,6 +22,13 @@ export interface PeriodicElement {
   Lote: number;
 }
 
+export interface BodyRemito {
+  idTransporte: number,
+  idDeposito: number,
+  idTalonario: number,
+  listaIdDetalle: number []
+}
+
 @Component({
   selector: 'app-confirmar-remito',
   templateUrl: './confirmar-remito.component.html',
@@ -33,7 +40,7 @@ export class ConfirmarRemitoComponent implements OnInit {
   dataSource2: any;
   
   selection = new SelectionModel<any>(true, []);
-  displayedColumns: string[] = ['select', 'CodigoArticulo', 'Comprobante', 'Fecha-Entrega', 'Cliente', 'Localidad', 'Dir. de entrega'];
+  toAdd = new Array<number>();
 
   filtroTransportes: any;
   selectedTransporte: any = 0;
@@ -46,7 +53,7 @@ export class ConfirmarRemitoComponent implements OnInit {
 
   proxCbte: string;
 
-  constructor(public dialogRef: MatDialogRef<any>,
+  constructor(public matDialogRef: MatDialogRef<ConfirmarRemitoComponent>,
               @Inject(MAT_DIALOG_DATA) public data:any,
               private _serviceRemitosConfirmar: ConfirmarRemitoService,
               private _dialog: MatDialog,
@@ -62,12 +69,13 @@ export class ConfirmarRemitoComponent implements OnInit {
     this.picker =  new Date(); */
 
     //selecciono, por default, todas las filas
-    this.dataSource2.forEach(row => this.selection.select(row));
+    //this.dataSource2.forEach(row => this.selection.select(row));
   }
 
   getfiltros(){
     this._serviceRemitosConfirmar.getAllDepostitosCarga().subscribe(params => {
       this.filtroDepositosCarga = params.datos;
+      this.selectedDepositoCarga = this.filtroDepositosCarga[0].id;
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
@@ -88,7 +96,8 @@ export class ConfirmarRemitoComponent implements OnInit {
     
     this._serviceRemitosConfirmar.getAllTalonarios().subscribe(params => {
       this.filtroTalonarios = params.datos;
-      this.proxCbte = '';
+      this.selectedTalonario = this.filtroTalonarios[0].nroTalonario;
+      this.getUltNroTalonario();;
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
@@ -129,13 +138,13 @@ export class ConfirmarRemitoComponent implements OnInit {
   }
 
   mostrarError(errStatus, titulo, mensaje){
-    const dialogRef = this._dialog.open( ModalErrorComponent, { 
+    const matDialogRef = this._dialog.open( ModalErrorComponent, { 
       data: {
         titulo: titulo,
         mensaje: mensaje
       } 
     });
-    dialogRef.afterClosed()
+    matDialogRef.afterClosed()
       .subscribe( () => {
         if (errStatus != 0) {  
           
@@ -167,7 +176,7 @@ export class ConfirmarRemitoComponent implements OnInit {
       console.log(talonario.nroTalonario.toString());
       console.log(this.selectedTalonario);
 
-      if ( talonario.nroTalonario.toString() === this.selectedTalonario ) {
+      if ( talonario.nroTalonario.toString() == this.selectedTalonario ) {
         this.proxCbte = talonario.ultimoId;
         
       } else {
@@ -199,7 +208,7 @@ export class ConfirmarRemitoComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.Id + 1}`;
   }
 
-  /* remitir(){
+  remitir(){
     console.log(this.dataSource2);
     for (let elemento of this.dataSource2){
       this.toAdd.push(elemento.id);
@@ -244,6 +253,6 @@ export class ConfirmarRemitoComponent implements OnInit {
   navegarAlistaRemitos(){
     let ruta = `apps/remitos/lista-remitos`;
     this._router.navigate([ruta]);
-  } */
+  }
 
 }

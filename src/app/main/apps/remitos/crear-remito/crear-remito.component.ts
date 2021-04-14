@@ -51,7 +51,7 @@ export class RemitosComponent implements OnInit {
   @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
   @ViewChild('buscarLote') buscarLoteInput: ElementRef;
 
-  displayedColumns: string[] = ['select', 'CodigoArticulo', 'Comprobante', 'Fecha-Entrega', 'Cliente', 'Localidad', 'Dir. de entrega'];
+  displayedColumns: string[] = ['select', 'comprobante', 'articulo', 'fechaEntrega', 'cliente', 'direcEntrega'];
   dataSource = ELEMENT_DATA;  
   dataSource2: any;
   selection = new SelectionModel<any>(true, []);
@@ -255,10 +255,10 @@ export class RemitosComponent implements OnInit {
     this.selectedDarsena = (event.target as HTMLSelectElement).value;
     console.log( "this.selectedDarsena", this.selectedDarsena );
     if( this.selectedDarsena === '0'){
-      this.displayedColumns = ['select', 'CodigoArticulo', 'Comprobante', 'Fecha-Entrega', 'Cliente', 'Localidad', 'Dir. de entrega', 'darsena'];
+      this.displayedColumns = ['select', 'comprobante', 'articulo', 'fechaEntrega', 'cliente', 'direcEntrega', 'darsena'];
     }
     else{
-      this.displayedColumns = ['select', 'CodigoArticulo', 'Comprobante', 'Fecha-Entrega', 'Cliente', 'Localidad', 'Dir. de entrega'];
+      this.displayedColumns = ['select', 'comprobante', 'articulo', 'fechaEntrega', 'cliente', 'direcEntrega'];
     }
     console.log(this.selectedDarsena);
     this.getPedidosSinRemitir(this.busqueda, this.columna, this.order);

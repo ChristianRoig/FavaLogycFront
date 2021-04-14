@@ -83,6 +83,7 @@ export class RemitosConfirmarComponent implements OnInit {
     this.picker =  new Date();
     //selecciono, por default, todas las filas
     this.dataSource2.forEach(row => this.selection.select(row));
+    
   }
   
   searchNombreLote() {
@@ -98,8 +99,8 @@ export class RemitosConfirmarComponent implements OnInit {
   
   selectTalonario(event: Event) {
     this.selectedTalonario = (event.target as HTMLSelectElement).value;
-    this.getUltNroTalonario();
     console.log("this.selectedTalonario",this.selectedTalonario);
+    this.getUltNroTalonario();
   }
   
   selectDepositoCarga(event: Event) {
@@ -130,6 +131,7 @@ export class RemitosConfirmarComponent implements OnInit {
     
     this._serviceRemitosConfirmar.getAllTalonarios().subscribe(params => {
       this.filtroTalonarios = params.datos;
+      console.log(this.filtroTalonarios);
       this.proxCbte = '';
     },
     (err: HttpErrorResponse) => {

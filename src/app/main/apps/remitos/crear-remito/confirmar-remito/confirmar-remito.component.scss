@@ -1,19 +1,25 @@
-@import "src/@fuse/scss/fuse";
-
-/* .divTabla {
-    position: relative;
-    height: 600px;
-    overflow: auto;
-} */
-
+/* @import "src/@fuse/scss/fuse";
 table {
     width: 100%;
     overflow: auto;
 }
 
 .fuse-card {
-    width: 800px !important;
-    height: 700px !important;
+    width: 500px !important;
+    height: 600px !important;
+    background: #ffffff !important;
+}
+
+.selector {
+    height: 50px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.botones {
+    width: 100%;
+    height: 40px;
+    justify-content: space-between;
 }
 
 .btnRemitir {
@@ -24,4 +30,57 @@ table {
 .btnCancelar {
     margin-right: 40px;
     width: 140px;
+} */
+
+@import "src/@fuse/scss/fuse";
+.contact-form-dialog {
+    @include media-breakpoint('xs') {
+        width: 100%;
+    }
+    @include media-breakpoint('gt-xs') {
+        width: 400px;
+    }
+    .mat-dialog-container {
+        padding: 0;
+        .mat-toolbar {
+            flex: 1 0 auto;
+            min-height: initial;
+        }
+        .toolbar-bottom {
+            height: auto;
+        }
+    }
+    .dialog-content-wrapper {
+        max-height: 85vh;
+        display: flex;
+        flex-direction: column;
+        background: red !important;
+    }
 }
+
+.divBotones {
+    justify-content: space-around !important;
+}
+
+.btn {
+    width: 100px;
+}
+
+.formClass {
+    height: 400px;
+}
+
+.titulo {
+    background: #039be6;
+    color: white;
+    height: 40px;
+    width: 100%;
+    padding: 30px;
+    padding-bottom: 30px;
+    border-radius: 5px;
+}
+
+
+/* .primerDiv {
+    background: red !important;
+} */
