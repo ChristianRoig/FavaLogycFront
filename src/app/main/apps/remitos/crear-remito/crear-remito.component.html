@@ -66,6 +66,10 @@
                             <mat-icon matSuffix>search</mat-icon>
                         </mat-form-field>
 
+                        <button (click)="getPedidosSinRemitir()" class="btn" mat-raised-button color="primary" [disabled]="!this.busqueda">
+                            Buscar
+                        </button>
+
                         <button (click)="remitir()" class="btn" mat-raised-button color="primary" [matBadge]="selection.selected.length" [disabled]="selection.selected.length===0" matBadgeColor="warn">
                             Crear Remito
                         </button>
@@ -77,8 +81,8 @@
 
 
 
-            <div fxLayout="row">
-                <ng-container *ngIf="this.length > 0; then hasDetalle; else notHasDetalle"></ng-container>
+            <div fxLayout="row ">
+                <ng-container *ngIf="this.length> 0; then hasDetalle; else notHasDetalle"></ng-container>
             </div>
 
 

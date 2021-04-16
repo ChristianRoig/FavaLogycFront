@@ -111,7 +111,7 @@ export class RemitosComponent implements OnInit {
 
     this.getfiltros();
     
-    this.getPedidosSinRemitir( this.busqueda, this.columna, this.order );
+    this.getPedidosSinRemitir( );
   }
 
   resetFiltros(){
@@ -169,11 +169,9 @@ export class RemitosComponent implements OnInit {
         }
       }
     })
-
-
   }
 
-  getPedidosSinRemitir( busqueda, columna, order ){
+  getPedidosSinRemitir(  ){
     let idTipo      :number = null;
     let idDarsena   :number = null;
     let desde       :string = null;
@@ -198,7 +196,7 @@ export class RemitosComponent implements OnInit {
     
     console.log(this.body);
 
-    this._loteCrearLoteService.getPedidosSinRemitir(this.body, busqueda, columna, order).subscribe(
+    this._loteCrearLoteService.getPedidosSinRemitir(this.body, this.busqueda, this.columna, this.order).subscribe(
       data => {
         this.dataSource2 = data.datos;
         console.log(this.dataSource2);
@@ -238,7 +236,7 @@ export class RemitosComponent implements OnInit {
 
             this.resetFiltros();
             this.getfiltros();
-            this.getPedidosSinRemitir(this.busqueda, this.columna, this.order);
+            this.getPedidosSinRemitir();
             
           } else {
             this._router.navigate(['']);
@@ -248,7 +246,7 @@ export class RemitosComponent implements OnInit {
 
   selectTipo(event: Event) {
     this.selectedTipo = (event.target as HTMLSelectElement).value;
-    this.getPedidosSinRemitir(this.busqueda, this.columna, this.order);
+    this.getPedidosSinRemitir();
   }
 
   selectDarsena(event: Event) {
@@ -261,7 +259,7 @@ export class RemitosComponent implements OnInit {
       this.displayedColumns = ['select', 'comprobante', 'articulo', 'fechaEntrega', 'cliente', 'direcEntrega'];
     }
     console.log(this.selectedDarsena);
-    this.getPedidosSinRemitir(this.busqueda, this.columna, this.order);
+    this.getPedidosSinRemitir();
   }
 
   addEvent( tipo, evento ) {
@@ -294,25 +292,19 @@ export class RemitosComponent implements OnInit {
           break;
       }
     }
-
-
-    this.getPedidosSinRemitir(this.busqueda, this.columna, this.order);
-
+    this.getPedidosSinRemitir();
   }
 
   buscar(){
-    this.getPedidosSinRemitir(this.busqueda,this.columna, this.order);
+    this.getPedidosSinRemitir();
   }
 
   @Debounce(1000)  
   searchCbte() {
 
     this.busqueda = this.buscarCbteInput.nativeElement.value;
-
-    this.page = 0;
-    this.columna = 'id';
-
-    this.getPedidosSinRemitir(this.busqueda, this.columna, this.order);
+    if( this.busqueda === '' || this.busqueda == null)
+      this.busqueda = null;
   }
 
   remitir() {
@@ -376,7 +368,7 @@ export class RemitosComponent implements OnInit {
     if (event.direction !== "")
       this.order = event.direction;
     
-    this.getPedidosSinRemitir(this.busqueda, this.columna, this.order);
+    this.getPedidosSinRemitir();
   }
 
   activarFecha(){
