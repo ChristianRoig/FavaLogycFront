@@ -15,12 +15,10 @@ import { FuseSidebarModule } from '@fuse/components';
 import { RemitosComponent } from './crear-remito/crear-remito.component';
 import { ListaRemitosComponent } from './lista-remitos/lista-remitos.component';
 import { VerRemitoComponent } from './lista-remitos/ver-remito/ver-remito.component';
-import { RemitosConfirmarComponent } from './remitos-confirmar/remitos-confirmar.component';
 import { ConfirmarRemitoComponent } from './crear-remito/confirmar-remito/confirmar-remito.component';
 
 //services
 import { RemitoService } from './crear-remito/crear-remito.service';
-import { RemitosConfirmarService } from './remitos-confirmar/remitos-confirmar.service';
 import { ListaRemitosService } from './lista-remitos/lista-remitos.service';
 import { VerRemitoService } from './lista-remitos/ver-remito/ver-remito.service';
 import { ConfirmarRemitoService } from './crear-remito/confirmar-remito/confirmar-remito.service';
@@ -38,20 +36,19 @@ const routes: Routes = [
         path     : 'ver-remito/:id',
         component: VerRemitoComponent
     },
-    {
+    /* {
         path     : 'remitos-conf',
         component: RemitosConfirmarComponent //borrar
     },
     {
         path     : 'confirmar-remito',
         component: ConfirmarRemitoComponent // este va
-    } 
+    } */ 
 ];
 
 @NgModule({
     declarations: [
         RemitosComponent,
-        RemitosConfirmarComponent,//borrar
         ConfirmarRemitoComponent,
         ListaRemitosComponent,
         VerRemitoComponent
@@ -68,7 +65,6 @@ const routes: Routes = [
     ],
     providers   : [
         RemitoService,
-        RemitosConfirmarService,// borrar
         ConfirmarRemitoService,
         ListaRemitosService,
         VerRemitoService

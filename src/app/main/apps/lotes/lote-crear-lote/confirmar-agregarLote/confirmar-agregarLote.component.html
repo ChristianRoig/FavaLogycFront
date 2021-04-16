@@ -1,0 +1,46 @@
+<div class="dialog-content-wrapper" class="primerDiv">
+    <div fxLayout="row">
+        <mat-toolbar matDialogTitle class="mat-accent m-0">
+            <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center" class="titulo">
+                <span class="title dialog-title">Cargar datos y confirmar lote</span>
+            </mat-toolbar-row>
+        </mat-toolbar>
+    </div>
+
+    <div mat-dialog-content class="pb-0 m-0" fusePerfectScrollbar>
+        <form class="formClass">
+            <div fxLayout="row" class="mb-8" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Nombre Lote</mat-label>
+                    <input #buscarNombreLote (keyup)="searchNombreLote()" matInput value="" placeholder="Nombre del Lote">
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row" class="mb-8" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Fecha</mat-label>
+                    <input matInput disabled value="{{this.picker | date:'shortDate'}}">
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row" class="mb-8" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Cantidad de Articulos</mat-label>
+                    <input matInput disabled type="number" value="{{this.cantidadArticulos}}">
+                </mat-form-field>
+            </div>
+        </form>
+    </div>
+
+    <div mat-dialog-actions class="m-0 divBotones" fxLayout="row" fxLayoutAlign="end center">
+
+        <button (click)="crearLote()" [disabled]="!this.nombreLote" mat-raised-button class="btn" color="accent" aria-label="SAVE">
+            Crear Lote
+        </button>
+
+        <button mat-raised-button class="btn" (click)="matDialogRef.close()" aria-label="Delete">
+            Cancelar
+        </button>
+
+    </div>
+</div>

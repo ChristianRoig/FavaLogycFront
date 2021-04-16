@@ -5,26 +5,18 @@ import { environment } from 'environments/environment';
 
 const BASE_URL = environment.server + environment.baseUrl;
 
+export interface BodyRemito {
+    idTransporte: number,
+    idDeposito: number,
+    idTalonario: number,
+    listaIdDetalle: number []
+  }
+
 @Injectable()
-export class LoteAgregarLoteService
+export class ConfirmarAgregarLoteService
 {
     constructor(
-        private _httpClient: HttpClient){
-    }
-
-
-    getCabecera(id): Observable<any> {   
-
-        let ruta = `${BASE_URL}pedidos/pedidocabecera/${id}`;
-        // console.log(ruta);
-        return this._httpClient.get(ruta);
-    }
-
-    getDetalle(id, page, size, columna, order): Observable<any> {   
-        let ruta = `${BASE_URL}pedidos/pedidodetalle/cabecera/${id}/${page}/${size}/${columna}/${order}`;
-        // console.log(ruta);
-        return this._httpClient.get(ruta);
-    }
+        private _httpClient: HttpClient) { }
 
     postLote(listaIdPedidos: Array<number>, comentario: string): Observable<any>{
         
@@ -44,4 +36,5 @@ export class LoteAgregarLoteService
         return this._httpClient.post(ruta,body,{headers:headers});
     }
 
+    
 }

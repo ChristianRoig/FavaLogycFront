@@ -62,7 +62,8 @@ export class ConfirmarRemitoComponent implements OnInit {
   ngOnInit(): void {
     this.getfiltros();
 
-    this.dataSource2 = JSON.parse(localStorage.getItem('Remitir'))._selected;
+    //this.dataSource2 = JSON.parse(localStorage.getItem('Remitir'))._selected;
+    this.dataSource2 = this.data.selection._selected;
     console.log(this.dataSource2);
 
     /* this.cantidad = this.dataSource2.length;
@@ -211,7 +212,7 @@ export class ConfirmarRemitoComponent implements OnInit {
   remitir(){
     console.log(this.dataSource2);
     for (let elemento of this.dataSource2){
-      this.toAdd.push(elemento.id);
+      this.toAdd.push(elemento.idDetalle);
     }   
     let idTransporte = parseInt(this.selectedTransporte, 10);
     let idTalonario = parseInt(this.selectedTalonario, 10);

@@ -7,7 +7,7 @@
         </mat-toolbar>
     </div>
 
-    <div mat-dialog-content class="p-24 pb-0 m-0" fusePerfectScrollbar>
+    <div mat-dialog-content class="pb-0 m-0" style="width: 100%;" fusePerfectScrollbar>
         <form class="formClass">
             <div fxLayout="row" class="mb-8" fxLayoutAlign="start start">
                 <mat-form-field appearance="outline" fxFlex>
@@ -57,13 +57,13 @@
 
     </div>
 
-    <div mat-dialog-actions class="m-0 p-16 divBotones" fxLayout="row" fxLayoutAlign="end center">
+    <div mat-dialog-actions class="m-0 divBotones" fxLayout="row" fxLayoutAlign="end center">
 
         <button mat-raised-button (click)="remitir()" class="btn" [disabled]="!this.selectedTransporte" color="accent" aria-label="SAVE">
             Remitir
         </button>
 
-        <button mat-raised-button class="save-button" (click)="matDialogRef.close()" aria-label="Delete">
+        <button mat-raised-button class="btn" (click)="matDialogRef.close() " aria-label="Delete ">
             Cancelar
         </button>
 

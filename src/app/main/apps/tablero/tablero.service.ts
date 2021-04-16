@@ -27,7 +27,6 @@ export class TableroService {
     
 /* ----------------------------------------------------------------------------------------------------------------------- */
     getProjects( ): Observable<any> {
-        console.log("llegue al service");
         let ruta = `http://localhost:3000/proyectos`; 
     
         return this._httpClient.get(ruta);

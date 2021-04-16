@@ -1,0 +1,77 @@
+<div class="dialog-content-wrapper" class="primerDiv">
+    <div fxLayout="row">
+        <mat-toolbar matDialogTitle class="mat-accent">
+            <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center" class="titulo">
+                <span class="title dialog-title" style="width: 100%;">Confirmar orden distribución</span>
+            </mat-toolbar-row>
+        </mat-toolbar>
+    </div>
+
+    <div mat-dialog-content class="p-24 pb-0 m-0" fusePerfectScrollbar>
+        <form class="formClass">
+            <div fxLayout="row" class="mb-8" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Nombre Lote</mat-label>
+                    <input #buscarNombreLote matInput value="{{ this.nombreOrden }}" placeholder="Nombre del Lote">
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row" class="mb-8" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>{{ filtroTransportes ? 'Transporte' : 'Cargando...'}}</mat-label>
+                    <select matNativeControl (change)="selectTransporte($event)" [disabled]="!filtroTransportes">
+                        <option [value]="0">Seleccionar Transporte</option>
+                        <option *ngFor="let transporte of filtroTransportes" [value]="transporte.id"
+                        [selected]="selectedTransporte === transporte.id"> 
+                        {{ transporte.nombre }}
+                    </option>
+                </select>
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row" class="mb-8" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>{{ filtroTurnos ? 'Turnos' : 'Cargando...'}}</mat-label>
+                    <select matNativeControl (change)="selectTurno($event)" [disabled]="!filtroTurnos">
+                        <option *ngFor="let turno of filtroTurnos" [value]="turno.id"
+                        [selected]="selectedTurno === turno.id">
+                            {{ turno.nombre }}
+                        </option>
+                          </select>
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row" class="mb-8" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>{{ filtroLocalidades ? 'Localidades' : 'Cargando...'}}</mat-label>
+                    <select matNativeControl (change)="selectLocalidad($event)" [disabled]="!filtroLocalidades">
+                        <option *ngFor="let localidad of filtroLocalidades" [value]="localidad.codigoPostal"
+                        [selected]="selectedLocalidad === localidad.codigoPostal"> 
+                            {{ localidad.nombre }}
+                        </option>
+                    </select>
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row" class="mb-8" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Cantidad de remitos</mat-label>
+                    <input matInput disabled type="number" value="{{ this.cantRemitos }}">
+                </mat-form-field>
+            </div>
+        </form>
+
+    </div>
+
+    <div mat-dialog-actions class="m-0 p-16 divBotones" fxLayout="row" fxLayoutAlign="end center">
+
+        <button mat-raised-button (click)="crearOrden()" class="btn" color="accent" aria-label="SAVE">
+            Crear
+        </button>
+
+        <button mat-raised-button class="btn" (click)="matDialogRef.close()" aria-label="Delete">
+            Cancelar
+        </button>
+
+    </div>
+</div>

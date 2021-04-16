@@ -239,10 +239,15 @@ export class VerLoteComponent implements OnInit {
         }
       }
     }); 
-    let ruta = `apps/lotes/lista-lotes`;
-    this._router.navigate([ruta]);
+    this.esperarYnavegar();
   }
 
+  esperarYnavegar(){
+    setTimeout(() => {                          
+      let ruta = `apps/lotes/lista-lotes`;
+      this._router.navigate([ruta]);
+    }, 1000);
+  }
   
 
   sacarDelLote(){

@@ -316,28 +316,25 @@ export class RemitosComponent implements OnInit {
   }
 
   remitir() {
-
-    /* antes */
-    localStorage.setItem('Remitir',JSON.stringify(this.selection));
-    
-    /* let ruta = `apps/remitos/remitos-conf`;
-    this._router.navigate([ruta]); */
-
-
-    /* ahora */
-    const dialogRef = this._dialog.open( ConfirmarRemitoComponent, {});
+    let errStatus;
+    let dialogRef = this._dialog.open( ConfirmarRemitoComponent, {
+      data: {
+        selection: this.selection
+      }
+    });
 
     dialogRef.afterClosed()
-      .subscribe( () => {
-          /* if (errStatus != 0) {
+    .subscribe( () => {    // definir!!!!!!
+      /* let ruta = `apps/remitos/lista-remitos`;
+      this._router.navigate([ruta]);  */
 
-             let ruta = `apps/remitos/lista-remitos`;
-              this._router.navigate([ruta]); 
-            
-          } else {
-            this._router.navigate(['']);
-          } */
-        });
+      /* if (errStatus != 0) { //ver el errorStatus
+          let ruta = `apps/remitos/lista-remitos`;
+          this._router.navigate([ruta]); 
+      } else {
+        this._router.navigate(['']);
+      } */
+      });
   }
 
   isAllSelected() {
@@ -360,7 +357,6 @@ export class RemitosComponent implements OnInit {
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.Id + 1}`;
   }
-
 
   /**
    * Toggle sidebar open

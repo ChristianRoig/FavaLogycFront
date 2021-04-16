@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef, MatDialogModule  } from '@angular/material/dialog';
-import { LoteAgregarLoteComponent } from '../agregar-lote.component';
+import {MAT_DIALOG_DATA, MatDialogRef, MatDialog  } from '@angular/material/dialog';
+import { ConfirmarAgregarLoteComponent } from '../confirmar-agregarLote/confirmar-agregarLote.component';
 
 @Component({
   selector: 'app-modal-desea-imprimir',
@@ -8,7 +8,7 @@ import { LoteAgregarLoteComponent } from '../agregar-lote.component';
 })
 export class ModalDeseaImprimirLoteComponent implements OnInit {
 
-  constructor(public dialogRef: MatDialogRef<LoteAgregarLoteComponent>,
+  constructor(public dialogRef: MatDialogRef<ConfirmarAgregarLoteComponent>,
     @Inject(MAT_DIALOG_DATA) public data:any) { }
 
   ngOnInit(): void {

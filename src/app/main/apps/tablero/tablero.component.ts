@@ -172,7 +172,6 @@ export class ProjectDashboardComponent implements OnInit {
      * On init
      */
     ngOnInit(): void {
-        console.log("entre a project");
 
         this.getProyectos();
         this.getWidgets();
