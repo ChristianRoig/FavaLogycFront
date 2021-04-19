@@ -29,6 +29,7 @@ import { LoginModule } from './main/pages/login/login.module';
 import { LoginComponent } from './main/pages/login/login.component';
 import { ProjectDashboardComponent } from './main/apps/tablero/tablero.component';
 
+
 const appRoutes: Routes = [
     
     {
@@ -75,7 +76,9 @@ const appRoutes: Routes = [
         SampleModule,
         PagesModule,
         SharedModule,
-        LoginModule
+        LoginModule,
+
+
     ],
     providers: [
         SonidoService

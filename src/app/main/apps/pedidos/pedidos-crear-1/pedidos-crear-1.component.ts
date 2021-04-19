@@ -93,14 +93,71 @@ export class PedidosCrear1Component implements OnInit {
   searchCbte() {
 
     this.cbte = this.buscarCbte.nativeElement.value;
-
+    if (this.cbte.length > 0){
+      let cantCaracteres = 8;
+      this.cbte = this.adaptarValorDeBusqueda(this.cbte, cantCaracteres);
+    }
   }
   
   searchPuntoVenta() {
-
     this.puntoVenta = this.buscarPuntoVenta.nativeElement.value;
-
+    if(this.puntoVenta.length > 0){
+      let cantCaracteres = 6;
+      this.puntoVenta = this.adaptarValorDeBusqueda( this.puntoVenta, cantCaracteres);
+    }
   }
+
+  adaptarValorDeBusqueda(palabra: string, cantCaracteres: number){
+    let newStr: string = "";
+    //console.log("palabra.length", palabra.length);
+    if(palabra.length <= cantCaracteres){     //si tiene menor de 6 caracteres
+        for (let i = 0; i <= palabra.length; i++) {
+            if(palabra.charAt(i) !== "0"){      //mientras que el char sea distinto de 0
+                newStr += palabra.charAt(i);    //guardo el valor el la variable
+            }
+        }
+      //console.log("newString",newStr);
+      let num = cantCaracteres - newStr.length;
+      let h = 0;
+      let stringRetorno = "";
+      if(cantCaracteres == 6){
+        stringRetorno = newStr.charAt(0);
+        h =1 ;
+      }
+      for(let i = 0; i < num; i++){
+          stringRetorno += "0";
+      }
+      for( h; h <= newStr.length; h++){
+          stringRetorno += newStr.charAt(h);
+      }
+      stringRetorno = stringRetorno.toLocaleUpperCase();
+      //console.log("stringRetorno", stringRetorno);
+
+      return stringRetorno;
+    }
+  }
+ /*  adaptarValorDeBusqueda(palabra: string, cantCaracteres: number){
+    let newStr: string = "";
+    console.log("this.puntoVenta.length", this.puntoVenta.length);
+    if(this.puntoVenta.length <= cantCaracteres){     //si tiene menor de 6 caracteres
+        for (let i = 0; i <= this.puntoVenta.length; i++) {
+            if(this.puntoVenta.charAt(i) !== "0"){      //mientras que el char sea distinto de 0
+                newStr += this.puntoVenta.charAt(i);    //guardo el valor el la variable
+            }
+        }
+      console.log("newString",newStr);
+      let num = cantCaracteres - newStr.length;
+      let stringRetorno = newStr.charAt(0);
+      for(let i = 0; i < num; i++){
+          stringRetorno += "0";
+      }
+      for( let h = 1; h <= newStr.length; h++){
+          stringRetorno += newStr.charAt(h);
+      }
+      this.puntoVenta = stringRetorno.toLocaleUpperCase();
+      console.log("this.puntoVenta", this.puntoVenta);
+    }
+  } */
 
   getfiltros(){
     this._pedidosListaService.getAllTipos().subscribe(params => {

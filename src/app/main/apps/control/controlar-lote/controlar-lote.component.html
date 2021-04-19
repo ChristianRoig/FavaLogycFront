@@ -3,28 +3,28 @@
 
     <div contenido class="content" fxLayout="row" fxLayoutAlign="center">
 
-        <div class="my-24" style="width: 100%;">
+        <div style="width: 100%;">
 
             <div fxLayout="row" class="controlesBusquedaF">
+                <div fxLayout="row" class="inputs">
+                    <mat-form-field appearance="outline" class="inputBusqueda">
+                        <mat-label>Código de Barras</mat-label>
+                        <input #buscarCodigoBarras class="text-uppercase" (keyup)="searchCodigoBarras()" matInput value="" placeholder="Ingrese un Código de Barras">
+                        <mat-icon matSuffix>search</mat-icon>
+                    </mat-form-field>
 
-                <mat-form-field appearance="outline" class="inputBusqueda">
-                    <mat-label>Código de Barras</mat-label>
-                    <input #buscarCodigoBarras class="text-uppercase" (keyup)="searchCodigoBarras()" matInput value="" placeholder="Ingrese un Código de Barras">
-                    <mat-icon matSuffix>search</mat-icon>
-                </mat-form-field>
-
-                <mat-form-field appearance="outline" class="inputBusqueda">
-                    <mat-label>CUPA</mat-label>
-                    <input #buscarCUPA class="text-uppercase" (keyup)="searchCUPA()" matInput value="" placeholder="Ingrese un CUPA">
-                    <mat-icon matSuffix>search</mat-icon>
-                </mat-form-field>
+                    <mat-form-field appearance="outline" class="inputBusqueda">
+                        <mat-label>CUPA</mat-label>
+                        <input #buscarCUPA class="text-uppercase" (keyup)="searchCUPA()" matInput value="" placeholder="Ingrese un CUPA">
+                        <mat-icon matSuffix>search</mat-icon>
+                    </mat-form-field>
+                </div>
                 <div class="botonesBusqueda">
                     <button mat-raised-button class="btn" color="primary" (click)="controlarEtapaArticulo()">Controlar</button>
 
                     <button mat-raised-button class="btn" color="warn" (click)="toggle()">Eliminar</button>
                 </div>
             </div>
-
 
             <div [@esconder]="funcionEsconder" class="botonesBusqueda" style="width: 100%;">
                 <mat-form-field appearance="outline" class="inputBusquedaBorrar">
@@ -40,7 +40,7 @@
             <!--  <mat-label class="cardControl">Control exitoso</mat-label>
             </div> -->
 
-
+            <mat-label class="ml-24 mt-16">Articulos a controlar</mat-label>
             <app-tabla-retractil *ngIf="this.articulos" [arregloDeDetalles]='this.articulos'></app-tabla-retractil>
         </div>
 
