@@ -379,9 +379,9 @@ export class AgregarDatosEntregaComponent implements OnInit{
     }
 
     addEvent( evento ) {
-  
+
       if (evento.value) {
-        let fecha = evento.value._i.year+"-"+(evento.value._i.month+1)+"-"+evento.value._i.date;
+        let fecha = evento.value._i.date+"/"+(evento.value._i.month+1)+"/"+evento.value._i.year;
         console.log(fecha);
 
         this.picker = fecha;   

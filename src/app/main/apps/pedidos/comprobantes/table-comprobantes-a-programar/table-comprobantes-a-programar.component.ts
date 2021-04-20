@@ -202,7 +202,8 @@ export class TableComprobantesAprogramarComponent implements OnInit {
   }
 
   stringifyDatos(){
-    localStorage.setItem('AddPedido',JSON.stringify(this.dataSource2)); //hago un stringify de los datos
+
+    localStorage.setItem('AddPedidoC',JSON.stringify(this.dataSource2)); //hago un stringify de los datos
     localStorage.setItem('IdTipo',JSON.stringify(1));
   }
 

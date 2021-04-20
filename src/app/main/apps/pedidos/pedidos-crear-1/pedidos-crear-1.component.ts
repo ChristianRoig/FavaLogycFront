@@ -136,28 +136,6 @@ export class PedidosCrear1Component implements OnInit {
       return stringRetorno;
     }
   }
- /*  adaptarValorDeBusqueda(palabra: string, cantCaracteres: number){
-    let newStr: string = "";
-    console.log("this.puntoVenta.length", this.puntoVenta.length);
-    if(this.puntoVenta.length <= cantCaracteres){     //si tiene menor de 6 caracteres
-        for (let i = 0; i <= this.puntoVenta.length; i++) {
-            if(this.puntoVenta.charAt(i) !== "0"){      //mientras que el char sea distinto de 0
-                newStr += this.puntoVenta.charAt(i);    //guardo el valor el la variable
-            }
-        }
-      console.log("newString",newStr);
-      let num = cantCaracteres - newStr.length;
-      let stringRetorno = newStr.charAt(0);
-      for(let i = 0; i < num; i++){
-          stringRetorno += "0";
-      }
-      for( let h = 1; h <= newStr.length; h++){
-          stringRetorno += newStr.charAt(h);
-      }
-      this.puntoVenta = stringRetorno.toLocaleUpperCase();
-      console.log("this.puntoVenta", this.puntoVenta);
-    }
-  } */
 
   getfiltros(){
     this._pedidosListaService.getAllTipos().subscribe(params => {

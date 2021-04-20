@@ -18,11 +18,13 @@
                     <ng-container *ngFor="let elemento of element.Detalle">
                         <div style="width: 100%; display: inline-flex; margin-bottom: 10px; padding-left: 10px; ">
                             <mat-label style="width: 10%;">
-                                <mat-checkbox class="example-margin" [checked]="elemento.Checks" [disabled]="true"></mat-checkbox>
+                                <!-- <mat-checkbox class="example-margin" [checked]="elemento.Checks" [disabled]="true"></mat-checkbox> -->
+                                <mat-icon *ngIf="elemento.Checks" class="active-icon green-600">check</mat-icon>
+                                <mat-icon *ngIf="!elemento.Checks" class="active-icon red-500">close</mat-icon>
                             </mat-label>
-                            <mat-label style="width: 60%;">{{elemento.Nomb_de_Parte}}</mat-label>
-                            <mat-label style="width: 30%;">{{elemento.Identificador}}</mat-label>
-                            <mat-label style="width: 30%;">{{elemento.CUPA}}</mat-label>
+                            <mat-label style="width: 30%;" class="subTabla">{{elemento.Nomb_de_Parte}}</mat-label>
+                            <mat-label style="width: 30%;" class="subTabla">{{elemento.Identificador}}</mat-label>
+                            <mat-label style="width: 10%;" class="subTabla">{{elemento.CUPA}}</mat-label>
                         </div>
                     </ng-container>
                 </div>
@@ -35,3 +37,10 @@
     </tr>
     <tr mat-row *matRowDef="let row; columns: [ 'expandedDetail']" class="example-detail-row"></tr>
 </table>
+<!-- <ng-container matColumnDef="checkTransporte">
+                <th mat-header-cell *matHeaderCellDef> Chequeo </th>
+                <td mat-cell class="example-button-row pl-16" *matCellDef="let articulo">
+                    <mat-icon *ngIf="articulo.checkTransporte" class="active-icon green-600">check</mat-icon>
+                    <mat-icon *ngIf="!articulo.checkTransporte" class="active-icon red-500">close</mat-icon>
+                </td>
+            </ng-container> -->

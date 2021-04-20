@@ -1,4 +1,4 @@
-import {Component, ViewEncapsulation, OnInit, ElementRef, ViewChild} from '@angular/core';
+import {Component, ViewEncapsulation, OnInit, ElementRef, ViewChild, Renderer2 } from '@angular/core';
 import { Debounce } from 'app/shared/decorators/debounce';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -14,6 +14,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { HttpErrorResponse } from '@angular/common/http';
 import { ControlarLoteService } from './controlar-lote.service';
+import { MatButton } from '@angular/material/button';
 
 /**
  * @title Basic use of `<table mat-table>`
@@ -44,6 +45,7 @@ export class ControlarLoteComponent implements OnInit {
   @ViewChild('buscarCUPA') buscarCUPAInput: ElementRef;
   @ViewChild('buscarCodigoBarras') buscarCodigoBarrasInput: ElementRef;
   @ViewChild('eliminaCupa') eliminaCupaInput: ElementRef;
+  @ViewChild('btnRef') buttonRef: MatButton;
     
   /* displayedColumns: string[] = ['check', 'nombreArt', 'codArt', 'etapa', 'cant','codBarra', 'cupa'];
   dataSource2: any; */
@@ -193,16 +195,28 @@ export class ControlarLoteComponent implements OnInit {
 
 
   @Debounce(1000) 
-  searchCodigoBarras() {
-    this.codigoBarras = this.buscarCodigoBarrasInput.nativeElement.value;
-    //this.buscarCUPAInput.nativeElement.focus();
-  }  
+  searchCodigoBarras( ) {
+    
 
+    this.codigoBarras = this.buscarCodigoBarrasInput.nativeElement.value;
+    this.codigoBarras = this.codigoBarras.toLocaleUpperCase();
+  }  
   @Debounce(1000) 
   searchCUPA() {
     this.cupa = this.buscarCUPAInput.nativeElement.value;
-
+    this.cupa = this.cupa.toLocaleUpperCase();
   }
+
+  saltarAcupa(e){
+    if(e.key === "Enter")
+      this.buscarCUPAInput.nativeElement.focus();
+  }
+
+  saltarAbotonControlar(e){
+    if (e.key === "Enter")
+      this.buttonRef.focus();
+  }
+
 
   resetCampos(){
     this.buscarCodigoBarrasInput.nativeElement.value = '';

@@ -99,9 +99,14 @@ export class PedidosCrear2Component implements OnInit {
     
     if(this.modo < 1) {
       this.titulo = 'Agregar Pedido'
-      //this.dataSourceArticulos = JSON.parse(localStorage.getItem('AddPedido'))._selected;
-      this.dataSourceArticulos = JSON.parse(localStorage.getItem('AddPedido'));
-      console.log(this.dataSourceArticulos);
+
+      this.dataSourceArticulos = JSON.parse(localStorage.getItem('AddPedidoC'));//asi anda desde comprobantes a programar
+      console.log("this.dataSourceArticulos",this.dataSourceArticulos);
+      if(this.dataSourceArticulos == null){
+        this.dataSourceArticulos = JSON.parse(localStorage.getItem('AddPedido'))._selected;//asi me anda desde pedido-crear1
+        console.log(this.dataSourceArticulos);
+      }
+      
       this.dataSourceDatosDeEntrega = this.listaDatosVacia;
       
       this.idTipoCbte = JSON.parse(localStorage.getItem('IdTipo'));
@@ -158,15 +163,17 @@ export class PedidosCrear2Component implements OnInit {
   }
 
   agregar(){
-    this._service.postPedidos(this.dataSourceDatosDeEntrega.datos, 1, this.dataSourceDatosDeEntrega.datos[0].listaPedidoDetalle[0].numeroCbte).subscribe(data => {
-      console.log(data);
-      // this.dataSourceDatosDeEntrega = params;
 
-      let ruta = `apps/pedidos/lista-articulos`;
-      localStorage.removeItem('AddPedido');
-      localStorage.removeItem('datoEntrega');
-      localStorage.removeItem('IsTipo');
-      this._router.navigate([ruta]);
+    this._service.postPedidos(this.dataSourceDatosDeEntrega.datos, 1, this.dataSourceDatosDeEntrega.datos[0].listaPedidoDetalle[0].numeroCbte)
+      .subscribe(data => {
+        console.log(data);
+        // this.dataSourceDatosDeEntrega = params;
+  
+        let ruta = `apps/pedidos/lista-articulos`;
+        localStorage.removeItem('AddPedido');
+        localStorage.removeItem('datoEntrega');
+        localStorage.removeItem('IsTipo');
+        this._router.navigate([ruta]);
     },
     (err: HttpErrorResponse) => {
       

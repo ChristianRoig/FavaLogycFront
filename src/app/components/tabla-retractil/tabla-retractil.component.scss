@@ -43,6 +43,17 @@
             margin-left: 10px !important;
         }
         
+        .active-icon {
+            border-radius: 50%;
+        }
+        
+        .subTabla {
+            background: #E0F7FA;
+            height: 30px;
+            padding-top: 5px;
+            padding-left: 10px;
+        }
+        
         @media (max-width: 768px) {
             td.mat-cell {
                 padding-left: 6px !important;

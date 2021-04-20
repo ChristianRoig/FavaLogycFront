@@ -9,18 +9,18 @@
                 <div fxLayout="row" class="inputs">
                     <mat-form-field appearance="outline" class="inputBusqueda">
                         <mat-label>Código de Barras</mat-label>
-                        <input #buscarCodigoBarras class="text-uppercase" (keyup)="searchCodigoBarras()" matInput value="" placeholder="Ingrese un Código de Barras">
+                        <input #buscarCodigoBarras (keydown)="saltarAcupa($event)" (keyup)="searchCodigoBarras()" matInput value="" placeholder="Ingrese un Código de Barras">
                         <mat-icon matSuffix>search</mat-icon>
                     </mat-form-field>
 
                     <mat-form-field appearance="outline" class="inputBusqueda">
                         <mat-label>CUPA</mat-label>
-                        <input #buscarCUPA class="text-uppercase" (keyup)="searchCUPA()" matInput value="" placeholder="Ingrese un CUPA">
+                        <input #buscarCUPA id="inputCupa" (keyup)="searchCUPA()" (keydown)="saltarAbotonControlar($event)" matInput value="" placeholder="Ingrese un CUPA">
                         <mat-icon matSuffix>search</mat-icon>
                     </mat-form-field>
                 </div>
                 <div class="botonesBusqueda">
-                    <button mat-raised-button class="btn" color="primary" (click)="controlarEtapaArticulo()">Controlar</button>
+                    <button mat-raised-button #btnRef="matButton" class="btn" color="primary" (click)="controlarEtapaArticulo()">Controlar</button>
 
                     <button mat-raised-button class="btn" color="warn" (click)="toggle()">Eliminar</button>
                 </div>
