@@ -95,7 +95,9 @@ export class PedidosCrear1Component implements OnInit {
     this.cbte = this.buscarCbte.nativeElement.value;
     if (this.cbte.length > 0){
       let cantCaracteres = 8;
-      this.cbte = this.adaptarValorDeBusqueda(this.cbte, cantCaracteres);
+      //this.cbte = this.adaptarValorDeBusqueda(this.cbte, cantCaracteres);
+      this.cbte = this.adaptar(this.cbte, cantCaracteres);
+      console.log("this.cbte", this.cbte);
     }
   }
   
@@ -103,11 +105,35 @@ export class PedidosCrear1Component implements OnInit {
     this.puntoVenta = this.buscarPuntoVenta.nativeElement.value;
     if(this.puntoVenta.length > 0){
       let cantCaracteres = 6;
-      this.puntoVenta = this.adaptarValorDeBusqueda( this.puntoVenta, cantCaracteres);
+      this.puntoVenta = this.adaptar( this.puntoVenta, cantCaracteres);
     }
   }
 
-  adaptarValorDeBusqueda(palabra: string, cantCaracteres: number){
+  adaptar(palabra: string, cantCaracteres: number){
+    if(palabra.length < cantCaracteres){
+      if(cantCaracteres == 8){
+        while(palabra.length < 8){
+          palabra = "0"+palabra;
+        }
+        console.log("palabra", palabra);
+        return palabra;
+      }
+      if(cantCaracteres == 6){
+        let palabraFinal = palabra.charAt(0);
+        console.log("asd", palabraFinal);
+        palabra = palabra.substring(1);//saco el primer caracter de la cadena
+        console.log("la puta palabra cortada", palabra);
+        while(palabra.length < 5){
+          palabra = "0" + palabra;
+        }
+        palabraFinal += palabra;
+        console.log("palabraFinal", palabraFinal);
+        return palabraFinal; 
+      }
+    }
+  }
+
+  /* adaptarValorDeBusqueda(palabra: string, cantCaracteres: number){
     let newStr: string = "";
     //console.log("palabra.length", palabra.length);
     if(palabra.length <= cantCaracteres){     //si tiene menor de 6 caracteres
@@ -135,7 +161,7 @@ export class PedidosCrear1Component implements OnInit {
 
       return stringRetorno;
     }
-  }
+  } */
 
   getfiltros(){
     this._pedidosListaService.getAllTipos().subscribe(params => {
