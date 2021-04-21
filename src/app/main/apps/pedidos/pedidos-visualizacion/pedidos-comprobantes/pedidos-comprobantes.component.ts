@@ -39,10 +39,7 @@ export class PedidosComprobantesComponent implements OnInit {
       private route: ActivatedRoute,
       private _service: PedidosVisualizacionService,
       private _dialog: MatDialog
-  )
-  {
-      
-  }
+  ){ }
 
   ngOnInit(): void{
     this.page = 0;

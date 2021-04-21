@@ -11,6 +11,7 @@ import { ModalConfirmacionBorrarComponent } from './modal-confirmacion-borrar/mo
 
 //servicios
 import { VerOrdenDistribucionService } from './ver-orden-distribucion.service';
+import { ConfirmarOrdenDeDistribucionComponent } from '../../crear-orden-distribucion/confirmar-ordenDist/confirmar-ordenDist.component';
 
 export interface Remito{
   id: number;
@@ -35,6 +36,7 @@ export class VerOrdenDistribucionComponent implements OnInit {
   dataSource2: any;
 
   idOrdenDist: number = null;
+  datosOrden: {} = {};
   nombreOrden: string = null;
   remitosDeOrden: [Remito] = null;
   resultObject: [any] = null;
@@ -64,6 +66,8 @@ export class VerOrdenDistribucionComponent implements OnInit {
       this.idOrdenDist = params['id'];
     });
     this.getRemitosDeOrdenDistribucion(this.idOrdenDist);
+    //this.dataSource2 = JSON.parse(localStorage.getItem('Remitir'))._selected;
+    this.datosOrden = JSON.parse(localStorage.getItem('orden'));
   }
   
   getRemitosDeOrdenDistribucion (idOrdenDist: number) {
@@ -206,6 +210,16 @@ export class VerOrdenDistribucionComponent implements OnInit {
           let mensaje = " ";
           this.mostrarError(errStatus, titulo, mensaje);
         }
+      }
+    });
+  }
+
+  editarOrdenDist(){
+
+    let dialogRef = this._dialog.open( ConfirmarOrdenDeDistribucionComponent, {
+      data:{
+            vengoDeOrden: true,
+            selection: this.datosOrden
       }
     });
   }

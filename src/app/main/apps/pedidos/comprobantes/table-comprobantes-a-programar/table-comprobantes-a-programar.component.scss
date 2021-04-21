@@ -37,6 +37,10 @@ fuse-sidebar {
     padding-bottom: 15px;
 }
 
+td.mat-cell {
+    width: 50px;
+}
+
 .controlesBusqueda {
     display: flex;
     width: 100%;
@@ -71,6 +75,8 @@ fuse-sidebar {
 .dato {
     //padding-left: 10px;
     padding-right: 10px;
+    width: 50px !important;
+    max-width: 50px !important;
 }
 
 .titulo {
@@ -93,12 +99,17 @@ fuse-sidebar {
 
 .estados {
     padding: 4px;
-    font-weight: bold;
+    padding-left: 5px;
     border-radius: 5px;
     color: white;
     background-color: #039be6;
     text-transform: uppercase;
-    width: 80px;
+    width: 120px !important;
+}
+
+.celda {
+    width: 70px !important;
+    max-width: 70px !important;
 }
 
 .estadoInicial {

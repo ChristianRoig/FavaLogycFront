@@ -173,8 +173,6 @@ export class ProjectDashboardComponent implements OnInit {
      */
     ngOnInit(): void {
 
-        this.getProyectos();
-        this.getWidgets();
         this.getResumen();
         /* this.widget11.onContactsChanged = new BehaviorSubject({});
         this.widget11.onContactsChanged.next(this.widgets.widget11.table.rows);
@@ -189,7 +187,7 @@ export class ProjectDashboardComponent implements OnInit {
         this.numEstado = num;
     }
 
-    getProyectos(){
+    /* getProyectos(){
         this._tableroService.getProjects().subscribe(
             data => {
               console.log("Projects ->", data);
@@ -247,7 +245,7 @@ export class ProjectDashboardComponent implements OnInit {
               }
             }
         );
-    }
+    } */
     getResumen(){
         //console.log( "dateNow",this.hoy);
         //this._tableroService.getWidgets().subscribe(

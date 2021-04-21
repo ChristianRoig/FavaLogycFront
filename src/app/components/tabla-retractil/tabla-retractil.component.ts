@@ -65,8 +65,18 @@ export class TablaRetractilComponent implements OnInit {
       }
       for (let index = 0; index < element.listaPartes.length; index++) {
         const elemento = element.listaPartes[index];
+
+        let valorCheck;
+        if (elemento.checkEstanteria == false) {
+          valorCheck = false;
+        } if (elemento.checkDarsena == false) {
+          valorCheck = false;
+        } if (elemento.checkDarsena == true) {
+          valorCheck = true;
+        }
+    
         let detalle = {
-          Checks: elemento.checkEstanteria,
+          Checks: valorCheck,
           Nomb_de_Parte: elemento.pedidoDetalle.articulo.nombre,
           Identificador: elemento.id,
           CUPA: elemento.codigoUnicoParteArticulo

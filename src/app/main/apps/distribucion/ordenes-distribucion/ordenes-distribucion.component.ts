@@ -198,6 +198,7 @@ export class OrdenesDistribucionComponent implements OnInit {
   verOrden(orden: Orden){ //redireccionar 
     if( orden != null ){
       this.idOrdenDist = orden.id;
+      localStorage.setItem('orden', JSON.stringify(orden));
       let ruta = `apps/distribucion/ver-orden-distribucion/${ this.idOrdenDist }`;
       this._router.navigate([ ruta ]);
     }

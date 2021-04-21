@@ -20,7 +20,8 @@
                 <mat-form-field appearance="outline" fxFlex>
                     <mat-label>{{ filtroTransportes ? 'Transporte' : 'Cargando...'}}</mat-label>
                     <select matNativeControl (change)="selectTransporte($event)" [disabled]="!filtroTransportes">
-                        <option [value]="0">Seleccionar Transporte</option>
+                        <option *ngIf="this.estoyEditando"> {{ this.selectedTransporte }}</option>
+                        <option *ngIf="!this.estoyEditando" [value]="0">Seleccionar Transporte</option>
                         <option *ngFor="let transporte of filtroTransportes" [value]="transporte.id"
                         [selected]="selectedTransporte === transporte.id"> 
                         {{ transporte.nombre }}
@@ -33,11 +34,12 @@
                 <mat-form-field appearance="outline" fxFlex>
                     <mat-label>{{ filtroTurnos ? 'Turnos' : 'Cargando...'}}</mat-label>
                     <select matNativeControl (change)="selectTurno($event)" [disabled]="!filtroTurnos">
+                        <option *ngIf="this.estoyEditando"> {{ this.selectedTurno }}</option>
                         <option *ngFor="let turno of filtroTurnos" [value]="turno.id"
                         [selected]="selectedTurno === turno.id">
-                            {{ turno.nombre }}
-                        </option>
-                          </select>
+                        {{ turno.nombre }}
+                    </option>
+                </select>
                 </mat-form-field>
             </div>
 
@@ -45,6 +47,7 @@
                 <mat-form-field appearance="outline" fxFlex>
                     <mat-label>{{ filtroLocalidades ? 'Localidades' : 'Cargando...'}}</mat-label>
                     <select matNativeControl (change)="selectLocalidad($event)" [disabled]="!filtroLocalidades">
+                        <option *ngIf="this.estoyEditando"> {{ this.selectedLocalidad }}</option>
                         <option *ngFor="let localidad of filtroLocalidades" [value]="localidad.codigoPostal"
                         [selected]="selectedLocalidad === localidad.codigoPostal"> 
                             {{ localidad.nombre }}

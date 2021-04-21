@@ -117,6 +117,7 @@ export class CrearOrdenDistribucionComponent implements OnInit {
 
     let dialogRef = this._dialog.open( ConfirmarOrdenDeDistribucionComponent, {
       data:{
+            vengoDeCrear: true,
             selection: this.selection
       }
     });

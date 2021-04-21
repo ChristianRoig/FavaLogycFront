@@ -115,53 +115,23 @@ export class PedidosCrear1Component implements OnInit {
         while(palabra.length < 8){
           palabra = "0"+palabra;
         }
-        console.log("palabra", palabra);
+        //console.log("palabra", palabra);
         return palabra;
       }
       if(cantCaracteres == 6){
         let palabraFinal = palabra.charAt(0);
-        console.log("asd", palabraFinal);
+        //console.log("primer caracter:", palabraFinal);
         palabra = palabra.substring(1);//saco el primer caracter de la cadena
-        console.log("la puta palabra cortada", palabra);
+        //console.log("la palabra cortada:", palabra);
         while(palabra.length < 5){
           palabra = "0" + palabra;
         }
         palabraFinal += palabra;
-        console.log("palabraFinal", palabraFinal);
+        //console.log("palabraFinal", palabraFinal);
         return palabraFinal; 
       }
     }
   }
-
-  /* adaptarValorDeBusqueda(palabra: string, cantCaracteres: number){
-    let newStr: string = "";
-    //console.log("palabra.length", palabra.length);
-    if(palabra.length <= cantCaracteres){     //si tiene menor de 6 caracteres
-        for (let i = 0; i <= palabra.length; i++) {
-            if(palabra.charAt(i) !== "0"){      //mientras que el char sea distinto de 0
-                newStr += palabra.charAt(i);    //guardo el valor el la variable
-            }
-        }
-      //console.log("newString",newStr);
-      let num = cantCaracteres - newStr.length;
-      let h = 0;
-      let stringRetorno = "";
-      if(cantCaracteres == 6){
-        stringRetorno = newStr.charAt(0);
-        h =1 ;
-      }
-      for(let i = 0; i < num; i++){
-          stringRetorno += "0";
-      }
-      for( h; h <= newStr.length; h++){
-          stringRetorno += newStr.charAt(h);
-      }
-      stringRetorno = stringRetorno.toLocaleUpperCase();
-      //console.log("stringRetorno", stringRetorno);
-
-      return stringRetorno;
-    }
-  } */
 
   getfiltros(){
     this._pedidosListaService.getAllTipos().subscribe(params => {

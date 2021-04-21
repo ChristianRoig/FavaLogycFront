@@ -43,6 +43,8 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
   toAdd = new Array();
   cantRemitos: number = 0;
   nombreOrden: string = "Mi dist";
+  datosOrden: {} = {};
+  estoyEditando: boolean = false;
 
   filtroTransportes: any;
   selectedTransporte: any = 0;
@@ -61,8 +63,19 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
 
   ngOnInit(): void {
     this.getfiltros();
-    this.toAdd = this.data.selection._selected;
-    this.cantRemitos = this.data.selection._selected.length;
+    console.log("llegué acá");
+    if(this.data.vengoDeCrear == true){
+      console.log("vengo de crear orden");
+      this.toAdd = this.data.selection._selected;
+      this.cantRemitos = this.data.selection._selected.length;
+    }
+    if (this.data.vengoDeOrden == true){
+      console.log("vengo de ver orden", this.data.selection);
+      this.datosOrden = this.data.selection;
+      console.log("vengo de ver orden", this.datosOrden);
+      this.setearValores();
+    }
+    localStorage.clear();
   }
 
   crearOrden(){
@@ -127,6 +140,27 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
           }
       });
   }
+
+  setearValores(){
+    this.estoyEditando = true;
+    this.selectedTransporte = this.data.selection.transporte;
+    this.selectedLocalidad = this.data.selection.localidad;
+    this.selectedTurno = this.data.selection.turno;
+    this.cantRemitos = this.data.selection.cantRemitos;
+    console.log("estoy editando", this.estoyEditando);
+    console.log(" this.selectedTransporte",  this.selectedTransporte, " this.selectedLocalidad", this.selectedLocalidad,
+    " this.selectedTurno",  this.selectedTurno);
+  }
+  /* cantArticulos: 1
+      cantArticulosACargar: 1
+      cantRemitos: 1
+      estado: "NUEVO"
+      fecha: "20/04/2021 20:48:45"
+      id: 3
+      localidad: "MAR DEL PLATA"
+      nombre: "Mi dist"
+      transporte: "OCA"
+      turno: "MAÑANA" */
 
   getfiltros(){
     this._confirmarOrdenDeDistribucionService.getAllTransportes().subscribe(params => {

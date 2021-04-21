@@ -102,11 +102,7 @@ export class TableComprobantesComponent implements OnInit {
     );
   }
 
-  abrir( nroCbte: number ){
-    let ruta = `apps/pedidos/ver-comprobante/${ nroCbte }`;
-    this._router.navigate([ ruta ]);
-  }
-
+  
   mostrarError(errStatus, titulo, mensaje){
     const dialogRef = this._dialog.open( ModalErrorComponent, { 
       data: {
@@ -114,18 +110,18 @@ export class TableComprobantesComponent implements OnInit {
         mensaje: mensaje
       } 
     });
-
+    
     dialogRef.afterClosed()
-      .subscribe( () => {
-          if (errStatus != 0) {
-            this.getComprobantesConPedidos(this.page, this.size, this.columna, this.order);
-            
-          } else {
-            this._router.navigate(['']);
-          }
-      });
+    .subscribe( () => {
+      if (errStatus != 0) {
+        this.getComprobantesConPedidos(this.page, this.size, this.columna, this.order);
+        
+      } else {
+        this._router.navigate(['']);
+      }
+    });
   }
-
+  
   getComprobanteConPedido(){
     this._tableComprobantesService.getComprobanteConPedido(this.body, this.busqueda, this.page, this.size, this.columna, this.order).subscribe(
       data => {
@@ -153,23 +149,28 @@ export class TableComprobantesComponent implements OnInit {
           }
         }
       }
-    );
+      );
   }
-
+    
   @Debounce(1000)  
   searchCbte() {
     this.busqueda = this.buscarCbteInput.nativeElement.value;
     this.busqueda = this.busqueda.toLocaleUpperCase();
     console.log(this.busqueda);
-    if( this.busqueda === '' || this.busqueda == null){
+    if( this.busqueda === '' || this.busqueda == null) {
       this.getComprobantesConPedidos( this.page, this.size, this.columna, this.order); // revisar ésto
     }
   }
 
-  consultar(id){
+  abrir( nroCbte: number ){ // a donde deberia de ir esto?
+    let ruta = `apps/pedidos/ver-comprobante/${ nroCbte }`;
+    this._router.navigate([ ruta ]);
+  }
+  
+  /*consultar(id){
     let ruta = `apps/pedidos/ver-pedido/${id}`;
     this._router.navigate([ruta]);
-  }
+  } */
 
   agregarPedido() {
     let ruta = `apps/pedidos/crear-pedido`;
