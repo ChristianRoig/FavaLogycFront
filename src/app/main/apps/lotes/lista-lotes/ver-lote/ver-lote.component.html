@@ -8,16 +8,7 @@
             <!-- Filtros en Pantalla grande -->
             <div fxLayout="row" class="titular">
 
-                <!-- LOTE -->
-                <!-- <div fxFlex="100" class="fuse-card p-24 mr-8"> -->
                 <h1 class="colorText" *ngIf="!this.editLote"> {{ this.nombreLote }} </h1>
-
-                <div *ngIf="this.editLote" class="input-group mb-3">
-                    <input #nombreLoteInput type="text" class="nombreLote" placeholder="({{ this.nombreLote }})  -  Inserte el nuevo nombre del lote">
-                    <button mat-raised-button class="btn btn-outline-secondary" color="light" (click)="actualizarNombreLote(nombreLoteInput.value)" type="button" id="button-addon1">Modificar</button>
-                </div>
-
-
                 <button mat-raised-button color="light" class="mt-22" (click)="confirmacionBorrar()">Eliminar lote</button>
                 <!-- </div> -->
             </div>

@@ -657,6 +657,7 @@ export class LoteCrearLoteComponent implements OnInit {
     //localStorage.setItem('Lote',JSON.stringify(this.selection));
     let dialogRef = this._dialog.open( ConfirmarAgregarLoteComponent, {
       data: {
+        vengoDeCrearLote: true,
         selection: this.selection
       }
     })

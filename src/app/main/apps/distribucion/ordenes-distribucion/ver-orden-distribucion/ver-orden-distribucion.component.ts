@@ -30,7 +30,7 @@ export interface Remito{
 export class VerOrdenDistribucionComponent implements OnInit {
   
   @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
-  
+
   displayedColumns: string[] = ['select', 'id', 'codComprobante', 'nroComprobante', 'fechaAlta', 'direccion', 'cantArticulos'];
   selection = new SelectionModel<any>(true, []);
   dataSource2: any;

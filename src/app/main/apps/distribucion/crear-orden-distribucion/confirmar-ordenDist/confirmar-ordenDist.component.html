@@ -68,8 +68,8 @@
 
     <div mat-dialog-actions class="m-0 p-16 divBotones" fxLayout="row" fxLayoutAlign="end center">
 
-        <button mat-raised-button (click)="crearOrden()" class="btn" color="accent" aria-label="SAVE">
-            Crear
+        <button mat-raised-button (click)="crearOrden(this.nombreBoton)" class="btn" color="accent" aria-label="SAVE">
+            {{ this.nombreBoton }}
         </button>
 
         <button mat-raised-button class="btn" (click)="matDialogRef.close()" aria-label="Delete">

@@ -185,7 +185,8 @@
 
             <div class="mt-4 mb-24 pt-4" fxLayout="row" fxLayoutAlign="space-between">
 
-                <button mat-raised-button color="accent" [disabled]="this.dataSourceArticulos.length > 0" (click)="this.procesar()">Procesar</button>
+                <!--<button mat-raised-button color="accent" [disabled]="this.dataSourceArticulos.length > 0" (click)="this.procesar()">Procesar</button>-->
+                <button mat-raised-button color="accent" [disabled]="this.procesarDatos == false" (click)="this.procesar()">Procesar</button>
 
                 <button mat-stroked-button class="mr-5px" (click)="this.volver()">Cancelar</button>
             </div>

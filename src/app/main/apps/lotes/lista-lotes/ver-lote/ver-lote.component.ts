@@ -11,6 +11,7 @@ import { VerImpresorasComponent } from '../ver-impresoras/ver-impresoras.compone
 import { ModalConfirmacionBorrarComponent } from './modal-confirmacion-borrar/modal-confirmacion-borrar.component';
 //servicios
 import { VerLoteService } from './ver-lote.service';
+import { ConfirmarAgregarLoteComponent } from '../../lote-crear-lote/confirmar-agregarLote/confirmar-agregarLote.component';
 
 export interface FiltroLote{
   idTipo : number;
@@ -42,6 +43,9 @@ export class VerLoteComponent implements OnInit {
   idLote: number = null;
   lote: string = null;
   nombreLote: string = null;
+  cantArticulos: number = 0;
+  fechaLote: string;
+
   busqueda: string = "";
   length: number = 0;
   page: number = 0;
@@ -118,11 +122,11 @@ export class VerLoteComponent implements OnInit {
   
   getArticulosDeLote(idLote: number){
     this.filtroLote.idLote = idLote;
-    //this.dataSource2 = ELEMENT_DATA;
     this._verLoteService.getArticulosDeLote( this.filtroLote, this.busqueda, this.columna, this.order ) .subscribe( data => {
       this.dataSource2 = data.datos;
-
-      console.log("articulos -> ", this.dataSource2);
+      this.cantArticulos = data.totalRegistros;
+      //console.log("articulos -> ", this.dataSource2);
+      //console.log("cant articulos -> ", data.totalRegistros);
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
@@ -144,7 +148,7 @@ export class VerLoteComponent implements OnInit {
 
   getLote(idLote: number){                                              //Propuesta de getLote PARA OBTENER Y MODIFICAR EL NOMBRE DE LOTE  
     this._verLoteService.getLote( idLote ) .subscribe( data => {
-      console.log(data);
+      console.log("getLote: ",data);
       this.loteActual = data;
       this.nombreLote = this.loteActual.nombre;
       this.idLote = this.loteActual.idLote;
@@ -168,37 +172,21 @@ export class VerLoteComponent implements OnInit {
   }
 
   editarLote(){
-    this.editLote = true;
-  }
-
-  actualizarNombreLote(nombreLoteInput: string){
-
-    console.log(nombreLoteInput);
-    if(nombreLoteInput != ''){
-      this.loteActual.nombreLote = nombreLoteInput;
-      this.nombreLote = nombreLoteInput;
+    //this.editLote = true;
+    let dialogRef = this._dialog.open( ConfirmarAgregarLoteComponent, {
+    data:{
+          vengoDeVerLote: true,
+          loteActual: this.loteActual
     }
-    this.editLote = false;
-
-    this._verLoteService.updateNombreLote(this.loteActual.nombreLote, this.loteActual.idLote) .subscribe (data =>  {
-
-    },
-    (err: HttpErrorResponse) => {
-      if (err.error instanceof Error) {
-        console.log("Client-side error");
-      } else {
-        let errStatus = err.status
-        if (errStatus == 0){
-          let titulo = 'Error de Servidor';
-          let mensaje = "Por favor comunicarse con Sistemas";
-          this.mostrarError(errStatus, titulo, mensaje);
-        } else {
-          let titulo = 'Error al actualizar el nombre';
-          let mensaje = err.error.message.toString();
-          this.mostrarError(errStatus, titulo, mensaje);
-        }
-      }
     });
+    dialogRef.afterClosed()
+      .subscribe(result => {
+        console.log("result",result);
+        if ( result )
+          console.log("result",result);
+          this.getLote( this.idLote );
+
+      });
   }
 
   confirmacionBorrar() {

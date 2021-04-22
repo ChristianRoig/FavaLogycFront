@@ -162,8 +162,8 @@ export class TableComprobantesComponent implements OnInit {
     }
   }
 
-  abrir( nroCbte: number ){ // a donde deberia de ir esto?
-    let ruta = `apps/pedidos/ver-comprobante/${ nroCbte }`;
+  abrir( idPedido: number ){ 
+    let ruta = `apps/pedidos/ver-pedido/${ idPedido }`;
     this._router.navigate([ ruta ]);
   }
   

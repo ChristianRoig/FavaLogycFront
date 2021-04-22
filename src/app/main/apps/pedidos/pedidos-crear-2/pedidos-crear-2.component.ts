@@ -74,6 +74,7 @@ export class PedidosCrear2Component implements OnInit {
   numeroCbte: string;
   codigoCliente: string;
   nombreCliente: string;
+  procesarDatos: boolean = false;
 
   listaDatosVacia: DatosDeEntrega = {
     datos: []
@@ -163,8 +164,7 @@ export class PedidosCrear2Component implements OnInit {
   }
 
   agregar(){
-
-    this._service.postPedidos(this.dataSourceDatosDeEntrega.datos, 1, this.dataSourceDatosDeEntrega.datos[0].listaPedidoDetalle[0].numeroCbte)
+    this._service.postPedidos( this.dataSourceDatosDeEntrega.datos, 1, this.dataSourceDatosDeEntrega.datos[0].listaPedidoDetalle[0].numeroCbte )
       .subscribe(data => {
         console.log(data);
         // this.dataSourceDatosDeEntrega = params;
@@ -415,14 +415,14 @@ export class PedidosCrear2Component implements OnInit {
           for (let art of this.selection.selected) {
             
             let indexToSplice = this.dataSourceArticulos.indexOf(art);
-            this.dataSourceArticulos.splice(indexToSplice,1);
+            this.dataSourceArticulos.splice(indexToSplice, 1);
             
             console.log(JSON.parse(localStorage.getItem('datoEntrega')));
           }
-          
+          //console.log("this.dataSourceArticulos", this.dataSourceArticulos, this.dataSourceArticulos.length);
           this.selection.clear();
           this.render();
-
+          this.procesarDatos = true;
         }
       });
   }

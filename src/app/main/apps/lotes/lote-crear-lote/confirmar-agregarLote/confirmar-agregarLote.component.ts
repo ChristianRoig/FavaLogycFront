@@ -40,70 +40,111 @@ export class ConfirmarAgregarLoteComponent implements OnInit {
   dataSourceArticulos: any;
   toAdd = new Array<number>();
   nombreLote: string;
-  cantidadArticulos: number;
+  cantidadArticulos: number = 0;
+  fechaAlta: string = "";
   picker: Date;
+  nombreBoton: string;
+  idLote: number;
   //idCabecera: number;
 
   constructor(  public matDialogRef: MatDialogRef<ConfirmarAgregarLoteComponent>,
                 @Inject(MAT_DIALOG_DATA) public data:any,
                 private _serviceAgregarLoteConfirmar: ConfirmarAgregarLoteService,
                 private _dialog: MatDialog,
-                private _router: Router,
-                private route: ActivatedRoute,
-                private _listaLoteService: ListaLotesService ) {          }
+                private _router: Router ) {          }
 
   ngOnInit(): void {
-    /* this.route.params.subscribe(params => {
-      this.idCabecera = params['id'];
-    }) */
-    //this.dataSourceArticulos = JSON.parse(localStorage.getItem('Lote'))._selected;
-    //localStorage.clear();
-    this.dataSourceArticulos = this.data.selection._selected;
-    console.log(this.dataSourceArticulos);
-
-    this.cantidadArticulos = this.dataSourceArticulos.length;
-
-    this.picker =  new Date();
+    if (this.data.vengoDeVerLote == true){
+      console.log("lote actual: ",this.data.loteActual);
+      this.nombreLote = this.data.loteActual.nombre;
+      this.cantidadArticulos = this.data.loteActual.cantART;
+      this.fechaAlta = this.getSoloFecha(this.data.loteActual.fechaAlta);
+      this.nombreBoton = "Actualizar";
+      this.idLote = this.data.loteActual.idLote;
+    }
+    if (this.data.vengoDeCrearLote == true){
+      this.dataSourceArticulos = this.data.selection._selected;
+      console.log("articulos p/crear lote: ",this.dataSourceArticulos);
+      this.cantidadArticulos = this.dataSourceArticulos.length;
+      this.picker =  new Date();
+      this.nombreBoton = "Crear";
+      this.idLote = this.dataSourceArticulos[0].id;
+    }
   }
 
   searchNombreLote() {
-    this.nombreLote = this.buscarNombreLote.nativeElement.value;
+    let inputNombreLoteValue = this.buscarNombreLote.nativeElement.value;
+    if(inputNombreLoteValue != '' || inputNombreLoteValue != null )
+      this.nombreLote = this.buscarNombreLote.nativeElement.value;
   }
 
   crearLote(){
-    for (let elemento of this.dataSourceArticulos){
-      this.toAdd.push(elemento.id);
+    if(this.data.vengoDeVerLote == true){
+      this.actualizarLote();
     }
-    console.log("this.toAdd");
-    console.log(this.toAdd);
-    if (this.toAdd.length > 0){
-      this._serviceAgregarLoteConfirmar.postLote(this.toAdd, this.nombreLote).subscribe(
-        data => {
-          let idLote = data.idLote
-          //this.imprimirCupas(idLote);
-          localStorage.setItem( 'idLote', JSON.stringify( idLote ));
-          this.matDialogRef.close();
-        },
-        (err: HttpErrorResponse) => {
-          if (err.error instanceof Error) {
-            console.log("Client-side error");
-          } else {
-            let errStatus = err.status
-            if (errStatus == 0){
-              let titulo = 'Error de Servidor';
-              let mensaje = "Por favor comunicarse con Sistemas";
-              this.mostrarError(errStatus, titulo, mensaje);
+    if (this.data.vengoDeCrearLote == true){
+      for (let elemento of this.dataSourceArticulos){
+        this.toAdd.push(elemento.id);
+      }
+      console.log("this.toAdd");
+      console.log(this.toAdd);
+      if (this.toAdd.length > 0){
+        this._serviceAgregarLoteConfirmar.postLote(this.toAdd, this.nombreLote).subscribe(
+          data => {
+            let idLote = data.idLote
+            //this.imprimirCupas(idLote);
+            localStorage.setItem( 'idLote', JSON.stringify( idLote ));
+            this._dialog.closeAll();
+          },
+          (err: HttpErrorResponse) => {
+            if (err.error instanceof Error) {
+              console.log("Client-side error");
             } else {
-              let titulo = 'Error al Agregar';
-              let mensaje = err.error.message.toString();
-              this.mostrarError(errStatus, titulo, mensaje);
+              let errStatus = err.status
+              if (errStatus == 0){
+                let titulo = 'Error de Servidor';
+                let mensaje = "Por favor comunicarse con Sistemas";
+                this.mostrarError(errStatus, titulo, mensaje);
+              } else {
+                let titulo = 'Error al Agregar';
+                let mensaje = err.error.message.toString();
+                this.mostrarError(errStatus, titulo, mensaje);
+              }
             }
           }
-        }
-      )
+        )
+      }
     }
   }
-  
+
+  getSoloFecha(fecha: any){
+    return fecha.split(' ')[0];
+  }
+
+  actualizarLote(){
+    this._serviceAgregarLoteConfirmar.updateNombreLote(this.nombreLote, this.idLote) .subscribe (data =>  {
+      console.log("actualizacion exitosa", data);
+      this._dialog.closeAll();
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
+        } else {
+          let titulo = 'Error al actualizar el nombre';
+          let mensaje = err.error.message.toString();
+          this.mostrarError(errStatus, titulo, mensaje);
+        }
+      }
+    });
+    
+  }
+
   mostrarError(errStatus, titulo, mensaje){
     const matDialogRef = this._dialog.open( ModalErrorComponent, { 
       data: {
@@ -138,6 +179,30 @@ export class ConfirmarAgregarLoteComponent implements OnInit {
     this._router.navigate([ruta]); */
   }
 
+  /* getLote( idLote: number ){                            
+    this._serviceAgregarLoteConfirmar.getLote( idLote ) .subscribe( data => {
+      console.log(data);
+       this.loteActual = data;
+      this.nombreLote = this.loteActual.nombre;
+      this.idLote = this.loteActual.idLote; 
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
+        } else {
+          let titulo = 'Error al obtener el lote';
+          let mensaje = err.error.message.toString();
+          this.mostrarError(errStatus, titulo, mensaje);
+        }
+      }
+    });
+  } */
 
   /* imprimirCupas(idLote: number){
     const dialogRef = this._dialog.open( ModalDeseaImprimirLoteComponent, {

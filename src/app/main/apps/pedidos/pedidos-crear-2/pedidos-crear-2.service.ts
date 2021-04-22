@@ -73,8 +73,8 @@ export class PedidosCrear2Service
             );
     }
 
-    postPedidos(listaDatosDeEntrega, idTipo , numerocbte): Observable<any>
-    {   
+    postPedidos( listaDatosDeEntrega, idTipo , numerocbte ): Observable<any> {   
+
         let ruta = `${BASE_URL}pedidos/pedidodetalle/sinremitir/datoentrega/${idTipo}/${numerocbte}`;
         
         let body=   {

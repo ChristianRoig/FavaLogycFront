@@ -45,6 +45,7 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
   nombreOrden: string = "Mi dist";
   datosOrden: {} = {};
   estoyEditando: boolean = false;
+  nombreBoton: string = "Crear";
 
   filtroTransportes: any;
   selectedTransporte: any = 0;
@@ -78,45 +79,55 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
     localStorage.clear();
   }
 
-  crearOrden(){
-    let seleccionados = [];
+  crearOrden( accion: string ){
 
-    for (let i = 0; i < this.toAdd.length; i++){
-      seleccionados.push(this.toAdd[i].id);
+    //queda hacer el mandar el update de actualizarOrden() y ver si existe el servicio
+    if(accion === "Actualizar"){
+      console.log("accion ->", accion);
+      this.actualizarOrden();
     }
-
-    let body = { 
-      nombre : "Mi dist",
-      idTurno        : this.selectedTurno,
-      idTransporte   : this.selectedTransporte,
-      idLocalidad    : this.selectedLocalidad,
-      listaId        : seleccionados
-    }
-    
-    console.log("body que mando", body);
-    this._confirmarOrdenDeDistribucionService.crearOrdenDeDistribucion( body ).subscribe( params => {
-      console.log("entró");
-    },
-    (err: HttpErrorResponse) => {
-      if (err.error instanceof Error) {
-        console.log("Client-side error");
-      } else {
-        let errStatus = err.status
-        if (errStatus == 0){
-          let titulo = 'Error de Servidor';
-          let mensaje = "Por favor comunicarse con Sistemas";
-          this.mostrarError(errStatus, titulo, mensaje);
-        } else {
-          let titulo = 'Error al crear la orden';
-          let mensaje = err.error.message.toString();
-          this.mostrarError(errStatus, titulo, mensaje);
-        }
+    else{
+      let seleccionados = [];
+  
+      for (let i = 0; i < this.toAdd.length; i++){
+        seleccionados.push(this.toAdd[i].id);
       }
-    });
-    setTimeout(() => {                          
-      this.navegarAlistaOrdenes();
+  
+      let body = { 
+        nombre : "Mi dist",
+        idTurno        : this.selectedTurno,
+        idTransporte   : this.selectedTransporte,
+        idLocalidad    : this.selectedLocalidad,
+        listaId        : seleccionados
+      }
+      
+      console.log("body que mando", body);
+      this._confirmarOrdenDeDistribucionService.crearOrdenDeDistribucion( body ).subscribe( params => {
+        console.log("entró");
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error");
+        } else {
+          let errStatus = err.status
+          if (errStatus == 0){
+            let titulo = 'Error de Servidor';
+            let mensaje = "Por favor comunicarse con Sistemas";
+            this.mostrarError(errStatus, titulo, mensaje);
+          } else {
+            let titulo = 'Error al crear la orden';
+            let mensaje = err.error.message.toString();
+            this.mostrarError(errStatus, titulo, mensaje);
+          }
+        }
+      });
+      setTimeout(() => {                          
+        this.navegarAlistaOrdenes();
       }, 1000);
+    }
   }
+
+  actualizarOrden(){}
 
   navegarAlistaOrdenes(){
     let ruta = `apps/distribucion/ordenes-distribucion`;
@@ -143,10 +154,12 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
 
   setearValores(){
     this.estoyEditando = true;
+    this.nombreBoton = "Actualizar";
     this.selectedTransporte = this.data.selection.transporte;
     this.selectedLocalidad = this.data.selection.localidad;
     this.selectedTurno = this.data.selection.turno;
     this.cantRemitos = this.data.selection.cantRemitos;
+    this.nombreOrden = this.data.selection.nombre;
     console.log("estoy editando", this.estoyEditando);
     console.log(" this.selectedTransporte",  this.selectedTransporte, " this.selectedLocalidad", this.selectedLocalidad,
     " this.selectedTurno",  this.selectedTurno);

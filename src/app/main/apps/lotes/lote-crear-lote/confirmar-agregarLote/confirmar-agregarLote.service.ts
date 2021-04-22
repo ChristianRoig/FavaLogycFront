@@ -36,5 +36,25 @@ export class ConfirmarAgregarLoteService
         return this._httpClient.post(ruta,body,{headers:headers});
     }
 
+    getLote( id: number ): Observable<any> {
+
+        let ruta = `${BASE_URL}pedidos/pedidoetapa/estado/${id}`;
+        return this._httpClient.get(ruta);
+    }
+    
+    updateNombreLote(nombre, idLote){
+    
+        let headers = new HttpHeaders({
+          "Content-Type": "application/json"
+        });
+    
+        let body = {
+          "nombre": nombre,
+        }
+    
+        let ruta = `${BASE_URL}pedidos/pedidolote/lote/${ idLote }`;
+        return this._httpClient.put(ruta, body,{headers: headers});
+      }
+
     
 }
