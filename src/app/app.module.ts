@@ -48,16 +48,6 @@ const appRoutes: Routes = [
         path        : 'error-404',
         loadChildren: () => import('./main/pages/404/error-404.module').then(m => m.Error404Module),
     },
-    /* {
-        path      : ' ',
-        redirectTo: 'pages/auth/login',
-        pathMatch: 'full'
-    },
-    {
-        path      : '**',
-        //redirectTo: '/error-404'
-        redirectTo        : 'pages/auth/login',
-    } */
     {
         path: '',
         redirectTo: 'pages/auth/login',
