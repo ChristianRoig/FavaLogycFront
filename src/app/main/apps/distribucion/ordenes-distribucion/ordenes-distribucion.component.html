@@ -39,15 +39,16 @@
     <ng-template #busquedaOrden>
         <div fxLayout="column">
             <div class="controlesBusqueda">
+                <div fxLayout="row">
+                    <mat-form-field appearance="outline" class="inputBuscar">
+                        <mat-label>Buscar Orden</mat-label>
+                        <input #buscarOrdenPorCupa (keyup)="searchOrden()" matInput value="" placeholder="Ingrese un cupa">
+                        <mat-icon matSuffix>search</mat-icon>
+                    </mat-form-field>
 
-                <mat-form-field appearance="outline" class="inputBuscar">
-                    <mat-label>Buscar Orden</mat-label>
-                    <input #buscarOrdenPorCupa (keyup)="searchOrden()" matInput value="" placeholder="Ingrese un cupa">
-                    <mat-icon matSuffix>search</mat-icon>
-                </mat-form-field>
-
-                <div class="botonesBusqueda">
-                    <button (click)="buscarOrdenPorCUPA()" class="btnBuscar" [disabled]="!this.cupa" mat-raised-button color="primary">Buscar</button>
+                    <div class="botonesBusqueda">
+                        <button (click)="buscarOrdenPorCUPA()" class="btnBuscar" [disabled]="!this.cupa" mat-raised-button color="primary">Buscar</button>
+                    </div>
                 </div>
 
                 <mat-form-field appearance="outline" fxFlex="20" class="ml-4 mt-16 selectMostrar">

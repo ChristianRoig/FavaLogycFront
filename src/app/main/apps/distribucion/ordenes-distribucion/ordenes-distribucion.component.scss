@@ -35,14 +35,14 @@
         display: flex;
         width: 100%;
         align-items: center !important;
-        justify-content: flex-start;
+        justify-content: space-between;
     }
     
     .botonesBusqueda {
         display: flex;
-        width: 900px;
+        width: 150px;
         align-items: center !important;
-        justify-content: space-between;
+        justify-content: flex-start;
         margin-left: 20px;
     }
     
@@ -72,7 +72,7 @@
     }
     
     .inputBuscar {
-        width: 600px;
+        width: 600px !important;
         justify-content: flex-start;
         padding-top: 20px;
     }

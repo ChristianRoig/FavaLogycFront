@@ -23,8 +23,8 @@
             "cantidadDeArticulos": 1 -->
         <ng-container matColumnDef="fechaEntrega" class="ml-24">
             <th mat-sort-header="fechaDeEntrega" mat-header-cell *matHeaderCellDef> Fecha Entrega </th>
-            <td mat-cell *matCellDef="let element" class="pl-8 celda"> 05/10/2021
-                <!-- {{ element.fechaDeEntrega }} -->
+            <td mat-cell *matCellDef="let element" class="pl-8 celda">
+                {{ element.fechaDeCompra }}
             </td>
             <!-- | date:'shortDate' -->
         </ng-container>
@@ -32,7 +32,8 @@
         <ng-container matColumnDef="cantArticulos">
             <th mat-header-cell *matHeaderCellDef> Articulos </th>
             <td mat-cell *matCellDef="let element" class="dato pl-16">
-                <p class="cantArticulos">{{ element.cantArticulos }}</p>
+                <p *ngIf="element.cantArticulos > 0" class="cantArticulos">{{ element.cantArticulos }}</p>
+                <p *ngIf="element.cantArticulos === 0" class="cantArticulosDos">{{ element.cantArticulos }}</p>
             </td>
         </ng-container>
 
@@ -64,7 +65,7 @@
             <th mat-header-cell *matHeaderCellDef> Seleccionar </th>
             <td mat-cell class="example-button-row celda" *matCellDef="let element">
 
-                <button mat-stroked-button (click)="getPedidoDeArticuloSinRemitir( element.nroCbte )" color="primary"> Crear </button>
+                <button mat-stroked-button [disabled]="element.cantArticulos===0" (click)="getPedidoDeArticuloSinRemitir( element.nroCbte )" color="primary"> Crear </button>
             </td>
         </ng-container>
 
