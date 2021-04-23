@@ -13,14 +13,13 @@ export interface BodyRemito {
   }
 
 @Injectable()
-export class ConfirmarAgregarLoteService
-{
+export class ConfirmarAgregarLoteService {
     constructor(
         private _httpClient: HttpClient) { }
 
     postLote(listaIdPedidos: Array<number>, comentario: string): Observable<any>{
         
-        let ruta = `${BASE_URL}pedidos/pedidolote/lote`
+        let ruta = `${BASE_URL}pedidos/pedidolote/lote`;
 
         let body =   {
             "listaIdPedidos": listaIdPedidos, 

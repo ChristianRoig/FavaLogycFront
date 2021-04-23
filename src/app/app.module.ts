@@ -28,6 +28,8 @@ import { UsuarioGuard } from './guards/usuario.guard';
 import { LoginModule } from './main/pages/login/login.module';
 import { LoginComponent } from './main/pages/login/login.component';
 import { ProjectDashboardComponent } from './main/apps/tablero/tablero.component';
+import { Error404Module } from './main/pages/404/error-404.module';
+//import { Error404Component } from './main/pages/404/error-404.component';
 
 
 const appRoutes: Routes = [
@@ -43,8 +45,17 @@ const appRoutes: Routes = [
         component   : LoginComponent
     },
     {
-        path      : '**',
+        path        : 'error-404',
+        loadChildren: () => import('./main/pages/404/error-404.module').then(m => m.Error404Module),
+    },
+    {
+        path      : 'login',
         redirectTo: 'pages/auth/login'
+    },
+    {
+        path      : '**',
+        redirectTo: '/error-404'
+        //redirectTo: 'pages/auth/login'
     }
 ];
 
@@ -77,6 +88,7 @@ const appRoutes: Routes = [
         PagesModule,
         SharedModule,
         LoginModule,
+        Error404Module
 
 
     ],
