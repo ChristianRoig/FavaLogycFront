@@ -163,8 +163,8 @@ export class TableComprobantesComponent implements OnInit {
   }
 
   abrir( idPedido: number ){ 
-    //let ruta = `apps/pedidos/ver-comprobante/${ idPedido }`; //para forzar fallo
-    let ruta = `apps/pedidos/ver-pedido/${ idPedido }`;
+    let ruta = `apps/pedidos/ver-comprobante/${ idPedido }`; //para forzar fallo
+    //let ruta = `apps/pedidos/ver-pedido/${ idPedido }`;
     this._router.navigate([ ruta ]);
   }
   
