@@ -112,6 +112,13 @@ export class AgregarDatosEntregaComponent implements OnInit{
     fechaFormatoDate: Date;
     id: number = null;
     estanTodosLosDatos: boolean = false;
+    localidadID: string = "7600";
+    //ciudadDefault = { nombreCiudad: "MAR DEL PLATA",  localidadID: this.localidadID, selectedLocalidad: this.selectLocalidad};
+    //valorDefault: boolean = true;
+    ciudadDefault  = {
+      nombreCiudad: "MAR DEL PLATA",
+      localidadID: 7600
+    }
 
     ngOnInit(): void {
       this.getfiltros();
@@ -455,13 +462,14 @@ export class AgregarDatosEntregaComponent implements OnInit{
     }
   
     selectLocalidad(event: Event) {
+
       this.selectedLocalidad = (event.target as HTMLSelectElement).value;
       // this.selectedCodigoPostal = (event.target as HTMLSelectElement);
       console.log((event.target as HTMLSelectElement).value);
 
-      let localidadID: string = (event.target as HTMLSelectElement).value;
+      this.localidadID = (event.target as HTMLSelectElement).value;
       
-      console.log("POSTAL:", this.getPostalxLocalidad( parseInt(localidadID) ) );
+      console.log("POSTAL:", this.getPostalxLocalidad( parseInt(this.localidadID) ) );
 
       if(this.selectedLocalidad > 0){
         this._pedidosListaService.getProvinciaPorLocalidad(this.selectedLocalidad).subscribe( params => {

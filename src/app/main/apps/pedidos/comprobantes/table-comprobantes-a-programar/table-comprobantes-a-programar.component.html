@@ -17,7 +17,7 @@
 
         <ng-container matColumnDef="Comprobante">
             <th mat-header-cell *matHeaderCellDef style="width: 60px; padding: 15px !important;"> Comprobante </th>
-            <td mat-cell *matCellDef="let element" class="dato" style="width: 60px; padding: 15px !important;"> {{ element.nroCbte }} </td>
+            <td mat-cell *matCellDef="let element" class="dato" style="width: 60px; padding: 15px !important;">VENTA - {{ element.nroCbte }} </td>
         </ng-container>
         <!-- "nroCbte": "B0003800043778",
             "cantidadDeArticulos": 1 -->
@@ -48,7 +48,8 @@
         <ng-container matColumnDef="estadoCeDIS">
             <th mat-sort-header="estadoCeDIS" mat-header-cell *matHeaderCellDef> Estado </th>
             <td mat-cell *matCellDef="let element" class="celda">
-                <p class="estados">A PROGRAMAR</p>
+                <p *ngIf="element.cantArticulos > 0" class="estados">A PROGRAMAR</p>
+                <p *ngIf="element.cantArticulos === 0" class="estadoProgramado">PROGRAMADO</p>
                 <!-- - {{ element.estadoCeDIS }} - -->
             </td>
         </ng-container>
@@ -61,8 +62,8 @@
             </td>
         </ng-container> -->
 
-        <ng-container matColumnDef="seleccionar">
-            <th mat-header-cell *matHeaderCellDef> Seleccionar </th>
+        <ng-container matColumnDef="seleccionar" style="width: 70px;">
+            <th mat-header-cell *matHeaderCellDef> Acción </th>
             <td mat-cell class="example-button-row celda" *matCellDef="let element">
 
                 <button mat-stroked-button [disabled]="element.cantArticulos===0" (click)="getPedidoDeArticuloSinRemitir( element.nroCbte )" color="primary"> Crear </button>

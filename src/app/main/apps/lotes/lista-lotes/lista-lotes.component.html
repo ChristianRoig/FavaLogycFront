@@ -216,7 +216,12 @@
 
                 <ng-container matColumnDef="estado">
                     <th mat-header-cell *matHeaderCellDef> Estado</th>
-                    <td mat-cell class="example-button-row" *matCellDef="let lote">{{ lote.estado }} </td>
+                    <td mat-cell class="example-button-row" *matCellDef="let lote">
+                        <p *ngIf="lote.estado ==='NUEVO'" class="h5 estadoNuevo">{{ lote.estado }}</p>
+                        <p *ngIf="lote.estado ==='ESTANTERIA'" class="h5 estadoEstanteria">{{ lote.estado }}</p>
+                        <p *ngIf="lote.estado ==='DARSENA'" class="h5 estadoDarsena">{{ lote.estado }}</p>
+                        <!-- {{ lote.estado }} -->
+                    </td>
                 </ng-container>
 
                 <ng-container matColumnDef="seleccionar">

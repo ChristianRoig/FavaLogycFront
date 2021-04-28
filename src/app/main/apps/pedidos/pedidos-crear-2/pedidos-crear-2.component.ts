@@ -164,6 +164,8 @@ export class PedidosCrear2Component implements OnInit {
   }
 
   agregar(){
+    console.log("this.dataSourceDatosDeEntrega.datos", this.dataSourceDatosDeEntrega.datos);
+    console.log("this.dataSourceDatosDeEntrega.datos[0].listaPedidoDetalle[0].numeroCbte", this.dataSourceDatosDeEntrega.datos[0].listaPedidoDetalle[0].numeroCbte);
     this._service.postPedidos( this.dataSourceDatosDeEntrega.datos, 1, this.dataSourceDatosDeEntrega.datos[0].listaPedidoDetalle[0].numeroCbte )
       .subscribe(data => {
         console.log(data);

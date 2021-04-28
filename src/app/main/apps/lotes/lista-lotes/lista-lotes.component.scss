@@ -46,6 +46,36 @@
         margin-left: 20px;
     }
     
+    .estadoNuevo {
+        padding: 4px;
+        padding-left: 10px;
+        border-radius: 5px;
+        color: white;
+        background-color: #03a9f4;
+        text-transform: uppercase;
+        width: 120px !important;
+    }
+    
+    .estadoEstanteria {
+        padding: 4px;
+        padding-left: 10px;
+        border-radius: 5px;
+        color: rgb(0, 0, 0);
+        background-color: #fff176;
+        text-transform: uppercase;
+        width: 120px !important;
+    }
+    
+    .estadoDarsena {
+        padding: 4px;
+        padding-left: 10px;
+        border-radius: 5px;
+        color: white;
+        background-color: #03a9f4;
+        text-transform: uppercase;
+        width: 120px !important;
+    }
+    
     .filtros {
         width: 350px;
         display: flex;
