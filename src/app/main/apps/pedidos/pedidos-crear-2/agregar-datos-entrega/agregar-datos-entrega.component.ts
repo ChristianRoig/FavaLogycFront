@@ -85,7 +85,7 @@ export class AgregarDatosEntregaComponent implements OnInit{
     minDateHastaFiltro: any;
 
     filtroProvincias: any;
-    selectedProvincia: any = 1;
+    selectedProvincia: any;
 
     filtroLocalidades: any;
     selectedLocalidad: any = 1402;
@@ -108,7 +108,8 @@ export class AgregarDatosEntregaComponent implements OnInit{
     mail:string          = '';
     observaciones:string = '';
     telefono:string      = '';
-
+    mostrarDatos: boolean = false;
+    fechaFormatoDate: Date;
     id: number = null;
     estanTodosLosDatos: boolean = false;
 
@@ -120,10 +121,12 @@ export class AgregarDatosEntregaComponent implements OnInit{
           break;
         case "upd":
           this.deshabilitado = false;
+          this.mostrarDatos = true;
           this.getDatoEntrega();
           break;
-        case "view":
-          this.deshabilitado = true;
+          case "view":
+            this.deshabilitado = true;
+            this.mostrarDatos = true;
           this.getDatoEntrega();
           break;
       }
@@ -164,12 +167,67 @@ export class AgregarDatosEntregaComponent implements OnInit{
       }
     }
 
-    getDatoEntrega(){
+    adaptarFecha(valor: string){
+      console.log("valor", valor);
+      let stringFechaAdaptada: string = "";
+      let dia:string = "";
+      let mes:string = "";
+      let anio:string = "";
 
+      for(let i = 0; i < valor.length ; i++){
+        //let caracter: string = valor[i];
+        if(valor[i] != "-" && dia.length <= 1){
+          dia += valor[i];
+        }
+        if (valor[i-1] === "-" && valor[i] != "-"){
+          if (valor[i+1] === "-" || valor[i+2] === "-"){
+            if (mes.length <= 1)
+              mes += valor[i];
+          }
+        }
+        /* if((valor[i-1] === "-" && valor[i] != "-") && valor[i+1] === "-"){
+          if(mes.length <= 1)
+            mes += valor[i];
+        } */
+        /* if((valor[i-1] === "-" && valor[i] != "-") && mes.length <= 1){
+          if(mes.length === 1 && valor[i+1] === "-")
+            mes += valor[i];
+        } */
+        if(dia.length >= 1 && mes.length >= 1){
+          let yaEstoyEnAnio = false;
+          if(valor[i-1] === "-"){
+            yaEstoyEnAnio = true;
+          }
+          if((valor[i] != "-" && anio.length <= 3) && yaEstoyEnAnio== true){
+            anio += valor[i];
+          }
+        }
+        /* if(caracter === "/"){
+          caracter = "-";
+        } */
+        /* console.log(" - ", caracter);
+        stringFechaAdaptada += caracter; */
+      }
+      console.log("todo junto quedaria", dia,"|", mes, "|", anio)
+      
+      /* let date = new  Date ("2014-10-10");
+      console.log(date.toDateString(), "estoy acá"); */
+      return stringFechaAdaptada;
+    }
+
+    getDatoEntrega(){
+      console.log("data", this.data);
+      console.log("FECHA DE THIS.DATA",this.data.item.fechaDeEntrega);
+      let fechaAdaptada = this.adaptarFecha(this.data.item.fechaDeEntrega);
+
+
+      //cumpleanos = new Date(1995,11,17);
       this.contacto             = this.data.item.contacto;
       this.direccion            = this.data.item.direccion;
       this.picker               = new Date(this.data.item.fechaDeEntrega);
       this.valorPicker          = new Date(this.data.item.fechaDeEntrega);
+      /* this.picker               = this.fechaFormatoDate;
+      this.valorPicker          = this.fechaFormatoDate; */
       this.data.articulos       = this.data.item.listaPedidoDetalle;
       this.mail                 = this.data.item.mail;
       this.id                   = this.data.item.id;
@@ -180,9 +238,60 @@ export class AgregarDatosEntregaComponent implements OnInit{
       this.selectedTransporte   = this.data.item.sysTransporte.id;
       this.telefono             = this.data.item.telefono;
 
-      console.log(this.picker);
-      console.log(this.data.item.fechaDeEntrega);
-  
+      console.log("LO QUE BUSCO", this.picker, "|",this.valorPicker, "|",this.data.item.fechaDeEntrega);
+      //console.log(this.data.item.fechaDeEntrega, this.selectedTransporte, this.selectedTurno  );
+    }
+
+    devolverTurno(selectedTurno: number){
+      if(selectedTurno == 1)
+      return "Mañana";
+      else
+        return "Tarde";
+    }
+
+    devolverNombreTransporte( selectedTransporte: number ){
+      if (selectedTransporte == 1)
+          return "Sin Transporte";
+      if (selectedTransporte == 2)
+          return "Transporte Santulli";
+      if (selectedTransporte == 3)
+          return "OCA";
+      if (selectedTransporte == 4)
+          return "Manuel Gonzalez";
+      if (selectedTransporte == 4)
+          return "Transporte Santiago";
+      if (selectedTransporte == 6)
+          return "Juan Russo";
+      if (selectedTransporte == 7)
+          return "Tato Cejas";
+      if (selectedTransporte == 8)
+          return "Roberto Scagglia";
+      if (selectedTransporte == 9)
+          return "Daniel Bareille";
+      if (selectedTransporte == 10)
+          return "Santa Rita";
+      if (selectedTransporte == 11)
+          return "Interprovincial";
+      if (selectedTransporte == 12)
+          return "Expreso Pinamar";
+      if (selectedTransporte == 13)
+          return "Transporte Lojo";
+      if (selectedTransporte == 14)
+          return "Jorvic Express";
+      if (selectedTransporte == 15)
+          return "Otros";
+      if (selectedTransporte == 16)
+          return "Expreso Tandil";
+      if (selectedTransporte == 17)
+          return "Crevecoeur Oscar A. y Marcos O. S. de H.";
+      if (selectedTransporte == 18)
+          return "Raf";
+      if (selectedTransporte == 19)
+          return "Flete Service";
+      if (selectedTransporte == 20)
+          return "Flete Armador";
+      if (selectedTransporte == 21)
+          return "Andreani";
     }
 
     getfiltros(){
@@ -229,8 +338,33 @@ export class AgregarDatosEntregaComponent implements OnInit{
       })
 
 
-      this._pedidosListaService.getAllProvincias().subscribe(params => {
+      /* this._pedidosListaService.getAllProvincias().subscribe(params => {
         this.filtroProvincias = params.datos;
+        console.log("filtroProvincias -> ", params.datos);
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error");
+        } else {
+          let errStatus = err.status
+          if (errStatus == 0){
+            let titulo = 'Error de Servidor';
+            let mensaje = "Por favor comunicarse con Sistemas";
+            this.mostrarError(errStatus, titulo, mensaje);
+          } else {
+            let titulo = 'Error al cargar filtros';
+            let mensaje = err.error.message.toString();
+            this.mostrarError(errStatus, titulo, mensaje);
+          }
+        }
+      }) */
+  
+      this._pedidosListaService.getAllLocalidades().subscribe(params => {
+        this.filtroLocalidades = params.datos;
+        //console.log("el primero ", this.filtroLocalidades[0]);
+        this.selectedLocalidad = this.filtroLocalidades[0].id;
+        //console.log("el selectedLocalidad ", this.selectedLocalidad);
+        
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
@@ -248,9 +382,11 @@ export class AgregarDatosEntregaComponent implements OnInit{
           }
         }
       })
-  
-      this._pedidosListaService.getAllLocalidades().subscribe(params => {
-        this.filtroLocalidades = params.datos;
+
+      this._pedidosListaService.getProvinciaPorLocalidad( this.selectedLocalidad ).subscribe( params => {
+         this.selectedProvincia = params;
+         //console.log("filtroProvincias asdasd-> ", this.selectedProvincia);
+        //this.filtroProvincias = params;
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
@@ -330,8 +466,9 @@ export class AgregarDatosEntregaComponent implements OnInit{
       if(this.selectedLocalidad > 0){
         this._pedidosListaService.getProvinciaPorLocalidad(this.selectedLocalidad).subscribe( params => {
           console.log("localidades -> ",params);
-          this.selectedProvincia = params.id;
-          console.log("Provincia: "+this.selectedProvincia);
+          //this.selectedProvincia = params.id;
+          this.selectedProvincia = params;
+          console.log("Provincia: "+this.selectedProvincia.id);
         },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
@@ -368,13 +505,13 @@ export class AgregarDatosEntregaComponent implements OnInit{
 
     selectTurno(event: Event) {
       this.selectedTurno = (event.target as HTMLSelectElement).value;
-      console.log(this.selectedTurno);
+      //console.log(this.selectedTurno);
       this.controlarExistenDatos();
     }
     
     selectTransporte(event: Event) {
       this.selectedTransporte = (event.target as HTMLSelectElement).value;
-      console.log(this.selectedTransporte);
+      //console.log(this.selectedTransporte);
       this.controlarExistenDatos();
     }
 
@@ -382,9 +519,13 @@ export class AgregarDatosEntregaComponent implements OnInit{
 
       if (evento.value) {
         let fecha = evento.value._i.date+"/"+(evento.value._i.month+1)+"/"+evento.value._i.year;
-        console.log(fecha);
+        let fechaFormatoPicker = evento.value._i.date+"-"+(evento.value._i.month+1)+"-"+evento.value._i.year;
+        this.fechaFormatoDate = new Date(evento.value._i.year, evento.value._i.month+1, evento.value._i.date);
+        //this.picker = fechaFormatoPicker; 
+        this.picker = this.fechaFormatoDate; 
 
-        this.picker = fecha;   
+        console.log("fechaFormatoDate", this.fechaFormatoDate);
+        //console.log(fecha, "|",this.picker);   
       }
       this.controlarExistenDatos();
     }

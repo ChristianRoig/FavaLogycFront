@@ -108,7 +108,7 @@ export class LoteCrearLoteComponent implements OnInit {
   selectedProvincia: any = 1;
 
   filtroLocalidades: any;
-  selectedLocalidad: any = 1402;
+  selectedLocalidad: any = null;
 
   pickerFiltroDesde:any = null;
   pickerFiltroHasta:any = null;
@@ -183,7 +183,8 @@ export class LoteCrearLoteComponent implements OnInit {
     this.selectedEstado = 0;
     this.selectedEtapa = 0;
     this.selectedProvincia = 1;
-    this.selectedLocalidad = 1402;
+    //this.selectedLocalidad = 1402;
+    this.selectedLocalidad = null;
     this.pickerFiltroDesde= null;
     this.pickerFiltroHasta= null;
     this.pickerLoteDesde  = null;
@@ -256,7 +257,7 @@ export class LoteCrearLoteComponent implements OnInit {
       }
     })
 
-    this._loteCrearLoteService.getAllEstados().subscribe(params => {
+    /* this._loteCrearLoteService.getAllEstados().subscribe(params => {
       this.filtroEstados = params.datos;
     },
     (err: HttpErrorResponse) => {
@@ -274,7 +275,7 @@ export class LoteCrearLoteComponent implements OnInit {
           this.mostrarError(errStatus, titulo, mensaje);
         }
       }
-    })
+    }) */
 
     this._loteCrearLoteService.getAllEtapas().subscribe(params => {
       this.filtroEtapas = params.datos;
@@ -316,7 +317,7 @@ export class LoteCrearLoteComponent implements OnInit {
       }
     })
 
-    this._loteCrearLoteService.getAllLocalidades().subscribe(params => {
+    /* this._loteCrearLoteService.getAllLocalidades().subscribe(params => {
       this.filtroLocalidades = params.datos;
     },
     (err: HttpErrorResponse) => {
@@ -334,7 +335,7 @@ export class LoteCrearLoteComponent implements OnInit {
           this.mostrarError(errStatus, titulo, mensaje);
         }
       }
-    })
+    }) */
   }
 
   getArticulos(){
@@ -402,6 +403,8 @@ export class LoteCrearLoteComponent implements OnInit {
     
     // console.log(this.body);
 
+    console.log("body que mando: ",this.body);
+    console.log("busqueda que mando: ",this.busqueda);
     this._loteCrearLoteService.getArticulos(this.body, this.busqueda, this.page, this.size, this.columna, this.order).subscribe(
       data => {
         this.dataSource2 = data.datos;
@@ -511,7 +514,7 @@ export class LoteCrearLoteComponent implements OnInit {
       })
     } else {
       this.selectedLocalidad = 0;
-      this._loteCrearLoteService.getAllLocalidades().subscribe(params => {
+     /*  this._loteCrearLoteService.getAllLocalidades().subscribe(params => {
         this.filtroLocalidades = params.datos;
       },
       (err: HttpErrorResponse) => {
@@ -529,7 +532,7 @@ export class LoteCrearLoteComponent implements OnInit {
             this.mostrarError(errStatus, titulo, mensaje);
           }
         }
-      })
+      }) */
     }
     // this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
   }

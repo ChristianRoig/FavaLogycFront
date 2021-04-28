@@ -94,15 +94,15 @@ export class PedidosListaService
         return this._httpClient.get(ruta);
     }
 
-    getAllProvincias(): Observable<any>
+    /* getAllProvincias(): Observable<any> // no devuelve nada
     {
         let ruta = `${BASE_URL}pedidos/provincia/domicilio/`;
         return this._httpClient.get(ruta);
-    }
+    } */
 
     getProvinciaPorLocalidad(id:number): Observable<any>
     {
-        let ruta = `${BASE_URL}pedidos/provincia/localidad/${id}`;
+        let ruta = `${BASE_URL}pedidos/provincia/localidad/${ id }`;
         return this._httpClient.get(ruta);
     }
 

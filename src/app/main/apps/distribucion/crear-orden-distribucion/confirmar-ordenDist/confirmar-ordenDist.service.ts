@@ -19,7 +19,7 @@ export class ConfirmarOrdenDeDistribucionService
         private _httpClient: HttpClient
     ) { }
 
-    crearOrdenDeDistribucion( body ){
+    crearOrdenDeDistribucion( body ): Observable<any>{
 
         let headers = new HttpHeaders({
             "Content-Type": "application/json"
@@ -27,6 +27,16 @@ export class ConfirmarOrdenDeDistribucionService
 
         let ruta = `${BASE_URL}pedidos/distribucion`;
         return this._httpClient.post(ruta, body, {headers: headers});
+    }
+
+    actualizarOrdenDistribucion( idOrden, body ): Observable<any>{
+        
+        let headers = new HttpHeaders({
+          "Content-Type": "application/json"
+        });
+        
+        let ruta = `${BASE_URL}pedidos/distribucion/${ idOrden }`;
+        return this._httpClient.put(ruta, body,{headers: headers});
     }
 
     getAllTransportes(): Observable<any> {

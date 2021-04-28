@@ -350,7 +350,7 @@ export class PedidosCrear2Component implements OnInit {
   verDatoEntrega(item){
     console.log(item);
 
-    let dialogRef = this._dialog.open(AgregarDatosEntregaComponent, {
+    let dialogRef = this._dialog.open( AgregarDatosEntregaComponent, {
       width: window.innerWidth+'px',
       data: {
         option: 'view',
@@ -408,6 +408,7 @@ export class PedidosCrear2Component implements OnInit {
     
     dialogRef.afterClosed()
       .subscribe(result => {
+        
         console.log(JSON.parse(localStorage.getItem('datoEntrega')));
         if(JSON.parse(localStorage.getItem('datoEntrega'))){
           

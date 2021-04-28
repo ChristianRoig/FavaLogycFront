@@ -197,15 +197,21 @@ export const navigation: FuseNavigation[] = [
                         exactMatch: true
                     },
                 ]
-            }/* ,
+            },
             {
-                id       : 'dashboards',
-                title    : 'Comprobantes',
-                type     : 'item',
-                url       : '/apps/comprobantes/lista-comprobantes',
-                icon     : 'school',
-                
-            } */
+                id       : 'beta and legacy',
+                title    : 'Beta and Legacy',
+                type     : 'collapsable',
+                children : [
+                    {
+                        id        : 'lista-articulos',
+                        title     : 'Pedidos (viejo)',
+                        type      : 'item',
+                        url       : '/apps/pedidos/lista-articulos',
+                        exactMatch: true
+                    }
+                ]
+            }
         ]
     }
 ];

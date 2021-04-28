@@ -104,7 +104,7 @@ const routes: Routes = [
         FuseSharedModule,
         FuseWidgetModule,
         CustomTagModule,
-        TablaRetractilModule
+        TablaRetractilModule,
     ],
     providers   : [
         PedidosListaService,

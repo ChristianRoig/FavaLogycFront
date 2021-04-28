@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ElementRef, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
@@ -7,6 +7,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 
 //service
 import { ConfirmarOrdenDeDistribucionService } from './confirmar-ordenDist.service';
+import { Debounce } from 'app/shared/decorators/debounce';
 
 export interface PeriodicElement {
   Id: number;
@@ -37,6 +38,7 @@ export interface BodyRemito {
 
 export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
 
+  @ViewChild('nombreOrdenDist') nombreOrdenDistInput: ElementRef;
   dataSource2: any;
   
   selection = new SelectionModel<any>(true, []);
@@ -46,7 +48,7 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
   datosOrden: {} = {};
   estoyEditando: boolean = false;
   nombreBoton: string = "Crear";
-
+buscarNombreLote
   filtroTransportes: any;
   selectedTransporte: any = 0;
 
@@ -82,7 +84,7 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
   crearOrden( accion: string ){
 
     //queda hacer el mandar el update de actualizarOrden() y ver si existe el servicio
-    if(accion === "Actualizar"){
+    if (accion === "Actualizar"){
       console.log("accion ->", accion);
       this.actualizarOrden();
     }
@@ -127,7 +129,34 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
     }
   }
 
-  actualizarOrden(){}
+  actualizarOrden(){
+    let body = { 
+      nombre         : this.nombreOrden,
+      idTurno        : this.selectedTurno,
+      idTransporte   : this.selectedTransporte,
+      idLocalidad    : this.selectedLocalidad
+    }
+    let idOrden = 4;// BORRAR ESTO
+    this._confirmarOrdenDeDistribucionService.actualizarOrdenDistribucion( idOrden, body ).subscribe( params => {
+      console.log("se actualizaron los datos con éxito");
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
+        } else {
+          let titulo = 'Error al actualizar la orden';
+          let mensaje = err.error.message.toString();
+          this.mostrarError(errStatus, titulo, mensaje);
+        }
+      }
+    });
+  }
 
   navegarAlistaOrdenes(){
     let ruta = `apps/distribucion/ordenes-distribucion`;
@@ -153,6 +182,7 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
   }
 
   setearValores(){
+      //falta setear el idOrden acá
     this.estoyEditando = true;
     this.nombreBoton = "Actualizar";
     this.selectedTransporte = this.data.selection.transporte;
@@ -164,16 +194,15 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
     console.log(" this.selectedTransporte",  this.selectedTransporte, " this.selectedLocalidad", this.selectedLocalidad,
     " this.selectedTurno",  this.selectedTurno);
   }
-  /* cantArticulos: 1
-      cantArticulosACargar: 1
-      cantRemitos: 1
-      estado: "NUEVO"
-      fecha: "20/04/2021 20:48:45"
-      id: 3
-      localidad: "MAR DEL PLATA"
-      nombre: "Mi dist"
-      transporte: "OCA"
-      turno: "MAÑANA" */
+
+  @Debounce(1000)
+  setNombreOrden() {
+    let valorInput = this.nombreOrdenDistInput.nativeElement.value;
+    if( valorInput < 1 || valorInput === null ) 
+      this.nombreOrden = "Mi dist";
+    else
+      this.nombreOrden = this.nombreOrdenDistInput.nativeElement.value;
+  }
 
   getfiltros(){
     this._confirmarOrdenDeDistribucionService.getAllTransportes().subscribe(params => {

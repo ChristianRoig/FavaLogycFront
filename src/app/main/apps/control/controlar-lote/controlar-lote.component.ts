@@ -123,8 +123,9 @@ export class ControlarLoteComponent implements OnInit {
 
   getArticulosDeLote() {
     this._controlarLoteService.getArticulosDeLote(this.idLote, '', this.modo).subscribe( data => {
-      console.log( data );
       this.articulos = data.datos;
+      console.log( "this.articulos ->", this.articulos );
+      
       //this.articulos = this.dataSource2;
     },
     (err: HttpErrorResponse) => {
