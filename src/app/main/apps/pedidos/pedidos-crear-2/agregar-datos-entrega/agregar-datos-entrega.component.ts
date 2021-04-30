@@ -86,6 +86,7 @@ export class AgregarDatosEntregaComponent implements OnInit{
 
     filtroProvincias: any;
     selectedProvincia: any;
+    provincia;
 
     filtroLocalidades: any;
     selectedLocalidad: any = 1402;
@@ -109,7 +110,8 @@ export class AgregarDatosEntregaComponent implements OnInit{
     observaciones:string = '';
     telefono:string      = '';
     mostrarDatos: boolean = false;
-    fechaFormatoDate: Date;
+    //fechaFormatoDate: Date;
+    fechaFormatoDate: String;
     id: number = null;
     estanTodosLosDatos: boolean = false;
     localidadID: string = "7600";
@@ -117,7 +119,7 @@ export class AgregarDatosEntregaComponent implements OnInit{
     //valorDefault: boolean = true;
     ciudadDefault  = {
       nombreCiudad: "MAR DEL PLATA",
-      localidadID: 7600
+      localidadID: 1402
     }
 
     ngOnInit(): void {
@@ -145,6 +147,8 @@ export class AgregarDatosEntregaComponent implements OnInit{
     }
 
     agregar(){
+      console.log("this.selectedLocalidad en AGREGAR;", this.selectedLocalidad);
+      console.log("| ID |", this.id);
       this.datoEntrega.contacto                     = this.contacto;
       this.datoEntrega.direccion                    = this.direccion;
       this.datoEntrega.fechaDeEntrega               = this.picker;
@@ -192,14 +196,6 @@ export class AgregarDatosEntregaComponent implements OnInit{
               mes += valor[i];
           }
         }
-        /* if((valor[i-1] === "-" && valor[i] != "-") && valor[i+1] === "-"){
-          if(mes.length <= 1)
-            mes += valor[i];
-        } */
-        /* if((valor[i-1] === "-" && valor[i] != "-") && mes.length <= 1){
-          if(mes.length === 1 && valor[i+1] === "-")
-            mes += valor[i];
-        } */
         if(dia.length >= 1 && mes.length >= 1){
           let yaEstoyEnAnio = false;
           if(valor[i-1] === "-"){
@@ -209,11 +205,6 @@ export class AgregarDatosEntregaComponent implements OnInit{
             anio += valor[i];
           }
         }
-        /* if(caracter === "/"){
-          caracter = "-";
-        } */
-        /* console.log(" - ", caracter);
-        stringFechaAdaptada += caracter; */
       }
       console.log("todo junto quedaria", dia,"|", mes, "|", anio)
       
@@ -231,8 +222,10 @@ export class AgregarDatosEntregaComponent implements OnInit{
       //cumpleanos = new Date(1995,11,17);
       this.contacto             = this.data.item.contacto;
       this.direccion            = this.data.item.direccion;
-      this.picker               = new Date(this.data.item.fechaDeEntrega);
-      this.valorPicker          = new Date(this.data.item.fechaDeEntrega);
+      /* this.picker               = new Date(this.data.item.fechaDeEntrega);
+      this.valorPicker          = new Date(this.data.item.fechaDeEntrega); */
+      this.picker               = "22/04/2021";
+      this.valorPicker          = "22/04/2021";
       /* this.picker               = this.fechaFormatoDate;
       this.valorPicker          = this.fechaFormatoDate; */
       this.data.articulos       = this.data.item.listaPedidoDetalle;
@@ -391,7 +384,9 @@ export class AgregarDatosEntregaComponent implements OnInit{
       })
 
       this._pedidosListaService.getProvinciaPorLocalidad( this.selectedLocalidad ).subscribe( params => {
-         this.selectedProvincia = params;
+        this.provincia = params;
+        this.selectedProvincia = params.id;
+        console.log("filtroProvincias -> ", this.selectedProvincia);
          //console.log("filtroProvincias asdasd-> ", this.selectedProvincia);
         //this.filtroProvincias = params;
       },
@@ -416,6 +411,7 @@ export class AgregarDatosEntregaComponent implements OnInit{
 
     selectProvincia(event: Event) {
       this.selectedProvincia = (event.target as HTMLSelectElement).value;
+      console.log("this.selectedProvincia", this.selectedProvincia);
       if(this.selectedProvincia > 0){
         this.selectedLocalidad = 0;
         this._pedidosListaService.getAllLocalidadesPorProvincia(this.selectedProvincia).subscribe(params => {
@@ -528,7 +524,8 @@ export class AgregarDatosEntregaComponent implements OnInit{
       if (evento.value) {
         let fecha = evento.value._i.date+"/"+(evento.value._i.month+1)+"/"+evento.value._i.year;
         let fechaFormatoPicker = evento.value._i.date+"-"+(evento.value._i.month+1)+"-"+evento.value._i.year;
-        this.fechaFormatoDate = new Date(evento.value._i.year, evento.value._i.month+1, evento.value._i.date);
+        //this.fechaFormatoDate = new Date(evento.value._i.year, evento.value._i.month+1, evento.value._i.date);
+        this.fechaFormatoDate = fecha;
         //this.picker = fechaFormatoPicker; 
         this.picker = this.fechaFormatoDate; 
 

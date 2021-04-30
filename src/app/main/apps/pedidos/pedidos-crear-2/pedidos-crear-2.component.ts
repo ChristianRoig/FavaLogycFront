@@ -14,6 +14,9 @@ import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.componen
 
 import { PedidosCrear2Service } from './pedidos-crear-2.service';
 
+
+
+
 export interface Articulo {  // se usa 
   id: number,
   codigoArticulo: string,
@@ -26,7 +29,7 @@ export interface Articulo {  // se usa
 }
 
 export interface DatosDeEntrega { // se usa
-  datos : Array< ListaDatosDeEntrega>
+  listadoDatosDeEntrega : Array< ListaDatosDeEntrega>
 }
 
 export interface ListaDatosDeEntrega {
@@ -49,7 +52,7 @@ export interface ListaDatosDeEntrega {
   pedidoTurno: {
       id: number,
   },
-  listaPedidoDetalle: Array <Articulo>
+  listaPedidoDetalle: Array <Articulo>; 
 }
 
 @Component({
@@ -77,7 +80,7 @@ export class PedidosCrear2Component implements OnInit {
   procesarDatos: boolean = false;
 
   listaDatosVacia: DatosDeEntrega = {
-    datos: []
+    listadoDatosDeEntrega: []
   };
   
   displayedColumnsArticulos: string[] = ['select','codigoArticulo','nombre'];
@@ -102,7 +105,7 @@ export class PedidosCrear2Component implements OnInit {
       this.titulo = 'Agregar Pedido'
 
       this.dataSourceArticulos = JSON.parse(localStorage.getItem('AddPedidoC'));//asi anda desde comprobantes a programar
-      console.log("this.dataSourceArticulos",this.dataSourceArticulos);
+      console.log("Articulos sin añadir | ",this.dataSourceArticulos);
       if(this.dataSourceArticulos == null){
         this.dataSourceArticulos = JSON.parse(localStorage.getItem('AddPedido'))._selected;//asi me anda desde pedido-crear1
         console.log(this.dataSourceArticulos);
@@ -128,12 +131,12 @@ export class PedidosCrear2Component implements OnInit {
   getDatosDeEntrga(){
     this._service.getDatosDeEntregaUpd(this.modo).subscribe((params) => {
 
-      this.dataSourceDatosDeEntrega.datos = params;
+      this.dataSourceDatosDeEntrega.listadoDatosDeEntrega = params;
       
-      this.tipoCbte      = this.dataSourceDatosDeEntrega.datos[0].listaPedidoDetalle[0].tipoCbte;
-      this.numeroCbte    = this.dataSourceDatosDeEntrega.datos[0].listaPedidoDetalle[0].numeroCbte;
-      this.codigoCliente = this.dataSourceDatosDeEntrega.datos[0].listaPedidoDetalle[0].codigoCliente;
-      this.nombreCliente = this.dataSourceDatosDeEntrega.datos[0].listaPedidoDetalle[0].nombreCliente;
+      this.tipoCbte      = this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0].listaPedidoDetalle[0].tipoCbte;
+      this.numeroCbte    = this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0].listaPedidoDetalle[0].numeroCbte;
+      this.codigoCliente = this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0].listaPedidoDetalle[0].codigoCliente;
+      this.nombreCliente = this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0].listaPedidoDetalle[0].nombreCliente;
     },
 
     (err: HttpErrorResponse) => {
@@ -162,12 +165,43 @@ export class PedidosCrear2Component implements OnInit {
       this.modificar();
     }
   }
-
+ //this.datoEntrega.sysLocalidad.id 
   agregar(){
-    console.log("this.dataSourceDatosDeEntrega.datos", this.dataSourceDatosDeEntrega.datos);
-    console.log("this.dataSourceDatosDeEntrega.datos[0].listaPedidoDetalle[0].numeroCbte", this.dataSourceDatosDeEntrega.datos[0].listaPedidoDetalle[0].numeroCbte);
-    this._service.postPedidos( this.dataSourceDatosDeEntrega.datos, 1, this.dataSourceDatosDeEntrega.datos[0].listaPedidoDetalle[0].numeroCbte )
-      .subscribe(data => {
+    
+    console.log("this.dataSourceDatosDeEntrega.datos ||", this.dataSourceDatosDeEntrega);
+    const {id} = this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0].listaPedidoDetalle[0];
+    const { numeroCbte } =  this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0].listaPedidoDetalle[0]; 
+    const { fechaDeEntrega,telefono, mail, direccion,contacto, observaciones,sysLocalidad,  sysTransporte, pedidoTurno } = this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0];
+    
+    let obj = {
+            "id": null,
+            direccion,
+            fechaDeEntrega,
+            telefono,
+            mail,
+            contacto,
+            observaciones,
+            sysLocalidad,
+            sysTransporte,
+            pedidoTurno,
+            "listaPedidoDetalle": [
+                {
+                   id,
+                }
+            ]
+        }
+    
+    let listaDatosDeEntrega = [];
+    listaDatosDeEntrega.push(obj);
+
+    console.log({numeroCbte});
+    console.log({listaDatosDeEntrega});
+    this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0].listaPedidoDetalle = [];
+    //this.dataSourceDatosDeEntrega.datos[0].listaPedidoDetalle.push();
+
+    //this.dataSourceDatosDeEntrega.datos[0].listaPedidoDetalle[] = idAux; 
+
+    this._service.postPedidos( listaDatosDeEntrega, 1, numeroCbte ).subscribe(data => {
         console.log(data);
         // this.dataSourceDatosDeEntrega = params;
   
@@ -178,7 +212,7 @@ export class PedidosCrear2Component implements OnInit {
         this._router.navigate([ruta]);
     },
     (err: HttpErrorResponse) => {
-      
+      console.error({err})
       if (err.error instanceof Error) {
         console.log("Client-side error");
       } else {
@@ -197,7 +231,7 @@ export class PedidosCrear2Component implements OnInit {
   }
   
   modificar(){
-    this._service.putPedidos(this.dataSourceDatosDeEntrega.datos).subscribe(data => {
+    this._service.putPedidos(this.dataSourceDatosDeEntrega.listadoDatosDeEntrega).subscribe(data => {
       console.log(data);
       let ruta = `apps/pedidos/pedidos-lista`;
       localStorage.removeItem('AddPedido');
@@ -233,21 +267,21 @@ export class PedidosCrear2Component implements OnInit {
     switch (indexTo) {
       case '-1' : {
         this.dataSourceArticulos.push(art);
-        this.dataSourceDatosDeEntrega.datos[indexItem].listaPedidoDetalle.splice(indexElement,1);
+        this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[indexItem].listaPedidoDetalle.splice(indexElement,1);
         break;
       }
       case '-2' : {
         break;
       }
       default: {
-        this.dataSourceDatosDeEntrega.datos[indexTo].listaPedidoDetalle.push(art);
-        this.dataSourceDatosDeEntrega.datos[indexItem].listaPedidoDetalle.splice(indexElement,1);
+        this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[indexTo].listaPedidoDetalle.push(art);
+        this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[indexItem].listaPedidoDetalle.splice(indexElement,1);
 
       }
     }
 
-    if(this.dataSourceDatosDeEntrega.datos[indexItem].listaPedidoDetalle.length === 0){
-      this.dataSourceDatosDeEntrega.datos.splice(indexItem,1)
+    if(this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[indexItem].listaPedidoDetalle.length === 0){
+      this.dataSourceDatosDeEntrega.listadoDatosDeEntrega.splice(indexItem,1)
     }
 
     this.render();
@@ -255,7 +289,7 @@ export class PedidosCrear2Component implements OnInit {
   }
 
   moverDesdeArticulos(event: Event){
-
+    
     let indexItems = (event.target as HTMLSelectElement).value    
 
     switch (indexItems) {
@@ -264,7 +298,8 @@ export class PedidosCrear2Component implements OnInit {
       }
       default: {
         for (let art of this.selection.selected) {
-          this.dataSourceDatosDeEntrega.datos[indexItems].listaPedidoDetalle.push(art);
+          
+          this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[indexItems].listaPedidoDetalle.push(art);
           
           let indexToSplice = this.dataSourceArticulos.indexOf(art);
           this.dataSourceArticulos.splice(indexToSplice,1);
@@ -386,7 +421,7 @@ export class PedidosCrear2Component implements OnInit {
         
         if(JSON.parse(localStorage.getItem('datoEntrega'))){
           
-          this.dataSourceDatosDeEntrega.datos.splice(indexItem,1,JSON.parse(localStorage.getItem('datoEntrega'))); 
+          this.dataSourceDatosDeEntrega.listadoDatosDeEntrega.splice(indexItem,1,JSON.parse(localStorage.getItem('datoEntrega'))); 
           
           console.log('despues');
           console.log(this.dataSourceDatosDeEntrega);
@@ -410,17 +445,20 @@ export class PedidosCrear2Component implements OnInit {
     
     dialogRef.afterClosed()
       .subscribe(result => {
-        
+        console.log("LOS DATOS QUE YA VIENEN");
         console.log(JSON.parse(localStorage.getItem('datoEntrega')));
         if(JSON.parse(localStorage.getItem('datoEntrega'))){
           
-          this.dataSourceDatosDeEntrega.datos.push(JSON.parse(localStorage.getItem('datoEntrega')));
+          this.dataSourceDatosDeEntrega.listadoDatosDeEntrega.push(JSON.parse(localStorage.getItem('datoEntrega')));
+          console.log("this.dataSourceDatosDeEntrega ANTES QUE META TODO",this.dataSourceDatosDeEntrega);
+          //this.dataSourceDatosDeEntrega.datos[0].listaPedidoDetalle.
+          //this.dataSourceDatosDeEntrega = 
           for (let art of this.selection.selected) {
             
             let indexToSplice = this.dataSourceArticulos.indexOf(art);
             this.dataSourceArticulos.splice(indexToSplice, 1);
             
-            console.log(JSON.parse(localStorage.getItem('datoEntrega')));
+            //console.log(JSON.parse(localStorage.getItem('datoEntrega')));
           }
           //console.log("this.dataSourceArticulos", this.dataSourceArticulos, this.dataSourceArticulos.length);
           this.selection.clear();

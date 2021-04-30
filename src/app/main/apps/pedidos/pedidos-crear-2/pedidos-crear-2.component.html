@@ -111,7 +111,7 @@
                         <mat-label>Mover a</mat-label>
                         <mat-select (change)="moverDesdeArticulos($event)">
                             <mat-option [value]="-1"> MOVER </mat-option>
-                            <mat-option *ngFor="let items of this.dataSourceDatosDeEntrega.datos; let indexItems = index" [value]="indexItems">
+                            <mat-option *ngFor="let items of this.dataSourceDatosDeEntrega.listadoDatosDeEntrega; let indexItems = index" [value]="indexItems">
                                 {{items.id}} - {{items.direccion}}
                             </mat-option>
                         </mat-select>
@@ -120,9 +120,9 @@
             </div>
         </div>
 
-        <div *ngIf="this.dataSourceDatosDeEntrega.datos.length > 0">
+        <div *ngIf="this.dataSourceDatosDeEntrega.listadoDatosDeEntrega.length > 0">
 
-            <div *ngFor="let item of this.dataSourceDatosDeEntrega.datos; let indexItem=index" #cards fxLayout="column" class="fuse-card" style="max-width: 100%;">
+            <div *ngFor="let item of this.dataSourceDatosDeEntrega.listadoDatosDeEntrega; let indexItem=index" #cards fxLayout="column" class="fuse-card" style="max-width: 100%;">
                 <div class="mat-card  my-24">
                     <div class="h2 m-24">
                         {{item.id}} - {{item.direccion}}
@@ -166,7 +166,7 @@
                                         <select matNativeControl (change)="moverDesdeDatosEntrega($event, element, indexItem, indexElement)">
                                             <option [value]="-2"> MOVER </option>
                                             <option [value]="-1"> Articulos a remitir </option>
-                                            <option *ngFor="let items of this.dataSourceDatosDeEntrega.datos; let indexItems = index" 
+                                            <option *ngFor="let items of this.dataSourceDatosDeEntrega.listadoDatosDeEntrega; let indexItems = index" 
                                                     [value]="indexItems"> {{items.id}} - {{items.direccion}} </option>
                                         </select>
                                     </mat-form-field>
