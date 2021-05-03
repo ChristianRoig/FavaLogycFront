@@ -52,17 +52,27 @@
     height: 80px;
 }
 
-
-/* .avisoControl {
-    margin-left: 500px;
-    margin-right: 900px;
-    height: 15px;
-    width: 100px;
+.estadoAcontrolar {
+    margin-left: 20px;
+    padding: 4px;
+    padding-left: 10px;
+    border-radius: 5px;
+    color: rgb(0, 0, 0);
+    background-color: #f44336;
+    text-transform: uppercase;
+    width: 120px !important;
 }
 
-.cardControl {
-    background-color: lightgreen;
-} */
+.estadoControlado {
+    margin-left: 20px;
+    padding: 4px;
+    padding-left: 10px;
+    border-radius: 5px;
+    color: rgb(0, 0, 0);
+    background-color: #43a047;
+    text-transform: uppercase;
+    width: 120px !important;
+}
 
 @media (max-width: 1024px) {
     .controlesBusquedaF {

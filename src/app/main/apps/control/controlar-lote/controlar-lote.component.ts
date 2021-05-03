@@ -58,6 +58,7 @@ export class ControlarLoteComponent implements OnInit {
   cupa: string = null;
   controlado: boolean = false;
   ocultarBotones: boolean = false;
+  estadoLote: string = "A CONTROLAR";
 
   condicion: string = null;
   endPoint: string = null;
@@ -125,11 +126,41 @@ export class ControlarLoteComponent implements OnInit {
     window.location.reload();
   }
 
+  setEstadoLote(articulos: any){
+    console.log("articulos de setEstadoLote", articulos);
+    let contador = 0;
+    if(this.modo === "estanteria"){
+      for(let articulo of articulos){
+        //console.log("cantDetalles", articulo.cantidadDeDetalles, "cantDetalles a chequear", articulo.cantidadDeDetallesCheckeados);  
+        if(articulo.cantidadDeDetalles == articulo.cantidadDeDetallesCheckeados){
+          contador++;
+          //console.log("contador", contador, "articulos.lenght", articulos.length);
+        }
+      }
+      if (contador == this.articulos.length){
+        this.estadoLote = "CONTROLADO";
+      }
+    }
+    //console.log("ESTADO LOTE", this.estadoLote);
+    if(this.modo === "darsena"){
+      for(let articulo of articulos){
+        //console.log("cantDetalles", articulo.cantidadDeDetalles, "cantDetalles a chequear", articulo.cantidadDeDetallesCheckeados);  
+        if(articulo.cantidadDeDetalles == articulo.cantidadDeDetallesCheckeados){
+          contador++;
+          //console.log("contador", contador);
+        }
+      }
+      if (contador == this.articulos.length)
+        this.estadoLote = "CONTROLADO";
+    }
+
+  }
+
   getArticulosDeLote() {
     this._controlarLoteService.getArticulosDeLote(this.idLote, '', this.modo).subscribe( data => {
       this.articulos = data.datos;
       console.log( "this.articulos ->", this.articulos );
-      
+      this.setEstadoLote( this.articulos );
       //this.articulos = this.dataSource2;
     },
     (err: HttpErrorResponse) => {
@@ -159,7 +190,7 @@ export class ControlarLoteComponent implements OnInit {
   esperarYactualizarDatos(){
     setTimeout(() => {                          
       this.getArticulosDeLote();
-      //this.actualizar();
+
     }, 1000);
   }
 
@@ -174,8 +205,6 @@ export class ControlarLoteComponent implements OnInit {
         this.controlado = true;
         this._sonido.playAudioSuccess();
         console.log("control exitoso");
-
-        this.esperarYactualizarDatos();
         
       },
       (err: HttpErrorResponse) => {
@@ -195,8 +224,9 @@ export class ControlarLoteComponent implements OnInit {
           }
         }
       });
+      this.esperarYactualizarDatos();
     }
-    //this.esperarYactualizarDatos();
+
 
 
   @Debounce(1000) 
