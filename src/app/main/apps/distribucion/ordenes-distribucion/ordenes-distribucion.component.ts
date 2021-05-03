@@ -34,7 +34,7 @@ export class OrdenesDistribucionComponent implements OnInit {
   //@ViewChild('buscarCbte') buscarCbteInput: ElementRef;
   @ViewChild('buscarOrdenPorCupa') buscarOrdenPorCupaInput: ElementRef;
 
-  displayedColumns: string[] = ['id', 'nombre', 'fecha', 'cantArticulos', 'cantArticulosACargar', 'cantRemitos', 'estado', 'seleccionar'];
+  displayedColumns: string[] = ['id', 'nombre', 'fecha', 'cantArticulos', 'cantArticulosACargar', 'cantRemitos', 'localidad', 'transporte', 'estado', 'seleccionar'];
   dataSource2: any;
   selection = new SelectionModel<any>(true, []);
   selecccionDeEstado: string;

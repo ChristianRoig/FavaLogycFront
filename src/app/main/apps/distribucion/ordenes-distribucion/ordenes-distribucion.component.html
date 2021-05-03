@@ -93,12 +93,25 @@
                     <td mat-cell class="example-button-row pl-16" *matCellDef="let orden">{{ orden.cantArticulos }} </td>
                 </ng-container>
                 <ng-container matColumnDef="cantArticulosACargar">
-                    <th mat-header-cell *matHeaderCellDef> Articulos a Cargar</th>
-                    <td mat-cell class="example-button-row pl-36" *matCellDef="let orden">{{ orden.cantArticulosACargar }} </td>
+                    <th mat-header-cell *matHeaderCellDef> A Cargar</th>
+                    <td mat-cell class="example-button-row pl-16" *matCellDef="let orden">
+                        <p *ngIf=" orden.cantArticulosACargar > 0" class="articulosAcargar">{{ orden.cantArticulosACargar }}</p>
+                        <p *ngIf=" orden.cantArticulosACargar === 0" class="articulosAcargarCero">{{ orden.cantArticulosACargar }}</p>
+                    </td>
                 </ng-container>
                 <ng-container matColumnDef="cantRemitos">
                     <th mat-header-cell *matHeaderCellDef> Remitos</th>
                     <td mat-cell class="example-button-row pl-16" *matCellDef="let orden">{{ orden.cantRemitos }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="localidad">
+                    <th mat-header-cell *matHeaderCellDef> Localidad</th>
+                    <td mat-cell class="example-button-row" *matCellDef="let orden">{{ orden.localidad }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="transporte">
+                    <th mat-header-cell *matHeaderCellDef> Transporte </th>
+                    <td mat-cell class="example-button-row" *matCellDef="let orden">{{ orden.transporte }} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="estado">
@@ -107,7 +120,7 @@
                 </ng-container>
 
                 <ng-container matColumnDef="seleccionar">
-                    <th mat-header-cell class="pl-16" *matHeaderCellDef> Seleccionar </th>
+                    <th mat-header-cell class="pl-16" *matHeaderCellDef> Acción </th>
                     <td mat-cell class="example-button-row" *matCellDef="let orden">
                         <button mat-stroked-button color="primary" (click)="verOrden(orden)"> Ver Orden </button>
                     </td>

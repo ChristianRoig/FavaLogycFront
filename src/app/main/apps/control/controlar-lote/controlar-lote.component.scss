@@ -16,11 +16,18 @@
     margin-left: 15px;
 }
 
+.btnToggle {
+    //margin-left: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
 .botonesBusqueda {
     display: flex;
-    width: 600px;
+    width: 900px;
     align-items: center !important;
-    /* justify-content: space-around; */
+    justify-content: space-between;
 }
 
 .inputBusqueda {
@@ -38,7 +45,7 @@
 
 .controlesBusquedaF {
     display: flex;
-    width: 100%;
+    width: 95%;
     align-items: center !important;
     justify-content: flex-start;
     margin-left: 60px;
@@ -65,6 +72,25 @@
         justify-content: flex-start;
         margin-left: 30px;
         height: 80px;
+    }
+    .inputBusquedaBorrar {
+        width: 300px;
+        //margin-left: 20px;
+        margin-top: 20px;
+    }
+    .botonesBusqueda {
+        display: flex;
+        width: 180px;
+        align-items: center !important;
+        /* justify-content: space-around; */
+    }
+    .btn {
+        height: 40px;
+        /* margin-bottom: 27px; */
+        width: 80px;
+        padding-left: 5px;
+        padding-right: 5px;
+        margin-left: 10px;
     }
 }
 

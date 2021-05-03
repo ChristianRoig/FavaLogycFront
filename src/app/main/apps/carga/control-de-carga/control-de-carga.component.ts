@@ -34,7 +34,7 @@ export class ControlDeCargaComponent implements OnInit {
 
   @ViewChild('buscar') buscarOrdenInput: ElementRef;
   // cantArticulos: cantArticulosACargar: cantRemitos: estado: fecha: id: nombre:  
-  displayedColumns: string[] = ['id', 'nombre', 'fecha', 'estado', 'cantArticulos', 'cantArticulosACargar', 'cantRemitos', 'seleccionar'];
+  displayedColumns: string[] = ['id', 'nombre', 'fecha', 'estado', 'cantArticulos', 'cantArticulosACargar', 'cantRemitos', 'localidad', 'transporte', 'seleccionar'];
   dataSource2: any;
   
   length: number = 0;

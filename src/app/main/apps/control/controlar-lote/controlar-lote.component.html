@@ -20,9 +20,15 @@
                     </mat-form-field>
                 </div>
                 <div class="botonesBusqueda">
-                    <button mat-raised-button #btnRef="matButton" class="btn" color="primary" (click)="controlarEtapaArticulo()">Controlar</button>
+                    <div *ngIf="!this.ocultarBotones">
+                        <button mat-raised-button #btnRef="matButton" class="btn" color="primary" (click)="controlarEtapaArticulo()">Controlar</button>
 
-                    <button mat-raised-button class="btn" color="warn" (click)="toggle()">Eliminar</button>
+                        <button mat-raised-button class="btn" color="warn" (click)="toggle()">Eliminar</button>
+                    </div>
+                    <div class="btnToggle">
+                        <mat-slide-toggle formcontrolname="hidden" type="button" (click)="toggleBotones()" [(ngModel)]="ocultarBotones" class="mat-slide-toggle"></mat-slide-toggle>
+                        <label class="pl-8">Ocultar botones</label>
+                    </div>
                 </div>
             </div>
 

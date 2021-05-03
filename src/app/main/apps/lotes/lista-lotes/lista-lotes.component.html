@@ -211,7 +211,10 @@
 
                 <ng-container matColumnDef="cantArticulos">
                     <th mat-header-cell *matHeaderCellDef> Cant Articulos</th>
-                    <td mat-cell class="example-button-row" *matCellDef="let lote">{{ lote.cantART }} </td>
+                    <td mat-cell class="example-button-row" *matCellDef="let lote">
+                        <p *ngIf="lote.cantART > 0" class="cantArticulos"> {{ lote.cantART }} </p>
+                        <p *ngIf="lote.cantART === 0" class="cantArticuloCero"> {{ lote.cantART }} </p>
+                    </td>
                 </ng-container>
 
                 <ng-container matColumnDef="estado">
@@ -225,7 +228,7 @@
                 </ng-container>
 
                 <ng-container matColumnDef="seleccionar">
-                    <th mat-header-cell *matHeaderCellDef> Seleccionar </th>
+                    <th mat-header-cell *matHeaderCellDef> Accción </th>
                     <td mat-cell class="example-button-row" *matCellDef="let lote">
                         <button mat-stroked-button color="primary" (click)="verLote(lote)"> Ver Lote </button>
                     </td>

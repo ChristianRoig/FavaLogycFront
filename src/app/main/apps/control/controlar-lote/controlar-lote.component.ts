@@ -57,6 +57,7 @@ export class ControlarLoteComponent implements OnInit {
   codigoBarras: string = null;
   cupa: string = null;
   controlado: boolean = false;
+  ocultarBotones: boolean = false;
 
   condicion: string = null;
   endPoint: string = null;
@@ -111,6 +112,9 @@ export class ControlarLoteComponent implements OnInit {
       } 
     } 
   } */
+  toggleBotones(){
+    console.log("verBotones", this.ocultarBotones);
+  }
 
   volver(){
     let ruta = `/apps/control/lote-en/${this.modo}`;
@@ -214,8 +218,12 @@ export class ControlarLoteComponent implements OnInit {
   }
 
   saltarAbotonControlar(e){
-    if (e.key === "Enter")
-      this.buttonRef.focus();
+    if (e.key === "Enter") {
+      if (this.ocultarBotones == true)
+        this.controlarEtapaArticulo();
+      else
+        this.buttonRef.focus();
+    }
   }
 
 
