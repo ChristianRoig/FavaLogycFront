@@ -10,6 +10,7 @@ import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { ComprobantesListaService } from './comprobantes-lista.service';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 
+
 export interface Articulos {
   Id: number;
   Tipo: string;
@@ -46,6 +47,7 @@ export interface BodyDetalle{
   styleUrls: ['./comprobantes-lista.component.scss']
 })
 
+
 export class ComprobantesListaComponent implements OnInit {
 
   @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
@@ -56,6 +58,14 @@ export class ComprobantesListaComponent implements OnInit {
   maxDateHastaLote: Date;
 
   index: number;
+
+  /* navLinks = [  //pendiente para la proxima presentacion
+    { path: 'comprobantes-a-programar', label: 'Comprobantes a programar' },
+    { path: 'comprobantes', label: 'Comprobantes' },
+    { path: 'pedidos', label: 'Pedidos' },
+    { path: 'articulos', label: 'Articulos' },
+  ]; */
+
 
   constructor(private _router: Router, 
               private _fuseSidebarService: FuseSidebarService, 

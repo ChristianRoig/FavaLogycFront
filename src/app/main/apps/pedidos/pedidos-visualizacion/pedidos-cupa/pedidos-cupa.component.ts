@@ -23,7 +23,7 @@ export class PedidosCupaComponent implements OnInit {
 
   dataSourceCUPA: any;
 
-  displayedColumnsCupa: string[] = ['lote', 'codigoArticulo','codigoUnicoParteArticulo', 'estado', 'etapa'];
+  displayedColumnsCupa: string[] = ['lote', 'codigoArticulo','codigoUnicoParteArticulo', 'estado', 'etapa', 'accion'];
 
   length: number;
   page: number;
@@ -76,6 +76,10 @@ export class PedidosCupaComponent implements OnInit {
         }
       }
     });
+  }
+
+  imprimirCupa(){
+    
   }
 
   sortData( event ) {

@@ -449,7 +449,7 @@ export class LoteCrearLoteComponent implements OnInit {
           } else {
             this._router.navigate(['']);
           }
-      });
+    });
   }
 
   selectTipo(event: Event) {

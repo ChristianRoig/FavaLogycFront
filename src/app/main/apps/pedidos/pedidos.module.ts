@@ -71,8 +71,22 @@ const routes: Routes = [
     {
         path     : 'lista-comprobantes',
         component: ComprobantesListaComponent
-    }
+    },
+    /* {   path     : 'lista-comprobantes/comprobantes-a-programar',  // cambios proximos
+        component: TableComprobantesAprogramarComponent 
+    },
+    {   path     : 'lista-comprobantes/comprobantes',
+        component: TableComprobantesComponent 
+    },
+    {   path     : 'lista-comprobantes/pedidos',
+        component: TablePedidosComponent 
+    },
+    {   path     : 'lista-comprobantes/articulos',
+        component: TableArticulosComponent 
+    }, */
 ];
+
+
 
 @NgModule({
     declarations: [

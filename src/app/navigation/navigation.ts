@@ -38,13 +38,13 @@ export const navigation: FuseNavigation[] = [
                         url       : '/apps/pedidos/crear-pedido',
                         exactMatch: true
                     },
-                    {
+                    /* {
                         id        : 'lista-articulos',
                         title     : 'Pedidos (viejo)',
                         type      : 'item',
                         url       : '/apps/pedidos/lista-articulos',
                         exactMatch: true
-                    }
+                    } */
                 ]
             },
             {

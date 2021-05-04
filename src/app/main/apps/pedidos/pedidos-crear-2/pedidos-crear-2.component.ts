@@ -205,10 +205,11 @@ export class PedidosCrear2Component implements OnInit {
         console.log(data);
         // this.dataSourceDatosDeEntrega = params;
   
-        let ruta = `apps/pedidos/lista-articulos`;
         localStorage.removeItem('AddPedido');
         localStorage.removeItem('datoEntrega');
         localStorage.removeItem('IsTipo');
+        
+        let ruta = `apps/pedidos/lista-comprobantes`;
         this._router.navigate([ruta]);
     },
     (err: HttpErrorResponse) => {
@@ -233,10 +234,11 @@ export class PedidosCrear2Component implements OnInit {
   modificar(){
     this._service.putPedidos(this.dataSourceDatosDeEntrega.listadoDatosDeEntrega).subscribe(data => {
       console.log(data);
-      let ruta = `apps/pedidos/pedidos-lista`;
       localStorage.removeItem('AddPedido');
       localStorage.removeItem('datoEntrega');
       localStorage.removeItem('IsTipo');
+
+      let ruta = `apps/pedidos/lista-comprobantes`;
       this._router.navigate([ruta]);
     },
     (err: HttpErrorResponse) => {

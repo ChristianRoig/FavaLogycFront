@@ -15,6 +15,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ControlarLoteService } from './controlar-lote.service';
 import { MatButton } from '@angular/material/button';
+import { PopUpLoteCreado } from './popUpLoteControlado/popUpLoteControlado.component';
 
 /**
  * @title Basic use of `<table mat-table>`
@@ -139,6 +140,7 @@ export class ControlarLoteComponent implements OnInit {
       }
       if (contador == this.articulos.length){
         this.estadoLote = "CONTROLADO";
+        this.popUpLoteControlado();
       }
     }
     //console.log("ESTADO LOTE", this.estadoLote);
@@ -150,11 +152,26 @@ export class ControlarLoteComponent implements OnInit {
           //console.log("contador", contador);
         }
       }
-      if (contador == this.articulos.length)
+      if (contador == this.articulos.length){
         this.estadoLote = "CONTROLADO";
+        this.popUpLoteControlado();
+      }
     }
 
   }
+
+  popUpLoteControlado() {
+    
+    this._dialog.open( PopUpLoteCreado, {
+        data: {
+          idLote: this.idLote,
+          modo: this.modo
+        }
+      });
+  } 
+  
+  
+  
 
   getArticulosDeLote() {
     this._controlarLoteService.getArticulosDeLote(this.idLote, '', this.modo).subscribe( data => {

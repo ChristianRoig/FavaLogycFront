@@ -48,7 +48,7 @@
 
         <ng-container matColumnDef="etapa">
             <th mat-sort-header="etapa" mat-header-cell *matHeaderCellDef> Etapa </th>
-            <td mat-cell *matCellDef="let element">
+            <td mat-cell *matCellDef="let element" class="mr-8">
                 <p *ngIf="element.etapa ==='INICIAL'" class="pl-32 h5 estadoInicial">{{ element.etapa }}</p>
                 <p *ngIf="element.etapa ==='EN LOTE'" class="pl-24 h5 estadoEnLote">{{ element.etapa }}</p>
                 <p *ngIf="element.etapa ==='ESTANTERIA'" class="pl-16 h5 estadoEstanteria">{{ element.etapa }}</p>

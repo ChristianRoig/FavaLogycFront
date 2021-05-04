@@ -21,6 +21,7 @@ import { ControlarLoteComponent } from './controlar-lote/controlar-lote.componen
 // servicios favalogyc
 import { ControlBusquedaService } from './control-busqueda/control-busqueda.service';
 import { ControlarLoteService } from '../control/controlar-lote/controlar-lote.service';
+import { PopUpLoteCreado } from './controlar-lote/popUpLoteControlado/popUpLoteControlado.component';
 
 const routes: Routes = [
     {
@@ -36,7 +37,8 @@ const routes: Routes = [
 @NgModule({
     declarations: [
         ControlEstanteriaComponent,
-        ControlarLoteComponent
+        ControlarLoteComponent,
+        PopUpLoteCreado
     ],
     imports     : [
         CommonModule,

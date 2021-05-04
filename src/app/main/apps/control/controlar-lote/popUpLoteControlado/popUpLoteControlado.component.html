@@ -1,0 +1,29 @@
+<div class="dialog-content-wrapper" class="primerDiv">
+    <div fxLayout="row">
+        <mat-toolbar matDialogTitle class="mat-accent" style="width: 100%;">
+            <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center" class="titulo">
+                <span class="dialog-title pl-40">Lote controlado</span>
+            </mat-toolbar-row>
+        </mat-toolbar>
+    </div>
+
+    <div mat-dialog-content class="pb-0 m-0" fusePerfectScrollbar>
+        <form class="formClass">
+            <div fxLayout="row" class="mb-8" fxLayoutAlign="start start">
+                <h3 class="texto">El lote {{ this.idLote }} fue controlado exitosamente</h3>
+            </div>
+        </form>
+    </div>
+
+    <div mat-dialog-actions class="m-0 divBotones" fxLayout="row" fxLayoutAlign="end center">
+
+        <button (click)="navegarAlista()" mat-raised-button class="btn" color="accent" aria-label="SAVE">
+           Continuar
+        </button>
+
+        <button mat-raised-button class="btn" (click)="matDialogRef.close()" aria-label="Delete">
+            Cerrar
+        </button>
+
+    </div>
+</div>
