@@ -21,12 +21,15 @@
 
                         <div class="botonesBusqueda">
                             <!-- (click)="editarLote()" -->
-                            <button class="btn" mat-raised-button color="primary">
+                            <!-- <button class="btn" mat-raised-button color="primary">
                                 Buscar
-                            </button>
+                            </button> -->
                             <!-- (click)="sacarDelLote()" -->
                             <button class="btn" mat-raised-button color="primary" [matBadge]="selection.selected.length" [matBadgeHidden]="selection.selected.length===0" matBadgeColor="warn" [disabled]="selection.selected.length===0">
                                 Eliminar Selec.
+                            </button>
+                            <button class="btn" mat-raised-button color="primary">
+                                Imprimir
                             </button>
 
                         </div>

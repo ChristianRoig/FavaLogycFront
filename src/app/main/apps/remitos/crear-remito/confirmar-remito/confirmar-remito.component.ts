@@ -246,7 +246,8 @@ export class ConfirmarRemitoComponent implements OnInit {
       }
     });
 
-    setTimeout(() => {                          
+    setTimeout(() => {    
+      this._dialog.closeAll();                      
       this.navegarAlistaRemitos();
       }, 1000);
   }

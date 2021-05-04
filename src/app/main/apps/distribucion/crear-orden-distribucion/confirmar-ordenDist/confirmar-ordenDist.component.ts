@@ -106,6 +106,7 @@ buscarNombreLote
       console.log("body que mando", body);
       this._confirmarOrdenDeDistribucionService.crearOrdenDeDistribucion( body ).subscribe( params => {
         console.log("entró");
+        this._dialog.closeAll();
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
@@ -139,6 +140,7 @@ buscarNombreLote
     let idOrden = 4;// BORRAR ESTO
     this._confirmarOrdenDeDistribucionService.actualizarOrdenDistribucion( idOrden, body ).subscribe( params => {
       console.log("se actualizaron los datos con éxito");
+      this._dialog.closeAll();
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {

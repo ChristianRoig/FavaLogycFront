@@ -7,7 +7,15 @@
 
             <div fxLayout="row" class="titular">
                 <h1 class="colorText"> Orden {{ this.idOrdenDist }}</h1>
-                <button mat-raised-button color="light" class="mt-22" (click)="eliminarOrdenDeDistribucion()">Eliminar orden</button>
+                <div>
+                    <button class="btn" mat-raised-button color="light">
+                        Imprimir
+                    </button>
+                    <button class="btn" (click)="editarOrdenDist()" mat-raised-button color="light">
+                        Editar
+                    </button>
+                    <button mat-raised-button color="light" class="btn" (click)="eliminarOrdenDeDistribucion()">Eliminar orden</button>
+                </div>
             </div>
 
             <div class="fuse-card my-20 pl-24 pr-24" style="max-width: 100%;">
@@ -15,7 +23,7 @@
                 <div fxLayout="row" fxLayoutAlign="space-around">
 
                     <div class="controlesBusqueda">
-                        <mat-form-field appearance="outline" class="inputBusqueda">
+                        <mat-form-field appearance="outline" name="inputBusqueda" class="inputBusqueda">
                             <mat-label>Buscar Remito</mat-label>
                             <input #buscarCbte class="text-uppercase" (keyup)="searchRemito()" matInput value="" placeholder="Buscar remito por id">
                             <mat-icon matSuffix>search</mat-icon>
@@ -34,9 +42,6 @@
                                 {{ textoBtnAddRemitos }}
                             </button>
 
-                            <button class="btn" (click)="editarOrdenDist()" mat-raised-button color="primary">
-                                Editar
-                            </button>
                         </div>
                     </div>
                 </div>
