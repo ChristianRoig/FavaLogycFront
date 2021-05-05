@@ -48,6 +48,9 @@
                     <mat-label>{{ filtroLocalidades ? 'Localidades' : 'Cargando...'}}</mat-label>
                     <select matNativeControl (change)="selectLocalidad($event)" [disabled]="!filtroLocalidades">
                         <option *ngIf="this.estoyEditando"> {{ this.selectedLocalidad }}</option>
+                        <option [(ngModel)]="localidadDefault" name="localidadDefault" [value]="localidadDefault.id" [selected]="selectedLocalidad === localidadDefault.id" >
+                            {{ localidadDefault.nombre }}
+                        </option>
                         <option *ngFor="let localidad of filtroLocalidades" [value]="localidad.codigoPostal"
                         [selected]="selectedLocalidad === localidad.codigoPostal"> 
                             {{ localidad.nombre }}

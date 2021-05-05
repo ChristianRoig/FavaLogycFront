@@ -48,9 +48,16 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
   datosOrden: {} = {};
   estoyEditando: boolean = false;
   nombreBoton: string = "Crear";
-buscarNombreLote
+  buscarNombreLote
   filtroTransportes: any;
   selectedTransporte: any = 0;
+
+  //localidadDefault: any = null;
+
+  localidadDefault  = {
+    nombre: "MAR DEL PLATA",
+    id: 1402
+  }
 
   filtroLocalidades: any;
   selectedLocalidad: any = 0;
@@ -70,6 +77,10 @@ buscarNombreLote
     if(this.data.vengoDeCrear == true){
       console.log("vengo de crear orden");
       this.toAdd = this.data.selection._selected;
+      console.log("toAdd", this.toAdd);
+      this.localidadDefault = this.toAdd[0].pedidoDetalles[0].pedidoDomicilioEntrega.sysLocalidad;
+      this.selectedLocalidad = this.localidadDefault.id;
+      console.log( this.localidadDefault );
       this.cantRemitos = this.data.selection._selected.length;
     }
     if (this.data.vengoDeOrden == true){
