@@ -45,8 +45,8 @@
             <!-- <mat-card-subtitle class="cardControl">Control exitoso</mat-card-subtitle> -->
             <!--  <mat-label class="cardControl">Control exitoso</mat-label>
             </div> -->
-            <div fxLayout="row">
-                <mat-label class="ml-24 mt-16">Estado del lote: </mat-label>
+            <div fxLayout="row" class="divEstado">
+                <mat-label class="mt-16">Estado del lote: </mat-label>
                 <p *ngIf="this.estadoLote === 'CONTROLADO'" class="estadoControlado">{{ this.estadoLote }}</p>
                 <p *ngIf="this.estadoLote === 'A CONTROLAR'" class="estadoAcontrolar">{{ this.estadoLote }}</p>
             </div>
