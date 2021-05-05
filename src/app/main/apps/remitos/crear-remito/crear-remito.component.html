@@ -12,7 +12,7 @@
                     <div fxLayout="row">
                         <mat-form-field appearance="outline" style="width: 24%;" class="mt-8 inputBusqueda">
                             <mat-label>Código de Artículo o Comprobante</mat-label>
-                            <input #buscarCbte class="text-uppercase" (keyup)="searchCbte()" matInput value="" placeholder="Buscar Cód. Artículo o comprobante">
+                            <input #buscarCbte (keyup)="searchCbte()" matInput value="" placeholder="Buscar Cód. Artículo o comprobante">
                             <mat-icon matSuffix>search</mat-icon>
                         </mat-form-field>
 

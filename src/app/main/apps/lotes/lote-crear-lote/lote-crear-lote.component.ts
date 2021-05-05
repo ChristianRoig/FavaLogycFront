@@ -641,6 +641,7 @@ export class LoteCrearLoteComponent implements OnInit {
     this.columna = 'id';
 
     this.busqueda = this.buscarLoteInput.nativeElement.value;
+    this.busqueda = this.busqueda.toLocaleUpperCase();
     if(this.busqueda === '' || this.busqueda == null){
       this.busqueda = "";
       this.getArticulos();

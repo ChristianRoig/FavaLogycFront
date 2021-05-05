@@ -303,6 +303,7 @@ export class RemitosComponent implements OnInit {
   searchCbte() {
 
     this.busqueda = this.buscarCbteInput.nativeElement.value;
+    this.busqueda = this.busqueda.toLocaleUpperCase();
     if( this.busqueda === '' || this.busqueda == null)
       this.busqueda = null;
   }

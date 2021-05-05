@@ -24,7 +24,7 @@
 
                         <div class="botonesBusqueda">
                             <!-- (click)="getRemitoPorId()" -->
-                            <button class="btn" mat-raised-button color="primary" (click)="controlarArticuloPorCupa()">
+                            <button class="btn" mat-raised-button color="primary" [disabled]="!this.cupa" (click)="controlarArticuloPorCupa()">
                                 Controlar 
                             </button>
 

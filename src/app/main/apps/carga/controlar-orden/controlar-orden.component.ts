@@ -92,6 +92,7 @@ export class ControlarCargaComponent implements OnInit {
   }
 
   controlarArticuloPorCupa(){
+    
     this._controlarOrdenService.controlarArticuloPorCupa( this.idOrdenDist, this.cupa ) .subscribe( data => {
       //console.log(data);
       console.log("controlado");

@@ -13,7 +13,7 @@
                     <div class="controlesBusqueda">
                         <mat-form-field appearance="outline" class="mt-8 inputBusqueda">
                             <mat-label>Buscar un Artículo</mat-label>
-                            <input #buscarLote class="text-uppercase" (keyup)="searchLote()" matInput value="" placeholder="Ingrese un Código de Artículo o Comprobante">
+                            <input #buscarLote (keyup)="searchLote()" matInput value="" placeholder="Ingrese un Código de Artículo o Comprobante">
                             <mat-icon matSuffix>search</mat-icon>
                         </mat-form-field>
 
