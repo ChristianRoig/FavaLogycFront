@@ -13,7 +13,7 @@ export class TableArticulosService
         private _httpClient: HttpClient) { }
 
     getArticulosDePedidos( body ,page, size, columna, order ): Observable<any> {
-        
+        //console.log("ARTICULOS |",columna, "|", order);
         let headers = new HttpHeaders({
             "Content-Type": "application/json"
         });

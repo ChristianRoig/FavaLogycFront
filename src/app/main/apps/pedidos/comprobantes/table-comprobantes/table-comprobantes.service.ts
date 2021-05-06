@@ -26,7 +26,7 @@ export class TableComprobantesService
         private _httpClient: HttpClient) { }
 
     getComprobantesConPedidos( body: BodyDetalle, page, size, columna, order ): Observable<any> {
-
+        //console.log(columna,"|", order);
         let headers = new HttpHeaders({
             "Content-Type": "application/json"
         });

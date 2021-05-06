@@ -44,8 +44,10 @@ export class TablePedidosComponent implements OnInit {
   length: number = 0;
   page: number = 0;
   size: number = 10;
-  columna: string = 'idDetalle';
-  order: string = 'asc';
+  //columna: string = 'idDetalle';
+  columna: string = 'idCabPed';
+  //order: string = 'asc';
+  order: string = 'desc';
 
   mensaje: string;
 

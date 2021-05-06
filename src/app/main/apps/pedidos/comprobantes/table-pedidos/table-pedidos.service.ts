@@ -13,6 +13,7 @@ export class TablePedidosService
         private _httpClient: HttpClient) { }
 
     getPedidos( body ,page, size, columna, order ): Observable<any> {
+       //console.log( "PEDIDOS|",columna, "|", order);
         
         let headers = new HttpHeaders({
             "Content-Type": "application/json"

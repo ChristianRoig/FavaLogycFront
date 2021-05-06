@@ -42,7 +42,7 @@ export class TableComprobantesComponent implements OnInit {
   length: number = 0;
   page: number = 0;
   size: number = 10;
-  columna: string = 'idCbte';
+  columna: string = 'idCabPed';
   order: string = 'desc';
 
   mensaje: string;
