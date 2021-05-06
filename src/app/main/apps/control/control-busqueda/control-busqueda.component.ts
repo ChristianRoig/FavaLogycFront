@@ -305,13 +305,13 @@ export class ControlEstanteriaComponent implements OnInit {
     return fecha.split(' ')[0];
   }
 
-  @Debounce(1000) 
+  //@Debounce(1000) 
   searchCodigoBarras() {
     this.codigoBarras = this.buscarCodigoBarrasInput.nativeElement.value;
     this.buscarCUPAInput.nativeElement.focus();
   }
 
-  @Debounce(1000) 
+  //@Debounce(1000) 
   searchCUPA() {
     this.CUPA = this.buscarCUPAInput.nativeElement.value;
   }

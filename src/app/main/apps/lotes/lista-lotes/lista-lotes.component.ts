@@ -734,7 +734,7 @@ export class ListaLotesComponent implements OnInit {
     this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
   }
 
-  @Debounce(1000)  
+  //@Debounce(1000)  
   searchCbte() {
 
     this.busqueda = this.buscarCbteInput.nativeElement.value;

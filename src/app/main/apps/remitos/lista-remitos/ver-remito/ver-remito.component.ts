@@ -117,7 +117,7 @@ export class VerRemitoComponent implements OnInit {
     return fecha.split(' ')[0];
   }
 
-  @Debounce(1000)  
+  //@Debounce(1000)  
   searchCbte() {
 
     this.busqueda = this.buscarCbteInput.nativeElement.value;

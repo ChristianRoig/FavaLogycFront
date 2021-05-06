@@ -634,7 +634,7 @@ export class LoteCrearLoteComponent implements OnInit {
   }
 
 
-  @Debounce(1000)  
+  //@Debounce(1000)  
   searchLote() {
     
     this.page = 0;

@@ -152,7 +152,7 @@ export class TableArticulosComponent implements OnInit {
       });
   }
 
-  @Debounce(1000)  
+  //@Debounce(1000)  
   searchArticulo() {
     this.busqueda = this.buscarArticuloInput.nativeElement.value;
     this.busqueda = this.busqueda.toLocaleUpperCase();

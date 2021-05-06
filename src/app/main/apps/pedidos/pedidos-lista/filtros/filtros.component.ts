@@ -507,7 +507,7 @@ export class FiltrosComponent implements OnInit {
   }
 
 
-  @Debounce(1000)  
+  //@Debounce(1000)  
   searchLote() {
 
     this.lote = this.buscarLoteInput.nativeElement.value;

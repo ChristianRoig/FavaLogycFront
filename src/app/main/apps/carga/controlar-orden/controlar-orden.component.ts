@@ -151,7 +151,7 @@ export class ControlarCargaComponent implements OnInit {
   }
 
 
-  @Debounce(1000)  
+  
   searchCupa() {
     this.cupa = this.buscarCupaInput.nativeElement.value;
     console.log(this.cupa);

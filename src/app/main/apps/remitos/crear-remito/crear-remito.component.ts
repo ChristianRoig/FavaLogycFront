@@ -299,7 +299,7 @@ export class RemitosComponent implements OnInit {
     this.getPedidosSinRemitir();
   }
 
-  @Debounce(1000)  
+  //@Debounce(1000)  
   searchCbte() {
 
     this.busqueda = this.buscarCbteInput.nativeElement.value;

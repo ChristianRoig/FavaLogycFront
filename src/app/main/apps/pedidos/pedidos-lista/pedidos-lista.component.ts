@@ -123,7 +123,7 @@ export class PedidosListaComponent implements OnInit {
     this.getPedidos( this.body );  
   }
 
-  @Debounce(1000)  
+  //@Debounce(1000)  
   searchCbte() {
 
     this.busqueda = this.buscarCbteInput.nativeElement.value;
@@ -132,7 +132,7 @@ export class PedidosListaComponent implements OnInit {
     this.columna = 'id';
   }
 
-  @Debounce(1000)  
+  //@Debounce(1000)  
   searchLote() {
 
     this.lote = this.buscarLoteInput.nativeElement.value;

@@ -220,7 +220,7 @@ export class ControlarLoteComponent implements OnInit {
     console.log(this.cupa);
     console.log(this.codigoBarras);
     this.articulos = null;
-
+    
     this._controlarLoteService.controlarEtapaArticulo( this.cupa, this.idLote, this.codigoBarras, this.modo )
       .subscribe( data => {
         this.controlado = true;
@@ -250,18 +250,20 @@ export class ControlarLoteComponent implements OnInit {
 
 
 
-  @Debounce(1000) 
+  //@Debounce(1000) 
   searchCodigoBarras( ) {
     this.codigoBarras = this.buscarCodigoBarrasInput.nativeElement.value;
     this.codigoBarras = this.codigoBarras.toLocaleUpperCase();
+    console.log(this.codigoBarras);
     if (this.codigoBarras == "" || this.codigoBarras == null){
       this.codigoBarras = null;
     }
   }  
-  @Debounce(1000) 
+  //@Debounce(1000) 
   searchCUPA() {
     this.cupa = this.buscarCUPAInput.nativeElement.value;
     this.cupa = this.cupa.toLocaleUpperCase();
+    console.log(this.cupa);
     if (this.cupa == "" || this.cupa == null){
       this.cupa = null;
     }

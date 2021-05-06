@@ -44,7 +44,7 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
   selection = new SelectionModel<any>(true, []);
   toAdd = new Array();
   cantRemitos: number = 0;
-  nombreOrden: string = "Mi dist";
+  nombreOrden: string = "";
   datosOrden: {} = {};
   ordenActual = {};
   estoyEditando: boolean = false;
@@ -110,7 +110,7 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
       }
   
       let body = { 
-        nombre : "",
+        nombre         : this.nombreOrdenDistInput.nativeElement.value,
         idTurno        : this.selectedTurno,
         idTransporte   : this.selectedTransporte,
         idLocalidad    : this.selectedLocalidad,
