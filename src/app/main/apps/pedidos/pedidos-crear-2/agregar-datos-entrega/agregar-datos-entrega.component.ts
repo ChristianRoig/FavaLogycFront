@@ -9,7 +9,7 @@ import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.componen
 import { PedidosListaService } from '../../pedidos-lista/pedidos-lista.service';
 
 export interface Articulo {
-  id: number,
+  idDetalleTango: number,
   codigoArticulo: string,
   codigoCliente: string,
   codigoDeBarras: string,

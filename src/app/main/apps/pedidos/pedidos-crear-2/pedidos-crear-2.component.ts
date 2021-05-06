@@ -18,7 +18,7 @@ import { PedidosCrear2Service } from './pedidos-crear-2.service';
 
 
 export interface Articulo {  // se usa 
-  id: number,
+  idDetalleTango: number,
   codigoArticulo: string,
   codigoCliente: string,
   codigoDeBarras: string,
@@ -169,7 +169,7 @@ export class PedidosCrear2Component implements OnInit {
   agregar(){
     
     console.log("this.dataSourceDatosDeEntrega.datos ||", this.dataSourceDatosDeEntrega);
-    const {id} = this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0].listaPedidoDetalle[0];
+    const {idDetalleTango} = this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0].listaPedidoDetalle[0];
     const { numeroCbte } =  this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0].listaPedidoDetalle[0]; 
     const { fechaDeEntrega,telefono, mail, direccion,contacto, observaciones,sysLocalidad,  sysTransporte, pedidoTurno } = this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0];
     //idDetalleTango
@@ -186,7 +186,7 @@ export class PedidosCrear2Component implements OnInit {
             pedidoTurno,
             "listaPedidoDetalle": [
                 {
-                   id,
+                  idDetalleTango,
                 }
             ]
         }
@@ -361,7 +361,7 @@ export class PedidosCrear2Component implements OnInit {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.idDetalleTango + 1}`;
   }
 
   volver(){
