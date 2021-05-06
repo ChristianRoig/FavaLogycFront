@@ -5,6 +5,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+
 import { TranslateModule } from '@ngx-translate/core';
 import 'hammerjs';
 
@@ -93,7 +95,8 @@ const appRoutes: Routes = [
 
     ],
     providers: [
-        SonidoService
+        SonidoService,
+        { provide: LocationStrategy, useClass: HashLocationStrategy }
         // { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
     ],
     bootstrap   : [
