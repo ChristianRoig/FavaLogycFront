@@ -248,15 +248,20 @@ export class ControlarLoteComponent implements OnInit {
 
   @Debounce(1000) 
   searchCodigoBarras( ) {
-    
-
     this.codigoBarras = this.buscarCodigoBarrasInput.nativeElement.value;
     this.codigoBarras = this.codigoBarras.toLocaleUpperCase();
+    if (this.codigoBarras == "" || this.codigoBarras == null){
+      this.codigoBarras = null;
+    }
   }  
   @Debounce(1000) 
   searchCUPA() {
     this.cupa = this.buscarCUPAInput.nativeElement.value;
     this.cupa = this.cupa.toLocaleUpperCase();
+    if (this.cupa == "" || this.cupa == null){
+      this.cupa = null;
+    }
+
   }
 
   saltarAcupa(e){

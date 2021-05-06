@@ -95,6 +95,8 @@ export class ConfirmarAgregarLoteComponent implements OnInit {
             //this.imprimirCupas(idLote);
             localStorage.setItem( 'idLote', JSON.stringify( idLote ));
             this._dialog.closeAll();
+            this.esperarYnavegarAlotes();
+            
           },
           (err: HttpErrorResponse) => {
             if (err.error instanceof Error) {
@@ -121,10 +123,18 @@ export class ConfirmarAgregarLoteComponent implements OnInit {
     return fecha.split(' ')[0];
   }
 
+  esperarYnavegarAlotes(){
+    setTimeout(() => {                          
+      let ruta = `apps/lotes/lista-lotes`;
+      this._router.navigate([ruta]);
+    }, 1000);
+  }
+
   actualizarLote(){
     this._serviceAgregarLoteConfirmar.updateNombreLote(this.nombreLote, this.idLote) .subscribe (data =>  {
       console.log("actualizacion exitosa", data);
       this._dialog.closeAll();
+      this.esperarYnavegarAlotes();
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {

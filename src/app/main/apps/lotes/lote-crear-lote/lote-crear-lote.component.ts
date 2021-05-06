@@ -669,7 +669,7 @@ export class LoteCrearLoteComponent implements OnInit {
 
       let idLote = JSON.parse(localStorage.getItem('idLote'));
       localStorage.clear();
-      this.esperarYnavegarAlotes();
+      
       //this.imprimirCupa( idLote );
         
         /* if (errStatus != 0) {
@@ -686,12 +686,12 @@ export class LoteCrearLoteComponent implements OnInit {
     this._router.navigate([ruta]); */
   }
 
-  esperarYnavegarAlotes(){
+  /* esperarYnavegarAlotes(){
     setTimeout(() => {                          
       let ruta = `apps/lotes/lista-lotes`;
       this._router.navigate([ruta]);
     }, 1000);
-  } 
+  }  */
 
   imprimirCupas(idLote: number){
     const dialogRef = this._dialog.open( ModalDeseaImprimirLoteComponent, {
