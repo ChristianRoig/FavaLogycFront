@@ -28,9 +28,11 @@
                             <button class="btn" mat-raised-button color="primary" [matBadge]="selection.selected.length" [matBadgeHidden]="selection.selected.length===0" matBadgeColor="warn" [disabled]="selection.selected.length===0">
                                 Eliminar Selec.
                             </button>
-                            <button class="btn" mat-raised-button color="primary">
+                            <a routerLink="/assets/pdfs/remito.pdf" routerLinkActive="active"  target="_blank">
+                                <button class="btn" mat-raised-button color="primary">
                                 Imprimir
-                            </button>
+                                </button>
+                            </a>
 
                         </div>
                     </div>

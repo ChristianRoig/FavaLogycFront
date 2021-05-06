@@ -79,7 +79,8 @@ export class PedidosCupaComponent implements OnInit {
   }
 
   imprimirCupa(){
-    
+    //routerLink="/assets/pdfs/Cupa.pdf" 
+    //window.open("http://localhost:4200/assets/pdfs/Cupa.pdf" , "_blank");
   }
 
   sortData( event ) {
