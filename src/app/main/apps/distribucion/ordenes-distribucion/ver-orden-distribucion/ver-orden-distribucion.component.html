@@ -8,9 +8,11 @@
             <div fxLayout="row" class="titular">
                 <h1 class="colorText"> Orden - {{ this.nombreOrden }}</h1>
                 <div>
-                    <button class="btn" mat-raised-button color="light">
+                    <a routerLink="/assets/pdfs/ordendist.pdf" routerLinkActive="active"  target="_blank">
+                        <button class="btn" mat-raised-button color="light">
                         Imprimir
-                    </button>
+                        </button>
+                    </a>
                     <button class="btn" (click)="editarOrdenDist()" mat-raised-button color="light">
                         Editar
                     </button>

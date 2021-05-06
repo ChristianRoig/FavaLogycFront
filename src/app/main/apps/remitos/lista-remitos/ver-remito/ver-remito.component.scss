@@ -50,19 +50,17 @@
     
     .botonesBusqueda {
         display: flex;
-        width: 250px;
+        width: 400px;
         align-items: center !important;
         justify-content: space-around;
     }
     
     .btn {
         height: 40px;
-        /* margin-bottom: 27px; */
-        width: 150px;
+        width: 180px;
         padding-left: 5px;
         padding-right: 5px;
         margin-left: 15px;
-        /* margin-right: 5px; */
     }
     
     @media (max-width: 768px) {
