@@ -21,7 +21,7 @@
                 </div>
                 <div class="botonesBusqueda">
                     <div *ngIf="!this.ocultarBotones">
-                        <button mat-raised-button (click)="controlarEtapaArticulo()" [disabled]="!this.cupa && !this.codigoBarras" #btnRef="matButton" class="btn" color="primary">Controlar</button>
+                        <button mat-raised-button (click)="controlarEtapaArticulo()" [disabled]="!this.cupa || !this.codigoBarras" #btnRef="matButton" class="btn" color="primary">Controlar</button>
 
                         <button mat-raised-button class="btn" color="warn" (click)="toggle()">Eliminar</button>
                     </div>
