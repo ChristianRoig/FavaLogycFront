@@ -65,7 +65,7 @@ export class ControlEstanteriaComponent implements OnInit {
 
   length: number = 0;
   page: number = 0;
-  size: number = 10;
+  size: number = 50;
 
   arregloDeDetalles;
 

@@ -23,7 +23,8 @@
                     <div *ngIf="!this.ocultarBotones">
                         <button mat-raised-button (click)="controlarEtapaArticulo()" [disabled]="!this.cupa || !this.codigoBarras" #btnRef="matButton" class="btn" color="primary">Controlar</button>
 
-                        <button mat-raised-button class="btn" color="warn" (click)="toggle()">Eliminar</button>
+                        <!-- <button mat-raised-button class="btn" color="warn" (click)="toggle()">Eliminar</button> -->
+                        <button mat-raised-button class="btn" color="warn" (click)="popUpLoteControlado()">Eliminar</button>
                     </div>
                     <div class="btnToggle">
                         <mat-slide-toggle formcontrolname="hidden" type="button" (click)="toggleBotones()" [(ngModel)]="ocultarBotones" class="mat-slide-toggle"></mat-slide-toggle>

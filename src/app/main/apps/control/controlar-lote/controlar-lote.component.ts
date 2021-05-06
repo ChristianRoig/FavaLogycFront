@@ -53,6 +53,7 @@ export class ControlarLoteComponent implements OnInit {
   articulos: [] = null;
   modo: string = '';
   idLote : number;
+  lote = {};
   nombreLote: string = '';
   eliminar: boolean = false;
   codigoBarras: string = null;
@@ -81,6 +82,7 @@ export class ControlarLoteComponent implements OnInit {
       this.idLote = params['id'];
     });
     this.getArticulosDeLote();
+    this.buscarLotePorId();
   }
 
   alertArregloVacio(){
@@ -90,30 +92,7 @@ export class ControlarLoteComponent implements OnInit {
     this.mostrarError(errStatus, titulo, mensaje);
     this.volver();
   }
-  
-  /* setearCondicion(){
-    if(this.modo === 'estanteria'){
-      this.condicion = 'EN LOTE';
-      this.endPoint = 'estanteria';
-    } else {
-      this.condicion = 'ESTANTERIA';
-      this.endPoint = 'darsena';
-    }
-  }  */
 
-  /* verificarEtapas(){
-    for( let i=0; i<this.arregloDeDetalles.length; i++ ){
-      if( this.arregloDeDetalles[i].detalle.pedidoEtapa.nombre != this.condicion ) {
-        let titulo = 'Ubicacion de lote incorrecta';
-        let mensaje = "El cupa de "+this.arregloDeDetalles[i].detalle.articulo.nombre+" está en estado " 
-          + this.arregloDeDetalles[i].detalle.pedidoEtapa.nombre + " y no se puede utilizar para control de "+this.endPoint;
-        let errStatus = 404;
-        this._router.navigate([`apps/control/lote-en/${this.endPoint}`]);
-        this.mostrarError(errStatus, titulo, mensaje);
-        return;
-      } 
-    } 
-  } */
   toggleBotones(){
     console.log("verBotones", this.ocultarBotones);
   }
@@ -125,6 +104,30 @@ export class ControlarLoteComponent implements OnInit {
 
   actualizar(){
     window.location.reload();
+  }
+
+  buscarLotePorId(){
+    this._controlarLoteService.getLotePorId( this.idLote ) .subscribe( data => {
+      //console.log("LOTEEEEEEEEEEEEEEEE", data);
+      this.lote = data; 
+      //console.log("LOTEEEEEEEEEEEEEEEE", this.lote);
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
+        } else {
+          let titulo = 'Error al buscar lote';
+          let mensaje = err.error.message.toString();
+          this.mostrarError(errStatus, titulo, mensaje);
+        }
+      }
+    });
   }
 
   setEstadoLote(articulos: any){
@@ -165,7 +168,8 @@ export class ControlarLoteComponent implements OnInit {
     this._dialog.open( PopUpLoteCreado, {
         data: {
           idLote: this.idLote,
-          modo: this.modo
+          modo: this.modo,
+          lote: this.lote
         }
       });
   } 

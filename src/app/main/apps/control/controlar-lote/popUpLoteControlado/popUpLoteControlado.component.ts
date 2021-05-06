@@ -13,6 +13,7 @@ export class PopUpLoteCreado implements OnInit {
   
   modo: string;
   idLote: number;
+  nombreLote: string;
 
   constructor(  public matDialogRef: MatDialogRef<PopUpLoteCreado>,
                 @Inject(MAT_DIALOG_DATA) public data:any,
@@ -22,6 +23,7 @@ export class PopUpLoteCreado implements OnInit {
   ngOnInit(): void {
     this.idLote = this.data.idLote;
     this.modo = this.data.modo;
+    this.nombreLote = this.data.lote.nombre;
   }
 
   navegarAlista(){

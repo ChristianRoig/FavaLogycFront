@@ -42,7 +42,7 @@ export class VerRemitoComponent implements OnInit {
   busqueda: string = "";
   length: number = 0;
   page: number = 0;
-  size: number = 10;
+  size: number = 50;
   columna: string = 'idDetalle';
   order: string = 'asc';
 

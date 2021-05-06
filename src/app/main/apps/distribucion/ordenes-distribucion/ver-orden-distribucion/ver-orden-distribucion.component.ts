@@ -45,7 +45,7 @@ export class VerOrdenDistribucionComponent implements OnInit {
   busqueda: number = null;
   length: number = 0;
   page: number = 0;
-  size: number = 10;
+  size: number = 50;
   columna: string = 'nroCbte';
   order: string = 'asc';
 
