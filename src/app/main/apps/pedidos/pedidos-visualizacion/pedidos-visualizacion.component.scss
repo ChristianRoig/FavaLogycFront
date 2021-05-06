@@ -1,5 +1,14 @@
-.btnEliminar {
+.titular {
     display: flex;
-    justify-content: flex-end !important;
-    margin-bottom: 15px;
+    justify-content: space-between;
+    align-items: center;
+    height: 30px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.colorText {
+    color: white;
+    width: 400px;
+    padding-left: 50px;
 }

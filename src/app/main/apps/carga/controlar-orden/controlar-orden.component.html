@@ -7,7 +7,7 @@
         <div fxLayout="column" style="max-width: 100%;">
 
             <div fxLayout="row" class="titular">
-                <h1 class="colorText"> Orden {{ this.idOrdenDist }}</h1>
+                <h1 class="colorText"> Orden {{ this.nombreOrden }}</h1>
             </div>
 
             <div class="fuse-card my-20 pl-24 pr-24" style="max-width: 100%;">
@@ -18,13 +18,13 @@
                         <mat-form-field appearance="outline" class="inputBusqueda">
                             <mat-label>Controlar un articulo por CUPA</mat-label>
                             <!-- (keyup)="searchCUPA()" -->
-                            <input #controlarCupa (keyup)="searchCupa()" matInput value="" placeholder="Ingrese el CUPA de un articulo">
+                            <input #controlarCupa (keyup)="searchCupa()" (keydown)="saltarAboton($event)" matInput value="" placeholder="Ingrese el CUPA de un articulo">
                             <mat-icon matSuffix>search</mat-icon>
                         </mat-form-field>
 
                         <div class="botonesBusqueda">
                             <!-- (click)="getRemitoPorId()" -->
-                            <button class="btn" mat-raised-button color="primary" [disabled]="!this.cupa" (click)="controlarArticuloPorCupa()">
+                            <button [disabled]="!this.cupa" #btnRef="matButton" (click)="controlarArticuloPorCupa()" class="btn" mat-raised-button color="primary">
                                 Controlar 
                             </button>
 
@@ -42,7 +42,12 @@
 <ng-template #remitos>
 
     <!-- <mat-icon aria-hidden="true" class="material-icons color_white ">info</mat-icon> -->
-    <mat-card-subtitle class="pl-24">Articulos que componen la orden</mat-card-subtitle>
+    <div fxLayout="row" class="divEstado">
+        <mat-label class="mt-16">Estado del lote: </mat-label>
+        <p *ngIf="this.estadoOrden === 'CONTROLADO'" class="estadoControlado">{{ this.estadoOrden }}</p>
+        <p *ngIf="this.estadoOrden === 'A CONTROLAR'" class="estadoAcontrolar">{{ this.estadoOrden }}</p>
+    </div>
+    <!-- <mat-card-subtitle class="pl-24">Articulos que componen la orden</mat-card-subtitle> -->
     <!-- "nombreTipoCbte"| nroParte| -->
     <!-- idArticulo|nombreArticulo|codigoArticulo|codigoUnicoParteArticulo|etapa|nroParte|nroCbte|checkTransporte -->
     <div style="width: 100%; overflow: auto;">

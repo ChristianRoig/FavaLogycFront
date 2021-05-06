@@ -78,6 +78,28 @@
     margin-right: 100px;
 }
 
+.estadoAcontrolar {
+    margin-left: 20px;
+    padding: 4px;
+    padding-left: 10px;
+    border-radius: 5px;
+    color: white;
+    background-color: #f44336;
+    text-transform: uppercase;
+    width: 120px !important;
+}
+
+.estadoControlado {
+    margin-left: 20px;
+    padding: 4px;
+    padding-left: 10px;
+    border-radius: 5px;
+    color: white;
+    background-color: #43a047;
+    text-transform: uppercase;
+    width: 120px !important;
+}
+
 @media (max-width: 768px) {
     .inputBusqueda {
         width: 400px;

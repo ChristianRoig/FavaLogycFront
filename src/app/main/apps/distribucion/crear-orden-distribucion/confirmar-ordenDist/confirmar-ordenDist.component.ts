@@ -46,6 +46,7 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
   cantRemitos: number = 0;
   nombreOrden: string = "Mi dist";
   datosOrden: {} = {};
+  ordenActual = {};
   estoyEditando: boolean = false;
   nombreBoton: string = "Crear";
   buscarNombreLote
@@ -86,6 +87,8 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
     if (this.data.vengoDeOrden == true){
       console.log("vengo de ver orden", this.data.selection);
       this.datosOrden = this.data.selection;
+      this.ordenActual = this.data.ordenActual;
+      this.nombreOrden = this.data.ordenActual.nombre;
       console.log("vengo de ver orden", this.datosOrden);
       this.setearValores();
     }
@@ -107,7 +110,7 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
       }
   
       let body = { 
-        nombre : "Mi dist",
+        nombre : "",
         idTurno        : this.selectedTurno,
         idTransporte   : this.selectedTransporte,
         idLocalidad    : this.selectedLocalidad,
@@ -211,10 +214,11 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
   @Debounce(1000)
   setNombreOrden() {
     let valorInput = this.nombreOrdenDistInput.nativeElement.value;
-    if( valorInput < 1 || valorInput === null ) 
-      this.nombreOrden = "Mi dist";
+    if( valorInput == "" || valorInput == null ){
+      this.nombreOrden = null;
+    } 
     else
-      this.nombreOrden = this.nombreOrdenDistInput.nativeElement.value;
+      this.nombreOrden = valorInput;
   }
 
   getfiltros(){

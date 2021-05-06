@@ -17,10 +17,12 @@ import { TablaRetractilModule } from 'app/components/tabla-retractil/tabla-retra
 // componentes favalogyc
 import { ControlDeCargaComponent } from './control-de-carga/control-de-carga.component';
 import { ControlarCargaComponent } from './controlar-orden/controlar-orden.component';
+import { PopUpOrdenControladaComponent } from './controlar-orden/popUpOrdenControlada/popUpOrdenControlada.component';
 
 // servicios favalogyc
 import { ControlDeCargaService } from './control-de-carga/control-de-carga.service';
 import { ControlarOrdenService } from './controlar-orden/controlar-orden.service';
+
 
 const routes: Routes = [
     {
@@ -36,7 +38,8 @@ const routes: Routes = [
 @NgModule({
     declarations: [
         ControlDeCargaComponent,
-        ControlarCargaComponent
+        ControlarCargaComponent,
+        PopUpOrdenControladaComponent
     ],
     imports     : [
         CommonModule,
@@ -51,7 +54,7 @@ const routes: Routes = [
     ],
     providers   : [
         ControlDeCargaService,
-        ControlarOrdenService
+        ControlarOrdenService,
     ]
 })
 

@@ -31,4 +31,10 @@ export class ControlarOrdenService{
     let ruta = `${BASE_URL}pedidos/distribucion/cupa/${ idOrdenDist }/${ cupa }`;
     return this._httpClient.get(ruta);
   }
+
+  getOrdenById ( idOrdenDist: number ): Observable<any>{    
+        
+    let ruta = `${ BASE_URL }pedidos/distribucion/${ idOrdenDist }`;
+    return this._httpClient.get(ruta);
+}
 }

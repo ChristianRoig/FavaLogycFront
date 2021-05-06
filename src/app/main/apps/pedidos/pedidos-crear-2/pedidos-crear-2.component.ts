@@ -172,7 +172,7 @@ export class PedidosCrear2Component implements OnInit {
     const {id} = this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0].listaPedidoDetalle[0];
     const { numeroCbte } =  this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0].listaPedidoDetalle[0]; 
     const { fechaDeEntrega,telefono, mail, direccion,contacto, observaciones,sysLocalidad,  sysTransporte, pedidoTurno } = this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0];
-    
+    //idDetalleTango
     let obj = {
             "id": null,
             direccion,
