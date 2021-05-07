@@ -81,7 +81,7 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
       console.log("toAdd", this.toAdd);
       this.localidadDefault = this.toAdd[0].pedidoDetalles[0].pedidoDomicilioEntrega.sysLocalidad;
       this.selectedLocalidad = this.localidadDefault.id;
-      console.log( this.localidadDefault );
+      console.log( "this.localidadDefault", this.localidadDefault.id );
       this.cantRemitos = this.data.selection._selected.length;
     }
     if (this.data.vengoDeOrden == true){

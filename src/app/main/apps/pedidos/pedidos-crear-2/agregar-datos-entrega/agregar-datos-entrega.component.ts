@@ -7,6 +7,7 @@ import { AnyMxRecord } from 'dns';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 
 import { PedidosListaService } from '../../pedidos-lista/pedidos-lista.service';
+import { Console } from 'console';
 
 export interface Articulo {
   idDetalleTango: number,
@@ -117,15 +118,16 @@ export class AgregarDatosEntregaComponent implements OnInit{
     localidadID: string = "7600";
     //ciudadDefault = { nombreCiudad: "MAR DEL PLATA",  localidadID: this.localidadID, selectedLocalidad: this.selectLocalidad};
     //valorDefault: boolean = true;
-    ciudadDefault  = {
+    /* ciudadDefault  = {
       nombreCiudad: "MAR DEL PLATA",
       localidadID: 1402
-    }
+    } */
 
     ngOnInit(): void {
       this.getfiltros();
       switch (this.data.option) {
         case "add":
+          console.log("this.selectedLocalidad en AGREGAR;", this.selectedLocalidad);
           this.deshabilitado = false;
           break;
         case "upd":
@@ -148,6 +150,7 @@ export class AgregarDatosEntregaComponent implements OnInit{
 
     agregar(){
       console.log("this.selectedLocalidad en AGREGAR;", this.selectedLocalidad);
+      console.log("this.selectedProvincia en AGREGAR;", this.selectedProvincia);
       console.log("| ID |", this.id);
       this.datoEntrega.contacto                     = this.contacto;
       this.datoEntrega.direccion                    = this.direccion;
@@ -162,7 +165,7 @@ export class AgregarDatosEntregaComponent implements OnInit{
       this.datoEntrega.sysTransporte.id             = this.selectedTransporte;
       this.datoEntrega.telefono                     = this.telefono;
 
-      // console.log(this.datoEntrega);
+      console.log("THIS DATOS ENTREGAAAAAAAA", this.datoEntrega);
       localStorage.setItem('datoEntrega', JSON.stringify(this.datoEntrega));
       this.dialogRef.close();
     }
@@ -362,7 +365,6 @@ export class AgregarDatosEntregaComponent implements OnInit{
       this._pedidosListaService.getAllLocalidades().subscribe(params => {
         this.filtroLocalidades = params.datos;
         //console.log("el primero ", this.filtroLocalidades[0]);
-        this.selectedLocalidad = this.filtroLocalidades[0].id;
         //console.log("el selectedLocalidad ", this.selectedLocalidad);
         
       },
@@ -458,7 +460,7 @@ export class AgregarDatosEntregaComponent implements OnInit{
     }
   
     selectLocalidad(event: Event) {
-
+      console.log("ENTRE A SELECTLOCALIDAD");
       this.selectedLocalidad = (event.target as HTMLSelectElement).value;
       // this.selectedCodigoPostal = (event.target as HTMLSelectElement);
       console.log((event.target as HTMLSelectElement).value);
@@ -469,7 +471,7 @@ export class AgregarDatosEntregaComponent implements OnInit{
 
       if(this.selectedLocalidad > 0){
         this._pedidosListaService.getProvinciaPorLocalidad(this.selectedLocalidad).subscribe( params => {
-          console.log("localidades -> ",params);
+          //console.log("localidades -> ",params);
           //this.selectedProvincia = params.id;
           this.selectedProvincia = params;
           console.log("Provincia: "+this.selectedProvincia.id);
