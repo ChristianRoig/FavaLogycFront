@@ -55,7 +55,7 @@ export class ListaRemitosComponent implements OnInit {
     this.getAllRemitosSinDistribucion();
   }
 
-  @Debounce(50)  
+  //@Debounce(50)  
   searchRemito() {
     this.busqueda = this.buscarRemitoInput.nativeElement.value;
     if(this.busqueda < 1 ){

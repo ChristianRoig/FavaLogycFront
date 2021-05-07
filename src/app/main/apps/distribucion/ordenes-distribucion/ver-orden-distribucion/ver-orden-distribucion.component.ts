@@ -306,7 +306,7 @@ export class VerOrdenDistribucionComponent implements OnInit {
     });
   }
 
-  @Debounce(50)  
+  //@Debounce(50)  
   searchRemito() {
     this.busqueda = this.buscarCbteInput.nativeElement.value;
     console.log(this.busqueda);

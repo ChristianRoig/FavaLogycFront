@@ -157,7 +157,6 @@ export class ControlarCargaComponent implements OnInit {
     console.log(this.cupa);
     if( this.cupa < 1 ){
       this.cupa = null;
-      
     }
   }
 

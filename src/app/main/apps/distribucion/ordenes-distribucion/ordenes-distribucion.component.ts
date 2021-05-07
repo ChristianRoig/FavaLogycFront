@@ -173,7 +173,7 @@ export class OrdenesDistribucionComponent implements OnInit {
     }); 
   } */
 
-  @Debounce(1000)
+ //@Debounce(1000)
   searchOrden() {
     this.cupa = this.buscarOrdenPorCupaInput.nativeElement.value;
     console.log(this.cupa);

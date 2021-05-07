@@ -59,7 +59,7 @@ export class ControlarLoteComponent implements OnInit {
   codigoBarras: string = null;
   cupa: string = null;
   controlado: boolean = false;
-  ocultarBotones: boolean = false;
+  ocultarBotones: boolean = true;
   estadoLote: string = "A CONTROLAR";
 
   condicion: string = null;

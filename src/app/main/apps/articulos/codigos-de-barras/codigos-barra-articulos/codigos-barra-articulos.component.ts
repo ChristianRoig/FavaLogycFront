@@ -119,7 +119,7 @@ export class PedidosCodigosBarraArticulosComponent implements OnInit {
           });
       }
     
-    @Debounce(1000)
+    //@Debounce(1000)
     search() {
 
         this.busqueda = this.buscarInput.nativeElement.value;

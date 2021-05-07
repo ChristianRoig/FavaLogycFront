@@ -211,7 +211,7 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
     " this.selectedTurno",  this.selectedTurno);
   }
 
-  @Debounce(1000)
+  //@Debounce(1000)
   setNombreOrden() {
     let valorInput = this.nombreOrdenDistInput.nativeElement.value;
     if( valorInput == "" || valorInput == null ){
