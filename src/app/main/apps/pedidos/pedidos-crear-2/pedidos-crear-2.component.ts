@@ -167,13 +167,41 @@ export class PedidosCrear2Component implements OnInit {
   }
  //this.datoEntrega.sysLocalidad.id 
   agregar(){
+
+
     
     console.log("this.dataSourceDatosDeEntrega.datos ||", this.dataSourceDatosDeEntrega);
-    const {idDetalleTango} = this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0].listaPedidoDetalle[0];
+    
+    //const { idDetalleTango } = this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0].listaPedidoDetalle[0];
+    /*------------------------------------------------------- */
+    //let listaPedidoDetalle = [];
+    
+    //opcion 1
+    /* for( let idDetalleTango of this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0].listaPedidoDetalle){
+      //const {idDetalleTango} = this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0].listaPedidoDetalle[0];
+      listaPedidoDetalle.push( { idDetalleTango } );
+    } */
+    
+    let listaPedidoDetalleAUX = [];
+    
+    //opcion 2
+     for( let i = 0 ; i < this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0].listaPedidoDetalle.length; i++){
+      
+      const { idDetalleTango } = this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0].listaPedidoDetalle[i];
+      listaPedidoDetalleAUX.push(  { idDetalleTango }  );
+    } 
+    console.log("listaPedidoDetalleXD", listaPedidoDetalleAUX);
+    
+    let listaPedidoDetalle = listaPedidoDetalleAUX;
+    
+    console.log("listaPedidoDetalle", listaPedidoDetalle);
+
+
+    /*------------------------------------------------------- */
     const { numeroCbte } =  this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0].listaPedidoDetalle[0]; 
     const { fechaDeEntrega,telefono, mail, direccion,contacto, observaciones,sysLocalidad,  sysTransporte, pedidoTurno } = this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0];
     //idDetalleTango
-    let obj = {
+    /* let obj = {
             "id": null,
             direccion,
             fechaDeEntrega,
@@ -189,11 +217,24 @@ export class PedidosCrear2Component implements OnInit {
                   idDetalleTango,
                 }
             ]
+        }  */
+    let obj = {
+            "id": null,
+            direccion,
+            fechaDeEntrega,
+            telefono,
+            mail,
+            contacto,
+            observaciones,
+            sysLocalidad,
+            sysTransporte,
+            pedidoTurno,
+            listaPedidoDetalle
         }
     
     let listaDatosDeEntrega = [];
     listaDatosDeEntrega.push(obj);
-
+    
     console.log({numeroCbte});
     console.log({listaDatosDeEntrega});
     this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0].listaPedidoDetalle = [];
