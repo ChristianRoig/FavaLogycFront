@@ -59,7 +59,7 @@
     </ng-template>
 
     <ng-template #listaRemitos>
-        <div style="width: 100%; overflow: auto;">
+        <div style="width: 100%; overflow: auto;" *ngIf="this.dataSource2">
             <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="dataSource2" class="mb-8">
 
                 <ng-container matColumnDef="id">

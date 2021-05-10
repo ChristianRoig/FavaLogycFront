@@ -228,6 +228,11 @@ export class ConfirmarRemitoComponent implements OnInit {
 
     this._serviceRemitosConfirmar.generarRemito( body ).subscribe(params => {
       console.log("entró");
+      
+      setTimeout(() => {    
+        this._dialog.closeAll();                      
+        this.navegarAlistaRemitos();
+        }, 1000);
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
@@ -246,10 +251,6 @@ export class ConfirmarRemitoComponent implements OnInit {
       }
     });
 
-    setTimeout(() => {    
-      this._dialog.closeAll();                      
-      this.navegarAlistaRemitos();
-      }, 1000);
   }
   
   navegarAlistaRemitos(){

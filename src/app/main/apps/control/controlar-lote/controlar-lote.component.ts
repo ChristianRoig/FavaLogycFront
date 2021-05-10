@@ -61,7 +61,7 @@ export class ControlarLoteComponent implements OnInit {
   codigoBarras: string = null;
   cupa: string = null;
   controlado: boolean = false;
-  ocultarBotones: boolean = true;
+  ocultarBotones: boolean = false;
   estadoLote: string = "A CONTROLAR";
 
   condicion: string = null;
@@ -217,8 +217,13 @@ export class ControlarLoteComponent implements OnInit {
   esperarYactualizarDatos(){
     setTimeout(() => {                          
       this.getArticulosDeLote();
-
+      this.limpiarInputs();
     }, 1000);
+  }
+
+  limpiarInputs(){
+    this.buscarCUPAInput.nativeElement.value = "";
+    this.buscarCodigoBarrasInput.nativeElement.value = "";
   }
 
   controlarEtapaArticulo() {
@@ -232,6 +237,7 @@ export class ControlarLoteComponent implements OnInit {
         this.controlado = true;
         this._sonido.playAudioSuccess();
         console.log("control exitoso");
+        this.esperarYactualizarDatos();
         
       },
       (err: HttpErrorResponse) => {
@@ -251,7 +257,6 @@ export class ControlarLoteComponent implements OnInit {
           }
         }
       });
-      this.esperarYactualizarDatos();
     }
 
 
@@ -283,10 +288,12 @@ export class ControlarLoteComponent implements OnInit {
 
   saltarAbotonControlar(e){
     if (e.key === "Enter") {
-      if (this.ocultarBotones == true)
+      if (this.ocultarBotones == false){
         this.controlarEtapaArticulo();
-      else
+      }
+      else{
         this.buttonRef.focus();
+      }
     }
   }
 
