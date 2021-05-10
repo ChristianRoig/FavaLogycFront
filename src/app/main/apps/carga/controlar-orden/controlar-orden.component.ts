@@ -80,6 +80,7 @@ export class ControlarCargaComponent implements OnInit {
       //console.log(data.remitos[0].pedidoDetalles[0].articulo);
       //this.remitosDeOrden = data.remitos;
       this.dataSource2 = data.datos;
+      this.setEstadoOrden();
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
@@ -109,6 +110,7 @@ export class ControlarCargaComponent implements OnInit {
         //console.log("contador", contador, "articulos.lenght", articulos.length);
       }
     }
+    console.log("contador |", contador, "this.dataSource2.length | ", this.dataSource2.length);
     if (contador == this.dataSource2.length){
       this.estadoOrden = "CONTROLADO";
       this.popUpOrdenControlada();
@@ -146,7 +148,6 @@ export class ControlarCargaComponent implements OnInit {
   esperarYactualizarDatos(){
     setTimeout(() => {                          
       this.getArticulosDeOrdenDistribucion( this.idOrdenDist );
-      this.setEstadoOrden();
     }, 3000);
   }
 
