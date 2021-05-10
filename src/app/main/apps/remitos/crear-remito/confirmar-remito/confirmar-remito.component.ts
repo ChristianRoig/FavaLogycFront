@@ -224,7 +224,7 @@ export class ConfirmarRemitoComponent implements OnInit {
       idTalonario: idTalonario,
       listaIdDetalle: this.toAdd
     }
-    console.log(body);
+    console.log({body});
 
     this._serviceRemitosConfirmar.generarRemito( body ).subscribe(params => {
       console.log("entró");
