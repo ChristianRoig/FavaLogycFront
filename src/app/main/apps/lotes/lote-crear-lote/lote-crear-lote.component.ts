@@ -60,7 +60,7 @@ export class LoteCrearLoteComponent implements OnInit {
 
   @ViewChild('buscarLote') buscarLoteInput: ElementRef;
 
-  displayedColumns: string[] = ['select', 'Comprobante', 'CodigoArticulo','NombreArticulo', 'Fecha-Entrega', 'Localidad','Etapa'];
+  displayedColumns: string[] = ['select', 'Comprobante', 'Fecha-Entrega', 'CodigoArticulo','NombreArticulo', 'Localidad','Etapa'];
   dataSource2: any;
   selection = new SelectionModel<Articulos>(true, []);
 
@@ -765,7 +765,10 @@ export class LoteCrearLoteComponent implements OnInit {
         }
       });
   }
-
+  
+  getSoloFecha(fecha: any){
+    return fecha.split(' ')[0];
+  }
 
   isAllSelected() {
     const numSelected = this.selection.selected.length;

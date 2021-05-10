@@ -1,4 +1,4 @@
-<app-plantilla-fondo-simple titulo='Ver Orden de Distribucion' arrowBack=true>
+<app-plantilla-fondo-simple titulo='{{ this.nombreOrden }}' arrowBack=true>
 
     <!-- CONTENIDO -->
     <div contenido>
@@ -6,9 +6,9 @@
         <div fxLayout="column" style="max-width: 100%;">
 
             <div fxLayout="row" class="titular">
-                <h1 class="colorText"> Orden - {{ this.nombreOrden }}</h1>
+                <!-- <h1 class="colorText"> Orden - {{ this.nombreOrden }}</h1> -->
                 <div>
-                    <a routerLink="/assets/pdfs/ordendist.pdf" routerLinkActive="active"  target="_blank">
+                    <a routerLink="/assets/pdfs/ordendist.pdf" routerLinkActive="active" target="_blank">
                         <button class="btn" mat-raised-button color="light">
                         Imprimir
                         </button>

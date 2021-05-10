@@ -16,6 +16,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ControlarLoteService } from './controlar-lote.service';
 import { MatButton } from '@angular/material/button';
 import { PopUpLoteCreado } from './popUpLoteControlado/popUpLoteControlado.component';
+import { SelectMultipleControlValueAccessor } from '@angular/forms';
 
 /**
  * @title Basic use of `<table mat-table>`
@@ -52,6 +53,7 @@ export class ControlarLoteComponent implements OnInit {
   dataSource2: any; */
   articulos: [] = null;
   modo: string = '';
+  tituloPagina: string = 'ESTANTERÍA';
   idLote : number;
   lote = {};
   nombreLote: string = '';
@@ -81,8 +83,15 @@ export class ControlarLoteComponent implements OnInit {
       this.modo = params['modo'];
       this.idLote = params['id'];
     });
+    this.setTitulo();
     this.getArticulosDeLote();
     this.buscarLotePorId();
+  }
+
+  setTitulo(){
+    if( this.modo === 'darsena' ){
+      this.tituloPagina = "DÁRSENA";
+    }
   }
 
   alertArregloVacio(){
@@ -173,9 +182,6 @@ export class ControlarLoteComponent implements OnInit {
         }
       });
   } 
-  
-  
-  
 
   getArticulosDeLote() {
     this._controlarLoteService.getArticulosDeLote(this.idLote, '', this.modo).subscribe( data => {

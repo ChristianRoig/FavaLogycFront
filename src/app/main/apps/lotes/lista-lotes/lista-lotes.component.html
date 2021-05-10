@@ -206,7 +206,7 @@
                 <ng-container matColumnDef="fechaAlta">
                     <!-- mat-sort-header="fechaAlta" -->
                     <th mat-header-cell *matHeaderCellDef> Fecha Alta </th>
-                    <td mat-cell *matCellDef="let lote"> {{ lote.fechaAlta }} </td>
+                    <td mat-cell *matCellDef="let lote"> {{ getSoloFecha( lote.fechaAlta ) }} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="cantArticulos">

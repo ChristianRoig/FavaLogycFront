@@ -1,4 +1,4 @@
-<app-plantilla-fondo-simple titulo='Ver Lote' arrowBack=true>
+<app-plantilla-fondo-simple titulo='{{ this.nombreLote }}' arrowBack=true>
 
     <!-- CONTENIDO -->
     <div contenido>
@@ -8,7 +8,7 @@
             <!-- Filtros en Pantalla grande -->
             <div fxLayout="row" class="titular">
 
-                <h1 class="colorText" *ngIf="!this.editLote"> {{ this.nombreLote }} </h1>
+                <!-- <h1 class="colorText" *ngIf="!this.editLote"> {{ this.nombreLote }} </h1> -->
                 <button mat-raised-button color="light" class="mt-22" (click)="confirmacionBorrar()">Eliminar lote</button>
                 <!-- </div> -->
             </div>
