@@ -117,14 +117,20 @@ export class ControlarCargaComponent implements OnInit {
     }
   }
 
+
+  limpiarInputs(){
+    this.buscarCupaInput.nativeElement.value = "";
+  }
+
   controlarArticuloPorCupa(){
     
     this._controlarOrdenService.controlarArticuloPorCupa( this.idOrdenDist, this.cupa ) .subscribe( data => {
-      //console.log(data);
+      //this.dataSource2 = null;
       console.log("controlado");
       //console.log(data.remitos[0].pedidoDetalles[0].articulo);
       //this.remitosDeOrden = data.remitos;
       //this.dataSource2 = data;
+      this.esperarYactualizarDatos();
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
@@ -142,13 +148,13 @@ export class ControlarCargaComponent implements OnInit {
         }
       }
     });
-    this.esperarYactualizarDatos();
   }
 
   esperarYactualizarDatos(){
-    setTimeout(() => {                          
+    setTimeout(() => {       
+      this.limpiarInputs();                   
       this.getArticulosDeOrdenDistribucion( this.idOrdenDist );
-    }, 3000);
+    }, 1000);
   }
 
 

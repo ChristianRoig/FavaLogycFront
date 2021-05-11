@@ -488,12 +488,12 @@ export class PedidosCrear2Component implements OnInit {
     
     dialogRef.afterClosed()
       .subscribe(result => {
-        console.log("LOS DATOS QUE YA VIENEN");
-        console.log(JSON.parse(localStorage.getItem('datoEntrega')));
+        //console.log("LOS DATOS QUE YA VIENEN");
+        //console.log(JSON.parse(localStorage.getItem('datoEntrega')));
         if(JSON.parse(localStorage.getItem('datoEntrega'))){
           
           this.dataSourceDatosDeEntrega.listadoDatosDeEntrega.push(JSON.parse(localStorage.getItem('datoEntrega')));
-          console.log("this.dataSourceDatosDeEntrega ANTES QUE META TODO",this.dataSourceDatosDeEntrega);
+          //console.log("this.dataSourceDatosDeEntrega ANTES QUE META TODO",this.dataSourceDatosDeEntrega);
           //this.dataSourceDatosDeEntrega.datos[0].listaPedidoDetalle.
           //this.dataSourceDatosDeEntrega = 
           for (let art of this.selection.selected) {

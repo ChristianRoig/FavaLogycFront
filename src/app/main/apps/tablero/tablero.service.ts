@@ -42,11 +42,9 @@ export class TableroService {
 
     getResumen( ): Observable<any> {
 
-    //let ruta = `http://localhost:3000/resumen`; 
-    //let ruta = `http://localhost:3000/resumenes`; 
-    let ruta = `${ BASE_URL }pedidos/resumen/SALON`;
-    
-    return this._httpClient.get(ruta);
+        let ruta = `${ BASE_URL }pedidos/resumen/SALON`;
+        
+        return this._httpClient.get(ruta);
     }
 /* ----------------------------------------------------------------------------------------------------------------------- */
     

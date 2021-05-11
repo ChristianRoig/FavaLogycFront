@@ -256,6 +256,18 @@ td.mat-cell {
     height: 20px;
 }
 
+.divSpinner {
+    display: flex;
+    justify-content: center !important;
+}
+
+mat-spinner {
+    display: flex;
+    justify-content: center !important;
+    margin-top: 100px;
+    margin-bottom: 600px;
+}
+
 @media (max-width: 768px) {
     .inputBusqueda {
         width: 400px;

@@ -100,6 +100,17 @@
     width: 120px !important;
 }
 
+.divSpinner {
+    display: flex;
+    justify-content: center !important;
+}
+
+mat-spinner {
+    display: flex;
+    justify-content: center !important;
+    // margin-left: 620px;
+}
+
 @media (max-width: 768px) {
     .inputBusqueda {
         width: 400px;

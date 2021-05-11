@@ -52,7 +52,11 @@
     <!-- idArticulo|nombreArticulo|codigoArticulo|codigoUnicoParteArticulo|etapa|nroParte|nroCbte|checkTransporte -->
     <div style="width: 100%; overflow: auto;">
         <!-- <p></p> -->
-        <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="dataSource2" class="mb-8 tablaArticulos">
+        <div class="divSpinner" *ngIf="!this.dataSource2">
+            <mat-spinner strokeWidth="5" [diameter]="40"></mat-spinner>
+        </div>
+
+        <table mat-table matSort *ngIf="this.dataSource2" (matSortChange)="sortData($event)" [dataSource]="dataSource2" class="mb-8 tablaArticulos">
             <!-- codigoArticulo, id, nombre, partes, codigoUnicoParteArticulo -->
             <ng-container matColumnDef="idArticulo">
                 <th mat-header-cell *matHeaderCellDef> Id Articulo </th>

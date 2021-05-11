@@ -89,6 +89,8 @@ export class AgregarDatosEntregaComponent implements OnInit{
     selectedProvincia: any;
     provincia;
 
+    
+
     filtroLocalidades: any;
     selectedLocalidad: any = 1402;
     selectedCodigoPostal: any;
@@ -112,7 +114,7 @@ export class AgregarDatosEntregaComponent implements OnInit{
     telefono:string      = '';
     mostrarDatos: boolean = false;
     //fechaFormatoDate: Date;
-    fechaFormatoDate: String;
+    fechaFormatoDate: any;
     id: number = null;
     estanTodosLosDatos: boolean = false;
     localidadID: string = "7600";
@@ -125,9 +127,10 @@ export class AgregarDatosEntregaComponent implements OnInit{
 
     ngOnInit(): void {
       this.getfiltros();
+      
       switch (this.data.option) {
         case "add":
-          console.log("this.selectedLocalidad en AGREGAR;", this.selectedLocalidad);
+          //console.log("this.selectedLocalidad en AGREGAR;", this.selectedLocalidad);
           this.deshabilitado = false;
           break;
         case "upd":
@@ -149,9 +152,9 @@ export class AgregarDatosEntregaComponent implements OnInit{
     }
 
     agregar(){
-      console.log("this.selectedLocalidad en AGREGAR;", this.selectedLocalidad);
-      console.log("this.selectedProvincia en AGREGAR;", this.selectedProvincia);
-      console.log("| ID |", this.id);
+      //console.log("this.selectedLocalidad en AGREGAR;", this.selectedLocalidad);
+      //console.log("this.selectedProvincia en AGREGAR;", this.selectedProvincia);
+      //console.log("| ID |", this.id);
       this.datoEntrega.contacto                     = this.contacto;
       this.datoEntrega.direccion                    = this.direccion;
       this.datoEntrega.fechaDeEntrega               = this.picker;
@@ -216,10 +219,10 @@ export class AgregarDatosEntregaComponent implements OnInit{
       return stringFechaAdaptada;
     }
 
-    getDatoEntrega(){
+    getDatoEntrega() {
       console.log("data", this.data);
-      console.log("FECHA DE THIS.DATA",this.data.item.fechaDeEntrega);
-      let fechaAdaptada = this.adaptarFecha(this.data.item.fechaDeEntrega);
+      
+      //let fechaAdaptada = this.adaptarFecha(this.data.item.fechaDeEntrega);
 
 
       //cumpleanos = new Date(1995,11,17);
@@ -227,10 +230,10 @@ export class AgregarDatosEntregaComponent implements OnInit{
       this.direccion            = this.data.item.direccion;
       /* this.picker               = new Date(this.data.item.fechaDeEntrega);
       this.valorPicker          = new Date(this.data.item.fechaDeEntrega); */
-      this.picker               = "22/04/2021";
-      this.valorPicker          = "22/04/2021";
-      /* this.picker               = this.fechaFormatoDate;
-      this.valorPicker          = this.fechaFormatoDate; */
+      /* this.picker               = "22/04/2021";
+      this.valorPicker          = "22/04/2021"; */
+      this.picker               = this.fechaFormatoDate;
+      this.valorPicker          = this.fechaFormatoDate;
       this.data.articulos       = this.data.item.listaPedidoDetalle;
       this.mail                 = this.data.item.mail;
       this.id                   = this.data.item.id;
@@ -388,7 +391,7 @@ export class AgregarDatosEntregaComponent implements OnInit{
       this._pedidosListaService.getProvinciaPorLocalidad( this.selectedLocalidad ).subscribe( params => {
         this.provincia = params;
         this.selectedProvincia = params.id;
-        console.log("filtroProvincias -> ", this.selectedProvincia);
+        //console.log("filtroProvincias -> ", this.selectedProvincia);
          //console.log("filtroProvincias asdasd-> ", this.selectedProvincia);
         //this.filtroProvincias = params;
       },
@@ -460,21 +463,21 @@ export class AgregarDatosEntregaComponent implements OnInit{
     }
   
     selectLocalidad(event: Event) {
-      console.log("ENTRE A SELECTLOCALIDAD");
+      //console.log("ENTRE A SELECTLOCALIDAD");
       this.selectedLocalidad = (event.target as HTMLSelectElement).value;
       // this.selectedCodigoPostal = (event.target as HTMLSelectElement);
-      console.log((event.target as HTMLSelectElement).value);
+      //console.log((event.target as HTMLSelectElement).value);
 
       this.localidadID = (event.target as HTMLSelectElement).value;
       
-      console.log("POSTAL:", this.getPostalxLocalidad( parseInt(this.localidadID) ) );
+      //console.log("POSTAL:", this.getPostalxLocalidad( parseInt(this.localidadID) ) );
 
       if(this.selectedLocalidad > 0){
         this._pedidosListaService.getProvinciaPorLocalidad(this.selectedLocalidad).subscribe( params => {
           //console.log("localidades -> ",params);
           //this.selectedProvincia = params.id;
           this.selectedProvincia = params;
-          console.log("Provincia: "+this.selectedProvincia.id);
+          //console.log("Provincia: "+this.selectedProvincia.id);
         },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
@@ -525,8 +528,10 @@ export class AgregarDatosEntregaComponent implements OnInit{
 
       if (evento.value) {
         let fecha = evento.value._i.date+"/"+(evento.value._i.month+1)+"/"+evento.value._i.year;
-        let fechaFormatoPicker = evento.value._i.date+"-"+(evento.value._i.month+1)+"-"+evento.value._i.year;
-        //this.fechaFormatoDate = new Date(evento.value._i.year, evento.value._i.month+1, evento.value._i.date);
+        //this.fechaFormatoPicker = evento.value._i.date+"-"+(evento.value._i.month+1)+"-"+evento.value._i.year;
+        this.fechaFormatoDate = new Date(evento.value._i.year, evento.value._i.month+1, evento.value._i.date);
+        console.log("this.fechaFormatoDate |", this.fechaFormatoDate);
+
         this.fechaFormatoDate = fecha;
         //this.picker = fechaFormatoPicker; 
         this.picker = this.fechaFormatoDate; 

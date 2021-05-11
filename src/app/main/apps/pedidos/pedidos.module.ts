@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { FuseSharedModule } from '@fuse/shared.module';
 import { FuseWidgetModule } from '@fuse/components/widget/widget.module';
@@ -119,6 +120,7 @@ const routes: Routes = [
         FuseWidgetModule,
         CustomTagModule,
         TablaRetractilModule,
+        MatProgressSpinnerModule
     ],
     providers   : [
         PedidosListaService,
