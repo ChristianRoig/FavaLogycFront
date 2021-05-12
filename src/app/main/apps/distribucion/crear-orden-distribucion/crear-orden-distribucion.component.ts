@@ -65,6 +65,7 @@ export class CrearOrdenDistribucionComponent implements OnInit {
     this.getAllRemitosSinDistribucion( );
     
   }
+  
   getAllRemitosSinDistribucion( ){
     this._crearOrdenDistribucionService.getRemitosSinDistribucion( this.page, this.size, this.columna, this.order ) .subscribe( data => {
       console.log(data);

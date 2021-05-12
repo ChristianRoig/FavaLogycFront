@@ -28,6 +28,11 @@ export class ConfirmarOrdenDeDistribucionService
         let ruta = `${BASE_URL}pedidos/distribucion`;
         return this._httpClient.post(ruta, body, {headers: headers});
     }
+    
+    getOrdenById( idOrden: number ){
+        let ruta = `${BASE_URL}pedidos/distribucion/${ idOrden }`;
+        return this._httpClient.get(ruta);
+    }
 
     actualizarOrdenDistribucion( idOrden, body ): Observable<any>{
         

@@ -44,7 +44,7 @@ export class ProjectDashboardComponent implements OnInit {
     
 
     estados = [
-        { valor: 0, texto:"A remitir" },
+        { valor: 0, texto:"A Programar" },
         { valor: 1, texto:"En Proceso" },
         { valor: 2, texto:"Despachados" }
     ];

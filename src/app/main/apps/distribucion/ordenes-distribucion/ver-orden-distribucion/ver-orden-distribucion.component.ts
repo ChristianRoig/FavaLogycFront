@@ -225,6 +225,12 @@ export class VerOrdenDistribucionComponent implements OnInit {
             ordenActual: this.ordenActual
       }
     });
+    dialogRef.afterClosed()
+      .subscribe(result => {
+        console.log("ENTRE");
+        console.log(result);
+        this.buscarOrdenPorId();
+      });
   }
 
   esperarYnavegarAordenes(){
