@@ -59,7 +59,6 @@ export class AgregarDatosEntregaComponent implements OnInit{
       this.minDateHastaFiltro = new Date();
     }
 
-
     datoEntrega: ListaDatosDeEntrega ={
       id: null,
       direccion: null,
@@ -89,10 +88,10 @@ export class AgregarDatosEntregaComponent implements OnInit{
     selectedProvincia: any;
     provincia;
 
-    
-
     filtroLocalidades: any;
-    selectedLocalidad: any = 1402;
+    selectedLocalidad: any;
+    nombreSelectedLocalidad: string;
+
     selectedCodigoPostal: any;
 
     filtroTurnos: any;
@@ -114,7 +113,7 @@ export class AgregarDatosEntregaComponent implements OnInit{
     telefono:string      = '';
     mostrarDatos: boolean = false;
     //fechaFormatoDate: Date;
-    fechaFormatoDate: any;
+    fechaFormatoDate: Date;
     id: number = null;
     estanTodosLosDatos: boolean = false;
     localidadID: string = "7600";
@@ -126,24 +125,25 @@ export class AgregarDatosEntregaComponent implements OnInit{
     } */
 
     ngOnInit(): void {
-      this.getfiltros();
-      
+
       switch (this.data.option) {
         case "add":
           //console.log("this.selectedLocalidad en AGREGAR;", this.selectedLocalidad);
+          this.selectedLocalidad = 1402; // 1402(Mar del plata) 
           this.deshabilitado = false;
           break;
         case "upd":
           this.deshabilitado = false;
-          this.mostrarDatos = true;
+          //this.mostrarDatos = true;
           this.getDatoEntrega();
           break;
           case "view":
             this.deshabilitado = true;
-            this.mostrarDatos = true;
-          this.getDatoEntrega();
+            //this.mostrarDatos = true;
+            this.getDatoEntrega();
           break;
       }
+      this.getfiltros();
     } 
 
 
@@ -170,6 +170,7 @@ export class AgregarDatosEntregaComponent implements OnInit{
 
       console.log("THIS DATOS ENTREGAAAAAAAA", this.datoEntrega);
       localStorage.setItem('datoEntrega', JSON.stringify(this.datoEntrega));
+      localStorage.setItem('fechaFormatoDate', JSON.stringify(this.fechaFormatoDate));
       this.dialogRef.close();
     }
 
@@ -220,18 +221,13 @@ export class AgregarDatosEntregaComponent implements OnInit{
     }
 
     getDatoEntrega() {
-      console.log("data", this.data);
-      
-      //let fechaAdaptada = this.adaptarFecha(this.data.item.fechaDeEntrega);
-
-
-      //cumpleanos = new Date(1995,11,17);
+      console.log("| DATA | ->", this.data);
+      console.log("| selectedLocalidad | ->", this.data.item.sysLocalidad.id);
+      this.fechaFormatoDate = JSON.parse(localStorage.getItem('fechaFormatoDate'));
+      //console.log("fechaFormatoDate ACA", this.fechaFormatoDate);
+  
       this.contacto             = this.data.item.contacto;
       this.direccion            = this.data.item.direccion;
-      /* this.picker               = new Date(this.data.item.fechaDeEntrega);
-      this.valorPicker          = new Date(this.data.item.fechaDeEntrega); */
-      /* this.picker               = "22/04/2021";
-      this.valorPicker          = "22/04/2021"; */
       this.picker               = this.fechaFormatoDate;
       this.valorPicker          = this.fechaFormatoDate;
       this.data.articulos       = this.data.item.listaPedidoDetalle;
@@ -243,6 +239,9 @@ export class AgregarDatosEntregaComponent implements OnInit{
       this.selectedProvincia    = this.data.item.sysLocalidad.sysProvincia.id;
       this.selectedTransporte   = this.data.item.sysTransporte.id;
       this.telefono             = this.data.item.telefono;
+
+      this.mostrarDatos = true; // tengo los datos ahora muestro
+
 
       console.log("LO QUE BUSCO", this.picker, "|",this.valorPicker, "|",this.data.item.fechaDeEntrega);
       //console.log(this.data.item.fechaDeEntrega, this.selectedTransporte, this.selectedTurno  );
@@ -298,6 +297,16 @@ export class AgregarDatosEntregaComponent implements OnInit{
           return "Flete Armador";
       if (selectedTransporte == 21)
           return "Andreani";
+    }
+
+    setLocalidadSeleccionada(){
+      if(this.mostrarDatos == true){
+        //this.selectedLocalidad =
+        this.nombreSelectedLocalidad = this.filtroLocalidades[this.data.item.sysLocalidad.id - 1].nombre;
+        this.selectedLocalidad = this.filtroLocalidades[this.data.item.sysLocalidad.id - 1].id;
+        console.log("this.nombreSelectedLocalidad", this.nombreSelectedLocalidad);
+        console.log("this.selectedLocalidad", this.selectedLocalidad);
+      }
     }
 
     getfiltros(){
@@ -367,6 +376,8 @@ export class AgregarDatosEntregaComponent implements OnInit{
   
       this._pedidosListaService.getAllLocalidades().subscribe(params => {
         this.filtroLocalidades = params.datos;
+
+        this.setLocalidadSeleccionada();
         //console.log("el primero ", this.filtroLocalidades[0]);
         //console.log("el selectedLocalidad ", this.selectedLocalidad);
         
@@ -387,7 +398,7 @@ export class AgregarDatosEntregaComponent implements OnInit{
           }
         }
       })
-
+      
       this._pedidosListaService.getProvinciaPorLocalidad( this.selectedLocalidad ).subscribe( params => {
         this.provincia = params;
         this.selectedProvincia = params.id;
@@ -527,14 +538,14 @@ export class AgregarDatosEntregaComponent implements OnInit{
     addEvent( evento ) {
 
       if (evento.value) {
-        let fecha = evento.value._i.date+"/"+(evento.value._i.month+1)+"/"+evento.value._i.year;
         //this.fechaFormatoPicker = evento.value._i.date+"-"+(evento.value._i.month+1)+"-"+evento.value._i.year;
+        let fecha = evento.value._i.date+"/"+(evento.value._i.month+1)+"/"+evento.value._i.year;
         this.fechaFormatoDate = new Date(evento.value._i.year, evento.value._i.month+1, evento.value._i.date);
         console.log("this.fechaFormatoDate |", this.fechaFormatoDate);
 
-        this.fechaFormatoDate = fecha;
+        //this.fechaFormatoDate = fecha;
         //this.picker = fechaFormatoPicker; 
-        this.picker = this.fechaFormatoDate; 
+        this.picker = fecha; 
 
         console.log("fechaFormatoDate", this.fechaFormatoDate);
         //console.log(fecha, "|",this.picker);   

@@ -8,10 +8,6 @@
 
         <form class="p-24" fxLayout="column" fxLayoutAlign="center" fxFlex="1 0 auto" name="form">
 
-            <!-- <div class="fuse-card"> -->
-
-            <!-- <h3>Dirección</h3> -->
-
             <mat-form-field appearance="outline">
                 <mat-label>Dirección</mat-label>
                 <input matInput [(ngModel)]='this.direccion' [disabled]='deshabilitado' [ngModelOptions]="{standalone: true}">
@@ -20,41 +16,15 @@
             <mat-form-field appearance="fill">
                 <mat-label>{{ filtroLocalidades ? 'Localidad' : 'Cargando...'}}</mat-label>
                 <select matNativeControl (change)="selectLocalidad( $event )" [disabled]="!filtroLocalidades || deshabilitado">
-
-
-                    <!-- <option [(ngModel)]="ciudadDefault" name="ciudadDefault" [value]="ciudadDefault.localidadID" [selected]="selectedLocalidad === ciudadDefault.localidadID" >
-                        {{ ciudadDefault.nombreCiudad }}
-                    </option> -->
-
-                    <!-- ----------------------------------------------- -->
-                    <!-- <option [value]="7600" [selected]="selectedLocalidad === 7600">MAR DEL PLATA</option> -->
-                    <!-- <option [(ngModel)]="this.ciudadDefault" [value]="this.ciudadDefault.localidadID" [selected]="selectedLocalidad === this.ciudadDefault.localidadID">
-                        {{ this.ciudadDefault.nombreCiudad }}    --[selected]="selectedLocalidad === 7600"
-                    </option> -->
-
-                    <option *ngFor="let localidad of filtroLocalidades; let index = index" [value]="localidad.id" [selected]="index == 1401"> {{ localidad.nombre }}</option>
-                    
-                    <!-- [selected]="selectedLocalidad === localidad.id" -->
+                    <option *ngFor="let localidad of filtroLocalidades; let index = index" [value]="localidad.id" [selected]="index == (this.selectedLocalidad - 1)"> 
+                        {{ localidad.nombre }}
+                    </option>
                 </select>
             </mat-form-field>
-
-            <!-- <mat-form-field appearance="fill">
-                <mat-label>{{ filtroProvincias ? 'Provincia' : 'Cargando...'}}</mat-label>
-                <select matNativeControl (change)="selectProvincia($event)" [disabled]="!filtroProvincias || deshabilitado">
-                        <option [value]="0">TODOS</option>
-                        <option *ngFor="let provincia of filtroProvincias" [value]="provincia.id"
-                            [selected]="selectedProvincia === provincia.id"> {{ provincia.nombre }}</option>
-                    </select>
-            </mat-form-field> -->
 
             <mat-form-field appearance="fill">
                 <mat-label>{{ selectedProvincia ? 'Provincia' : 'Cargando...'}}</mat-label>
                 <select matNativeControl (change)="selectProvincia($event)" [disabled]="!selectedProvincia || deshabilitado">
-                    <!-- <option [value]="0">TODOS</option> -->
-                    <!-- <option *ngFor="let provincia of filtroProvincias" [value]="provincia.id"
-                        [selected]="selectedProvincia === provincia.id"> {{ provincia.nombre }}</option> -->
-                    <!-- <option *ngIf="this.selectedProvincia" [value]="selectedProvincia.id"
-                        [selected]="selectedProvincia === selectedProvincia.id"> {{ selectedProvincia.nombre }}</option> -->
                         <option *ngIf="this.provincia" [value]="provincia.id" [selected]="selectedProvincia === provincia.id"> 
                             {{ provincia.nombre }}
                         </option>
@@ -84,38 +54,17 @@
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
-            <!-- <mat-form-field appearance="outline">
-                <mat-label>Fecha de entrega</mat-label>
-                <input matInput *ngIf="this.mostrarDatos == false" [matDatepicker]="picker" [min]="minDateHastaFiltro" [value]='valorPicker' (dateChange)="addEvent($event)" [disabled]='deshabilitado' />
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field> -->
-            <!-- <input matInput *ngIf="this.mostrarDatos == true" [value]='this.data.item.fechaDeEntrega' [matDatepicker]="picker" [min]="minDateHastaFiltro" (dateChange)="addEvent($event)" [disabled]='deshabilitado'> -->
-            <!-- [value]='valorPicker' -->
-
-            <!-- <mat-form-field appearance="fill">
-                <mat-label>{{ filtroTurnos ? 'Turno' : 'Cargando...'}}</mat-label>
-                <select matNativeControl (change)="selectTurno($event)" [disabled]="!filtroTurnos || deshabilitado">
-                    <option [value]="0">Seleccionar Turno</option>
-                    <option *ngFor="let turno of filtroTurnos" [value]="turno.id"
-                        [selected]="selectedTurno === turno.id"> {{ turno.nombre }}</option>
-                </select>
-            </mat-form-field> -->
 
             <mat-form-field appearance="fill">
                 <mat-label>{{ filtroTurnos ? 'Turno' : 'Cargando...'}}</mat-label>
                 <select matNativeControl (change)="selectTurno($event)" [disabled]="!filtroTurnos || deshabilitado">
                     <option *ngIf="this.mostrarDatos == false"[value]="0">Seleccionar Turno</option>
                     <option *ngIf="this.mostrarDatos == true"> {{ devolverTurno(this.selectedTurno) }} </option>
-                    <!-- devolverNombreTransporte(this.selectedTurno) -->
                     <option *ngFor="let turno of filtroTurnos" [value]="turno.id"
                         [selected]="selectedTurno === turno.id"> {{ turno.nombre }}</option>
                 </select>
             </mat-form-field>
-            <!-- </div> -->
 
-            <!-- <div class="fuse-card"> -->
-            <!-- <h3>Datos Contacto</h3> -->
 
             <mat-form-field appearance="outline">
                 <mat-label>Nombre de Contacto</mat-label>
@@ -138,7 +87,7 @@
                 <input matInput [(ngModel)]='this.observaciones' [disabled]='deshabilitado' [ngModelOptions]="{standalone: true}">
             </mat-form-field>
 
-            <!-- </div> -->
+
 
         </form>
 
