@@ -6,9 +6,10 @@ Plataforma de Logistica del Grupo Fava en Angular 9 y Angular Material
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-Nota 1: para ejecutar en un servidor externo apache, copiar el contenido del directorio `dist/` a `htdocs`
+Nota 1: [ref angular para ejecutar en Apache](https://angular.io/guide/deployment#routed-apps-must-fallback-to-indexhtml)
+para ejecutar en un servidor externo apache, copiar el contenido del directorio `dist/` a `htdocs`
 y agregar en la raiz del sitio un archivo `.htaccess` con 
-[ref angular](https://angular.io/guide/deployment#routed-apps-must-fallback-to-indexhtml)
+
 ```
 RewriteEngine On
 # If an existing asset or directory is requested go to it as it is
@@ -19,9 +20,10 @@ RewriteRule ^ - [L]
 # If the requested resource doesn't exist, use index.html
 RewriteRule ^ /index.html
 ```
-Nota 2: para build en un subdominio ejecutar `ng build --base-href "/favalogyc/" --prod`, 
+Nota 2: [ref angular para subdominio](https://angular.io/guide/deployment#the-base-tag)
+para build en un subdominio ejecutar `ng build --base-href "/favalogyc/" --prod`, 
 luego mover el directorio `dist` a `htdocs` y renombrar como `favalogyc` 
-[ref angular](https://angular.io/guide/deployment#the-base-tag)
+
 
 Nota 3: peeeero, para ejecutar el build en un subdominio, la ultima linea del  `.htaccess` debe ser 
 ```
