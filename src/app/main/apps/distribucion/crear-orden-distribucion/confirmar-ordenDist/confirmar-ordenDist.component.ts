@@ -57,8 +57,7 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
 
   filtroTransportes: any;
   selectedTransporte: any = 0;
-  filtroLocalidades: any;
-  selectedLocalidad: any = 0;
+
   filtroTurnos: any;
   selectedTurno: any = 1;
 
@@ -78,7 +77,7 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
       console.log("vengo de crear orden");
       console.log("toAdd", this.toAdd);
       this.localidadDefault = this.toAdd[0].pedidoDetalles[0].pedidoDomicilioEntrega.sysLocalidad;
-      this.selectedLocalidad = this.localidadDefault.id;
+      
       console.log( "this.localidadDefault", this.localidadDefault.id );
       this.cantRemitos = this.data.selection._selected.length;
     }
@@ -122,7 +121,6 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
           nombre         : this.nombreOrdenDistInput.nativeElement.value,
           idTurno        : this.selectedTurno,
           idTransporte   : this.selectedTransporte,
-          idLocalidad    : this.selectedLocalidad,
           listaId        : seleccionados
         }
         
@@ -174,8 +172,7 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
       let body = { 
         nombre         : this.nombreOrden,
         idTurno        : this.selectedTurno,
-        idTransporte   : this.selectedTransporte,
-        idLocalidad    : this.selectedLocalidad
+        idTransporte   : this.selectedTransporte
       }
   
       console.log("body", body, "idOrden", this.idOrden);
@@ -258,14 +255,12 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
     this.estoyEditando = true;
     this.nombreBoton = "Actualizar";
     this.selectedTransporte = this.data.ordenActual.sysTransporte.id;
-    this.selectedLocalidad = this.data.ordenActual.sysLocalidad.id;
     this.selectedTurno = this.data.ordenActual.pedidoTurno.id;
     this.cantRemitos = this.data.ordenActual.remitos.length;
     this.nombreOrden = this.data.ordenActual.nombre;
     this.idOrden = this.data.ordenActual.id;
     console.log("estoy editando", this.estoyEditando);
-    console.log(" this.selectedTransporte",  this.selectedTransporte, " this.selectedLocalidad", this.selectedLocalidad,
-    " this.selectedTurno",  this.selectedTurno);
+    console.log(" this.selectedTransporte",  this.selectedTransporte, " this.selectedTurno",  this.selectedTurno);
   }
 
   //@Debounce(1000)
@@ -319,26 +314,6 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
         }
       }
     })
-    this._confirmarOrdenDeDistribucionService.getAllLocalidades().subscribe(params => {
-      this.filtroLocalidades = params.datos;
-      //console.log("this.filtroLocalidades", this.filtroLocalidades);
-    },
-    (err: HttpErrorResponse) => {
-      if (err.error instanceof Error) {
-        console.log("Client-side error");
-      } else {
-        let errStatus = err.status
-        if (errStatus == 0){
-          let titulo = 'Error de Servidor';
-          let mensaje = "Por favor comunicarse con Sistemas";
-          this.mostrarError(errStatus, titulo, mensaje);
-        } else {
-          let titulo = 'Error al cargar filtros';
-          let mensaje = err.error.message.toString();
-          this.mostrarError(errStatus, titulo, mensaje);
-        }
-      }
-    })
   }
 
   selectTransporte(event: Event) {
@@ -351,10 +326,7 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
     console.log("this.selectedTurno",this.selectedTurno);
   }
 
-  selectLocalidad(event: Event) {
-    this.selectedLocalidad = (event.target as HTMLSelectElement).value;
-    console.log("this.selectedLocalidad SELECCIONADA",this.selectedLocalidad);
-  }
+
 
 
 }

@@ -54,9 +54,4 @@ export class ConfirmarOrdenDeDistribucionService
         return this._httpClient.get(ruta);
     }
 
-    getAllLocalidades(): Observable<any> {
-        let ruta = `${BASE_URL}pedidos/localidad`;
-        return this._httpClient.get(ruta);
-    }
-
 }
