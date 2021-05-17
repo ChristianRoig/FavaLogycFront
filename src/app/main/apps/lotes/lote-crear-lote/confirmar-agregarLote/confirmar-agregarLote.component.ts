@@ -45,6 +45,8 @@ export class ConfirmarAgregarLoteComponent implements OnInit {
   picker: Date;
   nombreBoton: string;
   idLote: number;
+  mostrarSpinner: boolean = false;
+  contador: number = 0;
   //idCabecera: number;
 
   constructor(  public matDialogRef: MatDialogRef<ConfirmarAgregarLoteComponent>,
@@ -79,18 +81,22 @@ export class ConfirmarAgregarLoteComponent implements OnInit {
   }
 
   crearLote(){
+    this.contador++; // incremento contador cada vez que entro a la funcion, para referenciar los clicks del usuario
+    console.log("contador", this.contador);
+    this.mostrarSpinner = true;
     if(this.data.vengoDeVerLote == true){
       this.actualizarLote();
     }
-    if (this.data.vengoDeCrearLote == true){
+    if (this.data.vengoDeCrearLote == true && this.contador == 1 ){
       for (let elemento of this.dataSourceArticulos){
         this.toAdd.push(elemento.id);
       }
       console.log("this.toAdd");
       console.log(this.toAdd);
-      if (this.toAdd.length > 0){
-        this._serviceAgregarLoteConfirmar.postLote(this.toAdd, this.nombreLote).subscribe(
+      if (this.toAdd.length > 0 ){ 
+         this._serviceAgregarLoteConfirmar.postLote(this.toAdd, this.nombreLote).subscribe(
           data => {
+            
             let idLote = data.idLote
             //this.imprimirCupas(idLote);
             localStorage.setItem( 'idLote', JSON.stringify( idLote ));
@@ -114,7 +120,7 @@ export class ConfirmarAgregarLoteComponent implements OnInit {
               }
             }
           }
-        )
+        ) 
       }
     }
   }
@@ -131,27 +137,29 @@ export class ConfirmarAgregarLoteComponent implements OnInit {
   }
 
   actualizarLote(){
-    this._serviceAgregarLoteConfirmar.updateNombreLote(this.nombreLote, this.idLote) .subscribe (data =>  {
-      console.log("actualizacion exitosa", data);
-      this._dialog.closeAll();
-      this.esperarYnavegarAlotes();
-    },
-    (err: HttpErrorResponse) => {
-      if (err.error instanceof Error) {
-        console.log("Client-side error");
-      } else {
-        let errStatus = err.status
-        if (errStatus == 0){
-          let titulo = 'Error de Servidor';
-          let mensaje = "Por favor comunicarse con Sistemas";
-          this.mostrarError(errStatus, titulo, mensaje);
+    if (this.contador == 1 ){
+      this._serviceAgregarLoteConfirmar.updateNombreLote(this.nombreLote, this.idLote) .subscribe (data =>  {
+        console.log("actualizacion exitosa", data);
+        this._dialog.closeAll();
+        this.esperarYnavegarAlotes();
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error");
         } else {
-          let titulo = 'Error al actualizar el nombre';
-          let mensaje = err.error.message.toString();
-          this.mostrarError(errStatus, titulo, mensaje);
+          let errStatus = err.status
+          if (errStatus == 0){
+            let titulo = 'Error de Servidor';
+            let mensaje = "Por favor comunicarse con Sistemas";
+            this.mostrarError(errStatus, titulo, mensaje);
+          } else {
+            let titulo = 'Error al actualizar el nombre';
+            let mensaje = err.error.message.toString();
+            this.mostrarError(errStatus, titulo, mensaje);
+          }
         }
-      }
-    });
+      });
+    } 
     
   }
 

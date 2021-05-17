@@ -431,7 +431,7 @@ export class PedidosCrear2Component implements OnInit {
     console.log(item);
 
     let dialogRef = this._dialog.open( AgregarDatosEntregaComponent, {
-      width: window.innerWidth+'px',
+
       data: {
         option: 'view',
         articulos: this.selection.selected,
@@ -447,7 +447,6 @@ export class PedidosCrear2Component implements OnInit {
     console.log(indexItem);
 
     let dialogRef = this._dialog.open(AgregarDatosEntregaComponent, {
-      width: window.innerWidth+'px',
       data: {
         option: 'upd',
         articulos: this.selection.selected,
@@ -479,7 +478,6 @@ export class PedidosCrear2Component implements OnInit {
   agregarDatoEntrega() {
 
     let dialogRef = this._dialog.open(AgregarDatosEntregaComponent, {
-      width: window.innerWidth+'px',
       data: {
         option: 'add',
         articulos: this.selection.selected,

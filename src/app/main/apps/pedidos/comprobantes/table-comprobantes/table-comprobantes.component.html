@@ -14,6 +14,10 @@
 
 <div style="width: 100%; overflow: auto;">
 
+    <div class="divSpinner" *ngIf="!this.dataSource2">
+        <mat-spinner strokeWidth="5" [diameter]="40"></mat-spinner>
+    </div>
+
     <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="dataSource2" style="width: 100%;">
 
         <ng-container matColumnDef="Comprobante">

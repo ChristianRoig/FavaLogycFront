@@ -37,7 +37,7 @@ export class ProjectDashboardComponent implements OnInit {
 
     length: number = 0;
     mensaje: string;
-    valorFijo: string = 'A remitir';
+    valorFijo: string = "En Proceso";
 
     dateNow = Date.now();
   

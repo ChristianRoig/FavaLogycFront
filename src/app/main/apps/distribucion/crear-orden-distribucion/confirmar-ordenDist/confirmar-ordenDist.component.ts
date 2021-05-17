@@ -50,20 +50,15 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
   ordenActual = {};
   estoyEditando: boolean = false;
   nombreBoton: string = "Crear";
-  buscarNombreLote
-  filtroTransportes: any;
-  selectedTransporte: any = 0;
+  contador: number = 0;
+  mostrarSpinner: boolean = false;
 
   localidadDefault: any = 1402;
 
-  /* localidadDefault  = {
-    nombre: "MAR DEL PLATA",
-    id: 1402
-  } */
-
+  filtroTransportes: any;
+  selectedTransporte: any = 0;
   filtroLocalidades: any;
   selectedLocalidad: any = 0;
-
   filtroTurnos: any;
   selectedTurno: any = 1;
 
@@ -106,49 +101,54 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
   }
 
   crearOrden( accion: string ){
-
+    this.contador++;
+    this.mostrarSpinner = true;
+    console.log("this.contador", this.contador);
     //queda hacer el mandar el update de actualizarOrden() y ver si existe el servicio
-    if (accion === "Actualizar"){
+    if ( accion === "Actualizar" ){
       console.log("accion ->", accion);
       this.actualizarOrden();
     }
     else{
-      let seleccionados = [];
-  
-      for (let i = 0; i < this.toAdd.length; i++){
-        seleccionados.push(this.toAdd[i].id);
-      }
-  
-      let body = { 
-        nombre         : this.nombreOrdenDistInput.nativeElement.value,
-        idTurno        : this.selectedTurno,
-        idTransporte   : this.selectedTransporte,
-        idLocalidad    : this.selectedLocalidad,
-        listaId        : seleccionados
-      }
-      
-      console.log("body que mando", body);
-      this._confirmarOrdenDeDistribucionService.crearOrdenDeDistribucion( body ).subscribe( params => {
-        console.log("entró");
-        this._dialog.closeAll();
-        this.esperarYnavegar();
-      },
-      (err: HttpErrorResponse) => {
-        if (err.error instanceof Error) {
-          console.log("Client-side error");
-        } else {
-          let errStatus = err.status
-          if (errStatus == 0){
-            let titulo = 'Error de Servidor';
-            let mensaje = "Por favor comunicarse con Sistemas";
-            this.mostrarError(errStatus, titulo, mensaje);
-          } else {
-            let titulo = 'Error al crear la orden';
-            let mensaje = err.error.message.toString();
-            this.mostrarError(errStatus, titulo, mensaje);
-          }
+      if ( this.contador == 1 ){
+
+        let seleccionados = [];
+    
+        for (let i = 0; i < this.toAdd.length; i++){
+          seleccionados.push(this.toAdd[i].id);
         }
-      });
+    
+        let body = { 
+          nombre         : this.nombreOrdenDistInput.nativeElement.value,
+          idTurno        : this.selectedTurno,
+          idTransporte   : this.selectedTransporte,
+          idLocalidad    : this.selectedLocalidad,
+          listaId        : seleccionados
+        }
+        
+        console.log("body que mando", body);
+        this._confirmarOrdenDeDistribucionService.crearOrdenDeDistribucion( body ).subscribe( params => {
+          console.log("entró");
+          this._dialog.closeAll();
+          this.esperarYnavegar();
+        },
+        (err: HttpErrorResponse) => {
+          if (err.error instanceof Error) {
+            console.log("Client-side error");
+          } else {
+            let errStatus = err.status
+            if (errStatus == 0){
+              let titulo = 'Error de Servidor';
+              let mensaje = "Por favor comunicarse con Sistemas";
+              this.mostrarError(errStatus, titulo, mensaje);
+            } else {
+              let titulo = 'Error al crear la orden';
+              let mensaje = err.error.message.toString();
+              this.mostrarError(errStatus, titulo, mensaje);
+            }
+          }
+        });
+      }
     }
   }
 
@@ -169,36 +169,38 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
   }
 
   actualizarOrden(){
+    if ( this.contador == 1 ){
 
-    let body = { 
-      nombre         : this.nombreOrden,
-      idTurno        : this.selectedTurno,
-      idTransporte   : this.selectedTransporte,
-      idLocalidad    : this.selectedLocalidad
-    }
-
-    console.log("body", body, "idOrden", this.idOrden);
-    
-    this._confirmarOrdenDeDistribucionService.actualizarOrdenDistribucion( this.idOrden, body ).subscribe( params => {
-      console.log("se actualizaron los datos con éxito");
-      this._dialog.closeAll();
-    },
-    (err: HttpErrorResponse) => {
-      if (err.error instanceof Error) {
-        console.log("Client-side error");
-      } else {
-        let errStatus = err.status
-        if (errStatus == 0){
-          let titulo = 'Error de Servidor';
-          let mensaje = "Por favor comunicarse con Sistemas";
-          this.mostrarError(errStatus, titulo, mensaje);
-        } else {
-          let titulo = 'Error al actualizar la orden';
-          let mensaje = err.error.message.toString();
-          this.mostrarError(errStatus, titulo, mensaje);
-        }
+      let body = { 
+        nombre         : this.nombreOrden,
+        idTurno        : this.selectedTurno,
+        idTransporte   : this.selectedTransporte,
+        idLocalidad    : this.selectedLocalidad
       }
-    });
+  
+      console.log("body", body, "idOrden", this.idOrden);
+      
+      this._confirmarOrdenDeDistribucionService.actualizarOrdenDistribucion( this.idOrden, body ).subscribe( params => {
+        console.log("se actualizaron los datos con éxito");
+        this._dialog.closeAll();
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error");
+        } else {
+          let errStatus = err.status
+          if (errStatus == 0){
+            let titulo = 'Error de Servidor';
+            let mensaje = "Por favor comunicarse con Sistemas";
+            this.mostrarError(errStatus, titulo, mensaje);
+          } else {
+            let titulo = 'Error al actualizar la orden';
+            let mensaje = err.error.message.toString();
+            this.mostrarError(errStatus, titulo, mensaje);
+          }
+        }
+      });
+    }
   }
 
   getOrdenById(){

@@ -42,6 +42,13 @@
     width: 100%;
 }
 
+.divSpinner {
+    display: flex;
+    justify-content: center !important;
+    align-items: center;
+    height: 300px;
+}
+
 .titulo {
     background: #039be6;
     color: white;

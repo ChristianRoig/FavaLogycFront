@@ -1,5 +1,5 @@
 <div class="dialog-content-wrapper" class="primerDiv">
-    <div fxLayout="row">
+    <div fxLayout="row" style="width: 100%;" class="formClass">
         <mat-toolbar matDialogTitle class="mat-accent">
             <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center" class="titulo">
                 <span class="title dialog-title" style="width: 100%;">Confirmar orden distribución</span>
@@ -7,7 +7,11 @@
         </mat-toolbar>
     </div>
 
-    <div mat-dialog-content class="p-24 pb-0 m-0" fusePerfectScrollbar>
+    <div class="divSpinner" *ngIf="this.mostrarSpinner">
+        <mat-spinner strokeWidth="5" [diameter]="40"></mat-spinner>
+    </div>
+
+    <div mat-dialog-content *ngIf="!this.mostrarSpinner" class="p-24 pb-0 m-0" fusePerfectScrollbar>
         <form class="formClass">
             <div fxLayout="row" class="mb-8" fxLayoutAlign="start start">
                 <mat-form-field appearance="outline" fxFlex>

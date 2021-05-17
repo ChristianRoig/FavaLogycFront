@@ -1,31 +1,123 @@
-/* .popUpDatoEntrega {
-    display: block;
-    padding: 24px;
-    border-radius: 4px;
-    box-sizing: border-box;
-    overflow: auto !important;
-    outline: 0;
-    width: 400px !important;
-    min-width: 400px !important;
-    max-width: 600px !important;
-    height: 100%;
-    min-height: inherit;
-    max-height: inherit;
+.contenedorPadre {
+    width: 990px;
+    max-width: 1000px;
+    border-radius: 10px;
+    align-items: center;
+    border: 1px solid;
+    border-color: rgb(207, 207, 207);
+    background: rgb(248, 248, 248);
+    /* margin-left: 5px;
+        margin-right: 5px; */
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
 }
- */
+
+mat-form-field {
+    width: 350px !important;
+}
 
 
-/* .mat-dialog-container {
-    display: block;
-    padding: 24px;
-    border-radius: 4px;
+/* body.theme-default .mat-dialog-container {
+        background: #7c7c7c !important;
+    } */
+
+body.theme-default {
+    background: #7c7c7c !important;
+}
+
+.titulo {
+    padding-left: 30px;
+}
+
+.tituloDos {
+    margin-right: 200px;
+    margin-bottom: 10px;
+}
+
+.contenedorBarra {
+    width: 970px;
+    flex-direction: column;
+    border: 1px solid;
+    border-color: lightgray;
+    background: white;
+    border-radius: 10px;
+    padding-top: 20px;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+}
+
+.divUno {
+    width: 450px !important;
+    flex-direction: column;
     box-sizing: border-box;
-    overflow: auto !important;
-    outline: 0;
-    width: 400px !important;
-    min-width: 400px !important;
-    max-width: 600px !important;
+    display: flex;
+    background: white;
+    border-radius: 10px;
+    align-items: center;
+    padding-top: 30px;
+    border: 1px solid;
+    border-color: lightgray;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.divContenedor {
+    display: flex;
+    align-items: center !important;
+    justify-content: space-between;
+    width: 990px;
+}
+
+.divDos {
+    width: 950px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 10px;
+    margin-top: 10px;
+    /* border: 1px solid;
+    border-color: lightgray; */
+    background: white;
+    /* border-radius: 10px; */
+    /* padding-top: 20px;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-bottom: 20px; */
+}
+
+
+/* .divPrincipal {
+        width: 1000px;
+        display: flex;
+        align-items: center;
+    } */
+
+.formulario {
+    display: flex;
+    align-items: center;
+    width: 990px;
+}
+
+.selector {
+    width: 350px !important;
+    margin-right: 15px;
+    margin-left: 15px;
+}
+
+mat-dialog-content {
+    display: flex;
+    //padding: 24px;
+    overflow: auto;
+    width: 100% !important;
     height: 100%;
     min-height: inherit;
     max-height: inherit;
-} */
+    justify-content: center !important;
+    margin-left: 5px;
+    margin-right: 5px;
+    padding: 10px;
+}

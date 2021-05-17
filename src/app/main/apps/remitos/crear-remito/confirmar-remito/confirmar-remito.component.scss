@@ -24,6 +24,13 @@
     }
 }
 
+.divSpinner {
+    display: flex;
+    justify-content: center !important;
+    align-items: center;
+    height: 400px;
+}
+
 .divBotones {
     justify-content: space-between !important;
 }
@@ -55,8 +62,3 @@ element.style {
     padding-bottom: 30px;
     border-radius: 5px;
 }
-
-
-/* .primerDiv {
-    background: red !important;
-} */

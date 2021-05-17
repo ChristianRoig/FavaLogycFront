@@ -52,6 +52,8 @@ export class ConfirmarRemitoComponent implements OnInit {
   selectedDepositoCarga: any = 0;
 
   proxCbte: string;
+  mostrarSpinner: boolean = false;
+  contador: number = 0;
 
   constructor(public matDialogRef: MatDialogRef<ConfirmarRemitoComponent>,
               @Inject(MAT_DIALOG_DATA) public data:any,
@@ -172,6 +174,7 @@ export class ConfirmarRemitoComponent implements OnInit {
   }
 
   getUltNroTalonario(){
+    
     this.filtroTalonarios.forEach( (talonario: any) => {
       
       console.log(talonario.nroTalonario.toString());
@@ -208,48 +211,53 @@ export class ConfirmarRemitoComponent implements OnInit {
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.Id + 1}`;
   }
-
+  
   remitir(){
-    console.log(this.dataSource2);
-    for (let elemento of this.dataSource2){
-      this.toAdd.push(elemento.idDetalle);
-    }   
-    let idTransporte = parseInt(this.selectedTransporte, 10);
-    let idTalonario = parseInt(this.selectedTalonario, 10);
-    let idDeposito = parseInt(this.selectedDepositoCarga, 10);
-
-    let body: BodyRemito = {
-      idTransporte: idTransporte,
-      idDeposito: idDeposito,
-      idTalonario: idTalonario,
-      listaIdDetalle: this.toAdd
-    }
-    console.log({body});
-
-    this._serviceRemitosConfirmar.generarRemito( body ).subscribe(params => {
-      console.log("entró");
-      
-      setTimeout(() => {    
-        this._dialog.closeAll();                      
-        this.navegarAlistaRemitos();
-        }, 1000);
-    },
-    (err: HttpErrorResponse) => {
-      if (err.error instanceof Error) {
-        console.log("Client-side error");
-      } else {
-        let errStatus = err.status
-        if (errStatus == 0){
-          let titulo = 'Error de Servidor';
-          let mensaje = "Por favor comunicarse con Sistemas";
-          this.mostrarError(errStatus, titulo, mensaje);
-        } else {
-          let titulo = 'Error al crear remito';
-          let mensaje = err.error.message.toString();
-          this.mostrarError(errStatus, titulo, mensaje);
-        }
+    this.mostrarSpinner = true;
+    this.contador++;
+    console.log( "contador", this.contador );
+    console.log( this.dataSource2 );
+    if(this.contador === 1){
+      for (let elemento of this.dataSource2){
+        this.toAdd.push(elemento.idDetalle);
+      }   
+      let idTransporte = parseInt(this.selectedTransporte, 10);
+      let idTalonario = parseInt(this.selectedTalonario, 10);
+      let idDeposito = parseInt(this.selectedDepositoCarga, 10);
+  
+      let body: BodyRemito = {
+        idTransporte: idTransporte,
+        idDeposito: idDeposito,
+        idTalonario: idTalonario,
+        listaIdDetalle: this.toAdd
       }
-    });
+      console.log({body});
+      console.log("entró ass");
+      this._serviceRemitosConfirmar.generarRemito( body ).subscribe(params => {
+        console.log("entró");
+        
+        setTimeout(() => {    
+          this._dialog.closeAll();                      
+          this.navegarAlistaRemitos();
+          }, 1000);
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error");
+        } else {
+          let errStatus = err.status
+          if (errStatus == 0){
+            let titulo = 'Error de Servidor';
+            let mensaje = "Por favor comunicarse con Sistemas";
+            this.mostrarError(errStatus, titulo, mensaje);
+          } else {
+            let titulo = 'Error al crear remito';
+            let mensaje = err.error.message.toString();
+            this.mostrarError(errStatus, titulo, mensaje);
+          }
+        }
+      });
+    }
 
   }
   
