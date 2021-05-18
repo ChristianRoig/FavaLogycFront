@@ -1,16 +1,16 @@
 .contenedorPadre {
-    width: 990px;
+    width: 1000px;
     max-width: 1000px;
     border-radius: 10px;
     align-items: center;
     border: 1px solid;
-    border-color: rgb(207, 207, 207);
+    border-color: rgb(197, 197, 197);
     background: rgb(248, 248, 248);
     /* margin-left: 5px;
         margin-right: 5px; */
     padding-left: 5px;
     padding-right: 5px;
-    padding-bottom: 5px;
+    //padding-bottom: 5px;
 }
 
 mat-form-field {
@@ -36,7 +36,7 @@ body.theme-default {
 }
 
 .contenedorBarra {
-    width: 970px;
+    width: 95%;
     flex-direction: column;
     border: 1px solid;
     border-color: lightgray;
@@ -44,13 +44,13 @@ body.theme-default {
     border-radius: 10px;
     padding-top: 20px;
     margin-top: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-left: 50px;
+    margin-right: 50px;
     margin-bottom: 20px;
 }
 
 .divUno {
-    width: 450px !important;
+    width: 470px !important;
     flex-direction: column;
     box-sizing: border-box;
     display: flex;
@@ -60,8 +60,8 @@ body.theme-default {
     padding-top: 30px;
     border: 1px solid;
     border-color: lightgray;
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
     margin-bottom: 10px;
 }
 
@@ -73,7 +73,7 @@ body.theme-default {
 }
 
 .divDos {
-    width: 950px;
+    width: 96%;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
@@ -83,15 +83,57 @@ body.theme-default {
 }
 
 .formulario {
-    display: flex;
+    display: block;
     align-items: center;
     width: 990px;
+}
+
+.titulo2 {
+    background: #039be6;
+    color: white;
+    height: 50px;
+    width: 100%;
+    border-radius: 5px;
+}
+
+.formClass {
+    width: 99% !important;
+    /* flex-direction: row; */
+    box-sizing: border-box;
+    /* display: flex; */
+    display: block !important;
+    justify-content: center;
+    align-items: center;
+    margin-left: 5px;
+    height: 60 px;
+}
+
+.btn {
+    width: 140px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.botones {
+    width: 99%;
+    margin-left: 5px;
+    justify-content: space-around;
+    display: flex;
 }
 
 .selector {
     width: 350px !important;
     margin-right: 15px;
     margin-left: 15px;
+}
+
+.centrarTitulo {
+    place-content: center;
+    align-items: center;
+    flex-direction: row;
+    box-sizing: border-box;
+    display: flex;
+    padding-top: 20px;
 }
 
 mat-dialog-content {

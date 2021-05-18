@@ -1,8 +1,16 @@
 <!-- <div class="contenedorPadre"> -->
-<h2 *ngIf="this.data.option === 'add'" class="pl-16" mat-dialog-title>Agregar Dato de entrega</h2>
+<!-- <h2 *ngIf="this.data.option === 'add'" class="pl-16" mat-dialog-title>Agregar Dato de entrega</h2>
 <h2 *ngIf="this.data.option === 'upd'" class="pl-16" mat-dialog-title>Modificar Dato de entrega</h2>
-<h2 *ngIf="this.data.option === 'view'" class="pl-16" mat-dialog-title>Ver Dato de entrega</h2>
-
+<h2 *ngIf="this.data.option === 'view'" class="pl-16" mat-dialog-title>Ver Dato de entrega</h2> -->
+<div fxLayout="row" style="width: 100%;" class="formClass">
+    <mat-toolbar matDialogTitle class="mat-accent">
+        <mat-toolbar-row fxLayoutAlign="center" class="titulo2">
+            <h2 *ngIf="this.data.option === 'add'" class="centrarTitulo" mat-dialog-title>Agregar Dato de entrega</h2>
+            <h2 *ngIf="this.data.option === 'upd'" class="centrarTitulo" mat-dialog-title>Modificar Dato de entrega</h2>
+            <h2 *ngIf="this.data.option === 'view'" class="centrarTitulo" mat-dialog-title>Ver Dato de entrega</h2>
+        </mat-toolbar-row>
+    </mat-toolbar>
+</div>
 <mat-dialog-content class="mat-typography contenedorPadre">
 
     <!-- <div fxLayout="column" class="divPrincipal"> -->
@@ -130,17 +138,16 @@
     <!--  </div> -->
 
 </mat-dialog-content>
-
-<mat-dialog-actions *ngIf="this.data.option === 'add'" fxLayoutAlign="space-between">
-    <button mat-raised-button [mat-dialog-close]="true" color="accent" [disabled]="!this.estanTodosLosDatos" (click)="agregar()">Agregar</button>
-    <button mat-stroked-button mat-dialog-close>Cancelar</button>
+<mat-dialog-actions *ngIf="this.data.option === 'add'">
+    <div class="botones">
+        <button mat-raised-button [mat-dialog-close]="true" class="btn" color="accent" [disabled]="!this.estanTodosLosDatos" (click)="agregar()">Agregar</button>
+        <button mat-stroked-button class="btn" mat-dialog-close>Cancelar</button>
+    </div>
 </mat-dialog-actions>
-<mat-dialog-actions *ngIf="this.data.option === 'upd'" fxLayoutAlign="space-between">
-    <button mat-raised-button [mat-dialog-close]="true" color="accent" [disabled]="!this.estanTodosLosDatos" (click)="agregar()">Modificar</button>
-    <button mat-stroked-button mat-dialog-close>Cancelar</button>
+<mat-dialog-actions *ngIf="this.data.option === 'upd'">
+    <button mat-raised-button [mat-dialog-close]="true" class="btn" color="accent" [disabled]="!this.estanTodosLosDatos" (click)="agregar()">Modificar</button>
+    <button mat-stroked-button class="btn" mat-dialog-close>Cancelar</button>
 </mat-dialog-actions>
-<mat-dialog-actions *ngIf="this.data.option === 'view'" fxLayoutAlign="end center">
-    <button mat-stroked-button mat-dialog-close>Cancelar</button>
+<mat-dialog-actions class="btn" *ngIf="this.data.option === 'view'" fxLayoutAlign="end center">
+    <button mat-stroked-button class="btn" mat-dialog-close>Cancelar</button>
 </mat-dialog-actions>
-
-<!-- </div> -->
