@@ -12,9 +12,10 @@ export class PedidosCodigosBarraAddService
         private _httpClient: HttpClient
     ){}
 
-    getCodigoBarra(codArt): Observable<any>
+    getCodigoBarra(codArt, page, size, columna, order): Observable<any>
     {
-        let ruta = `${BASE_URL}pedidos/codigodebarras/porcodigoarticuloonombre/${codArt}/0/1/id/asc`;
+        //let ruta = `${BASE_URL}pedidos/codigodebarras/porcodigoarticuloonombre/${codArt}/0/1/id/asc`;
+        let ruta = `${BASE_URL}pedidos/codigodebarras/porcodigoarticuloonombre/${codArt}/${page}/${size}/${columna}/${order}`;
         return this._httpClient.get(ruta);
     }
 

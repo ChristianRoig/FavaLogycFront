@@ -104,14 +104,6 @@
 
                     <button mat-raised-button color="accent" class="btn" [disabled]="this.selection.isEmpty()" (click)="agregarDatoEntrega()">NUEVO DATO DE ENTREGA</button>
 
-                    <!-- <mat-form-field appearance="fill">
-                        <mat-label>Mover a</mat-label>
-                        <select matNativeControl (change)="moverDesdeArticulos($event)">
-                            <option [value]="-1"> MOVER </option>
-                            <option *ngFor="let items of this.dataSourceDatosDeEntrega.datos; let indexItems = index" 
-                                    [value]="indexItems"> {{items.id}} - {{items.direccion}} </option>
-                        </select>
-                    </mat-form-field> -->
                     <mat-form-field appearance="outline" fxFlex="20" class="ml-4 selectMostrar">
                         <mat-label>Mover a</mat-label>
                         <mat-select (change)="moverDesdeArticulos($event)">
@@ -155,14 +147,6 @@
                                 <td mat-cell *matCellDef="let element"> {{element.nombreArticulo}} </td>
                             </ng-container>
 
-
-
-                            <!-- Symbol Column -->
-                            <!-- <ng-container matColumnDef="codigoDeBarras">
-                                <th mat-header-cell *matHeaderCellDef> Código de Barras </th>
-                                <td mat-cell *matCellDef="let element"> {{element.codigoDeBarras}} </td>
-                            </ng-container> -->
-
                             <ng-container matColumnDef="mover">
                                 <th mat-header-cell *matHeaderCellDef> Mover </th>
 
@@ -177,6 +161,7 @@
                                                     [value]="indexItems"> {{items.id}} - {{items.direccion}} </option>
                                         </select>
                                     </mat-form-field>
+
                                 </td>
                             </ng-container>
 
