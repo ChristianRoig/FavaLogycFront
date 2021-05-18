@@ -122,7 +122,7 @@
             </ng-container>
 
             <ng-container matColumnDef="seleccionar">
-                <th mat-header-cell *matHeaderCellDef> Seleccionar </th>
+                <th mat-header-cell *matHeaderCellDef> Acción </th>
                 <td mat-cell class="example-button-row" *matCellDef="let lote">
                     <!-- (click)="controlar(lote)" -->
                     <button mat-stroked-button (click)="controlar(lote)" color="primary"> Controlar Lote </button>
@@ -134,10 +134,10 @@
         </table>
         <div contenido class=" mb-4 ">
             <!-- (page)="paginar($event) " -->
-            <mat-paginator (page)="paginar($event)" [length]="length" [pageIndex]="page" [pageSize]="size" [pageSizeOptions]="[5, 10, 15, 500]">
+            <mat-paginator (page)="paginar($event)" [length]="length" [pageIndex]="page" [pageSize]="size" [pageSizeOptions]="[50, 250, 500]">
             </mat-paginator>
 
-            <!-- <mat-paginator [length]="length" [pageIndex]="page" [pageSize]="size" [pageSizeOptions]="[5, 10, 15, 500]" (page)="paginar($event)">
+            <!-- <mat-paginator [length]="length" [pageIndex]="page" [pageSize]="size" [pageSizeOptions]="[50, 250, 500]" (page)="paginar($event)">
             </mat-paginator> -->
         </div>
     </div>

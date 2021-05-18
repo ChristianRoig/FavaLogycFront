@@ -83,7 +83,8 @@ export class PedidosListaService
 
     getAllLocalidades(): Observable<any>
     {
-        let ruta = `${BASE_URL}pedidos/localidad/domicilio/`;
+        //let ruta = `${BASE_URL}pedidos/localidad/domicilio/`; //este esta llamando a "Get All Localidad filtrado por Domicilio De Entrega"
+        let ruta = `${BASE_URL}pedidos/localidad/`; //getAllLocalidad
         return this._httpClient.get(ruta);
     }
 
@@ -93,15 +94,15 @@ export class PedidosListaService
         return this._httpClient.get(ruta);
     }
 
-    getAllProvincias(): Observable<any>
+    /* getAllProvincias(): Observable<any> // no devuelve nada
     {
         let ruta = `${BASE_URL}pedidos/provincia/domicilio/`;
         return this._httpClient.get(ruta);
-    }
+    } */
 
     getProvinciaPorLocalidad(id:number): Observable<any>
     {
-        let ruta = `${BASE_URL}pedidos/provincia/localidad/${id}`;
+        let ruta = `${BASE_URL}pedidos/provincia/localidad/${ id }`;
         return this._httpClient.get(ruta);
     }
 
@@ -116,7 +117,7 @@ export class PedidosListaService
         if ( busqueda !== '' )
             buscar = `/${busqueda}`
 
-        let ruta = `${BASE_URL}pedidos/pedidodetalle/porcomprobanteoarticulo${buscar}/${page}/${size}/${columna}/${order}`;
+        let ruta = `${BASE_URL}pedidos/pedidodetalle/porcomprobanteoarticulo/${buscar}/${page}/${size}/${columna}/${order}`;
         
 
         return this._httpClient.post(ruta, body, {headers: headers});

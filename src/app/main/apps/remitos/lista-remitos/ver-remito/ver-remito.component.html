@@ -1,11 +1,11 @@
-<app-plantilla-fondo-simple titulo='Ver Remito' arrowBack=true>
+<app-plantilla-fondo-simple titulo='Remito {{ this.idRemito }}' arrowBack=true>
 
     <div contenido>
 
         <div fxLayout="column" style="max-width: 100%;">
 
             <div fxLayout="row" class="titular">
-                <h1 class="colorText"> Remito {{ this.idRemito }} </h1>
+                <!-- <h1 class="colorText"> Remito {{ this.idRemito }} </h1> -->
                 <button mat-raised-button color="light" class="mt-22" (click)="confirmacionBorrar()">Eliminar remito</button>
             </div>
 
@@ -21,13 +21,18 @@
 
                         <div class="botonesBusqueda">
                             <!-- (click)="editarLote()" -->
-                            <button class="btn" mat-raised-button color="primary">
+                            <!-- <button class="btn" mat-raised-button color="primary">
                                 Buscar
-                            </button>
+                            </button> -->
                             <!-- (click)="sacarDelLote()" -->
                             <button class="btn" mat-raised-button color="primary" [matBadge]="selection.selected.length" [matBadgeHidden]="selection.selected.length===0" matBadgeColor="warn" [disabled]="selection.selected.length===0">
                                 Eliminar Selec.
                             </button>
+                            <a routerLink="/assets/pdfs/remito.pdf" style="width: 120px;" routerLinkActive="active" target="_blank">
+                                <button class="btn" mat-raised-button color="primary">
+                                Imprimir
+                                </button>
+                            </a>
 
                         </div>
                     </div>

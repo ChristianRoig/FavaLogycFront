@@ -1,4 +1,4 @@
-<app-plantilla-fondo-simple titulo='Crear Orden de Distribucion'>
+<app-plantilla-fondo-simple titulo='Crear Orden de Distribución'>
 
     <!-- CONTENIDO -->
     <div contenido>
@@ -98,5 +98,9 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
+        <div contenido class=" mb-4">
+            <mat-paginator [length]="length" [pageIndex]="page" [pageSize]="size" [pageSizeOptions]="[50, 250, 500]" (page)="paginar($event)">
+            </mat-paginator>
+        </div>
     </div>
 </ng-template>

@@ -42,9 +42,7 @@ export class VerImpresorasComponent implements OnInit {
 
   ngOnInit(): void {
 
-  
     console.log(this.data.pedidos._selected);
-
 
     this._verImpresorasService.getImpresoras().subscribe(data => {
       this.dataSource2 = new MatTableDataSource<any>(data.datos);

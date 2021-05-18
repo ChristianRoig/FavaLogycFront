@@ -9,11 +9,28 @@ export const navigation: FuseNavigation[] = [
         icon     : 'apps',
         children : [
             {
+                id       : 'inicio',
+                title    : 'Inicio',
+                type     : 'item',
+                url       : '/apps',
+                icon     : 'home',
+                exactMatch: true
+            },
+            {
                 id       : 'pedidos',
                 title    : 'Pedidos',
                 type     : 'collapsable',
                 icon     : 'shopping_cart',
                 children : [
+                    
+                    {
+                        id       : 'comprobantes',
+                        title    : 'Comprobantes',
+                        type     : 'item',
+                        url       : '/apps/pedidos/lista-comprobantes',
+                        exactMatch: true
+                        
+                    },
                     {
                         id        : 'crear-pedido',
                         title     : 'Crear Pedido',
@@ -21,13 +38,13 @@ export const navigation: FuseNavigation[] = [
                         url       : '/apps/pedidos/crear-pedido',
                         exactMatch: true
                     },
-                    {
+                    /* {
                         id        : 'lista-articulos',
-                        title     : 'Pedidos',
+                        title     : 'Pedidos (viejo)',
                         type      : 'item',
                         url       : '/apps/pedidos/lista-articulos',
                         exactMatch: true
-                    }
+                    } */
                 ]
             },
             {
@@ -182,12 +199,18 @@ export const navigation: FuseNavigation[] = [
                 ]
             },
             {
-                id       : 'dashboards',
-                title    : 'Comprobantes',
-                type     : 'item',
-                url       : '/apps/comprobantes/lista-comprobantes',
-                icon     : 'school',
-                
+                id       : 'beta and legacy',
+                title    : 'Beta and Legacy',
+                type     : 'collapsable',
+                children : [
+                    {
+                        id        : 'lista-articulos',
+                        title     : 'Pedidos (viejo)',
+                        type      : 'item',
+                        url       : '/apps/pedidos/lista-articulos',
+                        exactMatch: true
+                    }
+                ]
             }
         ]
     }

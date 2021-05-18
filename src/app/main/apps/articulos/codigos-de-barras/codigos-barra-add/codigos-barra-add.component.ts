@@ -36,6 +36,11 @@ export class PedidosCodigosBarraAddComponent implements OnInit {
     descripcion: string;
     codigoDeBarras: string;
 
+    page: number = 0;
+    size: number = 1;
+    columna: string = 'id';
+    order: string = 'asc';
+
 
     constructor(
         private _router: Router,
@@ -61,28 +66,29 @@ export class PedidosCodigosBarraAddComponent implements OnInit {
             this.codigoArticulo = params['codArt'];
         })
 
-        this._pedidosCodigosBarraAddService.getCodigoBarra(this.codigoArticulo).subscribe( 
-          data => {
-            this.dataSource2 = data.datos;
-            this.id = this.dataSource2[0].articulo.id;
-            this.nombre = this.dataSource2[0].articulo.nombre;
-          },
-            (err: HttpErrorResponse) => {
-                if (err.error instanceof Error) {
-                    console.log("Client-side error");
-                } else {
-                    let errStatus = err.status
-                    if (errStatus == 0){
-                        let titulo = 'Error de Servidor';
-                        let mensaje = "Por favor comunicarse con Sistemas";
-                        this.mostrarError(errStatus, titulo, mensaje);
-                    } else {
-                        let titulo = 'Código de Barras no encontrada';
-                        let mensaje = err.error.message.toString();
-                        this.mostrarError(errStatus, titulo, mensaje);
-                    }
-                }
-            }
+        this._pedidosCodigosBarraAddService.getCodigoBarra(this.codigoArticulo, this.page, this.size, this.columna, this.order)
+          .subscribe( 
+            data => {
+              this.dataSource2 = data.datos;
+              this.id = this.dataSource2[0].articulo.id;
+              this.nombre = this.dataSource2[0].articulo.nombre;
+            },
+              (err: HttpErrorResponse) => {
+                  if (err.error instanceof Error) {
+                      console.log("Client-side error");
+                  } else {
+                      let errStatus = err.status
+                      if (errStatus == 0){
+                          let titulo = 'Error de Servidor';
+                          let mensaje = "Por favor comunicarse con Sistemas";
+                          this.mostrarError(errStatus, titulo, mensaje);
+                      } else {
+                          let titulo = 'Código de Barras no encontrada';
+                          let mensaje = err.error.message.toString();
+                          this.mostrarError(errStatus, titulo, mensaje);
+                      }
+                  }
+              }
         );        
     }
 

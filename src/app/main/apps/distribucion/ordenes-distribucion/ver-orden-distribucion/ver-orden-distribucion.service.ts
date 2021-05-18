@@ -40,6 +40,12 @@ export class VerOrdenDistribucionService {
     return this._httpClient.post( ruta, body,{ headers: headers });
   }
 
+  getOrdenById ( idOrdenDist: number ): Observable<any>{    
+        
+    let ruta = `${ BASE_URL }pedidos/distribucion/${ idOrdenDist }`;
+    return this._httpClient.get(ruta);
+}
+
   getRemitoPorId( idRemito: number ){
     let ruta = `${BASE_URL}pedidos/pedidocbte/remito/por-idremito/${ idRemito }`;
       return this._httpClient.get(ruta);

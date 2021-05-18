@@ -34,7 +34,7 @@ export class OrdenesDistribucionComponent implements OnInit {
   //@ViewChild('buscarCbte') buscarCbteInput: ElementRef;
   @ViewChild('buscarOrdenPorCupa') buscarOrdenPorCupaInput: ElementRef;
 
-  displayedColumns: string[] = ['id', 'nombre', 'fecha', 'cantArticulos', 'cantArticulosACargar', 'cantRemitos', 'estado', 'seleccionar'];
+  displayedColumns: string[] = ['id', 'nombre', 'fecha', 'cantArticulos', 'cantArticulosACargar', 'cantRemitos', 'localidad', 'transporte', 'estado', 'seleccionar'];
   dataSource2: any;
   selection = new SelectionModel<any>(true, []);
   selecccionDeEstado: string;
@@ -45,7 +45,7 @@ export class OrdenesDistribucionComponent implements OnInit {
   busqueda: string = "";
   length: number = 0;
   page: number = 0;
-  size: number = 10;
+  size: number = 50;
   columna: string = 'id';
   order: string = 'asc';
 
@@ -173,7 +173,7 @@ export class OrdenesDistribucionComponent implements OnInit {
     }); 
   } */
 
-  @Debounce(1000)
+ //@Debounce(1000)
   searchOrden() {
     this.cupa = this.buscarOrdenPorCupaInput.nativeElement.value;
     console.log(this.cupa);
@@ -198,6 +198,7 @@ export class OrdenesDistribucionComponent implements OnInit {
   verOrden(orden: Orden){ //redireccionar 
     if( orden != null ){
       this.idOrdenDist = orden.id;
+      localStorage.setItem('orden', JSON.stringify(orden));
       let ruta = `apps/distribucion/ver-orden-distribucion/${ this.idOrdenDist }`;
       this._router.navigate([ ruta ]);
     }

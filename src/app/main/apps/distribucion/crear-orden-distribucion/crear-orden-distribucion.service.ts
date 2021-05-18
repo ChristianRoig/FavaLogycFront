@@ -7,21 +7,19 @@ const BASE_URL = environment.server + environment.baseUrl;
 
 export interface BodyDetalle{
 
-    idTipo    : number;
-    idDarsena : number;
+    idTipo          : number;
+    idDarsena       : number;
     desdePedido     : string;
     hastaPedido     : string;
-  }
+}
 
 @Injectable()
-export class CrearOrdenDistribucionService
-{
+export class CrearOrdenDistribucionService {
     constructor(
-        private _httpClient: HttpClient
-    ){ }
+        private _httpClient: HttpClient ){ }
 
-    getRemitosSinDistribucion(page, size, columna, order): Observable<any>{  
-        
+    getRemitosSinDistribucion(page, size, columna, order): Observable<any> {  
+        console.log("datos-> ", page, size, columna, order);
         let ruta = `${ BASE_URL }pedidos/pedidocbte/remito/a-distribuir/${ page }/${ size }/${ columna }/${ order }`;
         return this._httpClient.get(ruta);
     }

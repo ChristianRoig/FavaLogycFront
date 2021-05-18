@@ -2,8 +2,11 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterModule, Routes } from '@angular/router';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
+
+//import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 import { TranslateModule } from '@ngx-translate/core';
 import 'hammerjs';
@@ -19,6 +22,9 @@ import { LayoutModule } from 'app/layout/layout.module';
 import { SampleModule } from 'app/main/sample/sample.module';
 import { PagesModule } from './main/pages/pages.module';
 
+
+
+
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { FormsModule } from '@angular/forms';
 import { PlantillaFondoComponent } from './main/custom-tags/plantilla-fondo/plantilla-fondo.component';
@@ -27,11 +33,19 @@ import { SonidoService } from './services/sonidos.service';
 import { UsuarioGuard } from './guards/usuario.guard';
 import { LoginModule } from './main/pages/login/login.module';
 import { LoginComponent } from './main/pages/login/login.component';
+import { ProjectDashboardComponent } from './main/apps/tablero/tablero.component';
+import { Error404Module } from './main/pages/404/error-404.module';
+//import { Error404Component } from './main/pages/404/error-404.component';
+
+
+
 
 const appRoutes: Routes = [
+    
     {
         path        : 'apps',
         loadChildren: () => import('./main/apps/apps.module').then(m => m.AppsModule),
+        //component   : ProjectDashboardComponent
         // canLoad: [UsuarioGuard]
     },
     {
@@ -39,8 +53,17 @@ const appRoutes: Routes = [
         component   : LoginComponent
     },
     {
+        path        : 'error-404',
+        loadChildren: () => import('./main/pages/404/error-404.module').then(m => m.Error404Module),
+    },
+    {
+        path: '',
+        redirectTo: 'pages/auth/login',
+        pathMatch: 'full'
+    },
+    {
         path      : '**',
-        redirectTo: 'pages/auth/login'
+        redirectTo: 'error-404'
     }
 ];
 
@@ -54,6 +77,7 @@ const appRoutes: Routes = [
         BrowserAnimationsModule,
         HttpClientModule,
         RouterModule.forRoot(appRoutes),
+        MatProgressSpinnerModule,
 
         TranslateModule.forRoot(),
 
@@ -72,10 +96,14 @@ const appRoutes: Routes = [
         SampleModule,
         PagesModule,
         SharedModule,
-        LoginModule
+        LoginModule,
+        Error404Module
+
+
     ],
     providers: [
-        SonidoService
+        SonidoService,
+        //{ provide: LocationStrategy, useClass: HashLocationStrategy }
         // { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
     ],
     bootstrap   : [

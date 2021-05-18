@@ -7,7 +7,15 @@ import { MatDialog } from '@angular/material/dialog';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { stringify } from 'querystring';
+
+//components
+import { ConfirmarAgregarLoteComponent } from './confirmar-agregarLote/confirmar-agregarLote.component';
+
+//services
 import { LoteCrearLoteService } from './lote-crear-lote.service';
+import { VerImpresorasComponent } from '../lista-lotes/ver-impresoras/ver-impresoras.component';
+import { ModalDeseaImprimirLoteComponent } from './modal-desea-imprimir/modal-desea-imprimir.component';
+
 
 export interface Articulos {
 
@@ -52,7 +60,7 @@ export class LoteCrearLoteComponent implements OnInit {
 
   @ViewChild('buscarLote') buscarLoteInput: ElementRef;
 
-  displayedColumns: string[] = ['select', 'Tipo', 'CodigoArticulo','NombreArticulo', 'Comprobante', 'Fecha-Entrega', 'Provincia', 'Localidad','Etapa'];
+  displayedColumns: string[] = ['select', 'Comprobante', 'Fecha-Entrega', 'CodigoArticulo','NombreArticulo', 'Localidad','Etapa'];
   dataSource2: any;
   selection = new SelectionModel<Articulos>(true, []);
 
@@ -60,7 +68,7 @@ export class LoteCrearLoteComponent implements OnInit {
   busqueda: string = "";
   length: number = 0;
   page: number = 0;
-  size: number = 10;
+  size: number = 50;
   columna: string = 'codigoArticulo';
   order: string = 'asc';
 
@@ -100,7 +108,7 @@ export class LoteCrearLoteComponent implements OnInit {
   selectedProvincia: any = 1;
 
   filtroLocalidades: any;
-  selectedLocalidad: any = 1402;
+  selectedLocalidad: any = null;
 
   pickerFiltroDesde:any = null;
   pickerFiltroHasta:any = null;
@@ -162,7 +170,6 @@ export class LoteCrearLoteComponent implements OnInit {
   }
 
   resetFiltros(){
-
     this.busqueda = "";
     this.page = 0;
     this.size = 10;
@@ -176,7 +183,8 @@ export class LoteCrearLoteComponent implements OnInit {
     this.selectedEstado = 0;
     this.selectedEtapa = 0;
     this.selectedProvincia = 1;
-    this.selectedLocalidad = 1402;
+    //this.selectedLocalidad = 1402;
+    this.selectedLocalidad = null;
     this.pickerFiltroDesde= null;
     this.pickerFiltroHasta= null;
     this.pickerLoteDesde  = null;
@@ -249,7 +257,7 @@ export class LoteCrearLoteComponent implements OnInit {
       }
     })
 
-    this._loteCrearLoteService.getAllEstados().subscribe(params => {
+    /* this._loteCrearLoteService.getAllEstados().subscribe(params => {
       this.filtroEstados = params.datos;
     },
     (err: HttpErrorResponse) => {
@@ -267,7 +275,7 @@ export class LoteCrearLoteComponent implements OnInit {
           this.mostrarError(errStatus, titulo, mensaje);
         }
       }
-    })
+    }) */
 
     this._loteCrearLoteService.getAllEtapas().subscribe(params => {
       this.filtroEtapas = params.datos;
@@ -309,7 +317,7 @@ export class LoteCrearLoteComponent implements OnInit {
       }
     })
 
-    this._loteCrearLoteService.getAllLocalidades().subscribe(params => {
+    /* this._loteCrearLoteService.getAllLocalidades().subscribe(params => {
       this.filtroLocalidades = params.datos;
     },
     (err: HttpErrorResponse) => {
@@ -327,7 +335,7 @@ export class LoteCrearLoteComponent implements OnInit {
           this.mostrarError(errStatus, titulo, mensaje);
         }
       }
-    })
+    }) */
   }
 
   getArticulos(){
@@ -395,11 +403,12 @@ export class LoteCrearLoteComponent implements OnInit {
     
     // console.log(this.body);
 
+    console.log("body que mando: ",this.body);
+    console.log("busqueda que mando: ",this.busqueda);
     this._loteCrearLoteService.getArticulos(this.body, this.busqueda, this.page, this.size, this.columna, this.order).subscribe(
       data => {
         this.dataSource2 = data.datos;
-        console.log("getPedidoDetalle");
-        console.log(this.dataSource2);
+        console.log("getArticulos: ",this.dataSource2);
         this.length = data.totalRegistros;
       },
       (err: HttpErrorResponse) => {
@@ -440,7 +449,7 @@ export class LoteCrearLoteComponent implements OnInit {
           } else {
             this._router.navigate(['']);
           }
-      });
+    });
   }
 
   selectTipo(event: Event) {
@@ -505,7 +514,7 @@ export class LoteCrearLoteComponent implements OnInit {
       })
     } else {
       this.selectedLocalidad = 0;
-      this._loteCrearLoteService.getAllLocalidades().subscribe(params => {
+     /*  this._loteCrearLoteService.getAllLocalidades().subscribe(params => {
         this.filtroLocalidades = params.datos;
       },
       (err: HttpErrorResponse) => {
@@ -523,7 +532,7 @@ export class LoteCrearLoteComponent implements OnInit {
             this.mostrarError(errStatus, titulo, mensaje);
           }
         }
-      })
+      }) */
     }
     // this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
   }
@@ -625,20 +634,19 @@ export class LoteCrearLoteComponent implements OnInit {
   }
 
 
-  @Debounce(1000)  
+  //@Debounce(1000)  
   searchLote() {
     
     this.page = 0;
     this.columna = 'id';
 
     this.busqueda = this.buscarLoteInput.nativeElement.value;
+    this.busqueda = this.busqueda.toLocaleUpperCase();
     if(this.busqueda === '' || this.busqueda == null){
       this.busqueda = "";
       this.getArticulos();
     }
-
     //this.getArticulos();
-
   }
 
   anular(id){
@@ -648,16 +656,119 @@ export class LoteCrearLoteComponent implements OnInit {
   }
 
   crearLote() {
-
-    console.log("seleccion");
-    console.log(this.selection);
-
-    localStorage.setItem('Lote',JSON.stringify(this.selection));
     
-    let ruta = `apps/lotes/agregar-lote`;
-    this._router.navigate([ruta]);
+    console.log("seleccion", this.selection);
+    //localStorage.setItem('Lote',JSON.stringify(this.selection));
+    let dialogRef = this._dialog.open( ConfirmarAgregarLoteComponent, {
+      data: {
+        vengoDeCrearLote: true,
+        selection: this.selection
+      }
+    })
+    dialogRef.afterClosed().subscribe( result => {
+
+      let idLote = JSON.parse(localStorage.getItem('idLote'));
+      localStorage.clear();
+      
+      //this.imprimirCupa( idLote );
+        
+        /* if (errStatus != 0) {
+          //let ruta = `apps/remitos/lista-remitos`;
+          //this._router.navigate([ruta]); 
+            
+        } else {
+          this._router.navigate(['']);
+        } */ 
+      });
+    
+    /* antes */
+    /* let ruta = `apps/lotes/agregar-lote`;
+    this._router.navigate([ruta]); */
   }
 
+  /* esperarYnavegarAlotes(){
+    setTimeout(() => {                          
+      let ruta = `apps/lotes/lista-lotes`;
+      this._router.navigate([ruta]);
+    }, 1000);
+  }  */
+
+  imprimirCupas(idLote: number){
+    const dialogRef = this._dialog.open( ModalDeseaImprimirLoteComponent, {
+      data: {
+        idLote: idLote
+      }
+    });
+
+    dialogRef.beforeClosed()
+      .subscribe(result => {
+        if ( result ){
+          this.imprimirCupa(idLote);
+        }
+        //this.esperarYnavegarAlotes();
+      });
+  }
+
+  imprimirCupa(idLote){
+    let application_name = "Favalogyc";
+    let permission_name = "Impresion_CUPA"
+
+    if(localStorage.getItem('ImpresoraCUPA')){
+      this.imprimir(idLote);
+    } else {
+      this.seleccionarImpresora( idLote );     //ARREGLAR ESTO
+    } 
+  }
+
+  imprimir(idLote){
+    let impresora = localStorage.getItem('ImpresoraCUPA');
+    console.log("adentro de imprimir",idLote, impresora);
+
+    this._loteCrearLoteService.imprimir( idLote, impresora ).subscribe(data => {
+      let titulo = 'Estado de impresión';
+      let mensaje = "Completado correctamente";
+      this.mostrarError(-1, titulo, mensaje);
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
+        } else {
+          let titulo = 'Error al imprimir';
+          let mensaje = err.error.message.toString();
+          this.mostrarError(errStatus, titulo, mensaje);
+        }
+      }
+    });
+  } 
+  
+  seleccionarImpresora(idLote){
+    console.log("selection en seleccionar impresora", this.selection);
+    let dialogRef = this._dialog.open(VerImpresorasComponent, {
+      data: {
+        pedidos: this.selection,
+        impresora: 'ImpresoraCUPA'
+      }
+    });
+    dialogRef.afterClosed()
+      .subscribe(result => {
+        if(localStorage.getItem('ImpresoraCUPA')){
+          this.imprimir(idLote);
+        } else {
+          dialogRef.close();
+          this.seleccionarImpresora(idLote);
+        }
+      });
+  }
+  
+  getSoloFecha(fecha: any){
+    return fecha.split(' ')[0];
+  }
 
   isAllSelected() {
     const numSelected = this.selection.selected.length;

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'environments/environment';
 import { map } from 'rxjs/operators';
@@ -73,21 +73,27 @@ export class PedidosCrear2Service
             );
     }
 
-    postPedidos(listaDatosDeEntrega, idTipo , numerocbte): Observable<any>
-    {   
-        let ruta = `${BASE_URL}pedidos/pedidodetalle/sinremitir/datoentrega/${idTipo}/${numerocbte}`;
-        
-        let body=   {
+    postPedidos( listaDatosDeEntrega, idTipo , numerocbte ): Observable<any> {   
+
+        const ruta = `${BASE_URL}pedidos/pedidodetalle/sinremitir/datoentrega/${idTipo}/${numerocbte}`;
+
+        /* const body =   {
+            listaDatosDeEntrega
+        } */
+        const body=   {
             listaDatosDeEntrega: listaDatosDeEntrega
         }
-
-        console.log(JSON.stringify(body));
-
-        let headers = new HttpHeaders({
+        //const params = new HttpParams().set("listaDatosDeEntrega",listaDatosDeEntrega);
+        
+        console.log("BODY ->", body);
+        
+         let headers = new HttpHeaders({
             "Content-Type": "application/json"
         });
 
-        return this._httpClient.post(ruta,body,{headers:headers});
+        //return this._httpClient.post( ruta,  { body } , { headers:headers });    //ANTES PESIMO HORRIBLE
+        
+        return this._httpClient.post( ruta,  body , { headers:headers });          //AHORA
     }
 
 
@@ -103,7 +109,7 @@ export class PedidosCrear2Service
             "Content-Type": "application/json"
         });
 
-        return this._httpClient.put(ruta,body,{headers:headers});
+        return this._httpClient.put( ruta, body, { headers:headers });
     }
 
 }

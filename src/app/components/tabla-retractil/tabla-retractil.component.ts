@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { DetallesTablaRetractil } from 'app/interfaces/detalles-tabla-retractil';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-tabla-retractil',
@@ -17,21 +18,30 @@ import { DetallesTablaRetractil } from 'app/interfaces/detalles-tabla-retractil'
 export class TablaRetractilComponent implements OnInit {
 
   @Input('arregloDeDetalles') arregloDeDetalles: Array<any>;
+
   dataSource;
+  modo: string;
   //'Check', 
   columnsToDisplay = ['Cod. Art.', 'Nomb. Art.', 'Cant.', 'Etapa', 'CodBarra', 'Cupa'];
   ELEMENT_DATA: DetallesTablaRetractil[] = [];
   columnsToDisplay2 = ['Checks', 'Nomb. de Parte', 'Identificador', 'CUPA'];
   expandedElement: DetallesTablaRetractil | null;
 
-  constructor() { }
+  constructor(
+    private _activatedRoute: ActivatedRoute
+  ) { }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
+    this._activatedRoute.params.subscribe( params => {
+      //console.log( params );
+      //console.log( params['id'] );
+      this.modo = params['modo'];
+      console.log("this.modo", this.modo );
+
+    }); 
 
     //console.log("appretractil ", this.arregloDeDetalles);
-    
     this.convertirDatosEnArreglo();
-
   }
 
   convertirDatosEnArreglo() {
@@ -66,8 +76,23 @@ export class TablaRetractilComponent implements OnInit {
       }
       for (let index = 0; index < element.listaPartes.length; index++) {
         const elemento = element.listaPartes[index];
+
+        let valorCheck;
+        if (this.modo == "estanteria"){
+          if (elemento.checkEstanteria == false) 
+            valorCheck = false;
+          if (elemento.checkEstanteria == true) 
+            valorCheck = true;
+        }
+        else {
+          if (elemento.checkDarsena == false) 
+            valorCheck = false;
+          if (elemento.checkDarsena == true) 
+            valorCheck = true;
+        }
+    
         let detalle = {
-          Checks: elemento.checkEstanteria,
+          Checks: valorCheck,
           Nomb_de_Parte: elemento.pedidoDetalle.articulo.nombre,
           Identificador: elemento.id,
           CUPA: elemento.codigoUnicoParteArticulo

@@ -1,27 +1,64 @@
-table {
-    margin: auto;
-    width: 100%;
-    margin-left: 20px;
-    margin-right: 200px;
-}
-
-tr.example-detail-row {
-    height: 0;
-}
-
-tr.example-element-row:not(.example-expanded-row):hover {
-    background: whitesmoke;
-}
-
-tr.example-element-row:not(.example-expanded-row):active {
-    background: #efefef;
-}
-
-.example-element-row td {
-    border-bottom-width: 0;
-}
-
-.example-element-detail {
-    overflow: hidden;
-    display: flex;
-}
+        table {
+            margin: auto;
+            width: 90%;
+            margin-left: 50px;
+            //margin-right: 200px;
+        }
+        
+        tr.example-detail-row {
+            height: 0;
+        }
+        
+        tr.example-element-row:not(.example-expanded-row):hover {
+            background: whitesmoke;
+        }
+        
+        tr.example-element-row:not(.example-expanded-row):active {
+            background: #efefef;
+        }
+        
+        .example-element-row td {
+            border-bottom-width: 0;
+        }
+        
+        .example-element-detail {
+            overflow: hidden;
+            display: flex;
+        }
+        
+        td.mat-cell {
+            padding-left: 6px !important;
+            padding-right: 6px !important;
+            margin-left: 10px !important;
+            margin-right: 10px !important;
+            width: 50px !important;
+        }
+        /* .columnas {
+        margin-right: 10px;
+        margin-left: 10px;
+    } */
+        
+        th.mat-header-cell {
+            margin-right: 10px !important;
+            margin-left: 10px !important;
+        }
+        
+        .active-icon {
+            border-radius: 50%;
+        }
+        
+        .subTabla {
+            height: 30px;
+            padding-top: 5px;
+            padding-left: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            td.mat-cell {
+                padding-left: 6px !important;
+                padding-right: 6px !important;
+                margin-left: 10px !important;
+                margin-right: 10px !important;
+                width: 50px !important;
+            }
+        }

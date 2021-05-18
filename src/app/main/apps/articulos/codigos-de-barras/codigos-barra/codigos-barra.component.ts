@@ -128,7 +128,7 @@ export class PedidosCodigosBarraComponent implements OnInit {
           );            
     }
 
-  @Debounce(1000)  
+  
   search() {
 
     this.busqueda = this.buscarInput.nativeElement.value;

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { FuseSharedModule } from '@fuse/shared.module';
 import { FuseWidgetModule } from '@fuse/components/widget/widget.module';
@@ -32,6 +33,21 @@ import { PedidosCrear1Service } from './pedidos-crear-1/pedidos-crear-1.service'
 import { PedidosCrear2Service } from './pedidos-crear-2/pedidos-crear-2.service';
 import { FiltrosService } from './pedidos-lista/filtros/filtros.service';
 
+
+//components
+import { ComprobantesListaComponent } from './comprobantes/comprobantes-lista/comprobantes-lista.component';
+import { TableComprobantesComponent } from './comprobantes/table-comprobantes/table-comprobantes.component';
+import { TableComprobantesAprogramarComponent } from './comprobantes/table-comprobantes-a-programar/table-comprobantes-a-programar.component';
+import { TableArticulosComponent } from './comprobantes/table-articulos/table-articulos.component';
+
+//services
+import { ComprobantesListaService } from './comprobantes/comprobantes-lista/comprobantes-lista.service';
+import { TableComprobantesService } from './comprobantes/table-comprobantes/table-comprobantes.service';
+import { TableComprobantesAprogramarService } from './comprobantes/table-comprobantes-a-programar/table-comprobantes-a-programar.service';
+import { TableArticulosService } from './comprobantes/table-articulos/table-articulos.service';
+import { TablePedidosComponent } from './comprobantes/table-pedidos/table-pedidos.component';
+import { TablePedidosService } from './comprobantes/table-pedidos/table-pedidos.service';
+
 const routes: Routes = [
     {
         path     : 'lista-articulos',
@@ -52,8 +68,26 @@ const routes: Routes = [
     {
         path     : 'crear-pedido2/:modo',
         component: PedidosCrear2Component
-    }
+    },
+    {
+        path     : 'lista-comprobantes',
+        component: ComprobantesListaComponent
+    },
+    /* {   path     : 'lista-comprobantes/comprobantes-a-programar',  // cambios proximos
+        component: TableComprobantesAprogramarComponent 
+    },
+    {   path     : 'lista-comprobantes/comprobantes',
+        component: TableComprobantesComponent 
+    },
+    {   path     : 'lista-comprobantes/pedidos',
+        component: TablePedidosComponent 
+    },
+    {   path     : 'lista-comprobantes/articulos',
+        component: TableArticulosComponent 
+    }, */
 ];
+
+
 
 @NgModule({
     declarations: [
@@ -67,7 +101,13 @@ const routes: Routes = [
         PedidosCrear1Component,
         PedidosCrear2Component,
         AgregarDatosEntregaComponent,
-        FiltrosComponent
+        FiltrosComponent,
+        ComprobantesListaComponent,
+        TableComprobantesComponent,
+        TableComprobantesAprogramarComponent,
+        TableArticulosComponent,
+        TablePedidosComponent,
+
     ],
     imports     : [
         CommonModule,
@@ -79,7 +119,8 @@ const routes: Routes = [
         FuseSharedModule,
         FuseWidgetModule,
         CustomTagModule,
-        TablaRetractilModule
+        TablaRetractilModule,
+        MatProgressSpinnerModule
     ],
     providers   : [
         PedidosListaService,
@@ -87,7 +128,13 @@ const routes: Routes = [
         PedidosAnularService,
         PedidosCrear1Service,
         PedidosCrear2Service,
-        FiltrosService
+        FiltrosService,
+        ComprobantesListaService,
+        TableComprobantesService,
+        TableComprobantesAprogramarService,
+        TableArticulosService,
+        TablePedidosService,
+ 
     ]
 })
 

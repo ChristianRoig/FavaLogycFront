@@ -1,10 +1,11 @@
-<app-plantilla-fondo-simple titulo='Ver Comprobante' arrowBack=true>
+<app-plantilla-fondo-simple titulo='{{ this.cabecera.pedidoTipo.nombre }} - {{ this.cabecera.pedidoCbte.nroCbte }}' arrowBack=true>
 
     <!-- CONTENIDO -->
     <div contenido>
 
         <!-- (click)="confirmacionBorrar()" -->
-        <div class="btnEliminar">
+        <div class="titular">
+            <!-- <h1 class="colorText"> {{ this.cabecera.pedidoTipo.nombre }} - {{ this.cabecera.pedidoCbte.nroCbte }}</h1> -->
             <button mat-raised-button (click)="anular(this.idCabecera)" color="light">Eliminar pedido</button>
         </div>
 

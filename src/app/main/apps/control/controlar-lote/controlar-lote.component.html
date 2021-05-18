@@ -1,27 +1,35 @@
-<app-plantilla-fondo titulo='Controlar Lote en {{ this.modo }} - Lote {{ this.idLote }}'>
+<app-plantilla-fondo titulo='Controlar Lote en {{ this.tituloPagina }} - Lote {{ this.idLote }}'>
 
 
     <div contenido class="content" fxLayout="row" fxLayoutAlign="center">
 
-        <div class="my-24" style="width: 100%;">
+        <div style="width: 100%;">
 
             <div fxLayout="row" class="controlesBusquedaF">
+                <div fxLayout="row" class="inputs">
+                    <mat-form-field appearance="outline" class="inputBusqueda">
+                        <mat-label>Código de Barras</mat-label>
+                        <input #buscarCodigoBarras (keydown)="saltarAcupa($event)" (keyup)="searchCodigoBarras()" matInput value="" placeholder="Ingrese un Código de Barras">
+                        <mat-icon matSuffix>search</mat-icon>
+                    </mat-form-field>
 
-                <mat-form-field appearance="outline" class="inputBusqueda">
-                    <mat-label>Código de Barras</mat-label>
-                    <input #buscarCodigoBarras class="text-uppercase" (keyup)="searchCodigoBarras()" matInput value="" placeholder="Ingrese un Código de Barras">
-                    <mat-icon matSuffix>search</mat-icon>
-                </mat-form-field>
-
-                <mat-form-field appearance="outline" class="inputBusqueda">
-                    <mat-label>CUPA</mat-label>
-                    <input #buscarCUPA class="text-uppercase" (keyup)="searchCUPA()" matInput value="" placeholder="Ingrese un CUPA">
-                    <mat-icon matSuffix>search</mat-icon>
-                </mat-form-field>
+                    <mat-form-field appearance="outline" class="inputBusqueda">
+                        <mat-label>CUPA</mat-label>
+                        <input #buscarCUPA id="inputCupa" (keyup)="searchCUPA()" (keydown)="saltarAbotonControlar($event)" matInput value="" placeholder="Ingrese un CUPA">
+                        <mat-icon matSuffix>search</mat-icon>
+                    </mat-form-field>
+                </div>
                 <div class="botonesBusqueda">
-                    <button mat-raised-button class="btn" color="primary" (click)="controlarEtapaArticulo()">Controlar</button>
+                    <div *ngIf="this.ocultarBotones">
+                        <button mat-raised-button (click)="controlarEtapaArticulo()" [disabled]="!this.cupa || !this.codigoBarras" #btnRef="matButton" class="btn" color="primary">Controlar</button>
 
-                    <button mat-raised-button class="btn" color="warn" (click)="toggle()">Eliminar</button>
+                        <!-- <button mat-raised-button class="btn" color="warn" (click)="toggle()">Eliminar</button> -->
+                        <button mat-raised-button class="btn" color="warn" (click)="popUpLoteControlado()">Eliminar</button>
+                    </div>
+                    <div class="btnToggle">
+                        <mat-slide-toggle formcontrolname="hidden" type="button" (click)="toggleBotones()" [(ngModel)]="ocultarBotones" class="mat-slide-toggle"></mat-slide-toggle>
+                        <label class="pl-8">Mostar botones</label>
+                    </div>
                 </div>
             </div>
 
@@ -33,59 +41,17 @@
                 </mat-form-field>
                 <button mat-raised-button class="btnBorrar" color="warn" (click)="borrarArticuloDeLotePorCupa()">Borrar</button>
             </div>
-
-
-            <app-tabla-retractil *ngIf="this.articulos" [arregloDeDetalles]='this.articulos'></app-tabla-retractil>
-
-            <!--  <div style="width: 100%; overflow: auto;">
-
-                <table mat-table matSort [dataSource]="dataSource2" class="mb-8" style="width: 100%;">
-
-                    <ng-container matColumnDef="check">
-
-                        <th mat-header-cell *matHeaderCellDef> Id </th>
-                        <td mat-cell *matCellDef="let articulo"> {{ articulo.idLote }} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="nombreArt">
-
-                        <th mat-header-cell *matHeaderCellDef> Nombre Articulo</th>
-                        <td mat-cell *matCellDef="let articulo"> {{ articulo.detalle.articulo.nombre }} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="codArt">
-
-                        <th mat-header-cell *matHeaderCellDef> Codigo Art. </th>
-                        <td mat-cell *matCellDef="let articulo"> {{ articulo.detalle.articulo.codigoArticulo }} </td>
-                    </ng-container>
-
-
-                    <ng-container matColumnDef="etapa">
-                        <th mat-header-cell *matHeaderCellDef> Etapa </th>
-                        <td mat-cell class="example-button-row" *matCellDef="let articulo">{{ articulo.detalle.pedidoEtapa.nombre }} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="cant">
-                        <th mat-header-cell *matHeaderCellDef> Cant </th>
-                        <td mat-cell class="example-button-row" *matCellDef="let articulo">{{ articulo.cantidadDeDetallesCheckeados + '/' + articulo.cantidadDeDetalles }} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="codBarra">
-                        <th mat-header-cell *matHeaderCellDef> Codigo Barra </th>
-                        <td mat-cell class="example-button-row" *matCellDef="let articulo">cod barra </td>
-
-                    </ng-container>
-
-                    <ng-container matColumnDef="cupa">
-                        <th mat-header-cell *matHeaderCellDef> CUPA </th>
-                        <td mat-cell class="example-button-row" *matCellDef="let articulo">{{ articulo.listaPartes.codigoUnicoParteArticulo }} </td>
-                    </ng-container>
-
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                </table>
-
+            <!-- <div class="avisoControl"> EN PROCESO -->
+            <!-- *ngIf="controlado" -->
+            <!-- <mat-card-subtitle class="cardControl">Control exitoso</mat-card-subtitle> -->
+            <!--  <mat-label class="cardControl">Control exitoso</mat-label>
             </div> -->
+            <div fxLayout="row" class="divEstado">
+                <mat-label class="mt-16">Estado del lote: </mat-label>
+                <p *ngIf="this.estadoLote === 'CONTROLADO'" class="estadoControlado">{{ this.estadoLote }}</p>
+                <p *ngIf="this.estadoLote === 'A CONTROLAR'" class="estadoAcontrolar">{{ this.estadoLote }}</p>
+            </div>
+            <app-tabla-retractil *ngIf="this.articulos" [arregloDeDetalles]='this.articulos'></app-tabla-retractil>
         </div>
 
     </div>

@@ -1,0 +1,65 @@
+    .btn {
+        height: 60px;
+        /* margin-bottom: 27px; */
+        width: 250px;
+        padding-left: 5px;
+        padding-right: 5px;
+        margin-left: 25px;
+        margin-top: 15px;
+    }
+    
+    .boton {
+        height: 40px;
+        /* margin-bottom: 27px; */
+        width: 120px;
+        padding-left: 5px;
+        padding-right: 5px;
+        /* margin-left: 25px;
+        margin-top: 15px; */
+    }
+    
+    .selectMostrar {
+        width: 300px;
+        margin-right: 25px;
+        margin-top: 10px;
+    }
+    
+    body.theme-default .mat-card {
+        border-radius: 10px;
+    }
+    
+    .mat-card {
+        border-radius: 10px !important;
+    }
+    
+    .botones {
+        place-content: space-between;
+        align-items: center;
+        height: 60px;
+        margin-left: 25px;
+        margin-right: 25px;
+    }
+    
+    body.theme-default .fuse-card {
+        border-radius: 10px !important;
+    }
+    
+    .fuse-card {
+        border-radius: 10px !important;
+    }
+    
+    .divArticulos {
+        border-radius: 10px;
+    }
+    
+    .tituloC {
+        padding-left: 10px;
+    }
+    
+    .primeroFormulario {
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    /* .primerDiv {} */

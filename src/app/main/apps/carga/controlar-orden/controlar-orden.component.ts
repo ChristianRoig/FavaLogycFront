@@ -9,6 +9,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 //service
 import { ControlarOrdenService } from './controlar-orden.service';
+import { MatButton } from '@angular/material/button';
+import { PopUpOrdenControladaComponent } from './popUpOrdenControlada/popUpOrdenControlada.component';
 
 /**
  * @title Basic use of `<table mat-table>`
@@ -37,16 +39,21 @@ import { ControlarOrdenService } from './controlar-orden.service';
 export class ControlarCargaComponent implements OnInit {
 
   @ViewChild('controlarCupa') buscarCupaInput: ElementRef;
+  @ViewChild('btnRef') buttonRef: MatButton;
+
   //'idArticulo','nombreArticulo','codigoArticulo','codigoUnicoParteArticulo','etapa','nroParte','nroCbte','checkTransporte'
   displayedColumns: string[] = ['idArticulo','nombreArticulo','codigoArticulo','codigoUnicoParteArticulo','etapa','nroParte','nroCbte','checkTransporte'];
   dataSource2: any;
 
+  ordenActual = {};
   idOrdenDist: number = null;
+  nombreOrden: string;
   cupa : number = null;
+  estadoOrden: string = "A CONTROLAR";
 
   length: number = 0;
   page: number = 0;
-  size: number = 10;
+  size: number = 50;
   columna: string = 'nroCbte';
   order: string = 'asc';
 
@@ -63,6 +70,7 @@ export class ControlarCargaComponent implements OnInit {
     this._activatedRoute.params.subscribe( params => {
     this.idOrdenDist = params['id'];
     });
+    this.buscarOrdenPorId();
     this.getArticulosDeOrdenDistribucion(this.idOrdenDist);
   }
 
@@ -72,6 +80,7 @@ export class ControlarCargaComponent implements OnInit {
       //console.log(data.remitos[0].pedidoDetalles[0].articulo);
       //this.remitosDeOrden = data.remitos;
       this.dataSource2 = data.datos;
+      this.setEstadoOrden();
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
@@ -91,13 +100,37 @@ export class ControlarCargaComponent implements OnInit {
     });
   }
 
+  setEstadoOrden(){
+    console.log("remitos de setEstadoOrden");
+    let contador = 0;
+    for(let remito of this.dataSource2){
+      //console.log("cantDetalles", articulo.cantidadDeDetalles, "cantDetalles a chequear", articulo.cantidadDeDetallesCheckeados);  
+      if(remito.checkTransporte == true){
+        contador++;
+        //console.log("contador", contador, "articulos.lenght", articulos.length);
+      }
+    }
+    console.log("contador |", contador, "this.dataSource2.length | ", this.dataSource2.length);
+    if (contador == this.dataSource2.length){
+      this.estadoOrden = "CONTROLADO";
+      this.popUpOrdenControlada();
+    }
+  }
+
+
+  limpiarInputs(){
+    this.buscarCupaInput.nativeElement.value = "";
+  }
+
   controlarArticuloPorCupa(){
+    
     this._controlarOrdenService.controlarArticuloPorCupa( this.idOrdenDist, this.cupa ) .subscribe( data => {
-      //console.log(data);
+      //this.dataSource2 = null;
       console.log("controlado");
       //console.log(data.remitos[0].pedidoDetalles[0].articulo);
       //this.remitosDeOrden = data.remitos;
       //this.dataSource2 = data;
+      this.esperarYactualizarDatos();
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
@@ -115,25 +148,40 @@ export class ControlarCargaComponent implements OnInit {
         }
       }
     });
-    this.esperarYactualizarDatos();
   }
 
   esperarYactualizarDatos(){
-    setTimeout(() => {                          
+    setTimeout(() => {       
+      this.limpiarInputs();                   
       this.getArticulosDeOrdenDistribucion( this.idOrdenDist );
-    }, 3000);
+    }, 1000);
   }
 
 
-  @Debounce(1000)  
+  
   searchCupa() {
     this.cupa = this.buscarCupaInput.nativeElement.value;
     console.log(this.cupa);
     if( this.cupa < 1 ){
       this.cupa = null;
-      
     }
   }
+
+  saltarAboton(e){
+    if (e.key === "Enter") {
+        this.buttonRef.focus();
+    }
+  }
+
+  popUpOrdenControlada() {
+    
+    this._dialog.open( PopUpOrdenControladaComponent, {
+        data: {
+          idLote: this.idOrdenDist,
+          orden: this.ordenActual
+        }
+      });
+  } 
 
   mostrarError(errStatus, titulo, mensaje){
     const dialogRef = this._dialog.open( ModalErrorComponent, { 
@@ -150,6 +198,30 @@ export class ControlarCargaComponent implements OnInit {
             this._router.navigate(['']);
           }
       });
+  }
+
+  buscarOrdenPorId() {
+    this._controlarOrdenService.getOrdenById( this.idOrdenDist ).subscribe( data => {
+        console.log(data);
+        this.ordenActual = data;
+        this.nombreOrden = data.nombre;
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error");
+        } else {
+          let errStatus = err.status
+          if (errStatus == 0){
+            let titulo = 'Error de Servidor';
+            let mensaje = "Por favor comunicarse con Sistemas";
+            this.mostrarError(errStatus, titulo, mensaje);
+          } else {
+            let titulo = 'Error al buscar una orden';
+            let mensaje = err.error.message.toString();
+            this.mostrarError(errStatus, titulo, mensaje);
+          }
+        }
+    }); 
   }
 
   /* sortData( event ) {

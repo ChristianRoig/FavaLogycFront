@@ -1,0 +1,89 @@
+<div fxLayout="row" class="controlesBusqueda ">
+
+    <mat-form-field appearance="outline" class="inputBusqueda">
+        <mat-label>Buscar un Comprobante</mat-label>
+        <!-- (keyup)="searchCbte()" -->
+        <input #buscarCbte (keyup)="searchCbte()" matInput value="" placeholder="Ingrese un comprobante">
+        <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+
+    <div class="botonesBusqueda">
+        <button class="btn" (click)="getComprobanteConPedido()" [disabled]="!this.busqueda" mat-raised-button color="primary">Buscar</button>
+    </div>
+</div>
+
+<div style="width: 100%; overflow: auto;">
+
+    <div class="divSpinner" *ngIf="!this.dataSource2">
+        <mat-spinner strokeWidth="5" [diameter]="40"></mat-spinner>
+    </div>
+
+    <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="dataSource2" style="width: 100%;">
+
+        <ng-container matColumnDef="Comprobante">
+            <th mat-header-cell *matHeaderCellDef style="width: 60px; padding: 15px !important;"> Comprobante </th>
+            <td mat-cell *matCellDef="let element" class="dato" class="dato" style="width: 250px; padding: 15px !important;">
+                <!-- {{element.pedidoTipo}} -->{{ element.pedidoTipo }} - {{ element.nroCbte }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Tipo">
+            <th mat-header-cell *matHeaderCellDef class="titulo"> Tipo </th>
+            <td mat-cell *matCellDef="let element" class="pl-8"> {{element.pedidoTipo}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="NombreArticulo">
+            <th mat-sort-header="nombreArticulo" mat-header-cell *matHeaderCellDef> Artículo </th>
+            <td mat-cell *matCellDef="let element" class="dato">
+                <span *ngIf="element.cantArticulos > 1" [matBadge]="'+' + (element.cantArticulos -1)" matBadgeOverlap="false">{{ element.primerCod }}  {{ element.priNombreArticulo }}</span>
+                <span *ngIf="element.cantArticulos <= 1">{{ element.primerCod }}  {{ element.priNombreArticulo }}</span>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Fecha-Entrega">
+            <th mat-sort-header="fechaDeEntrega" mat-header-cell *matHeaderCellDef> Fecha Entrega </th>
+            <td mat-cell *matCellDef="let element" class="pl-8"> {{ element.fechaDeEntrega }} </td>
+            <!-- | date:'shortDate' -->
+        </ng-container>
+
+        <ng-container matColumnDef="priDireccion">
+            <th mat-sort-header="priDireccion" mat-header-cell *matHeaderCellDef> Dirección </th>
+            <td mat-cell *matCellDef="let element">
+                <span *ngIf="element.cantDireccionEntrega > 1" [matBadge]="'+' + (element.cantDireccionEntrega -1)" matBadgeOverlap="false">{{ element.priDireccion }}, {{element.priLocalidad}}, {{ element.priProvincia }}</span>
+                <span *ngIf="element.cantDireccionEntrega <= 1">{{ element.priDireccion }}, {{element.priLocalidad}}, {{ element.priProvincia }}</span>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="priEtapa">
+            <th mat-sort-header="etapa" class="pl-8" mat-header-cell *matHeaderCellDef> Etapa </th>
+            <td mat-cell *matCellDef="let element">
+                <p *ngIf="element.priEtapa ==='INICIAL'" class="pl-32 h5 estadoInicial">{{ element.priEtapa }}</p>
+                <p *ngIf="element.priEtapa ==='EN LOTE'" class="pl-24 h5 estadoEnLote">{{ element.priEtapa }}</p>
+                <p *ngIf="element.priEtapa ==='ESTANTERIA'" class="pl-16 h5 estadoEstanteria">{{ element.priEtapa }}</p>
+                <p *ngIf="element.priEtapa ==='DARSENA'" class="pl-24 h5 estadoDarsena">{{ element.priEtapa }}</p>
+                <p *ngIf="element.priEtapa ==='REMITO'" class="pl-32 h5 estadoAremitir">{{ element.priEtapa }}</p>
+                <p *ngIf="element.priEtapa ==='DISTRIBUCION'" class="h5 estadoDistribucion">{{ element.priEtapa }}</p>
+                <p *ngIf="element.priEtapa ==='TRANSPORTE'" class="h5 estadoTransporte">{{ element.priEtapa }}</p>
+                <p *ngIf="element.priEtapa ==='REINGRESADO'" class="h5 estadoReingresado">{{ element.priEtapa }}</p>
+                <p *ngIf="element.priEtapa ==='STAND BY'" class="h5 estadoStandBy">{{ element.priEtapa }}</p>
+                <p *ngIf="element.priEtapa ==='ANULADO'" class="h5 estadoAnulado">{{ element.priEtapa }}</p>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="seleccionar">
+            <th mat-header-cell *matHeaderCellDef> Acción </th>
+            <td mat-cell class="example-button-row" *matCellDef="let element">
+                <!-- (click)="abrir( element.idCbt )" -->
+                <button mat-stroked-button color="primary" (click)="abrir( element.idCabPed )"> Abrir </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns "></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns; "></tr>
+    </table>
+
+    <div contenido class=" mb-4 ">
+        <mat-paginator [length]="length " [pageIndex]="page " [pageSize]="size " [pageSizeOptions]="[5, 10, 15, 500] " (page)="paginar($event) ">
+        </mat-paginator>
+    </div>
+</div>
+<!-- </ng-template> -->

@@ -5,9 +5,9 @@
     <div contenido>
 
         <!-- CONTENIDO -->
-        <div fxLayout="column" class="fuse-card" style="max-width: 100%;">
-            <div class="mat-card  my-24">
-                <div class="h2 m-24">Datos del Comprobante</div>
+        <div fxLayout="column" class="fuse-card" style="max-width: 100%; border-radius: 5px;">
+            <div class="mat-card border-radius: 5px;">
+                <div class="h2 m-24 border-radius: 5px;">Datos del Comprobante</div>
 
                 <div fxLayout="row">
 
@@ -45,7 +45,7 @@
                     <div class="h2 m-24">Articulos pendientes de remitir</div>
 
                     <ng-container>
-                        <table mat-table [(dataSource)]="this.dataSourceArticulos" class="mat-elevation-z8" style="width: 100%;" #tabla1>
+                        <table mat-table [(dataSource)]="this.dataSourceArticulos" class="mat-z8" style="width: 100%;" #tabla1>
 
                             <ng-container matColumnDef="select" sticky>
                                 <th mat-header-cell *matHeaderCellDef class="px-24">
@@ -69,6 +69,11 @@
                             <ng-container matColumnDef="nombre">
                                 <th mat-header-cell *matHeaderCellDef> Nombre </th>
                                 <td mat-cell *matCellDef="let element"> {{element.nombreArticulo}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="deposito">
+                                <th mat-header-cell *matHeaderCellDef> Deposito </th>
+                                <td mat-cell *matCellDef="let element"> {{element.codigoDeposito}} </td>
                             </ng-container>
 
                             <!-- Symbol Column -->
@@ -97,23 +102,24 @@
 
                 <div class="mt-4 mb-24 pt-4" fxLayout="row" fxLayoutAlign="space-between">
 
-                    <button mat-raised-button color="accent" [disabled]="this.selection.isEmpty()" (click)="agregarDatoEntrega()">NUEVO DATO DE ENTREGA</button>
+                    <button mat-raised-button color="accent" class="btn" [disabled]="this.selection.isEmpty()" (click)="agregarDatoEntrega()">NUEVO DATO DE ENTREGA</button>
 
-                    <mat-form-field appearance="fill">
+                    <mat-form-field appearance="outline" fxFlex="20" class="ml-4 selectMostrar">
                         <mat-label>Mover a</mat-label>
-                        <select matNativeControl (change)="moverDesdeArticulos($event)">
-                            <option [value]="-1"> MOVER </option>
-                            <option *ngFor="let items of this.dataSourceDatosDeEntrega.datos; let indexItems = index" 
-                                    [value]="indexItems"> {{items.id}} - {{items.direccion}} </option>
-                        </select>
+                        <mat-select (change)="moverDesdeArticulos($event)">
+                            <mat-option [value]="-1"> MOVER </mat-option>
+                            <mat-option *ngFor="let items of this.dataSourceDatosDeEntrega.listadoDatosDeEntrega; let indexItems = index" [value]="indexItems">
+                                {{items.id}} - {{items.direccion}}
+                            </mat-option>
+                        </mat-select>
                     </mat-form-field>
                 </div>
             </div>
         </div>
 
-        <div *ngIf="this.dataSourceDatosDeEntrega.datos.length > 0">
+        <div *ngIf="this.dataSourceDatosDeEntrega.listadoDatosDeEntrega.length > 0">
 
-            <div *ngFor="let item of this.dataSourceDatosDeEntrega.datos; let indexItem=index" #cards fxLayout="column" class="fuse-card" style="max-width: 100%;">
+            <div *ngFor="let item of this.dataSourceDatosDeEntrega.listadoDatosDeEntrega; let indexItem=index" #cards fxLayout="column" class="fuse-card" style="max-width: 100%;">
                 <div class="mat-card  my-24">
                     <div class="h2 m-24">
                         {{item.id}} - {{item.direccion}}
@@ -141,12 +147,6 @@
                                 <td mat-cell *matCellDef="let element"> {{element.nombreArticulo}} </td>
                             </ng-container>
 
-                            <!-- Symbol Column -->
-                            <!-- <ng-container matColumnDef="codigoDeBarras">
-                                <th mat-header-cell *matHeaderCellDef> Código de Barras </th>
-                                <td mat-cell *matCellDef="let element"> {{element.codigoDeBarras}} </td>
-                            </ng-container> -->
-
                             <ng-container matColumnDef="mover">
                                 <th mat-header-cell *matHeaderCellDef> Mover </th>
 
@@ -157,10 +157,11 @@
                                         <select matNativeControl (change)="moverDesdeDatosEntrega($event, element, indexItem, indexElement)">
                                             <option [value]="-2"> MOVER </option>
                                             <option [value]="-1"> Articulos a remitir </option>
-                                            <option *ngFor="let items of this.dataSourceDatosDeEntrega.datos; let indexItems = index" 
+                                            <option *ngFor="let items of this.dataSourceDatosDeEntrega.listadoDatosDeEntrega; let indexItems = index" 
                                                     [value]="indexItems"> {{items.id}} - {{items.direccion}} </option>
                                         </select>
                                     </mat-form-field>
+
                                 </td>
                             </ng-container>
 
@@ -174,11 +175,12 @@
 
         <div class="mat-card  my-24">
 
-            <div class="mt-4 mb-24 pt-4" fxLayout="row" fxLayoutAlign="space-between">
+            <div class="botones" fxLayout="row">
 
-                <button mat-raised-button color="accent" [disabled]="this.dataSourceArticulos.length > 0" (click)="this.procesar()">Procesar</button>
+                <!--<button mat-raised-button color="accent" [disabled]="this.dataSourceArticulos.length > 0" (click)="this.procesar()">Procesar</button>-->
+                <button mat-raised-button color="accent" class="boton" [disabled]="this.procesarDatos == false" (click)="this.procesar()">Procesar</button>
 
-                <button mat-stroked-button class="mr-5px" (click)="this.volver()">Cancelar</button>
+                <button mat-stroked-button class="mr-5px" class="boton" (click)="this.volver()">Cancelar</button>
             </div>
         </div>
     </div>

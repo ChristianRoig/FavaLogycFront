@@ -11,9 +11,9 @@ import { VerImpresorasComponent } from '../ver-impresoras/ver-impresoras.compone
 import { ModalConfirmacionBorrarComponent } from './modal-confirmacion-borrar/modal-confirmacion-borrar.component';
 //servicios
 import { VerLoteService } from './ver-lote.service';
+import { ConfirmarAgregarLoteComponent } from '../../lote-crear-lote/confirmar-agregarLote/confirmar-agregarLote.component';
 
-export interface BodyDetalle{
-
+export interface FiltroLote{
   idTipo : number;
   idTurno : number;
   idOrigen : number;
@@ -24,14 +24,6 @@ export interface BodyDetalle{
   hastaPedido : string;
   idLote : number;
 }
-
-const ELEMENT_DATA: any[] = [
-  {Id: 1,Tipo: "Venta", CodigoArticulo: "ATCLLED110", Nombre: "TCL LED 50\" P8M SMART",    Comprobante: "B0001700006163",    FechaEntrega: "10/05/2020",    Prov: "Bs.As.",    Loc: "Pinamar",    Estado: "INICIAL",       Etapa: "INICIAL",    Lote: 1},
-  {Id: 2,Tipo: "Venta", CodigoArticulo: "MPLAPLA010", Nombre: "Mueble Madera 1 puerta",    Comprobante: "B0009000012349",    FechaEntrega: "10/05/2020",    Prov: "Bs.As.",    Loc: "Pinamar",    Estado: "INICIAL",       Etapa: "INICIAL",    Lote: 1},
-  {Id: 3,Tipo: "Venta", CodigoArticulo: "MPLAPLA010", Nombre: "Mueble Madera 1 puerta",    Comprobante: "B0009000012349",    FechaEntrega: "10/05/2020",    Prov: "Bs.As.",    Loc: "Minamar",    Estado: "EN PROCESO",    Etapa: "EN LOTE",    Lote: 1},
-  {Id: 4,Tipo: "Venta", CodigoArticulo: "MPLAPLA010", Nombre: "Mueble Madera 1 puerta",    Comprobante: "B0009000012349",    FechaEntrega: "10/05/2020",    Prov: "Bs.As.",    Loc: "Gesell",     Estado: "EN PROCESO",    Etapa: "ESTANTERIA", Lote: 1},
-  {Id: 5,Tipo: "Venta", CodigoArticulo: "MPLAPLA010", Nombre: "Mueble Madera 1 puerta",    Comprobante: "B0009000012349",    FechaEntrega: "10/05/2020",    Prov: "Bs.As.",    Loc: "Gesell",     Estado: "ANULADO",       Etapa: "SIN STOCK",  Lote: 1},
-];
 
 @Component({
   selector: 'app-ver-lote',
@@ -51,10 +43,13 @@ export class VerLoteComponent implements OnInit {
   idLote: number = null;
   lote: string = null;
   nombreLote: string = null;
+  cantArticulos: number = 0;
+  fechaLote: string;
+
   busqueda: string = "";
   length: number = 0;
   page: number = 0;
-  size: number = 10;
+  size: number = 50;
   columna: string = 'idDetalle';
   order: string = 'asc';
 
@@ -90,7 +85,7 @@ export class VerLoteComponent implements OnInit {
   pickerLoteHasta: any   = null;
 
 
-  body: BodyDetalle ={
+  filtroLote: FiltroLote ={
     idTipo      : null,
     idTurno     : null,
     idOrigen    : null,
@@ -126,12 +121,12 @@ export class VerLoteComponent implements OnInit {
   }
   
   getArticulosDeLote(idLote: number){
-    this.body.idLote = idLote;
-    //this.dataSource2 = ELEMENT_DATA;
-    this._verLoteService.getArticulosDeLote( this.body, this.busqueda, this.columna, this.order ) .subscribe( data => {
+    this.filtroLote.idLote = idLote;
+    this._verLoteService.getArticulosDeLote( this.filtroLote, this.busqueda, this.columna, this.order ) .subscribe( data => {
       this.dataSource2 = data.datos;
-
-      console.log("articulos -> ", this.dataSource2);
+      this.cantArticulos = data.totalRegistros;
+      //console.log("articulos -> ", this.dataSource2);
+      //console.log("cant articulos -> ", data.totalRegistros);
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
@@ -153,7 +148,7 @@ export class VerLoteComponent implements OnInit {
 
   getLote(idLote: number){                                              //Propuesta de getLote PARA OBTENER Y MODIFICAR EL NOMBRE DE LOTE  
     this._verLoteService.getLote( idLote ) .subscribe( data => {
-      console.log(data);
+      console.log("getLote: ",data);
       this.loteActual = data;
       this.nombreLote = this.loteActual.nombre;
       this.idLote = this.loteActual.idLote;
@@ -177,37 +172,21 @@ export class VerLoteComponent implements OnInit {
   }
 
   editarLote(){
-    this.editLote = true;
-  }
-
-  actualizarNombreLote(nombreLoteInput: string){
-
-    console.log(nombreLoteInput);
-    if(nombreLoteInput != ''){
-      this.loteActual.nombreLote = nombreLoteInput;
-      this.nombreLote = nombreLoteInput;
+    //this.editLote = true;
+    let dialogRef = this._dialog.open( ConfirmarAgregarLoteComponent, {
+    data:{
+          vengoDeVerLote: true,
+          loteActual: this.loteActual
     }
-    this.editLote = false;
-
-    this._verLoteService.updateNombreLote(this.loteActual.nombreLote, this.loteActual.idLote) .subscribe (data =>  {
-
-    },
-    (err: HttpErrorResponse) => {
-      if (err.error instanceof Error) {
-        console.log("Client-side error");
-      } else {
-        let errStatus = err.status
-        if (errStatus == 0){
-          let titulo = 'Error de Servidor';
-          let mensaje = "Por favor comunicarse con Sistemas";
-          this.mostrarError(errStatus, titulo, mensaje);
-        } else {
-          let titulo = 'Error al actualizar el nombre';
-          let mensaje = err.error.message.toString();
-          this.mostrarError(errStatus, titulo, mensaje);
-        }
-      }
     });
+    dialogRef.afterClosed()
+      .subscribe(result => {
+        console.log("result",result);
+        if ( result )
+          console.log("result",result);
+          this.getLote( this.idLote );
+
+      });
   }
 
   confirmacionBorrar() {
@@ -248,10 +227,15 @@ export class VerLoteComponent implements OnInit {
         }
       }
     }); 
-    let ruta = `apps/lotes/lista-lotes`;
-    this._router.navigate([ruta]);
+    this.esperarYnavegar();
   }
 
+  esperarYnavegar(){
+    setTimeout(() => {                          
+      let ruta = `apps/lotes/lista-lotes`;
+      this._router.navigate([ruta]);
+    }, 1000);
+  }
   
 
   sacarDelLote(){
@@ -336,19 +320,19 @@ export class VerLoteComponent implements OnInit {
     if (this.pickerLoteHasta)
       hastaLote = this.pickerLoteHasta;
 
-    this.body.idTipo      = idTipo;
-    this.body.idTurno     = idTurno;
-    this.body.idOrigen    = idOrigen;
-    this.body.idEtapa     = idEtapa;
-    this.body.idProvincia = idProvincia;
-    this.body.idLocalidad = idLocalidad;
-    this.body.desdePedido = desdePedido;
-    this.body.hastaPedido = hastaPedido;
-    this.body.idLote      = idLote;
+    this.filtroLote.idTipo      = idTipo;
+    this.filtroLote.idTurno     = idTurno;
+    this.filtroLote.idOrigen    = idOrigen;
+    this.filtroLote.idEtapa     = idEtapa;
+    this.filtroLote.idProvincia = idProvincia;
+    this.filtroLote.idLocalidad = idLocalidad;
+    this.filtroLote.desdePedido = desdePedido;
+    this.filtroLote.hastaPedido = hastaPedido;
+    this.filtroLote.idLote      = idLote;
     
-    // console.log(this.body);
+    // console.log(this.filtroLote);
 
-    this._verLoteService.getArticulosDeLote(this.body, busqueda, columna, order).subscribe(
+    this._verLoteService.getArticulosDeLote(this.filtroLote, busqueda, columna, order).subscribe(
       data => {
         // console.log(data)
         this.lote = data.datos;
@@ -375,7 +359,7 @@ export class VerLoteComponent implements OnInit {
     );
   }
 
-  @Debounce(1000)  
+  //@Debounce(1000)  
   searchCbte() {
 
     this.busqueda = this.buscarCbteInput.nativeElement.value;

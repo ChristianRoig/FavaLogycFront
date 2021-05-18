@@ -11,6 +11,7 @@ import { ModalConfirmacionBorrarComponent } from './modal-confirmacion-borrar/mo
 
 //servicios
 import { VerOrdenDistribucionService } from './ver-orden-distribucion.service';
+import { ConfirmarOrdenDeDistribucionComponent } from '../../crear-orden-distribucion/confirmar-ordenDist/confirmar-ordenDist.component';
 
 export interface Remito{
   id: number;
@@ -29,12 +30,14 @@ export interface Remito{
 export class VerOrdenDistribucionComponent implements OnInit {
   
   @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
-  
-  displayedColumns: string[] = ['select', 'id', 'codComprobante', 'nroComprobante', 'fechaAlta', 'cantArticulos'];
+
+  displayedColumns: string[] = ['select', 'id', 'codComprobante', 'nroComprobante', 'fechaAlta', 'direccion', 'cantArticulos'];
   selection = new SelectionModel<any>(true, []);
   dataSource2: any;
 
   idOrdenDist: number = null;
+  ordenActual: {} ={};
+  datosOrden: {} = {};
   nombreOrden: string = null;
   remitosDeOrden: [Remito] = null;
   resultObject: [any] = null;
@@ -42,7 +45,7 @@ export class VerOrdenDistribucionComponent implements OnInit {
   busqueda: number = null;
   length: number = 0;
   page: number = 0;
-  size: number = 10;
+  size: number = 50;
   columna: string = 'nroCbte';
   order: string = 'asc';
 
@@ -63,7 +66,10 @@ export class VerOrdenDistribucionComponent implements OnInit {
     this._activatedRoute.params.subscribe( params => {
       this.idOrdenDist = params['id'];
     });
+    this.buscarOrdenPorId();
     this.getRemitosDeOrdenDistribucion(this.idOrdenDist);
+    //this.dataSource2 = JSON.parse(localStorage.getItem('Remitir'))._selected;
+    this.datosOrden = JSON.parse(localStorage.getItem('orden'));
   }
   
   getRemitosDeOrdenDistribucion (idOrdenDist: number) {
@@ -210,11 +216,52 @@ export class VerOrdenDistribucionComponent implements OnInit {
     });
   }
 
+  editarOrdenDist(){
+
+    let dialogRef = this._dialog.open( ConfirmarOrdenDeDistribucionComponent, {
+      data:{
+            vengoDeOrden: true,
+            selection: this.datosOrden,
+            ordenActual: this.ordenActual
+      }
+    });
+    dialogRef.afterClosed()
+      .subscribe(result => {
+        console.log("ENTRE");
+        console.log(result);
+        this.buscarOrdenPorId();
+      });
+  }
+
   esperarYnavegarAordenes(){
     setTimeout(() => {                          
       let ruta = `apps/distribucion/ordenes-distribucion`;
       this._router.navigate([ruta]);
       }, 1000);
+  }
+
+  buscarOrdenPorId() {
+    this._verOrdenDistribucion.getOrdenById( this.idOrdenDist ).subscribe( data => {
+        console.log(data);
+        this.ordenActual = data;
+        this.nombreOrden = data.nombre;
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error");
+        } else {
+          let errStatus = err.status
+          if (errStatus == 0){
+            let titulo = 'Error de Servidor';
+            let mensaje = "Por favor comunicarse con Sistemas";
+            this.mostrarError(errStatus, titulo, mensaje);
+          } else {
+            let titulo = 'Error al buscar una orden';
+            let mensaje = err.error.message.toString();
+            this.mostrarError(errStatus, titulo, mensaje);
+          }
+        }
+    }); 
   }
 
   remitoYaEstaEnOrden(remitoBuscado){
@@ -265,7 +312,7 @@ export class VerOrdenDistribucionComponent implements OnInit {
     });
   }
 
-  @Debounce(50)  
+  //@Debounce(50)  
   searchRemito() {
     this.busqueda = this.buscarCbteInput.nativeElement.value;
     console.log(this.busqueda);

@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { CustomTagModule } from 'app/main/custom-tags/custom-tag.module';
 import { MaterialDesignModule } from 'app/material-design/material-design.module';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 // modulos fuse
 import { FuseSharedModule } from '@fuse/shared.module';
@@ -17,10 +18,12 @@ import { TablaRetractilModule } from 'app/components/tabla-retractil/tabla-retra
 // componentes favalogyc
 import { ControlDeCargaComponent } from './control-de-carga/control-de-carga.component';
 import { ControlarCargaComponent } from './controlar-orden/controlar-orden.component';
+import { PopUpOrdenControladaComponent } from './controlar-orden/popUpOrdenControlada/popUpOrdenControlada.component';
 
 // servicios favalogyc
 import { ControlDeCargaService } from './control-de-carga/control-de-carga.service';
 import { ControlarOrdenService } from './controlar-orden/controlar-orden.service';
+
 
 const routes: Routes = [
     {
@@ -36,7 +39,8 @@ const routes: Routes = [
 @NgModule({
     declarations: [
         ControlDeCargaComponent,
-        ControlarCargaComponent
+        ControlarCargaComponent,
+        PopUpOrdenControladaComponent
     ],
     imports     : [
         CommonModule,
@@ -47,11 +51,12 @@ const routes: Routes = [
         FuseSharedModule,
         FuseWidgetModule,
         CustomTagModule,
-        TablaRetractilModule
+        TablaRetractilModule,
+        MatProgressSpinnerModule
     ],
     providers   : [
         ControlDeCargaService,
-        ControlarOrdenService
+        ControlarOrdenService,
     ]
 })
 

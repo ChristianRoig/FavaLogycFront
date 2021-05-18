@@ -9,44 +9,30 @@ import { coerceNumberProperty } from '@angular/cdk/coercion';
 import { HttpErrorResponse } from '@angular/common/http';
 import { DATOS_ENTREGA } from 'app/interfaces/datos-entrega';
 
-import { Articulos } from '../pedidos-lista/pedidos-lista.component';
 import { AgregarDatosEntregaComponent } from './agregar-datos-entrega/agregar-datos-entrega.component';
-import { PedidosDatosEntregaComponent } from '../pedidos-visualizacion/pedidos-datos-entrega/pedidos-datos-entrega.component';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 
-import { PedidosListaService } from '../pedidos-lista/pedidos-lista.service';
 import { PedidosCrear2Service } from './pedidos-crear-2.service';
+import { animate } from '@angular/animations';
 
-export interface PeriodicElement {
-  Id: number;
-  Tipo: string;
-  CodigoArticulo: string;
-  Nombre: string;
-  Comprobante: string;
-  FechaEntrega: string;
-  Prov: string;
-  Loc: string;
-  Estado: string;
-  Etapa: string;
-  Lote: number;
-}
-
-export interface Articulo {
-  id: number,
+export interface Articulo {  // se usa 
+  idDetalleTango: number,
   codigoArticulo: string,
   codigoCliente: string,
   codigoDeBarras: string,
+  codigoDeposito: string,
+  articulo: {
+    codigoArticulo: string
+  },
   nombreArticulo: string,
   nombreCliente: string,
   numeroCbte: string,
   tipoCbte: string
 }
 
-
-export interface DatosDeEntrega {
-  datos : Array< ListaDatosDeEntrega>
+export interface DatosDeEntrega { // se usa
+  listadoDatosDeEntrega : Array< ListaDatosDeEntrega>
 }
-
 
 export interface ListaDatosDeEntrega {
   id: number,
@@ -68,7 +54,7 @@ export interface ListaDatosDeEntrega {
   pedidoTurno: {
       id: number,
   },
-  listaPedidoDetalle: Array <Articulo>
+  listaPedidoDetalle: Array <Articulo>; 
 }
 
 @Component({
@@ -93,119 +79,14 @@ export class PedidosCrear2Component implements OnInit {
   numeroCbte: string;
   codigoCliente: string;
   nombreCliente: string;
-
-  listaArticulos: Array<Articulo> = [{
-    id: 114,
-    codigoArticulo: "MGENMES032",
-    codigoCliente: "MK995",
-    codigoDeBarras: "MGENMES032",
-    nombreArticulo: "Lapiz",
-    nombreCliente: "KREPCHUK MARTIN",
-    numeroCbte: "B0008800024195",
-    tipoCbte: "FAC"
-  },
-  {
-    id: 115,
-    codigoArticulo: "MGENMES032",
-    codigoCliente: "MK995",
-    codigoDeBarras: "MGENMES032",
-    nombreArticulo: "Goma",
-    nombreCliente: "KREPCHUK MARTIN",
-    numeroCbte: "B0008800024195",
-    tipoCbte: "FAC"
-  }];
-
-  listaDatos: DatosDeEntrega = {
-    datos: [
-      {
-        id: 1,
-        direccion: "Calle falsa 123",
-        fechaDeEntrega: "15/08/2020 12:36:00",
-        telefono: "060606",
-        mail: "pepe@grillojr",
-        contacto: "chespirito",
-        observaciones: "Prueba 2",
-        sysLocalidad: {
-            id: 6,
-            sysProvincia: {
-                id: 1
-            }
-        },
-        sysTransporte: {
-            id: 3
-        },
-        pedidoTurno: {
-            id: 2
-        },
-        listaPedidoDetalle: [
-            
-            {
-              id: 117,
-              codigoArticulo: "MGENMES032",
-              codigoCliente: "MK995",
-              codigoDeBarras: "MGENMES032",
-              nombreArticulo: "Cartuchera",
-              nombreCliente: "KREPCHUK MARTIN",
-              numeroCbte: "B0008800024195",
-              tipoCbte: "FAC"
-            }
-            
-        ]
-      },
-        {
-            id: 3,
-            direccion: "Avenida Siempre Viva 742",
-            fechaDeEntrega: "13/08/2020 12:36:00",
-            telefono: "123",
-            mail: "pepe@grillojr",
-            contacto: "prueba",
-            observaciones: "ejemplo de  prueba nueva api",
-            sysLocalidad: {
-                id: 1468,
-                sysProvincia: {
-                    id: 1
-                }
-            },
-            sysTransporte: {
-                id: 3
-            },
-            pedidoTurno: {
-                id: 2
-            },
-            listaPedidoDetalle: [
-                {
-                    id: 114,
-                    codigoArticulo: "MGENMES032",
-                    codigoCliente: "MK995",
-                    codigoDeBarras: "MGENMES032",
-                    nombreArticulo: "Regla",
-                    nombreCliente: "KREPCHUK MARTIN",
-                    numeroCbte: "B0008800024195",
-                    tipoCbte: "FAC"
-                },
-                {
-                  id: 115,
-                  codigoArticulo: "MGENMES032",
-                  codigoCliente: "MK995",
-                  codigoDeBarras: "MGENMES032",
-                  nombreArticulo: "Sacapuntas",
-                  nombreCliente: "KREPCHUK MARTIN",
-                  numeroCbte: "B0008800024195",
-                  tipoCbte: "FAC"
-                }
-            ]
-        }
-      ]
-  };
-  
+  procesarDatos: boolean = false;
 
   listaDatosVacia: DatosDeEntrega = {
-    datos: []
+    listadoDatosDeEntrega: []
   };
-  
-  displayedColumnsArticulos: string[] = ['select','codigoArticulo','nombre'];
-  displayedColumnsPedidoDetalle: string[] = ['codigoArticulo','nombre', 'mover'];
-
+  //, 'deposito'
+  displayedColumnsArticulos: string[] = ['select', 'codigoArticulo', 'nombre', 'deposito'];
+  displayedColumnsPedidoDetalle: string[] = ['codigoArticulo', 'nombre', 'mover'];
 
   // dataSourceArticulos = ELEMENT_DATA_ARTICULOS;
   dataSourceArticulos: Array<Articulo> = [];
@@ -213,7 +94,6 @@ export class PedidosCrear2Component implements OnInit {
 
   constructor(private _router: Router,
               private _service: PedidosCrear2Service, 
-              private _pedidosListaService: PedidosListaService,
               private route: ActivatedRoute,
               private _dialog: MatDialog) { }
 
@@ -223,9 +103,17 @@ export class PedidosCrear2Component implements OnInit {
       this.modo = params['modo'];
     })
     
-    if(this.modo < 1) {
+    if (this.modo < 1) {
       this.titulo = 'Agregar Pedido'
-      this.dataSourceArticulos = JSON.parse(localStorage.getItem('AddPedido'))._selected;
+
+      this.dataSourceArticulos = JSON.parse(localStorage.getItem('AddPedidoC'));//asi anda desde comprobantes a programar
+      console.log("Articulos sin añadir | ",this.dataSourceArticulos);
+
+      if (this.dataSourceArticulos == null){
+        this.dataSourceArticulos = JSON.parse(localStorage.getItem('AddPedido'))._selected;//asi me anda desde pedido-crear1
+        console.log(this.dataSourceArticulos);
+      }
+      
       this.dataSourceDatosDeEntrega = this.listaDatosVacia;
       
       this.idTipoCbte = JSON.parse(localStorage.getItem('IdTipo'));
@@ -243,16 +131,15 @@ export class PedidosCrear2Component implements OnInit {
     }
   }
   
-  
   getDatosDeEntrga(){
     this._service.getDatosDeEntregaUpd(this.modo).subscribe((params) => {
 
-      this.dataSourceDatosDeEntrega.datos = params;
+      this.dataSourceDatosDeEntrega.listadoDatosDeEntrega = params;
       
-      this.tipoCbte      = this.dataSourceDatosDeEntrega.datos[0].listaPedidoDetalle[0].tipoCbte;
-      this.numeroCbte    = this.dataSourceDatosDeEntrega.datos[0].listaPedidoDetalle[0].numeroCbte;
-      this.codigoCliente = this.dataSourceDatosDeEntrega.datos[0].listaPedidoDetalle[0].codigoCliente;
-      this.nombreCliente = this.dataSourceDatosDeEntrega.datos[0].listaPedidoDetalle[0].nombreCliente;
+      this.tipoCbte      = this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0].listaPedidoDetalle[0].tipoCbte;
+      this.numeroCbte    = this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0].listaPedidoDetalle[0].numeroCbte;
+      this.codigoCliente = this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0].listaPedidoDetalle[0].codigoCliente;
+      this.nombreCliente = this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0].listaPedidoDetalle[0].nombreCliente;
     },
 
     (err: HttpErrorResponse) => {
@@ -281,21 +168,74 @@ export class PedidosCrear2Component implements OnInit {
       this.modificar();
     }
   }
-
-
+ //this.datoEntrega.sysLocalidad.id 
   agregar(){
-    this._service.postPedidos(this.dataSourceDatosDeEntrega.datos, 1, this.dataSourceDatosDeEntrega.datos[0].listaPedidoDetalle[0].numeroCbte).subscribe(data => {
-      console.log(data);
-      // this.dataSourceDatosDeEntrega = params;
 
-      let ruta = `apps/pedidos/lista-articulos`;
-      localStorage.removeItem('AddPedido');
-      localStorage.removeItem('datoEntrega');
-      localStorage.removeItem('IsTipo');
-      this._router.navigate([ruta]);
+    console.log("this.dataSourceDatosDeEntrega.datos ||", this.dataSourceDatosDeEntrega);
+
+    let listaPedidoDetalleAUX = [];
+ 
+    for ( let i = 0 ; i < this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0].listaPedidoDetalle.length; i++){
+      
+      const idDetalleTango  = this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0].listaPedidoDetalle[i].idDetalleTango;
+      const codigoDeposito  = this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0].listaPedidoDetalle[i].codigoDeposito;
+      const { codigoArticulo }  = this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0].listaPedidoDetalle[i];
+      const articulo = { codigoArticulo };
+
+      let  datos   = { 
+        idDetalleTango,
+        codigoDeposito,
+        articulo
+      };
+
+      listaPedidoDetalleAUX.push(  datos  );
+    
+    } 
+
+    console.log("listaPedidoDetalleXD", listaPedidoDetalleAUX);
+    
+    let listaPedidoDetalle = listaPedidoDetalleAUX;
+    
+    console.log("listaPedidoDetalle", listaPedidoDetalle);
+
+    const { numeroCbte } =  this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0].listaPedidoDetalle[0]; 
+    const { fechaDeEntrega,telefono, mail, direccion,contacto, observaciones,sysLocalidad,  sysTransporte, pedidoTurno } = this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0];
+   
+    let obj = {
+            "id": null,
+            direccion,
+            fechaDeEntrega,
+            telefono,
+            mail,
+            contacto,
+            observaciones,
+            sysLocalidad,
+            sysTransporte,
+            pedidoTurno,
+            listaPedidoDetalle
+        }
+    
+    let listaDatosDeEntrega = [];
+    listaDatosDeEntrega.push(obj);
+    
+    console.log({numeroCbte});
+    console.log({listaDatosDeEntrega});
+    this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0].listaPedidoDetalle = [];
+
+
+    this._service.postPedidos( listaDatosDeEntrega, 1, numeroCbte ).subscribe(data => {
+        console.log(data);
+        // this.dataSourceDatosDeEntrega = params;
+  
+        localStorage.removeItem('AddPedido');
+        localStorage.removeItem('datoEntrega');
+        localStorage.removeItem('IsTipo');
+        
+        let ruta = `apps/pedidos/lista-comprobantes`;
+        this._router.navigate([ruta]);
     },
     (err: HttpErrorResponse) => {
-      
+      console.error({err})
       if (err.error instanceof Error) {
         console.log("Client-side error");
       } else {
@@ -311,18 +251,16 @@ export class PedidosCrear2Component implements OnInit {
         }
       }
     });
-
   }
   
-
-
   modificar(){
-    this._service.putPedidos(this.dataSourceDatosDeEntrega.datos).subscribe(data => {
+    this._service.putPedidos(this.dataSourceDatosDeEntrega.listadoDatosDeEntrega).subscribe(data => {
       console.log(data);
-      let ruta = `apps/pedidos/pedidos-lista`;
       localStorage.removeItem('AddPedido');
       localStorage.removeItem('datoEntrega');
       localStorage.removeItem('IsTipo');
+
+      let ruta = `apps/pedidos/lista-comprobantes`;
       this._router.navigate([ruta]);
     },
     (err: HttpErrorResponse) => {
@@ -343,10 +281,7 @@ export class PedidosCrear2Component implements OnInit {
       }
     });
   }
-
-
-
-
+  
   moverDesdeDatosEntrega(event: Event, element: any, indexItem:any, indexElement: any){
     
     let indexTo = (event.target as HTMLSelectElement).value;
@@ -356,21 +291,21 @@ export class PedidosCrear2Component implements OnInit {
     switch (indexTo) {
       case '-1' : {
         this.dataSourceArticulos.push(art);
-        this.dataSourceDatosDeEntrega.datos[indexItem].listaPedidoDetalle.splice(indexElement,1);
+        this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[indexItem].listaPedidoDetalle.splice(indexElement,1);
         break;
       }
       case '-2' : {
         break;
       }
       default: {
-        this.dataSourceDatosDeEntrega.datos[indexTo].listaPedidoDetalle.push(art);
-        this.dataSourceDatosDeEntrega.datos[indexItem].listaPedidoDetalle.splice(indexElement,1);
+        this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[indexTo].listaPedidoDetalle.push(art);
+        this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[indexItem].listaPedidoDetalle.splice(indexElement,1);
 
       }
     }
 
-    if(this.dataSourceDatosDeEntrega.datos[indexItem].listaPedidoDetalle.length === 0){
-      this.dataSourceDatosDeEntrega.datos.splice(indexItem,1)
+    if(this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[indexItem].listaPedidoDetalle.length === 0){
+      this.dataSourceDatosDeEntrega.listadoDatosDeEntrega.splice(indexItem,1)
     }
 
     this.render();
@@ -378,7 +313,7 @@ export class PedidosCrear2Component implements OnInit {
   }
 
   moverDesdeArticulos(event: Event){
-
+    
     let indexItems = (event.target as HTMLSelectElement).value    
 
     switch (indexItems) {
@@ -387,7 +322,8 @@ export class PedidosCrear2Component implements OnInit {
       }
       default: {
         for (let art of this.selection.selected) {
-          this.dataSourceDatosDeEntrega.datos[indexItems].listaPedidoDetalle.push(art);
+          
+          this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[indexItems].listaPedidoDetalle.push(art);
           
           let indexToSplice = this.dataSourceArticulos.indexOf(art);
           this.dataSourceArticulos.splice(indexToSplice,1);
@@ -447,7 +383,7 @@ export class PedidosCrear2Component implements OnInit {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.idDetalleTango + 1}`;
   }
 
   volver(){
@@ -459,7 +395,8 @@ export class PedidosCrear2Component implements OnInit {
   }
 
   volverIns(){
-    let ruta = `apps/pedidos/crear-pedido`;
+    //let ruta = `apps/pedidos/crear-pedido`;
+    let ruta = `apps/pedidos/lista-comprobantes`;
     localStorage.removeItem('AddPedido');
     this._router.navigate([ruta]);
   }
@@ -474,8 +411,8 @@ export class PedidosCrear2Component implements OnInit {
   verDatoEntrega(item){
     console.log(item);
 
-    let dialogRef = this._dialog.open(AgregarDatosEntregaComponent, {
-      width: window.innerWidth+'px',
+    let dialogRef = this._dialog.open( AgregarDatosEntregaComponent, {
+
       data: {
         option: 'view',
         articulos: this.selection.selected,
@@ -491,7 +428,6 @@ export class PedidosCrear2Component implements OnInit {
     console.log(indexItem);
 
     let dialogRef = this._dialog.open(AgregarDatosEntregaComponent, {
-      width: window.innerWidth+'px',
       data: {
         option: 'upd',
         articulos: this.selection.selected,
@@ -508,7 +444,7 @@ export class PedidosCrear2Component implements OnInit {
         
         if(JSON.parse(localStorage.getItem('datoEntrega'))){
           
-          this.dataSourceDatosDeEntrega.datos.splice(indexItem,1,JSON.parse(localStorage.getItem('datoEntrega'))); 
+          this.dataSourceDatosDeEntrega.listadoDatosDeEntrega.splice(indexItem,1,JSON.parse(localStorage.getItem('datoEntrega'))); 
           
           console.log('despues');
           console.log(this.dataSourceDatosDeEntrega);
@@ -523,7 +459,6 @@ export class PedidosCrear2Component implements OnInit {
   agregarDatoEntrega() {
 
     let dialogRef = this._dialog.open(AgregarDatosEntregaComponent, {
-      width: window.innerWidth+'px',
       data: {
         option: 'add',
         articulos: this.selection.selected,
@@ -532,21 +467,23 @@ export class PedidosCrear2Component implements OnInit {
     
     dialogRef.afterClosed()
       .subscribe(result => {
+        console.log("LOS DATOS QUE YA VIENEN");
         console.log(JSON.parse(localStorage.getItem('datoEntrega')));
         if(JSON.parse(localStorage.getItem('datoEntrega'))){
           
-          this.dataSourceDatosDeEntrega.datos.push(JSON.parse(localStorage.getItem('datoEntrega')));
+          this.dataSourceDatosDeEntrega.listadoDatosDeEntrega.push(JSON.parse(localStorage.getItem('datoEntrega')));
+
           for (let art of this.selection.selected) {
             
             let indexToSplice = this.dataSourceArticulos.indexOf(art);
-            this.dataSourceArticulos.splice(indexToSplice,1);
+            this.dataSourceArticulos.splice(indexToSplice, 1);
             
-            console.log(JSON.parse(localStorage.getItem('datoEntrega')));
+            //console.log(JSON.parse(localStorage.getItem('datoEntrega')));
           }
-          
+          //console.log("this.dataSourceArticulos", this.dataSourceArticulos, this.dataSourceArticulos.length);
           this.selection.clear();
           this.render();
-
+          this.procesarDatos = true;
         }
       });
   }

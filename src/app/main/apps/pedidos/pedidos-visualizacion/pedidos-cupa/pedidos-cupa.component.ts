@@ -23,7 +23,7 @@ export class PedidosCupaComponent implements OnInit {
 
   dataSourceCUPA: any;
 
-  displayedColumnsCupa: string[] = ['lote', 'codigoArticulo','codigoUnicoParteArticulo', 'estado', 'etapa'];
+  displayedColumnsCupa: string[] = ['lote', 'codigoArticulo','codigoUnicoParteArticulo', 'estado', 'etapa', 'accion'];
 
   length: number;
   page: number;
@@ -76,6 +76,11 @@ export class PedidosCupaComponent implements OnInit {
         }
       }
     });
+  }
+
+  imprimirCupa(){
+    //routerLink="/assets/pdfs/Cupa.pdf" 
+    //window.open("http://localhost:4200/assets/pdfs/Cupa.pdf" , "_blank");
   }
 
   sortData( event ) {

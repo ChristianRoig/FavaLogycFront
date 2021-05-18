@@ -8,23 +8,6 @@ import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.componen
 
 import { PedidosVisualizacionService } from './pedidos-visualizacion.service';
 
-export interface Articulos {
-
-  lote: number;
-  codigoArticulo: string;
-  nombre: string;
-  descripcion: string;
-  cantidad: number;
-  estado: string;
-  etapa: string;
-}
-
-const ELEMENT_DATA_ARTICULOS: Articulos[] = [
-  {lote: 1,codigoArticulo: "HCTZCAB030",nombre: "CTZ CALEFACTOR 6000	",          descripcion: "12 MESES DE GARANTIA",cantidad: 1,estado: "INICIAL",etapa: "INICIAL"},
-  {lote: 1,codigoArticulo: "HCTZACC010",nombre: "CTZ ACCESORIO TB	",              descripcion: "12 MESES DE GARANTIA",cantidad: 1,estado: "INICIAL",etapa: "INICIAL"},
-  {lote: 1,codigoArticulo: "HMOUFRE050",nombre: "MOULINEX FREIDORA AF134DAR/D59	",descripcion: "12 MESES DE GARANTIA",cantidad: 1,estado: "INICIAL",etapa: "INICIAL"}
-];
-
 @Component({
   selector: 'app-pedidos-visualizacion',
   templateUrl: './pedidos-visualizacion.component.html',
@@ -69,14 +52,15 @@ export class PedidosVisualizacionComponent implements OnInit {
     this.columna = 'id';
     this.order = 'asc';
 
-    this.subParametros = this.route.params.subscribe(params => {
+    this.subParametros = this.route.params.subscribe( params => {
       this.idCabecera = params['id'];
+      console.log(this.idCabecera);
     })
 
     this._service.getCabecera(this.idCabecera).subscribe(params => {
       if(params){
         this.cabecera = params;
-        // console.log(this.cabecera)
+        console.log("cabecera", this.cabecera);
         this.buscarDetalle(this.page, this.size, this.columna, this.order);
       }
     },
@@ -98,10 +82,10 @@ export class PedidosVisualizacionComponent implements OnInit {
     });
   }
 
-  buscarDetalle(page, size, columna, order){
+  buscarDetalle(page, size, columna, order) {
     this._service.getDetalle(this.idCabecera,page, size, columna, order).subscribe(paramsArt => {
       if(paramsArt){
-        console.log(paramsArt.datos);
+        console.log("buscarDetalle", paramsArt.datos);
         this.dataSourceArticulos = paramsArt.datos;
         this.length = paramsArt.totalRegistros;
       }

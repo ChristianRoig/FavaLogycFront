@@ -26,6 +26,12 @@ export class ControlarLoteService {
         return this._httpClient.get(ruta, {headers: headers});
     }
 
+    getLotePorId( id: number ){
+
+        let ruta = `${ BASE_URL }pedidos/pedidolote/${ id }`;
+        return this._httpClient.get(ruta);
+    }
+
     controlarEtapaArticulo(cupa, idLote, codBarras, modo): Observable<any> {
 
         let pedidoparte = modo === 'darsena' ? '/pedidoparte' : '';

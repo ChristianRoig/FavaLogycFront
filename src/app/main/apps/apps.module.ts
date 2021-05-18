@@ -25,10 +25,10 @@ const routes = [
         path        : 'articulos',
         loadChildren: () => import('./articulos/articulos.module').then(m => m.ArticulosModule)
     },
-    {
+    /* {
         path        : 'comprobantes',
         loadChildren: () => import('./comprobantes/comprobantes.module').then(m => m.ComprobantesModule)
-    },
+    }, */
     {
         path        : 'distribucion',
         loadChildren: () => import('./distribucion/distribucion.module').then(m => m.DistribucionModule)
@@ -36,8 +36,18 @@ const routes = [
     {
         path        : 'carga',
         loadChildren: () => import('./carga/carga.module').then(m => m.CargaModule)
+    },
+    {
+        path        : '',
+        loadChildren: () => import('./tablero/tablero.module').then(m => m.TableroModule)
     }
     
+    /* ,
+    {
+        path        : 'inicio',
+        loadChildren: () => import('./dashboard/project.module').then(m => m.ProjectDashboardModule)
+    } */
+  
 ];
 
 @NgModule({

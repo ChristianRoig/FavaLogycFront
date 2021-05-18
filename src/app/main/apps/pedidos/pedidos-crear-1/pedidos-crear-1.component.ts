@@ -80,8 +80,10 @@ export class PedidosCrear1Component implements OnInit {
   }
 
   agregar(){
-    localStorage.setItem('AddPedido',JSON.stringify(this.selection));
-    localStorage.setItem('IdTipo',JSON.stringify(this.selectedTipo));
+    console.log("this.selection", this.selection);
+    console.log("this.selectedTipo", this.selectedTipo);
+    localStorage.setItem('AddPedido',JSON.stringify( this.selection ));
+    localStorage.setItem('IdTipo',JSON.stringify( this.selectedTipo ));
     
     let ruta = `apps/pedidos/crear-pedido2/0`;
 
@@ -91,13 +93,44 @@ export class PedidosCrear1Component implements OnInit {
   searchCbte() {
 
     this.cbte = this.buscarCbte.nativeElement.value;
-
+    if (this.cbte.length > 0){
+      let cantCaracteres = 8;
+      //this.cbte = this.adaptarValorDeBusqueda(this.cbte, cantCaracteres);
+      this.cbte = this.adaptar(this.cbte, cantCaracteres);
+      console.log("this.cbte", this.cbte);
+    }
   }
   
   searchPuntoVenta() {
-
     this.puntoVenta = this.buscarPuntoVenta.nativeElement.value;
+    if(this.puntoVenta.length > 0){
+      let cantCaracteres = 6;
+      this.puntoVenta = this.adaptar( this.puntoVenta, cantCaracteres);
+    }
+  }
 
+  adaptar(palabra: string, cantCaracteres: number){
+    if(palabra.length < cantCaracteres){
+      if(cantCaracteres == 8){
+        while(palabra.length < 8){
+          palabra = "0"+palabra;
+        }
+        //console.log("palabra", palabra);
+        return palabra;
+      }
+      if(cantCaracteres == 6){
+        let palabraFinal = palabra.charAt(0);
+        //console.log("primer caracter:", palabraFinal);
+        palabra = palabra.substring(1);//saco el primer caracter de la cadena
+        //console.log("la palabra cortada:", palabra);
+        while(palabra.length < 5){
+          palabra = "0" + palabra;
+        }
+        palabraFinal += palabra;
+        //console.log("palabraFinal", palabraFinal);
+        return palabraFinal; 
+      }
+    }
   }
 
   getfiltros(){

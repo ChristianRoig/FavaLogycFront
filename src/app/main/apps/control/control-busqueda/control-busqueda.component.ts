@@ -65,7 +65,7 @@ export class ControlEstanteriaComponent implements OnInit {
 
   length: number = 0;
   page: number = 0;
-  size: number = 10;
+  size: number = 50;
 
   arregloDeDetalles;
 
@@ -110,7 +110,7 @@ export class ControlEstanteriaComponent implements OnInit {
 
   navegarAlote(){
     let ruta = `apps/control/lote-en/${ this.modo }/${ this.idLote }`;
-    this._router.navigate([ruta])
+    this._router.navigate([ruta]);
   }
 
   buscarLotePorNombre(nombre: string) {
@@ -305,13 +305,13 @@ export class ControlEstanteriaComponent implements OnInit {
     return fecha.split(' ')[0];
   }
 
-  @Debounce(1000) 
+  //@Debounce(1000) 
   searchCodigoBarras() {
     this.codigoBarras = this.buscarCodigoBarrasInput.nativeElement.value;
     this.buscarCUPAInput.nativeElement.focus();
   }
 
-  @Debounce(1000) 
+  //@Debounce(1000) 
   searchCUPA() {
     this.CUPA = this.buscarCUPAInput.nativeElement.value;
   }

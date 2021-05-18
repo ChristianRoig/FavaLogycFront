@@ -25,14 +25,14 @@ export class ListaRemitosComponent implements OnInit {
 
   @ViewChild('buscarRemito') buscarRemitoInput: ElementRef;
 
-  displayedColumns: string[] = ['id', 'codComprobante', 'nroComprobante', 'fechaAlta', 'cantArticulos', 'seleccionar'];
+  displayedColumns: string[] = ['id', 'nroComprobante', 'fechaAlta', 'direccion', 'transporte', 'cantArticulos', 'accion'];
   dataSource2: any;
   selection = new SelectionModel<any>(true, []);
 
   busqueda: number = null;
   length: number = 0;
   page: number = 0;
-  size: number = 10;
+  size: number = 50;
   columna: string = 'nroCbte';
   order: string = 'asc';
 
@@ -55,7 +55,7 @@ export class ListaRemitosComponent implements OnInit {
     this.getAllRemitosSinDistribucion();
   }
 
-  @Debounce(50)  
+  //@Debounce(50)  
   searchRemito() {
     this.busqueda = this.buscarRemitoInput.nativeElement.value;
     if(this.busqueda < 1 ){

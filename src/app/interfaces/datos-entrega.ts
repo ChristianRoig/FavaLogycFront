@@ -99,3 +99,46 @@ interface PedidoTurno {
   nombre: string;
 }
 
+//----- Pedidos ----------------------
+//ex BodyDetalle
+export interface FiltroArticulosPedidos {
+    idTipo : number;
+    idTurno : number;
+    idOrigen : number;
+    idEstado : number;
+    idEtapa : number;
+    idProvincia : number;
+    idLocalidad : number;
+    desdePedido : string;
+    hastaPedido : string;
+    lote : string;
+    desdeLote : string;
+    hastaLote : string;
+  }
+
+  /* export interface Articulo {
+  Id: number;
+  Tipo: string;
+  CodigoArticulo: string;
+  Nombre: string;
+  Comprobante: string;
+  FechaEntrega: string;
+  Prov: string;
+  Loc: string;
+  Estado: string;
+  Etapa: string;
+  Lote: number;
+}  */
+
+// VER DE CREAR UNA SOLA INTERFAZ ARTICULO
+// QUE SEA GENERAL
+/* export interface Articulo {
+  id: number,
+  codigoArticulo: string,
+  codigoCliente: string,
+  codigoDeBarras: string,
+  nombreArticulo: string,
+  nombreCliente: string,
+  numeroCbte: string,
+  tipoCbte: string
+} */

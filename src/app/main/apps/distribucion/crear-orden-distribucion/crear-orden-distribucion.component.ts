@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CrearOrdenDistribucionService } from './crear-orden-distribucion.service';
+import { ConfirmarOrdenDeDistribucionComponent } from './confirmar-ordenDist/confirmar-ordenDist.component';
 
 export interface BodyDetalle{
 
@@ -40,9 +41,9 @@ export class CrearOrdenDistribucionComponent implements OnInit {
 
   length: number = 0;
   page: number = 0;
-  size: number = 10;
+  size: number = 50;
   columna: string = 'nroCbte';
-  order: string = 'asc';
+  order: string = 'desc';
   
   toAdd = new Array();
 
@@ -64,6 +65,7 @@ export class CrearOrdenDistribucionComponent implements OnInit {
     this.getAllRemitosSinDistribucion( );
     
   }
+  
   getAllRemitosSinDistribucion( ){
     this._crearOrdenDistribucionService.getRemitosSinDistribucion( this.page, this.size, this.columna, this.order ) .subscribe( data => {
       console.log(data);
@@ -111,25 +113,25 @@ export class CrearOrdenDistribucionComponent implements OnInit {
       });
   }
 
-
   crearOrdenDeDistribucion() {
+    console.log( this.selection );
 
-    let seleccionados= [];
-
-    console.log(this.selection);
-
-    localStorage.setItem('Orden',JSON.stringify(this.selection));
-    this.toAdd = JSON.parse(localStorage.getItem('Orden'))._selected;
+    let dialogRef = this._dialog.open( ConfirmarOrdenDeDistribucionComponent, {
+      data:{
+            vengoDeCrear: true,
+            selection: this.selection
+      }
+    });
+  
+    //localStorage.setItem('Orden',JSON.stringify(this.selection));
+    //this.toAdd = JSON.parse(localStorage.getItem('Orden'))._selected;
+    
+    /* let seleccionados = [];
     
     console.log(this.toAdd);
     for(let i=0; i<this.toAdd.length; i++){
       seleccionados.push(this.toAdd[i].id);
     }
-
-    /* for (let elemento of this.toAdd){
-      console.log(elemento.id);
-      this.toAdd.push(elemento.id);
-    } */
     
     let body = { 
       nombre : "Mi distribucion",
@@ -158,7 +160,7 @@ export class CrearOrdenDistribucionComponent implements OnInit {
 
     setTimeout(() => {                          
       this.navegarAlistaOrdenes();
-      }, 1000);
+      }, 1000); */
   }
 
   navegarAlistaOrdenes(){
@@ -214,5 +216,12 @@ export class CrearOrdenDistribucionComponent implements OnInit {
 
   activarTipo(){
     this.mostrarTipo = !this.mostrarTipo;
+  }
+
+  paginar(e: any){
+    this.page = e.pageIndex;
+    this.size = e.pageSize;
+    
+    this.getAllRemitosSinDistribucion();
   }
 }

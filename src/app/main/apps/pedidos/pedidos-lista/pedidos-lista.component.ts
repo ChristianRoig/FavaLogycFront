@@ -1,44 +1,19 @@
 import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { Router } from '@angular/router';
-import { SelectionModel } from '@angular/cdk/collections';
+//import { SelectionModel } from '@angular/cdk/collections';
 import { Debounce } from 'app/shared/decorators/debounce';
 import { MatDialog } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
 
+//interfaces
+import { FiltroArticulosPedidos } from 'app/interfaces/datos-entrega';
+
+//componets
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 
+//services
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { PedidosListaService } from './pedidos-lista.service';
-
-export interface Articulos {
-
-  Id: number;
-  Tipo: string;
-  CodigoArticulo: string;
-  Nombre: string;
-  Comprobante: string;
-  FechaEntrega: string;
-  Prov: string;
-  Loc: string;
-  Estado: string;
-  Etapa: string;
-  Lote: number;
-}
-
-export interface BodyDetalle{
-  idTipo : number;
-  idTurno : number;
-  idOrigen : number;
-  idEstado : number;
-  idEtapa : number;
-  idProvincia : number;
-  idLocalidad : number;
-  desdePedido : string;
-  hastaPedido : string;
-  lote : string;
-  desdeLote : string;
-  hastaLote : string;
-}
 
 @Component({  
   selector: 'app-pedidos-lista',  
@@ -55,19 +30,19 @@ export class PedidosListaComponent implements OnInit {
   /* , 'Borrar' */
   
   dataSource2: any;
-  selection = new SelectionModel<Articulos>(true, []);
+  /* selection = new SelectionModel<Articulos>(true, []); */
 
   lote: string = null;
   busqueda: string = "";
   length: number = 0;
   page: number = 0;
-  size: number = 10;
+  size: number = 50;
   columna: string = 'id'; // 'codigoArticulo';
   order: string = 'desc'; // 'asc';
 
   mensaje: string;
 
-  body: BodyDetalle ={
+  body: FiltroArticulosPedidos = {
     idTipo      : null,
     idTurno     : null,
     idOrigen    : null,
@@ -92,8 +67,7 @@ export class PedidosListaComponent implements OnInit {
     this.getPedidos( this.body );
   }
 
-  //getPedidos(busqueda, page, size, columna, order){
-  getPedidos( datosFtiltro: BodyDetalle ){
+  getPedidos( datosFtiltro: FiltroArticulosPedidos ){
    
     console.log( datosFtiltro );
   
@@ -115,10 +89,10 @@ export class PedidosListaComponent implements OnInit {
             let mensaje = "Por favor comunicarse con Sistemas";
             this.mostrarError(errStatus, titulo, mensaje);
           } else {
-            let titulo = 'Error al cargar filtros';
+            let titulo = 'Error al listar articulos';
             let mensaje = err.error.message.toString();
             this.mensaje = mensaje;
-            // this.mostrarError(errStatus, titulo, mensaje);
+            this.mostrarError(errStatus, titulo, mensaje);
           }
         }
       }
@@ -149,7 +123,7 @@ export class PedidosListaComponent implements OnInit {
     this.getPedidos( this.body );  
   }
 
-  @Debounce(1000)  
+  //@Debounce(1000)  
   searchCbte() {
 
     this.busqueda = this.buscarCbteInput.nativeElement.value;
@@ -158,7 +132,7 @@ export class PedidosListaComponent implements OnInit {
     this.columna = 'id';
   }
 
-  @Debounce(1000)  
+  //@Debounce(1000)  
   searchLote() {
 
     this.lote = this.buscarLoteInput.nativeElement.value;
@@ -168,9 +142,9 @@ export class PedidosListaComponent implements OnInit {
     this.columna = 'id';
   }
 
-  consultar(id){
-    let ruta = `apps/pedidos/ver-pedido/${id}`;
-    this._router.navigate([ruta]);
+  consultar( id ){
+    let ruta = `apps/pedidos/ver-pedido/${ id }`;
+    this._router.navigate([ ruta ]);
   }
 
 /*   anular(id){

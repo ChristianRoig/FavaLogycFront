@@ -32,11 +32,11 @@ export class LoteCrearLoteService
     }
 
 
-    getAllEtapasPorId(id:number): Observable<any>
+    /* getAllEtapasPorId(id:number): Observable<any>
     {
         let ruta = `${BASE_URL}pedidos/pedidoetapa/estado/${id}`;
         return this._httpClient.get(ruta);
-    }
+    } */
 
     getAllEtapas(): Observable<any>
     {
@@ -57,7 +57,7 @@ export class LoteCrearLoteService
         return this._httpClient.get(ruta);
     }
 
-    getAllEstadosPorId(id:number): Observable<any>
+    /* getAllEstadosPorId(id:number): Observable<any>
     {
         let ruta = `${BASE_URL}pedidos/pedidoestado/etapa/${id}`;
         return this._httpClient.get(ruta);
@@ -67,7 +67,7 @@ export class LoteCrearLoteService
     {
         let ruta = `${BASE_URL}pedidos/pedidoestado/`;
         return this._httpClient.get(ruta);
-    }
+    } */
 
     getAllOrigenes(): Observable<any>
     {
@@ -81,11 +81,11 @@ export class LoteCrearLoteService
         return this._httpClient.get(ruta);
     }
 
-    getAllLocalidades(): Observable<any>
+    /* getAllLocalidades(): Observable<any>
     {
         let ruta = `${BASE_URL}pedidos/localidad/domicilio/`;
         return this._httpClient.get(ruta);
-    }
+    } */
 
     getAllLocalidadesPorProvincia(id:number): Observable<any>
     {
@@ -122,4 +122,15 @@ export class LoteCrearLoteService
 
         return this._httpClient.post(ruta, body, {headers: headers});
     }
+
+    imprimir(lote, impresora): Observable<any>{
+
+        let headers = new HttpHeaders({
+            "Content-Type": "application/json"
+        });
+        console.log(impresora);
+        let ruta = `${BASE_URL}pedidos/pedidolote/lote/imprimir/cupa/${lote}/${impresora}`;
+
+        return this._httpClient.post(ruta, {headers: headers});
+    } 
 }

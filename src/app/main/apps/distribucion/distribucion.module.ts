@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CustomTagModule } from 'app/main/custom-tags/custom-tag.module';
 import { MaterialDesignModule } from 'app/material-design/material-design.module';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 //fuse
 import { FuseSharedModule } from '@fuse/shared.module';
@@ -15,13 +16,13 @@ import { FuseSidebarModule } from '@fuse/components';
 import { CrearOrdenDistribucionComponent } from './crear-orden-distribucion/crear-orden-distribucion.component';
 import { OrdenesDistribucionComponent } from './ordenes-distribucion/ordenes-distribucion.component';
 import { VerOrdenDistribucionComponent } from './ordenes-distribucion/ver-orden-distribucion/ver-orden-distribucion.component';
-import { DistribucionConfirmarComponent } from './distribucion-confirmar/distribucion-confirmar.component';
+import { ConfirmarOrdenDeDistribucionComponent } from './crear-orden-distribucion/confirmar-ordenDist/confirmar-ordenDist.component';
 
 //services
 import { CrearOrdenDistribucionService } from './crear-orden-distribucion/crear-orden-distribucion.service';
-import { DistribucionConfirmarService } from './distribucion-confirmar/distribucion-confirmar.service';
 import { OrdenesDistribucionService } from './ordenes-distribucion/ordenes-distribucion.service';
 import { VerOrdenDistribucionService } from './ordenes-distribucion/ver-orden-distribucion/ver-orden-distribucion.service';
+import { ConfirmarOrdenDeDistribucionService } from './crear-orden-distribucion/confirmar-ordenDist/confirmar-ordenDist.service';
 
 
 const routes: Routes = [
@@ -36,19 +37,15 @@ const routes: Routes = [
     {
         path     : 'ver-orden-distribucion/:id',
         component: VerOrdenDistribucionComponent
-    },
-    {
-        path     : 'orden-distribucion-conf',
-        component: DistribucionConfirmarComponent
     }
 ];
 
 @NgModule({
     declarations: [
         CrearOrdenDistribucionComponent,
-        DistribucionConfirmarComponent,
         OrdenesDistribucionComponent,
-        VerOrdenDistribucionComponent
+        VerOrdenDistribucionComponent,
+        ConfirmarOrdenDeDistribucionComponent
     ],
     imports     : [
         CommonModule,
@@ -58,13 +55,14 @@ const routes: Routes = [
         FuseSidebarModule,
         FuseSharedModule,
         FuseWidgetModule,
-        CustomTagModule
+        CustomTagModule,
+        MatProgressSpinnerModule
     ],
     providers   : [
         CrearOrdenDistribucionService,
-        DistribucionConfirmarService,
         OrdenesDistribucionService,
-        VerOrdenDistribucionService
+        VerOrdenDistribucionService,
+        ConfirmarOrdenDeDistribucionService
     ],
     entryComponents: [ MatDialogModule ]
 })

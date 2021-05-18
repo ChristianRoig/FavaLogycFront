@@ -34,18 +34,19 @@ export class ControlDeCargaComponent implements OnInit {
 
   @ViewChild('buscar') buscarOrdenInput: ElementRef;
   // cantArticulos: cantArticulosACargar: cantRemitos: estado: fecha: id: nombre:  
-  displayedColumns: string[] = ['id', 'nombre', 'fecha', 'estado', 'cantArticulos', 'cantArticulosACargar', 'cantRemitos', 'seleccionar'];
+  displayedColumns: string[] = ['id', 'nombre', 'fecha', 'estado', 'cantArticulos', 'cantArticulosACargar', 'cantRemitos', 'localidad', 'transporte', 'seleccionar'];
   dataSource2: any;
   
   length: number = 0;
   page: number = 0;
-  size: number = 10;
+  size: number = 50;
   columna: string = 'id';
   order: string = 'desc';
   
   idOrdenDist: number = null;
   titulo: string = '';
   btnBuscar: boolean = false;
+  busquedaPorId: boolean = false;
 
   constructor(private _router: Router, 
               private _fuseSidebarService: FuseSidebarService, 
@@ -58,6 +59,7 @@ export class ControlDeCargaComponent implements OnInit {
   }
 
   getAllOrdenes() {
+    this.busquedaPorId = false;
     this._controlDeCargaService.getAllOrdenes( this.page, this.size, this.columna, this.order ).subscribe( data => {
         console.log("data", data);
         this.dataSource2 = data.datos;
@@ -81,18 +83,20 @@ export class ControlDeCargaComponent implements OnInit {
     }); 
   }
 
-  @Debounce(50)
+  //@Debounce(50)
   searchOrden() {
     this.idOrdenDist = this.buscarOrdenInput.nativeElement.value;
     if (this.idOrdenDist >= 1) {
       this.btnBuscar = true;
     } else{
+      this.btnBuscar = false;
       this.idOrdenDist = null;
       this.getAllOrdenes();
     } 
   }
 
   buscarOrdenPorId() {
+    this.busquedaPorId = true;
     let resultado: any = [];
     this._controlDeCargaService.getOrdenById( this.idOrdenDist ).subscribe( data => {
         console.log(data);
