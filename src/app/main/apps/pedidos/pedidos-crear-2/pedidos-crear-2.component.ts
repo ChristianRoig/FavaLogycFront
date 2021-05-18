@@ -13,15 +13,17 @@ import { AgregarDatosEntregaComponent } from './agregar-datos-entrega/agregar-da
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 
 import { PedidosCrear2Service } from './pedidos-crear-2.service';
-
-
-
+import { animate } from '@angular/animations';
 
 export interface Articulo {  // se usa 
   idDetalleTango: number,
   codigoArticulo: string,
   codigoCliente: string,
   codigoDeBarras: string,
+  codigoDeposito: string,
+  articulo: {
+    codigoArticulo: string
+  },
   nombreArticulo: string,
   nombreCliente: string,
   numeroCbte: string,
@@ -82,9 +84,9 @@ export class PedidosCrear2Component implements OnInit {
   listaDatosVacia: DatosDeEntrega = {
     listadoDatosDeEntrega: []
   };
-  
-  displayedColumnsArticulos: string[] = ['select','codigoArticulo','nombre'];
-  displayedColumnsPedidoDetalle: string[] = ['codigoArticulo','nombre', 'mover'];
+  //, 'deposito'
+  displayedColumnsArticulos: string[] = ['select', 'codigoArticulo', 'nombre', 'deposito'];
+  displayedColumnsPedidoDetalle: string[] = ['codigoArticulo', 'nombre', 'mover'];
 
   // dataSourceArticulos = ELEMENT_DATA_ARTICULOS;
   dataSourceArticulos: Array<Articulo> = [];
@@ -101,12 +103,13 @@ export class PedidosCrear2Component implements OnInit {
       this.modo = params['modo'];
     })
     
-    if(this.modo < 1) {
+    if (this.modo < 1) {
       this.titulo = 'Agregar Pedido'
 
       this.dataSourceArticulos = JSON.parse(localStorage.getItem('AddPedidoC'));//asi anda desde comprobantes a programar
       console.log("Articulos sin añadir | ",this.dataSourceArticulos);
-      if(this.dataSourceArticulos == null){
+
+      if (this.dataSourceArticulos == null){
         this.dataSourceArticulos = JSON.parse(localStorage.getItem('AddPedido'))._selected;//asi me anda desde pedido-crear1
         console.log(this.dataSourceArticulos);
       }
@@ -168,56 +171,36 @@ export class PedidosCrear2Component implements OnInit {
  //this.datoEntrega.sysLocalidad.id 
   agregar(){
 
-
-    
     console.log("this.dataSourceDatosDeEntrega.datos ||", this.dataSourceDatosDeEntrega);
-    
-    //const { idDetalleTango } = this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0].listaPedidoDetalle[0];
-    /*------------------------------------------------------- */
-    //let listaPedidoDetalle = [];
-    
-    //opcion 1
-    /* for( let idDetalleTango of this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0].listaPedidoDetalle){
-      //const {idDetalleTango} = this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0].listaPedidoDetalle[0];
-      listaPedidoDetalle.push( { idDetalleTango } );
-    } */
-    
+
     let listaPedidoDetalleAUX = [];
-    
-    //opcion 2
-     for( let i = 0 ; i < this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0].listaPedidoDetalle.length; i++){
+ 
+    for ( let i = 0 ; i < this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0].listaPedidoDetalle.length; i++){
       
-      const { idDetalleTango } = this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0].listaPedidoDetalle[i];
-      listaPedidoDetalleAUX.push(  { idDetalleTango }  );
+      const idDetalleTango  = this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0].listaPedidoDetalle[i].idDetalleTango;
+      const codigoDeposito  = this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0].listaPedidoDetalle[i].codigoDeposito;
+      const { codigoArticulo }  = this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0].listaPedidoDetalle[i];
+      const articulo = { codigoArticulo };
+
+      let  datos   = { 
+        idDetalleTango,
+        codigoDeposito,
+        articulo
+      };
+
+      listaPedidoDetalleAUX.push(  datos  );
+    
     } 
+
     console.log("listaPedidoDetalleXD", listaPedidoDetalleAUX);
     
     let listaPedidoDetalle = listaPedidoDetalleAUX;
     
     console.log("listaPedidoDetalle", listaPedidoDetalle);
 
-
-    /*------------------------------------------------------- */
     const { numeroCbte } =  this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0].listaPedidoDetalle[0]; 
     const { fechaDeEntrega,telefono, mail, direccion,contacto, observaciones,sysLocalidad,  sysTransporte, pedidoTurno } = this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0];
-    //idDetalleTango
-    /* let obj = {
-            "id": null,
-            direccion,
-            fechaDeEntrega,
-            telefono,
-            mail,
-            contacto,
-            observaciones,
-            sysLocalidad,
-            sysTransporte,
-            pedidoTurno,
-            "listaPedidoDetalle": [
-                {
-                  idDetalleTango,
-                }
-            ]
-        }  */
+   
     let obj = {
             "id": null,
             direccion,
@@ -238,9 +221,7 @@ export class PedidosCrear2Component implements OnInit {
     console.log({numeroCbte});
     console.log({listaDatosDeEntrega});
     this.dataSourceDatosDeEntrega.listadoDatosDeEntrega[0].listaPedidoDetalle = [];
-    //this.dataSourceDatosDeEntrega.datos[0].listaPedidoDetalle.push();
 
-    //this.dataSourceDatosDeEntrega.datos[0].listaPedidoDetalle[] = idAux; 
 
     this._service.postPedidos( listaDatosDeEntrega, 1, numeroCbte ).subscribe(data => {
         console.log(data);
@@ -486,14 +467,12 @@ export class PedidosCrear2Component implements OnInit {
     
     dialogRef.afterClosed()
       .subscribe(result => {
-        //console.log("LOS DATOS QUE YA VIENEN");
-        //console.log(JSON.parse(localStorage.getItem('datoEntrega')));
+        console.log("LOS DATOS QUE YA VIENEN");
+        console.log(JSON.parse(localStorage.getItem('datoEntrega')));
         if(JSON.parse(localStorage.getItem('datoEntrega'))){
           
           this.dataSourceDatosDeEntrega.listadoDatosDeEntrega.push(JSON.parse(localStorage.getItem('datoEntrega')));
-          //console.log("this.dataSourceDatosDeEntrega ANTES QUE META TODO",this.dataSourceDatosDeEntrega);
-          //this.dataSourceDatosDeEntrega.datos[0].listaPedidoDetalle.
-          //this.dataSourceDatosDeEntrega = 
+
           for (let art of this.selection.selected) {
             
             let indexToSplice = this.dataSourceArticulos.indexOf(art);
