@@ -477,7 +477,7 @@ export class AgregarDatosEntregaComponent implements OnInit{
       //console.log("ENTRE A SELECTLOCALIDAD");
       this.selectedLocalidad = (event.target as HTMLSelectElement).value;
       // this.selectedCodigoPostal = (event.target as HTMLSelectElement);
-      //console.log((event.target as HTMLSelectElement).value);
+      console.log( this.selectedLocalidad );
 
       this.localidadID = (event.target as HTMLSelectElement).value;
       
@@ -485,9 +485,9 @@ export class AgregarDatosEntregaComponent implements OnInit{
 
       if(this.selectedLocalidad > 0){
         this._pedidosListaService.getProvinciaPorLocalidad(this.selectedLocalidad).subscribe( params => {
-          //console.log("localidades -> ",params);
+          console.log("localidades -> ",params);
           //this.selectedProvincia = params.id;
-          this.selectedProvincia = params;
+          this.selectedProvincia = params.id;
           //console.log("Provincia: "+this.selectedProvincia.id);
         },
         (err: HttpErrorResponse) => {
