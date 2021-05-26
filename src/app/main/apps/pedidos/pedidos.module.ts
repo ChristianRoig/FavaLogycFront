@@ -10,7 +10,7 @@ import { CustomTagModule } from 'app/main/custom-tags/custom-tag.module';
 import { FuseSidebarModule } from '@fuse/components';
 
 import { MaterialDesignModule } from 'app/material-design/material-design.module';
-import { TablaRetractilModule } from 'app/components/tabla-retractil/tabla-retractil.module';
+import { TablaRetractilModule } from '@fava/components/tabla-retractil/tabla-retractil.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
 

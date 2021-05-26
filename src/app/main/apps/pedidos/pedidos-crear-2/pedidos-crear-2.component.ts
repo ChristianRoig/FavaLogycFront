@@ -1,19 +1,20 @@
 import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ViewChildren, QueryList} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
+import { HttpErrorResponse } from '@angular/common/http';
+
 import { SelectionModel } from '@angular/cdk/collections';
+import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
+
+import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
+import { AgregarDatosEntregaComponent } from './agregar-datos-entrega/agregar-datos-entrega.component';
+import { PedidosCrear2Service } from './pedidos-crear-2.service';
+
+import { animate } from '@angular/animations';
+import { DATOS_ENTREGA } from 'app/shared/interfaces/datos-entrega';
 import { indexOf } from 'lodash';
 import { coerceNumberProperty } from '@angular/cdk/coercion';
-import { HttpErrorResponse } from '@angular/common/http';
-import { DATOS_ENTREGA } from 'app/interfaces/datos-entrega';
-
-import { AgregarDatosEntregaComponent } from './agregar-datos-entrega/agregar-datos-entrega.component';
-import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
-
-import { PedidosCrear2Service } from './pedidos-crear-2.service';
-import { animate } from '@angular/animations';
 
 export interface Articulo {  // se usa 
   idDetalleTango: number,
