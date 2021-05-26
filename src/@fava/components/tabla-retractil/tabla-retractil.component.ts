@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import {animate, state, style, transition, trigger} from '@angular/animations';
-import { DetallesTablaRetractil } from 'app/interfaces/detalles-tabla-retractil';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ActivatedRoute } from '@angular/router';
+
+import { DetallesTablaRetractil } from '../../interfaces/detalles-tabla-retractil';
 
 @Component({
   selector: 'app-tabla-retractil',

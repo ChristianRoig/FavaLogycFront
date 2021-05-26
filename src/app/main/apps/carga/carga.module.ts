@@ -13,7 +13,7 @@ import { FuseWidgetModule } from '@fuse/components/widget/widget.module';
 import { FuseSidebarModule } from '@fuse/components';
 
 // modulos favalogyc
-import { TablaRetractilModule } from 'app/components/tabla-retractil/tabla-retractil.module';
+import { TablaRetractilModule } from '@fava/components/tabla-retractil/tabla-retractil.module';
 
 // componentes favalogyc
 import { ControlDeCargaComponent } from './control-de-carga/control-de-carga.component';
