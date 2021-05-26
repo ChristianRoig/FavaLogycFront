@@ -19,7 +19,7 @@ export class PedidosVisualizacionComponent implements OnInit {
   subParametros: Subscription;
   
   // displayedColumnsArticulos: string[] = ['lote','codigoArticulo','nombre','descripcion','cantidad','estado','etapa'];
-  displayedColumnsArticulos: string[] = ['lote','codigoArticulo','nombre','cantidad','etapa'];
+  displayedColumnsArticulos: string[] = ['lote','codigoArticulo','nombre','cantidad','etapa', 'info'];
   
 
 

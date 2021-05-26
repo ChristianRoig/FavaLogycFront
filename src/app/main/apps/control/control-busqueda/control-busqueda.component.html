@@ -9,7 +9,7 @@
             <div fxLayout="row" class="content-card pb-4">
 
                 <!-- LOTE -->
-                <div fxFlex="100" class="fuse-card p-24 mr-8">
+                <div fxFlex="100" class="fuse-card p-24">
 
                     <ng-container *ngTemplateOutlet="filtrosLote"></ng-container>
 
@@ -40,6 +40,7 @@
             <button fxHide.gt-sm mat-button (click)="toggleSidebarOpen('sidebarFilter')" class="mb-24">
                 <mat-icon>close</mat-icon>
             </button> 
+
         </span>
         <!-- / BOTON CERRAR -->
 
@@ -61,16 +62,16 @@
             </mat-form-field>
 
             <div class="botonesBusquedaSup">
-                <!-- [disabled]="!this.cupa" -->
                 <button mat-raised-button [disabled]="!this.CUPA" class="btn" color="primary" (click)="buscarLotePorCUPA(cupa.value)">Buscar</button>
             </div>
+
             <div class="btnToggle">
                 <mat-slide-toggle formcontrolname="hidden" type="button" (click)="toggleBusquedaAutomatica()" class="mat-slide-toggle"></mat-slide-toggle>
                 <label class="paddingLeft">Acceso automático</label>
             </div>
         </div>
 
-        <div class="controlesBusqueda" *ngIf="!this.busquedaAutomatica">
+        <div class="controlesBusquedaDos" *ngIf="!this.busquedaAutomatica">
             <mat-form-field appearance="outline" class="inputBuscarLote">
                 <mat-label>Buscar Lote</mat-label>
                 <input #buscarLote (keyup)="searchLote()" matInput value="" placeholder="Buscar lote por nombre">
@@ -83,12 +84,13 @@
                 <button [disabled]="!this.btnControlar" class="btn" mat-raised-button color="primary" (click)="accederAcontrolarLoteById()">Controlar Lote</button>
             </div>
         </div>
+
     </div>
 </ng-template>
 <!-- / FILTROS LOTE -->
 <ng-template #listaLotes>
     <!-- Lista de Lotes -->
-    <div style="width: 100%; overflow: auto;">
+    <div style="width: 100%; overflow: auto;" class="divLista">
         <!-- <h4>Todos los lote en estado abierto</h4> -->
         <table mat-table matSort [dataSource]="dataSource2" class="mb-8">
             <!-- (matSortChange)="sortData($event)" -->

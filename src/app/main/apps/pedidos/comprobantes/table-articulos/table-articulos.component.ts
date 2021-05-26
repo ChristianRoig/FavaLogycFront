@@ -6,6 +6,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 
+
 //service
 import { TableArticulosService } from './table-articulos.service';
 
@@ -36,8 +37,9 @@ export class TableArticulosComponent implements OnInit {
 
   @ViewChild('buscarArticulo') buscarArticuloInput: ElementRef;
 
-
-  displayedColumns: string[] = ['comprobante', 'fechaDeEntrega', 'direccion', 'codigoArt', 'nombreArticulo', 'etapa', 'seleccionar'];  
+ //codigoArticuloAsociado
+ //descripcionArticuloAsociado
+  displayedColumns: string[] = ['comprobante', 'fechaDeEntrega', 'direccion', 'codigoArt', 'nombreArticulo', 'info', 'etapa', 'seleccionar'];  
   dataSource2: any;
 
   lote: string = null;

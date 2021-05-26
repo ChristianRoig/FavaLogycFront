@@ -30,10 +30,22 @@
         max-width: unset !important;
     }
     
+    .divLista {
+        border-radius: 10px;
+    }
+    
     .controlesBusqueda {
         height: 80px;
         display: flex;
         width: 100%;
+        align-items: center !important;
+        justify-content: flex-start;
+    }
+    
+    .controlesBusquedaDos {
+        height: 80px;
+        display: flex;
+        width: 80%;
         align-items: center !important;
         justify-content: flex-start;
     }
@@ -73,6 +85,14 @@
         width: 700px;
         align-items: center !important;
         justify-content: space-between;
+    }
+    
+    @media (max-width: 1024px) {
+        .inputBuscarLote {
+            width: 600px;
+            justify-content: flex-start;
+            padding-top: 20px;
+        }
     }
     
     @media (max-width: 768px) {

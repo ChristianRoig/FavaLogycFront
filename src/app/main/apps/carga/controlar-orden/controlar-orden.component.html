@@ -14,15 +14,15 @@
 
                 <div fxLayout="row" fxLayoutAlign="space-around">
 
-                    <div class="controlesBusqueda">
-                        <mat-form-field appearance="outline" class="inputBusqueda">
+                    <div class="controlesBusqueda2">
+                        <mat-form-field appearance="outline" class="inputBusqueda2">
                             <mat-label>Controlar un articulo por CUPA</mat-label>
                             <!-- (keyup)="searchCUPA()" -->
                             <input #controlarCupa (keyup)="searchCupa()" (keydown)="saltarAboton($event)" matInput value="" placeholder="Ingrese el CUPA de un articulo">
                             <mat-icon matSuffix>search</mat-icon>
                         </mat-form-field>
 
-                        <div class="botonesBusqueda">
+                        <div class="botonesBusqueda2">
                             <!-- (click)="getRemitoPorId()" -->
                             <button [disabled]="!this.cupa" #btnRef="matButton" (click)="controlarArticuloPorCupa()" class="btn" mat-raised-button color="primary">
                                 Controlar 
