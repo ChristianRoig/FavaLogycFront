@@ -3,7 +3,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { CustomTagModule } from 'app/main/custom-tags/custom-tag.module';
+
+import { CustomTagModule } from 'app/shared/custom-tags/custom-tag.module';
 import { MaterialDesignModule } from 'app/material-design/material-design.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 

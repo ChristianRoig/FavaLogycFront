@@ -25,19 +25,17 @@ import { PagesModule } from './main/pages/pages.module';
 
 
 
-import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { FormsModule } from '@angular/forms';
-import { PlantillaFondoComponent } from './main/custom-tags/plantilla-fondo/plantilla-fondo.component';
 import { SharedModule } from './shared/shared.module';
 import { SonidoService } from './services/sonidos.service';
-import { UsuarioGuard } from './guards/usuario.guard';
 import { LoginModule } from './main/pages/login/login.module';
 import { LoginComponent } from './main/pages/login/login.component';
-import { ProjectDashboardComponent } from './main/apps/tablero/tablero.component';
 import { Error404Module } from './main/pages/404/error-404.module';
-//import { Error404Component } from './main/pages/404/error-404.component';
 
-
+import { ProjectDashboardComponent } from './main/apps/tablero/tablero.component';
+import { PlantillaFondoComponent } from './shared/custom-tags/plantilla-fondo/plantilla-fondo.component';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { UsuarioGuard } from './guards/usuario.guard';
 
 
 const appRoutes: Routes = [
