@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterModule, Routes } from '@angular/router';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { FormsModule } from '@angular/forms';
 
 //import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
@@ -14,28 +15,22 @@ import 'hammerjs';
 import { FuseModule } from '@fuse/fuse.module';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { FuseProgressBarModule, FuseSidebarModule, FuseThemeOptionsModule } from '@fuse/components';
-
 import { fuseConfig } from 'app/fuse-config';
 
 import { AppComponent } from 'app/app.component';
 import { LayoutModule } from 'app/layout/layout.module';
-import { SampleModule } from 'app/main/sample/sample.module';
 import { PagesModule } from './main/pages/pages.module';
-
-
-
-
-import { FormsModule } from '@angular/forms';
-import { SharedModule } from './shared/shared.module';
-import { SonidoService } from './services/sonidos.service';
 import { LoginModule } from './main/pages/login/login.module';
 import { LoginComponent } from './main/pages/login/login.component';
 import { Error404Module } from './main/pages/404/error-404.module';
+import { SharedModule } from './shared/shared.module';
+import { SonidoService } from './services/sonidos.service';
 
 import { ProjectDashboardComponent } from './main/apps/tablero/tablero.component';
 import { PlantillaFondoComponent } from './shared/custom-tags/plantilla-fondo/plantilla-fondo.component';
-import { AuthInterceptor } from './interceptors/auth.interceptor';
-import { UsuarioGuard } from './guards/usuario.guard';
+import { AuthInterceptor } from './shared/x_NOSEUSA_interceptors/auth.interceptor';
+import { UsuarioGuard } from './shared/x_NOSEUSA_guards/usuario.guard';
+import { SampleModule } from './main/x_NOSEUSA_sample/sample.module';
 
 
 const appRoutes: Routes = [
@@ -90,8 +85,8 @@ const appRoutes: Routes = [
         FuseThemeOptionsModule,
 
         // App modules
+        // NO SE USA: SampleModule,
         LayoutModule,
-        SampleModule,
         PagesModule,
         SharedModule,
         LoginModule,

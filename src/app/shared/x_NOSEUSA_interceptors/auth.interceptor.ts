@@ -4,7 +4,7 @@ import { Observable, from } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 
-import { UsuarioService } from '../services/usuario.service';
+import { UsuarioService } from 'app/services/usuario.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
