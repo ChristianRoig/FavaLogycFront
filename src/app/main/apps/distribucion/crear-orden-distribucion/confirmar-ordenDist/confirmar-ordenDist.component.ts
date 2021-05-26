@@ -121,6 +121,7 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
           nombre         : this.nombreOrdenDistInput.nativeElement.value,
           idTurno        : this.selectedTurno,
           idTransporte   : this.selectedTransporte,
+          idLocalidad    : 1402,
           listaId        : seleccionados
         }
         
