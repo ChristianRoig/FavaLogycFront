@@ -21,6 +21,14 @@ td.mat-column-position {
     border-left: 1px solid #e0e0e0;
 }
 
+td.mat-cell {
+    max-width: 70px !important;
+    width: 70px;
+}
+
+
+/**/
+
 a {
     cursor: pointer;
 }

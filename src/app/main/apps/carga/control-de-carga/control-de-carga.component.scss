@@ -1,6 +1,7 @@
 table {
     width: 100%;
     min-width: 1056px;
+    border-radius: 10px;
 }
 
 td.mat-column-star {
@@ -101,4 +102,8 @@ fuse-sidebar {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.divTable {
+    border-radius: 10px;
 }

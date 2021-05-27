@@ -6,9 +6,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { FuseWidgetModule } from '@fuse/components/widget/widget.module';
 
-import { CustomTagModule } from 'app/main/custom-tags/custom-tag.module';
+import { CustomTagModule } from 'app/shared/custom-tags/custom-tag.module';
 import { MaterialDesignModule } from 'app/material-design/material-design.module';
-// import { MaterialDesignModule } from 'app/material-design/material-design.module';
 
 //componentes
 import { PedidosPartesArticuloComponent } from './partes-articulos/partes-articulo/partes-articulo.component';

@@ -6,17 +6,19 @@ import { Debounce } from 'app/shared/decorators/debounce';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 import { HttpErrorResponse } from '@angular/common/http';
-import { element } from 'protractor';
-import { forEach } from 'lodash';
+
+import { ListaLotesService } from './lista-lotes.service';
+
+//import { element } from 'protractor';
+//import { forEach } from 'lodash';
 
 //import { BuscarLoteComponent } from './buscar-lote/buscar-lote.component';
-import { VerImpresorasComponent } from './ver-impresoras/ver-impresoras.component';
-import { VerLoteComponent } from './ver-lote/ver-lote.component';
+//import { VerImpresorasComponent } from './ver-impresoras/ver-impresoras.component';
+//import { VerLoteComponent } from './ver-lote/ver-lote.component';
 
 //services
-import { VerLoteService } from './ver-lote/ver-lote.service';
-import { UsuarioService } from 'app/services/usuario.service';
-import { ListaLotesService } from './lista-lotes.service';
+//import { VerLoteService } from './ver-lote/ver-lote.service';
+//import { UsuarioService } from 'app/services/usuario.service';
 
 export interface Articulos {
 

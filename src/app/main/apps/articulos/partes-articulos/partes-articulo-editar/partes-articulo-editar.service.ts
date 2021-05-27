@@ -16,8 +16,8 @@ export class PedidosPartesArticulosEditarService
      * Devuelve un Artículo por id
      * @param id: number
      */
-    getArticulo(id): Observable<any>
-    {
+    getArticulo(id): Observable<any> {
+
         return this._httpClient.get(`${BASE_URL}pedidos/articulo/${id}`);
     }
 
@@ -27,17 +27,21 @@ export class PedidosPartesArticulosEditarService
      * @param id: number
      * @param cantidad: number ( nueva cantidad )
      */
-    putArticulo( id:number, cantidad: number): Observable<any>
-    {
-        let body= {
+    putArticulo( id: number, body ): Observable<any> {
+/* 
+        let body = {
             cantidad: cantidad
-        }
+        } */
 
+        
         let ruta = `${BASE_URL}pedidos/articulo/${id}`
+        
         let headers = new HttpHeaders({
             "Content-Type": "application/json"
         });
-
-        return this._httpClient.put(ruta,body,{headers:headers});
+        console.log( " EL ID",  id  );
+        console.log( "THE body",  body  );
+        
+        return this._httpClient.put( ruta, body, { headers: headers } );
     }
 }
