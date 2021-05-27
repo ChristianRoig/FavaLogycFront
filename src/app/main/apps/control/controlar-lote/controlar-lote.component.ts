@@ -252,9 +252,10 @@ export class ControlarLoteComponent implements OnInit {
             let mensaje = "Por favor comunicarse con Sistemas";
             this.mostrarError(errStatus, titulo, mensaje);
           } else {
-            let titulo = 'Error';
-            let mensaje = "No se controló el artículo";
+            let titulo = 'Error al Controlar';
+            let mensaje = "No se controló el artículo. Es posible que falten datos para controlar";
             this.mostrarError(errStatus, titulo, mensaje);
+            this.getArticulosDeLote();
           }
         }
       });

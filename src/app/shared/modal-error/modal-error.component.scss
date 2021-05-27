@@ -1,0 +1,62 @@
+mat-dialog-actions{
+    justify-content: center;
+    margin-top: 5px;
+    height: 50px;
+}
+
+div{
+    height: 80px;
+}
+
+h2{
+    padding-top: 8px;
+}
+.titulo2 {
+    background: #f44336;
+    color: white;
+    height: 50px;
+    width: 100%;
+    border-radius: 5px;
+}
+p{
+    margin-left: 20px;
+}
+
+/* ::ng-deep .mat-dialog-container {
+    height: 250px !important;
+    width: 400px !important;
+    border-radius: 8px !important;
+} */
+.mat-dialog-container {
+    height: 250px !important;
+    width: 400px !important;
+    border-radius: 8px !important;
+}
+
+.father{
+    height: 200px !important;
+    width: 400px !important;
+}
+
+mat-dialog-container {
+    justify-content: center;
+    display: flex;
+    padding: 24px;
+    box-sizing: border-box;
+    overflow: auto;
+    outline: 0;
+    /* width: 600px !important;*/
+    height: 220px !important; 
+    min-height: inherit;
+    max-height: inherit;
+}
+
+mat-dialog-content{
+    //display: flex;
+    height: 120px;
+    justify-content: center;
+}
+
+mat-dialog-container {
+    border-radius: 8px;
+} 
