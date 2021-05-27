@@ -162,6 +162,7 @@ export class PedidosCrear1Component implements OnInit {
 
   mostrarError(errStatus, titulo, mensaje){
     const dialogRef = this._dialog.open( ModalErrorComponent, { 
+      
       data: {
         titulo: titulo,
         mensaje: mensaje

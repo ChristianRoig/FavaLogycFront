@@ -8,6 +8,9 @@
     }
     .mat-dialog-container {
         padding: 0;
+        height: 600px !important;
+        width: 400px !important;
+        border-radius: 8px !important;
         .mat-toolbar {
             flex: 1 0 auto;
             min-height: initial;

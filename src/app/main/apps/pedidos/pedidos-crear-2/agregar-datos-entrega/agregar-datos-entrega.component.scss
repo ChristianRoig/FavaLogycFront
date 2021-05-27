@@ -18,9 +18,10 @@ mat-form-field {
 }
 
 
-/* body.theme-default .mat-dialog-container {
-        background: #7c7c7c !important;
-    } */
+.mat-dialog-container {
+    height: 1000px!important;
+    width: 1000px!important;
+} 
 
 body.theme-default {
     background: #7c7c7c !important;
