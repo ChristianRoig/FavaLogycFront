@@ -1,10 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
-import { Debounce } from 'app/shared/decorators/debounce';
-import { SonidoService } from 'app/services/sonidos.service';
 import { Subscription } from 'rxjs';
-import { ErroresService } from 'app/services/errores.service';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -15,6 +12,10 @@ import {
   animate,
   transition
 } from '@angular/animations';
+
+// import { Debounce } from 'app/shared/decorators/debounce';
+// import { SonidoService } from 'app/shared/services/sonidos.service';
+// import { ErroresService } from 'app/services/errores.service';
 
 //services
 import { ControlBusquedaService } from './control-busqueda.service';
