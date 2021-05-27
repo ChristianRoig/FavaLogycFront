@@ -24,13 +24,14 @@ import { LoginModule } from './main/pages/login/login.module';
 import { LoginComponent } from './main/pages/login/login.component';
 import { Error404Module } from './main/pages/404/error-404.module';
 import { SharedModule } from './shared/shared.module';
-import { SonidoService } from './services/sonidos.service';
 
-import { ProjectDashboardComponent } from './main/apps/tablero/tablero.component';
-import { PlantillaFondoComponent } from './shared/custom-tags/plantilla-fondo/plantilla-fondo.component';
-import { AuthInterceptor } from './shared/x_NOSEUSA_interceptors/auth.interceptor';
-import { UsuarioGuard } from './shared/x_NOSEUSA_guards/usuario.guard';
-import { SampleModule } from './main/x_NOSEUSA_sample/sample.module';
+import { SonidoService } from './shared/services/sonidos.service';
+
+// import { ProjectDashboardComponent } from './main/apps/tablero/tablero.component';
+// import { PlantillaFondoComponent } from './shared/custom-tags/plantilla-fondo/plantilla-fondo.component';
+// import { AuthInterceptor } from './shared/x_NOSEUSA_interceptors/auth.interceptor';
+// import { UsuarioGuard } from './shared/x_NOSEUSA_guards/usuario.guard';
+// import { SampleModule } from './main/x_NOSEUSA_sample/sample.module';
 
 
 const appRoutes: Routes = [

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Component, Inject } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { SonidoService } from './sonidos.service';
+import { SonidoService } from 'app/shared/services/sonidos.service';
 
 @Injectable({
   providedIn: 'root'
