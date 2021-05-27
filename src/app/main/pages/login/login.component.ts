@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators   } from '@angular/forms';
 import { FuseConfigService } from '@fuse/services/config.service';
 import { fuseAnimations } from '@fuse/animations';
 import { Router } from '@angular/router';
-import { UsuarioService } from 'app/services/usuario.service';
+import { UsuarioService } from 'app/shared/services/usuario.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalRecuperarContrasenaComponent } from './modal-recuperar-contrasena/modal-recuperar-contrasena.component';
 import { SonidoService } from 'app/services/sonidos.service';
