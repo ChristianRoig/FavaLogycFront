@@ -36,7 +36,7 @@ body.theme-default {
 }
 
 .contenedorBarra {
-    width: 95%;
+    width: 96%;
     flex-direction: column;
     border: 1px solid;
     border-color: lightgray;
@@ -48,6 +48,10 @@ body.theme-default {
     margin-right: 50px;
     margin-bottom: 20px;
     height: 150px;
+}
+
+.mat-dialog-actions {
+    justify-content: space-around;
 }
 
 .divUno {
@@ -62,6 +66,22 @@ body.theme-default {
     border: 1px solid;
     border-color: lightgray;
     margin-left: 20px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.divTres {
+    width: 470px !important;
+    flex-direction: column;
+    box-sizing: border-box;
+    display: flex;
+    background: white;
+    border-radius: 10px;
+    align-items: center;
+    padding-top: 30px;
+    border: 1px solid;
+    border-color: lightgray;
+    margin-left: 10px;
     margin-right: 20px;
     margin-bottom: 10px;
 }

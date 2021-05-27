@@ -1,8 +1,7 @@
-import {Component, ViewEncapsulation, OnInit, ElementRef, ViewChild, Renderer2 } from '@angular/core';
-import { Debounce } from 'app/shared/decorators/debounce';
+import { Component, ViewEncapsulation, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 import { MatDialog } from '@angular/material/dialog';
-import { SonidoService } from 'app/services/sonidos.service';
+import { SonidoService } from 'app/shared/services/sonidos.service';
 import {
   trigger,
   state,
@@ -16,7 +15,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ControlarLoteService } from './controlar-lote.service';
 import { MatButton } from '@angular/material/button';
 import { PopUpLoteCreado } from './popUpLoteControlado/popUpLoteControlado.component';
-import { SelectMultipleControlValueAccessor } from '@angular/forms';
+
+// import { SelectMultipleControlValueAccessor } from '@angular/forms';
+// import { Debounce } from 'app/shared/decorators/debounce';
 
 /**
  * @title Basic use of `<table mat-table>`

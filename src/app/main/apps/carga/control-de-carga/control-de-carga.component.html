@@ -4,7 +4,7 @@
     <div contenido>
         <div fxLayout="column">
             <div fxLayout="row" class="content-card pb-4">
-                <div fxFlex="100" class="fuse-card p-24 mr-8">
+                <div fxFlex="100" class="fuse-card p-24">
                     <ng-container *ngTemplateOutlet="busqueda"></ng-container>
                 </div>
             </div>
@@ -34,7 +34,7 @@
 
 <ng-template #listaOrdenes>
 
-    <div style="width: 100%; overflow: auto;">
+    <div style="width: 100%; overflow: auto;" class="divTable">
         <table mat-table matSort [dataSource]="dataSource2" class="mb-8">
             <ng-container matColumnDef="id">
                 <!-- mat-sort-header="id" -->

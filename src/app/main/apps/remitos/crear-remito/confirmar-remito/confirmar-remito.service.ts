@@ -13,15 +13,17 @@ export interface BodyRemito {
   }
 
 @Injectable()
-export class ConfirmarRemitoService
-{
+export class ConfirmarRemitoService {
+
+    tipoVenta: number = 1;
+
     constructor(
         private _httpClient: HttpClient
     ) { }
 
     getAllTalonarios(): Observable<any>
     {
-        let ruta = `${BASE_URL}pedidos/talonario/tipopedido/1`;
+        let ruta = `${BASE_URL}pedidos/talonario/tipopedido/${ this.tipoVenta }`;
         return this._httpClient.get(ruta);
     }
 

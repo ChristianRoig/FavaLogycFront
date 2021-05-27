@@ -21,14 +21,16 @@ import { PedidosPartesArticulosEditarService } from './partes-articulo-editar.se
 })
 
 export class PedidosPartesArticuloEditarComponent implements OnInit {
-    displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-    dataSource2: any;
-    subParametros: Subscription;
-    id:number;
-    cantidad: number;
-    codigoArticulo: string;
-    nombre: string;
-    descripcion: string;
+
+    displayedColumns  : string[] = ['position', 'name', 'weight', 'symbol'];
+    dataSource2       : any;
+    subParametros     : Subscription;
+    id                : number;
+    cantidad          : number;
+    codigoArticulo    : string;
+    nombre            : string;
+    descripcion       : string;
+    observaciones     : string;
 
     constructor(
         private _router: Router,
@@ -56,6 +58,7 @@ export class PedidosPartesArticuloEditarComponent implements OnInit {
                 this.codigoArticulo = this.dataSource2.codigoArticulo;
                 this.nombre = this.dataSource2.nombre;
                 this.descripcion = this.dataSource2.descripcion;
+                this.observaciones = this.dataSource2.observaciones;
             },
             (err: HttpErrorResponse) => {
                 if (err.error instanceof Error) {
@@ -89,6 +92,16 @@ export class PedidosPartesArticuloEditarComponent implements OnInit {
     }
 
     editar(){
+      /* this.cantidad = this.dataSource2.partes;
+          this.codigoArticulo = this.dataSource2.codigoArticulo;
+          this.nombre = this.dataSource2.nombre;
+          this.descripcion = this.dataSource2.descripcion; */
+      if ( this.observaciones == null){
+        this.observaciones = "";
+      }
+      if ( this.descripcion == null){
+        this.descripcion = "";
+      }
 
       if(this.cantidad < 1){
         let titulo = 'Error al Editar';
@@ -96,7 +109,17 @@ export class PedidosPartesArticuloEditarComponent implements OnInit {
         this.mostrarError(0, titulo, mensaje);
       } else {
 
-        this._pedidosPartesArticulosEditarService.putArticulo(this.id,this.cantidad).subscribe(
+        const body = {
+
+          "id"            : this.id,
+          "nombre"        : this.nombre,
+          "descripcion"   : this.descripcion,
+          "observaciones" : this.observaciones,
+          "partes"        : this.cantidad
+
+        }
+
+        this._pedidosPartesArticulosEditarService.putArticulo( this.id, body ).subscribe(
           data => {
             let titulo = 'Confirmación de Edición';
             let mensaje = "Se actualizó el registro correctamente";

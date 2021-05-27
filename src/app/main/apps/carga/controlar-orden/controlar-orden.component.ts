@@ -1,6 +1,4 @@
 import {Component, ViewEncapsulation, OnInit, ElementRef, ViewChild} from '@angular/core';
-import { Debounce } from 'app/shared/decorators/debounce';
-import { ErroresService } from 'app/services/errores.service';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 import { MatDialog } from '@angular/material/dialog';
 import { trigger, state, style, animate, transition } from '@angular/animations';
@@ -11,6 +9,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ControlarOrdenService } from './controlar-orden.service';
 import { MatButton } from '@angular/material/button';
 import { PopUpOrdenControladaComponent } from './popUpOrdenControlada/popUpOrdenControlada.component';
+
+// import { Debounce } from 'app/shared/decorators/debounce';
+// import { ErroresService } from 'app/shared/services/errores.service';
 
 /**
  * @title Basic use of `<table mat-table>`

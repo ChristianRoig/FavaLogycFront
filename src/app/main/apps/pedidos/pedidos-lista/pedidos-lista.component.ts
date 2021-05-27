@@ -1,12 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { Router } from '@angular/router';
-//import { SelectionModel } from '@angular/cdk/collections';
-import { Debounce } from 'app/shared/decorators/debounce';
 import { MatDialog } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
 
-//interfaces
-import { FiltroArticulosPedidos } from 'app/interfaces/datos-entrega';
+import { FiltroArticulosPedidos } from 'app/shared/interfaces/datos-entrega';
 
 //componets
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
@@ -14,6 +11,9 @@ import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.componen
 //services
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { PedidosListaService } from './pedidos-lista.service';
+
+//import { SelectionModel } from '@angular/cdk/collections';
+//import { Debounce } from 'app/shared/decorators/debounce';
 
 @Component({  
   selector: 'app-pedidos-lista',  
