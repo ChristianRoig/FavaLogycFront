@@ -54,7 +54,7 @@ export class PedidosCrear1Component implements OnInit {
   }
 
   buscar(){
-    let comprobante = this.puntoVenta+this.cbte
+    let comprobante = this.puntoVenta + this.cbte;
     this._service.getDetalle(this.selectedTipo, comprobante).subscribe(params => {
       console.log(params);
       this.dataSourceArticulos = params.datos;
@@ -71,7 +71,7 @@ export class PedidosCrear1Component implements OnInit {
           let mensaje = "Por favor comunicarse con Sistemas";
           this.mostrarError(errStatus, titulo, mensaje);
         } else {
-          let titulo = 'Error al cargar filtros';
+          let titulo = 'Error en la busqueda';
           let mensaje = err.error.message.toString();
           this.mostrarError(errStatus, titulo, mensaje);
         }

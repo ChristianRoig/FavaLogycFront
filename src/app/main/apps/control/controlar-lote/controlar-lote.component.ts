@@ -253,7 +253,7 @@ export class ControlarLoteComponent implements OnInit {
             this.mostrarError(errStatus, titulo, mensaje);
           } else {
             let titulo = 'Error al Controlar';
-            let mensaje = "No se controló el artículo. Es posible que falten datos para controlar";
+            let mensaje = "No se controló el artículo. Es posible que falten datos para controlar o sean incorrectos.";
             this.mostrarError(errStatus, titulo, mensaje);
             this.getArticulosDeLote();
           }

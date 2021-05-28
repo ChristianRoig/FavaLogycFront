@@ -51,15 +51,16 @@ export class ConfirmarRemitoComponent implements OnInit {
   filtroDepositosCarga: any;
   selectedDepositoCarga: any = 0;
 
+  
   proxCbte: string;
   mostrarSpinner: boolean = false;
   contador: number = 0;
 
-  constructor(public matDialogRef: MatDialogRef<ConfirmarRemitoComponent>,
-              @Inject(MAT_DIALOG_DATA) public data:any,
-              private _serviceRemitosConfirmar: ConfirmarRemitoService,
-              private _dialog: MatDialog,
-              private _router: Router) { }
+  constructor( private matDialogRef: MatDialogRef<ConfirmarRemitoComponent>,
+               @Inject(MAT_DIALOG_DATA) public data:any,
+               private _serviceRemitosConfirmar: ConfirmarRemitoService,
+               private _dialog: MatDialog,
+               private _router: Router) { }
 
   ngOnInit(): void {
     this.getfiltros();
@@ -67,7 +68,7 @@ export class ConfirmarRemitoComponent implements OnInit {
     //this.dataSource2 = JSON.parse(localStorage.getItem('Remitir'))._selected;
     this.dataSource2 = this.data.selection._selected;
     console.log(this.dataSource2);
-
+    
     /* this.cantidad = this.dataSource2.length;
     this.picker =  new Date(); */
 
@@ -141,13 +142,14 @@ export class ConfirmarRemitoComponent implements OnInit {
   }
 
   mostrarError(errStatus, titulo, mensaje){
-    const matDialogRef = this._dialog.open( ModalErrorComponent, { 
+    
+    const matDialogRefDos = this._dialog.open( ModalErrorComponent, { 
       data: {
         titulo: titulo,
         mensaje: mensaje
       } 
     });
-    matDialogRef.afterClosed()
+    matDialogRefDos.afterClosed()
       .subscribe( () => {
         if (errStatus != 0) {  
           
@@ -217,10 +219,13 @@ export class ConfirmarRemitoComponent implements OnInit {
     this.contador++;
     console.log( "contador", this.contador );
     console.log( this.dataSource2 );
-    if(this.contador === 1){
+
+    if (this.contador === 1){
+
       for (let elemento of this.dataSource2){
         this.toAdd.push(elemento.idDetalle);
       }   
+
       let idTransporte = parseInt(this.selectedTransporte, 10);
       let idTalonario = parseInt(this.selectedTalonario, 10);
       let idDeposito = parseInt(this.selectedDepositoCarga, 10);
@@ -231,6 +236,8 @@ export class ConfirmarRemitoComponent implements OnInit {
         idTalonario: idTalonario,
         listaIdDetalle: this.toAdd
       }
+
+      
       console.log({body});
       console.log("entró ass");
       this._serviceRemitosConfirmar.generarRemito( body ).subscribe(params => {
@@ -244,16 +251,19 @@ export class ConfirmarRemitoComponent implements OnInit {
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
           console.log("Client-side error");
+          this.matDialogRef.close();
         } else {
           let errStatus = err.status
           if (errStatus == 0){
             let titulo = 'Error de Servidor';
             let mensaje = "Por favor comunicarse con Sistemas";
             this.mostrarError(errStatus, titulo, mensaje);
+            this.matDialogRef.close();
           } else {
             let titulo = 'Error al crear remito';
             let mensaje = err.error.message.toString();
             this.mostrarError(errStatus, titulo, mensaje);
+            this.matDialogRef.close();
           }
         }
       });
