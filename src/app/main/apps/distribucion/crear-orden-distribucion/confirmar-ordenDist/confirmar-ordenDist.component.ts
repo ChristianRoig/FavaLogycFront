@@ -134,16 +134,19 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
             console.log("Client-side error");
+            this.matDialogRef.close();
           } else {
             let errStatus = err.status
             if (errStatus == 0){
               let titulo = 'Error de Servidor';
               let mensaje = "Por favor comunicarse con Sistemas";
               this.mostrarError(errStatus, titulo, mensaje);
+              this.matDialogRef.close();
             } else {
               let titulo = 'Error al crear la orden';
               let mensaje = err.error.message.toString();
               this.mostrarError(errStatus, titulo, mensaje);
+              this.matDialogRef.close();
             }
           }
         });
@@ -185,16 +188,19 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
           console.log("Client-side error");
+          this.matDialogRef.close();
         } else {
           let errStatus = err.status
           if (errStatus == 0){
             let titulo = 'Error de Servidor';
             let mensaje = "Por favor comunicarse con Sistemas";
             this.mostrarError(errStatus, titulo, mensaje);
+            this.matDialogRef.close();
           } else {
             let titulo = 'Error al actualizar la orden';
             let mensaje = err.error.message.toString();
             this.mostrarError(errStatus, titulo, mensaje);
+            this.matDialogRef.close();
           }
         }
       });

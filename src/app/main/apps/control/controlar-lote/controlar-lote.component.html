@@ -6,6 +6,7 @@
         <div style="width: 100%;">
 
             <div fxLayout="row" class="controlesBusquedaF">
+
                 <div fxLayout="row" class="inputs">
                     <mat-form-field appearance="outline" class="inputBusqueda">
                         <mat-label>Código de Barras</mat-label>
@@ -19,6 +20,7 @@
                         <mat-icon matSuffix>search</mat-icon>
                     </mat-form-field>
                 </div>
+
                 <div class="botonesBusqueda">
                     <div *ngIf="this.ocultarBotones">
                         <button mat-raised-button (click)="controlarEtapaArticulo()" [disabled]="!this.cupa || !this.codigoBarras" #btnRef="matButton" class="btn" color="primary">Controlar</button>
@@ -31,6 +33,7 @@
                         <label class="pl-8">Mostar botones</label>
                     </div>
                 </div>
+
             </div>
 
             <div [@esconder]="funcionEsconder" class="botonesBusqueda" style="width: 100%;">

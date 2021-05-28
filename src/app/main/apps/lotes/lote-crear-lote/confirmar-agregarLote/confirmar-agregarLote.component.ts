@@ -49,7 +49,7 @@ export class ConfirmarAgregarLoteComponent implements OnInit {
   contador: number = 0;
   //idCabecera: number;
 
-  constructor(  public matDialogRef: MatDialogRef<ConfirmarAgregarLoteComponent>,
+  constructor(  private matDialogRef: MatDialogRef<ConfirmarAgregarLoteComponent>,
                 @Inject(MAT_DIALOG_DATA) public data:any,
                 private _serviceAgregarLoteConfirmar: ConfirmarAgregarLoteService,
                 private _dialog: MatDialog,
@@ -107,16 +107,20 @@ export class ConfirmarAgregarLoteComponent implements OnInit {
           (err: HttpErrorResponse) => {
             if (err.error instanceof Error) {
               console.log("Client-side error");
+              this.matDialogRef.close();
             } else {
               let errStatus = err.status
               if (errStatus == 0){
                 let titulo = 'Error de Servidor';
                 let mensaje = "Por favor comunicarse con Sistemas";
                 this.mostrarError(errStatus, titulo, mensaje);
+                this.matDialogRef.close();
               } else {
                 let titulo = 'Error al Agregar';
                 let mensaje = err.error.message.toString();
                 this.mostrarError(errStatus, titulo, mensaje);
+                this.matDialogRef.close();
+                
               }
             }
           }
@@ -164,13 +168,13 @@ export class ConfirmarAgregarLoteComponent implements OnInit {
   }
 
   mostrarError(errStatus, titulo, mensaje){
-    const matDialogRef = this._dialog.open( ModalErrorComponent, { 
+    const matDialogRefDos = this._dialog.open( ModalErrorComponent, { 
       data: {
         titulo: titulo,
         mensaje: mensaje
       } 
     });
-    matDialogRef.afterClosed()
+    matDialogRefDos.afterClosed()
       .subscribe( () => {
         if (errStatus != 0) {  
           
