@@ -1,9 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
+//fuse
 import { FuseSharedModule } from '@fuse/shared.module';
 import { FuseWidgetModule } from '@fuse/components';
-import { MaterialDesignModule } from 'app/material-design/material-design.module';
 
+//fava
+import { MaterialDesignModule } from '@material/material-design.module';
 import { PlantillaFondoComponent } from './plantilla-fondo/plantilla-fondo.component';
 import { PlantillaFondoSimpleComponent } from './plantilla-fondo-simple/plantilla-fondo-simple.component';
 

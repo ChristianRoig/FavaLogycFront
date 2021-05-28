@@ -3,11 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 
+//fuse
 import { FuseSharedModule } from '@fuse/shared.module';
 import { FuseWidgetModule } from '@fuse/components/widget/widget.module';
 
+//fava
+import { MaterialDesignModule } from '@material/material-design.module';
 import { CustomTagModule } from 'app/shared/custom-tags/custom-tag.module';
-import { MaterialDesignModule } from 'app/material-design/material-design.module';
 
 //componentes
 import { PedidosPartesArticuloComponent } from './partes-articulos/partes-articulo/partes-articulo.component';
