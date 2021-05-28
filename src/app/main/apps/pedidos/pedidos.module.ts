@@ -2,17 +2,19 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
+//fuse
 import { FuseSharedModule } from '@fuse/shared.module';
 import { FuseWidgetModule } from '@fuse/components/widget/widget.module';
-import { CustomTagModule } from 'app/shared/custom-tags/custom-tag.module';
 import { FuseSidebarModule } from '@fuse/components';
 
-import { MaterialDesignModule } from 'app/material-design/material-design.module';
-import { TablaRetractilModule } from '@fava/components/tabla-retractil/tabla-retractil.module';
+//fava
+import { MaterialDesignModule } from '@material/material-design.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { TablaRetractilModule } from '@fava/components/tabla-retractil/tabla-retractil.module';
+import { CustomTagModule } from 'app/shared/custom-tags/custom-tag.module';
 
 //components
 import { PedidosListaComponent } from './pedidos-lista/pedidos-lista.component';
@@ -34,7 +36,6 @@ import { PedidosAnularService } from './pedidos-anular/pedidos-anular.service';
 import { PedidosCrear1Service } from './pedidos-crear-1/pedidos-crear-1.service';
 import { PedidosCrear2Service } from './pedidos-crear-2/pedidos-crear-2.service';
 import { FiltrosService } from './pedidos-lista/filtros/filtros.service';
-
 
 //components
 import { ComprobantesListaComponent } from './comprobantes/comprobantes-lista/comprobantes-lista.component';

@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { MaterialDesignModule } from '@material/material-design.module';
 //import { MatTableModule } from '@angular/material/table';
-import { MaterialDesignModule } from 'app/material-design/material-design.module';
 
 import { TablaRetractilComponent } from './tabla-retractil.component';
 

@@ -4,16 +4,15 @@ import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 
-import { CustomTagModule } from 'app/shared/custom-tags/custom-tag.module';
-import { MaterialDesignModule } from 'app/material-design/material-design.module';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-
 // modulos fuse
 import { FuseSharedModule } from '@fuse/shared.module';
 import { FuseWidgetModule } from '@fuse/components/widget/widget.module';
 import { FuseSidebarModule } from '@fuse/components';
 
 // modulos favalogyc
+import { MaterialDesignModule } from '@material/material-design.module';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CustomTagModule } from 'app/shared/custom-tags/custom-tag.module';
 import { TablaRetractilModule } from '@fava/components/tabla-retractil/tabla-retractil.module';
 
 // componentes favalogyc

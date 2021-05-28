@@ -2,15 +2,17 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { CustomTagModule } from 'app/shared/custom-tags/custom-tag.module';
-import { MaterialDesignModule } from 'app/material-design/material-design.module';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 //fuse
 import { FuseSharedModule } from '@fuse/shared.module';
 import { FuseWidgetModule } from '@fuse/components/widget/widget.module';
 import { FuseSidebarModule } from '@fuse/components';
+
+//fava
+import { MaterialDesignModule } from '@material/material-design.module';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CustomTagModule } from 'app/shared/custom-tags/custom-tag.module';
 
 //components
 import { CrearOrdenDistribucionComponent } from './crear-orden-distribucion/crear-orden-distribucion.component';
