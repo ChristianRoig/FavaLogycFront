@@ -1,6 +1,6 @@
 mat-dialog-actions{
     justify-content: center;
-    margin-top: 15px;
+    margin-top: 10px;
     height: 50px;
 }
 
@@ -28,7 +28,7 @@ p{
     border-radius: 8px !important;
 } */
 .mat-dialog-container {
-    height: 250px !important;
+    height: 260px !important;
     width: 400px !important;
     border-radius: 8px !important;
 }
@@ -36,6 +36,10 @@ p{
 .father{
     height: 160px !important;
     width: 400px !important;
+}
+.boton{
+    width: 120px;
+    align-self: flex-end;
 }
 
 mat-dialog-container {
@@ -55,7 +59,8 @@ mat-dialog-content{
     //display: flex;
     height: 120px;
     justify-content: center;
-    padding-top: 25px;
+    padding-top: 12px;
+    flex-wrap: wrap;
 }
 
 mat-dialog-container {
