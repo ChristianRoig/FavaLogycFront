@@ -49,7 +49,7 @@ export class ConfirmarAgregarLoteComponent implements OnInit {
   contador: number = 0;
   //idCabecera: number;
 
-  constructor(  private matDialogRef: MatDialogRef<ConfirmarAgregarLoteComponent>,
+  constructor(  public matDialogRef: MatDialogRef<ConfirmarAgregarLoteComponent>,
                 @Inject(MAT_DIALOG_DATA) public data:any,
                 private _serviceAgregarLoteConfirmar: ConfirmarAgregarLoteService,
                 private _dialog: MatDialog,

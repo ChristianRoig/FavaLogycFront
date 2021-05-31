@@ -56,7 +56,7 @@ export class ConfirmarRemitoComponent implements OnInit {
   mostrarSpinner: boolean = false;
   contador: number = 0;
 
-  constructor( private matDialogRef: MatDialogRef<ConfirmarRemitoComponent>,
+  constructor( public matDialogRef: MatDialogRef<ConfirmarRemitoComponent>,
                @Inject(MAT_DIALOG_DATA) public data:any,
                private _serviceRemitosConfirmar: ConfirmarRemitoService,
                private _dialog: MatDialog,
