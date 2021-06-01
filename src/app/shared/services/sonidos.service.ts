@@ -14,14 +14,14 @@ export class SonidoService {
 
     playAudioSuccess(){
         let audio = new Audio();
-        audio.src = "../../assets/audio/success.wav";
+        audio.src = "assets/audio/success.wav";
         audio.load();
         audio.play();
     }
 
     playAudioAlert(){
         let audio = new Audio();
-        audio.src = "../../assets/audio/alert.wav";
+        audio.src = "assets/audio/alert.wav";
         audio.load();
         audio.play();
     }
