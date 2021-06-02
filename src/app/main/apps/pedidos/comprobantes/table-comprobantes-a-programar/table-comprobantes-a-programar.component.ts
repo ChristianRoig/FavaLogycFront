@@ -258,7 +258,6 @@ export class TableComprobantesAprogramarComponent implements OnInit {
   paginar(e: any){
       this.page = e.pageIndex;
       this.size = e.pageSize;
-      
       this.getComprobantesSinRemitir();
   }
 }

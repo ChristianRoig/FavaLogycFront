@@ -152,7 +152,7 @@ export class ListaLotesComponent implements OnInit {
     idLote      : null
   };
 
-  estado: string = 'NUEVO';
+  estado: string = 'ACTIVOS';
 
   estados: Estados [] = [
     { valor: "NUEVO", vista: "Nuevos" },
@@ -160,7 +160,7 @@ export class ListaLotesComponent implements OnInit {
     { valor: "ESTANTERIA", vista: "Estantería" },
     { valor: "DARSENA", vista: "Dársena" },
     { valor: "REMITIDO", vista: "Remitidos" },
-    { valor: "TODOS", vista: "Todos" }
+    { valor: "ACTIVOS", vista: "Activos" }
   ];
 
   constructor(private _router: Router, 
@@ -236,7 +236,7 @@ export class ListaLotesComponent implements OnInit {
   
   getLotesPorEstado( estado: string, page, size ){
     console.log({estado});
-    if( estado === 'TODOS'){
+    if( estado === 'ACTIVOS'){
       this._listaLoteService.getAllLotes( this.page, this.size ) .subscribe( data => {
         this.dataSource2 = data.datos; 
         this.length = data.totalRegistros;
