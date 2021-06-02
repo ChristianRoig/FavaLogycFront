@@ -66,15 +66,6 @@
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>{{ filtroLocalidades ? 'Localidad' : 'Cargando...'}}</mat-label>
-                    <select matNativeControl (change)="selectLocalidad( $event )" [disabled]="!filtroLocalidades || deshabilitado">
-                        <option *ngFor="let localidad of filtroLocalidades; let index = index" [value]="localidad.id" [selected]="index == (this.selectedLocalidad - 1)"> 
-                            {{ localidad.nombre }}
-                        </option>
-                    </select>
-                </mat-form-field>
-
-                <mat-form-field appearance="outline" fxFlex>
                     <mat-label>{{ selectedProvincia ? 'Provincia' : 'Cargando...'}}</mat-label>
                     <select matNativeControl (change)="selectProvincia($event)" [disabled]="!filtroProvincias || deshabilitado">
                         
@@ -86,6 +77,16 @@
                         </option> -->
                     </select>
                 </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>{{ filtroLocalidades ? 'Localidad' : 'Cargando...'}}</mat-label>
+                    <select matNativeControl (change)="selectLocalidad( $event )" [disabled]="!filtroLocalidades || deshabilitado">
+                        <option *ngFor="let localidad of filtroLocalidades; let index = index" [value]="localidad.id" [selected]="index == (this.selectedLocalidad - 1)"> 
+                            {{ localidad.nombre }}
+                        </option>
+                    </select>
+                </mat-form-field>
+
 
             </div>
             <div class="divTres">
