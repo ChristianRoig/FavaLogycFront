@@ -108,6 +108,5 @@ export class VerLoteService {
     let ruta = `${BASE_URL}pedidos/pedidolote/lote/${ idLote }`;
     return this._httpClient.put(ruta, body,{headers: headers});
   }
-
 }
 

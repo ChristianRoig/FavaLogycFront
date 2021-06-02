@@ -152,13 +152,14 @@ export class ListaLotesComponent implements OnInit {
     idLote      : null
   };
 
-  estado: string = 'TODOS';
+  estado: string = 'NUEVO';
 
   estados: Estados [] = [
     { valor: "NUEVO", vista: "Nuevos" },
     { valor: "ANULADO", vista: "Anulados" },
     { valor: "ESTANTERIA", vista: "Estantería" },
     { valor: "DARSENA", vista: "Dársena" },
+    { valor: "REMITIDO", vista: "Remitidos" },
     { valor: "TODOS", vista: "Todos" }
   ];
 
@@ -182,15 +183,10 @@ export class ListaLotesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
-    //this.resetFiltros();    
-    //this.getfiltros();
 
     this.getLotesPorEstado( this.estado, this.page, this.size );
     this.filtroFechas = false;
     this.filtroInactivos = false;
-    //this.arrowBack = false;
-    // this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
   }
   
   buscarLotePorNombre() {
@@ -239,6 +235,7 @@ export class ListaLotesComponent implements OnInit {
   }
   
   getLotesPorEstado( estado: string, page, size ){
+    console.log({estado});
     if( estado === 'TODOS'){
       this._listaLoteService.getAllLotes( this.page, this.size ) .subscribe( data => {
         this.dataSource2 = data.datos; 
@@ -263,7 +260,7 @@ export class ListaLotesComponent implements OnInit {
       });
     } else {
       this.estado = estado;
-      this._listaLoteService.getLotesPorEstado( estado, this.page, this.size ) .subscribe( data => {
+      this._listaLoteService.getLotesPorEstado( this.estado, this.page, this.size ) .subscribe( data => {
         console.log(data);
         this.dataSource2 = data.datos; 
         this.length = data.totalRegistros;
@@ -309,7 +306,7 @@ export class ListaLotesComponent implements OnInit {
   }
 
   resetFiltros(){
-    this.busqueda = ""
+    this.busqueda = "";
     this.page = 0;
     this.size = 10;
     this.columna = 'idDetalle';

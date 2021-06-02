@@ -30,7 +30,6 @@ export class ListaLotesService
     getAllLotes( page, size ): Observable<any>{  
         
         let ruta = `${ BASE_URL }pedidos/pedidolote/lote/v2/${ page }/${ size }`;
-        //let ruta = `${ BASE_URL }pedidos/pedidolote/lote/0/10`;
         return this._httpClient.get(ruta);
     }
     
@@ -40,86 +39,74 @@ export class ListaLotesService
         return this._httpClient.get(ruta);
     }
     
-    getLotesPorEstado(estado: string, page, size): Observable<any>{  
+    getLotesPorEstado( estado: string, page, size ): Observable<any>{  
         
         let ruta = `${ BASE_URL }pedidos/pedidolote/lote/v2/${ estado }/${ page }/${ size }`;
         return this._httpClient.get(ruta);
     }
 
-    getLotePorId(loteId: number): Observable<any>{                       //PROPUESTA
+    getLotePorId(loteId: number): Observable<any>{          
 
         let ruta = `${BASE_URL}pedidos/pedidolote/${ loteId }`;
         return this._httpClient.get(ruta);
     }
 
-    getAllEtapasPorId(id: number): Observable<any>
-    {
+    getAllEtapasPorId(id: number): Observable<any> {
         let ruta = `${BASE_URL}pedidos/pedidoetapa/estado/${id}`;
         return this._httpClient.get(ruta);
     }
 
-    getAllEtapas(): Observable<any>
-    {
+    getAllEtapas(): Observable<any> {
         let ruta = `${BASE_URL}pedidos/pedidoetapa/`;
         return this._httpClient.get(ruta);
     }
 
-    getAllTurnos(): Observable<any>
-    {
+    getAllTurnos(): Observable<any> {
         let ruta = `${BASE_URL}pedidos/pedidoturno/`;
         return this._httpClient.get(ruta);
     }
 
-    getAllTransportes(): Observable<any>
-    {
+    getAllTransportes(): Observable<any> {
         let ruta = `${BASE_URL}pedidos/transporte/`;
         return this._httpClient.get(ruta);
     }
 
-    getAllEstadosPorId(id:number): Observable<any>
-    {
+    getAllEstadosPorId(id:number): Observable<any> {
         let ruta = `${BASE_URL}pedidos/pedidoestado/etapa/${id}`;
         return this._httpClient.get(ruta);
     }
 
-    getAllEstados(): Observable<any>
-    {
+    getAllEstados(): Observable<any> {
         let ruta = `${BASE_URL}pedidos/pedidoestado/`;
         return this._httpClient.get(ruta);
     }
 
-    getAllOrigenes(): Observable<any>
-    {
+    getAllOrigenes(): Observable<any> {
         let ruta = `${BASE_URL}pedidos/pedidoorigen/`;
         return this._httpClient.get(ruta);
     }
 
-    getAllTipos(): Observable<any>
-    {
+    getAllTipos(): Observable<any> {
         let ruta = `${BASE_URL}pedidos/pedidotipo/`;
         return this._httpClient.get(ruta);
     }
 
-    getAllLocalidades(): Observable<any>
-    {
+    getAllLocalidades(): Observable<any> {
         let ruta = `${BASE_URL}pedidos/localidad/domicilio/`;
         return this._httpClient.get(ruta);
     }
 
-    getAllLocalidadesPorProvincia(id:number): Observable<any>
-    {
+    getAllLocalidadesPorProvincia(id:number): Observable<any> {
         let ruta = `${BASE_URL}pedidos/localidad/domicilio/provincia/${id}`;
         return this._httpClient.get(ruta);
     }
 
-    getAllProvincias(): Observable<any>
-    {
+    getAllProvincias(): Observable<any> {
         let ruta = `${BASE_URL}pedidos/provincia/domicilio/`;
         return this._httpClient.get(ruta);
     }
 
-    getProvinciaPorLocalidad(id:number): Observable<any>
-    {
+    getProvinciaPorLocalidad(id:number): Observable<any>  {
         let ruta = `${BASE_URL}pedidos/provincia/localidad/${id}`;
         return this._httpClient.get(ruta);
     }
