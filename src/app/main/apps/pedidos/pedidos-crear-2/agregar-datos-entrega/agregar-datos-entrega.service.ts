@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
 import { map } from 'rxjs/operators';
-
 import { DATOS_ENTREGA, RootObject, LISTA_PEDIDOS } from 'app/shared/interfaces/datos-entrega';
+import { Observable } from 'rxjs';
+import { environment } from 'environments/environment';
 
+const BASE_URL = environment.server + environment.baseUrl;
 
 @Injectable({
   providedIn: 'root'
 })
 export class AgregarDatosEntregaService {
+  
 
   constructor( private http: HttpClient ) { }
 
@@ -66,4 +68,38 @@ export class AgregarDatosEntregaService {
           
         )
   }
+
+  getAllLocalidadesPorProvincia( id:number ): Observable<any> {
+    let ruta = `${BASE_URL}pedidos/localidad/provincia/${ id }`;
+    return this.http.get(ruta);
+  }
+
+  getAllProvincias(): Observable<any> {
+    let ruta = `${BASE_URL}pedidos/provincia`;
+    return this.http.get(ruta);
+  }
+
+  getAllTransportes(): Observable<any>{
+    let ruta = `${BASE_URL}pedidos/transporte/`;
+    return this.http.get(ruta);
+  }
+
+  getAllTurnos(): Observable<any> {
+      let ruta = `${BASE_URL}pedidos/pedidoturno/`;
+      return this.http.get(ruta);
+  }
+
+  getProvinciaPorLocalidad( id:number ): Observable<any> {
+      let ruta = `${BASE_URL}pedidos/provincia/localidad/${ id }`;
+      return this.http.get(ruta);
+  }
+  
+  getAllLocalidades(): Observable<any> {
+      //let ruta = `${BASE_URL}pedidos/localidad/domicilio/`; //este esta llamando a "Get All Localidad filtrado por Domicilio De Entrega"
+      let ruta = `${BASE_URL}pedidos/localidad/`; //getAllLocalidad
+      return this.http.get(ruta);
+  }
+
+
 }
+

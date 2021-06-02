@@ -8,6 +8,7 @@ import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.componen
 
 import { PedidosListaService } from '../../pedidos-lista/pedidos-lista.service';
 import { Console } from 'console';
+import { AgregarDatosEntregaService } from './agregar-datos-entrega.service';
 
 export interface Articulo {
   idDetalleTango: number,
@@ -54,6 +55,7 @@ export class AgregarDatosEntregaComponent implements OnInit{
     public dialogRef: MatDialogRef<AgregarDatosEntregaComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _pedidosListaService: PedidosListaService,
+    private _agregarDatosEntregaService: AgregarDatosEntregaService,
     private _dialog: MatDialog,
     private _router: Router) {
       this.minDateHastaFiltro = new Date();
@@ -86,7 +88,7 @@ export class AgregarDatosEntregaComponent implements OnInit{
 
     filtroProvincias: any;
     selectedProvincia: any;
-    provincia;
+    //provincia;
 
     filtroLocalidades: any;
     selectedLocalidad: any;
@@ -117,12 +119,7 @@ export class AgregarDatosEntregaComponent implements OnInit{
     id: number = null;
     estanTodosLosDatos: boolean = false;
     localidadID: string = "7600";
-    //ciudadDefault = { nombreCiudad: "MAR DEL PLATA",  localidadID: this.localidadID, selectedLocalidad: this.selectLocalidad};
-    //valorDefault: boolean = true;
-    /* ciudadDefault  = {
-      nombreCiudad: "MAR DEL PLATA",
-      localidadID: 1402
-    } */
+    idProv: number = 1;
 
     ngOnInit(): void {
 
@@ -152,9 +149,7 @@ export class AgregarDatosEntregaComponent implements OnInit{
     }
 
     agregar(){
-      //console.log("this.selectedLocalidad en AGREGAR;", this.selectedLocalidad);
-      //console.log("this.selectedProvincia en AGREGAR;", this.selectedProvincia);
-      //console.log("| ID |", this.id);
+
       this.datoEntrega.contacto                     = this.contacto;
       this.datoEntrega.direccion                    = this.direccion;
       this.datoEntrega.fechaDeEntrega               = this.picker;
@@ -215,8 +210,6 @@ export class AgregarDatosEntregaComponent implements OnInit{
       }
       console.log("todo junto quedaria", dia,"|", mes, "|", anio)
       
-      /* let date = new  Date ("2014-10-10");
-      console.log(date.toDateString(), "estoy acá"); */
       return stringFechaAdaptada;
     }
 
@@ -311,7 +304,7 @@ export class AgregarDatosEntregaComponent implements OnInit{
 
     getfiltros(){
 
-      this._pedidosListaService.getAllTurnos().subscribe(params => {
+      this._agregarDatosEntregaService.getAllTurnos().subscribe(params => {
         this.filtroTurnos = params.datos;
       },
       (err: HttpErrorResponse) => {
@@ -331,8 +324,7 @@ export class AgregarDatosEntregaComponent implements OnInit{
         }
       })
 
-
-      this._pedidosListaService.getAllTransportes().subscribe(params => {
+      this._agregarDatosEntregaService.getAllTransportes().subscribe(params => {
         this.filtroTransporte = params.datos;
       },
       (err: HttpErrorResponse) => {
@@ -352,35 +344,10 @@ export class AgregarDatosEntregaComponent implements OnInit{
         }
       })
 
-
-      /* this._pedidosListaService.getAllProvincias().subscribe(params => {
-        this.filtroProvincias = params.datos;
-        console.log("filtroProvincias -> ", params.datos);
-      },
-      (err: HttpErrorResponse) => {
-        if (err.error instanceof Error) {
-          console.log("Client-side error");
-        } else {
-          let errStatus = err.status
-          if (errStatus == 0){
-            let titulo = 'Error de Servidor';
-            let mensaje = "Por favor comunicarse con Sistemas";
-            this.mostrarError(errStatus, titulo, mensaje);
-          } else {
-            let titulo = 'Error al cargar filtros';
-            let mensaje = err.error.message.toString();
-            this.mostrarError(errStatus, titulo, mensaje);
-          }
-        }
-      }) */
-  
-      this._pedidosListaService.getAllLocalidades().subscribe(params => {
+      this._agregarDatosEntregaService.getAllLocalidadesPorProvincia( this.idProv ).subscribe(params => {
+        console.log(params);
         this.filtroLocalidades = params.datos;
-
         this.setLocalidadSeleccionada();
-        //console.log("el primero ", this.filtroLocalidades[0]);
-        //console.log("el selectedLocalidad ", this.selectedLocalidad);
-        
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
@@ -398,13 +365,18 @@ export class AgregarDatosEntregaComponent implements OnInit{
           }
         }
       })
-      
-      this._pedidosListaService.getProvinciaPorLocalidad( this.selectedLocalidad ).subscribe( params => {
-        this.provincia = params;
-        this.selectedProvincia = params.id;
+
+   
+      this._agregarDatosEntregaService.getAllProvincias().subscribe( params => {
+        console.log("PROVINCIASSS: ", params.datos);
+        console.log("this.provincia", params[0]);
+        this.filtroProvincias = params.datos;
+        this.selectedProvincia = this.filtroProvincias[0].id;
+        //this.selectedProvincia = params.id;
         //console.log("filtroProvincias -> ", this.selectedProvincia);
          //console.log("filtroProvincias asdasd-> ", this.selectedProvincia);
         //this.filtroProvincias = params;
+        this._agregarDatosEntregaService.getAllLocalidadesPorProvincia( this.selectedProvincia );
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
@@ -430,7 +402,7 @@ export class AgregarDatosEntregaComponent implements OnInit{
       console.log("this.selectedProvincia", this.selectedProvincia);
       if(this.selectedProvincia > 0){
         this.selectedLocalidad = 0;
-        this._pedidosListaService.getAllLocalidadesPorProvincia(this.selectedProvincia).subscribe(params => {
+        this._agregarDatosEntregaService.getAllLocalidadesPorProvincia(this.selectedProvincia).subscribe(params => {
           this.filtroLocalidades = params.datos;
         },
         (err: HttpErrorResponse) => {
@@ -451,7 +423,7 @@ export class AgregarDatosEntregaComponent implements OnInit{
         })
       } else {
         this.selectedLocalidad = 0;
-        this._pedidosListaService.getAllLocalidades().subscribe(params => {
+        this._agregarDatosEntregaService.getAllLocalidades().subscribe(params => {
           this.filtroLocalidades = params.datos;
         },
         (err: HttpErrorResponse) => {
@@ -484,7 +456,7 @@ export class AgregarDatosEntregaComponent implements OnInit{
       //console.log("POSTAL:", this.getPostalxLocalidad( parseInt(this.localidadID) ) );
 
       if(this.selectedLocalidad > 0){
-        this._pedidosListaService.getProvinciaPorLocalidad(this.selectedLocalidad).subscribe( params => {
+        this._agregarDatosEntregaService.getProvinciaPorLocalidad(this.selectedLocalidad).subscribe( params => {
           console.log("localidades -> ",params);
           //this.selectedProvincia = params.id;
           this.selectedProvincia = params.id;

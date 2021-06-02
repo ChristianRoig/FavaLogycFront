@@ -22,7 +22,7 @@
             <div class="divDos">
                 <mat-form-field appearance="outline" fxFlex class="selector">
                     <mat-label>{{ filtroTransporte ? 'Trasnporte' : 'Cargando...'}}</mat-label>
-                    <select matNativeControl class="selector" (change)="selectTransporte($event)" [disabled]="!filtroTransporte || deshabilitado">
+                    <select matNativeControl (change)="selectTransporte($event)" [disabled]="!filtroTransporte || deshabilitado">
                             <option *ngIf="this.mostrarDatos == false" [value]="0">Seleccionar Transporte</option>
                             <option *ngIf="this.mostrarDatos == true"> {{ devolverNombreTransporte(this.data.item.sysTransporte.id) }} </option>
                             <option *ngFor="let transporte of filtroTransporte" [value]="transporte.id"
@@ -40,7 +40,7 @@
 
                 <mat-form-field appearance="outline" fxFlex class="selector">
                     <mat-label>{{ filtroTurnos ? 'Turno' : 'Cargando...'}}</mat-label>
-                    <select matNativeControl class="selector" (change)="selectTurno($event)" [disabled]="!filtroTurnos || deshabilitado">
+                    <select matNativeControl (change)="selectTurno($event)" [disabled]="!filtroTurnos || deshabilitado">
                             <option *ngIf="this.mostrarDatos == false"[value]="0">Seleccionar Turno</option>
                             <option *ngIf="this.mostrarDatos == true"> {{ devolverTurno(this.selectedTurno) }} </option>
                             <option *ngFor="let turno of filtroTurnos" [value]="turno.id"
@@ -67,20 +67,24 @@
 
                 <mat-form-field appearance="outline" fxFlex>
                     <mat-label>{{ filtroLocalidades ? 'Localidad' : 'Cargando...'}}</mat-label>
-                    <select matNativeControl class="selector" (change)="selectLocalidad( $event )" [disabled]="!filtroLocalidades || deshabilitado">
-                            <option *ngFor="let localidad of filtroLocalidades; let index = index" [value]="localidad.id" [selected]="index == (this.selectedLocalidad - 1)"> 
-                                {{ localidad.nombre }}
-                            </option>
-                        </select>
+                    <select matNativeControl (change)="selectLocalidad( $event )" [disabled]="!filtroLocalidades || deshabilitado">
+                        <option *ngFor="let localidad of filtroLocalidades; let index = index" [value]="localidad.id" [selected]="index == (this.selectedLocalidad - 1)"> 
+                            {{ localidad.nombre }}
+                        </option>
+                    </select>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" fxFlex>
                     <mat-label>{{ selectedProvincia ? 'Provincia' : 'Cargando...'}}</mat-label>
-                    <select matNativeControl (change)="selectProvincia($event)" [disabled]="!selectedProvincia || deshabilitado">
-                            <option *ngIf="this.provincia" [value]="provincia.id" [selected]="selectedProvincia === provincia.id"> 
-                                {{ provincia.nombre }}
-                            </option>
-                        </select>
+                    <select matNativeControl (change)="selectProvincia($event)" [disabled]="!filtroProvincias || deshabilitado">
+                        
+                        <option *ngFor="let provincia of filtroProvincias; let index = index" [value]="provincia.id" [selected]="index == 0"> 
+                            {{ provincia.nombre }}
+                        </option>
+                        <!-- <option *ngIf="this.provincia" [value]="provincia.id" [selected]="selectedProvincia === provincia.id"> 
+                            {{ provincia.nombre }}
+                        </option> -->
+                    </select>
                 </mat-form-field>
 
             </div>
