@@ -6,7 +6,7 @@
 
             <div fxLayout="row" class="titular">
                 <!-- <h1 class="colorText"> Remito {{ this.idRemito }} </h1> -->
-                <button mat-raised-button color="light" class="mt-22" (click)="confirmacionBorrar()">Eliminar remito</button>
+                <button mat-raised-button color="light" class="mt-22" (click)="confirmacionBorrar()">Anular remito</button>
             </div>
 
             <div class="fuse-card my-20 pl-24 pr-24" style="max-width: 100%;">
@@ -25,9 +25,9 @@
                                 Buscar
                             </button> -->
                             <!-- (click)="sacarDelLote()" -->
-                            <button class="btn" mat-raised-button color="primary" [matBadge]="selection.selected.length" [matBadgeHidden]="selection.selected.length===0" matBadgeColor="warn" [disabled]="selection.selected.length===0">
+                            <!-- <button class="btn" mat-raised-button color="primary" [matBadge]="selection.selected.length" [matBadgeHidden]="selection.selected.length===0" matBadgeColor="warn" [disabled]="selection.selected.length===0">
                                 Eliminar Selec.
-                            </button>
+                            </button> -->
                             <a routerLink="/assets/pdfs/remito.pdf" style="width: 120px;" routerLinkActive="active" target="_blank">
                                 <button class="btn" mat-raised-button color="primary">
                                 Imprimir
@@ -50,7 +50,7 @@
         <mat-card-subtitle class="pl-24">Lista de Articulos</mat-card-subtitle>
         <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="dataSource2" class="mb-8 tablaArticulos">
 
-            <ng-container matColumnDef="select" sticky>
+            <!-- <ng-container matColumnDef="select" sticky>
                 <th mat-header-cell *matHeaderCellDef class="px-8">
                     <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() 
                         && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
@@ -61,7 +61,7 @@
                     <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
                     </mat-checkbox>
                 </td>
-            </ng-container>
+            </ng-container> -->
 
             <!-- id, codigoArticulo, nombre, fechaDeEntrega -->
             <ng-container matColumnDef="id">

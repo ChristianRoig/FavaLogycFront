@@ -32,7 +32,7 @@ export class VerRemitoComponent implements OnInit {
   @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
 
   //displayedColumns: string[] = ['select', 'id', 'codComprobante', 'nroComprobante', 'fechaAlta', 'cantArticulos'];
-  displayedColumns: string[] = ['select', 'id', 'codigoArticulo', 'nombre', 'cantPartes', 'localidad', 'direccion', 'fechaDeEntrega'];
+  displayedColumns: string[] = ['id', 'codigoArticulo', 'nombre', 'cantPartes', 'localidad', 'direccion', 'fechaDeEntrega'];
   selection = new SelectionModel<any>(true, []);
   dataSource2: any;
 
