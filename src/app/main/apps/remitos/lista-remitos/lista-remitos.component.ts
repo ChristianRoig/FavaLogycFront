@@ -37,10 +37,7 @@ export class ListaRemitosComponent implements OnInit {
   order: string = 'asc';
 
   estados: Estados [] = [
-    { valor: "NUEVO", vista: "Nuevos" },
-    { valor: "ANULADO", vista: "Anulados" },
-    { valor: "ESTANTERIA", vista: "Estantería" },
-    { valor: "DARSENA", vista: "Dársena" },
+    { valor: "ACTIVO", vista: "Activos" },
     { valor: "TODOS", vista: "Todos" }
   ];
 
