@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+/* import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FuseSharedModule } from '@fuse/shared.module';
@@ -25,10 +25,6 @@ const routes = [
         path        : 'articulos',
         loadChildren: () => import('./articulos/articulos.module').then(m => m.ArticulosModule)
     },
-    /* {
-        path        : 'comprobantes',
-        loadChildren: () => import('./comprobantes/comprobantes.module').then(m => m.ComprobantesModule)
-    }, */
     {
         path        : 'distribucion',
         loadChildren: () => import('./distribucion/distribucion.module').then(m => m.DistribucionModule)
@@ -42,12 +38,6 @@ const routes = [
         loadChildren: () => import('./tablero/tablero.module').then(m => m.TableroModule)
     }
     
-    /* ,
-    {
-        path        : 'inicio',
-        loadChildren: () => import('./dashboard/project.module').then(m => m.ProjectDashboardModule)
-    } */
-  
 ];
 
 @NgModule({
@@ -61,3 +51,4 @@ const routes = [
 export class AppsModule
 {
 }
+ */

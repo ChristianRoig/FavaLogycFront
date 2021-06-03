@@ -85,7 +85,7 @@ export class LoginComponent implements OnInit
             //         this.usuarioIncorrecto();
             //     }
             // });
-        this._router.navigate(['/apps'])
+        this._router.navigate(['/inicio']);
     }   
 
 
