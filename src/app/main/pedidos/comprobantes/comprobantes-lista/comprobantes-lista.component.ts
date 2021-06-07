@@ -58,12 +58,7 @@ export class ComprobantesListaComponent implements OnInit {
 
   index: number;
 
-  /* navLinks = [  //pendiente para la proxima presentacion
-    { path: 'comprobantes-a-programar', label: 'Comprobantes a programar' },
-    { path: 'comprobantes', label: 'Comprobantes' },
-    { path: 'pedidos', label: 'Pedidos' },
-    { path: 'articulos', label: 'Articulos' },
-  ]; */
+
   constructor(private _router: Router, 
               private _fuseSidebarService: FuseSidebarService, 
               private _comprobantesListaService: ComprobantesListaService,
@@ -72,13 +67,6 @@ export class ComprobantesListaComponent implements OnInit {
   ngOnInit(): void { 
   
   }
-
-  /* tabChanged = (tabChangeEvent: MatTabChangeEvent): void => { //captura el event del cambio de pestaña
-    console.log('tabChangeEvent => ', tabChangeEvent); 
-    console.log('index => ', tabChangeEvent.index);
-    this.index =  tabChangeEvent.index;
-  
-  } */
 
 
 
