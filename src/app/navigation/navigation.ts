@@ -149,7 +149,7 @@ export const navigation: FuseNavigation[] = [
                         id        : 'control-de-carga',
                         title     : 'Control de Carga',
                         type      : 'item',
-                        url       : 'carga/control-de-carga',
+                        url       : 'distribucion/control-de-carga',
                         exactMatch: true
                     }
                 ]
