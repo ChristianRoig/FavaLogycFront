@@ -10,7 +10,6 @@ import { ModalUsuarioErroneoComponent } from './modal-usuario-erroneo/modal-usua
 
 import { UsuarioService } from 'app/shared/services/usuario.service';
 
-
 const routes = [
     {
         path     : '',

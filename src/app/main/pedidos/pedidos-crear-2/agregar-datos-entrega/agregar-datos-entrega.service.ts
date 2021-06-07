@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-import { DATOS_ENTREGA, RootObject, LISTA_PEDIDOS } from 'app/shared/interfaces/datos-entrega';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+import { DATOS_ENTREGA, RootObject, LISTA_PEDIDOS } from 'app/shared/interfaces/datos-entrega';
 import { environment } from 'environments/environment';
 
 const BASE_URL = environment.server + environment.baseUrl;

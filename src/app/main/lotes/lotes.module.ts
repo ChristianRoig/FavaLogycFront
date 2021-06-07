@@ -23,6 +23,8 @@ import { VerLoteComponent } from './lista-lotes/ver-lote/ver-lote.component';
 import { ConfirmarAgregarLoteComponent } from './lote-crear-lote/confirmar-agregarLote/confirmar-agregarLote.component';
 import { ModalDeseaImprimirLoteComponent } from './lote-crear-lote/modal-desea-imprimir/modal-desea-imprimir.component';
 import { ModalConfirmacionBorrarComponent } from './lista-lotes/ver-lote/modal-confirmacion-borrar/modal-confirmacion-borrar.component';
+//import { LoteAgregarLoteComponent } from '../lotes/lote-crear-lote/agregar-lote/agregar-lote.component';
+//import { ModalDeseaImprimirLoteComponent } from './lote-crear-lote/agregar-lote/modal-confirmacion-borrar/modal-desea-imprimir.component';
 
 // servicios
 import { LoteCrearLoteService } from './lote-crear-lote/lote-crear-lote.service';
@@ -31,6 +33,7 @@ import { VerImpresorasService } from './lista-lotes/ver-impresoras/ver-impresora
 import { VerCupasService } from './lista-lotes/ver-cupas/ver-cupas.service';
 import { VerLoteService } from './lista-lotes/ver-lote/ver-lote.service';
 import { ConfirmarAgregarLoteService } from './lote-crear-lote/confirmar-agregarLote/confirmar-agregarLote.service';
+//import { LoteAgregarLoteService } from '../lotes/lote-crear-lote/agregar-lote/agregar-lote.service';
 
 //import { ModalDeseaImprimirLoteComponent } from './lote-crear-lote/agregar-lote/modal-confirmacion-borrar/modal-desea-imprimir.component';
 //import { LoteAgregarLoteComponent } from '../lotes/lote-crear-lote/agregar-lote/agregar-lote.component';
