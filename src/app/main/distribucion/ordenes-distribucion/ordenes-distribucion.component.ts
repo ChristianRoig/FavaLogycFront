@@ -199,7 +199,7 @@ export class OrdenesDistribucionComponent implements OnInit {
     if( orden != null ){
       this.idOrdenDist = orden.id;
       localStorage.setItem('orden', JSON.stringify(orden));
-      let ruta = `apps/distribucion/ver-orden-distribucion/${ this.idOrdenDist }`;
+      let ruta = `distribucion/ver-orden-distribucion/${ this.idOrdenDist }`;
       this._router.navigate([ ruta ]);
     }
   }
@@ -228,7 +228,7 @@ export class OrdenesDistribucionComponent implements OnInit {
 
     localStorage.setItem('orden',JSON.stringify(this.selection));
     
-    let ruta = `apps/distribucion/crear-orden-distribucion`;
+    let ruta = `distribucion/crear-orden-distribucion`;
     this._router.navigate([ruta]);
   }
 
@@ -274,7 +274,7 @@ export class OrdenesDistribucionComponent implements OnInit {
   }
 
   redirecCrearOrden(){
-    let ruta = `apps/distribucion/crear-orden-distribucion`;
+    let ruta = `distribucion/crear-orden-distribucion`;
     this._router.navigate([ruta]);
   }
 

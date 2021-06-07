@@ -61,7 +61,7 @@ const appRoutes: Routes = [
         loadChildren: () => import('./main/distribucion/distribucion.module').then(m => m.DistribucionModule)
     },
     {
-        path        : 'carga',
+        path        : 'carga', 
         loadChildren: () => import('./main/carga/carga.module').then(m => m.CargaModule)
     },
     {

@@ -28,7 +28,7 @@ export class PopUpLoteCreado implements OnInit {
 
   navegarAlista(){
     this._dialog.closeAll();
-    let ruta = `apps/control/lote-en/${ this.modo }`;
+    let ruta = `control/lote-en/${ this.modo }`;
     this._router.navigate([ruta]);
   }
 }

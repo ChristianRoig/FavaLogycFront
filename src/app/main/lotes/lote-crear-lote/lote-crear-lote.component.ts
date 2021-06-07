@@ -650,7 +650,7 @@ export class LoteCrearLoteComponent implements OnInit {
   }
 
   anular(id){
-    let ruta = `apps/pedidos/administracion/anular/${id}`;
+    let ruta = `pedidos/administracion/anular/${id}`;
     console.log(ruta);
     this._router.navigate([ruta]);
   }

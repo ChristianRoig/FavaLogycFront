@@ -121,7 +121,7 @@ export class ListaRemitosComponent implements OnInit {
   verRemito( remito ){ //redireccionar 
     if( remito != null ){
       let idRemito = remito.id;
-      let ruta = `apps/remitos/ver-remito/${ idRemito }`;
+      let ruta = `remitos/ver-remito/${ idRemito }`;
       this._router.navigate([ ruta ]);
     }
   }
@@ -157,7 +157,7 @@ export class ListaRemitosComponent implements OnInit {
   crearRemito() {
     console.log(this.selection);
     localStorage.setItem('Remito',JSON.stringify(this.selection));
-    let ruta = `apps/remitos/crear-remito`;
+    let ruta = `remitos/crear-remito`;
     this._router.navigate([ruta]);
   }
 

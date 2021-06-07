@@ -298,7 +298,7 @@ export class ListaLotesComponent implements OnInit {
     if( lote != null ){
       //this.idLote = lote.id;
       this.idLote = lote.idLote;
-      let ruta = `apps/lotes/ver-lote/${ this.idLote }`;
+      let ruta = `lotes/ver-lote/${ this.idLote }`;
       //console.log("lote ASD");
       //this._verLoteComponent.obtenerLote(lote);
       this._router.navigate([ ruta ]);
@@ -744,12 +744,12 @@ export class ListaLotesComponent implements OnInit {
   }
 
   consultar(id){
-    let ruta = `apps/pedidos/administracion/visualizacion/${id}`;
+    let ruta = `pedidos/administracion/visualizacion/${id}`;
     this._router.navigate([ruta]);
   }
 
   anular(id){
-    let ruta = `apps/pedidos/administracion/anular/${id}`;
+    let ruta = `pedidos/administracion/anular/${id}`;
     console.log(ruta);
     this._router.navigate([ruta]);
   }
@@ -759,7 +759,7 @@ export class ListaLotesComponent implements OnInit {
 
     localStorage.setItem('Lote',JSON.stringify(this.selection));
     
-    let ruta = `apps/pedidos/administracion/addLote`;
+    let ruta = `pedidos/administracion/addLote`;
     this._router.navigate([ruta]);
   }
 
@@ -806,7 +806,7 @@ export class ListaLotesComponent implements OnInit {
 
   redirecCrearLote(){
     //this._router.navigate();
-    let ruta = `apps/lotes/crear-lote`;
+    let ruta = `lotes/crear-lote`;
     this._router.navigate([ruta]);
   }
 

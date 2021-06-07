@@ -164,7 +164,7 @@ export class CrearOrdenDistribucionComponent implements OnInit {
   }
 
   navegarAlistaOrdenes(){
-    let ruta = `apps/distribucion/ordenes-distribucion`;
+    let ruta = `distribucion/ordenes-distribucion`;
       this._router.navigate([ruta]);
   }
 

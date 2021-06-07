@@ -232,7 +232,7 @@ export class VerLoteComponent implements OnInit {
 
   esperarYnavegar(){
     setTimeout(() => {                          
-      let ruta = `apps/lotes/lista-lotes`;
+      let ruta = `lotes/lista-lotes`;
       this._router.navigate([ruta]);
     }, 1000);
   }
@@ -249,6 +249,7 @@ export class VerLoteComponent implements OnInit {
     this._verLoteService.postEliminarArticuloDeLote(listaIdPedidoDetalle).subscribe(params => {
       console.log("termino Ok");
       this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
+      this.getArticulosDeLote( this.idLote );
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {

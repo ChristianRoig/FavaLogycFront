@@ -163,18 +163,18 @@ export class TableComprobantesComponent implements OnInit {
   }
 
   abrir( idPedido: number ) { 
-    //let ruta = `apps/pedidos/ver-comprobante/${ idPedido }`; //para forzar fallo
-    let ruta = `apps/pedidos/ver-pedido/${ idPedido }`;
+    //let ruta = `pedidos/ver-comprobante/${ idPedido }`; //para forzar fallo
+    let ruta = `pedidos/ver-pedido/${ idPedido }`;
     this._router.navigate([ ruta ]);
   }
   
   /*consultar(id){
-    let ruta = `apps/pedidos/ver-pedido/${id}`;
+    let ruta = `pedidos/ver-pedido/${id}`;
     this._router.navigate([ruta]);
   } */
 
   agregarPedido() {
-    let ruta = `apps/pedidos/crear-pedido`;
+    let ruta = `pedidos/crear-pedido`;
     console.log(ruta);
     this._router.navigate([ruta]);
   }

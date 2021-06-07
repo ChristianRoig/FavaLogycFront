@@ -64,7 +64,7 @@ export class PedidosCodigosBarraComponent implements OnInit {
     }
 
     editar(id){
-        let ruta = `apps/articulos/codigos-barra/${this.codigoArticulo}/${id}`;
+        let ruta = `articulos/codigos-barra/${this.codigoArticulo}/${id}`;
         this._router.navigate([ruta]);
     }
 
@@ -161,12 +161,12 @@ export class PedidosCodigosBarraComponent implements OnInit {
   }
 
   agregar(){
-      let ruta = `apps/articulos/codigos-barra-add/${this.codigoArticulo}`;
+      let ruta = `articulos/codigos-barra-add/${this.codigoArticulo}`;
       this._router.navigate([ruta]);
     }
     
     volver(){
-    let ruta = `apps/articulos/codigos-barra-articulos`;
+    let ruta = `articulos/codigos-barra-articulos`;
       this._router.navigate([ruta]);
   }
 

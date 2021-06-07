@@ -102,7 +102,7 @@ export class TableArticulosComponent implements OnInit {
   } */
 
   abrir( idPedido: number ){
-    let ruta = `apps/pedidos/ver-pedido/${ idPedido }`;
+    let ruta = `pedidos/ver-pedido/${ idPedido }`;
     this._router.navigate([ ruta ]);
   }
 

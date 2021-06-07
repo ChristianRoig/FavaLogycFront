@@ -47,7 +47,6 @@ export interface BodyDetalle{
   styleUrls: ['./comprobantes-lista.component.scss']
 })
 
-
 export class ComprobantesListaComponent implements OnInit {
 
   @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
@@ -65,8 +64,6 @@ export class ComprobantesListaComponent implements OnInit {
     { path: 'pedidos', label: 'Pedidos' },
     { path: 'articulos', label: 'Articulos' },
   ]; */
-
-
   constructor(private _router: Router, 
               private _fuseSidebarService: FuseSidebarService, 
               private _comprobantesListaService: ComprobantesListaService,

@@ -109,7 +109,7 @@ export class VerRemitoComponent implements OnInit {
   }
 
   volver(){
-    let ruta = `apps/remitos/lista-remitos`;
+    let ruta = `remitos/lista-remitos`;
       this._router.navigate([ruta]);
   }
 

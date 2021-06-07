@@ -143,7 +143,7 @@ export class PedidosListaComponent implements OnInit {
   }
 
   consultar( id ){
-    let ruta = `apps/pedidos/ver-pedido/${ id }`;
+    let ruta = `pedidos/ver-pedido/${ id }`;
     this._router.navigate([ ruta ]);
   }
 
@@ -154,7 +154,7 @@ export class PedidosListaComponent implements OnInit {
   } */
 
   agregarPedido() {
-    let ruta = `apps/pedidos/crear-pedido`;
+    let ruta = `pedidos/crear-pedido`;
     console.log(ruta);
     this._router.navigate([ruta]);
   }

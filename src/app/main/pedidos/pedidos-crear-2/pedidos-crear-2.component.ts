@@ -232,7 +232,7 @@ export class PedidosCrear2Component implements OnInit {
         localStorage.removeItem('datoEntrega');
         localStorage.removeItem('IsTipo');
         
-        let ruta = `apps/pedidos/lista-comprobantes`;
+        let ruta = `pedidos/lista-comprobantes`;
         this._router.navigate([ruta]);
     },
     (err: HttpErrorResponse) => {
@@ -261,7 +261,7 @@ export class PedidosCrear2Component implements OnInit {
       localStorage.removeItem('datoEntrega');
       localStorage.removeItem('IsTipo');
 
-      let ruta = `apps/pedidos/lista-comprobantes`;
+      let ruta = `pedidos/lista-comprobantes`;
       this._router.navigate([ruta]);
     },
     (err: HttpErrorResponse) => {
@@ -397,13 +397,13 @@ export class PedidosCrear2Component implements OnInit {
 
   volverIns(){
     //let ruta = `apps/pedidos/crear-pedido`;
-    let ruta = `apps/pedidos/lista-comprobantes`;
+    let ruta = `pedidos/lista-comprobantes`;
     localStorage.removeItem('AddPedido');
     this._router.navigate([ruta]);
   }
 
   volverUpd(){
-    let ruta = `apps/pedidos/ver-pedido/${this.modo}`;
+    let ruta = `pedidos/ver-pedido/${this.modo}`;
     localStorage.removeItem('AddPedido');
     console.log(ruta);
     this._router.navigate([ruta]);

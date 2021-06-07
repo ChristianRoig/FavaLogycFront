@@ -85,7 +85,7 @@ export class PedidosCrear1Component implements OnInit {
     localStorage.setItem('AddPedido',JSON.stringify( this.selection ));
     localStorage.setItem('IdTipo',JSON.stringify( this.selectedTipo ));
     
-    let ruta = `apps/pedidos/crear-pedido2/0`;
+    let ruta = `pedidos/crear-pedido2/0`;
 
     this._router.navigate([ruta]);
   }
@@ -212,7 +212,7 @@ export class PedidosCrear1Component implements OnInit {
   }
 
   volver(){
-    let ruta = `apps/pedidos/pedidos-lista`;
+    let ruta = `pedidos/pedidos-lista`;
     this._router.navigate([ruta]);
   }
 

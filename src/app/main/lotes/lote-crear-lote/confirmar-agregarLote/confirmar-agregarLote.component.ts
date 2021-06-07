@@ -135,7 +135,7 @@ export class ConfirmarAgregarLoteComponent implements OnInit {
 
   esperarYnavegarAlotes(){
     setTimeout(() => {                          
-      let ruta = `apps/lotes/lista-lotes`;
+      let ruta = `lotes/lista-lotes`;
       this._router.navigate([ruta]);
     }, 1000);
   }
@@ -192,7 +192,7 @@ export class ConfirmarAgregarLoteComponent implements OnInit {
   } */
 
   navegarAlistaLotes(){
-    let ruta = `apps/lotes/lista-lotes`;
+    let ruta = `lotes/lista-lotes`;
     this._router.navigate([ruta]);
   }
 

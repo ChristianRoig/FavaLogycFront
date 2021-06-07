@@ -180,7 +180,7 @@ export class PedidosAnularComponent implements OnInit {
   }
 
   volver(){
-    let ruta = `apps/pedidos/ver-pedido/${ this.idCabecera }`;
+    let ruta = `pedidos/ver-pedido/${ this.idCabecera }`;
     this._router.navigate([ruta]);
   }
 

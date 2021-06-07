@@ -272,7 +272,7 @@ export class ConfirmarRemitoComponent implements OnInit {
   }
   
   navegarAlistaRemitos(){
-    let ruta = `apps/remitos/lista-remitos`;
+    let ruta = `remitos/lista-remitos`;
     this._router.navigate([ruta]);
   }
 

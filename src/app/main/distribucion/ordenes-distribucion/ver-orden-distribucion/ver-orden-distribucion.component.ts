@@ -235,7 +235,7 @@ export class VerOrdenDistribucionComponent implements OnInit {
 
   esperarYnavegarAordenes(){
     setTimeout(() => {                          
-      let ruta = `apps/distribucion/ordenes-distribucion`;
+      let ruta = `distribucion/ordenes-distribucion`;
       this._router.navigate([ruta]);
       }, 1000);
   }
