@@ -81,14 +81,14 @@ export const navigation: FuseNavigation[] = [
                         id        : 'control',
                         title     : 'Control Estanteria',
                         type      : 'item',
-                        url       : 'lotes/lote-en/estanteria',
+                        url       : 'lotes/control/lote-en/estanteria',
                         exactMatch: true
                     },
                     {
                         id        : 'control',
                         title     : 'Control Darsena',
                         type      : 'item',
-                        url       : 'lotes/lote-en/darsena',
+                        url       : 'lotes/control/lote-en/darsena',
                         exactMatch: true
                     }
                 ]

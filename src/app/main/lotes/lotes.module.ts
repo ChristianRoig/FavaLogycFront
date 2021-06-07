@@ -61,11 +61,11 @@ const routes: Routes = [
         component: LoteCrearLoteComponent
     },
     {
-        path     : 'lote-en/:modo',
+        path     : 'control/lote-en/:modo',
         component: ControlEstanteriaComponent
     },
     {
-        path     : 'lote-en/:modo/:id',
+        path     : 'control/lote-en/:modo/:id',
         component: ControlarLoteComponent
     }, 
     /* {
