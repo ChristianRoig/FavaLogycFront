@@ -1,0 +1,36 @@
+<app-plantilla-fondo-simple titulo='Comprobantes con Pedidos'>
+
+    <!-- CONTENIDO -->
+    <div contenido>
+        <div class="fuse-card tabTables" style="max-width: 100%;">
+            <!-- <mat-tab-group (selectedTabChange)="tabChanged($event)"> -->
+            <mat-tab-group>
+                <mat-tab label="Comprobantes a programar">
+                    <app-table-comprobantes-a-programar></app-table-comprobantes-a-programar>
+                </mat-tab>
+                <mat-tab label="Comprobantes">
+                    <app-table-comprobantes></app-table-comprobantes>
+                </mat-tab>
+                <mat-tab label="Pedidos">
+                    <app-table-pedidos></app-table-pedidos>
+                </mat-tab>
+                <mat-tab label="Articulos">
+                    <app-table-articulos></app-table-articulos>
+                </mat-tab>
+            </mat-tab-group>
+
+            <!-- <nav mat-tab-nav-bar>  CONTINAR POST PRESENTACION -  PERMITE PODER NAVEGAR HACIA LOS SUBS-TABS
+                <a mat-tab-link *ngFor="let link of navLinks" [routerLink]="['/' + link.path]">
+                    {{ link.label }}
+                </a>
+
+            </nav> -->
+        </div>
+    </div>
+    <!-- / CONTENIDO -->
+</app-plantilla-fondo-simple>
+
+<!-- TEMPLATE SIN DETALLES -->
+<ng-template #notHasDetalle>
+    <mat-card class="align-items: center; ">{{this.mensaje}}</mat-card>
+</ng-template>

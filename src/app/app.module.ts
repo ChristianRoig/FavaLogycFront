@@ -19,10 +19,10 @@ import { fuseConfig } from 'app/fuse-config';
 
 import { AppComponent } from 'app/app.component';
 import { LayoutModule } from 'app/layout/layout.module';
-import { PagesModule } from './main/pages/pages.module';
-import { LoginModule } from './main/pages/login/login.module';
-import { LoginComponent } from './main/pages/login/login.component';
-import { Error404Module } from './main/pages/404/error-404.module';
+import { PagesModule } from './auth/auth.module';
+import { LoginModule } from './auth/login/login.module';
+import { LoginComponent } from './auth/login/login.component';
+import { Error404Module } from './auth/404/error-404.module';
 import { SharedModule } from './shared/shared.module';
 
 import { SonidoService } from './shared/services/sonidos.service';
@@ -35,29 +35,56 @@ import { SonidoService } from './shared/services/sonidos.service';
 
 
 const appRoutes: Routes = [
-    
+
     {
-        path        : 'apps',
-        loadChildren: () => import('./main/apps/apps.module').then(m => m.AppsModule),
-        //component   : ProjectDashboardComponent
-        // canLoad: [UsuarioGuard]
+        path        : 'pedidos',
+        loadChildren: () => import('./main/pedidos/pedidos.module').then(m => m.PedidosModule)
     },
     {
-        path        : 'pages/auth/login',
-        component   : LoginComponent
+        path        : 'remitos',
+        loadChildren: () => import('./main/remitos/remitos.module').then(m => m.RemitosModule)
+    },
+    {
+        path        : 'lotes',
+        loadChildren: () => import('./main/lotes/lotes.module').then(m => m.LotesModule)
+    },
+    {
+        path        : 'control/lote-en',
+        loadChildren: () => import('./main/control/control.module').then(m => m.ControlModule)
+    },
+    {
+        path        : 'articulos',
+        loadChildren: () => import('./main/articulos/articulos.module').then(m => m.ArticulosModule)
+    },
+    {
+        path        : 'distribucion',
+        loadChildren: () => import('./main/distribucion/distribucion.module').then(m => m.DistribucionModule)
+    },
+    {
+        path        : 'carga', 
+        loadChildren: () => import('./main/carga/carga.module').then(m => m.CargaModule)
+    },
+    {
+        path        : 'inicio',
+        loadChildren: () => import('./main/tablero/tablero.module').then(m => m.TableroModule)
+    },
+    {
+        path        : 'login',
+        loadChildren: () => import('./auth/login/login.module').then(m => m.LoginModule),
     },
     {
         path        : 'error-404',
-        loadChildren: () => import('./main/pages/404/error-404.module').then(m => m.Error404Module),
+        loadChildren: () => import('./auth/404/error-404.module').then(m => m.Error404Module),
     },
     {
         path: '',
-        redirectTo: 'pages/auth/login',
+        redirectTo: 'login',
         pathMatch: 'full'
     },
     {
         path      : '**',
-        redirectTo: 'error-404'
+        redirectTo: 'error-404',
+        pathMatch: 'full'
     }
 ];
 

@@ -122,7 +122,7 @@ export class NavbarVerticalStyle2Component implements OnInit, OnDestroy
     }
 
     inicio(){
-        this._router.navigate(['/apps']);
+        this._router.navigate(['/inicio']);
     }
 
     /**

@@ -12,7 +12,7 @@ export const navigation: FuseNavigation[] = [
                 id       : 'inicio',
                 title    : 'Inicio',
                 type     : 'item',
-                url       : '/apps',
+                url       : 'inicio',
                 icon     : 'home',
                 exactMatch: true
             },
@@ -27,7 +27,7 @@ export const navigation: FuseNavigation[] = [
                         id       : 'comprobantes',
                         title    : 'Comprobantes',
                         type     : 'item',
-                        url       : '/apps/pedidos/lista-comprobantes',
+                        url       : 'pedidos/lista-comprobantes',
                         exactMatch: true
                         
                     },
@@ -35,7 +35,7 @@ export const navigation: FuseNavigation[] = [
                         id        : 'crear-pedido',
                         title     : 'Crear Pedido',
                         type      : 'item',
-                        url       : '/apps/pedidos/crear-pedido',
+                        url       : 'pedidos/crear-pedido',
                         exactMatch: true
                     },
                     /* {
@@ -58,14 +58,14 @@ export const navigation: FuseNavigation[] = [
                         id        : 'crearLote',
                         title     : 'Crear Lote',
                         type      : 'item',
-                        url       : '/apps/lotes/crear-lote',
+                        url       : '/lotes/crear-lote',
                         exactMatch: true
                     },
                     {
                         id        : 'listaLotes',
                         title     : 'Lotes',
                         type      : 'item',
-                        url       : '/apps/lotes/lista-lotes',
+                        url       : 'lotes/lista-lotes',
                         exactMatch: true
                     }
                 ]
@@ -81,14 +81,14 @@ export const navigation: FuseNavigation[] = [
                         id        : 'control',
                         title     : 'Control Estanteria',
                         type      : 'item',
-                        url       : '/apps/control/lote-en/estanteria',
+                        url       : 'control/lote-en/estanteria',
                         exactMatch: true
                     },
                     {
                         id        : 'control',
                         title     : 'Control Darsena',
                         type      : 'item',
-                        url       : '/apps/control/lote-en/darsena',
+                        url       : 'control/lote-en/darsena',
                         exactMatch: true
                     }
                 ]
@@ -104,14 +104,14 @@ export const navigation: FuseNavigation[] = [
                         id        : 'remitos',
                         title     : 'Crear Remito',
                         type      : 'item',
-                        url       : '/apps/remitos/crear-remito',
+                        url       : 'remitos/crear-remito',
                         exactMatch: true
                     },
                     {
                         id        : 'remitos',
                         title     : 'Remitos',
                         type      : 'item',
-                        url       : '/apps/remitos/lista-remitos',
+                        url       : 'remitos/lista-remitos',
                         exactMatch: true
                     }
                 ]
@@ -137,14 +137,14 @@ export const navigation: FuseNavigation[] = [
                         id        : 'crear-orden-distribucion',
                         title     : 'Crear Orden Distribución',
                         type      : 'item',
-                        url       : '/apps/distribucion/crear-orden-distribucion',
+                        url       : 'distribucion/crear-orden-distribucion',
                         exactMatch: true
                     },
                     {
                         id        : 'ordenes-distribucion',
                         title     : 'Ordenes de Distribución',
                         type      : 'item',
-                        url       : '/apps/distribucion/ordenes-distribucion',
+                        url       : 'distribucion/ordenes-distribucion',
                         exactMatch: true
                     }
                 ]
@@ -160,7 +160,7 @@ export const navigation: FuseNavigation[] = [
                         id        : 'control-de-carga',
                         title     : 'Control de Carga',
                         type      : 'item',
-                        url       : '/apps/carga/control-de-carga',
+                        url       : 'carga/control-de-carga',
                         exactMatch: true
                     }
                 ]
@@ -186,14 +186,14 @@ export const navigation: FuseNavigation[] = [
                         id        : 'partes-articulo',
                         title     : 'Partes de artículo',
                         type      : 'item',
-                        url       : '/apps/articulos/partes-articulo',
+                        url       : 'articulos/partes-articulo',
                         exactMatch: true
                     },
                     {
                         id        : 'codigos-barra',
                         title     : 'Códigos de Barras',
                         type      : 'item',
-                        url       : '/apps/articulos/codigos-barra-articulos',
+                        url       : 'articulos/codigos-barra-articulos',
                         exactMatch: true
                     },
                 ]
@@ -207,7 +207,7 @@ export const navigation: FuseNavigation[] = [
                         id        : 'lista-articulos',
                         title     : 'Pedidos (viejo)',
                         type      : 'item',
-                        url       : '/apps/pedidos/lista-articulos',
+                        url       : 'pedidos/lista-articulos',
                         exactMatch: true
                     }
                 ]
