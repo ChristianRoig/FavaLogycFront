@@ -108,7 +108,7 @@ export class ControlarLoteComponent implements OnInit {
   }
 
   volver(){
-    let ruta = `control/lote-en/${this.modo}`;
+    let ruta = `lotes/lote-en/${this.modo}`;
     this._router.navigate([ruta]);
   }
 

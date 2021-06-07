@@ -48,10 +48,10 @@ const appRoutes: Routes = [
         path        : 'lotes',
         loadChildren: () => import('./main/lotes/lotes.module').then(m => m.LotesModule)
     },
-    {
+    /* {
         path        : 'control/lote-en',
         loadChildren: () => import('./main/control/control.module').then(m => m.ControlModule)
-    },
+    }, */
     {
         path        : 'articulos',
         loadChildren: () => import('./main/articulos/articulos.module').then(m => m.ArticulosModule)
