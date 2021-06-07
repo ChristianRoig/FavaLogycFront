@@ -129,7 +129,7 @@ export class ControlDeCargaComponent implements OnInit {
   verOrden( orden ){
     if( orden != null ){
       this.idOrdenDist = orden.id;
-      let ruta = `carga/controlar-orden/${ this.idOrdenDist }`;
+      let ruta = `distribucion/controlar-orden/${ this.idOrdenDist }`;
       this._router.navigate([ ruta ]);
     }
   }

@@ -25,6 +25,11 @@ import { CrearOrdenDistribucionService } from './crear-orden-distribucion/crear-
 import { OrdenesDistribucionService } from './ordenes-distribucion/ordenes-distribucion.service';
 import { VerOrdenDistribucionService } from './ordenes-distribucion/ver-orden-distribucion/ver-orden-distribucion.service';
 import { ConfirmarOrdenDeDistribucionService } from './crear-orden-distribucion/confirmar-ordenDist/confirmar-ordenDist.service';
+import { ControlDeCargaComponent } from './control-de-carga/control-de-carga.component';
+import { ControlarCargaComponent } from './controlar-orden/controlar-orden.component';
+import { PopUpOrdenControladaComponent } from './controlar-orden/popUpOrdenControlada/popUpOrdenControlada.component';
+import { ControlDeCargaService } from './control-de-carga/control-de-carga.service';
+import { ControlarOrdenService } from './controlar-orden/controlar-orden.service';
 
 
 const routes: Routes = [
@@ -39,7 +44,15 @@ const routes: Routes = [
     {
         path     : 'ver-orden-distribucion/:id',
         component: VerOrdenDistribucionComponent
-    }
+    },
+    {
+        path     : 'control-de-carga',
+        component: ControlDeCargaComponent
+    },
+    {
+        path     : 'controlar-orden/:id',
+        component: ControlarCargaComponent
+    }, 
 ];
 
 @NgModule({
@@ -47,7 +60,10 @@ const routes: Routes = [
         CrearOrdenDistribucionComponent,
         OrdenesDistribucionComponent,
         VerOrdenDistribucionComponent,
-        ConfirmarOrdenDeDistribucionComponent
+        ConfirmarOrdenDeDistribucionComponent,
+        ControlDeCargaComponent,
+        ControlarCargaComponent,
+        PopUpOrdenControladaComponent
     ],
     imports     : [
         CommonModule,
@@ -64,7 +80,9 @@ const routes: Routes = [
         CrearOrdenDistribucionService,
         OrdenesDistribucionService,
         VerOrdenDistribucionService,
-        ConfirmarOrdenDeDistribucionService
+        ConfirmarOrdenDeDistribucionService,
+        ControlDeCargaService,
+        ControlarOrdenService
     ],
     entryComponents: [ MatDialogModule ]
 })

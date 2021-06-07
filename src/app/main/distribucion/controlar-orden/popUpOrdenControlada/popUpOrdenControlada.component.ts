@@ -30,7 +30,7 @@ export class PopUpOrdenControladaComponent implements OnInit {
 
   navegarAlista(){
     this._dialog.closeAll();
-    let ruta = `carga/control-de-carga`;
+    let ruta = `distribucion/control-de-carga`;
     this._router.navigate([ruta]);
   }
 
