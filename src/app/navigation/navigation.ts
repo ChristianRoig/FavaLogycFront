@@ -30,15 +30,15 @@ export const navigation: FuseNavigation[] = [
                         url       : 'pedidos/lista-comprobantes',
                         exactMatch: true
                         
-                    },
-                    {
+                    }
+                    /*{
                         id        : 'crear-pedido',
                         title     : 'Crear Pedido',
                         type      : 'item',
                         url       : 'pedidos/crear-pedido',
                         exactMatch: true
                     },
-                    /* {
+                    {
                         id        : 'lista-articulos',
                         title     : 'Pedidos (viejo)',
                         type      : 'item',
@@ -115,18 +115,7 @@ export const navigation: FuseNavigation[] = [
                         exactMatch: true
                     }
                 ]
-            },
-            ////////////////////////////////////// 
-           /*  {
-                id        : 'remitos',
-                title     : 'Crear Remitos',
-                type      : 'item',
-                icon      : 'insert_drive_file',
-                url       : '/apps/remitos/remitos',
-                exactMatch: true
-            }, */
-            ////////////////////////////////////// 
-            
+            },            
             {
                 id       : 'distribucion',
                 title    : 'Distribucion',
@@ -203,6 +192,13 @@ export const navigation: FuseNavigation[] = [
                 title    : 'Beta and Legacy',
                 type     : 'collapsable',
                 children : [
+                    {
+                        id        : 'crear-pedido',
+                        title     : 'Crear Pedido',
+                        type      : 'item',
+                        url       : 'pedidos/crear-pedido',
+                        exactMatch: true
+                    },
                     {
                         id        : 'lista-articulos',
                         title     : 'Pedidos (viejo)',
