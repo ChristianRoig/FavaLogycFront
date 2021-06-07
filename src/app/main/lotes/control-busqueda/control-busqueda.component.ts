@@ -110,7 +110,7 @@ export class ControlEstanteriaComponent implements OnInit {
   }
 
   navegarAlote(){
-    let ruta = `lotes/lote-en/${ this.modo }/${ this.idLote }`;
+    let ruta = `lotes/control/lote-en/${ this.modo }/${ this.idLote }`;
     this._router.navigate([ruta]);
   }
 
@@ -215,7 +215,7 @@ export class ControlEstanteriaComponent implements OnInit {
           let titulo = 'El lote '+this.lote+' no se encuentra en la etapa '+this.condiciónDeEstadoLote;
           let mensaje = "Realice el control en control "+this.seccionOpuesta;
           this.mostrarError(errStatus, titulo, mensaje);
-          let ruta = `lotes/lote-en/${this.modo}`;
+          let ruta = `lotes/control/lote-en/${this.modo}`;
           this._router.navigate([ruta]);
         }
         else{
@@ -246,7 +246,7 @@ export class ControlEstanteriaComponent implements OnInit {
             let titulo = 'Error';
             let mensaje = "El lote no esta en la etapa "+ this.condiciónDeEstadoLote;
             this.mostrarError(errStatus, titulo, mensaje);
-            let ruta = `control/lote-en/${this.modo}`;
+            let ruta = `lotes/control/lote-en/${this.modo}`;
             this._router.navigate([ruta]);
           }
         }
