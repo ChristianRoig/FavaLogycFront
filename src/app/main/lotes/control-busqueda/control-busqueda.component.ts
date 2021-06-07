@@ -90,12 +90,12 @@ export class ControlEstanteriaComponent implements OnInit {
         case "estanteria":
           this.titulo = "Estantería";
           this.condiciónDeEstadoLote = 'NUEVO'; 
-          this.getLotesPorEstado( this.page, this.size);
+          this.getLotesPorEstado( this.page, this.size );
           break;
           case "darsena":
             this.titulo = "Dársena";
             this.condiciónDeEstadoLote = 'ESTANTERIA';
-            this.getLotesPorEstado( this.page, this.size);
+            this.getLotesPorEstado( this.page, this.size );
           break;
       }
     });
@@ -110,7 +110,7 @@ export class ControlEstanteriaComponent implements OnInit {
   }
 
   navegarAlote(){
-    let ruta = `control/lote-en/${ this.modo }/${ this.idLote }`;
+    let ruta = `lotes/lote-en/${ this.modo }/${ this.idLote }`;
     this._router.navigate([ruta]);
   }
 
@@ -215,7 +215,7 @@ export class ControlEstanteriaComponent implements OnInit {
           let titulo = 'El lote '+this.lote+' no se encuentra en la etapa '+this.condiciónDeEstadoLote;
           let mensaje = "Realice el control en control "+this.seccionOpuesta;
           this.mostrarError(errStatus, titulo, mensaje);
-          let ruta = `control/lote-en/${this.modo}`;
+          let ruta = `lotes/lote-en/${this.modo}`;
           this._router.navigate([ruta]);
         }
         else{

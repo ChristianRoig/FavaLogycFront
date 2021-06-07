@@ -33,6 +33,12 @@ import { VerImpresorasService } from './lista-lotes/ver-impresoras/ver-impresora
 import { VerCupasService } from './lista-lotes/ver-cupas/ver-cupas.service';
 import { VerLoteService } from './lista-lotes/ver-lote/ver-lote.service';
 import { ConfirmarAgregarLoteService } from './lote-crear-lote/confirmar-agregarLote/confirmar-agregarLote.service';
+import { ControlEstanteriaComponent } from './control-busqueda/control-busqueda.component';
+import { ControlarLoteComponent } from './controlar-lote/controlar-lote.component';
+import { PopUpLoteCreado } from './controlar-lote/popUpLoteControlado/popUpLoteControlado.component';
+import { TablaRetractilModule } from '@fava/components/tabla-retractil/tabla-retractil.module';
+import { ControlBusquedaService } from './control-busqueda/control-busqueda.service';
+import { ControlarLoteService } from './controlar-lote/controlar-lote.service';
 //import { LoteAgregarLoteService } from '../lotes/lote-crear-lote/agregar-lote/agregar-lote.service';
 
 //import { ModalDeseaImprimirLoteComponent } from './lote-crear-lote/agregar-lote/modal-confirmacion-borrar/modal-desea-imprimir.component';
@@ -54,6 +60,14 @@ const routes: Routes = [
         path     : 'crear-lote',
         component: LoteCrearLoteComponent
     },
+    {
+        path     : 'lote-en/:modo',
+        component: ControlEstanteriaComponent
+    },
+    {
+        path     : 'lote-en/:modo/:id',
+        component: ControlarLoteComponent
+    }, 
     /* {
         path     : 'agregar-lote',
         component: LoteAgregarLoteComponent
@@ -69,7 +83,10 @@ const routes: Routes = [
         //LoteAgregarLoteComponent,
         ModalDeseaImprimirLoteComponent,
         ModalConfirmacionBorrarComponent,
-        ConfirmarAgregarLoteComponent
+        ConfirmarAgregarLoteComponent,
+        ControlEstanteriaComponent,
+        ControlarLoteComponent,
+        PopUpLoteCreado
     ],
     imports     : [
         CommonModule,
@@ -80,7 +97,8 @@ const routes: Routes = [
         FuseSharedModule,
         FuseWidgetModule,
         CustomTagModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        TablaRetractilModule
     ],
     providers   : [
         LoteCrearLoteService,
@@ -89,7 +107,9 @@ const routes: Routes = [
         ListaLotesService,
         VerLoteService,
         //LoteAgregarLoteService,
-        ConfirmarAgregarLoteService
+        ConfirmarAgregarLoteService,
+        ControlBusquedaService,
+        ControlarLoteService
     ]
 })
 
