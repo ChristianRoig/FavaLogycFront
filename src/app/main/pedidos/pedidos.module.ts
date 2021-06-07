@@ -10,8 +10,6 @@ import { FuseSidebarModule } from '@fuse/components';
 
 //fava
 import { MaterialDesignModule } from '@material/material-design.module';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatIconModule } from '@angular/material/icon';
 import { TablaRetractilModule } from '@fava/components/tabla-retractil/tabla-retractil.module';
 import { CustomTagModule } from 'app/shared/custom-tags/custom-tag.module';
 
@@ -108,22 +106,19 @@ const routes: Routes = [
         TableComprobantesComponent,
         TableComprobantesAprogramarComponent,
         TableArticulosComponent,
-        TablePedidosComponent,
-
+        TablePedidosComponent
     ],
     imports     : [
         CommonModule,
         HttpClientModule,
         RouterModule.forChild(routes),
-        MaterialDesignModule,
         FuseSidebarModule,
         FuseSharedModule,
         FuseWidgetModule,
+        MaterialDesignModule,
+
         CustomTagModule,
-        TablaRetractilModule,
-        MatProgressSpinnerModule,
-        MatTooltipModule,
-        MatIconModule
+        TablaRetractilModule
     ],
     providers   : [
         PedidosListaService,

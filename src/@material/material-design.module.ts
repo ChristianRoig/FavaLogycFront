@@ -20,6 +20,8 @@ import { MatDatepickerModule} from '@angular/material/datepicker';
 import { MatCheckboxModule} from '@angular/material/checkbox';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -44,7 +46,9 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle'
     MatDatepickerModule,
     MatCheckboxModule,
     MatBadgeModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatProgressSpinnerModule,
+    MatTooltipModule
   ],
   exports: [
     CommonModule,
@@ -66,8 +70,9 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle'
     MatDatepickerModule,
     MatCheckboxModule,
     MatBadgeModule,
-    MatSlideToggleModule
-
+    MatSlideToggleModule,
+    MatProgressSpinnerModule,
+    MatTooltipModule
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'es-GB'},
