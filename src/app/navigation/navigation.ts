@@ -196,14 +196,14 @@ export const navigation: FuseNavigation[] = [
                         id        : 'crear-pedido',
                         title     : 'Crear Pedido',
                         type      : 'item',
-                        url       : 'pedidos/crear-pedido',
+                        url       : 'pedidos/crear-pedido_OLD',
                         exactMatch: true
                     },
                     {
                         id        : 'lista-articulos',
                         title     : 'Pedidos (viejo)',
                         type      : 'item',
-                        url       : 'pedidos/lista-articulos',
+                        url       : 'pedidos/lista-articulos_OLD',
                         exactMatch: true
                     }
                 ]

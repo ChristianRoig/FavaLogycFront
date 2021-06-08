@@ -9,7 +9,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 
 //services
-import { PedidosListaService } from '../pedidos-lista/pedidos-lista.service';
+import { PedidosListaService } from '../x_NOSEUSA_pedidos-lista/pedidos-lista.service';
 import { PedidosCrear1Service } from './pedidos-crear-1.service';
 
 @Component({

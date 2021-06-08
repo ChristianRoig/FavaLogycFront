@@ -14,25 +14,25 @@ import { TablaRetractilModule } from '@fava/components/tabla-retractil/tabla-ret
 import { CustomTagModule } from 'app/shared/custom-tags/custom-tag.module';
 
 //components
-import { PedidosListaComponent } from './pedidos-lista/pedidos-lista.component';
+import { PedidosListaComponent } from './x_NOSEUSA_pedidos-lista/pedidos-lista.component';
 import { PedidosVisualizacionComponent } from './pedidos-visualizacion/pedidos-visualizacion.component';
 import { PedidosAnularComponent } from './pedidos-anular/pedidos-anular.component';
 import { PedidosDatosEntregaComponent } from './pedidos-visualizacion/pedidos-datos-entrega/pedidos-datos-entrega.component';
 import { PedidosTrazabilidadComponent } from './pedidos-visualizacion/pedidos-trazabilidad/pedidos-trazabilidad.component';
 import { PedidosComprobantesComponent } from './pedidos-visualizacion/pedidos-comprobantes/pedidos-comprobantes.component';
-import { PedidosCrear1Component } from './pedidos-crear-1/pedidos-crear-1.component';
+import { PedidosCrear1Component } from './x_NOSEUSA_pedidos-crear-1/pedidos-crear-1.component';
 import { PedidosCrear2Component } from './pedidos-crear-2/pedidos-crear-2.component';
 import { PedidosCupaComponent } from './pedidos-visualizacion/pedidos-cupa/pedidos-cupa.component';
 import { AgregarDatosEntregaComponent } from './pedidos-crear-2/agregar-datos-entrega/agregar-datos-entrega.component';
-import { FiltrosComponent } from './pedidos-lista/filtros/filtros.component';
+import { FiltrosComponent } from './x_NOSEUSA_pedidos-lista/filtros/filtros.component';
 
 //services
-import { PedidosListaService } from './pedidos-lista/pedidos-lista.service';
+import { PedidosListaService } from './x_NOSEUSA_pedidos-lista/pedidos-lista.service';
 import { PedidosVisualizacionService } from './pedidos-visualizacion/pedidos-visualizacion.service';
 import { PedidosAnularService } from './pedidos-anular/pedidos-anular.service';
-import { PedidosCrear1Service } from './pedidos-crear-1/pedidos-crear-1.service';
+import { PedidosCrear1Service } from './x_NOSEUSA_pedidos-crear-1/pedidos-crear-1.service';
 import { PedidosCrear2Service } from './pedidos-crear-2/pedidos-crear-2.service';
-import { FiltrosService } from './pedidos-lista/filtros/filtros.service';
+import { FiltrosService } from './x_NOSEUSA_pedidos-lista/filtros/filtros.service';
 
 //components
 import { ComprobantesListaComponent } from './comprobantes/comprobantes-lista/comprobantes-lista.component';
@@ -50,7 +50,7 @@ import { TablePedidosService } from './comprobantes/table-pedidos/table-pedidos.
 
 const routes: Routes = [
     {
-        path     : 'lista-articulos',
+        path     : 'lista-articulos_OLD',
         component: PedidosListaComponent
     },
     {
@@ -62,7 +62,7 @@ const routes: Routes = [
         component: PedidosAnularComponent
     },
     {
-        path     : 'crear-pedido',             
+        path     : 'crear-pedido_OLD',             
         component: PedidosCrear1Component
     },
     {
