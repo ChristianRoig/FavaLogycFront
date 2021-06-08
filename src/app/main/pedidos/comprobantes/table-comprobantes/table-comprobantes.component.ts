@@ -174,7 +174,7 @@ export class TableComprobantesComponent implements OnInit {
   } */
 
   agregarPedido() {
-    let ruta = `pedidos/crear-pedido`;
+    let ruta = `pedidos/crear-pedido_OLD`;
     console.log(ruta);
     this._router.navigate([ruta]);
   }
