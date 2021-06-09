@@ -6,7 +6,7 @@ import { AnyMxRecord } from 'dns';
 
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 
-import { PedidosListaService } from '../../pedidos-lista/pedidos-lista.service';
+import { PedidosListaService } from '../../x_NOSEUSA_pedidos-lista/pedidos-lista.service';
 import { Console } from 'console';
 import { AgregarDatosEntregaService } from './agregar-datos-entrega.service';
 

@@ -154,7 +154,7 @@ export class PedidosListaComponent implements OnInit {
   } */
 
   agregarPedido() {
-    let ruta = `pedidos/crear-pedido`;
+    let ruta = `pedidos/crear-pedido-OLD`;
     console.log(ruta);
     this._router.navigate([ruta]);
   }
