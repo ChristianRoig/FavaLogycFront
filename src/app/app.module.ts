@@ -69,6 +69,10 @@ const appRoutes: Routes = [
         loadChildren: () => import('./main/tablero/tablero.module').then(m => m.TableroModule)
     },
     {
+        path        : 'empaque',
+        loadChildren: () => import('./main/empaque/empaque.module').then(m => m.EmpaqueModule)
+    },
+    {
         path        : 'login',
         loadChildren: () => import('./auth/login/login.module').then(m => m.LoginModule),
     },

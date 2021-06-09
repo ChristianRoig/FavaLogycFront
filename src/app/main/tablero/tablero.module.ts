@@ -21,9 +21,6 @@ const routes: Routes = [
     {
         path     : '',
         component: ProjectDashboardComponent,
-        /* resolve  : {
-            data: ProjectDashboardService
-        } */
     }
 ];
 
