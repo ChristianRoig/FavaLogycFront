@@ -74,8 +74,8 @@ export class LoginComponent implements OnInit
 
     async ingresar() {
 
-        let email   = this.loginForm.get('email').value;
-        let password= this.loginForm.get('password').value;
+        let email: string     = this.loginForm.get('email').value;
+        let password: string  = this.loginForm.get('password').value;
         // this._usuarioService.login(email, password).then(res => {
         //     if(res) {
         //         this._serviceSonido.playAudioSuccess();
@@ -85,7 +85,14 @@ export class LoginComponent implements OnInit
             //         this.usuarioIncorrecto();
             //     }
             // });
-        this._router.navigate(['/inicio']);
+
+        //Control de usuario - octavio
+        if( this._usuarioService.chequearUsuario( email, password ) == true){
+            this._router.navigate(['/inicio']);
+        } 
+        else{
+            this.usuarioIncorrecto();
+        }
     }   
 
 
@@ -104,5 +111,9 @@ export class LoginComponent implements OnInit
         dialogRef.afterOpened().subscribe(result => {
             this._serviceSonido.playAudioAlert();
         });
+    }
+
+    onSubmit(){
+
     }
 }

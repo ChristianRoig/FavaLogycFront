@@ -17,6 +17,16 @@ export class UsuarioService {
 
   constructor(private _HttpClient: HttpClient, private router: Router) { }
 
+
+  chequearUsuario( usuario: string, password: string ){
+    if( usuario == 'Juan' && password == '123'){
+      return true;
+    } 
+    else {
+      return false;
+    }
+  }
+
   login( usuario: string, password: string ) {
 
     let headers = new HttpHeaders();
