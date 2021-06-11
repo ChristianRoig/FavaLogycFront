@@ -6,9 +6,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterModule, Routes } from '@angular/router';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { FormsModule } from '@angular/forms';
-
 //import { HashLocationStrategy, LocationStrategy } from '@angular/common';
-
 import { TranslateModule } from '@ngx-translate/core';
 import 'hammerjs';
 
@@ -21,7 +19,6 @@ import { AppComponent } from 'app/app.component';
 import { LayoutModule } from 'app/layout/layout.module';
 import { PagesModule } from './auth/auth.module';
 import { LoginModule } from './auth/login/login.module';
-import { LoginComponent } from './auth/login/login.component';
 import { Error404Module } from './auth/404/error-404.module';
 import { SharedModule } from './shared/shared.module';
 
@@ -41,29 +38,22 @@ const appRoutes: Routes = [
         loadChildren: () => import('./main/pedidos/pedidos.module').then(m => m.PedidosModule)
     },
     {
-        path        : 'remitos',
-        loadChildren: () => import('./main/remitos/remitos.module').then(m => m.RemitosModule)
-    },
-    {
         path        : 'lotes',
         loadChildren: () => import('./main/lotes/lotes.module').then(m => m.LotesModule)
     },
-    /* {
-        path        : 'control/lote-en',
-        loadChildren: () => import('./main/control/control.module').then(m => m.ControlModule)
-    }, */
     {
-        path        : 'articulos',
-        loadChildren: () => import('./main/articulos/articulos.module').then(m => m.ArticulosModule)
+        path        : 'remitos',
+        loadChildren: () => import('./main/remitos/remitos.module').then(m => m.RemitosModule)
     },
     {
         path        : 'distribucion',
         loadChildren: () => import('./main/distribucion/distribucion.module').then(m => m.DistribucionModule)
     },
-   /*  {
-        path        : 'carga', 
-        loadChildren: () => import('./main/carga/carga.module').then(m => m.CargaModule)
-    }, */
+    {
+        path        : 'articulos',
+        loadChildren: () => import('./main/articulos/articulos.module').then(m => m.ArticulosModule)
+    },
+
     {
         path        : 'inicio',
         loadChildren: () => import('./main/tablero/tablero.module').then(m => m.TableroModule)
