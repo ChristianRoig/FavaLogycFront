@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { environment } from 'environments/environment';
 //import { Perfil } from 'app/main/perfil/perfil.model';
-import { FuseNavigationService } from '../../../@fuse/components/navigation/navigation.service';
 
 import { config } from 'environments/config_system'; 
 
@@ -58,10 +56,8 @@ export class LoginService {
      * @param {Router} _router
      */
     constructor( 
-        private _router: Router, 
         private _httpClient: HttpClient, 
         private _cookieService: CookieService, 
-        private _fuseNavigationService: FuseNavigationService,
     ){
         // Set the defaults
         

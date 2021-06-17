@@ -161,7 +161,7 @@ export class LoginComponent implements OnInit {
     logIn(){
         let email:    string  = this.loginForm.get('email').value;
         let password: string  = this.loginForm.get('password').value;
-        
+        this.logout();
         this._loginService._obtenerLogin( email, password ).subscribe((info: ResponseLogin) => { 
             console.log("info - obtenerLogin|", info);
             if (info.token == null){                // comienzo de logica de GESTIONATE
@@ -225,7 +225,7 @@ export class LoginComponent implements OnInit {
     //, perf: Perfil, , roles: [] |  parametro que estaba y yo saqué O
     private _trabajoLogueo(info: ResponseLogin): void {        
         let expirarDate = new Date();
-        console.log("llego hasta trabajoLogueo");
+        //console.log("llego hasta trabajoLogueo");
         expirarDate.setMinutes(expirarDate.getMinutes() + sesion_activa);
         
         this.info = info;
@@ -257,8 +257,8 @@ export class LoginComponent implements OnInit {
      * @param {DataCookie} data 
      */
     private handlerCookies(data?: DataCookie): void {
-        console.log({data});
-        console.log("TOKEN",token);
+        console.log("token + tiempo sesion",{data});
+        //console.log("TOKEN",token);
         if (data){
             this._cookieService.deleteAll();
             this._cookieService.set(token, data.infoToken, data.expirar);
@@ -282,8 +282,6 @@ export class LoginComponent implements OnInit {
             this._cookieService.set(token, data.infoToken, data.expirar);
             this._cookieService.set(user, data.user, data.expirar);
             this._cookieService.set(expirar, data.expirar.toUTCString(), data.expirar );
-            console.log("this.isSetLog()");
-            this.isSetLog();
         }
     }
     //--------------------------------------------------------------------------------------------------
