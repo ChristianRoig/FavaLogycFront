@@ -8,7 +8,7 @@
                 <img src="assets/images/logos/fuse.svg">
             </div>
 
-            <form name="loginForm" [formGroup]="loginForm" novalidate (ngSubmit)="onSubmit()">
+            <form name="loginForm" [formGroup]="loginForm" novalidate (ngSubmit)="logIn()">
                 <h2 class="titulo">Bienvenido a Favalogyc</h2>
                 <mat-form-field appearance="outline">
                     <mat-label>Usuario de dominio</mat-label>
@@ -46,7 +46,7 @@
 
 
 
-                <button mat-raised-button color="accent" class="submit-button" aria-label="LOG IN" [disabled]="loginForm.invalid" (click)="ingresar()">
+                <button mat-raised-button color="accent" class="submit-button" aria-label="LOG IN" [disabled]="loginForm.invalid" (click)="logIn()">
                     INGRESAR
                 </button>
 

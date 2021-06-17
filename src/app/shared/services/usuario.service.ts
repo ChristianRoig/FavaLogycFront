@@ -2,20 +2,24 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 
-//import { environment } from 'environments/environment';
-const url_node = 'http://localhost:3000';
-const url_tomcat = 'https://192.168.100.101:8443/apiOnboard_trb/rest/';
+import { environment } from 'environments/environment';
+/* const url_node = 'http://localhost:3000';
+const url_tomcat = 'https://192.168.100.101:8443/apiOnboard_trb/rest/'; */
 /* const url_node = environment.url_node;
 const url_tomcat = environment.url_tomcat; */
+const url_node = environment.api_log;
+const url_tomcat = environment.url_tomcat;
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class UsuarioService {
 
   private token: string = '';
 
-  constructor(private _HttpClient: HttpClient, private router: Router) { }
+  constructor( private _HttpClient: HttpClient,
+               private router: Router) { }
 
 
   chequearUsuario( usuario: string, password: string ){
@@ -38,8 +42,8 @@ export class UsuarioService {
 
     return new Promise( resolve => {
       
-      this._HttpClient.post(`${ url_node }/active/directory`, body, { headers }).subscribe( async res => {
-        
+      this._HttpClient.post( url_node , body, { headers }).subscribe( async res => {
+        console.log(res);
         if( res['access_token'] ) {
           await this.setToken( res['access_token'] );
           let user: {} = await this.loginOk(usuario);
@@ -49,11 +53,8 @@ export class UsuarioService {
           await this.clearUser();
           resolve(false);
         }
-
       });
-
     });
-
   }
 
   setToken( token: string ) {
@@ -64,10 +65,9 @@ export class UsuarioService {
       localStorage.setItem('token', token);
       
       resolve(true);
-      
     });
-
   }
+
   getToken() {
     
     return new Promise( async resolve => {
@@ -76,7 +76,6 @@ export class UsuarioService {
       resolve(this.token);
 
     });
-
   }
 
   setPromotor( promotor: string ) {
@@ -88,7 +87,6 @@ export class UsuarioService {
       resolve(true);
       
     });
-    
   }
   
   getPromotor() {
@@ -111,8 +109,8 @@ export class UsuarioService {
       resolve(true);
       
     });
-
   }
+
   getPersona() {
     
     return new Promise( async resolve => {
@@ -129,7 +127,7 @@ export class UsuarioService {
     return new Promise( async resolve => {
       
       localStorage.clear();
-      this.token = ''
+      this.token = '';
       resolve(true);
 
     });

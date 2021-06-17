@@ -4,4 +4,3 @@ export const environment = {
     server    : 'http://192.168.100.117:28080/',
     baseUrl   : 'api_favalogyc_testing/'
 };
-z

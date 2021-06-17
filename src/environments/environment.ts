@@ -9,6 +9,7 @@ export const environment = {
     // server    : 'localhost:8080/',
     baseUrl   : 'api_favalogyc_frontend/',
     url_node: 'http://localhost:3000',
+    api_log: 'http://localhost:8082/login',
     url_tomcat: 'https://192.168.100.101:8443/apiOnboard_trb/rest/'
 };
 

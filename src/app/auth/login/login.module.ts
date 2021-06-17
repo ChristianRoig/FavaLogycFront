@@ -9,6 +9,7 @@ import { ModalRecuperarContrasenaComponent } from './modal-recuperar-contrasena/
 import { ModalUsuarioErroneoComponent } from './modal-usuario-erroneo/modal-usuario-erroneo.component';
 
 import { UsuarioService } from 'app/shared/services/usuario.service';
+import { LoginService } from './login.service';
 
 const routes = [
     {
@@ -32,7 +33,8 @@ const routes = [
         LoginComponent
     ],
     providers:[
-        UsuarioService
+        UsuarioService,
+        LoginService
     ]
 })
 export class LoginModule
