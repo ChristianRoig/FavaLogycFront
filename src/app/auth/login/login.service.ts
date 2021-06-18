@@ -87,7 +87,7 @@ export class LoginService {
      */
     _obtenerLogin(username: string, password: string): Observable<any> | any {
 
-        console.log("Obtener login");
+        //console.log("Obtener login");
         const httpHeaders = new HttpHeaders({
             'Content-Type': 'application/json'            
         });
@@ -98,7 +98,6 @@ export class LoginService {
             'username': username,
             'password': password
         };
-        console.log("fin Login");
 
         return this._httpClient.post(API_LOG, params, options);
     }

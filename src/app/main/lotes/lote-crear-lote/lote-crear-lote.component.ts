@@ -668,7 +668,7 @@ export class LoteCrearLoteComponent implements OnInit {
     dialogRef.afterClosed().subscribe( result => {
 
       let idLote = JSON.parse(localStorage.getItem('idLote'));
-      localStorage.clear();
+      localStorage.removeItem('idLote');
       
       //this.imprimirCupa( idLote );
         

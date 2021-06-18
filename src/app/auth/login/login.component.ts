@@ -17,6 +17,7 @@ import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.componen
 
 import { SonidoService } from 'app/shared/services/sonidos.service';
 import { LoginService } from './login.service';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 const user: string = config.Cookie_User;
 const token: string = config.Cookie_Token;
@@ -91,7 +92,7 @@ export class LoginComponent implements OnInit {
         this.rolOnChanged = new BehaviorSubject([]);
         
         const userLog = this._cookieService.get(user); 
-        console.log("- userLog | ", userLog);
+        //console.log("- userLog | ", userLog);
         /* // chequear la compatibilidad del servidor.... incorporar ErrorService
         if (!this._errorService.isBrowserCompatible()) {
             this._router.navigate(['/error']); 
@@ -161,7 +162,9 @@ export class LoginComponent implements OnInit {
     logIn(){
         let email:    string  = this.loginForm.get('email').value;
         let password: string  = this.loginForm.get('password').value;
+
         this.logout();
+        
         this._loginService._obtenerLogin( email, password ).subscribe((info: ResponseLogin) => { 
             console.log("info - obtenerLogin|", info);
             if (info.token == null){                // comienzo de logica de GESTIONATE
@@ -203,7 +206,8 @@ export class LoginComponent implements OnInit {
         //this.perfilLogOnChanged.next(new Perfil({}));
         this.rolOnChanged.next([]);
 
-        this._cookieService.deleteAll();
+        localStorage.clear();
+        //this._cookieService.deleteAll();
 
         this._router.navigate(['']);
     }
@@ -260,15 +264,21 @@ export class LoginComponent implements OnInit {
         console.log("token + tiempo sesion",{data});
         //console.log("TOKEN",token);
         if (data){
-            this._cookieService.deleteAll();
-            this._cookieService.set(token, data.infoToken, data.expirar);
+            console.log("primer SET |", token, "|",data.infoToken, "|",data.expirar);
+            
+
+            localStorage.setItem(token, data.infoToken);
+            console.log(localStorage.getItem(token));
+            
+            
+            /* this._cookieService.set(token, data.infoToken, data.expirar); 
             this._cookieService.set(user, data.user, data.expirar);
-            this._cookieService.set(expirar, data.expirar.toUTCString(), data.expirar );
+            this._cookieService.set(expirar, data.expirar.toUTCString(), data.expirar ); */
         } 
-        else { 
+        /* else { 
             let e = new Date();
             e.setMinutes(e.getMinutes() + sesion_activa);
-
+            
             console.log('Se extiende la sesion ' + sesion_activa);
             
             data = {
@@ -276,13 +286,13 @@ export class LoginComponent implements OnInit {
                 infoToken: this._cookieService.get(token),
                 user: this._cookieService.get(user),
             };
-
+            
             // console.log({data});
-
             this._cookieService.set(token, data.infoToken, data.expirar);
             this._cookieService.set(user, data.user, data.expirar);
             this._cookieService.set(expirar, data.expirar.toUTCString(), data.expirar );
-        }
+        }*/
+
     }
     //--------------------------------------------------------------------------------------------------
     /**
