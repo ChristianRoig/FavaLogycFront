@@ -39,20 +39,6 @@ export const navigation: FuseNavigation[] = [
                         exactMatch: true
                         
                     }
-                    /*{
-                        id        : 'crear-pedido',
-                        title     : 'Crear Pedido',
-                        type      : 'item',
-                        url       : 'pedidos/crear-pedido',
-                        exactMatch: true
-                    },
-                    {
-                        id        : 'lista-articulos',
-                        title     : 'Pedidos (viejo)',
-                        type      : 'item',
-                        url       : '/apps/pedidos/lista-articulos',
-                        exactMatch: true
-                    } */
                 ]
             },
             {
@@ -164,8 +150,7 @@ export const navigation: FuseNavigation[] = [
             }, 
         ]
     },
-    //-------------------------------------------------------------------------------------
-   
+    //-------------------------------------------------------------------------------------  
     {
         id       : 'infoAuxiliar',
         title    : 'Info Auxiliar',
@@ -218,4 +203,5 @@ export const navigation: FuseNavigation[] = [
             }
         ]
     }
+    //------------------------------------------------------------------------------------- */
 ];
