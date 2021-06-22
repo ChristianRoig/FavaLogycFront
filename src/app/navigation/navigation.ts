@@ -12,8 +12,16 @@ export const navigation: FuseNavigation[] = [
                 id       : 'inicio',
                 title    : 'Inicio',
                 type     : 'item',
-                url       : 'inicio',
+                url      : 'inicio',
                 icon     : 'home',
+                exactMatch: true
+            },
+            {
+                id       : 'empaque',
+                title    : 'Empaque',
+                type     : 'item',
+                url      : 'empaque',
+                icon     : 'how_to_vote',
                 exactMatch: true
             },
             {
