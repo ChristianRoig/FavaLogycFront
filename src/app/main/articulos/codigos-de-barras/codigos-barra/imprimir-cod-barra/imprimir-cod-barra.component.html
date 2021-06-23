@@ -24,15 +24,29 @@
 
             <div fxLayout="row" class="mb-8" fxLayoutAlign="start start">
                 <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Fecha</mat-label>
-                    <input matInput disabled>
+                    <mat-label>Codigo Articulo</mat-label>
+                    <input matInput disabled value="{{ this.codigoArticulo }}">
                 </mat-form-field>
             </div>
 
             <div fxLayout="row" class="mb-8" fxLayoutAlign="start start">
                 <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Cantidad de Articulos</mat-label>
-                    <input matInput disabled type="number">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput disabled value="{{ this.nombre }}">
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row" class="mb-8" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Codigo de barra</mat-label>
+                    <input matInput disabled value="{{ this.codigoDeBarras }}">
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row" class="mb-8" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Descripción</mat-label>
+                    <input matInput disabled value="{{ this.descripcion }}">
                 </mat-form-field>
             </div>
 

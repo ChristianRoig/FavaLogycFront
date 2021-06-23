@@ -50,6 +50,7 @@ export class PedidosCodigosBarraEditarComponent implements OnInit {
 
         this._pedidosCodigosBarraEditarService.getCodigoBarra(this.id).subscribe(
           data => {
+            console.log({data});
             this.dataSource = data;
             this.codigoDeBarras = this.dataSource.codigoDeBarras;
             this.descripcion = this.dataSource.descripcion;
