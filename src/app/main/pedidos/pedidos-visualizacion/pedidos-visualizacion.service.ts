@@ -55,5 +55,11 @@ export class PedidosVisualizacionService
         console.log(ruta);
         return this._httpClient.get(ruta);
     }
+
+    getImprimirCUPA( idPedidoDetalleParte: number ): Observable<any>{
+    
+        let ruta = `${ BASE_URL }pedidos/pedidolote/partearticulo/imprimir-cupa/${ idPedidoDetalleParte }`;
+        return this._httpClient.get(ruta);
+      }
     
 }
