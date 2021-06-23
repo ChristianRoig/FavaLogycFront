@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'environments/environment';
+import { map } from 'rxjs/operators';
 
 const BASE_URL = environment.server + environment.baseUrl;
 
@@ -96,5 +97,10 @@ export class VerOrdenDistribucionService {
     return this._httpClient.get(ruta);
   }
 
+  getImprimirOrdenDist(idOrdenDist: number){
+    
+    let ruta = `${ BASE_URL }pedidos/distribucion/imprimir-distribucion/${ idOrdenDist }`;
+    return this._httpClient.get(ruta);
+  }
 }
 
