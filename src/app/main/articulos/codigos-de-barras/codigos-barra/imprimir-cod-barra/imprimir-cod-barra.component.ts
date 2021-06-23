@@ -14,9 +14,15 @@ import{ ImprimirCodBarraService } from './imprimir-cod-barra.service';
 export class ImprimirCodBarraComponent implements OnInit {
 
   @ViewChild('cantImpresiones') cantImpresiones: ElementRef;
+
   idArticulo: number;
+  codigoArticulo: string;
   cant: number = 1;
   mostrarSpinner: boolean = false;
+  
+  codigoDeBarras: number;
+  descripcion: string;
+  nombre: string;
 
   constructor(  public matDialogRef: MatDialogRef<ImprimirCodBarraComponent>,
                 private _imprimirCodBarraService: ImprimirCodBarraService,
@@ -27,6 +33,9 @@ export class ImprimirCodBarraComponent implements OnInit {
 
     console.log( "data", this.data );
     this.idArticulo = this.data.idArticulo;
+    this.codigoArticulo = this.data.codigoArticulo;
+
+    this.obtenerDatos();
   }
 
   imprimirCodigosDeBarra(){
@@ -56,6 +65,35 @@ export class ImprimirCodBarraComponent implements OnInit {
         }
       }
     });
+  }
+
+  obtenerDatos(){
+    this._imprimirCodBarraService.getCodigoBarra( this.idArticulo ).subscribe( data => {
+  
+      console.log({data});
+      console.log(data.codigoDeBarras);
+      this.codigoDeBarras = data.codigoDeBarras;
+      this.descripcion = data.descripcion;
+      this.nombre = data.articulo.nombre;
+      this.codigoArticulo = data.articulo.codigoArticulo;
+      },
+      (err: HttpErrorResponse) => {
+          if (err.error instanceof Error) {
+              console.log("Client-side error");
+          } else {
+              let errStatus = err.status
+              if (errStatus == 0){
+                  let titulo = 'Error de Servidor';
+                  let mensaje = "Por favor comunicarse con Sistemas";
+                  this.mostrarError(errStatus, titulo, mensaje);
+              } else {
+                  let titulo = 'Código de Barras no encontrado';
+                  let mensaje = err.error.message.toString();
+                  this.mostrarError(errStatus, titulo, mensaje);
+              }
+          }
+      }
+    );
   }
 
   setearCantidad( ){

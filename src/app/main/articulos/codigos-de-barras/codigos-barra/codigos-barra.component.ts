@@ -198,7 +198,8 @@ export class PedidosCodigosBarraComponent implements OnInit {
   imprimir( idArticulo: number ){
     const dialogRef = this._dialog.open( ImprimirCodBarraComponent, { 
       data: {
-        idArticulo: this.idArticulo
+        idArticulo: this.idArticulo,
+        codigoArticulo: this.codigoArticulo
       } 
     });
   }
