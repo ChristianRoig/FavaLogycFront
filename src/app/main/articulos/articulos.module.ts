@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 //fuse
 import { FuseSharedModule } from '@fuse/shared.module';
@@ -19,6 +20,7 @@ import { PedidosCodigosBarraEditarComponent } from './codigos-de-barras/codigos-
 import { PedidosCodigosBarraAddComponent } from './codigos-de-barras/codigos-barra-add/codigos-barra-add.component';
 import { PedidosCodigosBarraArticulosComponent } from './codigos-de-barras/codigos-barra-articulos/codigos-barra-articulos.component';
 import { ModalConfirmacionBorrarComponent } from './codigos-de-barras/codigos-barra/modal-confirmacion-borrar/modal-confirmacion-borrar.component';
+import { ImprimirCodBarraComponent } from './codigos-de-barras/codigos-barra/imprimir-cod-barra/imprimir-cod-barra.component';
 
 //services
 import { PedidosPartesArticulosService } from './partes-articulos/partes-articulo/partes-articulo.service';
@@ -27,6 +29,7 @@ import { PedidosCodigosBarraEditarService } from './codigos-de-barras/codigos-ba
 import { PedidosCodigosBarraAddService } from './codigos-de-barras/codigos-barra-add/codigos-barra-add.service';
 import { PedidosCodigosBarraService } from './codigos-de-barras/codigos-barra/codigos-barra.service';
 import { PedidosCodigosBarraArticulosService } from './codigos-de-barras/codigos-barra-articulos/codigos-barra-articulos.service';
+import { ImprimirCodBarraService } from './codigos-de-barras/codigos-barra/imprimir-cod-barra/imprimir-cod-barra.service';
 
 const routes: Routes = [
     /* {
@@ -67,7 +70,8 @@ const routes: Routes = [
         PedidosCodigosBarraEditarComponent,
         PedidosCodigosBarraAddComponent,
         PedidosCodigosBarraArticulosComponent,
-        ModalConfirmacionBorrarComponent
+        ModalConfirmacionBorrarComponent,
+        ImprimirCodBarraComponent
     ],
     imports     : [
         CommonModule,
@@ -79,6 +83,7 @@ const routes: Routes = [
         FuseSharedModule,
         FuseWidgetModule,
         CustomTagModule,
+        MatProgressSpinnerModule
         
     ],
     providers   : [
@@ -87,7 +92,8 @@ const routes: Routes = [
         PedidosCodigosBarraAddService,
         PedidosCodigosBarraEditarService,
         PedidosCodigosBarraService,
-        PedidosCodigosBarraArticulosService
+        PedidosCodigosBarraArticulosService,
+        ImprimirCodBarraService
     ]
 })
 export class ArticulosModule

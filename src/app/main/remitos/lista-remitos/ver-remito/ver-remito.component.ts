@@ -93,6 +93,32 @@ export class VerRemitoComponent implements OnInit {
     });
   }
 
+  imprimirRemito(){
+    this._verRemitoService.getImprimirRemito( this.idRemito ).subscribe( data => {
+
+      console.log("data", data );
+      //this.link = data.toString();
+      window.open( data.toString(), '_blank');
+      
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status;
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
+        } else {
+          let titulo = 'Error al imprimir';
+          let mensaje = err.error.message.toString();
+          this.mostrarError(errStatus, titulo, mensaje);
+        }
+      }
+    });
+  }
+
   confirmacionBorrar() {
     const dialogRef = this._dialog.open( ModalConfirmacionBorrarComponent, { 
       data: {

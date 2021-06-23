@@ -1,0 +1,53 @@
+<div class="dialog-content-wrapper" class="primerDiv">
+    <div fxLayout="row">
+        <mat-toolbar matDialogTitle class="mat-accent m-0">
+            <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center" class="titulo">
+                <span class="title dialog-title">Imprimir código/s de barra</span>
+            </mat-toolbar-row>
+        </mat-toolbar>
+    </div>
+
+
+    <div class="divSpinner" *ngIf="this.mostrarSpinner">
+        <mat-spinner strokeWidth="5" [diameter]="40"></mat-spinner>
+    </div>
+
+    <div mat-dialog-content class="pb-0 m-0" fusePerfectScrollbar *ngIf="!this.mostrarSpinner">
+        <form class="formClass">
+
+            <div fxLayout="row" class="mb-8" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Cantidad a imprirmir</mat-label>
+                    <input #cantImpresiones matInput value="1" (keyup)="setearCantidad()" placeholder="Ingrese un numero">
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row" class="mb-8" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Fecha</mat-label>
+                    <input matInput disabled>
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row" class="mb-8" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Cantidad de Articulos</mat-label>
+                    <input matInput disabled type="number">
+                </mat-form-field>
+            </div>
+
+        </form>
+    </div>
+
+    <div mat-dialog-actions class="m-0 divBotones" fxLayout="row" fxLayoutAlign="end center">
+
+        <button (click)="imprimirCodigosDeBarra()" mat-raised-button class="btn" color="accent" aria-label="SAVE">
+         Imprimir
+      </button>
+
+        <button mat-raised-button class="btn" (click)="matDialogRef.close()" aria-label="Delete">
+          Cancelar
+      </button>
+
+    </div>
+</div>

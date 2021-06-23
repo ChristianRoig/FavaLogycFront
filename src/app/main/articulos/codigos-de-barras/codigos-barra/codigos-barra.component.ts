@@ -12,6 +12,7 @@ import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.componen
 
 //services
 import { PedidosCodigosBarraService } from './codigos-barra.service';
+import { ImprimirCodBarraComponent } from './imprimir-cod-barra/imprimir-cod-barra.component';
 
 /**
  * @title Basic use of `<table mat-table>`
@@ -27,10 +28,11 @@ export class PedidosCodigosBarraComponent implements OnInit {
 
     @ViewChild('buscar') buscarInput: ElementRef;
     
-    displayedColumns: string[] = ['id', 'codigoDeBarras', 'descripcion', 'editar', 'borrar'];
+    displayedColumns: string[] = ['id', 'codigoDeBarras', 'descripcion', 'editar', 'borrar', 'imprimir'];
     dataSource2: any;
     subParametros: Subscription;
 
+    idArticulo: number;
     codigoArticulo: string;
     nombre: string;
 
@@ -106,6 +108,7 @@ export class PedidosCodigosBarraComponent implements OnInit {
         this._pedidosCodigosBarraService.getCodigosBarra(codigoArticulo, busqueda, page, size, columna, order).subscribe(
             data => {
                 this.dataSource2 = data.datos;
+                this.idArticulo = this.dataSource2[0].id;
                 this.length = data.totalRegistros;
                 this.nombre = this.dataSource2[0].articulo.nombre;
             },
@@ -190,6 +193,14 @@ export class PedidosCodigosBarraComponent implements OnInit {
           this.borrar( id )
 
       });
+  }
+
+  imprimir( idArticulo: number ){
+    const dialogRef = this._dialog.open( ImprimirCodBarraComponent, { 
+      data: {
+        idArticulo: this.idArticulo
+      } 
+    });
   }
 
   mostrarError(errStatus, titulo, mensaje){

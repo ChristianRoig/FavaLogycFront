@@ -27,5 +27,13 @@ export class VerRemitoService {
       return this._httpClient.get(ruta);
   }
 
+  getImprimirRemito( idComprobante: number ){
+    
+    let ruta = `${ BASE_URL }pedidos/pedidocbte/imprimir-remito/${ idComprobante }`;
+    return this._httpClient.get(ruta);
+
+  }
 }
+
+
 
