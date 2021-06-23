@@ -394,20 +394,43 @@ export class VerLoteComponent implements OnInit {
 
   imprimirCupa(){
 
-    let application_name = "Favalogyc";
-    let permission_name = "Impresion_CUPA"
+    this._verLoteService.getImprimirCUPA( this.idLote ).subscribe( data => {
 
+      console.log("data", data );
+      window.open( data.toString(), '_blank');
+      
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status;
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
+        } else {
+          let titulo = 'Error al imprimir';
+          let mensaje = err.error.message.toString();
+          this.mostrarError(errStatus, titulo, mensaje);
+        }
+      }
+    });
+    
+    
+    /* let application_name = "Favalogyc";
+    let permission_name = "Impresion_CUPA" */
     // let res = await this._usuarioService.checkPermision(application_name, permission_name);
-    console.log('component')
+    //console.log('component')
     // console.log(res)
     // if (res === false){
     //   this.mostrarError(1, 'Error de Permisos', `Usted no tiene permisos para realizar la acción: ${permission_name}.`);
     // } else {
-      if(localStorage.getItem('ImpresoraCUPA')){
+      /* if(localStorage.getItem('ImpresoraCUPA')){
         this.imprimir();
       } else {
         this.seleccionarImpresora()
-      }
+      } */
   }
 
   resetFiltros(){

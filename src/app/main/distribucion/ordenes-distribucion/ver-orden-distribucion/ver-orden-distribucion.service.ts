@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'environments/environment';
+import { map } from 'rxjs/operators';
 
 const BASE_URL = environment.server + environment.baseUrl;
 
@@ -46,7 +47,7 @@ export class VerOrdenDistribucionService {
     return this._httpClient.get(ruta);
 }
 
-  getRemitoPorId( idRemito: number ){
+  getRemitoPorId( idRemito: number ): Observable<any>{
     let ruta = `${BASE_URL}pedidos/pedidocbte/remito/por-idremito/${ idRemito }`;
       return this._httpClient.get(ruta);
   }
@@ -62,7 +63,7 @@ export class VerOrdenDistribucionService {
     return this._httpClient.delete(ruta, {headers: headers});
   }
 
-  updateNombreLote(nombre, idLote){
+  updateNombreLote(nombre, idLote): Observable<any>{
     
     let headers = new HttpHeaders({
       "Content-Type": "application/json"
@@ -76,7 +77,7 @@ export class VerOrdenDistribucionService {
     return this._httpClient.put(ruta, body,{headers: headers});
   }
   
-  addRemitosAorden( idRemito ,idOrden ){
+  addRemitosAorden( idRemito ,idOrden ): Observable<any>{
     
     let headers = new HttpHeaders({
       "Content-Type": "application/json"
@@ -96,5 +97,10 @@ export class VerOrdenDistribucionService {
     return this._httpClient.get(ruta);
   }
 
+  getImprimirOrdenDist(idOrdenDist: number): Observable<any>{
+    
+    let ruta = `${ BASE_URL }pedidos/distribucion/imprimir-distribucion/${ idOrdenDist }`;
+    return this._httpClient.get(ruta);
+  }
 }
 

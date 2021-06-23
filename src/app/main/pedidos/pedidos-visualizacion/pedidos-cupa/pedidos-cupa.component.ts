@@ -31,18 +31,23 @@ export class PedidosCupaComponent implements OnInit {
   columna: string;
   order: string;
 
+  idPedido: number;
   mensaje: string;
 
   constructor(
       private _router: Router,
       private _service: PedidosVisualizacionService,
-      private _dialog: MatDialog
-  )
-  {
-      
-  }
+      private _dialog: MatDialog,
+      private _activatedRoute: ActivatedRoute
+  ){}
 
   ngOnInit(): void{
+
+    this._activatedRoute.params.subscribe( params => {
+      this.idPedido = params['id'];
+    });
+
+    console.log("idPedido", this.idPedido);
     this.page = 0;
     this.size = 50;
     this.columna = 'id';
@@ -79,8 +84,28 @@ export class PedidosCupaComponent implements OnInit {
   }
 
   imprimirCupa(){
-    //routerLink="/assets/pdfs/Cupa.pdf" 
-    //window.open("http://localhost:4200/assets/pdfs/Cupa.pdf" , "_blank");
+    this._service.getImprimirCUPA( this.idPedido ).subscribe( data => {
+
+      console.log("data", data );
+      window.open( data.toString(), '_blank');
+      
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status;
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
+        } else {
+          let titulo = 'Error al imprimir';
+          let mensaje = err.error.message.toString();
+          this.mostrarError(errStatus, titulo, mensaje);
+        }
+      }
+    });
   }
 
   sortData( event ) {

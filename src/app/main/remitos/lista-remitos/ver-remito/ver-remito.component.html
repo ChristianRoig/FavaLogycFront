@@ -20,19 +20,10 @@
                         </mat-form-field>
 
                         <div class="botonesBusqueda">
-                            <!-- (click)="editarLote()" -->
-                            <!-- <button class="btn" mat-raised-button color="primary">
-                                Buscar
-                            </button> -->
-                            <!-- (click)="sacarDelLote()" -->
-                            <!-- <button class="btn" mat-raised-button color="primary" [matBadge]="selection.selected.length" [matBadgeHidden]="selection.selected.length===0" matBadgeColor="warn" [disabled]="selection.selected.length===0">
-                                Eliminar Selec.
-                            </button> -->
-                            <a routerLink="/assets/pdfs/remito.pdf" style="width: 120px;" routerLinkActive="active" target="_blank">
-                                <button class="btn" mat-raised-button color="primary">
+
+                            <button class="btn" mat-raised-button color="primary" (click)="imprimirRemito()">
                                 Imprimir
-                                </button>
-                            </a>
+                            </button>
 
                         </div>
                     </div>
