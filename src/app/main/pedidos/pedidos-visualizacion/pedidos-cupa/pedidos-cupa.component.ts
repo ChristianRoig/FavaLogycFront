@@ -31,18 +31,23 @@ export class PedidosCupaComponent implements OnInit {
   columna: string;
   order: string;
 
+  idPedido: number;
   mensaje: string;
 
   constructor(
       private _router: Router,
       private _service: PedidosVisualizacionService,
-      private _dialog: MatDialog
-  )
-  {
-      
-  }
+      private _dialog: MatDialog,
+      private _activatedRoute: ActivatedRoute
+  ){}
 
   ngOnInit(): void{
+
+    this._activatedRoute.params.subscribe( params => {
+      this.idPedido = params['id'];
+    });
+
+    console.log("idPedido", this.idPedido);
     this.page = 0;
     this.size = 50;
     this.columna = 'id';

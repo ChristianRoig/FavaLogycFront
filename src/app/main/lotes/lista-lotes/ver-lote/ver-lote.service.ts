@@ -108,5 +108,12 @@ export class VerLoteService {
     let ruta = `${BASE_URL}pedidos/pedidolote/lote/${ idLote }`;
     return this._httpClient.put(ruta, body,{headers: headers});
   }
+
+  getImprimirCUPA( idLote: number ) {
+    
+    let ruta = `${ BASE_URL }pedidos/pedidolote/lote/imprimir-cupa/${ idLote }`;
+    return this._httpClient.get(ruta);
+  }
 }
+
 
