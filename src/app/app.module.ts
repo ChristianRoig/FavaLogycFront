@@ -48,6 +48,7 @@ const appRoutes: Routes = [
     {
         path        : 'articulos',
         loadChildren: () => import('./main/articulos/articulos.module').then(m => m.ArticulosModule)
+    },
     {
         path        : 'remitos',
         loadChildren: () => import('./main/remitos/remitos.module').then(m => m.RemitosModule)
