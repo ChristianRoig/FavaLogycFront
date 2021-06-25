@@ -177,6 +177,8 @@ export class LoginComponent implements OnInit {
                 this._trabajoLogueo( info ); //perf,roles
                 this._serviceSonido.playAudioSuccess();
                 this._router.navigate(['/inicio'])
+                this.infoOnChanged.next(info);
+                this._loginService.infoOnChanged.next(info);
             }
         },
         (err: HttpErrorResponse) => {
@@ -252,6 +254,16 @@ export class LoginComponent implements OnInit {
         //this.perfilLogOnChanged.next(this.perfilLog);
         
         //this._router.navigate(['/inicio']);
+    }
+
+    // -----------------------------------------------------------------------------------------------------
+    public isAdmin(): any{
+        console.log("this.info.username", this.info.username);
+        if (this.info.username == "burroni.santiago" || this.info.username == "jacobo.pablo" ){
+            return true;
+        } else{
+            return false;
+        }
     }
 
     // -----------------------------------------------------------------------------------------------------

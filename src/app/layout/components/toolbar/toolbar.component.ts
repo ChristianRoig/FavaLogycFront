@@ -10,6 +10,11 @@ import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { navigation } from 'app/navigation/navigation';
 import { Router } from '@angular/router';
 
+//import { LoginComponent } from '../../../auth/login/login.component';
+import { LoginService } from '../../../auth/login/login.service';
+
+
+
 @Component({
     selector     : 'toolbar',
     templateUrl  : './toolbar.component.html',
@@ -27,6 +32,9 @@ export class ToolbarComponent implements OnInit, OnDestroy
     selectedLanguage: any;
     userStatusOptions: any[];
 
+    user: any = {};
+    nombreUsuario: string = "Pablo Jacobo";
+
     // Private
     private _unsubscribeAll: Subject<any>;
 
@@ -41,7 +49,9 @@ export class ToolbarComponent implements OnInit, OnDestroy
         private _fuseConfigService: FuseConfigService,
         private _fuseSidebarService: FuseSidebarService,
         private _translateService: TranslateService,
-        private _router: Router
+        private _router: Router,
+        private _loginService: LoginService
+
     )
     {
         // Set the defaults
@@ -112,6 +122,10 @@ export class ToolbarComponent implements OnInit, OnDestroy
 
         // Set the selected language from default languages
         this.selectedLanguage = _.find(this.languages, {id: this._translateService.currentLang});
+
+        this.user = this._loginService.infoOnChanged.getValue();
+        this.setearNombre();  
+        console.log("this.user", this.user);
     }
 
     /**
@@ -166,5 +180,14 @@ export class ToolbarComponent implements OnInit, OnDestroy
 
         // Use the selected language for translations
         this._translateService.use(lang.id);
+    }
+
+    setearNombre(): void {
+        if (this.user.username === "burroni.santiago"){
+            this.nombreUsuario = "Santiago Burroni";
+        }
+        if (this.user.username === "herrada.laura"){
+            this.nombreUsuario = "Laura Herrada";
+        }
     }
 }

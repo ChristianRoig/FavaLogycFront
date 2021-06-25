@@ -45,7 +45,7 @@ export class LoginService {
     //private perfilLog: Perfil; // habría que definir la info de un Perfil de favalogyc
 
     infoOnChanged: BehaviorSubject<any>;
-    perfilLogOnChanged: BehaviorSubject<any>;
+    //perfilLogOnChanged: BehaviorSubject<any>;
     rolOnChanged: BehaviorSubject<any>;
 
     /**
@@ -62,7 +62,7 @@ export class LoginService {
         // Set the defaults
         
         this.infoOnChanged = new BehaviorSubject([]);
-        this.perfilLogOnChanged = new BehaviorSubject([]);
+        //this.perfilLogOnChanged = new BehaviorSubject([]);
         this.rolOnChanged = new BehaviorSubject([]);
         
         const userLog = this._cookieService.get(user);        
