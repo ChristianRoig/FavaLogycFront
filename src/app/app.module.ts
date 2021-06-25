@@ -94,7 +94,8 @@ const appRoutes: Routes = [
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        
     ],
     imports     : [
         BrowserModule,
@@ -122,7 +123,8 @@ const appRoutes: Routes = [
         PagesModule,
         SharedModule,
         LoginModule,
-        Error404Module
+        Error404Module,
+        
 
 
     ],
