@@ -167,12 +167,14 @@ export class LoginComponent implements OnInit {
         
         this._loginService._obtenerLogin( email, password ).subscribe((info: ResponseLogin) => { 
             console.log("info - obtenerLogin|", info);
+            
             if (info.token == null){                // comienzo de logica de GESTIONATE
                 this._serviceSonido.playAudioAlert();
                 let titulo = 'Fallo al ingresar';
                 let mensaje = 'El usuario o la contraseña son incorrectos';
                 this.mostrarError(0, titulo, mensaje);
-            } else {
+            } 
+            else {
                 info = new ResponseLogin(info);
                 this._trabajoLogueo( info ); //perf,roles
                 this._serviceSonido.playAudioSuccess();
@@ -259,7 +261,7 @@ export class LoginComponent implements OnInit {
     // -----------------------------------------------------------------------------------------------------
     public isAdmin(): any{
         console.log("this.info.username", this.info.username);
-        if (this.info.username == "burroni.santiago" || this.info.username == "jacobo.pablo" ){
+        if (this.info.username === "burroni.santiago" || this.info.username === "jacobo.pablo" ){
             return true;
         } else{
             return false;
