@@ -259,7 +259,8 @@ export class LoginComponent implements OnInit {
     }
 
     // -----------------------------------------------------------------------------------------------------
-    public isAdmin(): any{
+    
+    public isAdmin(): boolean{
         console.log("this.info.username", this.info.username);
         if (this.info.username === "burroni.santiago" || this.info.username === "jacobo.pablo" ){
             return true;
