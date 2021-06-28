@@ -18,6 +18,8 @@ import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.componen
 import { SonidoService } from 'app/shared/services/sonidos.service';
 import { LoginService } from './login.service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
+
 
 const user: string = config.Cookie_User;
 const token: string = config.Cookie_Token;
@@ -83,7 +85,8 @@ export class LoginComponent implements OnInit {
         private _dialog: MatDialog,
         private _serviceSonido: SonidoService,
         private _loginService: LoginService,
-        private _cookieService: CookieService
+        private _cookieService: CookieService,
+        private _fuseNavigationService: FuseNavigationService
     )
     {
 
@@ -176,6 +179,7 @@ export class LoginComponent implements OnInit {
             } 
             else {
                 info = new ResponseLogin(info);
+                this.definirAccesos(); 
                 this._trabajoLogueo( info ); //perf,roles
                 this._serviceSonido.playAudioSuccess();
                 this._router.navigate(['/inicio'])
@@ -215,6 +219,32 @@ export class LoginComponent implements OnInit {
 
         this._router.navigate(['']);
     }
+    //--------------------------------------------------------------------------------------------------
+
+    definirAccesos(){
+        if(this.isAdmin()){
+
+            this._fuseNavigationService.updateNavigationItem('pedidos', {
+                hidden: true
+            });
+            this._fuseNavigationService.updateNavigationItem('lotes', {
+                hidden: true
+            });
+            this._fuseNavigationService.updateNavigationItem('control', {
+                hidden: true
+            });
+            this._fuseNavigationService.updateNavigationItem('remitos', {
+                hidden: true
+            });
+            this._fuseNavigationService.updateNavigationItem('distribucion', {
+                hidden: true
+            });
+            this._fuseNavigationService.updateNavigationItem('carga', {
+                hidden: true
+            });
+        }
+    }
+
     //--------------------------------------------------------------------------------------------------
     /**
      * setea en caso de error
@@ -264,7 +294,7 @@ export class LoginComponent implements OnInit {
         console.log("this.info.username", this.info.username);
         if (this.info.username === "burroni.santiago" || this.info.username === "jacobo.pablo" ){
             return true;
-        } else{
+        } else {
             return false;
         }
     }

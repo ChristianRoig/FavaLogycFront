@@ -99,6 +99,9 @@ export class LoginService {
             'password': password
         };
 
-        return this._httpClient.post(API_LOG, params, options);
+        this.info = this._httpClient.post(API_LOG, params, options);
+        return this.info;
     }
+
+    
 }

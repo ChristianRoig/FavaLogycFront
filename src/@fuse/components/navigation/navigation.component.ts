@@ -4,7 +4,6 @@ import { takeUntil } from 'rxjs/operators';
 
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
 
-import { LoginComponent } from '../../../app/auth/login/login.component';
 
 
 @Component({
@@ -34,8 +33,7 @@ export class FuseNavigationComponent implements OnInit
      */
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
-        private _fuseNavigationService: FuseNavigationService,
-        private _loginComponent: LoginComponent
+        private _fuseNavigationService: FuseNavigationService
     )
     {
         // Set the private defaults
@@ -77,49 +75,6 @@ export class FuseNavigationComponent implements OnInit
              // Mark for check
              this._changeDetectorRef.markForCheck();
          });
-
-
-         //-------------------------------------------
-
-         this.definirAcessos();
-    }
-
-
-    private definirAcessos(): void {
-
-        if ( this._loginComponent.isAdmin){
-            
-            this.rolActual = "admin";
-            this.cambiarVistaSegunRol();
-        }
-
-        /* this._loginService.rolOnChanged   // gestionate
-            .pipe(takeUntil(this._unsubscribeAll))
-                .subscribe(
-                    (respu: []) => {
-                        if (respu == null) {
-                            respu = [];
-                        }
-
-                        this.switchByRol(respu);
-                    },
-                    (error: any) => {
-                        console.log(error);
-                        this.switchByRol([]);      
-                    }); */
-    }
-
-    private cambiarVistaSegunRol(): void {
-
-        if ( this.rolActual == "admin"){
-
-            this._fuseNavigationService.updateNavigationItem('pedidos', {
-                hidden: true
-            });
-            
-        }
-
-
     }
 
 }
