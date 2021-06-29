@@ -267,7 +267,8 @@ export class LoginComponent implements OnInit {
         expirarDate.setMinutes(expirarDate.getMinutes() + sesion_activa);
         
         this.info = info;
-        //this.rol = roles;
+
+        this.setearRol(); //this.rol = roles;
         //this.perfilLog = new Perfil(perf);
         
         //perf.novedadesExternas = null; // fix para que pueda setear la cookie, puede supepar el tamaño maximo cuando se transforma a JSON
@@ -286,6 +287,33 @@ export class LoginComponent implements OnInit {
         //this.perfilLogOnChanged.next(this.perfilLog);
         
         //this._router.navigate(['/inicio']);
+    }
+
+    setearRol(): void {
+        if (this.info.username === "burroni.santiago"){
+            this.rol = ["admin"];
+        }
+        if (this.info.username === "herrada.laura"){
+            this.rol = ["comun"];
+        }
+        if (this.info.username === "honaine.nicolas"){
+            this.rol = ["comun"];
+        }
+        if (this.info.username === "luque.gonzalo"){
+            this.rol = ["comun"];
+        }
+        if (this.info.username === "thomas.juan"){
+            this.rol = ["comun"];
+        }
+        if (this.info.username === "cejas.fernando"){
+            this.rol = ["cedis"];
+        }
+        if (this.info.username === "jacobo.pablo"){
+            this.rol = ["cedis"];
+        }
+        if (this.info.username === "augelli.angel"){
+            this.rol = ["cedis"];
+        }
     }
 
     // -----------------------------------------------------------------------------------------------------
