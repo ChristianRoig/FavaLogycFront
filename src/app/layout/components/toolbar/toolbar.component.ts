@@ -189,5 +189,20 @@ export class ToolbarComponent implements OnInit, OnDestroy
         if (this.user.username === "herrada.laura"){
             this.nombreUsuario = "Laura Herrada";
         }
+        if (this.user.username === "honaine.nicolas"){
+            this.nombreUsuario = "Nicolas Honaine";
+        }
+        if (this.user.username === "luque.gonzalo"){
+            this.nombreUsuario = "Gonzalo Luque";
+        }
+        if (this.user.username === "thomas.juan"){
+            this.nombreUsuario = "Juan Thomas";
+        }
+        if (this.user.username === "cejas.fernando"){
+            this.nombreUsuario = "Fernando Cejas";
+        }
+        if (this.user.username === "augelli.angel"){
+            this.nombreUsuario = "Angel Augelli";
+        }
     }
 }

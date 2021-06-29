@@ -5,9 +5,9 @@ import { CookieService } from 'ngx-cookie-service';
 import { environment } from 'environments/environment';
 //import { Perfil } from 'app/main/perfil/perfil.model';
 
+import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
 import { config } from 'environments/config_system'; 
 
-const API: string = environment.url_node;
 const API_LOG: string = environment.api_log;
 
 const user: string = config.Cookie_User;
@@ -45,8 +45,8 @@ export class LoginService {
     //private perfilLog: Perfil; // habría que definir la info de un Perfil de favalogyc
 
     infoOnChanged: BehaviorSubject<any>;
-    //perfilLogOnChanged: BehaviorSubject<any>;
     rolOnChanged: BehaviorSubject<any>;
+    //perfilLogOnChanged: BehaviorSubject<any>;
 
     /**
      * Constructor
@@ -57,13 +57,14 @@ export class LoginService {
      */
     constructor( 
         private _httpClient: HttpClient, 
-        private _cookieService: CookieService, 
+        private _cookieService: CookieService,         
+        private _fuseNavigationService: FuseNavigationService
     ){
         // Set the defaults
         
         this.infoOnChanged = new BehaviorSubject([]);
-        //this.perfilLogOnChanged = new BehaviorSubject([]);
         this.rolOnChanged = new BehaviorSubject([]);
+        //this.perfilLogOnChanged = new BehaviorSubject([]);
         
         const userLog = this._cookieService.get(user);        
         console.log("- userLog | ", userLog);
@@ -103,5 +104,12 @@ export class LoginService {
         return this.info;
     }
 
-    
+    hideByRol(roles: string[]): void {
+        if (roles.includes("comun") || roles == null || roles.length == 0){
+            this._fuseNavigationService.updateNavigationItem('infoAuxiliar', {
+                hidden: true
+            });          
+        }
+    }
+
 }

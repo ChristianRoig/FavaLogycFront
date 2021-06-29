@@ -64,9 +64,9 @@ export class LoginComponent implements OnInit {
     info: any;
     rol: string[] = [];
 
-    infoOnChanged: BehaviorSubject<any>;
+    /*infoOnChanged: BehaviorSubject<any>;
     perfilLogOnChanged: BehaviorSubject<any>;
-    rolOnChanged: BehaviorSubject<any>;
+    rolOnChanged: BehaviorSubject<any>;*/
 
     // Private
     protected _unsubscribeAll: Subject<any>;
@@ -90,9 +90,9 @@ export class LoginComponent implements OnInit {
     )
     {
 
-        this.infoOnChanged = new BehaviorSubject([]);
+        /*this.infoOnChanged = new BehaviorSubject([]);
         this.perfilLogOnChanged = new BehaviorSubject([]);
-        this.rolOnChanged = new BehaviorSubject([]);
+        this.rolOnChanged = new BehaviorSubject([]);*/
         
         const userLog = this._cookieService.get(user); 
         //console.log("- userLog | ", userLog);
@@ -183,7 +183,7 @@ export class LoginComponent implements OnInit {
                 this._trabajoLogueo( info ); //perf,roles
                 this._serviceSonido.playAudioSuccess();
                 this._router.navigate(['/inicio'])
-                this.infoOnChanged.next(info);
+                //this.infoOnChanged.next(info);
                 this._loginService.infoOnChanged.next(info);
             }
         },
@@ -210,9 +210,9 @@ export class LoginComponent implements OnInit {
      * Metodo para cerrar la sesion
      */
     private logout(): void {
-        this.infoOnChanged.next(new ResponseLogin({})); // ver de donde sale ResponseLogin
+        this._loginService.infoOnChanged.next(new ResponseLogin({})); // ver de donde sale ResponseLogin
         //this.perfilLogOnChanged.next(new Perfil({}));
-        this.rolOnChanged.next([]);
+        this._loginService.rolOnChanged.next([]);
 
         localStorage.clear();
         //this._cookieService.deleteAll();
@@ -254,8 +254,8 @@ export class LoginComponent implements OnInit {
         this.info = 'error';
         //this.perfilLog = new Perfil({});
         
-        this.rolOnChanged.next(this.rol);
-        this.infoOnChanged.next(this.info);
+        this._loginService.rolOnChanged.next(this.rol);
+        this._loginService.infoOnChanged.next(this.info);
         //this.perfilLogOnChanged.next(this.perfilLog);
     }
 
@@ -281,8 +281,8 @@ export class LoginComponent implements OnInit {
         
         this.handlerCookies(dataCookie);
         
-        this.rolOnChanged.next(this.rol);
-        this.infoOnChanged.next(this.info);
+        this._loginService.infoOnChanged.next(this.info);
+        this._loginService.rolOnChanged.next(this.rol);
         //this.perfilLogOnChanged.next(this.perfilLog);
         
         //this._router.navigate(['/inicio']);

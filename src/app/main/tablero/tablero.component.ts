@@ -194,6 +194,21 @@ export class ProjectDashboardComponent implements OnInit {
       if (this.user.username === "herrada.laura"){
           this.nombreUsuario = "Laura";
       }
+      if (this.user.username === "honaine.nicolas"){
+        this.nombreUsuario = "Nicolas";
+      }
+      if (this.user.username === "luque.gonzalo"){
+          this.nombreUsuario = "Gonzalo";
+      }
+      if (this.user.username === "thomas.juan"){
+          this.nombreUsuario = "Juan";
+      }
+      if (this.user.username === "cejas.fernando"){
+          this.nombreUsuario = "Fernando";
+      }
+      if (this.user.username === "augelli.angel"){
+          this.nombreUsuario = "Angel";
+      }
   }
 
    /*  setInterval(() => {
