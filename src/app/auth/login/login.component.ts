@@ -179,7 +179,7 @@ export class LoginComponent implements OnInit {
             } 
             else {
                 info = new ResponseLogin(info);
-                this.definirAccesos(); 
+                //this.definirAccesos(); 
                 this._trabajoLogueo( info ); //perf,roles
                 this._serviceSonido.playAudioSuccess();
                 this._router.navigate(['/inicio'])
@@ -221,7 +221,7 @@ export class LoginComponent implements OnInit {
     }
     //--------------------------------------------------------------------------------------------------
 
-    definirAccesos(){
+    /*definirAccesos(){
         if(this.isAdmin()){
 
             this._fuseNavigationService.updateNavigationItem('pedidos', {
@@ -243,7 +243,7 @@ export class LoginComponent implements OnInit {
                 hidden: true
             });
         }
-    }
+    } */
 
     //--------------------------------------------------------------------------------------------------
     /**

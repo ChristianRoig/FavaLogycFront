@@ -196,7 +196,7 @@ export const navigation: FuseNavigation[] = [
                 ]
             },
             {
-                id       : 'beta and legacy',
+                id       : 'desarrollo',
                 title    : 'Beta and Legacy',
                 type     : 'collapsable',
                 children : [
