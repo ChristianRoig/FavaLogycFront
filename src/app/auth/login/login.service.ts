@@ -104,9 +104,11 @@ export class LoginService {
         return this.info;
     }
 
-    hideByRol(roles: string[]): void {
-        console.log("roles: ", roles)
+    hideByRol(rolesSINUSO: string[]): void {
+
+        let roles: string[] = [];
         roles.push(localStorage.getItem("rol"));
+        
         if (roles.includes("comun") || roles == null || roles.length == 0){
             this._fuseNavigationService.updateNavigationItem('lotes',   { hidden: true });          
             this._fuseNavigationService.updateNavigationItem('control', { hidden: true });          

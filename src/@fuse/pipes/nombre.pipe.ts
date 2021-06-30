@@ -16,7 +16,7 @@ export class NombrePipe implements PipeTransform {
       let name = splitted[1][0].toUpperCase() + splitted[1].substr(1).toLowerCase();
       let surname = splitted[0][0].toUpperCase() + splitted[0].substr(1).toLowerCase();
   
-      return (name + ", " + surname);
+      return (name + " " + surname);
     }
   }
 
