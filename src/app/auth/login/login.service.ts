@@ -106,20 +106,30 @@ export class LoginService {
 
     hideByRol(roles: string[]): void {
         console.log("roles: ", roles)
+        roles.push(localStorage.getItem("rol"));
         if (roles.includes("comun") || roles == null || roles.length == 0){
+            this._fuseNavigationService.updateNavigationItem('lotes',   { hidden: true });          
+            this._fuseNavigationService.updateNavigationItem('control', { hidden: true });          
+            this._fuseNavigationService.updateNavigationItem('remitos', { hidden: true });          
             this._fuseNavigationService.updateNavigationItem('distribucion', { hidden: true });          
             this._fuseNavigationService.updateNavigationItem('carga', { hidden: true });          
-            this._fuseNavigationService.updateNavigationItem('infoAuxiliar', { hidden: true });          
+            this._fuseNavigationService.updateNavigationItem('infoAuxiliar', { hidden: true });           
         } else if (roles.includes("cedis") ){
+            this._fuseNavigationService.updateNavigationItem('lotes',   { hidden: false });          
+            this._fuseNavigationService.updateNavigationItem('control', { hidden: false });          
+            this._fuseNavigationService.updateNavigationItem('remitos', { hidden: false });          
             this._fuseNavigationService.updateNavigationItem('distribucion', { hidden: false });          
             this._fuseNavigationService.updateNavigationItem('carga', { hidden: false });          
             this._fuseNavigationService.updateNavigationItem('infoAuxiliar', { hidden: false });          
             this._fuseNavigationService.updateNavigationItem('desarrollo', { hidden: true });          
         } else if (roles.includes("admin") ){
+            this._fuseNavigationService.updateNavigationItem('lotes',   { hidden: false });          
+            this._fuseNavigationService.updateNavigationItem('control', { hidden: false });          
+            this._fuseNavigationService.updateNavigationItem('remitos', { hidden: false });          
             this._fuseNavigationService.updateNavigationItem('distribucion', { hidden: false });          
             this._fuseNavigationService.updateNavigationItem('carga', { hidden: false });          
             this._fuseNavigationService.updateNavigationItem('infoAuxiliar', { hidden: false });          
-            this._fuseNavigationService.updateNavigationItem('desarrollo', { hidden: false });          
+            this._fuseNavigationService.updateNavigationItem('desarrollo', { hidden: false });           
         }
 }
 

@@ -321,6 +321,7 @@ export class LoginComponent implements OnInit {
         if (this.info.username === "augelli.angel"){
             this.rol = ["cedis"];
         }
+        localStorage.setItem("rol", this.rol.toString());
     }
 
     // -----------------------------------------------------------------------------------------------------
