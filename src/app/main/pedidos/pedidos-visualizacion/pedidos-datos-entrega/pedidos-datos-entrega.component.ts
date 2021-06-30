@@ -112,6 +112,7 @@ export class PedidosDatosEntregaComponent implements OnInit {
   buscarDatosEntrega(page, size, columna, order){
     this._service.getDatosEntrega(this.idCabecera, page, size, columna, order).subscribe(paramsArt => {
       if(paramsArt){
+        console.log("DATOS DE ENTREGA -> ",paramsArt);
         this.dataSourceDatosEntrega = paramsArt.datos;
         this.length = paramsArt.totalRegistros;
       }

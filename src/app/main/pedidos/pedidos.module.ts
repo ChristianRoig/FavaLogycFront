@@ -13,6 +13,10 @@ import { MaterialDesignModule } from '@material/material-design.module';
 import { TablaRetractilModule } from '@fava/components/tabla-retractil/tabla-retractil.module';
 import { CustomTagModule } from 'app/shared/custom-tags/custom-tag.module';
 
+//pipes
+import { GuionPipe } from '@fuse/pipes/guion.pipe';
+
+
 //components
 import { PedidosListaComponent } from './x_NOSEUSA_pedidos-lista/pedidos-lista.component';
 import { PedidosVisualizacionComponent } from './pedidos-visualizacion/pedidos-visualizacion.component';
@@ -106,7 +110,8 @@ const routes: Routes = [
         TableComprobantesComponent,
         TableComprobantesAprogramarComponent,
         TableArticulosComponent,
-        TablePedidosComponent
+        TablePedidosComponent,
+        GuionPipe
     ],
     imports     : [
         CommonModule,
