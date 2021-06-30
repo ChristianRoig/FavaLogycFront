@@ -10,9 +10,12 @@ import { FuseSharedModule } from '@fuse/shared.module';
 
 import { ToolbarComponent } from 'app/layout/components/toolbar/toolbar.component';
 
+import { NombrePipe } from '@fuse/pipes/nombre.pipe';
+
 @NgModule({
     declarations: [
-        ToolbarComponent
+        ToolbarComponent,
+        NombrePipe
     ],
     imports     : [
         RouterModule,

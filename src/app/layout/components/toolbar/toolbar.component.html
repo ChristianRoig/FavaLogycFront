@@ -29,7 +29,7 @@
                 <div fxLayout="row" fxLayoutAlign="center center">
                     <!-- <img class="avatar mr-0 mr-sm-16" src="assets/images/avatars/Velazquez.jpg"> -->
                     <span class="material-icons mr-0 mr-sm-16 primary-700-fg" style="font-size: 35px;">account_circle</span>
-                    <span class="username mr-12" fxHide fxShow.gt-sm>{{ this.nombreUsuario }}</span>
+                    <span class="username mr-12" fxHide fxShow.gt-sm>{{ this.user | nombre }}</span>
                     <mat-icon class="s-16" fxHide.xs>keyboard_arrow_down</mat-icon>
                 </div>
             </button>

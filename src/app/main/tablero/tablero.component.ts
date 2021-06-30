@@ -43,7 +43,7 @@ export class ProjectDashboardComponent implements OnInit {
     valorFijo: string = "En Proceso";
 
     dateNow = Date.now();
-    user: any = {};
+    user: string;
     nombreUsuario: string = "Pablo";
     
 
@@ -182,13 +182,13 @@ export class ProjectDashboardComponent implements OnInit {
         /* this.widget11.onContactsChanged = new BehaviorSubject({});
         this.widget11.onContactsChanged.next(this.widgets.widget11.table.rows);
         this.widget11.dataSource = new FilesDataSource(this.widget11); */ 
-        this.user = this.user = localStorage.getItem("username");
+        this.user = localStorage.getItem("username");
         this.setearNombre();
     }
 
 
     setearNombre(): void {
-      if (this.user === "burroni.santiago"){
+      /* if (this.user === "burroni.santiago"){
           this.nombreUsuario = "Santiago";
       }
       if (this.user === "herrada.laura"){
@@ -208,7 +208,7 @@ export class ProjectDashboardComponent implements OnInit {
       }
       if (this.user === "augelli.angel"){
           this.nombreUsuario = "Angel";
-      }
+      } */
   }
 
    /*  setInterval(() => {

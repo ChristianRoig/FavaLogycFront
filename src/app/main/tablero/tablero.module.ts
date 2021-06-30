@@ -17,6 +17,8 @@ import { FuseWidgetModule } from '@fuse/components/widget/widget.module';
 import { ProjectDashboardComponent } from './tablero.component';
 import { TableroService } from './tablero.service';
 
+import { BienvenidoPipe } from '@fuse/pipes/bienvenido.pipe';
+
 const routes: Routes = [
     {
         path     : '',
@@ -26,7 +28,8 @@ const routes: Routes = [
 
 @NgModule({
     declarations: [
-        ProjectDashboardComponent
+        ProjectDashboardComponent,
+        BienvenidoPipe
     ],
     imports     : [
         RouterModule.forChild(routes),

@@ -185,7 +185,7 @@ export class ToolbarComponent implements OnInit, OnDestroy
 
     setearNombre(): void {
 
-        if (this.user === "burroni.santiago"){
+        /* if (this.user === "burroni.santiago"){
             this.nombreUsuario = "Santiago Burroni";
         }
         if (this.user === "herrada.laura"){
@@ -205,6 +205,6 @@ export class ToolbarComponent implements OnInit, OnDestroy
         }
         if (this.user === "augelli.angel"){
             this.nombreUsuario = "Angel Augelli";
-        }
+        } */
     }
 }
