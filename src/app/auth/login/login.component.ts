@@ -62,6 +62,7 @@ export class LoginComponent implements OnInit {
     errorLog = false;
     error = false;
     info: any;
+    username: string;
     rol: string[] = [];
 
     /*infoOnChanged: BehaviorSubject<any>;
@@ -267,6 +268,7 @@ export class LoginComponent implements OnInit {
         expirarDate.setMinutes(expirarDate.getMinutes() + sesion_activa);
         
         this.info = info;
+        this.username = info.username;
 
         this.setearRol(); //this.rol = roles;
         //this.perfilLog = new Perfil(perf);
@@ -288,7 +290,9 @@ export class LoginComponent implements OnInit {
         
         //this._router.navigate(['/inicio']);
     }
-
+    
+    // -----------------------------------------------------------------------------------------------------
+    
     setearRol(): void {
         if (this.info.username === "burroni.santiago"){
             this.rol = ["admin"];
@@ -341,6 +345,7 @@ export class LoginComponent implements OnInit {
             
 
             localStorage.setItem(token, data.infoToken);
+            localStorage.setItem("username", this.username);
             console.log(localStorage.getItem(token));
             
             

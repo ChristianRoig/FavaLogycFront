@@ -182,31 +182,31 @@ export class ProjectDashboardComponent implements OnInit {
         /* this.widget11.onContactsChanged = new BehaviorSubject({});
         this.widget11.onContactsChanged.next(this.widgets.widget11.table.rows);
         this.widget11.dataSource = new FilesDataSource(this.widget11); */ 
-        this.user = this._loginService.infoOnChanged.getValue();
+        this.user = this.user = localStorage.getItem("username");
         this.setearNombre();
     }
 
 
     setearNombre(): void {
-      if (this.user.username === "burroni.santiago"){
+      if (this.user === "burroni.santiago"){
           this.nombreUsuario = "Santiago";
       }
-      if (this.user.username === "herrada.laura"){
+      if (this.user === "herrada.laura"){
           this.nombreUsuario = "Laura";
       }
-      if (this.user.username === "honaine.nicolas"){
-        this.nombreUsuario = "Nicolas";
+      if (this.user === "honaine.nicolas"){
+          this.nombreUsuario = "Nicolas";
       }
-      if (this.user.username === "luque.gonzalo"){
+      if (this.user === "luque.gonzalo"){
           this.nombreUsuario = "Gonzalo";
       }
-      if (this.user.username === "thomas.juan"){
+      if (this.user === "thomas.juan"){
           this.nombreUsuario = "Juan";
       }
-      if (this.user.username === "cejas.fernando"){
+      if (this.user === "cejas.fernando"){
           this.nombreUsuario = "Fernando";
       }
-      if (this.user.username === "augelli.angel"){
+      if (this.user === "augelli.angel"){
           this.nombreUsuario = "Angel";
       }
   }

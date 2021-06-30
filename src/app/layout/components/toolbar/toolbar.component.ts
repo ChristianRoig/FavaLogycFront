@@ -32,7 +32,7 @@ export class ToolbarComponent implements OnInit, OnDestroy
     selectedLanguage: any;
     userStatusOptions: any[];
 
-    user: any = {};
+    user: string;
     nombreUsuario: string = "Pablo Jacobo";
 
     // Private
@@ -123,7 +123,8 @@ export class ToolbarComponent implements OnInit, OnDestroy
         // Set the selected language from default languages
         this.selectedLanguage = _.find(this.languages, {id: this._translateService.currentLang});
 
-        this.user = this._loginService.infoOnChanged.getValue();
+        //this.user = this._loginService.infoOnChanged.getValue();
+        this.user = localStorage.getItem("username");
         this.setearNombre();  
         console.log("this.user", this.user);
     }
@@ -183,25 +184,26 @@ export class ToolbarComponent implements OnInit, OnDestroy
     }
 
     setearNombre(): void {
-        if (this.user.username === "burroni.santiago"){
+
+        if (this.user === "burroni.santiago"){
             this.nombreUsuario = "Santiago Burroni";
         }
-        if (this.user.username === "herrada.laura"){
+        if (this.user === "herrada.laura"){
             this.nombreUsuario = "Laura Herrada";
         }
-        if (this.user.username === "honaine.nicolas"){
+        if (this.user === "honaine.nicolas"){
             this.nombreUsuario = "Nicolas Honaine";
         }
-        if (this.user.username === "luque.gonzalo"){
+        if (this.user === "luque.gonzalo"){
             this.nombreUsuario = "Gonzalo Luque";
         }
-        if (this.user.username === "thomas.juan"){
+        if (this.user === "thomas.juan"){
             this.nombreUsuario = "Juan Thomas";
         }
-        if (this.user.username === "cejas.fernando"){
+        if (this.user === "cejas.fernando"){
             this.nombreUsuario = "Fernando Cejas";
         }
-        if (this.user.username === "augelli.angel"){
+        if (this.user === "augelli.angel"){
             this.nombreUsuario = "Angel Augelli";
         }
     }
