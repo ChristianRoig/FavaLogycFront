@@ -56,7 +56,7 @@ export class PedidosCupaComponent implements OnInit {
     this._service.getCUPA(this.idCabecera,page, size, columna, order).subscribe(paramsArt => {
       if(paramsArt){
         this.dataSourceCUPA = paramsArt.datos;
-        console.log(this.dataSourceCUPA);
+        console.log("DATA SOURCE CUPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",this.dataSourceCUPA);
         this.length = paramsArt.totalRegistros;
       }
     },
@@ -78,9 +78,29 @@ export class PedidosCupaComponent implements OnInit {
     });
   }
 
-  imprimirCupa(){
-    //routerLink="/assets/pdfs/Cupa.pdf" 
-    //window.open("http://localhost:4200/assets/pdfs/Cupa.pdf" , "_blank");
+  imprimirCupa( id: number ){
+    this._service.getImprimirCUPA( id ).subscribe( data => {
+
+      console.log("data", data );
+      window.open( data.toString(), '_blank');
+      
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status;
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
+        } else {
+          let titulo = 'Error al imprimir';
+          let mensaje = err.error.message.toString();
+          this.mostrarError(errStatus, titulo, mensaje);
+        }
+      }
+    });
   }
 
   sortData( event ) {

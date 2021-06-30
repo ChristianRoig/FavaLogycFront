@@ -1,4 +1,4 @@
-import { createNgModuleType } from '@angular/compiler/src/render3/r3_module_compiler';
+
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
