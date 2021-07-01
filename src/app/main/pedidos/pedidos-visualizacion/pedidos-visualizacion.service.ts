@@ -30,7 +30,8 @@ export class PedidosVisualizacionService
     }
 
     getTrazabilidad(id, page, size, columna, order): Observable<any>
-    {   
+    {   //pedidos/trazabilidad/gestion/comprobante - NUEVO
+        //pedidos/trazabilidad/gestion/pedidocabecera - VIEJO
         let ruta = `${BASE_URL}pedidos/trazabilidad/gestion/pedidocabecera/${id}/${page}/${size}/${columna}/${order}`;
         // console.log(ruta);
         return this._httpClient.get(ruta);

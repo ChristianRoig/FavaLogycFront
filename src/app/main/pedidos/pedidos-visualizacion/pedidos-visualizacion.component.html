@@ -1,4 +1,4 @@
-<app-plantilla-fondo-simple titulo='{{ this.cabecera.pedidoTipo.nombre }} - {{ this.cabecera.pedidoCbte.nroCbte }}' arrowBack=true>
+<app-plantilla-fondo-simple *ngIf="this.cabecera" titulo='{{ this.cabecera.pedidoTipo.nombre }} - {{ this.cabecera.pedidoCbte.nroCbte }}' arrowBack=true>
 
     <!-- CONTENIDO -->
     <div contenido>
@@ -172,7 +172,7 @@
         <!-- Name Column -->
         <ng-container matColumnDef="codigoArticulo">
             <th mat-header-cell *matHeaderCellDef> Código Artìculo </th>
-            <td mat-cell *matCellDef="let element"> {{element.codigoArticulo}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.codigoArticulo | guion}} </td>
         </ng-container>
 
         <!-- Weight Column -->

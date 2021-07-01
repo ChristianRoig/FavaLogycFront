@@ -41,13 +41,9 @@ const appRoutes: Routes = [
         path        : 'lotes',
         loadChildren: () => import('./main/lotes/lotes.module').then(m => m.LotesModule)
     },
-    /* {
-        path        : 'control/lote-en',
-        loadChildren: () => import('./main/control/control.module').then(m => m.ControlModule)
-    }, */
     {
-        path        : 'articulos',
-        loadChildren: () => import('./main/articulos/articulos.module').then(m => m.ArticulosModule)
+        path        : 'remitos',
+        loadChildren: () => import('./main/remitos/remitos.module').then(m => m.RemitosModule)
     },
     {
         path        : 'remitos',
@@ -57,10 +53,11 @@ const appRoutes: Routes = [
         path        : 'distribucion',
         loadChildren: () => import('./main/distribucion/distribucion.module').then(m => m.DistribucionModule)
     },
-   /*  {
-        path        : 'carga', 
-        loadChildren: () => import('./main/carga/carga.module').then(m => m.CargaModule)
-    }, */
+    {
+        path        : 'articulos',
+        loadChildren: () => import('./main/articulos/articulos.module').then(m => m.ArticulosModule)
+    },
+
     {
         path        : 'articulos',
         loadChildren: () => import('./main/articulos/articulos.module').then(m => m.ArticulosModule)
@@ -95,7 +92,8 @@ const appRoutes: Routes = [
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        
     ],
     imports     : [
         BrowserModule,
@@ -123,7 +121,8 @@ const appRoutes: Routes = [
         PagesModule,
         SharedModule,
         LoginModule,
-        Error404Module
+        Error404Module,
+        
 
 
     ],

@@ -61,7 +61,7 @@ export class PedidosCupaComponent implements OnInit {
     this._service.getCUPA(this.idCabecera,page, size, columna, order).subscribe(paramsArt => {
       if(paramsArt){
         this.dataSourceCUPA = paramsArt.datos;
-        console.log(this.dataSourceCUPA);
+        console.log("DATA SOURCE CUPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",this.dataSourceCUPA);
         this.length = paramsArt.totalRegistros;
       }
     },
@@ -83,8 +83,8 @@ export class PedidosCupaComponent implements OnInit {
     });
   }
 
-  imprimirCupa(){
-    this._service.getImprimirCUPA( this.idPedido ).subscribe( data => {
+  imprimirCupa( id: number ){
+    this._service.getImprimirCUPA( id ).subscribe( data => {
 
       console.log("data", data );
       window.open( data.toString(), '_blank');

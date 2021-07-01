@@ -153,8 +153,7 @@ export const navigation: FuseNavigation[] = [
     //-------------------------------------------------------------------------------------  
     {
         id       : 'infoAuxiliar',
-        title    : 'Info Auxiliar',
-        translate: 'Info Auxiliar',
+        title    : 'Configuracion',
         type     : 'group',
         icon     : 'apps',
         children : [
@@ -179,15 +178,24 @@ export const navigation: FuseNavigation[] = [
                         exactMatch: true
                     },
                 ]
-            },
-            {
-                id       : 'beta and legacy',
-                title    : 'Beta and Legacy',
+            }
+        ]
+    },
+    //------------------------------------------------------------------------------------- */
+    {
+        id       : 'desarrollo',
+        title    : 'Desarrollo',
+        type     : 'group',
+        icon     : 'apps',
+        children : [
+                        {
+                id       : 'legacy',
+                title    : 'Versiones Viejas',
                 type     : 'collapsable',
                 children : [
                     {
                         id        : 'crear-pedido',
-                        title     : 'Crear Pedido',
+                        title     : 'Crear Pedido (viejo)',
                         type      : 'item',
                         url       : 'pedidos/crear-pedido_OLD',
                         exactMatch: true

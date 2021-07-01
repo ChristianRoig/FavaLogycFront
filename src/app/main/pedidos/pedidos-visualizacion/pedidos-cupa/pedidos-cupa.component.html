@@ -48,7 +48,7 @@
         <ng-container matColumnDef="accion">
             <th mat-header-cell *matHeaderCellDef> Acción </th>
             <td mat-cell *matCellDef="let element">
-                <button mat-stroked-button color="primary" (click)="imprimirCupa()"> Imprimir cupa </button>
+                <button mat-stroked-button color="primary" (click)="imprimirCupa( element.id )"> Imprimir cupa </button>
             </td>
         </ng-container>
 

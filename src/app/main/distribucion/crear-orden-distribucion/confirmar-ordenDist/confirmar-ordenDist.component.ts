@@ -96,7 +96,7 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
       this.setearValores();
       //this.getOrdenById();
     }
-    localStorage.clear();
+    //localStorage.clear();
   }
 
   crearOrden( accion: string ){

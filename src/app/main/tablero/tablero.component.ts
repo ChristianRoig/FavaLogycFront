@@ -9,6 +9,9 @@ import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 
+import { LoginService } from '../../auth/login/login.service';
+
+
 //service
 import { TableroService } from './tablero.service';
 
@@ -40,7 +43,8 @@ export class ProjectDashboardComponent implements OnInit {
     valorFijo: string = "En Proceso";
 
     dateNow = Date.now();
-  
+    user: string;
+    nombreUsuario: string = "Pablo";
     
 
     estados = [
@@ -58,7 +62,8 @@ export class ProjectDashboardComponent implements OnInit {
     constructor (
         private _fuseSidebarService: FuseSidebarService,
         private _tableroService: TableroService,
-        private _dialog: MatDialog
+        private _dialog: MatDialog,
+        private _loginService: LoginService
     )
     {
         /**
@@ -177,7 +182,34 @@ export class ProjectDashboardComponent implements OnInit {
         /* this.widget11.onContactsChanged = new BehaviorSubject({});
         this.widget11.onContactsChanged.next(this.widgets.widget11.table.rows);
         this.widget11.dataSource = new FilesDataSource(this.widget11); */ 
+        this.user = localStorage.getItem("username");
+        this.setearNombre();
     }
+
+
+    setearNombre(): void {
+      /* if (this.user === "burroni.santiago"){
+          this.nombreUsuario = "Santiago";
+      }
+      if (this.user === "herrada.laura"){
+          this.nombreUsuario = "Laura";
+      }
+      if (this.user === "honaine.nicolas"){
+          this.nombreUsuario = "Nicolas";
+      }
+      if (this.user === "luque.gonzalo"){
+          this.nombreUsuario = "Gonzalo";
+      }
+      if (this.user === "thomas.juan"){
+          this.nombreUsuario = "Juan";
+      }
+      if (this.user === "cejas.fernando"){
+          this.nombreUsuario = "Fernando";
+      }
+      if (this.user === "augelli.angel"){
+          this.nombreUsuario = "Angel";
+      } */
+  }
 
    /*  setInterval(() => {
         this.dateNow = Date.now();
