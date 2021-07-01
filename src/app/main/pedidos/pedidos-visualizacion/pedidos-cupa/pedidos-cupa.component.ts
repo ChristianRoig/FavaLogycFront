@@ -30,7 +30,7 @@ export class PedidosCupaComponent implements OnInit {
   size: number;
   columna: string;
   order: string;
-
+  idPedidoCbte: number;
   idPedido: number;
   mensaje: string;
 
@@ -52,13 +52,15 @@ export class PedidosCupaComponent implements OnInit {
     this.size = 50;
     this.columna = 'id';
     this.order = 'asc';
+    
+    this.idPedidoCbte = +localStorage.getItem('idCbte');
 
     this.buscarCUPA(this.page, this.size, this.columna, this.order);
 
   }
 
   buscarCUPA(page, size, columna, order){
-    this._service.getCUPA(this.idCabecera,page, size, columna, order).subscribe(paramsArt => {
+    this._service.getCUPA( this.idPedidoCbte, page, size, columna, order ).subscribe(paramsArt => {
       if(paramsArt){
         this.dataSourceCUPA = paramsArt.datos;
         console.log("DATA SOURCE CUPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",this.dataSourceCUPA);

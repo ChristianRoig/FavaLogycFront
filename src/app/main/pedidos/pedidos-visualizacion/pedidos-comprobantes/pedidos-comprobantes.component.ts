@@ -31,7 +31,7 @@ export class PedidosComprobantesComponent implements OnInit {
   size: number;
   columna: string;
   order: string;
-
+  idPedidoCbte: number;
   mensaje: string;
 
   constructor(
@@ -46,15 +46,16 @@ export class PedidosComprobantesComponent implements OnInit {
     this.size = 50;
     this.columna = 'id';
     this.order = 'asc';
+    this.idPedidoCbte = +localStorage.getItem('idCbte');
 
     this.buscarComprobantes(this.page, this.size, this.columna, this.order);
 
   }
 
   buscarComprobantes(page, size, columna, order){
-    this._service.getComprobantes(this.idCabecera,page, size, columna, order).subscribe(paramsArt => {
+    this._service.getComprobantes( this.idPedidoCbte, page, size, columna, order ).subscribe(paramsArt => {
       if(paramsArt){
-        //console.log(paramsArt.datos);
+        console.log("comprobantes -> ",paramsArt);
         this.dataSourceComprobantes = paramsArt.datos;
         this.length = paramsArt.totalRegistros;
       }

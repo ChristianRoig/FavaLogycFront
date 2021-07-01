@@ -67,6 +67,8 @@ export class PedidosDatosEntregaComponent implements OnInit {
 
   @Input('idCabecera') idCabecera: number;
 
+  idPedidoCbte: number;
+
   dataSourceDatosEntrega: any;
   dataSourceDatosDeEntrega: DatosDeEntrega;
 
@@ -102,15 +104,19 @@ export class PedidosDatosEntregaComponent implements OnInit {
     this.columna = 'direccion';
     this.order = 'asc';
 
-    this.buscarDatosEntrega(this.page, this.size, this.columna, this.order);
+    this.idPedidoCbte = +localStorage.getItem('idCbte');
+    console.log("this.idPedidoCbte", this.idPedidoCbte);
+    //localStorage.removeItem('idCbte');
+
+    this.buscarDatosEntrega( this.page, this.size, this.columna, this.order);
     
-    this.dataSourceDatosDeEntrega = this.listaDatosVacia;
-    this.getDatosDeEntrga();
+    //this.dataSourceDatosDeEntrega = this.listaDatosVacia;
+    //this.getDatosDeEntrga();
     console.log('termino el onInit');
   }
 
   buscarDatosEntrega(page, size, columna, order){
-    this._service.getDatosEntrega(this.idCabecera, page, size, columna, order).subscribe(paramsArt => {
+    this._service.getDatosEntrega( this.idPedidoCbte, page, size, columna, order ).subscribe(paramsArt => {
       if(paramsArt){
         console.log("DATOS DE ENTREGA -> ",paramsArt);
         this.dataSourceDatosEntrega = paramsArt.datos;

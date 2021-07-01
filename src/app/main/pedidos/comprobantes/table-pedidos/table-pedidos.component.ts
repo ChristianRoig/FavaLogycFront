@@ -168,8 +168,10 @@ export class TablePedidosComponent implements OnInit {
     );
   }
 
-  abrir( idPedido: number ){
-    console.log("idPedido",idPedido);
+  abrir( idPedido: number, idCbte: string ){
+
+    localStorage.setItem('idCbte', idCbte);
+    console.log("idPedido", idPedido);
     let ruta = `pedidos/ver-pedido/${ idPedido }`;
     this._router.navigate([ ruta ]);
   }

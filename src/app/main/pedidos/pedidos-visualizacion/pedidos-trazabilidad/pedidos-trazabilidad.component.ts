@@ -32,7 +32,7 @@ export class PedidosTrazabilidadComponent implements OnInit {
   size: number;
   columna: string;
   order: string;
-
+  idPedidoCbte: number;
   mensaje:string;
 
   constructor(
@@ -51,15 +51,17 @@ export class PedidosTrazabilidadComponent implements OnInit {
     this.columna = 'fecha';
     this.order = 'asc';
 
+    this.idPedidoCbte = +localStorage.getItem('idCbte');
+
     this.buscarTrazabilidad(this.page, this.size, this.columna, this.order);
 
   }
 
   buscarTrazabilidad(page, size, columna, order){
-    this._service.getTrazabilidad(this.idCabecera,page, size, columna, order).subscribe(paramsArt => {
+    this._service.getTrazabilidad( this.idPedidoCbte, page, size, columna, order ).subscribe(paramsArt => {
       if(paramsArt){
-        console.log("TRAZABILIDAD -> ", paramsArt);
         this.dataSourceTrazabilidad = paramsArt.datos;
+        console.log("TRAZABILIDAD -> ", this.dataSourceTrazabilidad);
         this.length = paramsArt.totalRegistros;
       }
     },
