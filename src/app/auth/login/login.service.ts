@@ -67,7 +67,7 @@ export class LoginService {
         //this.perfilLogOnChanged = new BehaviorSubject([]);
         
         const userLog = this._cookieService.get(user);        
-        console.log("- userLog | ", userLog);
+        //console.log("- userLog | ", userLog);
          //ver si es necesario el manejo de perfilUser en favalogyc 
         
         /* if (userLog){

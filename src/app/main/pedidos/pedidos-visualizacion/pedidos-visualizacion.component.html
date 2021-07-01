@@ -1,4 +1,4 @@
-<app-plantilla-fondo-simple titulo='{{ this.cabecera.pedidoTipo.nombre }} - {{ this.cabecera.pedidoCbte.nroCbte }}' arrowBack=true>
+<app-plantilla-fondo-simple *ngIf="this.cabecera" titulo='{{ this.cabecera.pedidoTipo.nombre }} - {{ this.cabecera.pedidoCbte.nroCbte }}' arrowBack=true>
 
     <!-- CONTENIDO -->
     <div contenido>

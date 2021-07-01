@@ -126,7 +126,7 @@ export class ToolbarComponent implements OnInit, OnDestroy
         //this.user = this._loginService.infoOnChanged.getValue();
         this.user = localStorage.getItem("username");
         this.setearNombre();  
-        console.log("this.user", this.user);
+        //console.log("this.user", this.user);
     }
 
     /**

@@ -93,8 +93,8 @@ export class FuseNavigationComponent implements OnInit
                             respu = [];
                         }
 
-                        console.log("rol change");
-                        console.log(respu);
+                        //console.log("rol change");
+                        //console.log(respu);
                         this._loginService.hideByRol(respu);
                         // this.hideByRol(respu); Mejor en el servicio, asi cambiamos menos el kernel de Fuse
                     },
