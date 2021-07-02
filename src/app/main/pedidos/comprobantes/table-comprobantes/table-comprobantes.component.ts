@@ -77,7 +77,7 @@ export class TableComprobantesComponent implements OnInit {
       data => {
         this.dataSource2 = data.datos;
         this.length = data.totalRegistros;
-        console.log(data);
+        //console.log(data);
         console.log("comprobantes con pedidos", this.dataSource2);
         //this.size = data.totalRegistros;
       },
@@ -162,8 +162,9 @@ export class TableComprobantesComponent implements OnInit {
     }
   }
 
-  abrir( idPedido: number ) { 
+  abrir( idPedido: number, idCbte: number ) { 
     //let ruta = `pedidos/ver-comprobante/${ idPedido }`; //para forzar fallo
+    localStorage.setItem('idCbte', idCbte.toString() );
     let ruta = `pedidos/ver-pedido/${ idPedido }`;
     this._router.navigate([ ruta ]);
   }
