@@ -23,7 +23,7 @@ export class PedidosVisualizacionService
         return this._httpClient.get(ruta);
     }
 
-    getArticulos(id, page, size, columna, order): Observable<any> {   
+    getArticulos( id, page, size, columna, order ): Observable<any> {   
 
         let ruta = `${BASE_URL}pedidos/pedidodetalle/comprobante/${ id }/${ page }/${ size }/${ columna }/${ order }`;
         console.log(ruta);
