@@ -2,6 +2,7 @@
 <!-- <h2 *ngIf="this.data.option === 'add'" class="pl-16" mat-dialog-title>Agregar Dato de entrega</h2>
 <h2 *ngIf="this.data.option === 'upd'" class="pl-16" mat-dialog-title>Modificar Dato de entrega</h2>
 <h2 *ngIf="this.data.option === 'view'" class="pl-16" mat-dialog-title>Ver Dato de entrega</h2> -->
+
 <div fxLayout="row" style="width: 100%;" class="formClass">
     <mat-toolbar matDialogTitle class="mat-accent">
         <mat-toolbar-row fxLayoutAlign="center" class="titulo2">
@@ -11,7 +12,7 @@
         </mat-toolbar-row>
     </mat-toolbar>
 </div>
-<mat-dialog-content class="mat-typography contenedorPadre">
+<mat-dialog-content *ngIf="this.crearDirec" class="mat-typography contenedorPadre">
 
     <!-- <div fxLayout="column" class="divPrincipal"> -->
 
@@ -21,7 +22,7 @@
             <mat-label class="titulo">Información de entrega</mat-label>
             <div class="divDos">
                 <mat-form-field appearance="outline" fxFlex class="selector">
-                    <mat-label>{{ filtroTransporte ? 'Trasnporte' : 'Cargando...'}}</mat-label>
+                    <mat-label>{{ filtroTransporte ? 'Transporte' : 'Cargando...'}}</mat-label>
                     <select matNativeControl (change)="selectTransporte($event)" [disabled]="!filtroTransporte || deshabilitado">
                             <option *ngIf="this.mostrarDatos == false" [value]="0">Seleccionar Transporte</option>
                             <option *ngIf="this.mostrarDatos == true"> {{ devolverNombreTransporte(this.data.item.sysTransporte.id) }} </option>
@@ -113,6 +114,39 @@
                 </mat-form-field>
             </div>
         </div>
+
+    </form>
+
+</mat-dialog-content>
+
+<!-- --------------------------------------------------------------------------------------------------------------------------------- -->
+
+<mat-dialog-content *ngIf="!this.crearDirec" class="mat-typography contenedorPadre">
+
+    <!-- <div fxLayout="column" class="divPrincipal"> -->
+
+    <form class="formularioDos" fxLayout="column" fxFlex="1 0 auto" name="form" fusePerfectScrollbar>
+
+        <!-- <div class="contenedorBarraDos"> -->
+        <div class="divCuatro">
+
+            <mat-label class="tituloDirecciones">Direcciones disponibles</mat-label>
+            <mat-form-field appearance="outline" fxFlex class="selector">
+                <mat-label>Seleccionar dirección</mat-label>
+                <select matNativeControl>
+                    <option>Calle Luro 641</option>
+                    <option> Calle Falsa 123</option>
+                </select>
+            </mat-form-field>
+            <mat-label class="tituloDirecciones">ó</mat-label>
+
+            <button mat-raised-button class="btnAddDirecc" color="accent" (click)="agregarNuevaDirec()">Agregar nueva dirección</button>
+        </div>
+        <!-- <mat-form-field appearance="outline" fxFlex class="selector">
+                <mat-label>Fecha de entrega</mat-label>
+                <button mat-raised-button class="btn" color="accent">Agregar nueva dirección</button>
+            </mat-form-field> -->
+        <!-- </div> -->
 
     </form>
 

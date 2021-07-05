@@ -120,6 +120,7 @@ export class AgregarDatosEntregaComponent implements OnInit{
     estanTodosLosDatos: boolean = false;
     localidadID: string = "7600";
     idProv: number = 1;
+    crearDirec: boolean = false;
 
     ngOnInit(): void {
 
@@ -505,6 +506,10 @@ export class AgregarDatosEntregaComponent implements OnInit{
       this.selectedTransporte = (event.target as HTMLSelectElement).value;
       //console.log(this.selectedTransporte);
       this.controlarExistenDatos();
+    }
+
+    agregarNuevaDirec(){
+      this.crearDirec = true;
     }
 
     addEvent( evento ) {
