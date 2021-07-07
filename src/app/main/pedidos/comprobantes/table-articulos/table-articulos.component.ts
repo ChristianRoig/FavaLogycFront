@@ -67,21 +67,6 @@ export class TableArticulosComponent implements OnInit {
     "hastaPedido" : "null",
     "idLote" : null
   }
-  
-  /* body: BodyDetalle = {
-    idTipo      : null,
-    idTurno     : null,
-    idOrigen    : null,
-    idEstado    : null,
-    idEtapa     : null,
-    idProvincia : null,
-    idLocalidad : null,
-    desdePedido : null,
-    hastaPedido : null,
-    lote        : null,
-    desdeLote   : null,
-    hastaLote   : null
-  }; */
 
   constructor(private _router: Router, 
               private _fuseSidebarService: FuseSidebarService, 
@@ -94,13 +79,6 @@ export class TableArticulosComponent implements OnInit {
     this.getArticulosDePedidos();
   }
 
-  /* verActivacion(){
-    if(this.numero === 3)
-      return true;
-    else
-      return false;
-  } */
-
   abrir( idPedido: number ){
     let ruta = `pedidos/ver-pedido/${ idPedido }`;
     this._router.navigate([ ruta ]);
@@ -112,7 +90,6 @@ export class TableArticulosComponent implements OnInit {
         console.log("data articulos -> ", data);
         this.dataSource2 = data.datos;
         this.length = data.totalRegistros;
-        //this.cantArt.emit( this.length ); //devuelvo el total de Articulos
       },
       (err: HttpErrorResponse) => {
         this.length = 0

@@ -40,13 +40,10 @@ export class TablePedidosComponent implements OnInit {
   dataSource2: any;
 
   lote: string = null;
-  //busqueda: string = "";
   length: number = 0;
   page: number = 0;
   size: number = 50;
-  //columna: string = 'idDetalle';
   columna: string = 'idCabPed';
-  //order: string = 'asc';
   order: string = 'desc';
 
   mensaje: string;
@@ -64,21 +61,6 @@ export class TablePedidosComponent implements OnInit {
     "hastaPedido" : "null",
     "idLote" : null
   }
-/* 
-  body: BodyDetalle = {
-    idTipo      : null,
-    idTurno     : null,
-    idOrigen    : null,
-    idEstado    : null,
-    idEtapa     : null,
-    idProvincia : null,
-    idLocalidad : null,
-    desdePedido : null,
-    hastaPedido : null,
-    lote        : null,
-    desdeLote   : null,
-    hastaLote   : null
-  }; */
 
   constructor(private _router: Router, 
               private _fuseSidebarService: FuseSidebarService, 

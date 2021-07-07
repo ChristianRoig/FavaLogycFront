@@ -13,14 +13,13 @@ export class TableArticulosService
         private _httpClient: HttpClient) { }
 
     getArticulosDePedidos( body ,page, size, columna, order ): Observable<any> {
-        //console.log("ARTICULOS |",columna, "|", order);
+
         let headers = new HttpHeaders({
             "Content-Type": "application/json"
         });
 
         let ruta = `${BASE_URL}pedidos/pedidodetalle/articulos-de-pedidos/${ page }/${ size }/${ columna }/${ order }`;
 
-        //return this._httpClient.post(ruta, {headers: headers});
         return this._httpClient.post(ruta, body, {headers: headers});
     }
 
@@ -35,8 +34,6 @@ export class TableArticulosService
             buscar = `/${busqueda}`
 
         let ruta = `${BASE_URL}pedidos/pedidodetalle/articulos-de-pedidos/${ busqueda }/${ page }/${ size }/${ columna }/${ order }`;
-        //getAll
-        //let ruta = `${BASE_URL}pedidos/pedidodetalle/comprobantes-con-pedidos/${ page }/${ size }/${ columna }/${ order }`; 
 
         return this._httpClient.post(ruta, body, {headers: headers});
     }
