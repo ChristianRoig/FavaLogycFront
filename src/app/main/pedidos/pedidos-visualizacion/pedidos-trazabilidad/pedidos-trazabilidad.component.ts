@@ -1,9 +1,9 @@
 import {Component, ViewEncapsulation, OnInit, Input} from '@angular/core';
-import { fuseAnimations } from '@fuse/animations';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
+
+import { fuseAnimations } from '@fuse/animations';
 
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 

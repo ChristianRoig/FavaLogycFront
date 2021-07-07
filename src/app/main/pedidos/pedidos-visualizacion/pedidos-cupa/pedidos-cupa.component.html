@@ -19,10 +19,7 @@
         <!-- codigoArticulo Column -->
         <ng-container matColumnDef="codigoArticulo">
             <th mat-sort-header="codigoArticulo" mat-header-cell *matHeaderCellDef> Código Artículo </th>
-            <td mat-cell *matCellDef="let element"> 123 </td>
-            <!-- <td mat-cell *matCellDef="let element"> {{element.codigoUnicoParteArticulo ?element.codigoUnicoParteArticulo : ''}} </td> -->
-            <!-- <td mat-cell *matCellDef="let element"> {{element.articuloCupa.articulo.codigoArticulo}} </td> -->
-
+            <td mat-cell *matCellDef="let element"> {{element.pedidoDetalle ? element.pedidoDetalle.codigoArticuloAsociado : ''}} </td>
         </ng-container>
 
         <!-- CUPA Column -->
