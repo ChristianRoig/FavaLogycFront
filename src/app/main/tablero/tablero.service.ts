@@ -23,29 +23,11 @@ export class TableroService {
     {
     }
 
-
-    
-/* ----------------------------------------------------------------------------------------------------------------------- */
-    /* getProjects( ): Observable<any> {
-        let ruta = `http://localhost:3000/proyectos`; 
-    
-        return this._httpClient.get(ruta);
-    } */
-
-    /* getWidgets( ): Observable<any> {
-
-    let ruta = `http://localhost:3000/resumenes`; 
-    //let ruta = `${ BASE_URL }pedidos/resumen/2021-03-15/SALON/${ fecha }/${ lugar }`;
-    
-    return this._httpClient.get(ruta);
-    } */
-
     getResumen( ): Observable<any> {
 
         let ruta = `${ BASE_URL }pedidos/resumen/SALON`;
         
         return this._httpClient.get(ruta);
     }
-/* ----------------------------------------------------------------------------------------------------------------------- */
     
 }
