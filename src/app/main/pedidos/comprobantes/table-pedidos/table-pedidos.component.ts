@@ -171,6 +171,7 @@ export class TablePedidosComponent implements OnInit {
   abrir( idPedido: number, idCbte: string ){
 
     localStorage.setItem('idCbte', idCbte);
+    localStorage.setItem('vengoDeCbte', "false" );
     console.log("idPedido", idPedido);
     let ruta = `pedidos/ver-pedido/${ idPedido }`;
     this._router.navigate([ ruta ]);

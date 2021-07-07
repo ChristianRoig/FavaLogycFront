@@ -30,10 +30,24 @@ export class PedidosVisualizacionService
         return this._httpClient.get(ruta);
     }
 
+    getArticulosPedidos( id, page, size, columna, order ): Observable<any> {   
+
+        let ruta = `${BASE_URL}pedidos/pedidodetalle/cabecera/${ id }/${ page }/${ size }/${ columna }/${ order }`;
+        console.log(ruta);
+        return this._httpClient.get(ruta);
+    }
+
     getTrazabilidad(id, page, size, columna, order): Observable<any>
     {   //pedidos/trazabilidad/gestion/comprobante - NUEVO
         //pedidos/trazabilidad/gestion/pedidocabecera - VIEJO
         let ruta = `${BASE_URL}pedidos/trazabilidad/gestion/comprobante/${ id }/${ page }/${ size }/${ columna }/${ order }`;
+        // console.log(ruta);
+        return this._httpClient.get(ruta);
+    }
+
+    getTrazabilidadPedidos(id, page, size, columna, order): Observable<any>
+    {   
+        let ruta = `${BASE_URL}pedidos/trazabilidad/gestion/pedidocabecera/${ id }/${ page }/${ size }/${ columna }/${ order }`;
         // console.log(ruta);
         return this._httpClient.get(ruta);
     }
@@ -45,15 +59,34 @@ export class PedidosVisualizacionService
         return this._httpClient.get(ruta);
     
     }
+    getDatosEntregaPedidos(id, page, size, columna, order): Observable<any>
+    {   //pedidos/datosentrega/comprobante
+        let ruta = `${BASE_URL}pedidos/datosentrega/cabecera/${id}/${page}/${size}/${columna}/${order}`;
+        // console.log(ruta);
+        return this._httpClient.get(ruta);
+    
+    }
 
     getComprobantes(id, page, size, columna, order): Observable<any> {   
         let ruta = `${BASE_URL}pedidos/pedidocbte/comprobante/${ id }/${ page }/${ size }/${ columna }/${ order }`;
         console.log(ruta);
         return this._httpClient.get(ruta);
     }
+    
+    getComprobantesPedidos(id, page, size, columna, order): Observable<any> {   
+        let ruta = `${BASE_URL}pedidos/pedidocbte/cabecera/${ id }/${ page }/${ size }/${ columna }/${ order }`;
+        console.log(ruta);
+        return this._httpClient.get(ruta);
+    }
 
     getCUPA(id, page, size, columna, order): Observable<any> {   
         let ruta = `${BASE_URL}pedidos/pedidoparte/comprobante/${id}/${page}/${size}/${columna}/${order}`;
+        console.log(ruta);
+        return this._httpClient.get(ruta);
+    }
+
+    getCUPAPedidos(id, page, size, columna, order): Observable<any> {   
+        let ruta = `${BASE_URL}pedidos/pedidoparte/cabecera/${id}/${page}/${size}/${columna}/${order}`;
         console.log(ruta);
         return this._httpClient.get(ruta);
     }

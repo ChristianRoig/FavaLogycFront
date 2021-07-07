@@ -31,8 +31,11 @@ export class PedidosComprobantesComponent implements OnInit {
   size: number;
   columna: string;
   order: string;
+
+  idPedidoCabecera: number;
   idPedidoCbte: number;
   mensaje: string;
+  vengoDeCbte: string;
 
   constructor(
       private _router: Router,
@@ -42,40 +45,77 @@ export class PedidosComprobantesComponent implements OnInit {
   ){ }
 
   ngOnInit(): void{
+
+    this.route.params.subscribe( params => {
+      this.idPedidoCabecera = params['id'];
+      console.log(this.idPedidoCabecera);
+    });
+
     this.page = 0;
     this.size = 50;
     this.columna = 'id';
     this.order = 'asc';
     this.idPedidoCbte = +localStorage.getItem('idCbte');
+    this.vengoDeCbte = localStorage.getItem('vengoDeCbte');
 
     this.buscarComprobantes(this.page, this.size, this.columna, this.order);
 
   }
 
   buscarComprobantes(page, size, columna, order){
-    this._service.getComprobantes( this.idPedidoCbte, page, size, columna, order ).subscribe(paramsArt => {
-      if(paramsArt){
-        console.log("comprobantes -> ",paramsArt);
-        this.dataSourceComprobantes = paramsArt.datos;
-        this.length = paramsArt.totalRegistros;
-      }
-    },
-    (err: HttpErrorResponse) => {
-      if (err.error instanceof Error) {
-        console.log("Client-side error");
-      } else {
-        let errStatus = err.status
-        if (errStatus == 0){
-          let titulo = 'Error de Servidor';
-          let mensaje = "Por favor comunicarse con Sistemas";
-          this.mostrarError(errStatus, titulo, mensaje);
-        } else {
-          let titulo = 'Error al cargar Trazabilidad';
-          let mensaje = err.error.message.toString();
-          this.mensaje = mensaje;
+
+    if( this.vengoDeCbte == "true"){ 
+      console.log("COMPROBANTES - vengo de comprobante", this.idPedidoCbte);
+      this._service.getComprobantes( this.idPedidoCbte, page, size, columna, order ).subscribe(paramsArt => {
+        if(paramsArt){
+          console.log("comprobantes -> ",paramsArt);
+          this.dataSourceComprobantes = paramsArt.datos;
+          this.length = paramsArt.totalRegistros;
         }
-      }
-    });
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error");
+        } else {
+          let errStatus = err.status
+          if (errStatus == 0){
+            let titulo = 'Error de Servidor';
+            let mensaje = "Por favor comunicarse con Sistemas";
+            this.mostrarError(errStatus, titulo, mensaje);
+          } else {
+            let titulo = 'Error al cargar Trazabilidad';
+            let mensaje = err.error.message.toString();
+            this.mensaje = mensaje;
+          }
+        }
+      });
+    }
+    if( this.vengoDeCbte == "false"){ 
+      console.log("COMPROBANTES - vengo de pedido", this.idPedidoCabecera);
+      this._service.getComprobantesPedidos( this.idPedidoCabecera, page, size, columna, order ).subscribe(paramsArt => {
+        if(paramsArt){
+          console.log("comprobantes -> ",paramsArt);
+          this.dataSourceComprobantes = paramsArt.datos;
+          this.length = paramsArt.totalRegistros;
+        }
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error");
+        } else {
+          let errStatus = err.status
+          if (errStatus == 0){
+            let titulo = 'Error de Servidor';
+            let mensaje = "Por favor comunicarse con Sistemas";
+            this.mostrarError(errStatus, titulo, mensaje);
+          } else {
+            let titulo = 'Error al cargar Trazabilidad';
+            let mensaje = err.error.message.toString();
+            this.mensaje = mensaje;
+          }
+        }
+      });
+    }
   }
 
   sortData( event ) {
