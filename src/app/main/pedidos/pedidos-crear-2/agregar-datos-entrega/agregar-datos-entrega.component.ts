@@ -2,12 +2,9 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { AnyMxRecord } from 'dns';
 
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 
-import { PedidosListaService } from '../../x_NOSEUSA_pedidos-lista/pedidos-lista.service';
-import { Console } from 'console';
 import { AgregarDatosEntregaService } from './agregar-datos-entrega.service';
 
 export interface Articulo {
@@ -54,7 +51,6 @@ export class AgregarDatosEntregaComponent implements OnInit{
   constructor(
     public dialogRef: MatDialogRef<AgregarDatosEntregaComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private _pedidosListaService: PedidosListaService,
     private _agregarDatosEntregaService: AgregarDatosEntregaService,
     private _dialog: MatDialog,
     private _router: Router) {
@@ -372,10 +368,8 @@ export class AgregarDatosEntregaComponent implements OnInit{
         console.log("this.provincia", params[0]);
         this.filtroProvincias = params.datos;
         this.selectedProvincia = this.filtroProvincias[0].id;
-        //this.selectedProvincia = params.id;
-        //console.log("filtroProvincias -> ", this.selectedProvincia);
+
          //console.log("filtroProvincias asdasd-> ", this.selectedProvincia);
-        //this.filtroProvincias = params;
         this._agregarDatosEntregaService.getAllLocalidadesPorProvincia( this.selectedProvincia );
       },
       (err: HttpErrorResponse) => {
