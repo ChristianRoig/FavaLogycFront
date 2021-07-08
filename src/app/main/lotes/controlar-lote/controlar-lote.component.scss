@@ -1,6 +1,5 @@
 .btn {
     height: 40px;
-    /* margin-bottom: 27px; */
     width: 120px;
     padding-left: 5px;
     padding-right: 5px;
@@ -9,7 +8,6 @@
 
 .btnBorrar {
     height: 40px;
-    /* margin-bottom: 27px; */
     width: 120px;
     padding-left: 5px;
     padding-right: 5px;
@@ -17,7 +15,6 @@
 }
 
 .btnToggle {
-    //margin-left: 100px;
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -56,8 +53,6 @@
     height: 80px;
     margin-top: 30px;
 }
-
-
 
 .estadoAcontrolar {
     margin-left: 20px;
@@ -137,7 +132,6 @@
         width: 500px;
     }
     .botonesBusqueda {
-        //margin-right: 40px;
         display: flex;
         justify-content: space-between;
         height: 65px;

@@ -44,11 +44,7 @@
                 </mat-form-field>
                 <button mat-raised-button class="btnBorrar" color="warn" (click)="borrarArticuloDeLotePorCupa()">Borrar</button>
             </div>
-            <!-- <div class="avisoControl"> EN PROCESO -->
-            <!-- *ngIf="controlado" -->
-            <!-- <mat-card-subtitle class="cardControl">Control exitoso</mat-card-subtitle> -->
-            <!--  <mat-label class="cardControl">Control exitoso</mat-label>
-            </div> -->
+
             <div fxLayout="row" class="divEstado">
                 <mat-label class="mt-16">Estado del lote: </mat-label>
                 <p *ngIf="this.estadoLote === 'CONTROLADO'" class="estadoControlado">{{ this.estadoLote }}</p>
