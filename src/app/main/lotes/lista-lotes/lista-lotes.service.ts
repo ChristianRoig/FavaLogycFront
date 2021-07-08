@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'environments/environment';
-import { observeOn } from 'rxjs/operators';
+
 import { BodyDetalleFecha } from './lista-lotes.component';
 
 const BASE_URL = environment.server + environment.baseUrl;

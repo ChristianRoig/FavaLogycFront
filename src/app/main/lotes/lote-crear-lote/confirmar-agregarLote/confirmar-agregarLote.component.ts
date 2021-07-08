@@ -1,18 +1,14 @@
 import { Component, OnInit, Inject, ElementRef, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
-import { SelectionModel } from '@angular/cdk/collections';
+import { Router } from '@angular/router';
 
 // componentes
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
-/* import { ModalDeseaImprimirLoteComponent } from '../modal-desea-imprimir/modal-desea-imprimir.component'; */
-import { VerImpresorasComponent } from '../../../lotes/lista-lotes/ver-impresoras/ver-impresoras.component';
 
 //servicios
 import { ConfirmarAgregarLoteService } from './confirmar-agregarLote.service';
-import { ListaLotesService } from '../../lista-lotes/lista-lotes.service';
-import { ModalDeseaImprimirLoteComponent } from '../modal-desea-imprimir/modal-desea-imprimir.component';
+
 
 export interface PeriodicElement {
   Id: number;
@@ -184,123 +180,9 @@ export class ConfirmarAgregarLoteComponent implements OnInit {
     });
   }
 
-  /* esperarYnavegarAlotes(){
-    setTimeout(() => {                          
-      this._dialog.closeAll();
-      this.navegarAlistaLotes( );
-    }, 1000);
-  } */
-
   navegarAlistaLotes(){
     let ruta = `lotes/lista-lotes`;
     this._router.navigate([ruta]);
   }
-
-  volver(){
-    /* let ruta = `apps/lotes/crear-lote`;
-    this._router.navigate([ruta]); */
-  }
-
-  /* getLote( idLote: number ){                            
-    this._serviceAgregarLoteConfirmar.getLote( idLote ) .subscribe( data => {
-      console.log(data);
-       this.loteActual = data;
-      this.nombreLote = this.loteActual.nombre;
-      this.idLote = this.loteActual.idLote; 
-    },
-    (err: HttpErrorResponse) => {
-      if (err.error instanceof Error) {
-        console.log("Client-side error");
-      } else {
-        let errStatus = err.status
-        if (errStatus == 0){
-          let titulo = 'Error de Servidor';
-          let mensaje = "Por favor comunicarse con Sistemas";
-          this.mostrarError(errStatus, titulo, mensaje);
-        } else {
-          let titulo = 'Error al obtener el lote';
-          let mensaje = err.error.message.toString();
-          this.mostrarError(errStatus, titulo, mensaje);
-        }
-      }
-    });
-  } */
-
-  /* imprimirCupas(idLote: number){
-    const dialogRef = this._dialog.open( ModalDeseaImprimirLoteComponent, {
-      data: {
-        idLote: idLote
-      }
-    });
-
-    dialogRef.beforeClosed()
-      .subscribe(result => {
-        if ( result ){
-          this.imprimirCupa(idLote);
-        }
-        
-      });
-  }
-
-  imprimirCupa(idLote){
-
-    let application_name = "Favalogyc";
-    let permission_name = "Impresion_CUPA"
-
-    if(localStorage.getItem('ImpresoraCUPA')){
-      this.imprimir(idLote);
-    } else {
-      this.seleccionarImpresora(idLote);     //ARREGLAR ESTO
-    } 
-    // }
-  }
-
-  imprimir(idLote){
-    let impresora = localStorage.getItem('ImpresoraCUPA');
-    console.log(idLote);
-    alert("idLote");
-    this._listaLoteService.imprimir( idLote, impresora ).subscribe(data => {
-      
-      let titulo = 'Estado de impresión';
-      let mensaje = "Completado correctamente";
-      this.mostrarError(-1, titulo, mensaje);
-    },
-    (err: HttpErrorResponse) => {
-      if (err.error instanceof Error) {
-        console.log("Client-side error");
-      } else {
-        let errStatus = err.status
-        if (errStatus == 0){
-          let titulo = 'Error de Servidor';
-          let mensaje = "Por favor comunicarse con Sistemas";
-          this.mostrarError(errStatus, titulo, mensaje);
-        } else {
-          let titulo = 'Error al imprimir';
-          let mensaje = err.error.message.toString();
-          this.mostrarError(errStatus, titulo, mensaje);
-        }
-      }
-    });
-  } 
-  
-  seleccionarImpresora(idLote){
-    let dialogRef = this._dialog.open(VerImpresorasComponent, {
-      data: {
-        //pedidos: this.selection,
-        pedidos: this.dataSourceArticulos,
-        impresora: 'ImpresoraCUPA'
-      }
-    });
-    dialogRef.afterClosed()
-      .subscribe(result => {
-        if(localStorage.getItem('ImpresoraCUPA')){
-          this.imprimir(idLote);
-        } else {
-          dialogRef.close();
-          this.seleccionarImpresora(idLote);
-        }
-      });
-  } */
-
 
 }
