@@ -4,7 +4,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 import { SelectionModel } from '@angular/cdk/collections';
-import { Debounce } from 'app/shared/decorators/debounce';
 
 //componentes
 import { ModalConfirmacionBorrarComponent } from './modal-confirmacion-borrar/modal-confirmacion-borrar.component';
@@ -68,7 +67,6 @@ export class VerOrdenDistribucionComponent implements OnInit {
     });
     this.buscarOrdenPorId();
     this.getRemitosDeOrdenDistribucion(this.idOrdenDist);
-    //this.dataSource2 = JSON.parse(localStorage.getItem('Remitir'))._selected;
     this.datosOrden = JSON.parse(localStorage.getItem('orden'));
   }
   

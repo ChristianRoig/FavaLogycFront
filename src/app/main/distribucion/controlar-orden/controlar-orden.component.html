@@ -1,4 +1,3 @@
-<!-- ---------------------------------sadasdasdasd---------------- -->
 <app-plantilla-fondo-simple titulo='Controlar Orden' arrowBack=true>
 
     <!-- CONTENIDO -->
@@ -17,13 +16,11 @@
                     <div class="controlesBusqueda2">
                         <mat-form-field appearance="outline" class="inputBusqueda2">
                             <mat-label>Controlar un articulo por CUPA</mat-label>
-                            <!-- (keyup)="searchCUPA()" -->
                             <input #controlarCupa (keyup)="searchCupa()" (keydown)="saltarAboton($event)" matInput value="" placeholder="Ingrese el CUPA de un articulo">
                             <mat-icon matSuffix>search</mat-icon>
                         </mat-form-field>
 
                         <div class="botonesBusqueda2">
-                            <!-- (click)="getRemitoPorId()" -->
                             <button [disabled]="!this.cupa" #btnRef="matButton" (click)="controlarArticuloPorCupa()" class="btn" mat-raised-button color="primary">
                                 Controlar 
                             </button>
@@ -41,23 +38,18 @@
 <!-- ------------------------------------------------------------------------------------------------------------------------------ -->
 <ng-template #remitos>
 
-    <!-- <mat-icon aria-hidden="true" class="material-icons color_white ">info</mat-icon> -->
     <div fxLayout="row" class="divEstado">
         <mat-label class="mt-16">Estado del lote: </mat-label>
         <p *ngIf="this.estadoOrden === 'CONTROLADO'" class="estadoControlado">{{ this.estadoOrden }}</p>
         <p *ngIf="this.estadoOrden === 'A CONTROLAR'" class="estadoAcontrolar">{{ this.estadoOrden }}</p>
     </div>
-    <!-- <mat-card-subtitle class="pl-24">Articulos que componen la orden</mat-card-subtitle> -->
-    <!-- "nombreTipoCbte"| nroParte| -->
-    <!-- idArticulo|nombreArticulo|codigoArticulo|codigoUnicoParteArticulo|etapa|nroParte|nroCbte|checkTransporte -->
+
     <div style="width: 100%; overflow: auto;">
-        <!-- <p></p> -->
         <div class="divSpinner" *ngIf="!this.dataSource2">
             <mat-spinner strokeWidth="5" [diameter]="40"></mat-spinner>
         </div>
 
         <table mat-table matSort *ngIf="this.dataSource2" (matSortChange)="sortData($event)" [dataSource]="dataSource2" class="mb-8 tablaArticulos">
-            <!-- codigoArticulo, id, nombre, partes, codigoUnicoParteArticulo -->
             <ng-container matColumnDef="idArticulo">
                 <th mat-header-cell *matHeaderCellDef> Id Articulo </th>
                 <td mat-cell class="pl-32 " *matCellDef="let articulo"> {{ articulo.idArticulo }} </td>
