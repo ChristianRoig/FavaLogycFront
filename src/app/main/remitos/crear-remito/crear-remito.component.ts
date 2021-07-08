@@ -1,13 +1,15 @@
 import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
-import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
-import { Debounce } from 'app/shared/decorators/debounce';
-import { MatDialog } from '@angular/material/dialog';
-import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 import { HttpErrorResponse } from '@angular/common/http';
-import { RemitoService } from './crear-remito.service';
+import { MatDialog } from '@angular/material/dialog';
+
+import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
+
+import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 import { ConfirmarRemitoComponent } from './confirmar-remito/confirmar-remito.component';
+
+import { RemitoService } from './crear-remito.service';
 
 export interface Articulos {
 
@@ -315,19 +317,6 @@ export class RemitosComponent implements OnInit {
         selection: this.selection
       }
     });
-
-    dialogRef.afterClosed()
-    .subscribe( () => {    // definir!!!!!!
-      /* let ruta = `apps/remitos/lista-remitos`;
-      this._router.navigate([ruta]);  */
-
-      /* if (errStatus != 0) { //ver el errorStatus
-          let ruta = `apps/remitos/lista-remitos`;
-          this._router.navigate([ruta]); 
-      } else {
-        this._router.navigate(['']);
-      } */
-      });
   }
 
   isAllSelected() {

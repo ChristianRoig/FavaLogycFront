@@ -71,25 +71,6 @@
 
                     </div>
 
-
-                    <!-- <div fxLayout="row">
-
-                        <mat-form-field appearance="outline" style="width: 24%;" class="mt-8 inputBusqueda">
-                            <mat-label>Código de Artículo o Comprobante</mat-label>
-                            <input #buscarCbte class="text-uppercase" (keyup)="searchCbte()" matInput value="" placeholder="Buscar Cód. Artículo o comprobante">
-                            <mat-icon matSuffix>search</mat-icon>
-                        </mat-form-field>
-
-                        <button (click)="getPedidosSinRemitir()" class="btn" mat-raised-button color="primary" [disabled]="!this.busqueda">
-                            Buscar
-                        </button>
-
-                        <button (click)="remitir()" class="btn" mat-raised-button color="primary" [matBadge]="selection.selected.length" [disabled]="selection.selected.length===0" matBadgeColor="warn">
-                            Crear Remito
-                        </button>
-
-                    </div> -->
-
                 </form>
             </div>
 
@@ -98,26 +79,11 @@
             <div fxLayout="row ">
                 <ng-container *ngIf="this.length> 0; then hasDetalle; else notHasDetalle"></ng-container>
             </div>
-
-
         </div>
 
-        <!-- <div class="mat-card my-24">            
-            <ng-container  *ngIf="this.length > 0; then hasDetalle; else notHasDetalle"></ng-container>
-        </div> -->
-
     </div>
-
-
-
     <!-- / CONTENIDO -->
-
-
 </app-plantilla-fondo-simple>
-<!-- <br>
-<br>
-<br>
- -->
 
 <ng-template #notHasDetalle>
     <p class="pb-24" style="margin: auto;">{{this.mensaje}}</p>

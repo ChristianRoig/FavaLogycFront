@@ -46,9 +46,7 @@ export class RemitoService
         if (busqueda !== '')
             buscar = `/${busqueda}`
 
-        //let ruta = `${BASE_URL}pedidos/pedidodetalle/etapadarsena/porcomprobanteoarticulo/${buscar}/${buscar}/${buscar}/${columna}/${order}`;
-        let ruta = `${BASE_URL}pedidos/pedidodetalle/etapadarsena/porcomprobanteoarticulo/${ buscar }/${ columna }/${ order }`;
-        
+            let ruta = `${BASE_URL}pedidos/pedidodetalle/etapadarsena/porcomprobanteoarticulo/${ buscar }/${ columna }/${ order }`;
 
         return this._httpClient.post(ruta, body, {headers: headers});
     }
