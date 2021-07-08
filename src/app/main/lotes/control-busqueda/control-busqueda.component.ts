@@ -13,9 +13,6 @@ import {
   transition
 } from '@angular/animations';
 
-// import { Debounce } from 'app/shared/decorators/debounce';
-// import { SonidoService } from 'app/shared/services/sonidos.service';
-// import { ErroresService } from 'app/services/errores.service';
 
 //services
 import { ControlBusquedaService } from './control-busqueda.service';
@@ -181,19 +178,6 @@ export class ControlEstanteriaComponent implements OnInit {
     console.log(lote);
     this.idLote = lote.idLote;
     this.navegarAlote();
-    /* console.log(lote.estado, this.condiciónDeEstadoLote);
-    if ( lote.estado === this.condiciónDeEstadoLote ){
-      this.estadoLote = lote.estado;
-      this.idLote = lote.idLote;
-    } 
-    else {
-      let errStatus = 0;
-      let titulo = 'El lote '+ lote.nombre +' no se encuentra en la etapa '+this.modo;
-      let mensaje = "Realice el control en Control "+this.modo;
-      this.mostrarError(errStatus, titulo, mensaje);
-      let ruta = `apps/control/lote-en/${this.modo}`;
-      this._router.navigate([ruta]);
-    } */
   }
 
   buscarLotePorCUPA( cupa ){
@@ -336,22 +320,6 @@ export class ControlEstanteriaComponent implements OnInit {
       this._fuseSidebarService.getSidebar(key).toggleOpen();
   }  
 
-  /* async buscarDetalleUnico() {
-
-    this.arregloDeDetalles = null;
-    // let codArt = this.buscarCbteInput.nativeElement.value ? this.buscarCbteInput.nativeElement.value : '';
-    let res = await this._controlBusquedaService.getDetalleUnico(this.idLote, '', this.modo);
-    this.arregloDeDetalles = res.datos;
-    console.log(this.arregloDeDetalles);
-    this._controlBusquedaService.arregloDeDetalles = this.arregloDeDetalles;
-    this._controlBusquedaService.idLote = this.idLote;
-    this._controlBusquedaService.modo = this.modo;
-    //let ruta = `apps/control/lote-en/${this.modo}/busqueda`;
-    let ruta = `apps/control/lote-en/${this.modo}/${this.idLote}`;
-    this._router.navigate([ruta]);
-  }  */
-  
-
   get funcionEsconder() {
     return this.eliminar ? 'show' : 'hide'
   }
@@ -359,21 +327,6 @@ export class ControlEstanteriaComponent implements OnInit {
   toggle() {
     this.eliminar = !this.eliminar;
   }
-
-/*   @Debounce(1000)
-  async eliminarCupa() {
-    
-    let res = await this._controlBusquedaService.eliminarArticuloDeLotePorCupa(this.eliminaCupaInput.nativeElement.value);
-    if(!res) {
-      this._sonido.playAudioSuccess();
-      this.resetCampos();
-      await this.buscarDetalleUnico();
-    } else {
-      this._erroresServices.error(res); 
-      this.resetCampos();
-      await this.buscarDetalleUnico();
-    }
-  } */
 
   mostrarError(errStatus, titulo, mensaje){
     const dialogRef = this._dialog.open( ModalErrorComponent, { 
@@ -384,15 +337,7 @@ export class ControlEstanteriaComponent implements OnInit {
     });
     this._router.navigate(['']);
     dialogRef.afterClosed()
-     /*  .subscribe( () => {
-          if (errStatus != 0) {
 
-            // this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
-            
-          } else {
-            this._router.navigate(['']);
-          }
-      }); */
   }
 
   paginar(e: any){
@@ -400,7 +345,6 @@ export class ControlEstanteriaComponent implements OnInit {
     this.page = e.pageIndex;
     this.size = e.pageSize;
     
-    //this._listaLoteService.getAllLotes( this.page, this.size ); 
     this.getLotesPorEstado( this.page, this.size ); 
   }
 }

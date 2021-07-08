@@ -97,8 +97,7 @@ export class TableComprobantesAprogramarComponent implements OnInit {
         this.dataSource2 = data.datos;
         this.length = data.totalRegistros;
         console.log("comprobantes a programar ->",data.datos);
-        /*console.log("asd", this.dataSource2); */
-        //this.size = data.totalRegistros;
+
       },
       (err: HttpErrorResponse) => {
         this.length = 0

@@ -31,8 +31,11 @@ export class PedidosCupaComponent implements OnInit {
   columna: string;
   order: string;
 
+
+  idPedidoCbte: number;
   idPedido: number;
   mensaje: string;
+  vengoDeCbte: string;
 
   constructor(
       private _router: Router,
@@ -52,35 +55,67 @@ export class PedidosCupaComponent implements OnInit {
     this.size = 50;
     this.columna = 'id';
     this.order = 'asc';
+    
+    this.idPedidoCbte = +localStorage.getItem('idCbte');
+    this.vengoDeCbte = localStorage.getItem('vengoDeCbte');
 
     this.buscarCUPA(this.page, this.size, this.columna, this.order);
 
   }
 
   buscarCUPA(page, size, columna, order){
-    this._service.getCUPA(this.idCabecera,page, size, columna, order).subscribe(paramsArt => {
-      if(paramsArt){
-        this.dataSourceCUPA = paramsArt.datos;
-        console.log("DATA SOURCE CUPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",this.dataSourceCUPA);
-        this.length = paramsArt.totalRegistros;
-      }
-    },
-    (err: HttpErrorResponse) => {
-      if (err.error instanceof Error) {
-        console.log("Client-side error");
-      } else {
-        let errStatus = err.status
-        if (errStatus == 0){
-          let titulo = 'Error de Servidor';
-          let mensaje = "Por favor comunicarse con Sistemas";
-          this.mostrarError(errStatus, titulo, mensaje);
-        } else {
-          let titulo = 'Error al cargar Trazabilidad';
-          let mensaje = err.error.message.toString();
-          this.mensaje = mensaje;
+    if (this.vengoDeCbte == "true"){
+      console.log("CUPA - vengo de comprobante", this.idPedidoCbte);
+      this._service.getCUPA( this.idPedidoCbte, page, size, columna, order ).subscribe(paramsArt => {
+        if(paramsArt){
+          this.dataSourceCUPA = paramsArt.datos;
+          console.log("CUPA ->",this.dataSourceCUPA);
+          this.length = paramsArt.totalRegistros;
         }
-      }
-    });
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error");
+        } else {
+          let errStatus = err.status
+          if (errStatus == 0){
+            let titulo = 'Error de Servidor';
+            let mensaje = "Por favor comunicarse con Sistemas";
+            this.mostrarError(errStatus, titulo, mensaje);
+          } else {
+            let titulo = 'Error al cargar Trazabilidad';
+            let mensaje = err.error.message.toString();
+            this.mensaje = mensaje;
+          }
+        }
+      });
+    } 
+    if (this.vengoDeCbte == "false"){
+      console.log("CUPA - vengo de pedido");
+      this._service.getCUPAPedidos( this.idPedido, page, size, columna, order ).subscribe(paramsArt => {
+        if(paramsArt){
+          this.dataSourceCUPA = paramsArt.datos;
+          console.log("CUPA ->",this.dataSourceCUPA);
+          this.length = paramsArt.totalRegistros;
+        }
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error");
+        } else {
+          let errStatus = err.status
+          if (errStatus == 0){
+            let titulo = 'Error de Servidor';
+            let mensaje = "Por favor comunicarse con Sistemas";
+            this.mostrarError(errStatus, titulo, mensaje);
+          } else {
+            let titulo = 'Error al cargar Trazabilidad';
+            let mensaje = err.error.message.toString();
+            this.mensaje = mensaje;
+          }
+        }
+      });
+    } 
   }
 
   imprimirCupa( id: number ){

@@ -1,24 +1,15 @@
 import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
-import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
-import { Debounce } from 'app/shared/decorators/debounce';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 import { HttpErrorResponse } from '@angular/common/http';
 
+import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
+
+
 import { ListaLotesService } from './lista-lotes.service';
 
-//import { element } from 'protractor';
-//import { forEach } from 'lodash';
-
-//import { BuscarLoteComponent } from './buscar-lote/buscar-lote.component';
-//import { VerImpresorasComponent } from './ver-impresoras/ver-impresoras.component';
-//import { VerLoteComponent } from './ver-lote/ver-lote.component';
-
-//services
-//import { VerLoteService } from './ver-lote/ver-lote.service';
-//import { UsuarioService } from 'app/services/usuario.service';
 
 export interface Articulos {
 
@@ -75,7 +66,6 @@ export class ListaLotesComponent implements OnInit {
   @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
   @ViewChild('buscarLote') buscarLoteInput: ElementRef;
 
-  // displayedColumns: string[] = ['select', 'Tipo', 'CodigoArticulo','NombreArticulo', 'Comprobante', 'Fecha-Entrega', 'Provincia', 'Localidad','Etapa', 'Lote', 'Borrar'];
   displayedColumns: string[] = ['id', 'nombre', 'fechaAlta', 'cantArticulos', 'estado', 'seleccionar'];
   dataSource2: any;
   selection = new SelectionModel<any>(true, []);
@@ -92,7 +82,6 @@ export class ListaLotesComponent implements OnInit {
   order: string = 'asc';
 
   mensaje: string;
-  //arrowBack: boolean;
   filtroFechas: boolean;
   filtroInactivos: boolean;
   
@@ -299,8 +288,7 @@ export class ListaLotesComponent implements OnInit {
       //this.idLote = lote.id;
       this.idLote = lote.idLote;
       let ruta = `lotes/ver-lote/${ this.idLote }`;
-      //console.log("lote ASD");
-      //this._verLoteComponent.obtenerLote(lote);
+
       this._router.navigate([ ruta ]);
     }
   }
@@ -323,7 +311,6 @@ export class ListaLotesComponent implements OnInit {
     this.pickerFiltroHasta= null;
     
     
-    // this.buscarLoteInput.nativeElement.value = '';
     this.buscarCbteInput.nativeElement.value = '';
   }
 
@@ -563,27 +550,21 @@ export class ListaLotesComponent implements OnInit {
 
   selectTipo(event: Event) {
     this.selectedTipo = (event.target as HTMLSelectElement).value;
-    // this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
   }
   
   selectTurno(event: Event) {
     this.selectedTurno = (event.target as HTMLSelectElement).value;
-    // this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
   }
   
   selectOrigen(event: Event) {
     this.selectedOrigen = (event.target as HTMLSelectElement).value;
-    // this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
   }
   
   selectEstado(event: Event) {
     this.selectedEstado = (event.target as HTMLSelectElement).value;
     if(this.selectedEstado !== 0){
-      //Buscar Estado
-      //console.log("Buscar Estado");
     }
     console.log("Estado: "+this.selectedEstado);
-    // this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
   }
 
   selectEtapa(event: Event) {
@@ -595,7 +576,6 @@ export class ListaLotesComponent implements OnInit {
 
     }
     console.log("Etapa: "+this.selectedEtapa);
-    // this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
   }
 
   selectProvincia(event: Event) {
@@ -643,7 +623,6 @@ export class ListaLotesComponent implements OnInit {
         }
       })
     }
-    // this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
   }
 
   selectLocalidad(event: Event) {
@@ -670,7 +649,6 @@ export class ListaLotesComponent implements OnInit {
         }
       })
     }
-    // this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
   }
 
   addEvent( tipo, evento ) {

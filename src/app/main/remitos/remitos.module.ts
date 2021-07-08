@@ -38,15 +38,7 @@ const routes: Routes = [
     {
         path     : 'ver-remito/:id',
         component: VerRemitoComponent
-    },
-    /* {
-        path     : 'remitos-conf',
-        component: RemitosConfirmarComponent //borrar
-    },
-    {
-        path     : 'confirmar-remito',
-        component: ConfirmarRemitoComponent // este va
-    } */ 
+    }
 ];
 
 @NgModule({

@@ -31,9 +31,7 @@ export interface BodyDetalle{
 export class TableComprobantesComponent implements OnInit {
 
   @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
-  /*Comprobante (VTA-B00065-00004525 segun mejora#2), F. Entrega, 1er. Dirección, (+D), Localidad, Provincia, 1er. Cod., 1er. Artículo, (+A), Estado, Etapa, (+E) */
 
-  //Comprobante, fecha de entrega, direccion, articulo, etapa
   displayedColumns: string[] = ['Comprobante', 'Fecha-Entrega', 'priDireccion', 'NombreArticulo', 'priEtapa', 'seleccionar'];  
   dataSource2: any;
 
@@ -77,7 +75,7 @@ export class TableComprobantesComponent implements OnInit {
       data => {
         this.dataSource2 = data.datos;
         this.length = data.totalRegistros;
-        console.log(data);
+        //console.log(data);
         console.log("comprobantes con pedidos", this.dataSource2);
         //this.size = data.totalRegistros;
       },
@@ -162,16 +160,13 @@ export class TableComprobantesComponent implements OnInit {
     }
   }
 
-  abrir( idPedido: number ) { 
-    //let ruta = `pedidos/ver-comprobante/${ idPedido }`; //para forzar fallo
+  abrir( idPedido: number, idCbte: number ) { 
+
+    localStorage.setItem('idCbte', idCbte.toString() );
+    localStorage.setItem('vengoDeCbte', "true" );
     let ruta = `pedidos/ver-pedido/${ idPedido }`;
     this._router.navigate([ ruta ]);
   }
-  
-  /*consultar(id){
-    let ruta = `pedidos/ver-pedido/${id}`;
-    this._router.navigate([ruta]);
-  } */
 
   agregarPedido() {
     let ruta = `pedidos/crear-pedido_OLD`;

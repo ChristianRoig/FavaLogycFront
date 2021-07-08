@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
-import { Debounce } from 'app/shared/decorators/debounce';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -46,13 +45,6 @@ export class CrearOrdenDistribucionComponent implements OnInit {
   order: string = 'desc';
   
   toAdd = new Array();
-
-  /* body: BodyDetalle = {
-    idTipo    : null,
-    idDarsena : null,
-    desdePedido     : null,
-    hastaPedido     : null
-  } */
 
   constructor(private _router: Router, 
               private _fuseSidebarService: FuseSidebarService, 
@@ -122,45 +114,6 @@ export class CrearOrdenDistribucionComponent implements OnInit {
             selection: this.selection
       }
     });
-  
-    //localStorage.setItem('Orden',JSON.stringify(this.selection));
-    //this.toAdd = JSON.parse(localStorage.getItem('Orden'))._selected;
-    
-    /* let seleccionados = [];
-    
-    console.log(this.toAdd);
-    for(let i=0; i<this.toAdd.length; i++){
-      seleccionados.push(this.toAdd[i].id);
-    }
-    
-    let body = { 
-      nombre : "Mi distribucion",
-      listaId: seleccionados
-    }
-
-    this._crearOrdenDistribucionService.crearOrdenDeDistribucion( body ).subscribe( params => {
-      console.log("entró");
-    },
-    (err: HttpErrorResponse) => {
-      if (err.error instanceof Error) {
-        console.log("Client-side error");
-      } else {
-        let errStatus = err.status
-        if (errStatus == 0){
-          let titulo = 'Error de Servidor';
-          let mensaje = "Por favor comunicarse con Sistemas";
-          this.mostrarError(errStatus, titulo, mensaje);
-        } else {
-          let titulo = 'Error al crear remito';
-          let mensaje = err.error.message.toString();
-          this.mostrarError(errStatus, titulo, mensaje);
-        }
-      }
-    });
-
-    setTimeout(() => {                          
-      this.navegarAlistaOrdenes();
-      }, 1000); */
   }
 
   navegarAlistaOrdenes(){
@@ -207,7 +160,6 @@ export class CrearOrdenDistribucionComponent implements OnInit {
     if (event.direction !== "")
         this.order = event.direction;
     
-    //this.getDetalle(this.busqueda, this.columna, this.order);
   }
 
   activarFecha(){

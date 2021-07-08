@@ -1,10 +1,9 @@
-import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 import { SelectionModel } from '@angular/cdk/collections';
-import { Debounce } from 'app/shared/decorators/debounce';
 
 //componentes
 import { ModalConfirmacionBorrarComponent } from './modal-confirmacion-borrar/modal-confirmacion-borrar.component';
@@ -31,7 +30,6 @@ export class VerRemitoComponent implements OnInit {
   
   @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
 
-  //displayedColumns: string[] = ['select', 'id', 'codComprobante', 'nroComprobante', 'fechaAlta', 'cantArticulos'];
   displayedColumns: string[] = ['id', 'codigoArticulo', 'nombre', 'cantPartes', 'localidad', 'direccion', 'fechaDeEntrega'];
   selection = new SelectionModel<any>(true, []);
   dataSource2: any;
@@ -48,7 +46,6 @@ export class VerRemitoComponent implements OnInit {
 
   mensaje: string;
   titulo: string;
-  //editLote: boolean;
 
   constructor(
     private _verRemitoService: VerRemitoService,
@@ -175,8 +172,6 @@ export class VerRemitoComponent implements OnInit {
     this.columna = event.active; 
     if (event.direction !== "")
         this.order = event.direction;
-    
-    //this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
   }
 
   isAllSelected() {

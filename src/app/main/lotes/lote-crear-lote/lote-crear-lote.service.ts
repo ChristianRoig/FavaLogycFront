@@ -61,13 +61,13 @@ export class LoteCrearLoteService
     {
         let ruta = `${BASE_URL}pedidos/pedidoestado/etapa/${id}`;
         return this._httpClient.get(ruta);
-    }
+    }*/
 
-    getAllEstados(): Observable<any>
+    /* getAllEstados(): Observable<any>
     {
         let ruta = `${BASE_URL}pedidos/pedidoestado/`;
         return this._httpClient.get(ruta);
-    } */
+    }  */
 
     getAllOrigenes(): Observable<any>
     {

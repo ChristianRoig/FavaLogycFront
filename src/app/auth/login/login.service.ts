@@ -42,11 +42,9 @@ export class LoginService {
 
     private info: any;
     private rol: string[] = [];
-    //private perfilLog: Perfil; // habría que definir la info de un Perfil de favalogyc
 
     infoOnChanged: BehaviorSubject<any>;
     rolOnChanged: BehaviorSubject<any>;
-    //perfilLogOnChanged: BehaviorSubject<any>;
 
     /**
      * Constructor
@@ -64,20 +62,10 @@ export class LoginService {
         
         this.infoOnChanged = new BehaviorSubject([]);
         this.rolOnChanged = new BehaviorSubject([]);
-        //this.perfilLogOnChanged = new BehaviorSubject([]);
         
         const userLog = this._cookieService.get(user);        
-        //console.log("- userLog | ", userLog);
-         //ver si es necesario el manejo de perfilUser en favalogyc 
-        
-        /* if (userLog){
-            this.perfilLog = new Perfil(JSON.parse(userLog));            
-        } else {
-            this.perfilLog = new Perfil({});        
-        }  */
 
         this.rolOnChanged.next([]);
-        //this.perfilLogOnChanged.next(this.perfilLog);
     }
 
     //--------------------------------------------------------------------------------------------------

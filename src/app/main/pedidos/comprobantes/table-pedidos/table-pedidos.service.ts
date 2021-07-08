@@ -13,7 +13,6 @@ export class TablePedidosService
         private _httpClient: HttpClient) { }
 
     getPedidos( body ,page, size, columna, order ): Observable<any> {
-       //console.log( "PEDIDOS|",columna, "|", order);
         
         let headers = new HttpHeaders({
             "Content-Type": "application/json"
@@ -21,7 +20,6 @@ export class TablePedidosService
 
         let ruta = `${BASE_URL}pedidos/pedidodetalle/${ page }/${ size }/${ columna }/${ order }`;
 
-        //return this._httpClient.post(ruta, {headers: headers});
         return this._httpClient.post(ruta, body, {headers: headers});
     }
 

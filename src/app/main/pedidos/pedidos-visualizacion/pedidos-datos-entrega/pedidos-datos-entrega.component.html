@@ -88,7 +88,7 @@
         <ng-container matColumnDef="editar">
             <th mat-header-cell *matHeaderCellDef> Turno </th>
             <td mat-cell class="example-button-row" *matCellDef="let element">
-                <button mat-stroked-button color="primary" (click)="editar()" [disabled]="element.pedidoEtapa.nombre === 'ANULADO' || element.pedidoEtapa.nombre === 'TRANSPORTE'">
+                <button mat-stroked-button *ngIf="element.pedidoEtapa" color="primary" (click)="editar()" [disabled]="element.pedidoEtapa.nombre === 'ANULADO' || element.pedidoEtapa.nombre === 'TRANSPORTE'">
                   <mat-icon>edit</mat-icon>
                   Editar
               </button>

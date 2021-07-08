@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { takeUntil } from 'rxjs/operators';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { config } from 'environments/config_system';
 import { CookieService } from 'ngx-cookie-service';
 
@@ -17,12 +17,7 @@ import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.componen
 
 import { SonidoService } from 'app/shared/services/sonidos.service';
 import { LoginService } from './login.service';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
-
-
-
-
 
 const user: string = config.Cookie_User;
 const token: string = config.Cookie_Token;
@@ -68,10 +63,6 @@ export class LoginComponent implements OnInit {
     username: string;
     rol: string[] = [];
 
-    /*infoOnChanged: BehaviorSubject<any>;
-    perfilLogOnChanged: BehaviorSubject<any>;
-    rolOnChanged: BehaviorSubject<any>;*/
-
     // Private
     protected _unsubscribeAll: Subject<any>;
 
@@ -93,18 +84,9 @@ export class LoginComponent implements OnInit {
         private _fuseNavigationService: FuseNavigationService
     )
     {
-
-        /*this.infoOnChanged = new BehaviorSubject([]);
-        this.perfilLogOnChanged = new BehaviorSubject([]);
-        this.rolOnChanged = new BehaviorSubject([]);*/
         
         const userLog = this._cookieService.get(user); 
         //console.log("- userLog | ", userLog);
-        /* // chequear la compatibilidad del servidor.... incorporar ErrorService
-        if (!this._errorService.isBrowserCompatible()) {
-            this._router.navigate(['/error']); 
-        } 
-        */
         // Configure the layout
         this._fuseConfigService.config = {
             layout: {
@@ -136,10 +118,10 @@ export class LoginComponent implements OnInit {
     ngOnInit(): void {
 
         this.loginForm = this._formBuilder.group({
+
             email   : ['', Validators.required],
             password: ['', Validators.required]
-            /* email   : [''],
-            password: [''] */
+
         });
 
         this._loginService.infoOnChanged
@@ -183,11 +165,11 @@ export class LoginComponent implements OnInit {
             } 
             else {
                 info = new ResponseLogin(info);
-                //this.definirAccesos(); 
+ 
                 this._trabajoLogueo( info ); //perf,roles
                 this._serviceSonido.playAudioSuccess();
                 this._router.navigate(['/inicio'])
-                //this.infoOnChanged.next(info);
+
                 this._loginService.infoOnChanged.next(info);
             }
         },
@@ -215,56 +197,26 @@ export class LoginComponent implements OnInit {
      */
     private logout(): void {
         this._loginService.infoOnChanged.next(new ResponseLogin({})); // ver de donde sale ResponseLogin
-        //this.perfilLogOnChanged.next(new Perfil({}));
+
         this._loginService.rolOnChanged.next([]);
 
         localStorage.clear();
-        //this._cookieService.deleteAll();
 
         this._router.navigate(['']);
     }
-    //--------------------------------------------------------------------------------------------------
 
-    /*definirAccesos(){
-        if(this.isAdmin()){
-
-            this._fuseNavigationService.updateNavigationItem('pedidos', {
-                hidden: true
-            });
-            this._fuseNavigationService.updateNavigationItem('lotes', {
-                hidden: true
-            });
-            this._fuseNavigationService.updateNavigationItem('control', {
-                hidden: true
-            });
-            this._fuseNavigationService.updateNavigationItem('remitos', {
-                hidden: true
-            });
-            this._fuseNavigationService.updateNavigationItem('distribucion', {
-                hidden: true
-            });
-            this._fuseNavigationService.updateNavigationItem('carga', {
-                hidden: true
-            });
-        }
-    } */
-
-    //--------------------------------------------------------------------------------------------------
     /**
      * setea en caso de error
      */
     private _defineError(): void {
         this.rol = [];
         this.info = 'error';
-        //this.perfilLog = new Perfil({});
         
         this._loginService.rolOnChanged.next(this.rol);
         this._loginService.infoOnChanged.next(this.info);
-        //this.perfilLogOnChanged.next(this.perfilLog);
     }
 
     //--------------------------------------------------------------------------------------------------
-    //, perf: Perfil, , roles: [] |  parametro que estaba y yo saqué O
     private _trabajoLogueo(info: ResponseLogin): void {        
         let expirarDate = new Date();
         //console.log("llego hasta trabajoLogueo");
@@ -274,24 +226,19 @@ export class LoginComponent implements OnInit {
         this.username = info.username;
 
         this.setearRol(); //this.rol = roles;
-        //this.perfilLog = new Perfil(perf);
-        
-        //perf.novedadesExternas = null; // fix para que pueda setear la cookie, puede supepar el tamaño maximo cuando se transforma a JSON
-        //perf.novedadesPorEquipo = null; // fix para que pueda setear la cookie, puede supepar el tamaño maximo cuando se transforma a JSON
+
         
         let dataCookie: DataCookie = {
             expirar: expirarDate,
             infoToken: info.token,
-            //user: JSON.stringify(perf),
+
         };
         
         this.handlerCookies(dataCookie);
         
         this._loginService.infoOnChanged.next(this.info);
         this._loginService.rolOnChanged.next(this.rol);
-        //this.perfilLogOnChanged.next(this.perfilLog);
-        
-        //this._router.navigate(['/inicio']);
+
     }
     
     // -----------------------------------------------------------------------------------------------------
@@ -345,36 +292,12 @@ export class LoginComponent implements OnInit {
         console.log("token + tiempo sesion",{data});
         //console.log("TOKEN",token);
         if (data){
-            console.log("primer SET |", token, "|",data.infoToken, "|",data.expirar);
-            
+            console.log("primer SET |", token, "|",data.infoToken, "|",data.expirar);   
 
             localStorage.setItem(token, data.infoToken);
             localStorage.setItem("username", this.username);
             console.log(localStorage.getItem(token));
-            
-            
-            /* this._cookieService.set(token, data.infoToken, data.expirar); 
-            this._cookieService.set(user, data.user, data.expirar);
-            this._cookieService.set(expirar, data.expirar.toUTCString(), data.expirar ); */
         } 
-        /* else { 
-            let e = new Date();
-            e.setMinutes(e.getMinutes() + sesion_activa);
-            
-            console.log('Se extiende la sesion ' + sesion_activa);
-            
-            data = {
-                expirar: e,
-                infoToken: this._cookieService.get(token),
-                user: this._cookieService.get(user),
-            };
-            
-            // console.log({data});
-            this._cookieService.set(token, data.infoToken, data.expirar);
-            this._cookieService.set(user, data.user, data.expirar);
-            this._cookieService.set(expirar, data.expirar.toUTCString(), data.expirar );
-        }*/
-
     }
     //--------------------------------------------------------------------------------------------------
     /**

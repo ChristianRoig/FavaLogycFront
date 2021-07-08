@@ -73,7 +73,7 @@
             <th mat-header-cell *matHeaderCellDef> Acción </th>
             <td mat-cell class="example-button-row" *matCellDef="let element">
                 <!-- (click)="abrir( element.idCbt )" -->
-                <button mat-stroked-button color="primary" (click)="abrir( element.idCabPed )"> Abrir </button>
+                <button mat-stroked-button color="primary" (click)="abrir( element.idCabPed, element.idCbt )"> Abrir </button>
             </td>
         </ng-container>
 
