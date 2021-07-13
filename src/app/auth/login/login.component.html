@@ -9,42 +9,33 @@
             </div>
 
             <form name="loginForm" [formGroup]="loginForm" novalidate (ngSubmit)="logIn()">
+
                 <h2 class="titulo">Bienvenido a Favalogyc</h2>
+
                 <mat-form-field appearance="outline">
                     <mat-label>Usuario de dominio</mat-label>
                     <input matInput formControlName="email" placeholder="Usuario de dominio">
                     <mat-icon matSuffix class="secondary-text">mail</mat-icon>
+
                     <mat-error *ngIf="loginForm.get('email').hasError('required')">
                         El Usuario es requerido
                     </mat-error>
+
                     <mat-error *ngIf="!loginForm.get('email').hasError('required') &&
                                     loginForm.get('email').hasError('email')">
                         Por Favor, ingrese un Usuario válido
                     </mat-error>
+
                 </mat-form-field>
 
                 <mat-form-field appearance="outline">
                     <mat-label>Contraseña</mat-label>
-                    <input matInput type="password" formControlName="password">
-                    <!-- // linea de gestionate para ocultar/visibilizar la pass 
-                    //<mat-icon matSuffix class="secondary-text visibility" (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>  -->
-                    <mat-icon matSuffix class="secondary-text">vpn_key</mat-icon>
+                    <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+                    <mat-icon matSuffix class="secondary-text visibility" (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                     <mat-error>
                         La contraseña es requerida
                     </mat-error>
                 </mat-form-field>
-
-
-                <!-- Informe de errores de Gestionate 
-                <mat-error *ngIf="errorLog">
-                    Los Datos Ingresados NO Son Correctos
-                </mat-error>
-
-                <mat-error *ngIf="error">
-                    Ups! Algo salio mal, por favor intente loguearse nuevamente..
-                </mat-error> -->
-
-
 
                 <button mat-raised-button color="accent" class="submit-button" aria-label="LOG IN" [disabled]="loginForm.invalid" (click)="logIn()">
                     INGRESAR
@@ -58,11 +49,7 @@
                         </a> -->
                 </div>
 
-
             </form>
-
         </div>
-
     </div>
-
 </div>

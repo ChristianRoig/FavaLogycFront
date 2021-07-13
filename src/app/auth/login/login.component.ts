@@ -65,6 +65,7 @@ export class LoginComponent implements OnInit {
     errorLog = false;
     error = false;
     info: any;
+    hide: boolean = true;
     username: string;
     rol: string[] = [];
 
