@@ -5,9 +5,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { takeUntil } from 'rxjs/operators';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { config } from 'environments/config_system';
-import { CookieService } from 'ngx-cookie-service';
 
 import { fuseAnimations } from '@fuse/animations';
 import { FuseConfigService } from '@fuse/services/config.service';
@@ -17,19 +16,10 @@ import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.componen
 
 import { SonidoService } from 'app/shared/services/sonidos.service';
 import { LoginService } from './login.service';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
 
-
-
-
-
-const user: string = config.Cookie_User;
-const token: string = config.Cookie_Token;
-const expirar: string = config.Cookie_expirar;
 const sesion_activa: number = config.sesion_activa; // Minutos
 
-export interface DataCookie {
+export interface Data {
     infoToken?: string;
     expirar?: Date;
     user?: string;
@@ -90,22 +80,8 @@ export class LoginComponent implements OnInit {
         private _dialog: MatDialog,
         private _serviceSonido: SonidoService,
         private _loginService: LoginService,
-        private _cookieService: CookieService,
-        private _fuseNavigationService: FuseNavigationService
     )
-    {
-
-        /*this.infoOnChanged = new BehaviorSubject([]);
-        this.perfilLogOnChanged = new BehaviorSubject([]);
-        this.rolOnChanged = new BehaviorSubject([]);*/
-        
-        const userLog = this._cookieService.get(user); 
-        //console.log("- userLog | ", userLog);
-        /* // chequear la compatibilidad del servidor.... incorporar ErrorService
-        if (!this._errorService.isBrowserCompatible()) {
-            this._router.navigate(['/error']); 
-        } 
-        */
+    {  
         // Configure the layout
         this._fuseConfigService.config = {
             layout: {
@@ -159,6 +135,8 @@ export class LoginComponent implements OnInit {
             });
     }
 
+    // -----------------------------------------------------------------------------------------------------
+    
     recuperarContrasena() {                    // NO SE USA
         const dialogRef = this._dialog.open(ModalRecuperarContrasenaComponent);
     
@@ -167,7 +145,9 @@ export class LoginComponent implements OnInit {
         });
     }
 
-    logIn(){
+    // -----------------------------------------------------------------------------------------------------
+
+    logIn() {
         let email:    string  = this.loginForm.get('email').value;
         let password: string  = this.loginForm.get('password').value;
 
@@ -176,19 +156,17 @@ export class LoginComponent implements OnInit {
         this._loginService._obtenerLogin( email, password ).subscribe((info: ResponseLogin) => { 
             console.log("info - obtenerLogin|", info);
             
-            if (info.token == null){                // comienzo de logica de GESTIONATE
+            if (info.token == null){          
                 this._serviceSonido.playAudioAlert();
                 let titulo = 'Fallo al ingresar';
                 let mensaje = 'El usuario o la contraseña son incorrectos';
                 this.mostrarError(0, titulo, mensaje);
             } 
             else {
-                info = new ResponseLogin(info);
-                //this.definirAccesos(); 
-                this._trabajoLogueo( info ); //perf,roles
+                info = new ResponseLogin( info );
+                this.setTiempoSession( info );
                 this._serviceSonido.playAudioSuccess();
                 this._router.navigate(['/inicio'])
-                //this.infoOnChanged.next(info);
                 this._loginService.infoOnChanged.next(info);
             }
         },
@@ -215,40 +193,14 @@ export class LoginComponent implements OnInit {
      * Metodo para cerrar la sesion
      */
     private logout(): void {
-        this._loginService.infoOnChanged.next(new ResponseLogin({})); // ver de donde sale ResponseLogin
-        //this.perfilLogOnChanged.next(new Perfil({}));
+
+        this._loginService.infoOnChanged.next( new ResponseLogin({}) ); 
         this._loginService.rolOnChanged.next([]);
 
         localStorage.clear();
-        //this._cookieService.deleteAll();
 
         this._router.navigate(['']);
     }
-    //--------------------------------------------------------------------------------------------------
-
-    /*definirAccesos(){
-        if(this.isAdmin()){
-
-            this._fuseNavigationService.updateNavigationItem('pedidos', {
-                hidden: true
-            });
-            this._fuseNavigationService.updateNavigationItem('lotes', {
-                hidden: true
-            });
-            this._fuseNavigationService.updateNavigationItem('control', {
-                hidden: true
-            });
-            this._fuseNavigationService.updateNavigationItem('remitos', {
-                hidden: true
-            });
-            this._fuseNavigationService.updateNavigationItem('distribucion', {
-                hidden: true
-            });
-            this._fuseNavigationService.updateNavigationItem('carga', {
-                hidden: true
-            });
-        }
-    } */
 
     //--------------------------------------------------------------------------------------------------
     /**
@@ -257,42 +209,34 @@ export class LoginComponent implements OnInit {
     private _defineError(): void {
         this.rol = [];
         this.info = 'error';
-        //this.perfilLog = new Perfil({});
         
         this._loginService.rolOnChanged.next(this.rol);
         this._loginService.infoOnChanged.next(this.info);
-        //this.perfilLogOnChanged.next(this.perfilLog);
     }
 
     //--------------------------------------------------------------------------------------------------
-    //, perf: Perfil, , roles: [] |  parametro que estaba y yo saqué O
-    private _trabajoLogueo(info: ResponseLogin): void {        
+
+    private setTiempoSession(info: ResponseLogin): void {     
+
+        //objeto que contiene el tiempo de session limite
         let expirarDate = new Date();
-        //console.log("llego hasta trabajoLogueo");
         expirarDate.setMinutes(expirarDate.getMinutes() + sesion_activa);
         
         this.info = info;
         this.username = info.username;
 
-        this.setearRol(); //this.rol = roles;
-        //this.perfilLog = new Perfil(perf);
+        this.setearRol(); 
         
-        //perf.novedadesExternas = null; // fix para que pueda setear la cookie, puede supepar el tamaño maximo cuando se transforma a JSON
-        //perf.novedadesPorEquipo = null; // fix para que pueda setear la cookie, puede supepar el tamaño maximo cuando se transforma a JSON
-        
-        let dataCookie: DataCookie = {
+        let dataCookie: Data = {
             expirar: expirarDate,
             infoToken: info.token,
-            //user: JSON.stringify(perf),
+            user: info.username
         };
         
-        this.handlerCookies(dataCookie);
+        this.guardarInfoEnLocalStorage( dataCookie );
         
         this._loginService.infoOnChanged.next(this.info);
         this._loginService.rolOnChanged.next(this.rol);
-        //this.perfilLogOnChanged.next(this.perfilLog);
-        
-        //this._router.navigate(['/inicio']);
     }
     
     // -----------------------------------------------------------------------------------------------------
@@ -326,64 +270,29 @@ export class LoginComponent implements OnInit {
     }
 
     // -----------------------------------------------------------------------------------------------------
-    
-    public isAdmin(): boolean{
-        console.log("this.info.username", this.info.username);
-        if (this.info.username === "burroni.santiago" || this.info.username === "jacobo.pablo" ){
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    // -----------------------------------------------------------------------------------------------------
     /**
      * se encarga de setear las cookies o de extender las mas importantes si es el caso
      * para extender las cookies solamente NO hay que enviar la data
      * @param {DataCookie} data 
      */
-    private handlerCookies(data?: DataCookie): void {
-        console.log("token + tiempo sesion",{data});
-        //console.log("TOKEN",token);
-        if (data){
-            console.log("primer SET |", token, "|",data.infoToken, "|",data.expirar);
-            
+    private guardarInfoEnLocalStorage(data?: Data): void {
 
-            localStorage.setItem(token, data.infoToken);
-            localStorage.setItem("username", this.username);
-            console.log(localStorage.getItem(token));
-            
-            
-            /* this._cookieService.set(token, data.infoToken, data.expirar); 
-            this._cookieService.set(user, data.user, data.expirar);
-            this._cookieService.set(expirar, data.expirar.toUTCString(), data.expirar ); */
+        //console.log("token + tiempo sesion",{data});
+        if ( data ){
+            localStorage.setItem("token", data.infoToken);
+            localStorage.setItem("username", data.user);
+            localStorage.setItem("expirar", data.expirar.toString());
         } 
-        /* else { 
-            let e = new Date();
-            e.setMinutes(e.getMinutes() + sesion_activa);
-            
-            console.log('Se extiende la sesion ' + sesion_activa);
-            
-            data = {
-                expirar: e,
-                infoToken: this._cookieService.get(token),
-                user: this._cookieService.get(user),
-            };
-            
-            // console.log({data});
-            this._cookieService.set(token, data.infoToken, data.expirar);
-            this._cookieService.set(user, data.user, data.expirar);
-            this._cookieService.set(expirar, data.expirar.toUTCString(), data.expirar );
-        }*/
-
     }
+
     //--------------------------------------------------------------------------------------------------
+
     /**
      * Determina si los datos de log estan disponibles            // YA ESTA EN EL COMPONENT
      */
-    isSetLog(): boolean {
-        const userLog = this._cookieService.get(user);
-        const tokenLog = this._cookieService.get(token);
+    estaLogueado(): boolean {
+        const userLog = localStorage.getItem("username");
+        const tokenLog = localStorage.getItem("token");
         console.log("userLog",userLog, "tokenLog", tokenLog);
         if ((userLog) && (tokenLog)) {
             return true;
@@ -392,9 +301,10 @@ export class LoginComponent implements OnInit {
             return false;
         }    
     }
+
     //--------------------------------------------------------------------------------------------------
         
-    private mostrarError(errStatus, titulo, mensaje){
+    private mostrarError( errStatus, titulo, mensaje ){
         const dialogRef = this._dialog.open( ModalErrorComponent, { 
           data: {
             titulo: titulo,
