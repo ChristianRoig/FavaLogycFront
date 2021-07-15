@@ -282,7 +282,10 @@ export class LoginComponent implements OnInit {
             localStorage.setItem("token", data.infoToken);
             localStorage.setItem("username", data.user);
             localStorage.setItem("expirar", data.expirar.toString());
-        } 
+        }
+
+        // obtengo el token en el service para tenerlo disponible ahí, para futuros chequeos de logueo
+        this._loginService.getToken();   
     }
 
     //--------------------------------------------------------------------------------------------------

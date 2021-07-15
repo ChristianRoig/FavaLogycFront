@@ -2,12 +2,10 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { AnyMxRecord } from 'dns';
 
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 
 import { PedidosListaService } from '../../x_NOSEUSA_pedidos-lista/pedidos-lista.service';
-import { Console } from 'console';
 import { AgregarDatosEntregaService } from './agregar-datos-entrega.service';
 
 export interface Articulo {
@@ -93,7 +91,7 @@ export class AgregarDatosEntregaComponent implements OnInit{
     filtroLocalidades: any;
     selectedLocalidad: any;
     nombreSelectedLocalidad: string;
-
+  
     selectedCodigoPostal: any;
 
     filtroTurnos: any;
@@ -113,34 +111,40 @@ export class AgregarDatosEntregaComponent implements OnInit{
     mail:string          = '';
     observaciones:string = '';
     telefono:string      = '';
-    mostrarDatos: boolean = false;
-    //fechaFormatoDate: Date;
+
+    mostrarDatos: boolean;
     fechaFormatoDate: Date;
     id: number = null;
     estanTodosLosDatos: boolean = false;
     localidadID: string = "7600";
     idProv: number = 1;
     crearDirec: boolean = false;
+    indexLocalidad: number;
 
     ngOnInit(): void {
 
       switch (this.data.option) {
         case "add":
-          //console.log("this.selectedLocalidad en AGREGAR;", this.selectedLocalidad);
           this.selectedLocalidad = 1402; // 1402(Mar del plata) 
           this.deshabilitado = false;
+          this.mostrarDatos = false;
           break;
         case "upd":
           this.deshabilitado = false;
-          //this.mostrarDatos = true;
+          this.crearDirec = true;
+          this.mostrarDatos = true;
+          // permito la modificacion aunque los valores no se cambien, sino si o si hay que cambiar fecha ó turno ó transporte para poder actualizar
+          this.estanTodosLosDatos = true; 
           this.getDatoEntrega();
           break;
           case "view":
             this.deshabilitado = true;
-            //this.mostrarDatos = true;
+            this.crearDirec = true;
+            this.mostrarDatos = true;
             this.getDatoEntrega();
           break;
       }
+      console.log("this.indexLocalidad", this.indexLocalidad);
       this.getfiltros();
     } 
 
@@ -164,7 +168,7 @@ export class AgregarDatosEntregaComponent implements OnInit{
       this.datoEntrega.sysTransporte.id             = this.selectedTransporte;
       this.datoEntrega.telefono                     = this.telefono;
 
-      console.log("THIS DATOS ENTREGAAAAAAAA", this.datoEntrega);
+      console.log("THIS DATOS ENTREGA", this.datoEntrega);
       localStorage.setItem('datoEntrega', JSON.stringify(this.datoEntrega));
       localStorage.setItem('fechaFormatoDate', JSON.stringify(this.fechaFormatoDate));
       this.dialogRef.close();
@@ -182,7 +186,7 @@ export class AgregarDatosEntregaComponent implements OnInit{
     }
 
     adaptarFecha(valor: string){
-      console.log("valor", valor);
+      //console.log("valor", valor);
       let stringFechaAdaptada: string = "";
       let dia:string = "";
       let mes:string = "";
@@ -209,14 +213,16 @@ export class AgregarDatosEntregaComponent implements OnInit{
           }
         }
       }
-      console.log("todo junto quedaria", dia,"|", mes, "|", anio)
+      //console.log("todo junto quedaria", dia,"|", mes, "|", anio)
       
       return stringFechaAdaptada;
     }
 
     getDatoEntrega() {
+
+      this.indexLocalidad = +localStorage.getItem("indexLocalidad");
       console.log("| DATA | ->", this.data);
-      console.log("| selectedLocalidad | ->", this.data.item.sysLocalidad.id);
+      //console.log("| selectedLocalidad | ->", this.data.item.sysLocalidad.id);
       this.fechaFormatoDate = JSON.parse(localStorage.getItem('fechaFormatoDate'));
       //console.log("fechaFormatoDate ACA", this.fechaFormatoDate);
   
@@ -231,13 +237,13 @@ export class AgregarDatosEntregaComponent implements OnInit{
       this.selectedTurno        = this.data.item.pedidoTurno.id;
       this.selectedLocalidad    = this.data.item.sysLocalidad.id;
       this.selectedProvincia    = this.data.item.sysLocalidad.sysProvincia.id;
+      this.idProv               = this.data.item.sysLocalidad.sysProvincia.id;
       this.selectedTransporte   = this.data.item.sysTransporte.id;
       this.telefono             = this.data.item.telefono;
-
-      this.mostrarDatos = true; // tengo los datos ahora muestro
-
-
-      console.log("LO QUE BUSCO", this.picker, "|",this.valorPicker, "|",this.data.item.fechaDeEntrega);
+      
+      console.log( this.selectedProvincia );
+      console.log( this.selectedLocalidad );
+      //console.log("LO QUE BUSCO", this.picker, "|",this.valorPicker, "|",this.data.item.fechaDeEntrega);
       //console.log(this.data.item.fechaDeEntrega, this.selectedTransporte, this.selectedTurno  );
     }
 
@@ -293,15 +299,15 @@ export class AgregarDatosEntregaComponent implements OnInit{
           return "Andreani";
     }
 
-    setLocalidadSeleccionada(){
-      if(this.mostrarDatos == true){
-        //this.selectedLocalidad =
+    /* setLocalidadSeleccionada(){
+      if ( this.mostrarDatos == true ){
+        console.log("ESTOY ENTRANDO ACAAAAAAAAAAAAAAAAAAAAAAAAAA");
         this.nombreSelectedLocalidad = this.filtroLocalidades[this.data.item.sysLocalidad.id - 1].nombre;
         this.selectedLocalidad = this.filtroLocalidades[this.data.item.sysLocalidad.id - 1].id;
         console.log("this.nombreSelectedLocalidad", this.nombreSelectedLocalidad);
         console.log("this.selectedLocalidad", this.selectedLocalidad);
       }
-    }
+    } */
 
     getfiltros(){
 
@@ -348,7 +354,8 @@ export class AgregarDatosEntregaComponent implements OnInit{
       this._agregarDatosEntregaService.getAllLocalidadesPorProvincia( this.idProv ).subscribe(params => {
         console.log(params);
         this.filtroLocalidades = params.datos;
-        this.setLocalidadSeleccionada();
+        console.log(params.datos)
+        //this.setLocalidadSeleccionada();
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
@@ -369,15 +376,13 @@ export class AgregarDatosEntregaComponent implements OnInit{
 
    
       this._agregarDatosEntregaService.getAllProvincias().subscribe( params => {
-        console.log("PROVINCIASSS: ", params.datos);
-        console.log("this.provincia", params[0]);
+        console.log("PROVINCIAS -> ", params.datos);
         this.filtroProvincias = params.datos;
-        this.selectedProvincia = this.filtroProvincias[0].id;
-        //this.selectedProvincia = params.id;
-        //console.log("filtroProvincias -> ", this.selectedProvincia);
-         //console.log("filtroProvincias asdasd-> ", this.selectedProvincia);
-        //this.filtroProvincias = params;
-        this._agregarDatosEntregaService.getAllLocalidadesPorProvincia( this.selectedProvincia );
+        if ( this.mostrarDatos == false ){
+          console.log("estoy entrando aca aunque esta en falsooo");
+          this.selectedProvincia = this.filtroProvincias[0].id;
+          this._agregarDatosEntregaService.getAllLocalidadesPorProvincia( this.selectedProvincia );
+        }
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
@@ -402,9 +407,14 @@ export class AgregarDatosEntregaComponent implements OnInit{
       this.selectedProvincia = (event.target as HTMLSelectElement).value;
       console.log("this.selectedProvincia", this.selectedProvincia);
       if(this.selectedProvincia > 0){
-        this.selectedLocalidad = 0;
+        //this.selectedLocalidad = 0;
         this._agregarDatosEntregaService.getAllLocalidadesPorProvincia(this.selectedProvincia).subscribe(params => {
           this.filtroLocalidades = params.datos;
+          
+          if (this.mostrarDatos === true) {
+            this.selectedLocalidad = this.filtroLocalidades[0].id;
+            console.log("this.selectedLocalidad", this.selectedLocalidad);
+          }
         },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
@@ -447,10 +457,13 @@ export class AgregarDatosEntregaComponent implements OnInit{
     }
   
     selectLocalidad(event: Event) {
-      //console.log("ENTRE A SELECTLOCALIDAD");
+
       this.selectedLocalidad = (event.target as HTMLSelectElement).value;
+      this.indexLocalidad = (event.target as HTMLSelectElement).selectedIndex;
+      console.log("indexLocalidad",  this.indexLocalidad);
+      localStorage.setItem("indexLocalidad", this.indexLocalidad.toString());
       // this.selectedCodigoPostal = (event.target as HTMLSelectElement);
-      console.log( this.selectedLocalidad );
+      console.log("localidad seleccionada ->", this.selectedLocalidad );
 
       this.localidadID = (event.target as HTMLSelectElement).value;
       
@@ -458,7 +471,7 @@ export class AgregarDatosEntregaComponent implements OnInit{
 
       if(this.selectedLocalidad > 0){
         this._agregarDatosEntregaService.getProvinciaPorLocalidad(this.selectedLocalidad).subscribe( params => {
-          console.log("localidades -> ",params);
+          console.log("provincia segun localidad -> ",params);
           //this.selectedProvincia = params.id;
           this.selectedProvincia = params.id;
           //console.log("Provincia: "+this.selectedProvincia.id);

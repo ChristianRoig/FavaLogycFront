@@ -28,8 +28,8 @@
 
                 <mat-form-field appearance="outline" fxFlex class="selector">
                     <mat-label>Fecha de entrega</mat-label>
-                    <input matInput *ngIf="this.mostrarDatos == false" [matDatepicker]="picker" [min]="minDateHastaFiltro" [value]='valorPicker' (dateChange)="addEvent($event)" [disabled]='deshabilitado'>
-                    <input matInput *ngIf="this.mostrarDatos == true" [matDatepicker]="picker" [min]="minDateHastaFiltro" [value]='this.valorPicker' (dateChange)="addEvent($event)" [disabled]='deshabilitado'>
+                    <input matInput *ngIf="this.mostrarDatos == false" autocomplete="off" [matDatepicker]="picker" [min]="minDateHastaFiltro" [value]='valorPicker' (dateChange)="addEvent($event)" [disabled]='deshabilitado'>
+                    <input matInput *ngIf="this.mostrarDatos == true" autocomplete="off" [matDatepicker]="picker" [min]="minDateHastaFiltro" [value]='this.valorPicker' (dateChange)="addEvent($event)" [disabled]='deshabilitado'>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
@@ -64,22 +64,42 @@
                 <mat-form-field appearance="outline" fxFlex>
                     <mat-label>{{ selectedProvincia ? 'Provincia' : 'Cargando...'}}</mat-label>
                     <select matNativeControl (change)="selectProvincia($event)" [disabled]="!filtroProvincias || deshabilitado">
+
+                        <ng-container *ngIf="mostrarDatos; then provinciasViewUpdy; else provincias"></ng-container>
                         
-                        <option *ngFor="let provincia of filtroProvincias; let index = index" [value]="provincia.id" [selected]="index == 0"> 
-                            {{ provincia.nombre }}
-                        </option>
-                        <!-- <option *ngIf="this.provincia" [value]="provincia.id" [selected]="selectedProvincia === provincia.id"> 
-                            {{ provincia.nombre }}
-                        </option> -->
+                        <ng-template #provinciasViewUpdy>
+                            <option *ngFor="let provincia of filtroProvincias; let index = index" [value]="provincia.id" [selected]="index == selectedProvincia - 1"> 
+                                {{ provincia.nombre }}
+                            </option>
+                        </ng-template>
+
+                        <ng-template #provincias>
+                            <option *ngFor="let provincia of filtroProvincias; let index = index" [value]="provincia.id" [selected]="index == 0"> 
+                                {{ provincia.nombre }}
+                            </option>
+                        </ng-template>
+                       
                     </select>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" fxFlex>
                     <mat-label>{{ filtroLocalidades ? 'Localidad' : 'Cargando...'}}</mat-label>
                     <select matNativeControl (change)="selectLocalidad( $event )" [disabled]="!filtroLocalidades || deshabilitado">
-                        <option *ngFor="let localidad of filtroLocalidades; let index = index" [value]="localidad.id" [selected]="index == (this.selectedLocalidad - 1)"> 
-                            {{ localidad.nombre }}
-                        </option>
+
+                        <ng-container *ngIf="mostrarDatos; then localidadesViewUpdt; else localidades"></ng-container>
+                        
+                        <ng-template #localidadesViewUpdt>
+                            <option *ngFor="let localidad of filtroLocalidades; let index = index" [value]="localidad.id" [selected]="index == ( this.indexLocalidad )"> 
+                                {{ localidad.nombre }}
+                            </option>
+                        </ng-template>
+
+                        <ng-template #localidades>
+                            <option *ngFor="let localidad of filtroLocalidades; let index = index" [value]="localidad" [selected]="index == 0"> 
+                                {{ localidad.nombre }}
+                            </option>
+                        </ng-template>
+                        
                     </select>
                 </mat-form-field>
 
