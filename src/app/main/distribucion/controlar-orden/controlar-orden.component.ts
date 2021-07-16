@@ -9,6 +9,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ControlarOrdenService } from './controlar-orden.service';
 import { MatButton } from '@angular/material/button';
 import { PopUpOrdenControladaComponent } from './popUpOrdenControlada/popUpOrdenControlada.component';
+import { SonidoService } from 'app/shared/services/sonidos.service';
 
 // import { Debounce } from 'app/shared/decorators/debounce';
 // import { ErroresService } from 'app/shared/services/errores.service';
@@ -62,7 +63,8 @@ export class ControlarCargaComponent implements OnInit {
       private _controlarOrdenService: ControlarOrdenService,
       private _dialog: MatDialog,
       private _router: Router,
-      private _activatedRoute: ActivatedRoute
+      private _activatedRoute: ActivatedRoute,
+      private _sonido: SonidoService
     ) { }
 
     
@@ -128,6 +130,7 @@ export class ControlarCargaComponent implements OnInit {
     this._controlarOrdenService.controlarArticuloPorCupa( this.idOrdenDist, this.cupa ) .subscribe( data => {
       //this.dataSource2 = null;
       console.log("controlado");
+      this._sonido.playAudioSuccess();
       //console.log(data.remitos[0].pedidoDetalles[0].articulo);
       //this.remitosDeOrden = data.remitos;
       //this.dataSource2 = data;
