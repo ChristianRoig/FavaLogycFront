@@ -1,8 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
-import { Debounce } from 'app/shared/decorators/debounce';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -31,7 +30,6 @@ interface Estados{
 
 export class OrdenesDistribucionComponent implements OnInit {
 
-  //@ViewChild('buscarCbte') buscarCbteInput: ElementRef;
   @ViewChild('buscarOrdenPorCupa') buscarOrdenPorCupaInput: ElementRef;
 
   displayedColumns: string[] = ['id', 'nombre', 'fecha', 'cantArticulos', 'cantArticulosACargar', 'cantRemitos', 'localidad', 'transporte', 'estado', 'seleccionar'];
@@ -149,30 +147,6 @@ export class OrdenesDistribucionComponent implements OnInit {
     }); 
   }
 
-  /* eliminarOrden() {
-    this._ordenesDistribucionService.eliminarOrden( this.idOrdenDist ).subscribe( data => {
-        console.log(data);
-        //this.dataSource2 = data.datos;
-        //this.length = data.totalRegistros;
-      },
-      (err: HttpErrorResponse) => {
-        if (err.error instanceof Error) {
-          console.log("Client-side error");
-        } else {
-          let errStatus = err.status
-          if (errStatus == 0){
-            let titulo = 'Error de Servidor';
-            let mensaje = "Por favor comunicarse con Sistemas";
-            this.mostrarError(errStatus, titulo, mensaje);
-          } else {
-            let titulo = 'Error al buscar una orden';
-            let mensaje = err.error.message.toString();
-            this.mostrarError(errStatus, titulo, mensaje);
-          }
-        }
-    }); 
-  } */
-
  //@Debounce(1000)
   searchOrden() {
     this.cupa = this.buscarOrdenPorCupaInput.nativeElement.value;
@@ -246,7 +220,6 @@ export class OrdenesDistribucionComponent implements OnInit {
   }
 
   /** The label for the checkbox on the passed row */
-  //checkboxLabel(row?: Articulos): string {
   checkboxLabel( row? ): string {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;

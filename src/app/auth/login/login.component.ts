@@ -16,7 +16,6 @@ import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.componen
 
 import { SonidoService } from 'app/shared/services/sonidos.service';
 import { LoginService } from './login.service';
-
 const sesion_activa: number = config.sesion_activa; // Minutos
 
 export interface Data {
@@ -58,10 +57,6 @@ export class LoginComponent implements OnInit {
     hide: boolean = true;
     username: string;
     rol: string[] = [];
-
-    /*infoOnChanged: BehaviorSubject<any>;
-    perfilLogOnChanged: BehaviorSubject<any>;
-    rolOnChanged: BehaviorSubject<any>;*/
 
     // Private
     protected _unsubscribeAll: Subject<any>;
@@ -113,10 +108,10 @@ export class LoginComponent implements OnInit {
     ngOnInit(): void {
 
         this.loginForm = this._formBuilder.group({
+
             email   : ['', Validators.required],
             password: ['', Validators.required]
-            /* email   : [''],
-            password: [''] */
+
         });
 
         this._loginService.infoOnChanged
@@ -202,7 +197,6 @@ export class LoginComponent implements OnInit {
         this._router.navigate(['']);
     }
 
-    //--------------------------------------------------------------------------------------------------
     /**
      * setea en caso de error
      */

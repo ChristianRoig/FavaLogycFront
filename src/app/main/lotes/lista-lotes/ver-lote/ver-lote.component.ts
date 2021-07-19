@@ -194,9 +194,7 @@ export class VerLoteComponent implements OnInit {
       data: {
         id: this.loteActual.idLote,
         nombre: this.nombreLote,
-        /* codigoArticulo: this.codigoArticulo,
-        codigoDeBarras: codigoDeBarras, 
-        descripcion: descripcion */
+
       } 
     });
     dialogRef.afterClosed()
@@ -417,20 +415,6 @@ export class VerLoteComponent implements OnInit {
       }
     });
     
-    
-    /* let application_name = "Favalogyc";
-    let permission_name = "Impresion_CUPA" */
-    // let res = await this._usuarioService.checkPermision(application_name, permission_name);
-    //console.log('component')
-    // console.log(res)
-    // if (res === false){
-    //   this.mostrarError(1, 'Error de Permisos', `Usted no tiene permisos para realizar la acción: ${permission_name}.`);
-    // } else {
-      /* if(localStorage.getItem('ImpresoraCUPA')){
-        this.imprimir();
-      } else {
-        this.seleccionarImpresora()
-      } */
   }
 
   resetFiltros(){

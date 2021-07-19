@@ -130,19 +130,6 @@ export class LoteCrearLoteComponent implements OnInit {
     hastaLote   : null
   };
 
-  /* {
-
-   "idTipo" : 1,
-   "idTurno" : null,
-   "idOrigen" : null,
-   "idEtapa" : null,
-   "idProvincia" : 1,
-   "idLocalidad" : null,
-   "desdePedido" : null,
-   "hastaPedido" : "null",
-   "idLote" : null   
-
-} */
 
   constructor(private _router: Router, 
               private _fuseSidebarService: FuseSidebarService, 
@@ -155,7 +142,7 @@ export class LoteCrearLoteComponent implements OnInit {
     this.minDateHastaFiltro = new Date(currentYear - 5, 0, 1);
     this.maxDateHastaFiltro = new Date(currentYear + 1, 11, 31);
     this.minDateDesdeLote   = new Date(currentYear - 5, 0, 1);
-    this.maxDateDesdeLote   = new Date(currentYear + 1, 11, 31);
+    this.maxDateDesdeLote   = new Date(currentYear + 1, 11, 31);  
     this.minDateHastaLote   = new Date(currentYear - 5, 0, 1);
     this.maxDateHastaLote   = new Date(currentYear + 1, 11, 31);
   }
@@ -164,7 +151,7 @@ export class LoteCrearLoteComponent implements OnInit {
     
     //this.resetFiltros();    
 
-    //this.getfiltros(); ESTA COMENTADO PARA QUE NO HAGA TANTAS CONSULTAS A LA API
+    //this.getfiltros(); //ESTA COMENTADO PARA QUE NO HAGA TANTAS CONSULTAS A LA API
     
     this.getArticulos();
   }
@@ -534,7 +521,6 @@ export class LoteCrearLoteComponent implements OnInit {
         }
       }) */
     }
-    // this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
   }
 
   selectLocalidad(event: Event) {
@@ -561,13 +547,7 @@ export class LoteCrearLoteComponent implements OnInit {
         }
       })
     }
-    // this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
   }
-
-  // addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
-
-  //   console.log(event.value);
-  // }
 
   addEvent( tipo, evento ) {
 
@@ -642,11 +622,10 @@ export class LoteCrearLoteComponent implements OnInit {
 
     this.busqueda = this.buscarLoteInput.nativeElement.value;
     this.busqueda = this.busqueda.toLocaleUpperCase();
-    if(this.busqueda === '' || this.busqueda == null){
+    if (this.busqueda === '' || this.busqueda == null){
       this.busqueda = "";
       this.getArticulos();
     }
-    //this.getArticulos();
   }
 
   anular(id){
@@ -658,7 +637,6 @@ export class LoteCrearLoteComponent implements OnInit {
   crearLote() {
     
     console.log("seleccion", this.selection);
-    //localStorage.setItem('Lote',JSON.stringify(this.selection));
     let dialogRef = this._dialog.open( ConfirmarAgregarLoteComponent, {
       data: {
         vengoDeCrearLote: true,
@@ -670,28 +648,9 @@ export class LoteCrearLoteComponent implements OnInit {
       let idLote = JSON.parse(localStorage.getItem('idLote'));
       localStorage.removeItem('idLote');
       
-      //this.imprimirCupa( idLote );
-        
-        /* if (errStatus != 0) {
-          //let ruta = `apps/remitos/lista-remitos`;
-          //this._router.navigate([ruta]); 
-            
-        } else {
-          this._router.navigate(['']);
-        } */ 
       });
-    
-    /* antes */
-    /* let ruta = `apps/lotes/agregar-lote`;
-    this._router.navigate([ruta]); */
   }
 
-  /* esperarYnavegarAlotes(){
-    setTimeout(() => {                          
-      let ruta = `apps/lotes/lista-lotes`;
-      this._router.navigate([ruta]);
-    }, 1000);
-  }  */
 
   imprimirCupas(idLote: number){
     const dialogRef = this._dialog.open( ModalDeseaImprimirLoteComponent, {
@@ -705,7 +664,6 @@ export class LoteCrearLoteComponent implements OnInit {
         if ( result ){
           this.imprimirCupa(idLote);
         }
-        //this.esperarYnavegarAlotes();
       });
   }
 

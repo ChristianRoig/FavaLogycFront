@@ -11,8 +11,6 @@ import { MatButton } from '@angular/material/button';
 import { PopUpOrdenControladaComponent } from './popUpOrdenControlada/popUpOrdenControlada.component';
 import { SonidoService } from 'app/shared/services/sonidos.service';
 
-// import { Debounce } from 'app/shared/decorators/debounce';
-// import { ErroresService } from 'app/shared/services/errores.service';
 
 /**
  * @title Basic use of `<table mat-table>`
@@ -43,7 +41,6 @@ export class ControlarCargaComponent implements OnInit {
   @ViewChild('controlarCupa') buscarCupaInput: ElementRef;
   @ViewChild('btnRef') buttonRef: MatButton;
 
-  //'idArticulo','nombreArticulo','codigoArticulo','codigoUnicoParteArticulo','etapa','nroParte','nroCbte','checkTransporte'
   displayedColumns: string[] = ['idArticulo','nombreArticulo','codigoArticulo','codigoUnicoParteArticulo','etapa','nroParte','nroCbte','checkTransporte'];
   dataSource2: any;
 
@@ -128,12 +125,11 @@ export class ControlarCargaComponent implements OnInit {
   controlarArticuloPorCupa(){
     
     this._controlarOrdenService.controlarArticuloPorCupa( this.idOrdenDist, this.cupa ) .subscribe( data => {
-      //this.dataSource2 = null;
+
       console.log("controlado");
       this._sonido.playAudioSuccess();
       //console.log(data.remitos[0].pedidoDetalles[0].articulo);
-      //this.remitosDeOrden = data.remitos;
-      //this.dataSource2 = data;
+
       this.esperarYactualizarDatos();
     },
     (err: HttpErrorResponse) => {
@@ -227,16 +223,5 @@ export class ControlarCargaComponent implements OnInit {
         }
     }); 
   }
-
-  /* sortData( event ) {
-      
-    this.page = 0;
-    this.columna = event.active;
-    
-    if (event.direction !== "")
-        this.order = event.direction;
-    
-    this.getRemitosDeOrdenDistribucion( this.idOrdenDist );
-  } */
     
 }

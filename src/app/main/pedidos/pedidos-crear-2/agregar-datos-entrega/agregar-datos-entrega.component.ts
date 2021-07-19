@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 
-import { PedidosListaService } from '../../x_NOSEUSA_pedidos-lista/pedidos-lista.service';
 import { AgregarDatosEntregaService } from './agregar-datos-entrega.service';
 
 export interface Articulo {
@@ -52,7 +51,6 @@ export class AgregarDatosEntregaComponent implements OnInit{
   constructor(
     public dialogRef: MatDialogRef<AgregarDatosEntregaComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private _pedidosListaService: PedidosListaService,
     private _agregarDatosEntregaService: AgregarDatosEntregaService,
     private _dialog: MatDialog,
     private _router: Router) {

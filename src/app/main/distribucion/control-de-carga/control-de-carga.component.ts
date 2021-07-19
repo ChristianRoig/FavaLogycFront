@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { Router } from '@angular/router';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
-import { Debounce } from 'app/shared/decorators/debounce';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 import { MatDialog} from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -33,7 +32,6 @@ import { ControlDeCargaService } from './control-de-carga.service';
 export class ControlDeCargaComponent implements OnInit {
 
   @ViewChild('buscar') buscarOrdenInput: ElementRef;
-  // cantArticulos: cantArticulosACargar: cantRemitos: estado: fecha: id: nombre:  
   displayedColumns: string[] = ['id', 'nombre', 'fecha', 'estado', 'cantArticulos', 'cantArticulosACargar', 'cantRemitos', 'localidad', 'transporte', 'seleccionar'];
   dataSource2: any;
   
@@ -143,15 +141,7 @@ export class ControlDeCargaComponent implements OnInit {
     });
     this._router.navigate(['']);
     dialogRef.afterClosed()
-     /*  .subscribe( () => {
-          if (errStatus != 0) {
 
-            // this.getDetalle(this.busqueda, this.page, this.size, this.columna, this.order);
-            
-          } else {
-            this._router.navigate(['']);
-          }
-      }); */
   }
 
   paginar(e: any){

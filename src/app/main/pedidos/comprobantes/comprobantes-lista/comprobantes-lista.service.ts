@@ -21,19 +21,6 @@ export interface BodyDetalle{
     desdeLote : string;
     hastaLote : string;
 
-    /* 
-    "idTipo" : 1, (numerico o null)
-    "idTurno" : 1, (numerico o null)
-    "idOrigen" : 15, (numerico o null)
-    "idEstado" : 3, (numerico o null)
-    "idEtapa" : 3, (numerico o null)
-    "idProvincia" : 1, (numerico o null)
-    "idLocalidad" : 798, (numerico o null)
-    "desdePedido" : null, (tipo date (AAAA-MM-DD) o null)
-    "hastaPedido" : "2020-01-06", (tipo date (AAAA-MM-DD) o null)
-    "lote" : 1, (string o null)
-    "desdeLote" : null, (tipo date (AAAA-MM-DD) o null)
-    "hastaLote" : "2020-06-17" (tipo date (AAAA-MM-DD) o null) */
   }
 
 @Injectable()

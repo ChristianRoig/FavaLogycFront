@@ -32,7 +32,7 @@ export class ControlDeCargaService {
         let ruta = `${ BASE_URL }pedidos/distribucion/estado/NUEVO/${ page }/${ size }/${ columna }/${ order }`;
 
         return this._httpClient.get(ruta);
-    } // pedidos / distribucion / :pageNo / :pageSize / :soryBy / :order
+    } 
     
     getOrdenById ( idOrdenDist: number ): Observable<any>{    
         

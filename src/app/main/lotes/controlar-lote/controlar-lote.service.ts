@@ -18,10 +18,6 @@ export class ControlarLoteService {
         let ruta = `${BASE_URL}pedidos/detalleunico/lote/${ idLote }/${ etapaproceso }/codbarras`;
 
         console.log('idLote', idLote, "| etapaproceso", etapaproceso, "| codArt", codArt);
-
-        //let ruta = `${BASE_URL}pedidos/detalleunico/lote/${idLote}/${etapaproceso}/${codArt}`;
-        //let ruta = `${BASE_URL}pedidos/detalleunico/lote/7/estanteria/a/codbarras`;
-        //codBarras
         
         return this._httpClient.get(ruta, {headers: headers});
     }

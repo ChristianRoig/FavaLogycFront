@@ -21,9 +21,6 @@
             </div>
             <!-- / Filtros en Pantalla grande -->
 
-            <!-- SECCION ARTICULOS -->
-
-            <!-- / SECCION ARTICULOS -->
         </div>
     </div>
     <!-- / CONTENIDO -->
@@ -75,7 +72,6 @@
             <mat-form-field appearance="outline" class="inputBuscarLote">
                 <mat-label>Buscar Lote</mat-label>
                 <input #buscarLote (keyup)="searchLote()" matInput value="" placeholder="Buscar lote por nombre">
-                <!-- <input matInput value="" placeholder="Buscar lote"> -->
                 <mat-icon matSuffix>search</mat-icon>
             </mat-form-field>
 
@@ -91,24 +87,20 @@
 <ng-template #listaLotes>
     <!-- Lista de Lotes -->
     <div style="width: 100%; overflow: auto;" class="divLista">
-        <!-- <h4>Todos los lote en estado abierto</h4> -->
+
         <table mat-table matSort [dataSource]="dataSource2" class="mb-8">
-            <!-- (matSortChange)="sortData($event)" -->
 
             <ng-container matColumnDef="id">
-                <!-- mat-sort-header="id" -->
                 <th mat-header-cell *matHeaderCellDef> Id </th>
                 <td mat-cell *matCellDef="let lote"> {{ lote.idLote }} </td>
             </ng-container>
 
             <ng-container matColumnDef="nombre">
-                <!-- mat-sort-header="nombre" -->
                 <th mat-header-cell *matHeaderCellDef> Nombre </th>
                 <td mat-cell *matCellDef="let lote"> {{ lote.nombre }} </td>
             </ng-container>
 
             <ng-container matColumnDef="fechaAlta">
-                <!-- mat-sort-header="fechaAlta" -->
                 <th mat-header-cell *matHeaderCellDef> Fecha Alta </th>
                 <td mat-cell *matCellDef="let lote"> {{ getSoloFecha(lote.fechaAlta) }} </td>
             </ng-container>
@@ -126,7 +118,6 @@
             <ng-container matColumnDef="seleccionar">
                 <th mat-header-cell *matHeaderCellDef> Acción </th>
                 <td mat-cell class="example-button-row" *matCellDef="let lote">
-                    <!-- (click)="controlar(lote)" -->
                     <button mat-stroked-button (click)="controlar(lote)" color="primary"> Controlar Lote </button>
                 </td>
             </ng-container>
@@ -134,13 +125,10 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
+
         <div contenido class=" mb-4 ">
-            <!-- (page)="paginar($event) " -->
             <mat-paginator (page)="paginar($event)" [length]="length" [pageIndex]="page" [pageSize]="size" [pageSizeOptions]="[50, 250, 500]">
             </mat-paginator>
-
-            <!-- <mat-paginator [length]="length" [pageIndex]="page" [pageSize]="size" [pageSizeOptions]="[50, 250, 500]" (page)="paginar($event)">
-            </mat-paginator> -->
         </div>
     </div>
 </ng-template>

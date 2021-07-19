@@ -24,6 +24,8 @@ export class PedidosVisualizacionComponent implements OnInit {
   // dataSourceArticulos = ELEMENT_DATA_ARTICULOS;
   dataSourceArticulos: any;
   idPedidoCabecera: any;
+  idPedidoCbte: number = 0;
+  vengoDeCbte: string = "false";
   cabecera: any;
 
   length: number;
@@ -54,7 +56,8 @@ export class PedidosVisualizacionComponent implements OnInit {
       this.idPedidoCabecera = params['id'];
       console.log(this.idPedidoCabecera);
     });
-
+    this.idPedidoCbte = +localStorage.getItem('idCbte');
+    this.vengoDeCbte = localStorage.getItem('vengoDeCbte');
     this.obtenerCabeceraDePedido();
   }
 
@@ -85,30 +88,61 @@ export class PedidosVisualizacionComponent implements OnInit {
     });
   }
 
-  getArticulos(page, size, columna, order) {
-    this._service.getArticulos( this.idPedidoCabecera, page, size, columna, order ).subscribe(paramsArt => {
-      if(paramsArt){
-        console.log("articulos -> ", paramsArt.datos);
-        this.dataSourceArticulos = paramsArt.datos;
-        this.length = paramsArt.totalRegistros;
-      }
-    },
-    (err: HttpErrorResponse) => {
-      if (err.error instanceof Error) {
-        console.log("Client-side error");
-      } else {
-        let errStatus = err.status;
-        if (errStatus == 0){
-          let titulo = 'Error de Servidor';
-          let mensaje = "Por favor comunicarse con Sistemas";
-          this.mostrarError(errStatus, titulo, mensaje);
-        } else {
-          let titulo = 'Error al cargar Articulos';
-          let mensaje = err.error.message.toString();
-          this.mostrarError(errStatus, titulo, mensaje);
+  getArticulos( page, size, columna, order) {
+    if(this.idPedidoCbte > 0 && this.vengoDeCbte == "true"){
+      console.log("estoy consultando los articulos con id -> ", this.idPedidoCbte);
+      this._service.getArticulos( this.idPedidoCbte, page, size, columna, order ).subscribe(paramsArt => {
+        if(paramsArt){
+          console.log("articulos -> ", paramsArt.datos);
+          this.dataSourceArticulos = paramsArt.datos;
+          this.length = paramsArt.totalRegistros;
+          this.vengoDeCbte = localStorage.getItem('vengoDeCbte');
         }
-      }
-    });
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error");
+        } else {
+          let errStatus = err.status;
+          if (errStatus == 0){
+            let titulo = 'Error de Servidor';
+            let mensaje = "Por favor comunicarse con Sistemas";
+            this.mostrarError(errStatus, titulo, mensaje);
+          } else {
+            let titulo = 'Error al cargar Articulos';
+            let mensaje = err.error.message.toString();
+            this.mostrarError(errStatus, titulo, mensaje);
+          }
+        }
+      });
+
+    } 
+    if (this.vengoDeCbte == "false"){
+      console.log("viniendo desde PEDIDO");
+      this._service.getArticulosPedidos( this.idPedidoCabecera, page, size, columna, order ).subscribe(paramsArt => {
+        if(paramsArt){
+          console.log("articulos -> ", paramsArt.datos);
+          this.dataSourceArticulos = paramsArt.datos;
+          this.length = paramsArt.totalRegistros;
+        }
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error");
+        } else {
+          let errStatus = err.status;
+          if (errStatus == 0){
+            let titulo = 'Error de Servidor';
+            let mensaje = "Por favor comunicarse con Sistemas";
+            this.mostrarError(errStatus, titulo, mensaje);
+          } else {
+            let titulo = 'Error al cargar Articulos';
+            let mensaje = err.error.message.toString();
+            this.mostrarError(errStatus, titulo, mensaje);
+          }
+        }
+      });
+    }
   }
 
   sortData( event ) {

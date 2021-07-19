@@ -16,8 +16,6 @@ import { ControlarLoteService } from './controlar-lote.service';
 import { MatButton } from '@angular/material/button';
 import { PopUpLoteCreado } from './popUpLoteControlado/popUpLoteControlado.component';
 
-// import { SelectMultipleControlValueAccessor } from '@angular/forms';
-// import { Debounce } from 'app/shared/decorators/debounce';
 
 /**
  * @title Basic use of `<table mat-table>`
@@ -50,8 +48,6 @@ export class ControlarLoteComponent implements OnInit {
   @ViewChild('eliminaCupa') eliminaCupaInput: ElementRef;
   @ViewChild('btnRef') buttonRef: MatButton;
     
-  /* displayedColumns: string[] = ['check', 'nombreArt', 'codArt', 'etapa', 'cant','codBarra', 'cupa'];
-  dataSource2: any; */
   articulos: [] = null;
   modo: string = '';
   tituloPagina: string = 'ESTANTERÍA';
@@ -78,9 +74,7 @@ export class ControlarLoteComponent implements OnInit {
 
   ngOnInit(): void{
     this._activatedRoute.params.subscribe( params => {
-      //console.log( params );
-      //console.log( params['modo'] );
-      //console.log( params['id'] );
+
       this.modo = params['modo'];
       this.idLote = params['id'];
     });
@@ -118,7 +112,7 @@ export class ControlarLoteComponent implements OnInit {
 
   buscarLotePorId(){
     this._controlarLoteService.getLotePorId( this.idLote ) .subscribe( data => {
-      //console.log("LOTEEEEEEEEEEEEEEEE", data);
+
       this.lote = data; 
       //console.log("LOTEEEEEEEEEEEEEEEE", this.lote);
     },
@@ -207,12 +201,7 @@ export class ControlarLoteComponent implements OnInit {
         }
       }
     });
-   /*  if( !this.articulos || this.articulos.length == 0 ) {
-      this.alertArregloVacio();
-    } else {
-      this.setearCondicion();
-      //this.verificarEtapas();
-    } */
+
   }
 
   esperarYactualizarDatos(){
@@ -347,15 +336,5 @@ export class ControlarLoteComponent implements OnInit {
         mensaje: mensaje
       } 
     });
-
-    /* dialogRef.afterClosed()
-      .subscribe( () => {
-          if (errStatus != 0) {
-            //this.resetFiltros();
-            
-          } else {
-            this._router.navigate(['']);
-          }
-      });*/
   } 
 }

@@ -1,11 +1,12 @@
 import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
-import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
-import { Debounce } from 'app/shared/decorators/debounce';
 import { MatDialog } from '@angular/material/dialog';
-import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 import { HttpErrorResponse } from '@angular/common/http';
+
+import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
+
+import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 
 //services
 import { ListaRemitosService } from './lista-remitos.service';
@@ -143,17 +144,6 @@ export class ListaRemitosComponent implements OnInit {
       });
   }
 
-  /* consultar(id){
-    let ruta = `apps/pedidos/administracion/visualizacion/${id}`;
-    this._router.navigate([ruta]);
-  } */
-
-  /* anular(id){
-    let ruta = `apps/pedidos/administracion/anular/${id}`;
-    console.log(ruta);
-    this._router.navigate([ruta]);
-  } */
-
   crearRemito() {
     console.log(this.selection);
     localStorage.setItem('Remito',JSON.stringify(this.selection));
@@ -174,13 +164,6 @@ export class ListaRemitosComponent implements OnInit {
         this.dataSource2.forEach(row => this.selection.select(row));
   }
 
-  /** The label for the checkbox on the passed row */
-  /* checkboxLabel(row?: Articulos): string {
-    if (!row) {
-      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
-    }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.Id + 1}`;
-  } */
 
   /**
    * Toggle sidebar open

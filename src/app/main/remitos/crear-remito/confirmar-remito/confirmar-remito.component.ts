@@ -1,9 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
+
+import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 
 //service
 import { ConfirmarRemitoService } from './confirmar-remito.service';
@@ -65,15 +66,9 @@ export class ConfirmarRemitoComponent implements OnInit {
   ngOnInit(): void {
     this.getfiltros();
 
-    //this.dataSource2 = JSON.parse(localStorage.getItem('Remitir'))._selected;
     this.dataSource2 = this.data.selection._selected;
     console.log(this.dataSource2);
-    
-    /* this.cantidad = this.dataSource2.length;
-    this.picker =  new Date(); */
 
-    //selecciono, por default, todas las filas
-    //this.dataSource2.forEach(row => this.selection.select(row));
   }
 
   getfiltros(){

@@ -28,25 +28,6 @@ export class ControlBusquedaService
     
     constructor( private _httpClient: HttpClient ) {}
 
-    /* async getDetalleUnico( idLote, codArt, etapaproceso ): Promise<any>{
-
-        let headers = new HttpHeaders({
-            "Content-Type": "application/json"
-        });
-
-       console.log('idLote', idLote, "| etapaproceso", etapaproceso, "| codArt", codArt);
-        let ruta = `${BASE_URL}pedidos/detalleunico/lote/${idLote}/${etapaproceso}/codbarras`;
-        //let ruta = `${BASE_URL}pedidos/detalleunico/lote/${idLote}/${etapaproceso}/${codArt}`;
-        //let ruta = `${BASE_URL}pedidos/detalleunico/lote/7/estanteria/a/codbarras`;
-        //codBarras
-        
-        return this._httpClient.get(ruta, {headers: headers})
-		.toPromise().then ( (response: any) => {
-
-			return response;	
-		});
-    } */
-
 
     getLotesPorEstado(estado: string, page, size): Observable<any>{  
         let ruta = `${ BASE_URL }pedidos/pedidolote/lote/v2/${ estado }/${ page }/${ size }`;
@@ -73,26 +54,4 @@ export class ControlBusquedaService
         let ruta = `${ BASE_URL }pedidos/pedidolote/${ id }`;
         return this._httpClient.get(ruta);
     }
-
-    /* async eliminarArticuloDeLotePorCupa(cupa): Promise<any>
-    {
-
-        let headers = new HttpHeaders({
-            "Content-Type": "application/json"
-        });
-
-        let ruta = `${BASE_URL}pedidos/pedidolote/cupa/${cupa}`;
-        
-
-        return this._httpClient.delete(ruta, {headers: headers})
-		.toPromise().then ( (response: any) => {
-
-			return response;
-			
-		}, (err) => {
-            
-            return err;
-            
-        });
-    } */
 }

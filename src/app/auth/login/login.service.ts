@@ -46,7 +46,6 @@ export class LoginService {
 
     infoOnChanged: BehaviorSubject<any>;
     rolOnChanged: BehaviorSubject<any>;
-    //perfilLogOnChanged: BehaviorSubject<any>;
 
     /**
      * Constructor

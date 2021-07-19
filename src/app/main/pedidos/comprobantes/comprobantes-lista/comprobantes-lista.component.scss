@@ -59,16 +59,13 @@ fuse-sidebar {
 
 .btn {
     height: 40px;
-    /* margin-bottom: 27px; */
     width: 120px;
     padding-left: 5px;
     padding-right: 5px;
     margin-left: 15px;
-    /* margin-right: 5px; */
 }
 
 .dato {
-    //padding-left: 10px;
     padding-right: 10px;
 }
 
@@ -82,13 +79,6 @@ fuse-sidebar {
     max-width: 100%;
 }
 
-
-/* mat-tab-labels {
-    width: 100px;
-    display: flex;
-    justify-content: flex-start;
-} */
-
 .mat-tab-labels {
     display: flex;
     justify-content: flex-start !important;
@@ -98,13 +88,6 @@ fuse-sidebar {
 .asd {
     justify-content: flex-start !important;
 }
-
-
-/* .titulosTabs {
-    width: 100px;
-    display: flex;
-    justify-content: flex-start;
-} */
 
 @media (max-width: 768px) {
     .inputBusqueda {
