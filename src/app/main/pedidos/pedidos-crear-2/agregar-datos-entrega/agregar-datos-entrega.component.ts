@@ -95,13 +95,13 @@ export class AgregarDatosEntregaComponent implements OnInit{
     selectedCodigoPostal: any;
 
     filtroTurnos: any;
-    selectedTurno: any = 0;
+    selectedTurno: any = 1;
 
     filtroTransporte: any;
     selectedTransporte: any = 0;
 
-    picker: any;
-    valorPicker: any;
+    picker: any; // es la fecha en formato "dd/mm/yyyy" para enviar al backend
+    valorPicker: any; // es un obj Date para mostrar en el input la fecha seleccioanda
     codigoPostal: any = 7600;
 
     deshabilitado: boolean;
@@ -115,11 +115,12 @@ export class AgregarDatosEntregaComponent implements OnInit{
     mostrarDatos: boolean;
     fechaFormatoDate: Date;
     id: number = null;
-    estanTodosLosDatos: boolean = false;
     localidadID: string = "7600";
     idProv: number = 1;
-    crearDirec: boolean = false;
+    crearDirec: boolean = true;
     indexLocalidad: number;
+    nombreTurno: string = "Mañana";
+    setTransporte: boolean = false;
 
     ngOnInit(): void {
 
@@ -128,23 +129,26 @@ export class AgregarDatosEntregaComponent implements OnInit{
           this.selectedLocalidad = 1402; // 1402(Mar del plata) 
           this.deshabilitado = false;
           this.mostrarDatos = false;
+          this.valorPicker = new Date(new Date());
+          localStorage.setItem('fechaFormatoDate', JSON.stringify( this.valorPicker ));
+          this.indexLocalidad = 1401; // 1402(Mar del plata) menos uno xq array empieza en 0
+          localStorage.setItem('indexLocalidad', JSON.stringify( this.indexLocalidad ));
           break;
         case "upd":
           this.deshabilitado = false;
           this.crearDirec = true;
           this.mostrarDatos = true;
           // permito la modificacion aunque los valores no se cambien, sino si o si hay que cambiar fecha ó turno ó transporte para poder actualizar
-          this.estanTodosLosDatos = true; 
           this.getDatoEntrega();
           break;
-          case "view":
-            this.deshabilitado = true;
-            this.crearDirec = true;
-            this.mostrarDatos = true;
-            this.getDatoEntrega();
-          break;
+        case "view":
+          this.deshabilitado = true;
+          this.crearDirec = true;
+          this.mostrarDatos = true;
+          this.getDatoEntrega();
+        break;
       }
-      console.log("this.indexLocalidad", this.indexLocalidad);
+
       this.getfiltros();
     } 
 
@@ -153,7 +157,20 @@ export class AgregarDatosEntregaComponent implements OnInit{
       // this.dialogRef.close();
     }
 
+    setearHoy(){
+      const currentDate = new Date();
+      const day = currentDate.getDate();
+      const month = currentDate.getMonth() + 1;
+      const year = currentDate.getFullYear();
+      this.picker = day + "/" + month + "/" + year;
+    }
+
     agregar(){
+
+      if (this.picker === undefined){
+        this.setearHoy();
+        console.log("this.picker-----------------", this.picker);
+      }
 
       this.datoEntrega.contacto                     = this.contacto;
       this.datoEntrega.direccion                    = this.direccion;
@@ -170,20 +187,9 @@ export class AgregarDatosEntregaComponent implements OnInit{
 
       console.log("THIS DATOS ENTREGA", this.datoEntrega);
       localStorage.setItem('datoEntrega', JSON.stringify(this.datoEntrega));
-      localStorage.setItem('fechaFormatoDate', JSON.stringify(this.fechaFormatoDate));
       this.dialogRef.close();
     }
 
-    controlarExistenDatos(){
-      //console.log("this.picker - ", this.picker, " | ","this.selectedTurno - ", this.selectedTurno, " | ","this.selectedTransporte - ", this.selectedTransporte   );
-      if( this.picker != undefined && this.selectedTurno != 0 ){
-        if( this.selectedTransporte != 0 ){
-          this.estanTodosLosDatos = true;  
-        }
-      }else{
-        this.estanTodosLosDatos = false;  
-      }
-    }
 
     adaptarFecha(valor: string){
       //console.log("valor", valor);
@@ -193,7 +199,6 @@ export class AgregarDatosEntregaComponent implements OnInit{
       let anio:string = "";
 
       for(let i = 0; i < valor.length ; i++){
-        //let caracter: string = valor[i];
         if(valor[i] != "-" && dia.length <= 1){
           dia += valor[i];
         }
@@ -218,6 +223,8 @@ export class AgregarDatosEntregaComponent implements OnInit{
       return stringFechaAdaptada;
     }
 
+    
+
     getDatoEntrega() {
 
       this.indexLocalidad = +localStorage.getItem("indexLocalidad");
@@ -228,7 +235,7 @@ export class AgregarDatosEntregaComponent implements OnInit{
   
       this.contacto             = this.data.item.contacto;
       this.direccion            = this.data.item.direccion;
-      this.picker               = this.fechaFormatoDate;
+      this.picker               = this.data.fechaDeEntrega;
       this.valorPicker          = this.fechaFormatoDate;
       this.data.articulos       = this.data.item.listaPedidoDetalle;
       this.mail                 = this.data.item.mail;
@@ -247,7 +254,7 @@ export class AgregarDatosEntregaComponent implements OnInit{
       //console.log(this.data.item.fechaDeEntrega, this.selectedTransporte, this.selectedTurno  );
     }
 
-    devolverTurno(selectedTurno: number){
+    devolverTurno(selectedTurno: number){      // BORRRRRRRRRAAAAAAAAAAAAAAARRRRR
       if(selectedTurno == 1)
       return "Mañana";
       else
@@ -379,7 +386,6 @@ export class AgregarDatosEntregaComponent implements OnInit{
         console.log("PROVINCIAS -> ", params.datos);
         this.filtroProvincias = params.datos;
         if ( this.mostrarDatos == false ){
-          console.log("estoy entrando aca aunque esta en falsooo");
           this.selectedProvincia = this.filtroProvincias[0].id;
           this._agregarDatosEntregaService.getAllLocalidadesPorProvincia( this.selectedProvincia );
         }
@@ -509,38 +515,54 @@ export class AgregarDatosEntregaComponent implements OnInit{
       return this.codigoPostal;
     }
 
-    selectTurno(event: Event) {
+    /* selectTurno(event: Event) {
       this.selectedTurno = (event.target as HTMLSelectElement).value;
-      //console.log(this.selectedTurno);
-      this.controlarExistenDatos();
+      console.log("this.selectedTurno", this.selectedTurno);
+    } */
+    definirTurno(){
+      if (this.selectedTurno === 1) {
+        this.selectedTurno = 2;
+        this.nombreTurno = "Tarde";
+      } else{
+        this.selectedTurno = 1;
+        this.nombreTurno = "Mañana";
+      }
+      console.log("this.selectedTurno", this.selectedTurno);
     }
     
     selectTransporte(event: Event) {
       this.selectedTransporte = (event.target as HTMLSelectElement).value;
       //console.log(this.selectedTransporte);
-      this.controlarExistenDatos();
     }
 
-    agregarNuevaDirec(){
+    /* agregarNuevaDirec(){
       this.crearDirec = true;
-    }
+    } */
 
     addEvent( evento ) {
-
+      // picker es el valor para enviar al BACKEND
+      // valorPicker es el el objeto Date para reflejar la fecha e el input matPicker
       if (evento.value) {
-        //this.fechaFormatoPicker = evento.value._i.date+"-"+(evento.value._i.month+1)+"-"+evento.value._i.year;
-        let fecha = evento.value._i.date+"/"+(evento.value._i.month+1)+"/"+evento.value._i.year;
-        this.fechaFormatoDate = new Date(evento.value._i.year, evento.value._i.month+1, evento.value._i.date);
+        localStorage.removeItem('fechaFormatoDate');
+        let fecha = evento.value._i.date + "/" + (evento.value._i.month+1) + "/" + evento.value._i.year;
+        this.fechaFormatoDate = new Date(evento.value._i.year, evento.value._i.month , evento.value._i.date);
+        localStorage.setItem('fechaFormatoDate', JSON.stringify(this.fechaFormatoDate));
         console.log("this.fechaFormatoDate |", this.fechaFormatoDate);
-
-        //this.fechaFormatoDate = fecha;
-        //this.picker = fechaFormatoPicker; 
+        console.log("this.fecha |", fecha);
+        
         this.picker = fecha; 
-
-        console.log("fechaFormatoDate", this.fechaFormatoDate);
-        //console.log(fecha, "|",this.picker);   
+        //console.log("Fecha seleccionada ->",this.picker);
+        //console.log("fechaFormatoDate", this.fechaFormatoDate);
       }
-      this.controlarExistenDatos();
+    }
+
+    activarTransporte(){
+      if( this.setTransporte === false){
+        this.setTransporte = true;
+      } else{
+        this.setTransporte = false;
+      }
+      console.log(this.setTransporte);
     }
 
     mostrarError(errStatus, titulo, mensaje){

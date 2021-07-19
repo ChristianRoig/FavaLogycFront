@@ -15,6 +15,7 @@
 
 mat-form-field {
     width: 350px !important;
+    height: 80px !important;
 }
 
 .mat-dialog-container {
@@ -75,6 +76,7 @@ body.theme-default {
 
 .divUno {
     width: 470px !important;
+    height: 600px;
     flex-direction: column;
     box-sizing: border-box;
     display: flex;
@@ -87,10 +89,12 @@ body.theme-default {
     margin-left: 20px;
     margin-right: 10px;
     margin-bottom: 10px;
+    padding-bottom: 20px;
 }
 
 .divTres {
     width: 470px !important;
+    height: 600px;
     flex-direction: column;
     box-sizing: border-box;
     display: flex;
@@ -103,6 +107,7 @@ body.theme-default {
     margin-left: 10px;
     margin-right: 20px;
     margin-bottom: 10px;
+    padding-bottom: 50px;
 }
 
 .divCuatro {
@@ -119,6 +124,28 @@ body.theme-default {
     border-color: lightgray;
     margin-bottom: 15px;
     margin-top: 15px;
+}
+
+.divFechaAndTurno {
+    display: flex;
+}
+
+.btnToggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 5px;
+}
+
+.divBtnToggle {
+    margin-top: 10px;
+    margin-left: 30px;
+    width: 90px;
+}
+
+.divToggleTransporte {
+    width: 200px;
+    margin-bottom: 20px;
 }
 
 .divContenedor {
@@ -193,6 +220,12 @@ body.theme-default {
     width: 350px !important;
     margin-right: 15px;
     margin-left: 15px;
+}
+
+.selectorFecha {
+    width: 225px !important;
+    /* margin-right: 15px;
+    margin-left: 15px; */
 }
 
 .centrarTitulo {

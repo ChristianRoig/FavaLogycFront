@@ -163,7 +163,7 @@ export class PedidosCrear2Component implements OnInit {
   }
 
   procesar(){
-    //borro un dato necesario para "agregar datos" en este punto que ya no lo necesito
+    // borro un dato necesario para "agregar datos" en este punto que ya no lo necesito
     localStorage.removeItem("indexLocalidad");
     if (this.modo < 1){
       this.agregar();
