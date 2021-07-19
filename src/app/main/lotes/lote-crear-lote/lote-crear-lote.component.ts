@@ -69,7 +69,7 @@ export class LoteCrearLoteComponent implements OnInit {
   length: number = 0;
   page: number = 0;
   size: number = 50;
-  columna: string = 'codigoArticulo';
+  columna: string = 'fechaDeEntrega';
   order: string = 'asc';
 
 
@@ -618,7 +618,7 @@ export class LoteCrearLoteComponent implements OnInit {
   searchLote() {
     
     this.page = 0;
-    this.columna = 'id';
+    this.columna = 'fechaDeEntrega';
 
     this.busqueda = this.buscarLoteInput.nativeElement.value;
     this.busqueda = this.busqueda.toLocaleUpperCase();
