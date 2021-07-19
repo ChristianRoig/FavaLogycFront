@@ -10,6 +10,7 @@ import { AgregarDatosEntregaComponent } from '../../pedidos-crear-2/agregar-dato
 
 import { PedidosVisualizacionService } from '../pedidos-visualizacion.service';
 import { PedidosCrear2Service } from '../../pedidos-crear-2/pedidos-crear-2.service';
+import { environment } from 'environments/environment';
 
 /**
  * @title Basic use of `<table mat-table>`
@@ -31,7 +32,6 @@ export interface Articulo {
 export interface DatosDeEntrega {
   datos : Array< ListaDatosDeEntrega>
 }
-
 
 export interface ListaDatosDeEntrega 
     {
@@ -104,7 +104,7 @@ export class PedidosDatosEntregaComponent implements OnInit {
 
     this.route.params.subscribe( params => {
       this.idPedidoCabecera = params['id'];
-      console.log(this.idPedidoCabecera);
+      console.log( "ID PEDIDO CABECERA -> ",this.idPedidoCabecera );
     });
 
 
@@ -237,10 +237,8 @@ export class PedidosDatosEntregaComponent implements OnInit {
   }
 
   editar(){
-    //let ruta = `apps/pedidos/addPedido2/${this.idCabecera}`;
-    let ruta = `pedidos/crear-pedido2/${this.idCabecera}`;
 
-    this._router.navigate([ruta]);
+    this._router.navigate([`/pedidos/crear-pedido2/${ this.idPedidoCabecera }`])
   }
 
   mostrarError(errStatus, titulo, mensaje){
