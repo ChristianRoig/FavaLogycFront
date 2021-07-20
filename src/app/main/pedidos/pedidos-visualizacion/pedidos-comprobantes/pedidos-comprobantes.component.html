@@ -34,6 +34,13 @@
             <td mat-cell *matCellDef="let element"> {{element[0].fechaCbte}} </td>
         </ng-container>
 
+        <ng-container matColumnDef="accion">
+            <th mat-header-cell *matHeaderCellDef> Acción </th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-button color="accent" (click)="verRemito( element[1].remito.id )"> Ver remito</button>
+            </td>
+        </ng-container>
+
         <tr mat-header-row *matHeaderRowDef="displayedColumnsCbts"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumnsCbts;"></tr>
     </table>
