@@ -125,7 +125,7 @@
                         </ng-template>
 
                         <ng-template #provincias>
-                            <option *ngFor="let provincia of filtroProvincias; let index = index" [value]="provincia.id" [selected]="index == 0"> 
+                            <option *ngFor="let provincia of filtroProvincias; let index = index" [value]="provincia.id" [selected]="index == selectedProvincia - 1"> 
                                 {{ provincia.nombre }}
                             </option>
                         </ng-template>
@@ -146,7 +146,7 @@
                         </ng-template>
 
                         <ng-template #localidades>
-                            <option *ngFor="let localidad of filtroLocalidades; let index = index" [value]="localidad.id" [selected]="index == (this.selectedLocalidad - 1)"> 
+                            <option *ngFor="let localidad of filtroLocalidades; let index = index" [value]="localidad.id" [selected]="index == (this.selectedLocalidad )"> 
                                {{ localidad.nombre }} ({{ localidad.codigoPostal }})
                             </option>
                         </ng-template>

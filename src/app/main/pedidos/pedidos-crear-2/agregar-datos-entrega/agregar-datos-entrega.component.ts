@@ -119,18 +119,21 @@ export class AgregarDatosEntregaComponent implements OnInit{
     indexLocalidad: number;
     nombreTurno: string = "Mañana";
     setTransporte: boolean = false;
+    numeroCbte: string;
 
     ngOnInit(): void {
 
       switch (this.data.option) {
         case "add":
-          this.selectedLocalidad = 1402; // 1402(Mar del plata) 
+          this.numeroCbte = localStorage.getItem("numeroCbte");
+          this.getDomiciliosCliente();
+          //this.selectedLocalidad; // 1402(Mar del plata) 
           this.deshabilitado = false;
           this.mostrarDatos = false;
           this.valorPicker = new Date(new Date());
           localStorage.setItem('fechaFormatoDate', JSON.stringify( this.valorPicker ));
-          this.indexLocalidad = 1401; // 1402(Mar del plata) menos uno xq array empieza en 0
           localStorage.setItem('indexLocalidad', JSON.stringify( this.indexLocalidad ));
+          this.indexLocalidad = 1401; // 1402(Mar del plata) menos uno xq array empieza en 0
           break;
         case "upd":
           this.deshabilitado = false;
@@ -250,6 +253,41 @@ export class AgregarDatosEntregaComponent implements OnInit{
       console.log( this.selectedLocalidad );
       //console.log("LO QUE BUSCO", this.picker, "|",this.valorPicker, "|",this.data.item.fechaDeEntrega);
       //console.log(this.data.item.fechaDeEntrega, this.selectedTransporte, this.selectedTurno  );
+    }
+
+    getDomiciliosCliente(){
+      this._agregarDatosEntregaService.getDomiciliosCliente( this.numeroCbte ) .subscribe( data => {
+        console.log("DOMICILIO CLIENTE", data);
+        if (data){
+          this.selectedLocalidad = data.direccionPosible.idLocalidad;
+          this.selectedProvincia = data.direccionPosible.idProvincia;
+          this.direccion = data.direccionPosible.domicilio;
+          this.mail = data.direccionPosible.mail;
+          this.telefono = data.direccionPosible.telefono;
+
+          /* console.log( this.selectedLocalidad );
+          console.log( this.selectedProvincia ); */
+        } else{
+          this.selectedLocalidad = 1401; //1402 mardel - 1 por que array arranca en 0
+          this.selectedProvincia = 1; //1402 mardel - 1 por que array arranca en 0
+        }
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error");
+        } else {
+          let errStatus = err.status
+          if (errStatus == 0){
+            let titulo = 'Error de Servidor';
+            let mensaje = "Por favor comunicarse con Sistemas";
+            this.mostrarError(errStatus, titulo, mensaje);
+          } else {
+            let titulo = 'Error al obtener domicilio';
+            let mensaje = err.error.message.toString();
+            this.mostrarError(errStatus, titulo, mensaje);
+          }
+        }
+      });
     }
 
     devolverTurno(selectedTurno: number){      // BORRRRRRRRRAAAAAAAAAAAAAAARRRRR

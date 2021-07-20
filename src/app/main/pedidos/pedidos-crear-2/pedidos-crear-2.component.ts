@@ -122,6 +122,7 @@ export class PedidosCrear2Component implements OnInit {
       this.numeroCbte = this.dataSourceArticulos[0].numeroCbte;
       this.codigoCliente = this.dataSourceArticulos[0].codigoCliente;
       this.nombreCliente = this.dataSourceArticulos[0].nombreCliente;
+      localStorage.setItem("numeroCbte", this.numeroCbte);
     } else {
       this.titulo = 'Modificar Pedido'
       this.dataSourceArticulos = [];

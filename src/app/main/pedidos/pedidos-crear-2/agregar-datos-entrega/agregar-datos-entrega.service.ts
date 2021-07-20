@@ -100,6 +100,10 @@ export class AgregarDatosEntregaService {
       let ruta = `${BASE_URL}pedidos/localidad/`; //getAllLocalidad
       return this.http.get(ruta);
   }
+  getDomiciliosCliente( comprobante ): Observable<any> {
+      let ruta = `${BASE_URL}comprobante/direccionesposibles/${ comprobante }`; //getAllLocalidad
+      return this.http.get(ruta);
+  }
 
 
 }
