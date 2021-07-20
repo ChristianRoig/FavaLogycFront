@@ -23,7 +23,7 @@ export class PedidosCupaComponent implements OnInit {
 
   dataSourceCUPA: any;
 
-  displayedColumnsCupa: string[] = ['lote', 'codigoArticulo','codigoUnicoParteArticulo', 'estado', 'etapa', 'accion'];
+  displayedColumnsCupa: string[] = ['lote', 'codigoArticulo','codigoUnicoParteArticulo', 'etapa', 'accionUno', 'accion'];
 
   length: number;
   page: number;
@@ -159,6 +159,11 @@ export class PedidosCupaComponent implements OnInit {
     this.size = e.pageSize;
     
     this.buscarCUPA(this.page, this.size, this.columna, this.order);
+  }
+
+  verLote( idLote ){
+
+    this._router.navigate([ `lotes/ver-lote/${ idLote }` ]);
   }
 
   mostrarError(errStatus, titulo, mensaje){
