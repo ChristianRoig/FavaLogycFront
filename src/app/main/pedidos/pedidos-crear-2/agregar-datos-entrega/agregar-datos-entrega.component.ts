@@ -268,7 +268,7 @@ export class AgregarDatosEntregaComponent implements OnInit{
           /* console.log( this.selectedLocalidad );
           console.log( this.selectedProvincia ); */
         } else{
-          this.selectedLocalidad = 1401; //1402 mardel - 1 por que array arranca en 0
+          this.selectedLocalidad = 1402; //1402 mardel 
           this.selectedProvincia = 1; //1402 mardel - 1 por que array arranca en 0
         }
       },
