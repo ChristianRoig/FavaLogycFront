@@ -89,6 +89,36 @@ export class ListaRemitosComponent implements OnInit {
     });
   }
   
+  getRemitosPorEstado( estado: string){
+    if(estado === "ACTIVO"){
+      this.getAllRemitosSinDistribucion();
+    }
+    if(estado === "TODOS"){
+      this._listaRemitosService.getAllRemitos( this.page, this.size, this.columna, this.order ) .subscribe( data => {
+        console.log(data);
+        console.log(data.totalRegistros);
+        this.dataSource2 = data.datos;
+        this.length = data.totalRegistros;
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error");
+        } else {
+          let errStatus = err.status
+          if (errStatus == 0){
+            let titulo = 'Error de Servidor';
+            let mensaje = "Por favor comunicarse con Sistemas";
+            this.mostrarError(errStatus, titulo, mensaje);
+          } else {
+            let titulo = 'Error al listar';
+            let mensaje = err.error.message.toString();
+            this.mostrarError(errStatus, titulo, mensaje);
+          }
+        }
+      });
+    }
+  }
+
   getRemitoPorId(){
     let resultado: any = [];
     console.log( "busqueda", this.busqueda );

@@ -36,6 +36,11 @@ export class ListaRemitosService
         return this._httpClient.get(ruta);
     }
 
+    getAllRemitos( page, size, columna, order ): Observable<any> {
+        let ruta = `${ BASE_URL }pedidos/pedidocbte/remito/${ page }/${ size }/${ columna }/${ order }`;
+        return this._httpClient.get(ruta);
+    }
+
   
 
     
