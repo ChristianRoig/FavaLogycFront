@@ -49,6 +49,8 @@ export class ComprobantesAprogramarComponent implements OnInit {
 
   displayedColumns: string[] = ['Comprobante', 'fechaEntrega', 'cantArticulos', 'estadoCeDIS', 'seleccionar'];  
   dataSource2: any;
+
+  sucursal: string = "CASA CENTRAL";
   
   lote: string = null;
   busqueda: string = "";
@@ -86,7 +88,9 @@ export class ComprobantesAprogramarComponent implements OnInit {
               
   ngOnInit(): void { 
     
-    this.getComprobantesSinRemitir( );
+    this.getComprobantesSinRemitir( );    
+    this.sucursal = localStorage.getItem("nbSuc");
+    
   }
 
   getComprobantesSinRemitir( ){

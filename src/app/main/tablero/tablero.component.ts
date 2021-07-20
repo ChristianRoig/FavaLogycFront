@@ -45,6 +45,7 @@ export class ProjectDashboardComponent implements OnInit {
     dateNow = Date.now();
     user: string;
     nombreUsuario: string = "Pablo";
+    sucursal: string = "CASA CENTRAL";
     
 
     estados = [
@@ -183,6 +184,7 @@ export class ProjectDashboardComponent implements OnInit {
         this.widget11.onContactsChanged.next(this.widgets.widget11.table.rows);
         this.widget11.dataSource = new FilesDataSource(this.widget11); */ 
         this.user = localStorage.getItem("username");
+        this.sucursal = localStorage.getItem("nbSuc");
         this.setearNombre();
     }
 

@@ -68,6 +68,10 @@ export class LoginComponent implements OnInit {
     username: string;
     rol: string[] = [];
 
+    // Sucursal
+    idSuc: number = 1;
+    nbSuc: string = "CASA CENTRAL";
+
     /*infoOnChanged: BehaviorSubject<any>;
     perfilLogOnChanged: BehaviorSubject<any>;
     rolOnChanged: BehaviorSubject<any>;*/
@@ -297,21 +301,16 @@ export class LoginComponent implements OnInit {
     // -----------------------------------------------------------------------------------------------------
     
     setearRol(): void {
+        //Defaults
+        this.rol = ["comun"];
+        this.idSuc = 1;
+        this.nbSuc = "CASA CENTRAL";
+
+        //Roles y Sucursales asignados
         if (this.info.username === "burroni.santiago"){
             this.rol = ["admin"];
         }
-        if (this.info.username === "herrada.laura"){
-            this.rol = ["comun"];
-        }
-        if (this.info.username === "honaine.nicolas"){
-            this.rol = ["comun"];
-        }
-        if (this.info.username === "luque.gonzalo"){
-            this.rol = ["comun"];
-        }
-        if (this.info.username === "thomas.juan"){
-            this.rol = ["comun"];
-        }
+
         if (this.info.username === "cejas.fernando"){
             this.rol = ["cedis"];
         }
@@ -321,7 +320,26 @@ export class LoginComponent implements OnInit {
         if (this.info.username === "augelli.angel"){
             this.rol = ["cedis"];
         }
+
+        /*if (this.info.username === "herrada.laura"){
+            this.rol = ["comun"];
+        }
+        if (this.info.username === "honaine.nicolas"){
+            this.rol = ["comun"];
+        }*/
+        if (this.info.username === "luque.gonzalo"){
+            //this.rol = ["comun"];
+            this.idSuc = 2;
+            this.nbSuc = "PUERTO";
+            }
+        if (this.info.username === "thomas.juan"){
+            //this.rol = ["comun"];
+            this.idSuc = 3;
+            this.nbSuc = "TANDIL";
+        }
         localStorage.setItem("rol", this.rol.toString());
+        localStorage.setItem("idSuc", this.idSuc.toString());
+        localStorage.setItem("nbSuc", this.nbSuc);
     }
 
     // -----------------------------------------------------------------------------------------------------
