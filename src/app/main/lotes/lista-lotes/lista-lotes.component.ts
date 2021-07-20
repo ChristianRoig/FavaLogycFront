@@ -246,6 +246,7 @@ export class ListaLotesComponent implements OnInit {
             let mensaje = "Por favor comunicarse con Sistemas";
             this.mostrarError(errStatus, titulo, mensaje);
           } else {
+            console.log(err.error);
             let titulo = 'Error al listar';
             let mensaje = err.error.message.toString();
             this.mostrarError(errStatus, titulo, mensaje);
