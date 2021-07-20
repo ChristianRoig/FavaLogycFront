@@ -329,12 +329,12 @@ export class LoginComponent implements OnInit {
         }*/
         if (this.info.username === "luque.gonzalo"){
             //this.rol = ["comun"];
-            this.idSuc = 2;
+            this.idSuc = 8;
             this.nbSuc = "PUERTO";
             }
         if (this.info.username === "thomas.juan"){
             //this.rol = ["comun"];
-            this.idSuc = 3;
+            this.idSuc = 10;
             this.nbSuc = "TANDIL";
         }
         localStorage.setItem("rol", this.rol.toString());

@@ -57,7 +57,7 @@
         <div class="controlesBusqueda">
             <mat-form-field appearance="outline" class="inputBuscarLote">
                 <mat-label>Buscar Lote por CUPA</mat-label>
-                <input #cupa matInput (keyup)="searchCupa()" value="" placeholder="Ingrese un CUPA">
+                <input #cupa matInput (keyup)="searchCupa()" (keydown)="ejecutarBuscar($event)" value="" placeholder="Ingrese un CUPA">
                 <mat-icon matSuffix>search</mat-icon>
             </mat-form-field>
 
@@ -120,14 +120,21 @@
 
             <ng-container matColumnDef="estado">
                 <th mat-header-cell *matHeaderCellDef> Estado</th>
-                <td mat-cell class="example-button-row" *matCellDef="let lote">{{ lote.estado }} </td>
+                <td mat-cell class="example-button-row" *matCellDef="let lote">
+                    <p *ngIf="lote.estado ==='NUEVO'" class="h5 estadoNuevo">{{ lote.estado }}</p>
+                    <p *ngIf="lote.estado ==='ESTANTERIA'" class="h5 estadoEstanteria">{{ lote.estado }}</p>
+                    <p *ngIf="lote.estado ==='DARSENA'" class="h5 estadoDarsena">{{ lote.estado }}</p>
+                    <p *ngIf="lote.estado ==='REMITIDO'" class="h5 estadoRemitido">{{ lote.estado }}</p>
+                </td>
+
             </ng-container>
 
             <ng-container matColumnDef="seleccionar">
                 <th mat-header-cell *matHeaderCellDef> Acción </th>
                 <td mat-cell class="example-button-row" *matCellDef="let lote">
                     <!-- (click)="controlar(lote)" -->
-                    <button mat-stroked-button (click)="controlar(lote)" color="primary"> Controlar Lote </button>
+                    <button mat-stroked-button class="btnTable" style="margin-right: 10px;" color="primary" (click)="controlar(lote)" > Controlar Lote </button>
+                    <button mat-stroked-button color="primary" (click)="verLote(lote)"> Ver Lote </button>
                 </td>
             </ng-container>
 
