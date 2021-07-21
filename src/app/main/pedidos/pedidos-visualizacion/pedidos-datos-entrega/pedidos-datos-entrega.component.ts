@@ -65,8 +65,6 @@ export interface ListaDatosDeEntrega
 
 export class PedidosDatosEntregaComponent implements OnInit {
 
-  @Input('idCabecera') idCabecera: number;
-
   idPedidoCbte: number;
 
   dataSourceDatosEntrega: any;
@@ -121,8 +119,8 @@ export class PedidosDatosEntregaComponent implements OnInit {
 
     this.buscarDatosEntrega( this.page, this.size, this.columna, this.order);
     
-    //this.dataSourceDatosDeEntrega = this.listaDatosVacia;
-    //this.getDatosDeEntrga();
+    this.dataSourceDatosDeEntrega = this.listaDatosVacia;
+    this.getDatosDeEntrga();
     console.log('termino el onInit');
   }
 
@@ -182,13 +180,11 @@ export class PedidosDatosEntregaComponent implements OnInit {
   }
 
   getDatosDeEntrga(){
-    this._serviceDatoEntrega.getDatosDeEntregaUpd(this.idCabecera).subscribe((params) => {
-
+    this._serviceDatoEntrega.getDatosDeEntregaUpd( this.idPedidoCabecera ).subscribe((params) => {
+      console.log("PARAMS-----------", params);
       this.dataSourceDatosDeEntrega.datos = params;
     },
-
     (err: HttpErrorResponse) => {
-      
       if (err.error instanceof Error) {
         console.log("Client-side error");
       } else {
