@@ -36,7 +36,7 @@ export class VerLoteComponent implements OnInit {
   
   @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
 
-  displayedColumns: string[] = ['select', 'codigoArticulo', 'nombreArticulo', 'etapa', 'comprobante'];
+  displayedColumns: string[] = ['select', 'codigoArticulo', 'nombreArticulo', 'etapa', 'comprobante', 'info'];
   selection = new SelectionModel<any>(true, []);
   dataSource2: any;
 

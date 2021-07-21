@@ -86,7 +86,7 @@ export class PedidosCrear2Component implements OnInit {
     listadoDatosDeEntrega: []
   };
   //, 'deposito'
-  displayedColumnsArticulos: string[] = ['select', 'codigoArticulo', 'nombre', 'deposito'];
+  displayedColumnsArticulos: string[] = ['select', 'codigoArticulo', 'nombre', 'deposito', 'info'];
   displayedColumnsPedidoDetalle: string[] = ['codigoArticulo', 'nombre', 'mover'];
 
   // dataSourceArticulos = ELEMENT_DATA_ARTICULOS;
@@ -100,7 +100,7 @@ export class PedidosCrear2Component implements OnInit {
 
   ngOnInit(): void {
 
-    this.subParametros = this.route.params.subscribe(params => {
+    this.subParametros = this.route.params.subscribe( params => {
       this.modo = params['modo'];
     })
     

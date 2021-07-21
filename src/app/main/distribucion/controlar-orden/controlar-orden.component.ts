@@ -41,7 +41,7 @@ export class ControlarCargaComponent implements OnInit {
   @ViewChild('controlarCupa') buscarCupaInput: ElementRef;
   @ViewChild('btnRef') buttonRef: MatButton;
 
-  displayedColumns: string[] = ['idArticulo','nombreArticulo','codigoArticulo','codigoUnicoParteArticulo','etapa','nroParte','nroCbte','checkTransporte'];
+  displayedColumns: string[] = ['idArticulo','nombreArticulo','codigoArticulo','codigoUnicoParteArticulo','etapa','nroParte', 'nroCbte', 'info', 'checkTransporte'];
   dataSource2: any;
 
   ordenActual = {};

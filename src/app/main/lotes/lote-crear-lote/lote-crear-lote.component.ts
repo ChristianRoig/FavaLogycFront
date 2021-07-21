@@ -60,7 +60,7 @@ export class LoteCrearLoteComponent implements OnInit {
 
   @ViewChild('buscarLote') buscarLoteInput: ElementRef;
 
-  displayedColumns: string[] = ['select', 'Comprobante', 'Fecha-Entrega', 'CodigoArticulo','NombreArticulo', 'Localidad','Etapa'];
+  displayedColumns: string[] = ['select', 'Comprobante', 'Fecha-Entrega', 'CodigoArticulo','NombreArticulo', 'Localidad', 'Etapa', 'info'];
   dataSource2: any;
   selection = new SelectionModel<Articulos>(true, []);
 
