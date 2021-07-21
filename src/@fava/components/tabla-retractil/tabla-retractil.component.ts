@@ -54,7 +54,10 @@ export class TablaRetractilComponent implements OnInit {
       let nom_art = element.detalle.articulo.nombre;
       let etapa = element.detalle.pedidoEtapa.nombre;
       let cant = element.cantidadDeDetallesCheckeados + '/' + element.cantidadDeDetalles;
-      let info = element.codigoArticuloAsociado; // Exceptuado remitible
+      let info = "-";
+      if (element.codigoArticuloAsociado != null || element.descripcionArticuloAsociado != null){
+        let info = element.codigoArticuloAsociado + ' - ' + element.descripcionArticuloAsociado; // Exceptuado remitible
+      }
       let codBarra;
       
       if( element.articuloCodBarras[0] === undefined ){
