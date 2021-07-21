@@ -107,7 +107,7 @@
                 <th mat-header-cell *matHeaderCellDef> Comprobante </th>
                 <!-- <td mat-cell class="example-button-row" *matCellDef="let producto">{{ producto.pedidoCabecera.pedidoCbte.nroCbte }}</td> -->
                 <td mat-cell class="example-button-row" *matCellDef="let producto">
-                    <button mat-button color="accent" (click)="verPedido( producto.pedidoCabecera.id )"> 
+                    <button mat-button color="accent" (click)="verPedido( producto.pedidoCabecera.id, producto.pedidoCabecera.pedidoCbte.id )"> 
                         {{ producto.pedidoCabecera.pedidoCbte.nroCbte }} 
                     </button>
                 </td>

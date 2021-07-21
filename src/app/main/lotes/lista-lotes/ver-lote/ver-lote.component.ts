@@ -518,8 +518,9 @@ export class VerLoteComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.Id + 1}`;
   }
 
-  verPedido( idPedido ){
-
+  verPedido( idPedido, idCbte ){
+    localStorage.setItem('vengoDeCbte', "true" );
+    localStorage.setItem('idCbte', idCbte );
     this._router.navigate([ `pedidos/ver-pedido/${ idPedido }` ]);
   }
 

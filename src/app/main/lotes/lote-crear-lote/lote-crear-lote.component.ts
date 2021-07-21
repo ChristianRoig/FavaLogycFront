@@ -390,8 +390,9 @@ export class LoteCrearLoteComponent implements OnInit {
     
     // console.log(this.body);
 
-    console.log("body que mando: ",this.body);
-    console.log("busqueda que mando: ",this.busqueda);
+    /* console.log("body que mando: ",this.body);
+    console.log("busqueda que mando: ",this.busqueda); */
+
     this._loteCrearLoteService.getArticulos(this.body, this.busqueda, this.page, this.size, this.columna, this.order).subscribe(
       data => {
         this.dataSource2 = data.datos;
