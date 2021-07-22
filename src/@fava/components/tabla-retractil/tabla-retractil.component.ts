@@ -23,7 +23,7 @@ export class TablaRetractilComponent implements OnInit {
   dataSource;
   modo: string;
   //'Check', 
-  columnsToDisplay = ['Cod. Art.', 'Nomb. Art.', 'Cant.', 'Etapa', 'CodBarra', 'Cupa'];
+  columnsToDisplay = ['Cod. Art.', 'Nomb. Art.', 'Cant.', 'Etapa', 'CodBarra', 'Cupa', 'Id. Visual', 'Info'];
   ELEMENT_DATA: DetallesTablaRetractil[] = [];
   columnsToDisplay2 = ['Checks', 'Nomb. de Parte', 'Identificador', 'CUPA'];
   expandedElement: DetallesTablaRetractil | null;
@@ -54,6 +54,10 @@ export class TablaRetractilComponent implements OnInit {
       let nom_art = element.detalle.articulo.nombre;
       let etapa = element.detalle.pedidoEtapa.nombre;
       let cant = element.cantidadDeDetallesCheckeados + '/' + element.cantidadDeDetalles;
+      let info = "-";
+      if (element.codigoArticuloAsociado != null || element.descripcionArticuloAsociado != null){
+        let info = element.codigoArticuloAsociado + ' - ' + element.descripcionArticuloAsociado; // Exceptuado remitible
+      }
       let codBarra;
       
       if( element.articuloCodBarras[0] === undefined ){
@@ -64,6 +68,7 @@ export class TablaRetractilComponent implements OnInit {
       }
       //let codBarra = 0; 
       let cupa = element.listaPartes[0].codigoUnicoParteArticulo;
+      let idVisual = element.listaPartes[0].idVisual;
 
       let objeto = {
         'Cod. Art.': cod_art,
@@ -73,6 +78,8 @@ export class TablaRetractilComponent implements OnInit {
         Etapa: etapa,
         'CodBarra': codBarra,
         'Cupa': cupa,
+        'Id. Visual': idVisual,
+        'Info': info,
         Detalle: []
       }
       for (let index = 0; index < element.listaPartes.length; index++) {

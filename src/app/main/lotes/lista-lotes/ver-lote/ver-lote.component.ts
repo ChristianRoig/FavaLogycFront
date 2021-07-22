@@ -36,7 +36,7 @@ export class VerLoteComponent implements OnInit {
   
   @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
 
-  displayedColumns: string[] = ['select', 'codigoArticulo', 'nombreArticulo', 'etapa', 'comprobante'];
+  displayedColumns: string[] = ['select', 'codigoArticulo', 'nombreArticulo', 'etapa', 'comprobante', 'info'];
   selection = new SelectionModel<any>(true, []);
   dataSource2: any;
 
@@ -125,7 +125,7 @@ export class VerLoteComponent implements OnInit {
     this._verLoteService.getArticulosDeLote( this.filtroLote, this.busqueda, this.columna, this.order ) .subscribe( data => {
       this.dataSource2 = data.datos;
       this.cantArticulos = data.totalRegistros;
-      //console.log("articulos -> ", this.dataSource2);
+      console.log("articulos -> ", this.dataSource2);
       //console.log("cant articulos -> ", data.totalRegistros);
     },
     (err: HttpErrorResponse) => {
@@ -516,5 +516,16 @@ export class VerLoteComponent implements OnInit {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.Id + 1}`;
+  }
+
+  verPedido( idPedido, idCbte ){
+    localStorage.setItem('vengoDeCbte', "true" );
+    localStorage.setItem('idCbte', idCbte );
+    this._router.navigate([ `pedidos/ver-pedido/${ idPedido }` ]);
+  }
+
+  navegarCodigoArticulo( codArticulo ){
+
+    this._router.navigate([ `articulos/codigos-barra/${ codArticulo }` ]);
   }
 }

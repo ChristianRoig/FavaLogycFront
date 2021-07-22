@@ -85,6 +85,13 @@
                 <td mat-cell class="example-button-row pl-16" *matCellDef="let articulo">{{ articulo.nroParte }} </td>
             </ng-container>
 
+            <ng-container matColumnDef="info">
+                <th mat-header-cell *matHeaderCellDef> Info </th>
+                <td mat-cell class="mx-16" *matCellDef="let articulo">
+                    <mat-icon #tooltip="matTooltip" matTooltip="{{articulo.codigoArticuloAsociado}} - {{articulo.descripcionArticuloAsociado}}" matTooltipPosition="above" matTooltipHideDelay="100" aria-label="" class="example-button">info</mat-icon>
+                </td>
+            </ng-container>
+
             <ng-container matColumnDef="checkTransporte">
                 <th mat-header-cell *matHeaderCellDef> Chequeo </th>
                 <td mat-cell class="example-button-row pl-16" *matCellDef="let articulo">

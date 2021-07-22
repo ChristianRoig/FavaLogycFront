@@ -24,7 +24,7 @@ export class PedidosComprobantesComponent implements OnInit {
 
   dataSourceComprobantes: any;
 
-  displayedColumnsCbts: string[] = ['codigoArticulo','codigoCbte', 'nroCbte', 'fechaCbte'];
+  displayedColumnsCbts: string[] = ['codigoArticulo','codigoCbte', 'nroCbte', 'fechaCbte', 'accion'];
 
   length: number;
   page: number;
@@ -65,11 +65,12 @@ export class PedidosComprobantesComponent implements OnInit {
   buscarComprobantes(page, size, columna, order){
 
     if( this.vengoDeCbte == "true"){ 
-      console.log("COMPROBANTES - vengo de comprobante", this.idPedidoCbte);
       this._service.getComprobantes( this.idPedidoCbte, page, size, columna, order ).subscribe(paramsArt => {
         if(paramsArt){
-          console.log("comprobantes -> ",paramsArt);
+          console.log("COMPROBANTES - vengo de comprobante", this.idPedidoCbte);
+          console.log("comprobantes -> ", paramsArt);
           this.dataSourceComprobantes = paramsArt.datos;
+          console.log("esteeeeeeeee", this.dataSourceComprobantes);
           this.length = paramsArt.totalRegistros;
         }
       },
@@ -91,9 +92,9 @@ export class PedidosComprobantesComponent implements OnInit {
       });
     }
     if( this.vengoDeCbte == "false"){ 
-      console.log("COMPROBANTES - vengo de pedido", this.idPedidoCabecera);
       this._service.getComprobantesPedidos( this.idPedidoCabecera, page, size, columna, order ).subscribe(paramsArt => {
         if(paramsArt){
+          console.log("COMPROBANTES - vengo de pedido", this.idPedidoCabecera);
           console.log("comprobantes -> ",paramsArt);
           this.dataSourceComprobantes = paramsArt.datos;
           this.length = paramsArt.totalRegistros;
@@ -159,5 +160,9 @@ export class PedidosComprobantesComponent implements OnInit {
           this._router.navigate(['']);
         }
     });
+  }
+
+  verRemito( id: number ){
+    this._router.navigate([ `remitos/ver-remito/${ id }` ]);
   }
 }

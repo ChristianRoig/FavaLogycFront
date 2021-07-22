@@ -93,10 +93,17 @@ export class ConfirmarAgregarLoteComponent implements OnInit {
          this._serviceAgregarLoteConfirmar.postLote(this.toAdd, this.nombreLote).subscribe(
           data => {
             
+            /* antes venia el id
             let idLote = data.idLote
             //this.imprimirCupas(idLote);
-            localStorage.setItem( 'idLote', JSON.stringify( idLote ));
+            localStorage.setItem( 'idLote', JSON.stringify( idLote )); */
+
             this._dialog.closeAll();
+
+            // ahora viene la URL en data
+            console.log(data);
+            this.imprimirCupas(data);
+
             this.esperarYnavegarAlotes();
             
           },
@@ -123,6 +130,38 @@ export class ConfirmarAgregarLoteComponent implements OnInit {
         ) 
       }
     }
+  }
+
+  imprimirCupas(data){
+
+    // ahora viene la URL
+    console.log("data", data );
+    window.open( data.toString(), '_blank');
+
+    /* antes venia el id
+    // this._verLoteService.getImprimirCUPA( this.idLote ).subscribe( data => {
+
+      console.log("data", data );
+      window.open( data.toString(), '_blank');
+      
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status;
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
+        } else {
+          let titulo = 'Error al imprimir';
+          let mensaje = err.error.message.toString();
+          this.mostrarError(errStatus, titulo, mensaje);
+        }
+      }
+    }); */
+    
   }
 
   getSoloFecha(fecha: any){

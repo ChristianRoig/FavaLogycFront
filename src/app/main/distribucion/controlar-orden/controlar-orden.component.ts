@@ -9,6 +9,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ControlarOrdenService } from './controlar-orden.service';
 import { MatButton } from '@angular/material/button';
 import { PopUpOrdenControladaComponent } from './popUpOrdenControlada/popUpOrdenControlada.component';
+import { SonidoService } from 'app/shared/services/sonidos.service';
 
 
 /**
@@ -40,7 +41,7 @@ export class ControlarCargaComponent implements OnInit {
   @ViewChild('controlarCupa') buscarCupaInput: ElementRef;
   @ViewChild('btnRef') buttonRef: MatButton;
 
-  displayedColumns: string[] = ['idArticulo','nombreArticulo','codigoArticulo','codigoUnicoParteArticulo','etapa','nroParte','nroCbte','checkTransporte'];
+  displayedColumns: string[] = ['idArticulo','nombreArticulo','codigoArticulo','codigoUnicoParteArticulo','etapa','nroParte', 'nroCbte', 'info', 'checkTransporte'];
   dataSource2: any;
 
   ordenActual = {};
@@ -59,7 +60,8 @@ export class ControlarCargaComponent implements OnInit {
       private _controlarOrdenService: ControlarOrdenService,
       private _dialog: MatDialog,
       private _router: Router,
-      private _activatedRoute: ActivatedRoute
+      private _activatedRoute: ActivatedRoute,
+      private _sonido: SonidoService
     ) { }
 
     
@@ -125,6 +127,7 @@ export class ControlarCargaComponent implements OnInit {
     this._controlarOrdenService.controlarArticuloPorCupa( this.idOrdenDist, this.cupa ) .subscribe( data => {
 
       console.log("controlado");
+      this._sonido.playAudioSuccess();
       //console.log(data.remitos[0].pedidoDetalles[0].articulo);
 
       this.esperarYactualizarDatos();

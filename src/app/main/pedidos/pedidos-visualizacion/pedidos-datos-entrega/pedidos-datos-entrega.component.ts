@@ -10,6 +10,7 @@ import { AgregarDatosEntregaComponent } from '../../pedidos-crear-2/agregar-dato
 
 import { PedidosVisualizacionService } from '../pedidos-visualizacion.service';
 import { PedidosCrear2Service } from '../../pedidos-crear-2/pedidos-crear-2.service';
+import { environment } from 'environments/environment';
 
 /**
  * @title Basic use of `<table mat-table>`
@@ -31,7 +32,6 @@ export interface Articulo {
 export interface DatosDeEntrega {
   datos : Array< ListaDatosDeEntrega>
 }
-
 
 export interface ListaDatosDeEntrega 
     {
@@ -64,8 +64,6 @@ export interface ListaDatosDeEntrega
   })
 
 export class PedidosDatosEntregaComponent implements OnInit {
-
-  @Input('idCabecera') idCabecera: number;
 
   idPedidoCbte: number;
 
@@ -104,7 +102,7 @@ export class PedidosDatosEntregaComponent implements OnInit {
 
     this.route.params.subscribe( params => {
       this.idPedidoCabecera = params['id'];
-      console.log(this.idPedidoCabecera);
+      console.log( "ID PEDIDO CABECERA -> ",this.idPedidoCabecera );
     });
 
 
@@ -121,8 +119,8 @@ export class PedidosDatosEntregaComponent implements OnInit {
 
     this.buscarDatosEntrega( this.page, this.size, this.columna, this.order);
     
-    //this.dataSourceDatosDeEntrega = this.listaDatosVacia;
-    //this.getDatosDeEntrga();
+    this.dataSourceDatosDeEntrega = this.listaDatosVacia;
+    this.getDatosDeEntrga();
     console.log('termino el onInit');
   }
 
@@ -182,13 +180,11 @@ export class PedidosDatosEntregaComponent implements OnInit {
   }
 
   getDatosDeEntrga(){
-    this._serviceDatoEntrega.getDatosDeEntregaUpd(this.idCabecera).subscribe((params) => {
-
+    this._serviceDatoEntrega.getDatosDeEntregaUpd( this.idPedidoCabecera ).subscribe((params) => {
+      console.log("PARAMS-----------", params);
       this.dataSourceDatosDeEntrega.datos = params;
     },
-
     (err: HttpErrorResponse) => {
-      
       if (err.error instanceof Error) {
         console.log("Client-side error");
       } else {
@@ -237,10 +233,8 @@ export class PedidosDatosEntregaComponent implements OnInit {
   }
 
   editar(){
-    //let ruta = `apps/pedidos/addPedido2/${this.idCabecera}`;
-    let ruta = `pedidos/crear-pedido2/${this.idCabecera}`;
 
-    this._router.navigate([ruta]);
+    this._router.navigate([`/pedidos/crear-pedido2/${ this.idPedidoCabecera }`])
   }
 
   mostrarError(errStatus, titulo, mensaje){

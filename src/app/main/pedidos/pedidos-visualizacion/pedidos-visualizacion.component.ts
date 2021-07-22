@@ -192,10 +192,16 @@ export class PedidosVisualizacionComponent implements OnInit {
     let ruta = `pedidos/pedidos-lista`;
     this._router.navigate([ruta]);
   }
-
+  
   anular(id){
     let ruta = `pedidos/anular/${id}`;
-    console.log(ruta);
+    //console.log(ruta);
+    this._router.navigate([ruta]);
+  }
+  
+  navegar( codArticulo ){
+    
+    let ruta = `articulos/codigos-barra/${ codArticulo }`;
     this._router.navigate([ruta]);
   }
 

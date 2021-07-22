@@ -7,6 +7,7 @@ import { environment } from 'environments/environment';
 
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
 import { config } from 'environments/config_system'; 
+import { Router } from '@angular/router';
 
 const API_LOG: string = environment.api_log;
 
@@ -41,7 +42,7 @@ export class ResponseLogin {
 export class LoginService {
 
     private info: any;
-    private rol: string[] = [];
+    private token: string;
 
     infoOnChanged: BehaviorSubject<any>;
     rolOnChanged: BehaviorSubject<any>;
@@ -55,7 +56,7 @@ export class LoginService {
      */
     constructor( 
         private _httpClient: HttpClient, 
-        private _cookieService: CookieService,         
+        private _router: Router,
         private _fuseNavigationService: FuseNavigationService
     ){
         // Set the defaults
@@ -63,7 +64,7 @@ export class LoginService {
         this.infoOnChanged = new BehaviorSubject([]);
         this.rolOnChanged = new BehaviorSubject([]);
         
-        const userLog = this._cookieService.get(user);        
+        const userLog = localStorage.getItem("username");        
 
         this.rolOnChanged.next([]);
     }
@@ -75,22 +76,58 @@ export class LoginService {
      * @param {string} password        // devuelve un token y un userName
      */
     _obtenerLogin(username: string, password: string): Observable<any> | any {
-
+        
         //console.log("Obtener login");
         const httpHeaders = new HttpHeaders({
             'Content-Type': 'application/json'            
         });
-
+        
         const options = { headers: httpHeaders };
-
+        
         const params = {
             'username': username,
             'password': password
         };
-
+        
         this.info = this._httpClient.post(API_LOG, params, options);
         return this.info;
     }
+
+    //--------------------------------------------------------------------------------------------------
+    
+    estaLogueado(): boolean {
+        const userLog = localStorage.getItem("username");
+        const tokenLog = localStorage.getItem("token");
+        console.log("userLog",userLog, "tokenLog", tokenLog);
+        if ((userLog) && (tokenLog)) {
+            return true;
+        } else {
+            this.logout();
+            return false;
+        }    
+    }
+    
+    //--------------------------------------------------------------------------------------------------
+
+    getToken(): string {
+        if ( localStorage.getItem("token") != "" ) {
+
+            this.token = localStorage.getItem("token");
+            return this.token;
+        } else{
+            return "";
+        }
+    }
+
+    //--------------------------------------------------------------------------------------------------
+
+    logout(): void {
+
+        localStorage.clear();
+        this._router.navigate(['']);
+    }
+
+    //--------------------------------------------------------------------------------------------------
 
     hideByRol(rolesSINUSO: string[]): void {
 

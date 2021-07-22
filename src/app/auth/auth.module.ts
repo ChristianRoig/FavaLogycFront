@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 
 import { LoginModule } from 'app/auth/login/login.module';
-import { UsuarioService } from 'app/shared/services/usuario.service';
 
 @NgModule({
     declarations: [
@@ -12,7 +11,7 @@ import { UsuarioService } from 'app/shared/services/usuario.service';
         LoginModule
     ],
     providers: [
-        UsuarioService
+
     ]
 
 })

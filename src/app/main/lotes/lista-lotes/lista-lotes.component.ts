@@ -207,11 +207,16 @@ export class ListaLotesComponent implements OnInit {
     }); 
   }
 
-  searchLote() {
+  setNombreLote() {
     this.lote = this.buscarLoteInput.nativeElement.value;
-    if(this.lote == ''){
+    if(this.lote === ''){
       this.lote = null;
-      this.getLotesPorEstado( this.estado, this.page, this.size );
+    }
+  }
+
+  buscarLoteConEnter( e ){
+    if (e.key === "Enter" && (this.lote != null || this.lote != undefined)) {
+      this.buscarLotePorNombre();
     }
   }
 
@@ -241,6 +246,7 @@ export class ListaLotesComponent implements OnInit {
             let mensaje = "Por favor comunicarse con Sistemas";
             this.mostrarError(errStatus, titulo, mensaje);
           } else {
+            console.log(err.error);
             let titulo = 'Error al listar';
             let mensaje = err.error.message.toString();
             this.mostrarError(errStatus, titulo, mensaje);

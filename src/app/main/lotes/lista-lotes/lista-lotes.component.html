@@ -131,7 +131,7 @@
 
                 <mat-form-field appearance="outline" class="inputBuscarLote">
                     <mat-label>Lote</mat-label>
-                    <input #buscarLote (keyup)="searchLote()" matInput value="" placeholder="Buscar lote por nombre">
+                    <input #buscarLote (keyup)="setNombreLote()" (keydown)="buscarLoteConEnter($event)" matInput value="" placeholder="Buscar lote por nombre">
                     <mat-icon matSuffix>search</mat-icon>
                 </mat-form-field>
 

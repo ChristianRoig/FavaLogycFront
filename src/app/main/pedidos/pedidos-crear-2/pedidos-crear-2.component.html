@@ -71,9 +71,17 @@
                                 <td mat-cell *matCellDef="let element"> {{element.nombreArticulo}} </td>
                             </ng-container>
 
+
                             <ng-container matColumnDef="deposito">
                                 <th mat-header-cell *matHeaderCellDef> Deposito </th>
                                 <td mat-cell *matCellDef="let element"> {{element.codigoDeposito}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="info">
+                                <th mat-header-cell *matHeaderCellDef> Info </th>
+                                <td mat-cell class="mx-16" *matCellDef="let element">
+                                    <mat-icon #tooltip="matTooltip" matTooltip="{{element.codigoArticuloAsociado}} - {{element.descripcionArticuloAsociado}}" matTooltipPosition="above" matTooltipHideDelay="100" aria-label="" class="example-button">info</mat-icon>
+                                </td>
                             </ng-container>
 
                             <ng-container matColumnDef="mover">

@@ -86,7 +86,7 @@ export class PedidosCrear2Component implements OnInit {
     listadoDatosDeEntrega: []
   };
   //, 'deposito'
-  displayedColumnsArticulos: string[] = ['select', 'codigoArticulo', 'nombre', 'deposito'];
+  displayedColumnsArticulos: string[] = ['select', 'codigoArticulo', 'nombre', 'deposito', 'info'];
   displayedColumnsPedidoDetalle: string[] = ['codigoArticulo', 'nombre', 'mover'];
 
   // dataSourceArticulos = ELEMENT_DATA_ARTICULOS;
@@ -100,7 +100,7 @@ export class PedidosCrear2Component implements OnInit {
 
   ngOnInit(): void {
 
-    this.subParametros = this.route.params.subscribe(params => {
+    this.subParametros = this.route.params.subscribe( params => {
       this.modo = params['modo'];
     })
     
@@ -122,6 +122,7 @@ export class PedidosCrear2Component implements OnInit {
       this.numeroCbte = this.dataSourceArticulos[0].numeroCbte;
       this.codigoCliente = this.dataSourceArticulos[0].codigoCliente;
       this.nombreCliente = this.dataSourceArticulos[0].nombreCliente;
+      localStorage.setItem("numeroCbte", this.numeroCbte);
     } else {
       this.titulo = 'Modificar Pedido'
       this.dataSourceArticulos = [];
@@ -163,6 +164,8 @@ export class PedidosCrear2Component implements OnInit {
   }
 
   procesar(){
+    // borro un dato necesario para "agregar datos" en este punto que ya no lo necesito
+    localStorage.removeItem("indexLocalidad");
     if (this.modo < 1){
       this.agregar();
     } else {

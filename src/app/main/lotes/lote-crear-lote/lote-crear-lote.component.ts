@@ -60,7 +60,7 @@ export class LoteCrearLoteComponent implements OnInit {
 
   @ViewChild('buscarLote') buscarLoteInput: ElementRef;
 
-  displayedColumns: string[] = ['select', 'Comprobante', 'Fecha-Entrega', 'CodigoArticulo','NombreArticulo', 'Localidad','Etapa'];
+  displayedColumns: string[] = ['select', 'Comprobante', 'Fecha-Entrega', 'CodigoArticulo','NombreArticulo', 'Localidad', 'Etapa', 'info'];
   dataSource2: any;
   selection = new SelectionModel<Articulos>(true, []);
 
@@ -69,7 +69,7 @@ export class LoteCrearLoteComponent implements OnInit {
   length: number = 0;
   page: number = 0;
   size: number = 50;
-  columna: string = 'codigoArticulo';
+  columna: string = 'fechaDeEntrega';
   order: string = 'asc';
 
 
@@ -390,8 +390,9 @@ export class LoteCrearLoteComponent implements OnInit {
     
     // console.log(this.body);
 
-    console.log("body que mando: ",this.body);
-    console.log("busqueda que mando: ",this.busqueda);
+    /* console.log("body que mando: ",this.body);
+    console.log("busqueda que mando: ",this.busqueda); */
+
     this._loteCrearLoteService.getArticulos(this.body, this.busqueda, this.page, this.size, this.columna, this.order).subscribe(
       data => {
         this.dataSource2 = data.datos;
@@ -618,7 +619,7 @@ export class LoteCrearLoteComponent implements OnInit {
   searchLote() {
     
     this.page = 0;
-    this.columna = 'id';
+    this.columna = 'fechaDeEntrega';
 
     this.busqueda = this.buscarLoteInput.nativeElement.value;
     this.busqueda = this.busqueda.toLocaleUpperCase();

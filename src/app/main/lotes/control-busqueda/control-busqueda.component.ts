@@ -174,10 +174,28 @@ export class ControlEstanteriaComponent implements OnInit {
     }
   }
 
+  ejecutarBuscar(e){
+    if (e.key === "Enter") {
+        this.buscarLotePorCUPA(this.CUPA);
+    }
+  }
+
   controlar( lote ){
     console.log(lote);
     this.idLote = lote.idLote;
     this.navegarAlote();
+  }
+
+  verLote( lote ){ //redireccionar (idem a metodo de Lista Lotes)
+    //console.log(lote.idLote);
+    if( lote != null ){
+      //this.idLote = lote.id;
+      this.idLote = lote.idLote;
+      let ruta = `lotes/ver-lote/${ this.idLote }`;
+      //console.log("lote ASD");
+      //this._verLoteComponent.obtenerLote(lote);
+      this._router.navigate([ ruta ]);
+    }
   }
 
   buscarLotePorCUPA( cupa ){
