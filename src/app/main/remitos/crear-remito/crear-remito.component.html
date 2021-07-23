@@ -41,9 +41,9 @@
                         <mat-form-field appearance="outline" class="darsenaSelect">
                             <mat-label>{{ filtroTipos ? 'Dársena' : 'Cargando...'}}</mat-label>
                             <select matNativeControl (change)="selectDarsena($event)" [disabled]="!filtroDarsena">
+                                <option *ngIf="this.filtroDarsena" [value]="0">TODAS</option>
                                 <option *ngFor="let darsena of filtroDarsena" [value]="darsena.id"
                                     [selected]="selectedDarsena === darsena.id"> {{ darsena.nombre }}</option>
-                                <option *ngIf="this.filtroDarsena" [value]="0">TODAS</option> <!-- [value]="TODAS" -->
                             </select>
                         </mat-form-field>
 
@@ -113,7 +113,12 @@
 
             <ng-container matColumnDef="comprobante">
                 <th mat-sort-header="comprobante" class="pl-8" mat-header-cell *matHeaderCellDef> Comprobante </th>
-                <td mat-cell class="pl-8" *matCellDef="let element"> {{element.tipoCbte}} - {{element.nroCbte}} </td>
+                <td mat-cell class="example-button-row pl-8" *matCellDef="let element">
+                    <button mat-button color="accent" (click)="navegarHaciaCodigoArticulo( element.codigoArticulo )">  
+                        {{element.tipoCbte}} - {{element.nroCbte}}
+                    </button>
+                </td>
+
             </ng-container>
 
             <ng-container matColumnDef="fechaEntrega">

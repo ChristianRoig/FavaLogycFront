@@ -368,4 +368,9 @@ export class RemitosComponent implements OnInit {
   activarTipo(){
     this.mostrarTipo = !this.mostrarTipo;
   }
+
+  navegarHaciaCodigoArticulo( codigoArticulo: string ){
+
+    this._router.navigate([`articulos/codigos-barra/${ codigoArticulo }`]);
+  }
 }

@@ -32,7 +32,7 @@ export class ListaRemitosService
     }
     
     getRemitoPorId( idRemito: number ): Observable<any> {
-        let ruta = `${BASE_URL}pedidos/pedidocbte/remito/por-idremito/${ idRemito }`;
+        let ruta = `${ BASE_URL }pedidos/pedidocbte/remito/por-idremito/${ idRemito }`;
         return this._httpClient.get(ruta);
     }
 

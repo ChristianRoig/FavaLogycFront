@@ -29,6 +29,7 @@
     </fuse-sidebar>
 
     <ng-template #busquedaRemito>
+
         <div fxLayout="column">
             <div class="controlesBusqueda">
 
@@ -50,20 +51,10 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
-                <!-- 
 
-                    <mat-form-field appearance="outline" fxFlex="20" class="ml-4 selectMostrar">
-                    <mat-label>Filtrar por</mat-label>
-                    <mat-select [(ngModel)]="selecccionDeEstado" name="food">
-                        <mat-option (click)="getLotesPorEstado( estado.valor )" *ngFor="let estado of estados" [value]="estado.valor">
-                            {{estado.vista}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-                 -->
             </div>
-
         </div>
+
     </ng-template>
 
     <ng-template #listaRemitos>

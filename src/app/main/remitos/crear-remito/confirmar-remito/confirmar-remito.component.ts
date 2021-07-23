@@ -237,7 +237,8 @@ export class ConfirmarRemitoComponent implements OnInit {
       console.log("entró ass");
       this._serviceRemitosConfirmar.generarRemito( body ).subscribe(params => {
         console.log("entró");
-        
+        console.log("remito generado -> ",params);
+        localStorage.setItem("nuevoRemito", "true");
         setTimeout(() => {    
           this._dialog.closeAll();                      
           this.navegarAlistaRemitos();

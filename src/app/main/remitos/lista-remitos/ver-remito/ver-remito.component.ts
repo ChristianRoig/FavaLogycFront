@@ -61,6 +61,10 @@ export class VerRemitoComponent implements OnInit {
       this.getRemitoPorId( params['id'] );
       console.log("id remito -> ", params['id']);
     });
+    if (localStorage.getItem("nuevoRemito")){
+      this.imprimirRemito();
+      localStorage.removeItem("nuevoRemito");
+    }
   }
   
   getRemitoPorId( idRemito: number ){
@@ -91,6 +95,7 @@ export class VerRemitoComponent implements OnInit {
   }
 
   imprimirRemito(){
+
     this._verRemitoService.getImprimirRemito( this.idRemito ).subscribe( data => {
 
       console.log("data", data );
@@ -193,5 +198,9 @@ export class VerRemitoComponent implements OnInit {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.Id + 1}`;
+  }
+
+  navegarHaciaCodigoArticulo( codigoArticulo: string ){
+    this._router.navigate([`articulos/codigos-barra/${ codigoArticulo }`]);
   }
 }
