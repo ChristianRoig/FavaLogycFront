@@ -13,19 +13,7 @@
 
     <div mat-dialog-content class="pb-0 m-0" *ngIf="!this.mostrarSpinner" style="width: 100%;" fusePerfectScrollbar>
         <form class="formClass">
-            <div fxLayout="row" class="mb-8" fxLayoutAlign="start start">
-                <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>{{ filtroTransportes ? 'Transporte' : 'Cargando...'}}</mat-label>
-                    <select matNativeControl (change)="selectTransporte($event)" [disabled]="!filtroTransportes">
-                        <option [value]="0">Seleccionar Transporte</option>
-                        <option *ngFor="let transporte of filtroTransportes" [value]="transporte.id"
-                                [selected]="selectedTransporte === transporte.id"> 
-                                {{ transporte.nombre }}
-                        </option>
-                    </select>
-                </mat-form-field>
-            </div>
-            <!-- [selected]="index == (this.selectedLocalidad - 1)" -->
+
             <div fxLayout="row" class="mb-8" fxLayoutAlign="start start">
                 <mat-form-field appearance="outline" fxFlex>
                     <mat-label>{{ filtroDepositosCarga ? 'Depositos Carga' : 'Cargando...'}}</mat-label>
@@ -54,6 +42,19 @@
                 <mat-form-field appearance="outline" fxFlex>
                     <mat-label>Próximo Comprobante</mat-label>
                     <input matInput disabled [value]="this.proxCbte">
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row" class="mb-8" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>{{ filtroTransportes ? 'Transporte' : 'Cargando...'}}</mat-label>
+                    <select matNativeControl (change)="selectTransporte($event)" [disabled]="!filtroTransportes">
+                        <option [value]="0">Seleccionar Transporte</option>
+                        <option *ngFor="let transporte of filtroTransportes" [value]="transporte.id"
+                                [selected]="selectedTransporte === transporte.id"> 
+                                {{ transporte.nombre }}
+                        </option>
+                    </select>
                 </mat-form-field>
             </div>
 

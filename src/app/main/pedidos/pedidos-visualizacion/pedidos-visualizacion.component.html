@@ -90,7 +90,7 @@
         <!-- Position Column -->
         <ng-container matColumnDef="lote">
             <th mat-sort-header="idLote" mat-header-cell *matHeaderCellDef> Lote </th>
-            <td mat-cell *matCellDef="let element"> {{ element.pedidoLote ? element.pedidoLote.id : ''}} </td>
+            <td mat-cell *matCellDef="let element"> {{ element.pedidoLote ? element.pedidoLote.nombre : ''}} </td>
         </ng-container>
 
         <!-- Name Column -->
