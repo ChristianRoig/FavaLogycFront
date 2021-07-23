@@ -41,9 +41,8 @@
                         <mat-form-field appearance="outline" class="darsenaSelect">
                             <mat-label>{{ filtroTipos ? 'Dársena' : 'Cargando...'}}</mat-label>
                             <select matNativeControl (change)="selectDarsena($event)" [disabled]="!filtroDarsena">
-                                <option *ngIf="this.filtroDarsena" [value]="0">TODAS</option>
-                                <option *ngFor="let darsena of filtroDarsena" [value]="darsena.id"
-                                    [selected]="selectedDarsena === darsena.id"> {{ darsena.nombre }}</option>
+                                <option *ngFor="let darsena of filtroDarsena; let index = index" [value]="darsena.id"
+                                    [selected]="index == 8"> {{ darsena.nombre }}</option>
                             </select>
                         </mat-form-field>
 
