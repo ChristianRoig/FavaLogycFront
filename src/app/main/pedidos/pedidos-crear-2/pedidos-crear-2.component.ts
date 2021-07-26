@@ -259,6 +259,7 @@ export class PedidosCrear2Component implements OnInit {
   
   modificar(){
     this._service.putPedidos(this.dataSourceDatosDeEntrega.listadoDatosDeEntrega).subscribe(data => {
+
       console.log(data);
       localStorage.removeItem('AddPedido');
       localStorage.removeItem('datoEntrega');
@@ -457,6 +458,7 @@ export class PedidosCrear2Component implements OnInit {
           this.selection.clear();
         }
       });
+      this.procesarDatos = true;
   }
   
   
