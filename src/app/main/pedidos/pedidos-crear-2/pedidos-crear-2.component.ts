@@ -457,6 +457,7 @@ export class PedidosCrear2Component implements OnInit {
           this.selection.clear();
         }
       });
+      this.procesarDatos = true;
   }
   
   
