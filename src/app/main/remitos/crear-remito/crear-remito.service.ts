@@ -34,8 +34,7 @@ export class RemitoService
         return this._httpClient.get(ruta);
     }
 
-    getPedidosSinRemitir(body: BodyDetalle, busqueda, columna, order): Observable<any>
-    {    
+    getPedidosSinRemitir(body: BodyDetalle, busqueda, columna, order): Observable<any> {    
         console.log("body", body, "busqueda", busqueda, "columna", columna, "order", order);
 
         let headers = new HttpHeaders({

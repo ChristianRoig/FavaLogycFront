@@ -107,13 +107,17 @@
 
             <ng-container matColumnDef="articulo">
                 <th mat-sort-header="articulo" mat-header-cell *matHeaderCellDef> Artículo </th>
-                <td mat-cell *matCellDef="let element"> {{element.nombreArticulo}} ( {{element.codigoArticulo}} )</td>
+                <td mat-cell *matCellDef="let element"> <!-- {{element.nombreArticulo}} ( {{element.codigoArticulo}} ) -->
+                    <button mat-button color="accent" (click)="navegarHaciaCodigoArticulo( element.codigoArticulo )">  
+                        {{element.nombreArticulo}} ( {{element.codigoArticulo}} )
+                    </button>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="comprobante">
                 <th mat-sort-header="comprobante" class="pl-8" mat-header-cell *matHeaderCellDef> Comprobante </th>
                 <td mat-cell class="example-button-row pl-8" *matCellDef="let element">
-                    <button mat-button color="accent" (click)="navegarHaciaCodigoArticulo( element.codigoArticulo )">  
+                    <button mat-button color="accent" (click)="navegarHaciaVerPedido( element.idPedidoCabecera )">  
                         {{element.tipoCbte}} - {{element.nroCbte}}
                     </button>
                 </td>

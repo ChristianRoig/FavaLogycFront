@@ -379,4 +379,9 @@ export class RemitosComponent implements OnInit {
 
     this._router.navigate([`articulos/codigos-barra/${ codigoArticulo }`]);
   }
+
+  navegarHaciaVerPedido( idPedidoCabecera: number ){
+
+    this._router.navigate([`pedidos/ver-pedido/${ idPedidoCabecera }`]);
+  }
 }
