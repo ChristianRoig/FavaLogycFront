@@ -117,7 +117,7 @@
             <ng-container matColumnDef="comprobante">
                 <th mat-sort-header="comprobante" class="pl-8" mat-header-cell *matHeaderCellDef> Comprobante </th>
                 <td mat-cell class="example-button-row pl-8" *matCellDef="let element">
-                    <button mat-button color="accent" (click)="navegarHaciaVerPedido( element.idPedidoCabecera )">  
+                    <button mat-button color="accent" (click)="navegarHaciaVerPedido( element.idPedidoCabecera, element.idPedidoCbte )">  
                         {{element.tipoCbte}} - {{element.nroCbte}}
                     </button>
                 </td>
