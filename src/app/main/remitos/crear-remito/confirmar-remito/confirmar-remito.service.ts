@@ -7,7 +7,6 @@ const BASE_URL = environment.server + environment.baseUrl;
 
 export interface BodyRemito {
     idTransporte: number,
-    idDeposito: number,
     idTalonario: number,
     listaIdDetalle: number []
   }
@@ -30,12 +29,6 @@ export class ConfirmarRemitoService {
     getAllTransportes(): Observable<any>
     {
         let ruta = `${BASE_URL}pedidos/transporte/`;
-        return this._httpClient.get(ruta);
-    }
-
-    getAllDepostitosCarga(): Observable<any>
-    {
-        let ruta = `${BASE_URL}pedidos/deposito/`;
         return this._httpClient.get(ruta);
     }
 

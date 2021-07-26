@@ -25,7 +25,6 @@ export interface PeriodicElement {
 
 export interface BodyRemito {
   idTransporte: number,
-  idDeposito: number,
   idTalonario: number,
   listaIdDetalle: number []
 }
@@ -49,10 +48,6 @@ export class ConfirmarRemitoComponent implements OnInit {
   filtroTalonarios: any;
   selectedTalonario: any = 0;
   
-  filtroDepositosCarga: any;
-  selectedDepositoCarga: any = 0;
-
-  
   proxCbte: string;
   mostrarSpinner: boolean = false;
   contador: number = 0;
@@ -72,26 +67,6 @@ export class ConfirmarRemitoComponent implements OnInit {
   }
 
   getfiltros(){
-    this._serviceRemitosConfirmar.getAllDepostitosCarga().subscribe(params => {
-      this.filtroDepositosCarga = params.datos;
-      this.selectedDepositoCarga = this.filtroDepositosCarga[0].id;
-    },
-    (err: HttpErrorResponse) => {
-      if (err.error instanceof Error) {
-        console.log("Client-side error");
-      } else {
-        let errStatus = err.status
-        if (errStatus == 0){
-          let titulo = 'Error de Servidor';
-          let mensaje = "Por favor comunicarse con Sistemas";
-          this.mostrarError(errStatus, titulo, mensaje);
-        } else {
-          let titulo = 'Error al cargar filtros';
-          let mensaje = err.error.message.toString();
-          this.mostrarError(errStatus, titulo, mensaje);
-        }
-      }
-    })
     
     this._serviceRemitosConfirmar.getAllTalonarios().subscribe(params => {
       this.filtroTalonarios = params.datos;
@@ -164,11 +139,6 @@ export class ConfirmarRemitoComponent implements OnInit {
     this.getUltNroTalonario();
     console.log("this.selectedTalonario",this.selectedTalonario);
   }
-  
-  selectDepositoCarga(event: Event) {
-    this.selectedDepositoCarga = (event.target as HTMLSelectElement).value;
-    console.log("this.selectedDepositoCarga", this.selectedDepositoCarga);
-  }
 
   getUltNroTalonario(){
     
@@ -183,7 +153,6 @@ export class ConfirmarRemitoComponent implements OnInit {
       } else {
         this.proxCbte = '';
       }
-      
     });
   }
 
@@ -223,15 +192,12 @@ export class ConfirmarRemitoComponent implements OnInit {
 
       let idTransporte = parseInt(this.selectedTransporte, 10);
       let idTalonario = parseInt(this.selectedTalonario, 10);
-      let idDeposito = parseInt(this.selectedDepositoCarga, 10);
   
       let body: BodyRemito = {
         idTransporte: idTransporte,
-        idDeposito: idDeposito,
         idTalonario: idTalonario,
         listaIdDetalle: this.toAdd
       }
-
       
       console.log({body});
       console.log("entró ass");
