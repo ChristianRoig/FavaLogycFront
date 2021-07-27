@@ -178,7 +178,7 @@ export class ConfirmarRemitoComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.Id + 1}`;
   }
   
-  remitir(){
+  remitir() {
     this.mostrarSpinner = true;
     this.contador++;
     console.log( "contador", this.contador );
