@@ -27,7 +27,7 @@
             </div> -->
 
             <div fxLayout="row" class="mb-8" fxLayoutAlign="start start">
-                <mat-form-field appearance="outline" fxFlex>
+                <mat-form-field appearance="outline" class="talonario">
                     <mat-label>{{ filtroTalonarios ? 'Talonarios' : 'Cargando...'}}</mat-label>
                     <select matNativeControl (change)="selectTalonario($event)" [disabled]="!filtroTalonarios">
                         <option *ngFor="let talonario of filtroTalonarios" [value]="talonario.nroTalonario"
@@ -36,12 +36,21 @@
                         </option>
                     </select>
                 </mat-form-field>
+                
+                <mat-form-field appearance="outline" class="cantRemitos">
+                    <mat-label>Cant. Remitos</mat-label>
+                    <input matInput disabled [value]="this.cantRemitos">
+                </mat-form-field>
             </div>
 
             <div fxLayout="row" class="mb-8" fxLayoutAlign="start start">
-                <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Próximo Comprobante</mat-label>
-                    <input matInput disabled [value]="this.proxCbte">
+                <mat-form-field appearance="outline" class="comprobante">
+                    <mat-label>Nro Desde</mat-label>
+                    <input matInput disabled [value]="this.nroDesde">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="comprobante ml-16">
+                    <mat-label>Nro Hasta</mat-label>
+                    <input matInput disabled [value]="this.nroHasta">
                 </mat-form-field>
             </div>
 

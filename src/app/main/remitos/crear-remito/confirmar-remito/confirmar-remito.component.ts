@@ -49,6 +49,9 @@ export class ConfirmarRemitoComponent implements OnInit {
   selectedTalonario: any = 0;
   
   proxCbte: string;
+  nroDesde: string = "X0000400217947";
+  nroHasta: string = "X0000400217950";
+  cantRemitos: number = 8;
   mostrarSpinner: boolean = false;
   contador: number = 0;
 
@@ -63,19 +66,31 @@ export class ConfirmarRemitoComponent implements OnInit {
 
     this.dataSource2 = this.data.selection._selected;
     console.log(this.dataSource2);
-
   }
 
+
+  
   getfiltros(){
-    
-    this._serviceRemitosConfirmar.getAllTalonarios().subscribe(params => {
+    const articulos = [];
+  
+    for (let art of  this.data.selection._selected){
+      articulos.push(art.idDetalle)
+    }
+    //this._serviceRemitosConfirmar.getAllTalonarios( articulos ).subscribe(params => {
+    this._serviceRemitosConfirmar.getAllTalonarios( ).subscribe(params => {
       this.filtroTalonarios = params.datos;
       this.selectedTalonario = this.filtroTalonarios[0].nroTalonario;
-      this.getUltNroTalonario();;
+      this.getUltNroTalonario();
+      /* 
+      this.cantRemitos = params.datos.cantidad;
+      this.nroDesde = params.datos.nroDesde;
+      this.nroHasta = params.datos.nroHasta;
+      this.alias = params.datos.alias;
+      */
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
-        console.log("Client-side error");
+        console.log("Client-side error"); 
       } else {
         let errStatus = err.status
         if (errStatus == 0){

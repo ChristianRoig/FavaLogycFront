@@ -20,19 +20,35 @@ export class ConfirmarRemitoService {
         private _httpClient: HttpClient
     ) { }
 
-    getAllTalonarios(): Observable<any>
-    {
+
+
+    /* 
+    getAllTalonarios( body ): Observable<any> {
+
+        let headers = new HttpHeaders({
+            "Content-Type": "application/json"
+        });
+
+        console.log("body en service", body);
+
+        let ruta = `${BASE_URL}pedidos/talonario/tipopedido/${ this.tipoVenta }`;
+        return this._httpClient.post(ruta, body, {headers: headers});
+    }
+    */
+    getAllTalonarios(): Observable<any> {
+
         let ruta = `${BASE_URL}pedidos/talonario/tipopedido/${ this.tipoVenta }`;
         return this._httpClient.get(ruta);
     }
 
-    getAllTransportes(): Observable<any>
-    {
+    getAllTransportes(): Observable<any> {
+
         let ruta = `${BASE_URL}pedidos/transporte/`;
         return this._httpClient.get(ruta);
     }
 
     getUltimoNroCbte(id){
+
         let ruta = `${BASE_URL}pedidos/talonario/${id}`;
         return this._httpClient.get(ruta);
     }
