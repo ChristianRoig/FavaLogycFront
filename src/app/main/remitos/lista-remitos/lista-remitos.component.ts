@@ -26,7 +26,7 @@ export class ListaRemitosComponent implements OnInit {
 
   @ViewChild('buscarRemito') buscarRemitoInput: ElementRef;
 
-  displayedColumns: string[] = ['id', 'nroComprobante', 'fechaAlta', 'direccion', 'transporte', 'cantArticulos', 'accion'];
+  displayedColumns: string[] = ['id', 'nroComprobante', 'fechaAlta', 'direccion', 'transporte', 'cantArticulos', 'info', 'accion'];
   dataSource2: any;
   selection = new SelectionModel<any>(true, []);
 
