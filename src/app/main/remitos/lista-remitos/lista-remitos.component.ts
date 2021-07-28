@@ -37,6 +37,17 @@ export class ListaRemitosComponent implements OnInit {
   columna: string = 'nroCbte';
   order: string = 'asc';
 
+  filtroFechas: boolean = false;
+
+  pickerRemitoDesde: any   = null;
+  pickerRemitoHasta: any   = null;
+
+  minDateDesdeRemito: Date;
+  maxDateDesdeRemito: Date;
+
+  minDateHastaRemito: Date;
+  maxDateHastaRemito: Date;
+
   estados: Estados [] = [
     { valor: "ACTIVO", vista: "Activos" },
     { valor: "TODOS", vista: "Todos" }
@@ -65,6 +76,13 @@ export class ListaRemitosComponent implements OnInit {
   getAllRemitosSinDistribucion( ){
     this.columna = 'id';
     this.order = 'desc';
+
+    //: BodyDetalleFecha ver de importar la interfaz desde otro lado, En donde van las interfaces
+    let bodyFechas = {
+      desdeLote   : this.pickerRemitoDesde,
+      hastaLote   : this.pickerRemitoHasta
+    }
+    // deberia mamdar el body y listo
     this._listaRemitosService.getRemitosSinDistribucion( this.page, this.size, this.columna, this.order ) .subscribe( data => {
       console.log(data);
       console.log(data.totalRegistros);
@@ -220,5 +238,48 @@ export class ListaRemitosComponent implements OnInit {
     this.size = e.pageSize;
     
     this.getAllRemitosSinDistribucion( ); 
+  }
+
+  activarFechas(){
+    this.filtroFechas = !this.filtroFechas;
+  }
+
+  addEvent( tipo, evento ) {
+
+    // console.log("evento value");
+    // console.log(evento.value);
+    // console.log("evento value");
+
+    if (evento.value) {
+      console.log("tipo "+ tipo +": "+evento.value._i.year+"-"+evento.value._i.month+"-"+evento.value._i.date);
+      let fecha = evento.value._i.year+"-"+(evento.value._i.month+1)+"-"+evento.value._i.date;
+  
+      switch (tipo) {
+        case "pickerRemitoDesde":
+          this.pickerRemitoDesde = fecha;
+          this.minDateHastaRemito = evento.value;
+          break;
+        case "pickerRemitoHasta":
+          this.pickerRemitoHasta = fecha;
+          this.maxDateDesdeRemito = evento.value;
+          console.log(this.pickerRemitoHasta);
+          break;
+      }
+          
+    } else {
+      const currentYear = new Date().getFullYear();
+
+      switch (tipo) {
+        case "pickerRemitoDesde":
+          this.pickerRemitoDesde = null;
+          this.minDateHastaRemito= new Date(currentYear - 5, 0, 1);
+          break;
+        case "pickerRemitoHasta":
+          this.pickerRemitoHasta = null;
+          this.maxDateDesdeRemito = new Date(currentYear + 1, 11, 31);
+          break;
+      }
+    }
+
   }
 }

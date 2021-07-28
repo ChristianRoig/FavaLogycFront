@@ -36,14 +36,26 @@
         width: 100%;
         align-items: center !important;
         justify-content: flex-start;
+        height: 100px;
     }
     
     .botonesBusqueda {
         display: flex;
-        width: 150px;
+        width: 900px;
         align-items: center !important;
-        justify-content: flex-start;
+        justify-content: space-between;
         margin-left: 20px;
+    }
+
+    .fechas {
+        width: 745px;
+        margin-top: 15px;
+    }
+
+    .contenedorFiltros {
+        justify-content: space-between;
+        align-items: center;
+        height: 60px;
     }
     
     .filtros {
@@ -81,6 +93,12 @@
         width: 120px;
         padding-left: 5px;
         padding-right: 5px;
+    }
+
+    .btnToggle {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
     
     .unaclase {
