@@ -25,14 +25,15 @@ export class ListaRemitosService
         private _httpClient: HttpClient
     ){    }
     
-    getRemitosSinDistribucion(page, size, columna, order): Observable<any>{  
+    getRemitosSinDistribucion( page, size, columna, order ): Observable<any>{  
         
         let ruta = `${ BASE_URL }pedidos/pedidocbte/remito/a-distribuir/${ page }/${ size }/${ columna }/${ order }`;
         return this._httpClient.get(ruta);
     }
     
-    getRemitoPorId( idRemito: number ): Observable<any> {
-        let ruta = `${ BASE_URL }pedidos/pedidocbte/remito/por-idremito/${ idRemito }`;
+    getRemitoPorComprobante( nroComprobante, page, size, columna, order  ): Observable<any> {
+        
+        let ruta = `${ BASE_URL }pedidos/pedidocbte/remito/por-idremito/${ nroComprobante }/${ page }/${ size }/${ columna }/${ order }`;
         return this._httpClient.get(ruta);
     }
 

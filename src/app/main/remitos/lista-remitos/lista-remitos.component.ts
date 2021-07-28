@@ -30,7 +30,7 @@ export class ListaRemitosComponent implements OnInit {
   dataSource2: any;
   selection = new SelectionModel<any>(true, []);
 
-  busqueda: number = null;
+  busqueda: string = null;
   length: number = 0;
   page: number = 0;
   size: number = 50;
@@ -65,9 +65,9 @@ export class ListaRemitosComponent implements OnInit {
   }
 
   //@Debounce(50)  
-  searchRemito() {
+  searchRemito() {  //esta bieeeeeeeeen
     this.busqueda = this.buscarRemitoInput.nativeElement.value;
-    if(this.busqueda < 1 ){
+    if(this.busqueda === '' || this.busqueda === null ){
       this.busqueda = null;
       this.getAllRemitosSinDistribucion( );
     }
@@ -137,13 +137,17 @@ export class ListaRemitosComponent implements OnInit {
     }
   }
 
-  getRemitoPorId(){
+  getRemitoPorComprobante(){
     let resultado: any = [];
     console.log( "busqueda", this.busqueda );
-    this._listaRemitosService.getRemitoPorId( this.busqueda ).subscribe( data => {
+    this._listaRemitosService.getRemitoPorComprobante( this.busqueda, this.page, this.size, this.columna, this.order ).subscribe( data => {
+      
+      console.log( "data", data );
+      /* 
+      ANTES
       resultado.push( data );
       console.log( resultado );
-      this.dataSource2 = resultado;
+      this.dataSource2 = resultado; */
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {

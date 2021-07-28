@@ -35,12 +35,12 @@
 
                 <mat-form-field appearance="outline" class="inputBuscar">
                     <mat-label>Buscar Remito</mat-label>
-                    <input #buscarRemito (keyup)="searchRemito()" matInput value="" placeholder="Ingrese un id remito">
+                    <input #buscarRemito (keyup)="searchRemito()" matInput value="" placeholder="Ingrese un nro de comprobante">
                     <mat-icon matSuffix>search</mat-icon>
                 </mat-form-field>
 
                 <div class="botonesBusqueda">
-                    <button (click)="getRemitoPorId()" class="btnBuscar" [disabled]="!this.busqueda" mat-raised-button color="primary">Buscar</button>
+                    <button (click)="getRemitoPorComprobante()" class="btnBuscar" [disabled]="!this.busqueda" mat-raised-button color="primary">Buscar</button>
 
                     <div class="btnToggle">
                         <mat-slide-toggle formcontrolname="hidden" type="button" (click)="activarFechas()" class="mat-slide-toggle"></mat-slide-toggle>
@@ -103,11 +103,12 @@
 
                 <ng-container matColumnDef="direccion">
                     <th mat-header-cell mat-sort-header="direccion" *matHeaderCellDef> Localidad </th>
-                    <td mat-cell *matCellDef="let remito"> {{ remito.pedidoDetalles[0].pedidoDomicilioEntrega.direccion }} </td>
+                    <td mat-cell *matCellDef="let remito"> {{ remito.pedidoDetalles[0] ? remito.pedidoDetalles[0].pedidoDomicilioEntrega.direccion: '' }} </td>
+                    <!-- {element.pedidoDetalleParte.nroParte ? element.pedidoDetalleParte.nroParte : ''}} -->
                 </ng-container>
                 <ng-container matColumnDef="transporte">
                     <th mat-header-cell mat-sort-header="transporte" *matHeaderCellDef> Transporte </th>
-                    <td mat-cell *matCellDef="let remito"> {{ remito.pedidoDetalles[0].pedidoDomicilioEntrega.sysTransporte.nombre }} </td>
+                    <td mat-cell *matCellDef="let remito"> {{ remito.pedidoDetalles[0] ? remito.pedidoDetalles[0].pedidoDomicilioEntrega.sysTransporte.nombre: '' }} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="cantArticulos">
@@ -117,8 +118,8 @@
 
                 <ng-container matColumnDef="info">
                     <th mat-header-cell *matHeaderCellDef> Info </th>
-                    <td mat-cell class="mx-16" *matCellDef="let element">
-                        <mat-icon #tooltip="matTooltip" matTooltip="esperando campo observaciones" matTooltipPosition="above" matTooltipHideDelay="100" aria-label="" class="example-button">info</mat-icon>
+                    <td mat-cell class="mx-16" *matCellDef="let remito">
+                        <mat-icon #tooltip="matTooltip" matTooltip="{{ remito.pedidoDetalles[0] ? remito.pedidoDetalles[0].pedidoDomicilioEntrega.observaciones: '' }}" matTooltipPosition="above" matTooltipHideDelay="100" aria-label="" class="example-button">info</mat-icon>
                     </td>
                 </ng-container>
 
