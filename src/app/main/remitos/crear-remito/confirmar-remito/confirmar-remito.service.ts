@@ -22,7 +22,7 @@ export class ConfirmarRemitoService {
 
 
 
-    /* 
+    
     getAllTalonarios( body ): Observable<any> {
 
         let headers = new HttpHeaders({
@@ -32,13 +32,8 @@ export class ConfirmarRemitoService {
         console.log("body en service", body);
 
         let ruta = `${BASE_URL}pedidos/talonario/tipopedido/${ this.tipoVenta }`;
-        return this._httpClient.post(ruta, body, {headers: headers});
-    }
-    */
-    getAllTalonarios(): Observable<any> {
 
-        let ruta = `${BASE_URL}pedidos/talonario/tipopedido/${ this.tipoVenta }`;
-        return this._httpClient.get(ruta);
+        return this._httpClient.post(ruta, body, {headers: headers});
     }
 
     getAllTransportes(): Observable<any> {

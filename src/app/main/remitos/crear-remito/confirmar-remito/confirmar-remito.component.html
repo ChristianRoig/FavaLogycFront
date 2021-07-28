@@ -27,20 +27,24 @@
             </div> -->
 
             <div fxLayout="row" class="mb-8" fxLayoutAlign="start start">
+
                 <mat-form-field appearance="outline" class="talonario">
-                    <mat-label>{{ filtroTalonarios ? 'Talonarios' : 'Cargando...'}}</mat-label>
+                    <!-- <mat-label>{{ filtroTalonarios ? 'Talonarios' : 'Cargando...'}}</mat-label>
                     <select matNativeControl (change)="selectTalonario($event)" [disabled]="!filtroTalonarios">
                         <option *ngFor="let talonario of filtroTalonarios" [value]="talonario.nroTalonario"
                         [selected]="selectedTalonario === talonario.nroTalonario"> 
                             {{ talonario.alias }}
                         </option>
-                    </select>
+                    </select> -->
+                    <mat-label>Alias</mat-label>
+                    <input matInput disabled [value]="this.alias">
                 </mat-form-field>
                 
                 <mat-form-field appearance="outline" class="cantRemitos">
                     <mat-label>Cant. Remitos</mat-label>
                     <input matInput disabled [value]="this.cantRemitos">
                 </mat-form-field>
+
             </div>
 
             <div fxLayout="row" class="mb-8" fxLayoutAlign="start start">

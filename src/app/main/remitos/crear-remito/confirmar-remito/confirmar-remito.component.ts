@@ -45,13 +45,16 @@ export class ConfirmarRemitoComponent implements OnInit {
   filtroTransportes: any;
   selectedTransporte: any = 0;
   
-  filtroTalonarios: any;
-  selectedTalonario: any = 0;
+  /* filtroTalonarios: any;
+  selectedTalonario: any = 0; */
   
   proxCbte: string;
-  nroDesde: string = "X0000400217947";
-  nroHasta: string = "X0000400217950";
-  cantRemitos: number = 8;
+  nroDesde: string 
+  nroHasta: string;
+  alias: string;
+  cantRemitos: number;
+  nroTalonario: number;
+
   mostrarSpinner: boolean = false;
   contador: number = 0;
 
@@ -76,17 +79,27 @@ export class ConfirmarRemitoComponent implements OnInit {
     for (let art of  this.data.selection._selected){
       articulos.push(art.idDetalle)
     }
-    //this._serviceRemitosConfirmar.getAllTalonarios( articulos ).subscribe(params => {
-    this._serviceRemitosConfirmar.getAllTalonarios( ).subscribe(params => {
+
+    const body = {
+      "listaIdDetalle" : articulos
+    }
+
+    this._serviceRemitosConfirmar.getAllTalonarios( body ).subscribe(params => {
+      console.log("params", params);
+
+      /*ANTES 
       this.filtroTalonarios = params.datos;
       this.selectedTalonario = this.filtroTalonarios[0].nroTalonario;
-      this.getUltNroTalonario();
-      /* 
-      this.cantRemitos = params.datos.cantidad;
-      this.nroDesde = params.datos.nroDesde;
-      this.nroHasta = params.datos.nroHasta;
-      this.alias = params.datos.alias;
-      */
+      this.getUltNroTalonario(); */
+
+
+      // DESPUES
+      this.cantRemitos = params.datos[0].cantidad;
+      this.nroDesde = params.datos[0].nroDesde;
+      this.nroHasta = params.datos[0].nroHasta;
+      this.alias = params.datos[0].alias;
+      this.nroTalonario = params.datos[0].nroTalonario;
+     
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
@@ -149,13 +162,13 @@ export class ConfirmarRemitoComponent implements OnInit {
     console.log("this.selectedTransporte",this.selectedTransporte);
   }
   
-  selectTalonario(event: Event) {
+  /* selectTalonario(event: Event) {
     this.selectedTalonario = (event.target as HTMLSelectElement).value;
     this.getUltNroTalonario();
     console.log("this.selectedTalonario",this.selectedTalonario);
   }
-
-  getUltNroTalonario(){
+ */
+  /* getUltNroTalonario(){
     
     this.filtroTalonarios.forEach( (talonario: any) => {
       
@@ -169,7 +182,7 @@ export class ConfirmarRemitoComponent implements OnInit {
         this.proxCbte = '';
       }
     });
-  }
+  } */
 
   /* seleccion */
   isAllSelected() {
@@ -205,12 +218,12 @@ export class ConfirmarRemitoComponent implements OnInit {
         this.toAdd.push(elemento.idDetalle);
       }   
 
-      let idTransporte = parseInt(this.selectedTransporte, 10);
-      let idTalonario = parseInt(this.selectedTalonario, 10);
-  
+      const idTransporte = parseInt(this.selectedTransporte, 10);
+      const idTalonario = this.nroTalonario; 
+
       let body: BodyRemito = {
-        idTransporte: idTransporte,
         idTalonario: idTalonario,
+        idTransporte: idTransporte,
         listaIdDetalle: this.toAdd
       }
       
