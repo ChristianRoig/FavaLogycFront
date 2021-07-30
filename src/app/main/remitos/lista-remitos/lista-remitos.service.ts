@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'environments/environment';
 
@@ -25,10 +25,15 @@ export class ListaRemitosService
         private _httpClient: HttpClient
     ){    }
     
-    getRemitosSinDistribucion( page, size, columna, order ): Observable<any>{  
+    getAllRemitosConFiltros( body, page, size, columna, order ): Observable<any>{         
+
+        let headers = new HttpHeaders({
+            "Content-Type": "application/json"
+        });
         
-        let ruta = `${ BASE_URL }pedidos/pedidocbte/remito/a-distribuir/${ page }/${ size }/${ columna }/${ order }`;
-        return this._httpClient.get(ruta);
+        let ruta = `${ BASE_URL }pedidos/pedidocbte/remito/${ page }/${ size }/${ columna }/${ order }`;
+       
+        return this._httpClient.post(ruta, body, {headers: headers});
     }
     
     getRemitoPorComprobante( nroComprobante, page, size, columna, order  ): Observable<any> {

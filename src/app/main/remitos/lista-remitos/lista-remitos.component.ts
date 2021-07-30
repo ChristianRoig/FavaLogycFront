@@ -12,7 +12,7 @@ import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.componen
 import { ListaRemitosService } from './lista-remitos.service';
 
 interface Estados{
-  valor: string;
+  valor: number;
   vista: string;
 }
 @Component({  
@@ -31,6 +31,8 @@ export class ListaRemitosComponent implements OnInit {
   selection = new SelectionModel<any>(true, []);
 
   busqueda: string = null;
+  idEstado: number = 7;
+
   length: number = 0;
   page: number = 0;
   size: number = 50;
@@ -49,9 +51,13 @@ export class ListaRemitosComponent implements OnInit {
   maxDateHastaRemito: Date;
 
   estados: Estados [] = [
-    { valor: "ACTIVO", vista: "Activos" },
-    { valor: "TODOS", vista: "Todos" }
+    { valor: 7, vista: "Activos" },
+    { valor: 8, vista: "Inactivos" },
+    { valor: 2, vista: "Anulados" },
+    { valor: 9, vista: "Todos" }
   ];
+
+  //ACTIVO ( 7 ) - INACTIVO ( 8 ) - ANULADO ( 2 )
 
   constructor(private _router: Router, 
               private _fuseSidebarService: FuseSidebarService, 
@@ -61,29 +67,30 @@ export class ListaRemitosComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.getAllRemitosSinDistribucion();
+    this.getAllRemitosConFiltros();
   }
 
   //@Debounce(50)  
-  searchRemito() {  //esta bieeeeeeeeen
+  searchRemito() {  
     this.busqueda = this.buscarRemitoInput.nativeElement.value;
     if(this.busqueda === '' || this.busqueda === null ){
       this.busqueda = null;
-      this.getAllRemitosSinDistribucion( );
+      this.getAllRemitosConFiltros( );
     }
   }
   
-  getAllRemitosSinDistribucion( ){
+  getAllRemitosConFiltros( ) {
     this.columna = 'id';
     this.order = 'desc';
 
-    //: BodyDetalleFecha ver de importar la interfaz desde otro lado, En donde van las interfaces
-    let bodyFechas = {
-      desdeLote   : this.pickerRemitoDesde,
-      hastaLote   : this.pickerRemitoHasta
+    let body = {
+      "nroCbte"      : this.busqueda,
+      "fechaDesde"   : this.pickerRemitoDesde,
+      "fechaHasta"   : this.pickerRemitoHasta,
+      "idEstado"     : this.idEstado
     }
-    // deberia mamdar el body y listo
-    this._listaRemitosService.getRemitosSinDistribucion( this.page, this.size, this.columna, this.order ) .subscribe( data => {
+    console.log({body});
+    this._listaRemitosService.getAllRemitosConFiltros( body, this.page, this.size, this.columna, this.order ) .subscribe( data => {
       console.log(data);
       console.log(data.totalRegistros);
       this.dataSource2 = data.datos;
@@ -107,9 +114,12 @@ export class ListaRemitosComponent implements OnInit {
     });
   }
   
-  getRemitosPorEstado( estado: string){
-    if(estado === "ACTIVO"){
-      this.getAllRemitosSinDistribucion();
+  cambiarEstado( numEstado: number){
+
+    this.idEstado = numEstado;
+    console.log( numEstado );
+    /* if(estado === "ACTIVO"){
+      this.getAllRemitosConFiltros();
     }
     if(estado === "TODOS"){
       this._listaRemitosService.getAllRemitos( this.page, this.size, this.columna, this.order ) .subscribe( data => {
@@ -134,7 +144,7 @@ export class ListaRemitosComponent implements OnInit {
           }
         }
       });
-    }
+    } */
   }
 
   getRemitoPorComprobante(){
@@ -147,7 +157,8 @@ export class ListaRemitosComponent implements OnInit {
       ANTES
       resultado.push( data );
       console.log( resultado );
-      this.dataSource2 = resultado; */
+      this.dataSource2 = resultado; 
+      */
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
@@ -233,7 +244,7 @@ export class ListaRemitosComponent implements OnInit {
     if (event.direction !== "")
         this.order = event.direction;
     
-    this.getAllRemitosSinDistribucion( );
+    this.getAllRemitosConFiltros( );
   }
 
   paginar(e: any){
@@ -241,7 +252,7 @@ export class ListaRemitosComponent implements OnInit {
     this.page = e.pageIndex;
     this.size = e.pageSize;
     
-    this.getAllRemitosSinDistribucion( ); 
+    this.getAllRemitosConFiltros( ); 
   }
 
   activarFechas(){
@@ -255,8 +266,8 @@ export class ListaRemitosComponent implements OnInit {
     // console.log("evento value");
 
     if (evento.value) {
-      console.log("tipo "+ tipo +": "+evento.value._i.year+"-"+evento.value._i.month+"-"+evento.value._i.date);
       let fecha = evento.value._i.year+"-"+(evento.value._i.month+1)+"-"+evento.value._i.date;
+      console.log("tipo "+ tipo + ": " +fecha);
   
       switch (tipo) {
         case "pickerRemitoDesde":
