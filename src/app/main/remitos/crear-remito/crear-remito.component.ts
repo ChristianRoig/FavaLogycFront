@@ -179,7 +179,7 @@ export class RemitosComponent implements OnInit {
     })
   }
 
-  getPedidosSinRemitir(  ){
+  getPedidosSinRemitir(  ) {
     let idTipo      :number = null;
     let idDarsena   :number = null;
     let desde       :string = null;
