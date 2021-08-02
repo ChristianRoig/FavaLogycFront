@@ -46,6 +46,8 @@ export class VerRemitoComponent implements OnInit {
 
   mensaje: string;
   titulo: string;
+  url: string;
+  pdfRemitoUrl: string;
 
   constructor(
     private _verRemitoService: VerRemitoService,
@@ -59,10 +61,10 @@ export class VerRemitoComponent implements OnInit {
 
       this.idRemito = params['id'];
       this.getRemitoPorId( params['id'] );
-      console.log("id remito -> ", params['id']);
+      //console.log("id remito -> ", params['id']);
     });
+    this.obtenerURLRemitoAimprimir();
     if (localStorage.getItem("nuevoRemito")){
-      this.imprimirRemito();
       localStorage.removeItem("nuevoRemito");
     }
   }
@@ -94,14 +96,17 @@ export class VerRemitoComponent implements OnInit {
     });
   }
 
-  imprimirRemito(){
+  obtenerURLRemitoAimprimir(): any {
 
-    this._verRemitoService.getImprimirRemito( this.idRemito ).subscribe( data => {
+    const listaIdPedidoCbte:  number[] = [];
+    listaIdPedidoCbte.push( this.idRemito );
+    let body= {
+      "listaIdPedidoCbte": listaIdPedidoCbte
+    };
 
-      console.log("data", data );
-      //this.link = data.toString();
-      window.open( data.toString(), '_blank');
-      
+    this._verRemitoService.getImprimirRemito( body ).subscribe( data => {
+      //console.log(" U R L ->", data );
+      this.pdfRemitoUrl = data.toString();
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
@@ -120,6 +125,10 @@ export class VerRemitoComponent implements OnInit {
       }
     });
   }
+
+  imprimirRemito( ){
+    window.open( this.pdfRemitoUrl, '_blank');
+  } 
 
   confirmacionBorrar() {
     const dialogRef = this._dialog.open( ModalConfirmacionBorrarComponent, { 

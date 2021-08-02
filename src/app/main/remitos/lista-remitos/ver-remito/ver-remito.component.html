@@ -8,7 +8,7 @@
                 <button mat-raised-button color="light" class="mt-22" (click)="confirmacionBorrar()">Anular remito</button>
             </div>
 
-            <div class="fuse-card my-20 pl-24 pr-24" style="max-width: 100%;">
+            <div class="fuse-card my-20 pl-24 pr-24" fxLayout="column" style="max-width: 100%;">
 
                 <div fxLayout="row" fxLayoutAlign="space-around">
                     <div class="controlesBusqueda">
@@ -20,7 +20,7 @@
 
                         <div class="botonesBusqueda">
 
-                            <button class="btn" mat-raised-button color="primary" (click)="imprimirRemito()">
+                            <button class="btn" mat-raised-button color="primary" (click)="obtenerURLRemitoAimprimir()">
                                 Imprimir
                             </button>
 
@@ -28,7 +28,15 @@
                     </div>
                 </div>
 
-                <ng-container *ngTemplateOutlet="comprobantes" class="tablaArticulos"></ng-container>
+                <mat-tab-group fxLayout="column" fxFlex>
+
+                    <mat-tab label="Articulos">
+                        <ng-container *ngTemplateOutlet="comprobantes" class="tablaArticulos"></ng-container>
+                    </mat-tab>
+                    <mat-tab label="Visualizar Remito">
+                        <ng-container *ngTemplateOutlet="remito" class="tablaArticulos"></ng-container>
+                    </mat-tab>
+                </mat-tab-group>
             </div>
         </div>
     </div>
@@ -36,7 +44,7 @@
 
 <!-- ------------------------------------------------------------------------------------------------------------------------------ -->
 <ng-template #comprobantes>
-    <div style="width: 100%; overflow: auto;">
+    <div style="width: 100%; overflow: auto;" class="mt-16">
         <mat-card-subtitle class="pl-24">Lista de Articulos</mat-card-subtitle>
         <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="dataSource2" class="mb-8 tablaArticulos">
 
@@ -90,7 +98,15 @@
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns "></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns; "></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
+    </div>
+</ng-template>
+
+<!-- ------------------------------------------------------------------------------------------------------------------------------ -->
+
+<ng-template #remito>
+    <div class="m-16">
+        <pdf-viewer [src]="this.pdfRemitoUrl" [render-text]="true" style="display: block;"></pdf-viewer>
     </div>
 </ng-template>
