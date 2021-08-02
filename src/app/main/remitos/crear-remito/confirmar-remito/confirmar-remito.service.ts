@@ -36,10 +36,16 @@ export class ConfirmarRemitoService {
         return this._httpClient.post(ruta, body, {headers: headers});
     }
 
-    getAllTransportes(): Observable<any> {
+    getAllTransportes( body ): Observable<any> {
+        
+        let headers = new HttpHeaders({
+            "Content-Type": "application/json"
+        });
 
         let ruta = `${BASE_URL}pedidos/transporte/`;
-        return this._httpClient.get(ruta);
+
+        console.log({body});
+        return this._httpClient.post(ruta, body,{headers: headers});
     }
 
     getUltimoNroCbte(id){

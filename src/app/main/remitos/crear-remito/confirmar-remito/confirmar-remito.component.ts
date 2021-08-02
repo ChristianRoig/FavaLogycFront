@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dial
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
-
+import { MatIconModule } from '@angular/material/icon';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 
 //service
@@ -118,8 +118,10 @@ export class ConfirmarRemitoComponent implements OnInit {
       }
     })
 
-    this._serviceRemitosConfirmar.getAllTransportes().subscribe(params => {
+    this._serviceRemitosConfirmar.getAllTransportes( body ).subscribe(params => {
       this.filtroTransportes = params.datos;
+      console.log("filtroTransportes -----", this.filtroTransportes);
+      console.log( this.verificarCantPedidos() );
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
@@ -137,6 +139,26 @@ export class ConfirmarRemitoComponent implements OnInit {
         }
       }
     })
+  }
+
+  verificarCantPedidos(): boolean{
+    let contador: number = 0;
+    for ( let elem of this.filtroTransportes ){
+      if (elem.cantidadPedido > 0) {
+        this.selectedTransporte = elem.id;
+        contador++;
+        if (contador > 1){
+          this.selectedTransporte = 0;
+          return true;
+        }
+      }
+    }
+    if (contador === 1){
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 
   mostrarError(errStatus, titulo, mensaje){
@@ -230,9 +252,10 @@ export class ConfirmarRemitoComponent implements OnInit {
       console.log({body});
       console.log("entró ass");
       this._serviceRemitosConfirmar.generarRemito( body ).subscribe(params => {
-        console.log("entró");
-        console.log("remito generado -> ",params);
+
+        console.log("remito generado -> ", params);
         localStorage.setItem("nuevoRemito", "true");
+        this.imprimirRemitos( params );
         setTimeout(() => {    
           this._dialog.closeAll();                      
           this.navegarAlistaRemitos();
@@ -259,6 +282,10 @@ export class ConfirmarRemitoComponent implements OnInit {
       });
     }
 
+  }
+
+  imprimirRemitos( data ){
+    window.open( data.toString(), '_blank');
   }
   
   navegarAlistaRemitos(){

@@ -39,7 +39,7 @@
                     <mat-label>Alias</mat-label>
                     <input matInput disabled [value]="this.alias">
                 </mat-form-field>
-                
+
                 <mat-form-field appearance="outline" class="cantRemitos">
                     <mat-label>Cant. Remitos</mat-label>
                     <input matInput disabled [value]="this.cantRemitos">
@@ -62,12 +62,15 @@
                 <mat-form-field appearance="outline" fxFlex>
                     <mat-label>{{ filtroTransportes ? 'Transporte' : 'Cargando...'}}</mat-label>
                     <select matNativeControl (change)="selectTransporte($event)" [disabled]="!filtroTransportes">
-                        <option [value]="0">Seleccionar Transporte</option>
-                        <option *ngFor="let transporte of filtroTransportes" [value]="transporte.id"
-                                [selected]="selectedTransporte === transporte.id"> 
-                                {{ transporte.nombre }}
+                        <option [value]="0">(*) DEBE seleccionar transporte
+                            <!-- <mat-icon class="active-icon green-600">check</mat-icon> -->
+                            <!-- <i class="material-icons">home</i> -->
                         </option>
-                    </select>
+                        <option *ngFor="let transporte of filtroTransportes" [value]="transporte.id"
+                        [selected]="selectedTransporte === transporte.id"> 
+                        {{ transporte.nombre }}
+                    </option>
+                </select>
                 </mat-form-field>
             </div>
 
