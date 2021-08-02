@@ -46,12 +46,12 @@
         justify-content: space-between;
         margin-left: 20px;
     }
-
+    
     .fechas {
         width: 745px;
         margin-top: 15px;
     }
-
+    
     .contenedorFiltros {
         justify-content: space-between;
         align-items: center;
@@ -94,11 +94,16 @@
         padding-left: 5px;
         padding-right: 5px;
     }
-
+    
     .btnToggle {
         display: flex;
         align-items: center;
         justify-content: space-between;
+    }
+    
+     ::ng-deep .tooltip {
+        font-size: 24px !important; // current default is 10px :-/
+        color: #8bc34a;
     }
     
     .unaclase {

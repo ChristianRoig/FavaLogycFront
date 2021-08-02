@@ -20,7 +20,7 @@
 
                         <div class="botonesBusqueda">
 
-                            <button class="btn" mat-raised-button color="primary" (click)="obtenerURLRemitoAimprimir()">
+                            <button class="btn" mat-raised-button color="primary" (click)="imprimirRemito()">
                                 Imprimir
                             </button>
 
@@ -93,7 +93,16 @@
             <ng-container matColumnDef="info">
                 <th mat-header-cell *matHeaderCellDef> Info </th>
                 <td mat-cell class="mx-16" *matCellDef="let articulo">
-                    <mat-icon #tooltip="matTooltip" matTooltip="{{articulo.codigoArticuloAsociado}} - {{articulo.descripcionArticuloAsociado}}" matTooltipPosition="above" matTooltipHideDelay="100" aria-label="" class="example-button">info</mat-icon>
+                    <ng-container *ngIf="articulo.codigoArticuloAsociado; then conInfo; else sinInfo"></ng-container>
+
+                    <ng-template #conInfo>
+                        <mat-icon #tooltip="matTooltip" matTooltipClass="tooltip" matTooltip="{{articulo.codigoArticuloAsociado}} - {{articulo.descripcionArticuloAsociado}}" matTooltipPosition="above" matTooltipHideDelay="100" aria-label="" class="example-button tooltip">info</mat-icon>
+                    </ng-template>
+
+                    <ng-template #sinInfo>
+                        <mat-icon #tooltip="matTooltip" matTooltip="" matTooltipPosition="above" matTooltipHideDelay="100" aria-label="" class="example-button">info</mat-icon>
+                    </ng-template>
+                    <!-- <mat-icon #tooltip="matTooltip" matTooltip="{{articulo.codigoArticuloAsociado}} - {{articulo.descripcionArticuloAsociado}}" matTooltipPosition="above" matTooltipHideDelay="100" aria-label="" class="example-button">info</mat-icon> -->
                 </td>
             </ng-container>
 
