@@ -29,9 +29,18 @@
         justify-content: space-between;
     }
     
+    .mat-tab-labels {
+        border-radius: 8px !important;
+    }
+    
     .tablaArticulos {
         justify-content: space-between;
         width: 100%;
+    }
+    
+     ::ng-deep .tooltip {
+        font-size: 24px !important; // current default is 10px :-/
+        color: #8bc34a;
     }
     
     .controlesBusqueda {

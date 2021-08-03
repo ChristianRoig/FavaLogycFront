@@ -54,12 +54,18 @@ export class CrearOrdenDistribucionComponent implements OnInit {
   ngOnInit(): void {
     
     // this.resetFiltros();    
-    this.getAllRemitosSinDistribucion( );
+    this.getAllRemitosNuevos( );
     
   }
   
-  getAllRemitosSinDistribucion( ){
-    this._crearOrdenDistribucionService.getRemitosSinDistribucion( this.page, this.size, this.columna, this.order ) .subscribe( data => {
+  getAllRemitosNuevos( ){
+    let body = {
+      "nroCbte": null,
+      "fechaDesde": null,
+      "fechaHasta": null,
+      "idEstado": 1
+    }
+    this._crearOrdenDistribucionService.getAllRemitosNuevos( body, this.page, this.size, this.columna, this.order ) .subscribe( data => {
       console.log(data);
       //console.log(data.totalRegistros);
       this.dataSource2 = data.datos;
@@ -174,6 +180,6 @@ export class CrearOrdenDistribucionComponent implements OnInit {
     this.page = e.pageIndex;
     this.size = e.pageSize;
     
-    this.getAllRemitosSinDistribucion();
+    this.getAllRemitosNuevos();
   }
 }

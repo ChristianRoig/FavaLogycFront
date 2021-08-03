@@ -6,8 +6,7 @@ import { environment } from 'environments/environment';
 const BASE_URL = environment.server + environment.baseUrl;
 
 export interface BodyRemito {
-    idTransporte: number,
-    idDeposito: number,
+    idTransporte: any,
     idTalonario: number,
     listaIdDetalle: number []
   }
@@ -21,25 +20,36 @@ export class ConfirmarRemitoService {
         private _httpClient: HttpClient
     ) { }
 
-    getAllTalonarios(): Observable<any>
-    {
+
+
+    
+    getAllTalonarios( body ): Observable<any> {
+
+        let headers = new HttpHeaders({
+            "Content-Type": "application/json"
+        });
+
+        console.log("body en service", body);
+
         let ruta = `${BASE_URL}pedidos/talonario/tipopedido/${ this.tipoVenta }`;
-        return this._httpClient.get(ruta);
+
+        return this._httpClient.post(ruta, body, {headers: headers});
     }
 
-    getAllTransportes(): Observable<any>
-    {
+    getAllTransportes( body ): Observable<any> {
+        
+        let headers = new HttpHeaders({
+            "Content-Type": "application/json"
+        });
+
         let ruta = `${BASE_URL}pedidos/transporte/`;
-        return this._httpClient.get(ruta);
-    }
 
-    getAllDepostitosCarga(): Observable<any>
-    {
-        let ruta = `${BASE_URL}pedidos/deposito/`;
-        return this._httpClient.get(ruta);
+        console.log({body});
+        return this._httpClient.post(ruta, body,{headers: headers});
     }
 
     getUltimoNroCbte(id){
+
         let ruta = `${BASE_URL}pedidos/talonario/${id}`;
         return this._httpClient.get(ruta);
     }

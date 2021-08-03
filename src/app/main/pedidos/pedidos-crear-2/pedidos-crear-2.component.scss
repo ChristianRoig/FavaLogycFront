@@ -28,6 +28,11 @@
         border-radius: 10px !important;
     }
     
+     ::ng-deep .tooltip {
+        font-size: 24px !important;
+        color: #8bc34a;
+    }
+    
     .botones {
         place-content: space-between;
         align-items: center;
