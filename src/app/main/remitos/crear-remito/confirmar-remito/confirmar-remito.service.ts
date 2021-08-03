@@ -6,7 +6,7 @@ import { environment } from 'environments/environment';
 const BASE_URL = environment.server + environment.baseUrl;
 
 export interface BodyRemito {
-    idTransporte: number,
+    idTransporte: any,
     idTalonario: number,
     listaIdDetalle: number []
   }

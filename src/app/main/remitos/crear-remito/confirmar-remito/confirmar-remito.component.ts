@@ -24,7 +24,7 @@ export interface PeriodicElement {
 }
 
 export interface BodyRemito {
-  idTransporte: number,
+  idTransporte: any,
   idTalonario: number,
   listaIdDetalle: number []
 }
@@ -43,7 +43,7 @@ export class ConfirmarRemitoComponent implements OnInit {
   toAdd = new Array<number>();
 
   filtroTransportes: any;
-  selectedTransporte: any = 0;
+  selectedTransporte: any = null;
   
   /* filtroTalonarios: any;
   selectedTalonario: any = 0; */
@@ -148,7 +148,7 @@ export class ConfirmarRemitoComponent implements OnInit {
         this.selectedTransporte = elem.id;
         contador++;
         if (contador > 1){
-          this.selectedTransporte = 0;
+          this.selectedTransporte = null;
           return true;
         }
       }
@@ -239,8 +239,11 @@ export class ConfirmarRemitoComponent implements OnInit {
       for (let elemento of this.dataSource2){
         this.toAdd.push(elemento.idDetalle);
       }   
-
-      const idTransporte = parseInt(this.selectedTransporte, 10);
+      console.log("this.selectedTransporte", this.selectedTransporte);
+      let idTransporte = null;
+      if (this.selectedTransporte != null){
+        idTransporte = parseInt(this.selectedTransporte, 10); 
+      }
       const idTalonario = this.nroTalonario; 
 
       let body: BodyRemito = {
@@ -251,9 +254,9 @@ export class ConfirmarRemitoComponent implements OnInit {
       
       console.log({body});
       console.log("entró ass");
-      this._serviceRemitosConfirmar.generarRemito( body ).subscribe(params => {
+      this._serviceRemitosConfirmar.generarRemito( body ).subscribe( params => {
 
-        console.log("remito generado -> ", params);
+        console.log("remito generado -> ", params );
         localStorage.setItem("nuevoRemito", "true");
         this.imprimirRemitos( params );
         setTimeout(() => {    
