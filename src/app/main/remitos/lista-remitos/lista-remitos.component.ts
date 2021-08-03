@@ -266,7 +266,21 @@ export class ListaRemitosComponent implements OnInit {
     // console.log("evento value");
 
     if (evento.value) {
-      let fecha = evento.value._i.year+"-"+(evento.value._i.month+1)+"-"+evento.value._i.date;
+      let mes: string;
+      let dia: string;
+      if (evento.value._i.month < 10 && evento.value._i.month > 0 ){
+        mes = "0"+ (evento.value._i.month + 1 );
+      }
+      else {
+        mes = evento.value._i.month + 1;
+      }
+      if (evento.value._i.date < 10 && evento.value._i.date > 0 ){
+        dia = "0" + evento.value._i.date;
+      }
+      else {
+        dia = evento.value._i.date;
+      }
+      let fecha = evento.value._i.year+"-"+ mes +"-"+dia;
       console.log("tipo "+ tipo + ": " +fecha);
   
       switch (tipo) {
