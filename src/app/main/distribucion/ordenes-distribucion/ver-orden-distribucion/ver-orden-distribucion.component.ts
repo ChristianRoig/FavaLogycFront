@@ -113,7 +113,7 @@ export class VerOrdenDistribucionComponent implements OnInit {
     if(this.mostrarRemitos == true){
       this.textoBtnAddRemitos = "Finalizar";
       this.displayedColumns = ['id', 'codComprobante', 'fechaAlta', 'cantArticulos', 'accion'];
-      this.getAllRemitosSinOrden();
+      this.getAllRemitosNuevos();
     }
     if(this.mostrarRemitos == false){
       this.textoBtnAddRemitos = "Agregar Remitos";
@@ -122,11 +122,44 @@ export class VerOrdenDistribucionComponent implements OnInit {
     }
   }
 
+  
+  getAllRemitosNuevos( ){
+    let body = {
+      "nroCbte": null,
+      "fechaDesde": null,
+      "fechaHasta": null,
+      "idEstado": 1
+    }
+    this._verOrdenDistribucion.getAllRemitosNuevos( body, this.page, this.size, this.columna, this.order ) .subscribe( data => {
+      console.log(data);
+      //console.log(data.totalRegistros);
+      this.dataSource2 = data.datos;
+      this.length = data.totalRegistros;
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
+        } else {
+          let titulo = 'Error al listar';
+          let mensaje = err.error.message.toString();
+          this.mostrarError(errStatus, titulo, mensaje);
+        }
+      }
+    });
+  }
+ 
+
   getSoloFecha(fecha: any){
     return fecha.split(' ')[0];
   }
 
-  getAllRemitosSinOrden( ){
+  /* getAllRemitosSinOrden( ){
     this._verOrdenDistribucion.getRemitosSinDistribucion( this.page, this.size, this.columna, this.order ) .subscribe( data => {
       let resultado = [];
       for(let elem of data.datos){
@@ -154,7 +187,7 @@ export class VerOrdenDistribucionComponent implements OnInit {
         }
       }
     });
-  }
+  } */
 
   existeEnELRemito( id: number ){
     for(let remito of this.remitosDeOrden){
@@ -187,7 +220,10 @@ export class VerOrdenDistribucionComponent implements OnInit {
         }
       }
     });
-    this.getAllRemitosSinOrden();
+
+    setTimeout(() => {      
+      this.getAllRemitosNuevos();
+    }, 100);
   }
 
   eliminarOrdenDeDistribucion(){
@@ -317,7 +353,7 @@ export class VerOrdenDistribucionComponent implements OnInit {
     if( this.busqueda < 1 ){
       this.busqueda = null;
       if(this.mostrarRemitos == true)
-        this.getAllRemitosSinOrden();
+        this.getAllRemitosNuevos();
       else
         this.getRemitosDeOrdenDistribucion( this.idOrdenDist );
     }

@@ -18,10 +18,17 @@ export class CrearOrdenDistribucionService {
     constructor(
         private _httpClient: HttpClient ){ }
 
-    getRemitosSinDistribucion(page, size, columna, order): Observable<any> {  
+    getAllRemitosNuevos( body, page, size, columna, order): Observable<any> {  
+
         console.log("datos-> ", page, size, columna, order);
-        let ruta = `${ BASE_URL }pedidos/pedidocbte/remito/a-distribuir/${ page }/${ size }/${ columna }/${ order }`;
-        return this._httpClient.get(ruta);
+
+        let headers = new HttpHeaders({
+            "Content-Type": "application/json"
+        });
+
+        let ruta = `${ BASE_URL }pedidos/pedidocbte/remito/${ page }/${ size }/${ columna }/${ order }`;
+
+        return this._httpClient.post(ruta, body, {headers: headers});
     }
 
     crearOrdenDeDistribucion( body ){
