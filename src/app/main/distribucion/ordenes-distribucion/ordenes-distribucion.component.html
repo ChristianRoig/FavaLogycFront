@@ -84,6 +84,7 @@
                     <th mat-header-cell *matHeaderCellDef> Articulos</th>
                     <td mat-cell class="example-button-row pl-16" *matCellDef="let orden">{{ orden.cantArticulos }} </td>
                 </ng-container>
+
                 <ng-container matColumnDef="cantArticulosACargar">
                     <th mat-header-cell *matHeaderCellDef> A Cargar</th>
                     <td mat-cell class="example-button-row pl-16" *matCellDef="let orden">
@@ -91,6 +92,7 @@
                         <p *ngIf=" orden.cantArticulosACargar === 0" class="articulosAcargarCero">{{ orden.cantArticulosACargar }}</p>
                     </td>
                 </ng-container>
+
                 <ng-container matColumnDef="cantRemitos">
                     <th mat-header-cell *matHeaderCellDef> Remitos</th>
                     <td mat-cell class="example-button-row pl-16" *matCellDef="let orden">{{ orden.cantRemitos }} </td>

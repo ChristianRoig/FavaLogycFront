@@ -30,7 +30,7 @@ export class VerOrdenDistribucionComponent implements OnInit {
   
   @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
 
-  displayedColumns: string[] = ['select', 'id', 'codComprobante', 'nroComprobante', 'fechaAlta', 'direccion', 'cantArticulos'];
+  displayedColumns: string[] = ['select', 'comprobante', 'fechaAlta', 'direccion', 'info', 'cantArticulos', 'accion'];
   selection = new SelectionModel<any>(true, []);
   dataSource2: any;
 
@@ -53,6 +53,9 @@ export class VerOrdenDistribucionComponent implements OnInit {
   editRemito: boolean;
   mostrarRemitos: boolean = false;
   textoBtnAddRemitos: string = "Agregar Remitos";
+  turno: string;
+  transporte: string;
+  fechaEntrega: string;
 
   constructor(
     private _verOrdenDistribucion: VerOrdenDistribucionService,
@@ -279,6 +282,9 @@ export class VerOrdenDistribucionComponent implements OnInit {
         console.log(data);
         this.ordenActual = data;
         this.nombreOrden = data.nombre;
+        this.turno = data.pedidoTurno.nombre;
+        this.transporte = data.sysTransporte.nombre;
+        /* this.fechaEntrega = data; */
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
@@ -436,6 +442,10 @@ export class VerOrdenDistribucionComponent implements OnInit {
             this._router.navigate(['']);
           }
       });
+  }
+
+  navegarAremito( idRemito: number ){
+    this._router.navigate([ `remitos/ver-remito/${ idRemito }` ]);
   }
 
   
