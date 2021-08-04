@@ -51,10 +51,11 @@ export class ListaRemitosComponent implements OnInit {
   maxDateHastaRemito: Date;
 
   estados: Estados [] = [
-    { valor: 7, vista: "Activos" },
-    { valor: 8, vista: "Inactivos" },
+    { valor: 1, vista: "Nuevos" },
+    { valor: 9, vista: "Orden" },
+    { valor: 4, vista: "Transporte" },
     { valor: 2, vista: "Anulados" },
-    { valor: 9, vista: "Todos" }
+    { valor: null, vista: "Todos" }
   ];
 
   //ACTIVO ( 7 ) - INACTIVO ( 8 ) - ANULADO ( 2 )
