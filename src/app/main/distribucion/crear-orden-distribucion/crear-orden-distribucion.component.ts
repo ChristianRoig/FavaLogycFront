@@ -31,7 +31,7 @@ export class CrearOrdenDistribucionComponent implements OnInit {
 
   @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
 
-  displayedColumns: string[] = ['select', 'id', 'codComprobante', 'nroComprobante', 'fechaAlta', 'cantArticulos'];
+  displayedColumns: string[] = ['select', 'id', 'comprobante', 'fechaAlta', 'cantArticulos'];
   dataSource2: any;
   selection = new SelectionModel<any>(true, []);
   mostrarFecha = false;
@@ -181,5 +181,11 @@ export class CrearOrdenDistribucionComponent implements OnInit {
     this.size = e.pageSize;
     
     this.getAllRemitosNuevos();
+  }
+
+  verPedido( idPedido, idCbte ){                          // falta que el back agregue datos para hacer la navegacion
+    /* localStorage.setItem('vengoDeCbte', "true" );
+    localStorage.setItem('idCbte', idCbte );
+    this._router.navigate([ `pedidos/ver-pedido/${ idPedido }` ]); */
   }
 }

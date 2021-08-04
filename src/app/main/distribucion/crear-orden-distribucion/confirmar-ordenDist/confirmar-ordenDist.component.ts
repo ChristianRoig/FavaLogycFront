@@ -45,7 +45,7 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
   toAdd = new Array();
   cantRemitos: number = 0;
   nombreOrden: string = "";
-  idOrden: number ;
+  idOrden: number;
   datosOrden: {} = {};
   ordenActual = {};
   estoyEditando: boolean = false;
@@ -56,7 +56,7 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
   localidadDefault: any = 1402;
 
   filtroTransportes: any;
-  selectedTransporte: any = 0;
+  selectedTransporte: any = null;
 
   filtroTurnos: any;
   selectedTurno: any = 1;
@@ -71,7 +71,7 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
     this.getfiltros();
     
 
-    if(this.data.vengoDeCrear == true){
+    if (this.data.vengoDeCrear == true) {
       console.log(this.data.selection._selected);
       this.toAdd = this.data.selection._selected;
       console.log("vengo de crear orden");
@@ -81,7 +81,7 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
       console.log( "this.localidadDefault", this.localidadDefault.id );
       this.cantRemitos = this.data.selection._selected.length;
     }
-    if (this.data.vengoDeOrden == true){
+    if (this.data.vengoDeOrden == true) {
 
       console.log("vengo de ver orden", this.data.selection);
       
@@ -99,7 +99,7 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
     //localStorage.clear();
   }
 
-  crearOrden( accion: string ){
+  crearOrden( accion: string ) {
     this.contador++;
     this.mostrarSpinner = true;
     console.log("this.contador", this.contador);
@@ -280,9 +280,11 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
   }
 
   getfiltros(){
+
     this._confirmarOrdenDeDistribucionService.getAllTransportes().subscribe(params => {
       this.filtroTransportes = params.datos;
-      //console.log("this.filtroTransportes", this.filtroTransportes);
+      console.log("this.filtroTransportes", this.filtroTransportes);
+      console.log( this.verificarCantPedidos() );
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
@@ -322,9 +324,29 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
     })
   }
 
+  verificarCantPedidos(): boolean{
+    let contador: number = 0;
+    for ( let elem of this.filtroTransportes ) {
+      if (elem.cantidadPedido > 0) {
+        this.selectedTransporte = elem.id;
+        contador++;
+        if (contador > 1){
+          this.selectedTransporte = null;
+          return true;
+        }
+      }
+    }
+    if (contador === 1){
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
   selectTransporte(event: Event) {
     this.selectedTransporte = (event.target as HTMLSelectElement).value;
-    console.log("this.selectedTransporte",this.selectedTransporte);
+    console.log("this.selectedTransporte", this.selectedTransporte);
   }
 
   selectTurno(event: Event) {

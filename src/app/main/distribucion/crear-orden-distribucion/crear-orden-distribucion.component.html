@@ -65,14 +65,13 @@
                 <td mat-cell *matCellDef="let remito"> {{ remito.id }}</td>
             </ng-container>
 
-            <ng-container matColumnDef="codComprobante">
-                <th mat-sort-header="codComprobante" mat-header-cell *matHeaderCellDef> Codigo Comprobante </th> -->
-                <td mat-cell *matCellDef="let remito"> {{remito.pedidoTipoCbte.codigoCbte}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="nroComprobante">
-                <th mat-sort-header="nroComprobante" mat-header-cell *matHeaderCellDef> Nro Comprobante </th>
-                <td mat-cell *matCellDef="let remito"> {{ remito.nroCbte }} </td>
+            <ng-container matColumnDef="comprobante">
+                <th mat-sort-header="comprobante" mat-header-cell *matHeaderCellDef> Comprobante </th> -->
+                <td mat-cell *matCellDef="let remito">
+                    <button mat-button color="accent" (click)="verPedido( remito.pedidoDetalles[0].pedidoCabecera.id, remito.nroCbte  )"> 
+                        {{remito.pedidoTipoCbte.codigoCbte}} {{ remito.nroCbte }}
+                    </button>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="fechaAlta">

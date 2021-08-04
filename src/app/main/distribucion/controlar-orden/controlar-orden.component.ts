@@ -223,5 +223,9 @@ export class ControlarCargaComponent implements OnInit {
         }
     }); 
   }
+
+  navegarCodigoArticulo( codArticulo: string ){
+    this._router.navigate([ `articulos/codigos-barra/${ codArticulo }` ]);
+  }
     
 }
