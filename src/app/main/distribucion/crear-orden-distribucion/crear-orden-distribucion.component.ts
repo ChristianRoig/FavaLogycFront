@@ -184,8 +184,8 @@ export class CrearOrdenDistribucionComponent implements OnInit {
   }
 
   verPedido( idPedido, idCbte ){                          // falta que el back agregue datos para hacer la navegacion
-    /* localStorage.setItem('vengoDeCbte', "true" );
+    localStorage.setItem('vengoDeCbte', "true" );
     localStorage.setItem('idCbte', idCbte );
-    this._router.navigate([ `pedidos/ver-pedido/${ idPedido }` ]); */
+    this._router.navigate([ `pedidos/ver-pedido/${ idPedido }` ]);
   }
 }

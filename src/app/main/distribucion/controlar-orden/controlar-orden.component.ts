@@ -71,7 +71,7 @@ export class ControlarCargaComponent implements OnInit {
     this.idOrdenDist = params['id'];
     });
     this.buscarOrdenPorId();
-    this.getArticulosDeOrdenDistribucion(this.idOrdenDist);
+    this.getArticulosDeOrdenDistribucion( this.idOrdenDist );
   }
 
   getArticulosDeOrdenDistribucion( idOrdenDist: number ) {
@@ -226,6 +226,12 @@ export class ControlarCargaComponent implements OnInit {
 
   navegarCodigoArticulo( codArticulo: string ){
     this._router.navigate([ `articulos/codigos-barra/${ codArticulo }` ]);
+  }
+
+  verPedido( idPedido, idCbte ){                          // falta que el back agregue datos para hacer la navegacion
+    localStorage.setItem('vengoDeCbte', "true" );
+    localStorage.setItem('idCbte', idCbte );
+    this._router.navigate([ `pedidos/ver-pedido/${ idPedido }` ]);
   }
     
 }
