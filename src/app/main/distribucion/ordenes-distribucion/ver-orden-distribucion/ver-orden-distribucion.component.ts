@@ -56,7 +56,8 @@ export class VerOrdenDistribucionComponent implements OnInit {
   turno: string;
   transporte: string;
   fechaEntrega: string;
-
+  pdfOrdenUrl: string;
+  
   constructor(
     private _verOrdenDistribucion: VerOrdenDistribucionService,
     private _dialog: MatDialog,
@@ -70,6 +71,7 @@ export class VerOrdenDistribucionComponent implements OnInit {
     });
     this.buscarOrdenPorId();
     this.getRemitosDeOrdenDistribucion(this.idOrdenDist);
+    this.obtenerUrlPdfOrdenDist();
     this.datosOrden = JSON.parse(localStorage.getItem('orden'));
   }
   
@@ -395,11 +397,10 @@ export class VerOrdenDistribucionComponent implements OnInit {
     });
   }
 
-  imprimirOrdenDist(){
+  obtenerUrlPdfOrdenDist(){
     this._verOrdenDistribucion.getImprimirOrdenDist( this.idOrdenDist ).subscribe( data => {
-
-      console.log("data", data );
-      window.open( data.toString(), '_blank');
+      console.log(data);
+      this.pdfOrdenUrl = data;
       
     },
     (err: HttpErrorResponse) => {
@@ -418,6 +419,10 @@ export class VerOrdenDistribucionComponent implements OnInit {
         }
       }
     });
+  }
+
+  imprimirOrdenDistribucion(){
+    window.open( this.pdfOrdenUrl, '_blank');
   }
 
   esperarYactualizar(){

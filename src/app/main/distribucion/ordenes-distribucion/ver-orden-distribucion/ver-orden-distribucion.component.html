@@ -8,7 +8,7 @@
             <div fxLayout="row" class="titular">
                 <h4>Turno: {{ this.turno }} - Transporte: {{ this.transporte }}</h4>
                 <div class="botonesCabecera">
-                    <button class="btn" mat-raised-button color="light" (click)="imprimirOrdenDist()">
+                    <button class="btn" mat-raised-button color="light" (click)="imprimirOrdenDistribucion()">
                         Imprimir
                     </button>
 
@@ -19,7 +19,7 @@
                 </div>
             </div>
 
-            <div class="fuse-card my-20 pl-24 pr-24" style="max-width: 100%;">
+            <div class="fuse-card my-20 pl-24 pr-24" fxLayout="column" style="max-width: 100%;">
 
                 <div fxLayout="row" fxLayoutAlign="space-around">
 
@@ -46,8 +46,16 @@
                         </div>
                     </div>
                 </div>
+                <!-- <ng-container *ngTemplateOutlet="remitos" class="tablaArticulos"></ng-container> -->
+                <mat-tab-group fxLayout="column" fxFlex>
 
-                <ng-container *ngTemplateOutlet="remitos" class="tablaArticulos"></ng-container>
+                    <mat-tab label="Remitos">
+                        <ng-container *ngTemplateOutlet="remitos" class="tablaArticulos"></ng-container>
+                    </mat-tab>
+                    <mat-tab label="Visualizar Orden">
+                        <ng-container *ngTemplateOutlet="remito" class="tablaArticulos"></ng-container>
+                    </mat-tab>
+                </mat-tab-group>
             </div>
         </div>
     </div>
@@ -55,7 +63,7 @@
 </app-plantilla-fondo-simple>
 <!-- ------------------------------------------------------------------------------------------------------------------------------ -->
 <ng-template #remitos>
-    <mat-card-subtitle class="pl-16">Remitos que componen la orden</mat-card-subtitle>
+    <mat-card-subtitle class="pl-16 pt-32">Remitos que componen la orden</mat-card-subtitle>
     <div style="width: 100%; overflow: auto;">
         <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="dataSource2" class="mb-8 tablaArticulos">
 
@@ -149,4 +157,10 @@
         </table>
     </div>
 
+</ng-template>
+<!-- -------------------------------------------------------------------------------------------------------------- -->
+<ng-template #remito>
+    <div class="m-16">
+        <pdf-viewer [src]="this.pdfOrdenUrl" [render-text]="true" style="display: block;"></pdf-viewer>
+    </div>
 </ng-template>

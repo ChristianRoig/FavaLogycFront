@@ -31,7 +31,7 @@ export class ListaRemitosComponent implements OnInit {
   selection = new SelectionModel<any>(true, []);
 
   busqueda: string = null;
-  idEstado: number = 7;
+  idEstado: number = 1;
 
   length: number = 0;
   page: number = 0;

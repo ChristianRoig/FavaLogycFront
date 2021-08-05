@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+
 //fuse
 import { FuseSharedModule } from '@fuse/shared.module';
 import { FuseWidgetModule } from '@fuse/components/widget/widget.module';
@@ -74,7 +76,8 @@ const routes: Routes = [
         FuseSharedModule,
         FuseWidgetModule,
         CustomTagModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        PdfViewerModule
     ],
     providers   : [
         CrearOrdenDistribucionService,
