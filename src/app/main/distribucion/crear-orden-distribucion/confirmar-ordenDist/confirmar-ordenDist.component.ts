@@ -5,6 +5,8 @@ import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.componen
 import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 
+
+
 //service
 import { ConfirmarOrdenDeDistribucionService } from './confirmar-ordenDist.service';
 import { Debounce } from 'app/shared/decorators/debounce';
@@ -52,6 +54,9 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
   nombreBoton: string = "Crear";
   contador: number = 0;
   mostrarSpinner: boolean = false;
+  nuevaFecha: boolean = false;
+  cantTurnosManiana: number = 0;
+  cantTurnosTarde: number = 0;
 
   localidadDefault: any = 1402;
 
@@ -61,16 +66,26 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
   filtroTurnos: any;
   selectedTurno: any = 1;
 
-  constructor(public matDialogRef: MatDialogRef<ConfirmarOrdenDeDistribucionComponent>,
+  filtroFechasDeEntregaExistentes: any;
+  selectedFecha: string = null;
+
+
+  minDateHastaOrden: Date;
+  maxDateHastaOrden: Date;
+
+  pickerFechaEntregaOrden: any   = null;
+
+
+ constructor( public matDialogRef: MatDialogRef<ConfirmarOrdenDeDistribucionComponent>,
               @Inject(MAT_DIALOG_DATA) public data:any,
               private _confirmarOrdenDeDistribucionService: ConfirmarOrdenDeDistribucionService,
               private _dialog: MatDialog,
-              private _router: Router) { }
+              private _router: Router) {
+
+              }
 
   ngOnInit(): void {
-    this.getfiltros();
-    
-
+  
     if (this.data.vengoDeCrear == true) {
       console.log(this.data.selection._selected);
       this.toAdd = this.data.selection._selected;
@@ -97,7 +112,11 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
       //this.getOrdenById();
     }
     //localStorage.clear();
+    this.setMaxAndMinFechaSeleccion();
+    this.getfiltros();
   }
+
+
 
   crearOrden( accion: string ) {
     this.contador++;
@@ -108,7 +127,7 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
       console.log("accion ->", accion);
       this.actualizarOrden();
     }
-    else{
+    else {
       if ( this.contador == 1 ){
 
         let seleccionados = [];
@@ -123,9 +142,17 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
           idTransporte   : this.selectedTransporte,
           listaId        : seleccionados
         }
+
+         /*  {      COMO VA A SER LUEGO DE LA MODIFICACION
+              "nombre" : "Mi dist",
+              "idTurno" : 1,
+              "idTransporte" : 1,
+              "fechaEntregaEnvio" : this.selectedFecha
+              "listaId": [60]
+          } */
         
         console.log("body que mando", body);
-        this._confirmarOrdenDeDistribucionService.crearOrdenDeDistribucion( body ).subscribe( params => {
+        /* this._confirmarOrdenDeDistribucionService.crearOrdenDeDistribucion( body ).subscribe( params => {
           console.log("entró");
           this._dialog.closeAll();
           this.esperarYnavegar();
@@ -148,7 +175,7 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
               this.matDialogRef.close();
             }
           }
-        });
+        }); */
       }
     }
   }
@@ -280,8 +307,15 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
   }
 
   getfiltros(){
+    let listaIdDetalle: number [] = [];
+    for( let elem of this.toAdd ){
+      listaIdDetalle.push(elem.id);
+    }
+    let body = {
+      "listaIdPedidoCbte": listaIdDetalle
+    }
 
-    this._confirmarOrdenDeDistribucionService.getAllTransportes().subscribe(params => {
+    this._confirmarOrdenDeDistribucionService.getAllTransportes( body ).subscribe(params => {
       this.filtroTransportes = params.datos;
       console.log("this.filtroTransportes", this.filtroTransportes);
       console.log( this.verificarCantPedidos() );
@@ -302,9 +336,13 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
         }
       }
     })
-    this._confirmarOrdenDeDistribucionService.getAllTurnos().subscribe(params => {
+
+    this._confirmarOrdenDeDistribucionService.getAllTurnos( body ).subscribe(params => {
       this.filtroTurnos = params.datos;
-      //console.log("this.filtroTurnos", this.filtroTurnos);
+      this.setearCantidadDeTurnos();
+      this.setSelectedTurno();
+      console.log("this.filtroTurnos", this.filtroTurnos);
+      console.log("TURNO SELECCIONADO", this.selectedTurno );
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
@@ -321,9 +359,59 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
           this.mostrarError(errStatus, titulo, mensaje);
         }
       }
-    })
+    });
+
+    this._confirmarOrdenDeDistribucionService.getAllFechasDeEntregaExistentes( body ).subscribe(params => {
+      this.filtroFechasDeEntregaExistentes = params.datos;
+      console.log("FechasEntregaExistentes ->", params);
+      this.selectedFecha = this.filtroFechasDeEntregaExistentes[0].fechaEntregaEnvio;
+      //console.log("this.selectedFecha", this.selectedFecha);
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
+        } else {
+          let titulo = 'Error al cargar filtros';
+          let mensaje = err.error.message.toString();
+          this.mostrarError(errStatus, titulo, mensaje);
+        }
+      }
+    });
   }
 
+  setearCantidadDeTurnos(){
+    if (this.filtroTurnos) {
+
+      if (this.filtroTurnos[0].cantidadPedido > 0 && this.filtroTurnos[0].id === 1 ){
+        this.cantTurnosManiana = this.filtroTurnos[0].cantidadPedido;
+      }
+      if (this.filtroTurnos[0].cantidadPedido > 0 && this.filtroTurnos[0].id === 2 ){
+        this.cantTurnosTarde = this.filtroTurnos[0].cantidadPedido;
+      }
+      if (this.filtroTurnos[1].cantidadPedido > 0 && this.filtroTurnos[1].id === 1 ){
+        this.cantTurnosManiana = this.filtroTurnos[1].cantidadPedido;
+      }
+      if (this.filtroTurnos[1].cantidadPedido > 0 && this.filtroTurnos[1].id === 2 ){
+        this.cantTurnosTarde = this.filtroTurnos[1].cantidadPedido;
+      }
+    }
+  }
+
+  setSelectedTurno(){
+    if (this.cantTurnosManiana > 0 && this.cantTurnosTarde === 0){
+      this.selectedTurno = 1;
+    }
+    if (this.cantTurnosManiana === 0 && this.cantTurnosTarde > 0){
+      this.selectedTurno = 2;
+    }
+    console.log("this.selectedTurno", this.selectedTurno); 
+  }
   verificarCantPedidos(): boolean{
     let contador: number = 0;
     for ( let elem of this.filtroTransportes ) {
@@ -344,6 +432,11 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
     }
   }
 
+  selectFechaExistente(event: Event) {
+    this.selectedFecha = (event.target as HTMLSelectElement).value;
+    console.log("this.selectedFecha", this.selectedFecha);
+  }
+
   selectTransporte(event: Event) {
     this.selectedTransporte = (event.target as HTMLSelectElement).value;
     console.log("this.selectedTransporte", this.selectedTransporte);
@@ -354,7 +447,56 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
     console.log("this.selectedTurno",this.selectedTurno);
   }
 
+  addEvent( tipo, evento ) {
 
+    if (evento.value) {
+      /* ----------------- Para agregarle 0 adelante a mes y dia de un digito ---------------------- */
+      let mes: string;
+      let dia: string;
+      if (evento.value._i.month < 10 && evento.value._i.month > 0 ){
+        mes = "0"+ (evento.value._i.month + 1 );
+      }
+      else {
+        mes = evento.value._i.month + 1;
+      }
+      if (evento.value._i.date < 10 && evento.value._i.date > 0 ){
+        dia = "0" + evento.value._i.date;
+      }
+      else {
+        dia = evento.value._i.date;
+      }
+      let fecha = evento.value._i.year+"-"+ mes +"-"+dia;
+      console.log("tipo "+ tipo + ": " +fecha);
+      /* ---------------------------------------------------------------------------------------- */
+  
+      switch (tipo) {
+        case "pickerFechaEntregaOrden":
+          this.pickerFechaEntregaOrden = fecha;
+          this.selectedFecha = fecha;
+          this.minDateHastaOrden = evento.value;
+          break;
+      }    
+    }
+  }
+
+  setMaxAndMinFechaSeleccion(){
+    const currentYear = new Date().getFullYear();
+    this.minDateHastaOrden   = new Date(currentYear - 5, 0, 1);
+    this.maxDateHastaOrden   = new Date(currentYear + 1, 11, 31);
+  }
+
+  activarNuevaFecha(){
+    this.nuevaFecha = !this.nuevaFecha;
+  }
+
+  definirTurno(): boolean {
+    if (this.cantTurnosManiana > 0 && this.cantTurnosTarde > 0 ){
+      return true;
+    } 
+    else{
+      return false;
+    }
+  }
 
 
 }

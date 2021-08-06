@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-
+import { MatRadioModule } from '@angular/material/radio'
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 //fuse
@@ -77,7 +77,8 @@ const routes: Routes = [
         FuseWidgetModule,
         CustomTagModule,
         MatProgressSpinnerModule,
-        PdfViewerModule
+        PdfViewerModule,
+        MatRadioModule
     ],
     providers   : [
         CrearOrdenDistribucionService,
