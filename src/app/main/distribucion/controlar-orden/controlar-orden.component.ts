@@ -49,6 +49,7 @@ export class ControlarCargaComponent implements OnInit {
   nombreOrden: string;
   cupa : number = null;
   estadoOrden: string = "A CONTROLAR";
+  pdfOrdenUrl: string;
 
   length: number = 0;
   page: number = 0;
@@ -72,6 +73,7 @@ export class ControlarCargaComponent implements OnInit {
     });
     this.buscarOrdenPorId();
     this.getArticulosDeOrdenDistribucion( this.idOrdenDist );
+    this.obtenerUrlPdfOrdenDist();
   }
 
   getArticulosDeOrdenDistribucion( idOrdenDist: number ) {
@@ -143,6 +145,30 @@ export class ControlarCargaComponent implements OnInit {
           this.mostrarError(errStatus, titulo, mensaje);
         } else {
           let titulo = 'Error al listar remitos de orden ' + this.idOrdenDist;
+          let mensaje = err.error.message.toString();
+          this.mostrarError(errStatus, titulo, mensaje);
+        }
+      }
+    });
+  }
+
+  obtenerUrlPdfOrdenDist(){
+    this._controlarOrdenService.getImprimirOrdenDist( this.idOrdenDist ).subscribe( data => {
+      console.log(data);
+      this.pdfOrdenUrl = data;
+      
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status;
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
+        } else {
+          let titulo = 'Error al imprimir';
           let mensaje = err.error.message.toString();
           this.mostrarError(errStatus, titulo, mensaje);
         }
