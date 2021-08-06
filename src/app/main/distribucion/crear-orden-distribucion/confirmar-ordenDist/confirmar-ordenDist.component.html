@@ -23,7 +23,7 @@
             <div fxLayout="row" class="mb-8" fxLayoutAlign="start start">
                 <mat-form-field appearance="outline" fxFlex>
                     <mat-label>{{ filtroTransportes ? 'Transporte' : 'Cargando...'}}</mat-label>
-                    <select matNativeControl (change)="selectTransporte($event)" [disabled]="!filtroTransportes" matTooltipClass="tooltip" matTooltip="El cambio de TRANSPORTE afecta a todos los remitos de la orden" matTooltipPosition="right" matTooltipHideDelay="100">
+                    <select matNativeControl (change)="selectTransporte($event)" [disabled]="!filtroTransportes" class="tooltip" matTooltipClass="tooltip" matTooltip="El cambio de TRANSPORTE afecta a todos los remitos de la orden" matTooltipPosition="right" matTooltipHideDelay="100">
                         <option *ngIf="this.estoyEditando"> {{ this.selectedTransporte }}</option>
                         <option *ngIf="!this.estoyEditando" [value]="0">DEBE seleccionar un transporte</option>
                         <option *ngFor="let transporte of filtroTransportes" [value]="transporte.id"
@@ -44,7 +44,7 @@
                 <mat-form-field *ngIf="!this.nuevaFecha" appearance="outline" class="selectFecha">
                     <!--  <mat-label>{{ filtroTransportes ? 'Transporte' : 'Cargando...'}}</mat-label> -->
                     <mat-label>Fecha de entrega</mat-label>
-                    <select matNativeControl (change)="selectFechaExistente($event)" [disabled]="!filtroFechasDeEntregaExistentes" matTooltipClass="tooltip" matTooltip="El cambio de FECHA afecta a todos los remitos de la orden" matTooltipPosition="above" matTooltipHideDelay="100">
+                    <select matNativeControl (change)="selectFechaExistente($event)" [disabled]="!filtroFechasDeEntregaExistentes" matTooltipClass="tooltip" matTooltip="El cambio de FECHA afecta a todos los remitos de la orden" matTooltipPosition="left" matTooltipHideDelay="100">
                         <option>Seleccionar fecha</option>
                         <!-- Seleccionar fecha de entrega -->
                         <option *ngFor="let fecha of filtroFechasDeEntregaExistentes; let index = index" [value]="fecha.fechaEntregaEnvio" [selected]="index == 0">
@@ -55,7 +55,7 @@
                 <mat-form-field *ngIf="this.nuevaFecha" appearance="outline" class="mr-4 selectFecha">
                     <mat-label>Nueva fecha</mat-label>
                     <input matInput [min]="minDateHastaOrden" autocomplete="off" [max]="maxDateHastaOrden" [matDatepicker]="pickerFechaEntregaOrden" (dateChange)="addEvent('pickerFechaEntregaOrden', $event)" matTooltipClass="tooltip" matTooltip="El cambio de FECHA afecta a todos los remitos de la orden"
-                        matTooltipPosition="above" matTooltipHideDelay="100">
+                        matTooltipPosition="left" matTooltipHideDelay="100">
                     <mat-datepicker-toggle matSuffix [for]="pickerFechaEntregaOrden"></mat-datepicker-toggle>
                     <mat-datepicker #pickerFechaEntregaOrden></mat-datepicker>
                 </mat-form-field>
