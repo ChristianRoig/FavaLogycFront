@@ -52,6 +52,23 @@
             <td mat-cell *matCellDef="let element"> {{element.sysUsuario.nombre}} </td>
         </ng-container>
 
+        <ng-container matColumnDef="info">
+            <th mat-header-cell *matHeaderCellDef> Info </th>
+            <td mat-cell class="mx-16" *matCellDef="let element">
+
+                <ng-container *ngIf="element.pedidoDetalleParte.pedidoDetalle.codigoArticuloAsociado; then conInfo; else sinInfo"></ng-container>
+
+                <ng-template #conInfo>
+                    <mat-icon #tooltip="matTooltip" matTooltipClass="tooltip" matTooltip="{{element.pedidoDetalleParte.pedidoDetalle.codigoArticuloAsociado}} - {{element.pedidoDetalleParte.pedidoDetalle.codigoDeposito}}" matTooltipPosition="above" matTooltipHideDelay="100"
+                        aria-label="" class="example-button tooltip">info</mat-icon>
+                </ng-template>
+
+                <ng-template #sinInfo>
+                    <mat-icon #tooltip="matTooltip" matTooltip="" matTooltipPosition="above" matTooltipHideDelay="100" aria-label="" class="example-button">info</mat-icon>
+                </ng-template>
+            </td>
+        </ng-container>
+
         <tr mat-header-row *matHeaderRowDef="displayedColumnsTrazabilidad"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumnsTrazabilidad;"></tr>
     </table>

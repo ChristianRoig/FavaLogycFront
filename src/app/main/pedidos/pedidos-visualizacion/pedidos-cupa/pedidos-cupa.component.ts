@@ -23,7 +23,7 @@ export class PedidosCupaComponent implements OnInit {
 
   dataSourceCUPA: any;
 
-  displayedColumnsCupa: string[] = ['lote', 'codigoArticulo','codigoUnicoParteArticulo', 'etapa', 'accionUno', 'accion'];
+  displayedColumnsCupa: string[] = ['lote', 'codigoArticulo','codigoUnicoParteArticulo', 'etapa', 'info', 'accionUno', 'accion'];
 
   length: number;
   page: number;
