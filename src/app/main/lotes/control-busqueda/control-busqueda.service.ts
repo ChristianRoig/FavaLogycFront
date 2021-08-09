@@ -35,7 +35,6 @@ export class ControlBusquedaService
     }
 
     getDetalleLotePorCupa ( cupa, etapa ): Observable<any>{  
-        
         let ruta = `${ BASE_URL }pedidos/detalleunico/cupa/${ cupa }/${ etapa }`;
         return this._httpClient.get(ruta);
     }
