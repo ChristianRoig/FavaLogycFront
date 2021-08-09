@@ -9,7 +9,7 @@
                 <h1 class="colorText"> Orden {{ this.nombreOrden }}</h1>
             </div>
 
-            <div class="fuse-card my-20 pl-24 pr-24" style="max-width: 100%;">
+            <div class="fuse-card my-20 pl-24 pr-24" fxLayout="column" style="max-width: 100%;">
 
                 <div fxLayout="row" fxLayoutAlign="space-around">
 
@@ -21,15 +21,32 @@
                         </mat-form-field>
 
                         <div class="botonesBusqueda2">
-                            <button [disabled]="!this.cupa" #btnRef="matButton" (click)="controlarArticuloPorCupa()" class="btn" mat-raised-button color="primary">
+                            <!-- (click)="popUpOrdenControlada()" -->
+                            <!-- (click)="controlarArticuloPorCupa()" -->
+                            <!-- estadoOrdenVariante -->
+                            <button [disabled]="!this.cupa" (click)="controlarArticuloPorCupa()" #btnRef="matButton" class="btn" mat-raised-button color="primary">
                                 Controlar 
+                            </button>
+                            <button [disabled]="this.estadoOrdenVariante !='TRANSPORTE'" (click)="descargarCOT()" #btnRef="matButton" class="btn" mat-raised-button color="primary">
+                                Descargar COT 
                             </button>
 
                         </div>
                     </div>
                 </div>
 
-                <ng-container *ngTemplateOutlet="remitos" class="tablaArticulos"></ng-container>
+                <!-- <ng-container *ngTemplateOutlet="remitos" class="tablaArticulos"></ng-container> -->
+
+                <mat-tab-group fxLayout="column" fxFlex>
+
+                    <mat-tab label="Orden">
+                        <ng-container *ngTemplateOutlet="remitos" class="tablaArticulos"></ng-container>
+                    </mat-tab>
+                    <mat-tab label="Visualizar Orden">
+                        <ng-container *ngTemplateOutlet="remito" class="tablaArticulos"></ng-container>
+                    </mat-tab>
+                </mat-tab-group>
+
             </div>
         </div>
     </div>
@@ -122,4 +139,11 @@
         </table>
     </div>
 
+</ng-template>
+
+<!-- -------------------------------------------------------------------------------------------------------------- -->
+<ng-template #remito>
+    <div class="m-16">
+        <pdf-viewer [src]="this.pdfOrdenUrl" [render-text]="true" style="display: block;"></pdf-viewer>
+    </div>
 </ng-template>

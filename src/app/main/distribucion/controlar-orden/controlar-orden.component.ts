@@ -49,6 +49,7 @@ export class ControlarCargaComponent implements OnInit {
   nombreOrden: string;
   cupa : number = null;
   estadoOrden: string = "A CONTROLAR";
+  estadoOrdenVariante: string;
   pdfOrdenUrl: string;
 
   length: number = 0;
@@ -71,6 +72,7 @@ export class ControlarCargaComponent implements OnInit {
     this._activatedRoute.params.subscribe( params => {
     this.idOrdenDist = params['id'];
     });
+
     this.buscarOrdenPorId();
     this.getArticulosDeOrdenDistribucion( this.idOrdenDist );
     this.obtenerUrlPdfOrdenDist();
@@ -154,9 +156,8 @@ export class ControlarCargaComponent implements OnInit {
 
   obtenerUrlPdfOrdenDist(){
     this._controlarOrdenService.getImprimirOrdenDist( this.idOrdenDist ).subscribe( data => {
-      console.log(data);
+      //console.log(data);
       this.pdfOrdenUrl = data;
-      
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
@@ -174,6 +175,29 @@ export class ControlarCargaComponent implements OnInit {
         }
       }
     });
+  }
+
+  descargarCOT() {
+    
+    this._controlarOrdenService.descargarCOT( this.idOrdenDist ).subscribe( data => {
+        console.log( data );
+        window.open( data );
+      }, (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error");
+        } else {
+          let errStatus = err.status
+          if (errStatus == 0){
+            let titulo = 'Error de Servidor';
+            let mensaje = "Por favor comunicarse con Sistemas";
+            this.mostrarError(errStatus, titulo, mensaje);
+          } else {
+            let titulo = 'Error al imprimir';
+            let mensaje = "No se pudo descargar el archivo";
+            this.mostrarError(errStatus, titulo, mensaje);
+          }
+        }
+      });
   }
 
   esperarYactualizarDatos(){
@@ -200,7 +224,6 @@ export class ControlarCargaComponent implements OnInit {
   }
 
   popUpOrdenControlada() {
-    
     this._dialog.open( PopUpOrdenControladaComponent, {
         data: {
           idLote: this.idOrdenDist,
@@ -231,6 +254,7 @@ export class ControlarCargaComponent implements OnInit {
         console.log(data);
         this.ordenActual = data;
         this.nombreOrden = data.nombre;
+        this.estadoOrdenVariante = data.estado.nombre;
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
