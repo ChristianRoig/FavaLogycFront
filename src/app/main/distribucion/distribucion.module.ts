@@ -32,6 +32,8 @@ import { ControlarCargaComponent } from './controlar-orden/controlar-orden.compo
 import { PopUpOrdenControladaComponent } from './controlar-orden/popUpOrdenControlada/popUpOrdenControlada.component';
 import { ControlDeCargaService } from './control-de-carga/control-de-carga.service';
 import { ControlarOrdenService } from './controlar-orden/controlar-orden.service';
+import { PopUpOrdenControladaService } from './controlar-orden/popUpOrdenControlada/popUpOrdenControlada.service';
+
 
 
 const routes: Routes = [
@@ -86,7 +88,8 @@ const routes: Routes = [
         VerOrdenDistribucionService,
         ConfirmarOrdenDeDistribucionService,
         ControlDeCargaService,
-        ControlarOrdenService
+        ControlarOrdenService,
+        PopUpOrdenControladaService
     ],
     entryComponents: [ MatDialogModule ]
 })
