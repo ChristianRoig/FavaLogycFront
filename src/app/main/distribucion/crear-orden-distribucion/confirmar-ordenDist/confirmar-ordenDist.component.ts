@@ -58,6 +58,7 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
   cantTurnosManiana: number = 0;
   cantTurnosTarde: number = 0;
   pdfOrdenUrl: string;
+  estanTodosLosDatos: boolean = false;
 
   localidadDefault: any = 1402;
 
@@ -65,7 +66,7 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
   selectedTransporte: any = null;
 
   filtroTurnos: any;
-  selectedTurno: any = 1;
+  selectedTurno: any = null;
 
   filtroFechasDeEntregaExistentes: any;
   selectedFecha: string = null;
@@ -146,7 +147,7 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
         }
         
         console.log("body que mando", body);
-        this._confirmarOrdenDeDistribucionService.crearOrdenDeDistribucion( body ).subscribe( params => {
+        /* this._confirmarOrdenDeDistribucionService.crearOrdenDeDistribucion( body ).subscribe( params => {
           console.log("entró", params);
           this.pdfOrdenUrl = params;
           this.imprimirOrdenDistribucion();
@@ -171,7 +172,7 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
               this.matDialogRef.close();
             }
           }
-        });
+        }); */
       }
     }
   }
@@ -185,6 +186,14 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
     setTimeout(() => {                          
       this.navegarAlistaOrdenes();
     }, 1000);
+  }
+
+  verificarEstanTodosLosDatos(){
+    if (( this.selectedTransporte != null && this.selectedFecha != null) && this.selectedTurno != null){
+      this.estanTodosLosDatos = true;
+    } else{
+      this.estanTodosLosDatos = false;
+    }
   }
 
 
@@ -204,6 +213,14 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
         idTurno        : this.selectedTurno,
         idTransporte   : this.selectedTransporte
       }
+
+      /* let body = { 
+          nombre             : this.nombreOrdenDistInput.nativeElement.value,
+          idTurno            : this.selectedTurno,
+          idTransporte       : this.selectedTransporte,
+          fechaEntregaEnvio  : this.selectedFecha,
+          listaId            : seleccionados
+        } */
   
       console.log("body", body, "idOrden", this.idOrden);
       
@@ -318,7 +335,7 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
     this._confirmarOrdenDeDistribucionService.getAllTransportes( body ).subscribe(params => {
       this.filtroTransportes = params.datos;
       console.log("this.filtroTransportes", this.filtroTransportes);
-      console.log( this.verificarCantPedidos() );
+      console.log( this.verificarCantPedidos() ); // se saco el transporte seleccionado por default
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
@@ -340,7 +357,7 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
     this._confirmarOrdenDeDistribucionService.getAllTurnos( body ).subscribe(params => {
       this.filtroTurnos = params.datos;
       this.setearCantidadDeTurnos();
-      this.setSelectedTurno();
+      //this.setSelectedTurno(); se saco el turno seleccionado por default
       console.log("this.filtroTurnos", this.filtroTurnos);
       console.log("TURNO SELECCIONADO", this.selectedTurno );
     },
@@ -364,7 +381,7 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
     this._confirmarOrdenDeDistribucionService.getAllFechasDeEntregaExistentes( body ).subscribe(params => {
       this.filtroFechasDeEntregaExistentes = params.datos;
       console.log("FechasEntregaExistentes ->", params);
-      this.selectedFecha = this.filtroFechasDeEntregaExistentes[0].fechaEntregaEnvio;
+      //this.selectedFecha = this.filtroFechasDeEntregaExistentes[0].fechaEntregaEnvio; //se saco la fecha seleccionada por default
       //console.log("this.selectedFecha", this.selectedFecha);
     },
     (err: HttpErrorResponse) => {
@@ -416,7 +433,7 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
     let contador: number = 0;
     for ( let elem of this.filtroTransportes ) {
       if (elem.cantidadPedido > 0) {
-        this.selectedTransporte = elem.id;
+        //this.selectedTransporte = elem.id; //se saco el tranposrte seleccionadop por default
         contador++;
         if (contador > 1){
           this.selectedTransporte = null;
@@ -435,20 +452,23 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
   selectFechaExistente(event: Event) {
     this.selectedFecha = (event.target as HTMLSelectElement).value;
     console.log("this.selectedFecha", this.selectedFecha);
+    this.verificarEstanTodosLosDatos();
   }
-
+  
   selectTransporte(event: Event) {
     this.selectedTransporte = (event.target as HTMLSelectElement).value;
     console.log("this.selectedTransporte", this.selectedTransporte);
+    this.verificarEstanTodosLosDatos();
   }
-
+  
   selectTurno(event: Event) {
     this.selectedTurno = (event.target as HTMLSelectElement).value;
     console.log("this.selectedTurno",this.selectedTurno);
+    this.verificarEstanTodosLosDatos();
   }
-
+  
   addEvent( tipo, evento ) {
-
+    
     if (evento.value) {
       /* ----------------- Para agregarle 0 adelante a mes y dia de un digito ---------------------- */
       let mes: string;
@@ -468,21 +488,22 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
       let fecha = evento.value._i.year+"-"+ mes +"-"+dia;
       console.log("tipo "+ tipo + ": " +fecha);
       /* ---------------------------------------------------------------------------------------- */
-  
+      
       switch (tipo) {
         case "pickerFechaEntregaOrden":
           this.pickerFechaEntregaOrden = fecha;
           this.selectedFecha = fecha;
           this.minDateHastaOrden = evento.value;
           break;
-      }    
+        }    
+      }
+      this.verificarEstanTodosLosDatos();
     }
-  }
-
-  setMaxAndMinFechaSeleccion(){
-    const currentYear = new Date().getFullYear();
-    this.minDateHastaOrden   = new Date(currentYear - 5, 0, 1);
-    this.maxDateHastaOrden   = new Date(currentYear + 1, 11, 31);
+    
+    setMaxAndMinFechaSeleccion(){
+      const currentYear = new Date().getFullYear();
+      this.minDateHastaOrden   = new Date(currentYear - 5, 0, 1);
+      this.maxDateHastaOrden   = new Date(currentYear + 1, 11, 31);
   }
 
   activarNuevaFecha(){

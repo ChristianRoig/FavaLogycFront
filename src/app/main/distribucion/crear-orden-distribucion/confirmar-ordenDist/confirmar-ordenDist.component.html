@@ -23,31 +23,25 @@
             <div fxLayout="row" class="mb-8" fxLayoutAlign="start start">
                 <mat-form-field appearance="outline" fxFlex>
                     <mat-label>{{ filtroTransportes ? 'Transporte' : 'Cargando...'}}</mat-label>
-                    <select matNativeControl (change)="selectTransporte($event)" [disabled]="!filtroTransportes" class="tooltip" matTooltipClass="tooltip" matTooltip="El cambio de TRANSPORTE afecta a todos los remitos de la orden" matTooltipPosition="right" matTooltipHideDelay="100">
+                    <select matNativeControl required (change)="selectTransporte($event)" [disabled]="!filtroTransportes" class="tooltip" matTooltipClass="tooltip" matTooltip="El cambio de TRANSPORTE afecta a todos los remitos de la orden" matTooltipPosition="right" matTooltipHideDelay="100">
                         <option *ngIf="this.estoyEditando"> {{ this.selectedTransporte }}</option>
                         <option *ngIf="!this.estoyEditando" [value]="0">DEBE seleccionar un transporte</option>
-                        <option *ngFor="let transporte of filtroTransportes" [value]="transporte.id"
-                        [selected]="selectedTransporte === transporte.id"> {{ transporte.nombre }}
-                    </option>
-                </select>
+                        <option *ngFor="let transporte of filtroTransportes" [value]="transporte.id"><!-- [selected]="selectedTransporte === transporte.id" -->
+                             {{ transporte.nombre }}
+                        </option>
+                    </select>
                 </mat-form-field>
             </div>
-            <!-- 
-            <div fxLayout="row" class="mb-8" fxLayoutAlign="start start">
-                <div class="btnToggle">
-                    <label class="ml-16 pr-16">Crear fecha</label>
-                    <mat-slide-toggle (click)="activarNuevaFecha()" formcontrolname="hidden" type="button" class="mat-slide-toggle"></mat-slide-toggle>
-                </div>
-            </div> -->
+
 
             <div fxLayout="row" class="mb-8" fxLayoutAlign="start start">
                 <mat-form-field *ngIf="!this.nuevaFecha" appearance="outline" class="selectFecha">
                     <!--  <mat-label>{{ filtroTransportes ? 'Transporte' : 'Cargando...'}}</mat-label> -->
                     <mat-label>Fecha de entrega</mat-label>
-                    <select matNativeControl (change)="selectFechaExistente($event)" [disabled]="!filtroFechasDeEntregaExistentes" matTooltipClass="tooltip" matTooltip="El cambio de FECHA afecta a todos los remitos de la orden" matTooltipPosition="left" matTooltipHideDelay="100">
+                    <select matNativeControl required (change)="selectFechaExistente($event)" [disabled]="!filtroFechasDeEntregaExistentes" matTooltipClass="tooltip" matTooltip="El cambio de FECHA afecta a todos los remitos de la orden" matTooltipPosition="left" matTooltipHideDelay="100">
                         <option>Seleccionar fecha</option>
                         <!-- Seleccionar fecha de entrega -->
-                        <option *ngFor="let fecha of filtroFechasDeEntregaExistentes; let index = index" [value]="fecha.fechaEntregaEnvio" [selected]="index == 0">
+                        <option *ngFor="let fecha of filtroFechasDeEntregaExistentes; let index = index" [value]="fecha.fechaEntregaEnvio">
                             {{ fecha.fechaEntregaVisual }}
                         </option>
                     </select>
@@ -104,7 +98,7 @@
                 <mat-label *ngIf="this.definirTurno()" class="ml-32 alertTurno">Se debe definir un turno</mat-label>
                 <div fxLayout="row" fxLayoutAlign="start start">
                     <mat-label class="mt-4"> Turnos:</mat-label>
-                    <mat-radio-group [(ngModel)]="this.selectedTurno" name="turno" class="turnos" aria-label="Select an option" matTooltipClass="tooltip" matTooltip="El cambio del TURNO afecta a todos los remitos de la orden" matTooltipPosition="right" matTooltipHideDelay="100">
+                    <mat-radio-group [(ngModel)]="this.selectedTurno" required name="turno" class="turnos" aria-label="Select an option" matTooltipClass="tooltip" matTooltip="El cambio del TURNO afecta a todos los remitos de la orden" matTooltipPosition="right" matTooltipHideDelay="100">
                         <mat-radio-button value="1">Mañana: {{ this.cantTurnosManiana }}</mat-radio-button>
                         <mat-radio-button value="2">Tarde: {{ this.cantTurnosTarde }}</mat-radio-button>
                     </mat-radio-group>
@@ -117,7 +111,7 @@
 
     <div mat-dialog-actions class="m-0 p-16 divBotones" fxLayout="row" fxLayoutAlign="end center">
 
-        <button mat-raised-button (click)="crearOrden(this.nombreBoton)" [disabled]="this.selectedTransporte === null" class="btn" color="accent" aria-label="SAVE">
+        <button mat-raised-button (click)="crearOrden(this.nombreBoton)" [disabled]="!this.estanTodosLosDatos" class="btn" color="accent" aria-label="SAVE">
             {{ this.nombreBoton }}
         </button>
 
