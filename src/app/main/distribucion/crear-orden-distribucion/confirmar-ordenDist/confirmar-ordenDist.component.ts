@@ -57,6 +57,7 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
   nuevaFecha: boolean = false;
   cantTurnosManiana: number = 0;
   cantTurnosTarde: number = 0;
+  pdfOrdenUrl: string;
 
   localidadDefault: any = 1402;
 
@@ -128,7 +129,7 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
       this.actualizarOrden();
     }
     else {
-      if ( this.contador == 1 ){
+      if ( this.contador == 1 ) {
 
         let seleccionados = [];
     
@@ -137,23 +138,18 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
         }
     
         let body = { 
-          nombre         : this.nombreOrdenDistInput.nativeElement.value,
-          idTurno        : this.selectedTurno,
-          idTransporte   : this.selectedTransporte,
-          listaId        : seleccionados
+          nombre             : this.nombreOrdenDistInput.nativeElement.value,
+          idTurno            : this.selectedTurno,
+          idTransporte       : this.selectedTransporte,
+          fechaEntregaEnvio  : this.selectedFecha,
+          listaId            : seleccionados
         }
-
-         /*  {      COMO VA A SER LUEGO DE LA MODIFICACION
-              "nombre" : "Mi dist",
-              "idTurno" : 1,
-              "idTransporte" : 1,
-              "fechaEntregaEnvio" : this.selectedFecha
-              "listaId": [60]
-          } */
         
         console.log("body que mando", body);
-        /* this._confirmarOrdenDeDistribucionService.crearOrdenDeDistribucion( body ).subscribe( params => {
-          console.log("entró");
+        this._confirmarOrdenDeDistribucionService.crearOrdenDeDistribucion( body ).subscribe( params => {
+          console.log("entró", params);
+          this.pdfOrdenUrl = params;
+          this.imprimirOrdenDistribucion();
           this._dialog.closeAll();
           this.esperarYnavegar();
         },
@@ -175,9 +171,13 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
               this.matDialogRef.close();
             }
           }
-        }); */
+        });
       }
     }
+  }
+
+  imprimirOrdenDistribucion(){
+    window.open( this.pdfOrdenUrl, '_blank');
   }
 
   esperarYnavegar(){
