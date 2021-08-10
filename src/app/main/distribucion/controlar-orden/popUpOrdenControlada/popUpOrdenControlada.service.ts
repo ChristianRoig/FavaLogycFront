@@ -28,7 +28,7 @@ export class PopUpOrdenControladaService {
 
         let ruta = `${ BASE_URL }pedidos/distribucion/cot/${ idOrdenDist }`;
         console.log(ruta);
-        return this._httpClient.get(ruta);
+        return this._httpClient.get(ruta, {responseType: "text"});
     }
 
 }

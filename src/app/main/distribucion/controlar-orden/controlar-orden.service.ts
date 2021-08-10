@@ -47,6 +47,8 @@ export class ControlarOrdenService{
   descargarCOT( idOrdenDist: number ): Observable<any> {  
 
     let ruta = `${ BASE_URL }pedidos/distribucion/cot/${ idOrdenDist }`;
-    return this._httpClient.get(ruta);
-}
+    console.log(ruta);
+    return this._httpClient.get(ruta, {responseType: "text"});
+  }
+
 }

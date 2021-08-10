@@ -4,6 +4,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
+import { DomSanitizer } from '@angular/platform-browser';
+
 
 //service
 import { ControlarOrdenService } from './controlar-orden.service';
@@ -51,6 +53,7 @@ export class ControlarCargaComponent implements OnInit {
   estadoOrden: string = "A CONTROLAR";
   estadoOrdenVariante: string;
   pdfOrdenUrl: string;
+  responseUrl: any;
 
   length: number = 0;
   page: number = 0;
@@ -63,8 +66,8 @@ export class ControlarCargaComponent implements OnInit {
       private _dialog: MatDialog,
       private _router: Router,
       private _activatedRoute: ActivatedRoute,
-      private _sonido: SonidoService
-    ) { }
+      private _sonido: SonidoService,
+      private sanitizer: DomSanitizer ) { }
 
     
 
@@ -177,27 +180,35 @@ export class ControlarCargaComponent implements OnInit {
     });
   }
 
-  descargarCOT() {
-    
+  descargarCOT() { 
     this._controlarOrdenService.descargarCOT( this.idOrdenDist ).subscribe( data => {
-        console.log( data );
-        window.open( data );
-      }, (err: HttpErrorResponse) => {
-        if (err.error instanceof Error) {
-          console.log("Client-side error");
+
+        const url = window.URL
+              .createObjectURL(new Blob([data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'file.txt');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status;
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
         } else {
-          let errStatus = err.status
-          if (errStatus == 0){
-            let titulo = 'Error de Servidor';
-            let mensaje = "Por favor comunicarse con Sistemas";
-            this.mostrarError(errStatus, titulo, mensaje);
-          } else {
-            let titulo = 'Error al imprimir';
-            let mensaje = "No se pudo descargar el archivo";
-            this.mostrarError(errStatus, titulo, mensaje);
-          }
+          let titulo = 'Error al imprimir';
+          let mensaje = "No pudo descargarse el archivo";
+          console.log(errStatus);
+          this.mostrarError( errStatus, titulo, mensaje );
         }
-      });
+      }
+    });
   }
 
   esperarYactualizarDatos(){
@@ -224,12 +235,16 @@ export class ControlarCargaComponent implements OnInit {
   }
 
   popUpOrdenControlada() {
-    this._dialog.open( PopUpOrdenControladaComponent, {
+    let dialogRef = this._dialog.open( PopUpOrdenControladaComponent, {
         data: {
           idLote: this.idOrdenDist,
           orden: this.ordenActual
         }
       });
+    /* dialogRef.afterClosed().subscribe( () => {
+      this.buscarOrdenPorId();
+      this.getArticulosDeOrdenDistribucion( this.idOrdenDist );
+    }); */
   } 
 
   mostrarError(errStatus, titulo, mensaje){

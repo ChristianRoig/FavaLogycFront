@@ -27,9 +27,12 @@
                             <button [disabled]="!this.cupa" (click)="controlarArticuloPorCupa()" #btnRef="matButton" class="btn" mat-raised-button color="primary">
                                 Controlar 
                             </button>
-                            <button [disabled]="this.estadoOrdenVariante !='TRANSPORTE'" (click)="descargarCOT()" #btnRef="matButton" class="btn" mat-raised-button color="primary">
-                                Descargar COT 
-                            </button>
+                            <a download="file.txt">
+                                <!-- [href]="fileUrl" download="file.txt" -->
+                                <button (click)="descargarCOT()" mat-stroked-button color="accent" class="btnLarge">
+                                    Descargar COT
+                                </button>
+                            </a>
 
                         </div>
                     </div>
