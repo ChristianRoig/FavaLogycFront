@@ -147,7 +147,7 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
         }
         
         console.log("body que mando", body);
-        /* this._confirmarOrdenDeDistribucionService.crearOrdenDeDistribucion( body ).subscribe( params => {
+        this._confirmarOrdenDeDistribucionService.crearOrdenDeDistribucion( body ).subscribe( params => {
           console.log("entró", params);
           this.pdfOrdenUrl = params;
           this.imprimirOrdenDistribucion();
@@ -172,7 +172,7 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
               this.matDialogRef.close();
             }
           }
-        }); */
+        });
       }
     }
   }
@@ -461,8 +461,10 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
     this.verificarEstanTodosLosDatos();
   }
   
-  selectTurno(event: Event) {
-    this.selectedTurno = (event.target as HTMLSelectElement).value;
+  selectTurno( value: number ) {
+    /* console.log("entre a select turno");
+    this.selectedTurno = (event.target as HTMLSelectElement).value; */
+    this.selectedTurno = value;
     console.log("this.selectedTurno",this.selectedTurno);
     this.verificarEstanTodosLosDatos();
   }
@@ -486,6 +488,8 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
         dia = evento.value._i.date;
       }
       let fecha = evento.value._i.year+"-"+ mes +"-"+dia;
+      this.selectedFecha = fecha;
+      console.log("this.selectedFecha", this.selectedFecha);
       console.log("tipo "+ tipo + ": " +fecha);
       /* ---------------------------------------------------------------------------------------- */
       

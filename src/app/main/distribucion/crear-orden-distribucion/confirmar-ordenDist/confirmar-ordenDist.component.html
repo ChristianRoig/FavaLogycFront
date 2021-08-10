@@ -99,8 +99,8 @@
                 <div fxLayout="row" fxLayoutAlign="start start">
                     <mat-label class="mt-4"> Turnos:</mat-label>
                     <mat-radio-group [(ngModel)]="this.selectedTurno" required name="turno" class="turnos" aria-label="Select an option" matTooltipClass="tooltip" matTooltip="El cambio del TURNO afecta a todos los remitos de la orden" matTooltipPosition="right" matTooltipHideDelay="100">
-                        <mat-radio-button value="1">Mañana: {{ this.cantTurnosManiana }}</mat-radio-button>
-                        <mat-radio-button value="2">Tarde: {{ this.cantTurnosTarde }}</mat-radio-button>
+                        <mat-radio-button (click)="this.selectTurno( 1 )" value="1">Mañana: {{ this.cantTurnosManiana }}</mat-radio-button>
+                        <mat-radio-button (click)="this.selectTurno( 2 )" value="2">Tarde: {{ this.cantTurnosTarde }}</mat-radio-button>
                     </mat-radio-group>
                 </div>
                 <!-- *ngIf="this.definirTurno()" -->
