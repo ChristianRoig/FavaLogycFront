@@ -20,13 +20,13 @@
     <div fxLayout="column">
         <div class="controlesBusqueda">
             <mat-form-field appearance="outline" class="inputBuscar">
-                <mat-label>Buscar Orden de Distribucion</mat-label>
-                <input #buscar (keyup)="searchOrden()" matInput value="" placeholder="Ingrese el id de una Orden de Distribucion">
+                <mat-label>Buscar Orden de Distribucion por CUPA</mat-label>
+                <input #buscar (keyup)="searchOrden()" minlength="15" matInput value="" placeholder="Ingrese un CUPA">
                 <mat-icon matSuffix>search</mat-icon>
             </mat-form-field>
 
             <div class="botonesBusqueda">
-                <button [disabled]="!this.btnBuscar" class="btn" mat-raised-button color="primary" (click)="buscarOrdenPorId()">Buscar</button>
+                <button [disabled]="!this.btnBuscar" class="btn" mat-raised-button color="primary" (click)="getOrdenPorCupa()">Buscar</button>
             </div>
         </div>
     </div>
