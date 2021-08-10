@@ -31,7 +31,7 @@ export class VerOrdenDistribucionComponent implements OnInit {
   @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
 
   displayedColumns: string[] = ['select', 'comprobante', 'fechaAlta', 'direccion', 'info', 'cantArticulos', 'accion'];
-  displayedColumnsDos: string[] = ['codigoArticulo', 'idVisual'];
+  displayedColumnsDos: string[] = ['codigoArticulo', 'nombre', 'comprobante', 'idVisual'];
   selection = new SelectionModel<any>(true, []);
   dataSource2: any;
 

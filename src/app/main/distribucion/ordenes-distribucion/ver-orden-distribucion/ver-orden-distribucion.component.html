@@ -191,9 +191,19 @@
                 <td mat-cell *matCellDef="let remito"> {{ remito.pedidoDetalles[0].articulo.codigoArticulo }} </td>
             </ng-container>
 
+            <ng-container matColumnDef="nombre">
+                <th mat-header-cell mat-sort-header="nombre" *matHeaderCellDef>Nombre</th>
+                <td mat-cell *matCellDef="let remito"> {{ remito.pedidoDetalles[0].articulo.nombre }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="comprobante">
+                <th mat-header-cell mat-sort-header="comprobante" *matHeaderCellDef>Comprobante</th>
+                <td mat-cell *matCellDef="let remito"> {{remito.pedidoTipoCbte.codigoCbte}} {{ remito.nroCbte }} </td>
+            </ng-container>
+
             <ng-container matColumnDef="idVisual">
                 <th mat-header-cell mat-sort-header="idVisual" *matHeaderCellDef>Id Visual</th>
-                <td mat-cell *matCellDef="let remito"> {{ remito.pedidoDetalles[0].listaPedidoDetalleParte[0].idVisual }} </td>
+                <td mat-cell *matCellDef="let remito"> {{ remito.pedidoDetalles[0].idVisual }} </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumnsDos"></tr>
