@@ -34,6 +34,23 @@
             <td mat-cell *matCellDef="let element"> {{element[0].fechaCbte}} </td>
         </ng-container>
 
+        <!--  <ng-container matColumnDef="info">
+            <th mat-header-cell *matHeaderCellDef> Info </th>
+            <td mat-cell class="mx-16" *matCellDef="let element">
+
+                <ng-container *ngIf="element.pedidoDetalles[0].codigoArticuloAsociado; then conInfo; else sinInfo"></ng-container>
+
+                <ng-template #conInfo>
+                    <mat-icon #tooltip="matTooltip" matTooltipClass="tooltip" matTooltip="{{element.pedidoDetalles[0].codigoArticuloAsociado}} - {{element.pedidoDetalles[0].descripcionArticuloAsociado}}" matTooltipPosition="above" matTooltipHideDelay="100" aria-label=""
+                        class="example-button tooltip">info</mat-icon>
+                </ng-template>
+
+                <ng-template #sinInfo>
+                    <mat-icon #tooltip="matTooltip" matTooltip="" matTooltipPosition="above" matTooltipHideDelay="100" aria-label="" class="example-button">info</mat-icon>
+                </ng-template>
+            </td>
+        </ng-container> -->
+
         <ng-container matColumnDef="accion">
             <th mat-header-cell *matHeaderCellDef> Acción </th>
             <td mat-cell *matCellDef="let element">

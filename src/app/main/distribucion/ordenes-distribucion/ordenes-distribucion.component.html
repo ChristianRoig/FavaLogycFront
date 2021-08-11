@@ -36,8 +36,8 @@
             <div class="controlesBusqueda">
                 <div fxLayout="row">
                     <mat-form-field appearance="outline" class="inputBuscar">
-                        <mat-label>Buscar Orden por Cupa</mat-label>
-                        <input #buscarOrdenPorCupa (keyup)="searchOrden()" matInput value="" placeholder="Ingrese un Cupa">
+                        <mat-label>Buscar orden por nombre</mat-label>
+                        <input #buscarOrdenPorCupa (keyup)="searchOrden()" matInput value="" placeholder="Ingrese un nombre">
                         <mat-icon matSuffix>search</mat-icon>
                     </mat-form-field>
 
@@ -84,6 +84,7 @@
                     <th mat-header-cell *matHeaderCellDef> Articulos</th>
                     <td mat-cell class="example-button-row pl-16" *matCellDef="let orden">{{ orden.cantArticulos }} </td>
                 </ng-container>
+
                 <ng-container matColumnDef="cantArticulosACargar">
                     <th mat-header-cell *matHeaderCellDef> A Cargar</th>
                     <td mat-cell class="example-button-row pl-16" *matCellDef="let orden">
@@ -91,6 +92,7 @@
                         <p *ngIf=" orden.cantArticulosACargar === 0" class="articulosAcargarCero">{{ orden.cantArticulosACargar }}</p>
                     </td>
                 </ng-container>
+
                 <ng-container matColumnDef="cantRemitos">
                     <th mat-header-cell *matHeaderCellDef> Remitos</th>
                     <td mat-cell class="example-button-row pl-16" *matCellDef="let orden">{{ orden.cantRemitos }} </td>

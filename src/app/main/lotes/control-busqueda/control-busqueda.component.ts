@@ -106,7 +106,7 @@ export class ControlEstanteriaComponent implements OnInit {
     this.navegarAlote();
   }
 
-  navegarAlote(){
+  navegarAlote() {
     let ruta = `lotes/control/lote-en/${ this.modo }/${ this.idLote }`;
     this._router.navigate([ruta]);
   }

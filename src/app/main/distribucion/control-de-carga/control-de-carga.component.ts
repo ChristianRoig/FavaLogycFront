@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { Router } from '@angular/router';
-import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 import { MatDialog} from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -42,12 +41,12 @@ export class ControlDeCargaComponent implements OnInit {
   order: string = 'desc';
   
   idOrdenDist: number = null;
+  cupa: number = null;
   titulo: string = '';
   btnBuscar: boolean = false;
   busquedaPorId: boolean = false;
 
   constructor(private _router: Router, 
-              private _fuseSidebarService: FuseSidebarService, 
               private _controlDeCargaService: ControlDeCargaService,
               private _dialog: MatDialog,) {  }
 
@@ -83,24 +82,29 @@ export class ControlDeCargaComponent implements OnInit {
 
   //@Debounce(50)
   searchOrden() {
-    this.idOrdenDist = this.buscarOrdenInput.nativeElement.value;
-    if (this.idOrdenDist >= 1) {
+    this.cupa = this.buscarOrdenInput.nativeElement.value;
+    if (this.buscarOrdenInput.nativeElement.value === null || this.buscarOrdenInput.nativeElement.value === undefined ){
+      this.btnBuscar = false;
+      this.getAllOrdenes();
+    }
+    if ( this.cupa >= 1) { 
       this.btnBuscar = true;
-    } else{
+    } 
+    else{
       this.btnBuscar = false;
       this.idOrdenDist = null;
-      this.getAllOrdenes();
     } 
   }
+  
 
-  buscarOrdenPorId() {
-    this.busquedaPorId = true;
-    let resultado: any = [];
-    this._controlDeCargaService.getOrdenById( this.idOrdenDist ).subscribe( data => {
-        console.log(data);
-        resultado.push(data);
-        this.dataSource2 = resultado;
-        this.length = resultado.length;
+  getOrdenPorCupa() {
+    this._controlDeCargaService.getOrdenDistribucionPorCupa( this.cupa ).subscribe( data => {
+      if (data) {
+          console.log(data);
+          this.dataSource2 = data;
+          const idOrdenDist = data.id;
+          this._router.navigate([`distribucion/controlar-orden/${ idOrdenDist }`]);
+        }
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {

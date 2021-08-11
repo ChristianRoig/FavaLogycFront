@@ -4,6 +4,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
+import { DomSanitizer } from '@angular/platform-browser';
+
 
 //service
 import { ControlarOrdenService } from './controlar-orden.service';
@@ -49,6 +51,9 @@ export class ControlarCargaComponent implements OnInit {
   nombreOrden: string;
   cupa : number = null;
   estadoOrden: string = "A CONTROLAR";
+  estadoOrdenVariante: string;
+  pdfOrdenUrl: string;
+  responseUrl: any;
 
   length: number = 0;
   page: number = 0;
@@ -61,8 +66,8 @@ export class ControlarCargaComponent implements OnInit {
       private _dialog: MatDialog,
       private _router: Router,
       private _activatedRoute: ActivatedRoute,
-      private _sonido: SonidoService
-    ) { }
+      private _sonido: SonidoService,
+      private sanitizer: DomSanitizer ) { }
 
     
 
@@ -70,8 +75,10 @@ export class ControlarCargaComponent implements OnInit {
     this._activatedRoute.params.subscribe( params => {
     this.idOrdenDist = params['id'];
     });
+
     this.buscarOrdenPorId();
-    this.getArticulosDeOrdenDistribucion(this.idOrdenDist);
+    this.getArticulosDeOrdenDistribucion( this.idOrdenDist );
+    this.obtenerUrlPdfOrdenDist();
   }
 
   getArticulosDeOrdenDistribucion( idOrdenDist: number ) {
@@ -150,6 +157,60 @@ export class ControlarCargaComponent implements OnInit {
     });
   }
 
+  obtenerUrlPdfOrdenDist(){
+    this._controlarOrdenService.getImprimirOrdenDist( this.idOrdenDist ).subscribe( data => {
+      //console.log(data);
+      this.pdfOrdenUrl = data;
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status;
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
+        } else {
+          let titulo = 'Error al imprimir';
+          let mensaje = err.error.message.toString();
+          this.mostrarError(errStatus, titulo, mensaje);
+        }
+      }
+    });
+  }
+
+  descargarCOT() { 
+    this._controlarOrdenService.descargarCOT( this.idOrdenDist ).subscribe( data => {
+
+        const url = window.URL
+              .createObjectURL(new Blob([data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'file.txt');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status;
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
+        } else {
+          let titulo = 'Error al imprimir';
+          let mensaje = "No pudo descargarse el archivo";
+          console.log(errStatus);
+          this.mostrarError( errStatus, titulo, mensaje );
+        }
+      }
+    });
+  }
+
   esperarYactualizarDatos(){
     setTimeout(() => {       
       this.limpiarInputs();                   
@@ -174,13 +235,16 @@ export class ControlarCargaComponent implements OnInit {
   }
 
   popUpOrdenControlada() {
-    
-    this._dialog.open( PopUpOrdenControladaComponent, {
+    let dialogRef = this._dialog.open( PopUpOrdenControladaComponent, {
         data: {
           idLote: this.idOrdenDist,
           orden: this.ordenActual
         }
       });
+    /* dialogRef.afterClosed().subscribe( () => {
+      this.buscarOrdenPorId();
+      this.getArticulosDeOrdenDistribucion( this.idOrdenDist );
+    }); */
   } 
 
   mostrarError(errStatus, titulo, mensaje){
@@ -205,6 +269,7 @@ export class ControlarCargaComponent implements OnInit {
         console.log(data);
         this.ordenActual = data;
         this.nombreOrden = data.nombre;
+        this.estadoOrdenVariante = data.estado.nombre;
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
@@ -222,6 +287,16 @@ export class ControlarCargaComponent implements OnInit {
           }
         }
     }); 
+  }
+
+  navegarCodigoArticulo( codArticulo: string ){
+    this._router.navigate([ `articulos/codigos-barra/${ codArticulo }` ]);
+  }
+
+  verPedido( idPedido, idCbte ){                          // falta que el back agregue datos para hacer la navegacion
+    localStorage.setItem('vengoDeCbte', "true" );
+    localStorage.setItem('idCbte', idCbte );
+    this._router.navigate([ `pedidos/ver-pedido/${ idPedido }` ]);
   }
     
 }

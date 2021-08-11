@@ -30,7 +30,8 @@ export class VerOrdenDistribucionComponent implements OnInit {
   
   @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
 
-  displayedColumns: string[] = ['select', 'id', 'codComprobante', 'nroComprobante', 'fechaAlta', 'direccion', 'cantArticulos'];
+  displayedColumns: string[] = ['select', 'comprobante', 'fechaAlta', 'direccion', 'info', 'cantArticulos', 'accion'];
+  displayedColumnsDos: string[] = ['codigoArticulo', 'nombre', 'comprobante', 'idVisual'];
   selection = new SelectionModel<any>(true, []);
   dataSource2: any;
 
@@ -53,7 +54,11 @@ export class VerOrdenDistribucionComponent implements OnInit {
   editRemito: boolean;
   mostrarRemitos: boolean = false;
   textoBtnAddRemitos: string = "Agregar Remitos";
-
+  turno: string;
+  transporte: string;
+  fechaEntrega: string;
+  pdfOrdenUrl: string;
+  
   constructor(
     private _verOrdenDistribucion: VerOrdenDistribucionService,
     private _dialog: MatDialog,
@@ -67,6 +72,7 @@ export class VerOrdenDistribucionComponent implements OnInit {
     });
     this.buscarOrdenPorId();
     this.getRemitosDeOrdenDistribucion(this.idOrdenDist);
+    this.obtenerUrlPdfOrdenDist();
     this.datosOrden = JSON.parse(localStorage.getItem('orden'));
   }
   
@@ -279,6 +285,9 @@ export class VerOrdenDistribucionComponent implements OnInit {
         console.log(data);
         this.ordenActual = data;
         this.nombreOrden = data.nombre;
+        this.turno = data.pedidoTurno.nombre;
+        this.transporte = data.sysTransporte.nombre;
+        /* this.fechaEntrega = data; */
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
@@ -389,11 +398,10 @@ export class VerOrdenDistribucionComponent implements OnInit {
     });
   }
 
-  imprimirOrdenDist(){
+  obtenerUrlPdfOrdenDist(){
     this._verOrdenDistribucion.getImprimirOrdenDist( this.idOrdenDist ).subscribe( data => {
-
-      console.log("data", data );
-      window.open( data.toString(), '_blank');
+      console.log(data);
+      this.pdfOrdenUrl = data;
       
     },
     (err: HttpErrorResponse) => {
@@ -412,6 +420,10 @@ export class VerOrdenDistribucionComponent implements OnInit {
         }
       }
     });
+  }
+
+  imprimirOrdenDistribucion(){
+    window.open( this.pdfOrdenUrl, '_blank');
   }
 
   esperarYactualizar(){
@@ -436,6 +448,10 @@ export class VerOrdenDistribucionComponent implements OnInit {
             this._router.navigate(['']);
           }
       });
+  }
+
+  navegarAremito( idRemito: number ){
+    this._router.navigate([ `remitos/ver-remito/${ idRemito }` ]);
   }
 
   
@@ -469,5 +485,11 @@ export class VerOrdenDistribucionComponent implements OnInit {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.Id + 1}`;
+  }
+
+  verPedido( idPedido, idCbte ){   
+    localStorage.setItem('vengoDeCbte', "true" );
+    localStorage.setItem('idCbte', idCbte );
+    this._router.navigate([ `pedidos/ver-pedido/${ idPedido }` ]);
   }
 }

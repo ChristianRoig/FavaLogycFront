@@ -36,5 +36,19 @@ export class ControlarOrdenService{
         
     let ruta = `${ BASE_URL }pedidos/distribucion/${ idOrdenDist }`;
     return this._httpClient.get(ruta);
-}
+  }
+  
+  getImprimirOrdenDist(idOrdenDist: number): Observable<any>{
+    
+    let ruta = `${ BASE_URL }pedidos/distribucion/imprimir-distribucion/${ idOrdenDist }`;
+    return this._httpClient.get(ruta);
+  }
+
+  descargarCOT( idOrdenDist: number ): Observable<any> {  
+
+    let ruta = `${ BASE_URL }pedidos/distribucion/cot/${ idOrdenDist }`;
+    console.log(ruta);
+    return this._httpClient.get(ruta, {responseType: "text"});
+  }
+
 }
