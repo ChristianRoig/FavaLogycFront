@@ -87,6 +87,7 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
               }
 
   ngOnInit(): void {
+    this.setMaxAndMinFechaSeleccion();
   
     if (this.data.vengoDeCrear == true) {
       console.log(this.data.selection._selected);
@@ -114,7 +115,6 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
       //this.getOrdenById();
     }
     //localStorage.clear();
-    this.setMaxAndMinFechaSeleccion();
     this.getfiltros();
   }
 
@@ -504,10 +504,10 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
       this.verificarEstanTodosLosDatos();
     }
     
-    setMaxAndMinFechaSeleccion(){
-      const currentYear = new Date().getFullYear();
-      this.minDateHastaOrden   = new Date(currentYear - 5, 0, 1);
-      this.maxDateHastaOrden   = new Date(currentYear + 1, 11, 31);
+  setMaxAndMinFechaSeleccion(){
+    const currentYear = new Date().getFullYear();
+    this.minDateHastaOrden   = new Date(currentYear - 5, 0, 1);
+    this.maxDateHastaOrden   = new Date(currentYear + 1, 11, 31);
   }
 
   activarNuevaFecha(){

@@ -36,11 +36,9 @@
 
             <div fxLayout="row" class="mb-8" fxLayoutAlign="start start">
                 <mat-form-field *ngIf="!this.nuevaFecha" appearance="outline" class="selectFecha">
-                    <!--  <mat-label>{{ filtroTransportes ? 'Transporte' : 'Cargando...'}}</mat-label> -->
                     <mat-label>Fecha de entrega</mat-label>
                     <select matNativeControl required (change)="selectFechaExistente($event)" [disabled]="!filtroFechasDeEntregaExistentes" matTooltipClass="tooltip" matTooltip="El cambio de FECHA afecta a todos los remitos de la orden" matTooltipPosition="left" matTooltipHideDelay="100">
                         <option>Seleccionar fecha</option>
-                        <!-- Seleccionar fecha de entrega -->
                         <option *ngFor="let fecha of filtroFechasDeEntregaExistentes; let index = index" [value]="fecha.fechaEntregaEnvio">
                             {{ fecha.fechaEntregaVisual }}
                         </option>
@@ -48,33 +46,16 @@
                 </mat-form-field>
                 <mat-form-field *ngIf="this.nuevaFecha" appearance="outline" class="mr-4 selectFecha">
                     <mat-label>Nueva fecha</mat-label>
-                    <input matInput [min]="minDateHastaOrden" autocomplete="off" [max]="maxDateHastaOrden" [matDatepicker]="pickerFechaEntregaOrden" (dateChange)="addEvent('pickerFechaEntregaOrden', $event)" matTooltipClass="tooltip" matTooltip="El cambio de FECHA afecta a todos los remitos de la orden"
+                    <input matInput [min]="this.minDateHastaOrden" autocomplete="off" [max]="this.maxDateHastaOrden" [matDatepicker]="pickerFechaEntregaOrden" (dateChange)="addEvent('pickerFechaEntregaOrden', $event)" matTooltipClass="tooltip" matTooltip="El cambio de FECHA afecta a todos los remitos de la orden"
                         matTooltipPosition="left" matTooltipHideDelay="100">
                     <mat-datepicker-toggle matSuffix [for]="pickerFechaEntregaOrden"></mat-datepicker-toggle>
                     <mat-datepicker #pickerFechaEntregaOrden></mat-datepicker>
                 </mat-form-field>
                 <div class="btnToggle">
                     <label>Crear fecha</label>
-                    <!-- class="ml-16 pr-16" -->
                     <mat-slide-toggle (click)="activarNuevaFecha()" formcontrolname="hidden" type="button" class="mat-slide-toggle"></mat-slide-toggle>
                 </div>
             </div>
-
-            <!-- <mat-form-field *ngIf="this.nuevaFecha" appearance="outline" fxFlex="100" class="mr-4">
-                    <mat-label>Seleccione la nueva fecha</mat-label>
-                    <input matInput [min]="minDateDesdeOrden" autocomplete="off" [max]="maxDateDesdeOrden" [matDatepicker]="pickerFechaEntregaOrden" (dateChange)="addEvent('pickerFechaEntregaOrden', $event)">
-                    <mat-datepicker-toggle matSuffix [for]="pickerFechaEntregaOrden"></mat-datepicker-toggle>
-                    <mat-datepicker #pickerFechaEntregaOrden></mat-datepicker>
-                </mat-form-field> -->
-
-            <!-- <div fxLayout="row" *ngIf="this.nuevaFecha" class="mb-8" fxLayoutAlign="start start">
-                <mat-form-field appearance="outline" fxFlex="100" class="mr-4">
-                    <mat-label>Seleccione la nueva fecha</mat-label>
-                    <input matInput [min]="minDateDesdeOrden" autocomplete="off" [max]="maxDateDesdeOrden" [matDatepicker]="pickerFechaEntregaOrden" (dateChange)="addEvent('pickerFechaEntregaOrden', $event)">
-                    <mat-datepicker-toggle matSuffix [for]="pickerFechaEntregaOrden"></mat-datepicker-toggle>
-                    <mat-datepicker #pickerFechaEntregaOrden></mat-datepicker>
-                </mat-form-field>
-            </div> -->
 
             <div fxLayout="row" class="mb-8" fxLayoutAlign="start start">
                 <mat-form-field appearance="outline" fxFlex>
@@ -84,17 +65,7 @@
             </div>
 
             <div fxLayout="column" class="mb-8 turnosDiv" fxLayoutAlign="start start">
-                <!-- 
-                <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>{{ filtroTurnos ? 'Turnos' : 'Cargando...'}}</mat-label>
-                    <select matNativeControl (change)="selectTurno($event)" [disabled]="!filtroTurnos">
-                        <option *ngIf="this.estoyEditando"> {{ this.selectedTurno }}</option>
-                        <option *ngFor="let turno of filtroTurnos; let index = index" [value]="turno.id" [selected]="index == 0">
-                            {{ turno.nombre }}
-                        </option>
-                    </select>
-                </mat-form-field> 
-                -->
+
                 <mat-label *ngIf="this.definirTurno()" class="ml-32 alertTurno">Se debe definir un turno</mat-label>
                 <div fxLayout="row" fxLayoutAlign="start start">
                     <mat-label class="mt-4"> Turnos:</mat-label>
