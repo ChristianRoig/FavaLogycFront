@@ -34,8 +34,7 @@ export class RemitoService
         return this._httpClient.get(ruta);
     }
 
-    getPedidosSinRemitir(body: BodyDetalle, busqueda, columna, order): Observable<any>
-    {    
+    getPedidosSinRemitir(body: BodyDetalle, busqueda, columna, order): Observable<any> {    
         console.log("body", body, "busqueda", busqueda, "columna", columna, "order", order);
 
         let headers = new HttpHeaders({
@@ -46,7 +45,7 @@ export class RemitoService
         if (busqueda !== '')
             buscar = `/${busqueda}`
 
-            let ruta = `${BASE_URL}pedidos/pedidodetalle/etapadarsena/porcomprobanteoarticulo/${ buscar }/${ columna }/${ order }`;
+        let ruta = `${BASE_URL}pedidos/pedidodetalle/etapadarsena/porcomprobanteoarticulo/${ buscar }/${ columna }/${ order }`;
 
         return this._httpClient.post(ruta, body, {headers: headers});
     }

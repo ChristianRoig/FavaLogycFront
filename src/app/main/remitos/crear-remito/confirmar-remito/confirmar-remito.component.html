@@ -13,20 +13,8 @@
 
     <div mat-dialog-content class="pb-0 m-0" *ngIf="!this.mostrarSpinner" style="width: 100%;" fusePerfectScrollbar>
         <form class="formClass">
-            <div fxLayout="row" class="mb-8" fxLayoutAlign="start start">
-                <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>{{ filtroTransportes ? 'Transporte' : 'Cargando...'}}</mat-label>
-                    <select matNativeControl (change)="selectTransporte($event)" [disabled]="!filtroTransportes">
-                        <option [value]="0">Seleccionar Transporte</option>
-                        <option *ngFor="let transporte of filtroTransportes" [value]="transporte.id"
-                                [selected]="selectedTransporte === transporte.id"> 
-                                {{ transporte.nombre }}
-                        </option>
-                    </select>
-                </mat-form-field>
-            </div>
-            <!-- [selected]="index == (this.selectedLocalidad - 1)" -->
-            <div fxLayout="row" class="mb-8" fxLayoutAlign="start start">
+
+            <!-- <div fxLayout="row" class="mb-8" fxLayoutAlign="start start">
                 <mat-form-field appearance="outline" fxFlex>
                     <mat-label>{{ filtroDepositosCarga ? 'Depositos Carga' : 'Cargando...'}}</mat-label>
                     <select matNativeControl (change)="selectDepositoCarga($event)" [disabled]="!filtroDepositosCarga">
@@ -36,24 +24,55 @@
                         </option>
                           </select>
                 </mat-form-field>
-            </div>
+            </div> -->
 
             <div fxLayout="row" class="mb-8" fxLayoutAlign="start start">
-                <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>{{ filtroTalonarios ? 'Talonarios' : 'Cargando...'}}</mat-label>
+
+                <mat-form-field appearance="outline" class="talonario">
+                    <!-- <mat-label>{{ filtroTalonarios ? 'Talonarios' : 'Cargando...'}}</mat-label>
                     <select matNativeControl (change)="selectTalonario($event)" [disabled]="!filtroTalonarios">
                         <option *ngFor="let talonario of filtroTalonarios" [value]="talonario.nroTalonario"
                         [selected]="selectedTalonario === talonario.nroTalonario"> 
                             {{ talonario.alias }}
                         </option>
-                    </select>
+                    </select> -->
+                    <mat-label>Alias</mat-label>
+                    <input matInput disabled [value]="this.alias">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="cantRemitos">
+                    <mat-label>Cant. Remitos</mat-label>
+                    <input matInput disabled [value]="this.cantRemitos">
+                </mat-form-field>
+
+            </div>
+
+            <div fxLayout="row" class="mb-8" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" class="comprobante">
+                    <mat-label>Nro Desde</mat-label>
+                    <input matInput disabled [value]="this.nroDesde">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="comprobante ml-16">
+                    <mat-label>Nro Hasta</mat-label>
+                    <input matInput disabled [value]="this.nroHasta">
                 </mat-form-field>
             </div>
 
             <div fxLayout="row" class="mb-8" fxLayoutAlign="start start">
                 <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Próximo Comprobante</mat-label>
-                    <input matInput disabled [value]="this.proxCbte">
+                    <mat-label>{{ filtroTransportes ? 'Transporte' : 'Cargando...'}}</mat-label>
+                    <select matNativeControl (change)="selectTransporte($event)" [disabled]="!filtroTransportes">
+                        <!-- <option [value]="0">(*) DEBE seleccionar transporte
+                        </option> -->
+                        <option [value]="0">(*) Mantiene asignación ORIGINAL
+                        </option>
+                            <!-- <mat-icon class="active-icon green-600">check</mat-icon> -->
+                            <!-- <i class="material-icons">home</i> -->
+                        <option *ngFor="let transporte of filtroTransportes" [value]="transporte.id"
+                        [selected]="selectedTransporte === transporte.id"> 
+                        {{ transporte.nombre }}
+                    </option>
+                </select>
                 </mat-form-field>
             </div>
 
@@ -63,7 +82,7 @@
 
     <div mat-dialog-actions class="m-0 divBotones" fxLayout="row" fxLayoutAlign="end center">
 
-        <button mat-raised-button (click)="remitir()" class="btn" [disabled]="!this.selectedTransporte" color="accent" aria-label="SAVE">
+        <button mat-raised-button (click)="remitir()" class="btn" color="accent" aria-label="SAVE">
             Remitir
         </button>
 

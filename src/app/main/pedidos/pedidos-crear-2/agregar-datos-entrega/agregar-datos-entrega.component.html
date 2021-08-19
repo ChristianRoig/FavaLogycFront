@@ -9,64 +9,11 @@
 </div>
 <mat-dialog-content *ngIf="this.crearDirec" class="mat-typography contenedorPadre">
 
-    <!-- <div fxLayout="column" class="divPrincipal"> -->
 
     <form class="formulario" fxLayout="column" fxFlex="1 0 auto" name="form" fusePerfectScrollbar>
 
-        <!-- <div class="contenedorBarra">
-            <mat-label class="titulo">Información de entrega</mat-label>
-            <div class="divDos">
-                <mat-form-field appearance="outline" fxFlex class="selector">
-                    <mat-label>{{ filtroTransporte ? 'Transporte' : 'Cargando...'}}</mat-label>
-                    <select matNativeControl (change)="selectTransporte($event)" [disabled]="!filtroTransporte || deshabilitado">
-                            <option *ngIf="this.mostrarDatos == false" [value]="0">Seleccionar Transporte</option>
-                            <option *ngIf="this.mostrarDatos == true"> {{ devolverNombreTransporte(this.data.item.sysTransporte.id) }} </option>
-                            <option *ngFor="let transporte of filtroTransporte" [value]="transporte.id"
-                                [selected]="selectedTransporte === transporte.id"> {{ transporte.nombre }}</option>
-                        </select>
-                </mat-form-field>
-
-                <mat-form-field appearance="outline" fxFlex class="selector">
-                    <mat-label>Fecha de entrega</mat-label>
-                    <input matInput *ngIf="this.mostrarDatos == false" autocomplete="off" [matDatepicker]="picker" [min]="minDateHastaFiltro" [value]='valorPicker' (dateChange)="addEvent($event)" [disabled]='deshabilitado'>
-                    <input matInput *ngIf="this.mostrarDatos == true" autocomplete="off" [matDatepicker]="picker" [min]="minDateHastaFiltro" [value]='this.valorPicker' (dateChange)="addEvent($event)" [disabled]='deshabilitado'>
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>
-
-                <mat-form-field appearance="outline" fxFlex class="selector">
-                    <mat-label>{{ filtroTurnos ? 'Turno' : 'Cargando...'}}</mat-label>
-                    <select matNativeControl (change)="selectTurno($event)" [disabled]="!filtroTurnos || deshabilitado">
-                            <option *ngIf="this.mostrarDatos == false"[value]="0">Seleccionar Turno</option>
-                            <option *ngIf="this.mostrarDatos == true"> {{ devolverTurno(this.selectedTurno) }} </option>
-                            <option *ngFor="let turno of filtroTurnos" [value]="turno.id"
-                                [selected]="selectedTurno === turno.id"> {{ turno.nombre }}</option>
-                        </select>
-                </mat-form-field>
-
-
-            </div>
-        </div> -->
         <div class="divContenedor">
-            <!-- <div class="divDos">
-                <mat-form-field appearance="outline" fxFlex class="selector">
-                    <mat-label>Fecha de entrega</mat-label>
-                    <input matInput *ngIf="this.mostrarDatos == false" autocomplete="off" [matDatepicker]="picker" [min]="minDateHastaFiltro" [value]='valorPicker' (dateChange)="addEvent($event)" [disabled]='deshabilitado'>
-                    <input matInput *ngIf="this.mostrarDatos == true" autocomplete="off" [matDatepicker]="picker" [min]="minDateHastaFiltro" [value]='this.valorPicker' (dateChange)="addEvent($event)" [disabled]='deshabilitado'>
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>
 
-                <mat-form-field appearance="outline" fxFlex class="selector">
-                    <mat-label>{{ filtroTurnos ? 'Turno' : 'Cargando...'}}</mat-label>
-                    <select matNativeControl (change)="selectTurno($event)" [disabled]="!filtroTurnos || deshabilitado">
-                            <option *ngIf="this.mostrarDatos == false"[value]="0">Seleccionar Turno</option>
-                            <option *ngIf="this.mostrarDatos == true"> {{ devolverTurno(this.selectedTurno) }} </option>
-                            <option *ngFor="let turno of filtroTurnos" [value]="turno.id"
-                                [selected]="selectedTurno === turno.id"> {{ turno.nombre }}</option>
-                        </select>
-                </mat-form-field>
-            </div> -->
 
             <div fxLayout="column" class="divUno">
                 <mat-label class="tituloDos">Información de entrega</mat-label>
@@ -79,17 +26,6 @@
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
 
-                    <!-- <mat-form-field appearance="outline" fxFlex class="selectorFecha">
-                        <mat-label>{{ filtroTurnos ? 'Turno' : 'Cargando...'}}</mat-label>
-                        <select matNativeControl (change)="selectTurno($event)" [disabled]="!filtroTurnos || deshabilitado">
-                            <option *ngIf="this.mostrarDatos == false"[value]="0">Seleccionar Turno</option>
-                            <option *ngIf="this.mostrarDatos == true"> {{ devolverTurno(this.selectedTurno) }} </option>
-                            <option *ngFor="let turno of filtroTurnos" [value]="turno.id"
-                                [selected]="selectedTurno === turno.id"> {{ turno.nombre }}</option>
-                        </select>
-                    </mat-form-field> -->
-
-
                     <div class="divBtnToggle" fxLayout="column">
                         <label>Turno:</label>
                         <div class="btnToggle" fxLayout="row">
@@ -99,18 +35,13 @@
                     </div>
 
                 </div>
-                <!-- ------------------------------------------------------------------------------------ -->
+                
                 <mat-label class="tituloDos">Información de Destino</mat-label>
                 <!-- class="bloque" -->
                 <mat-form-field appearance="outline" fxFlex>
                     <mat-label>Dirección</mat-label>
                     <input matInput [(ngModel)]='this.direccion' [disabled]='deshabilitado' [ngModelOptions]="{standalone: true}">
                 </mat-form-field>
-
-                <!-- <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Código Postal</mat-label>
-                    <input matInput disabled [value]="this.codigoPostal">
-                </mat-form-field> -->
 
                 <mat-form-field appearance="outline" fxFlex>
                     <mat-label>{{ selectedProvincia ? 'Provincia' : 'Cargando...'}}</mat-label>

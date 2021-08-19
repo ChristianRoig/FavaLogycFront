@@ -7,7 +7,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 
-
 import { ListaLotesService } from './lista-lotes.service';
 
 
@@ -685,7 +684,7 @@ export class ListaLotesComponent implements OnInit {
             this.maxDateDesdeLote = evento.value;
             console.log(this.pickerLoteHasta);
             break;
-          }
+      }
           
     } else {
       console.log("llego al else");

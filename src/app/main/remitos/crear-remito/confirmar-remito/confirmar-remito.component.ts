@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dial
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
-
+import { MatIconModule } from '@angular/material/icon';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
 
 //service
@@ -24,8 +24,7 @@ export interface PeriodicElement {
 }
 
 export interface BodyRemito {
-  idTransporte: number,
-  idDeposito: number,
+  idTransporte: any,
   idTalonario: number,
   listaIdDetalle: number []
 }
@@ -44,16 +43,18 @@ export class ConfirmarRemitoComponent implements OnInit {
   toAdd = new Array<number>();
 
   filtroTransportes: any;
-  selectedTransporte: any = 0;
+  selectedTransporte: any = null;
   
-  filtroTalonarios: any;
-  selectedTalonario: any = 0;
-  
-  filtroDepositosCarga: any;
-  selectedDepositoCarga: any = 0;
-
+  /* filtroTalonarios: any;
+  selectedTalonario: any = 0; */
   
   proxCbte: string;
+  nroDesde: string 
+  nroHasta: string;
+  alias: string;
+  cantRemitos: number;
+  nroTalonario: number;
+
   mostrarSpinner: boolean = false;
   contador: number = 0;
 
@@ -68,39 +69,41 @@ export class ConfirmarRemitoComponent implements OnInit {
 
     this.dataSource2 = this.data.selection._selected;
     console.log(this.dataSource2);
-
   }
 
+
+  
   getfiltros(){
-    this._serviceRemitosConfirmar.getAllDepostitosCarga().subscribe(params => {
-      this.filtroDepositosCarga = params.datos;
-      this.selectedDepositoCarga = this.filtroDepositosCarga[0].id;
-    },
-    (err: HttpErrorResponse) => {
-      if (err.error instanceof Error) {
-        console.log("Client-side error");
-      } else {
-        let errStatus = err.status
-        if (errStatus == 0){
-          let titulo = 'Error de Servidor';
-          let mensaje = "Por favor comunicarse con Sistemas";
-          this.mostrarError(errStatus, titulo, mensaje);
-        } else {
-          let titulo = 'Error al cargar filtros';
-          let mensaje = err.error.message.toString();
-          this.mostrarError(errStatus, titulo, mensaje);
-        }
-      }
-    })
-    
-    this._serviceRemitosConfirmar.getAllTalonarios().subscribe(params => {
+    const articulos = [];
+  
+    for (let art of  this.data.selection._selected){
+      articulos.push(art.idDetalle)
+    }
+
+    const body = {
+      "listaIdDetalle" : articulos
+    }
+
+    this._serviceRemitosConfirmar.getAllTalonarios( body ).subscribe(params => {
+      console.log("params", params);
+
+      /*ANTES 
       this.filtroTalonarios = params.datos;
       this.selectedTalonario = this.filtroTalonarios[0].nroTalonario;
-      this.getUltNroTalonario();;
+      this.getUltNroTalonario(); */
+
+
+      // DESPUES
+      this.cantRemitos = params.datos[0].cantidad;
+      this.nroDesde = params.datos[0].nroDesde;
+      this.nroHasta = params.datos[0].nroHasta;
+      this.alias = params.datos[0].alias;
+      this.nroTalonario = params.datos[0].nroTalonario;
+     
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
-        console.log("Client-side error");
+        console.log("Client-side error"); 
       } else {
         let errStatus = err.status
         if (errStatus == 0){
@@ -115,8 +118,10 @@ export class ConfirmarRemitoComponent implements OnInit {
       }
     })
 
-    this._serviceRemitosConfirmar.getAllTransportes().subscribe(params => {
+    this._serviceRemitosConfirmar.getAllTransportes( body ).subscribe(params => {
       this.filtroTransportes = params.datos;
+      console.log("filtroTransportes -----", this.filtroTransportes);
+      console.log( this.verificarCantPedidos() );
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
@@ -134,6 +139,26 @@ export class ConfirmarRemitoComponent implements OnInit {
         }
       }
     })
+  }
+
+  verificarCantPedidos(): boolean{
+    let contador: number = 0;
+    for ( let elem of this.filtroTransportes ){
+      if (elem.cantidadPedido > 0) {
+        this.selectedTransporte = elem.id;
+        contador++;
+        if (contador > 1){
+          this.selectedTransporte = null;
+          return true;
+        }
+      }
+    }
+    if (contador === 1){
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 
   mostrarError(errStatus, titulo, mensaje){
@@ -159,18 +184,13 @@ export class ConfirmarRemitoComponent implements OnInit {
     console.log("this.selectedTransporte",this.selectedTransporte);
   }
   
-  selectTalonario(event: Event) {
+  /* selectTalonario(event: Event) {
     this.selectedTalonario = (event.target as HTMLSelectElement).value;
     this.getUltNroTalonario();
     console.log("this.selectedTalonario",this.selectedTalonario);
   }
-  
-  selectDepositoCarga(event: Event) {
-    this.selectedDepositoCarga = (event.target as HTMLSelectElement).value;
-    console.log("this.selectedDepositoCarga", this.selectedDepositoCarga);
-  }
-
-  getUltNroTalonario(){
+ */
+  /* getUltNroTalonario(){
     
     this.filtroTalonarios.forEach( (talonario: any) => {
       
@@ -183,9 +203,8 @@ export class ConfirmarRemitoComponent implements OnInit {
       } else {
         this.proxCbte = '';
       }
-      
     });
-  }
+  } */
 
   /* seleccion */
   isAllSelected() {
@@ -209,7 +228,7 @@ export class ConfirmarRemitoComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.Id + 1}`;
   }
   
-  remitir(){
+  remitir() {
     this.mostrarSpinner = true;
     this.contador++;
     console.log( "contador", this.contador );
@@ -220,24 +239,26 @@ export class ConfirmarRemitoComponent implements OnInit {
       for (let elemento of this.dataSource2){
         this.toAdd.push(elemento.idDetalle);
       }   
+      console.log("this.selectedTransporte", this.selectedTransporte);
+      let idTransporte = null;
+      if (this.selectedTransporte != null){
+        idTransporte = parseInt(this.selectedTransporte, 10); 
+      }
+      const idTalonario = this.nroTalonario; 
 
-      let idTransporte = parseInt(this.selectedTransporte, 10);
-      let idTalonario = parseInt(this.selectedTalonario, 10);
-      let idDeposito = parseInt(this.selectedDepositoCarga, 10);
-  
       let body: BodyRemito = {
-        idTransporte: idTransporte,
-        idDeposito: idDeposito,
         idTalonario: idTalonario,
+        idTransporte: idTransporte,
         listaIdDetalle: this.toAdd
       }
-
       
       console.log({body});
       console.log("entró ass");
-      this._serviceRemitosConfirmar.generarRemito( body ).subscribe(params => {
-        console.log("entró");
-        
+      this._serviceRemitosConfirmar.generarRemito( body ).subscribe( params => {
+
+        console.log("remito generado -> ", params );
+        localStorage.setItem("nuevoRemito", "true");
+        this.imprimirRemitos( params );
         setTimeout(() => {    
           this._dialog.closeAll();                      
           this.navegarAlistaRemitos();
@@ -264,6 +285,10 @@ export class ConfirmarRemitoComponent implements OnInit {
       });
     }
 
+  }
+
+  imprimirRemitos( data ){
+    window.open( data.toString(), '_blank');
   }
   
   navegarAlistaRemitos(){
