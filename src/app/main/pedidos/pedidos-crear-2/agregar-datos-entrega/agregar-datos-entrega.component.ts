@@ -228,7 +228,11 @@ export class AgregarDatosEntregaComponent implements OnInit{
 
     getDatoEntrega() {
 
-      this.indexLocalidad = +localStorage.getItem("indexLocalidad");
+      if (localStorage.getItem("indexLocalidad")){
+        this.indexLocalidad = +localStorage.getItem("indexLocalidad");
+      } else{
+        this.indexLocalidad = this.data.item.sysLocalidad.id - 1;
+      }
       console.log("| DATA | ->", this.data);
       //console.log("| selectedLocalidad | ->", this.data.item.sysLocalidad.id);
       this.fechaFormatoDate = JSON.parse(localStorage.getItem('fechaFormatoDate'));

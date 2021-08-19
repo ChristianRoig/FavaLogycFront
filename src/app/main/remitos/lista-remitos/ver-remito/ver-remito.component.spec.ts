@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { VerLoteComponent } from './ver-remito.component';
+import { VerRemitoComponent } from './ver-remito.component';
 
 describe('BuscarLoteComponent', () => {
-  let component: VerLoteComponent;
-  let fixture: ComponentFixture<VerLoteComponent>;
+  let component: VerRemitoComponent;
+  let fixture: ComponentFixture<VerRemitoComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ VerLoteComponent ]
+      declarations: [ VerRemitoComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(VerLoteComponent);
+    fixture = TestBed.createComponent(VerRemitoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -110,7 +110,7 @@ export class PedidosCrear2Component implements OnInit {
       this.dataSourceArticulos = JSON.parse(localStorage.getItem('AddPedidoC'));//asi anda desde comprobantes a programar
       console.log("Articulos sin añadir | ",this.dataSourceArticulos);
 
-      if (this.dataSourceArticulos == null){
+      if (this.dataSourceArticulos == null) {
         this.dataSourceArticulos = JSON.parse(localStorage.getItem('AddPedido'))._selected;//asi me anda desde pedido-crear1
         console.log(this.dataSourceArticulos);
       }
@@ -259,6 +259,7 @@ export class PedidosCrear2Component implements OnInit {
   
   modificar(){
     this._service.putPedidos(this.dataSourceDatosDeEntrega.listadoDatosDeEntrega).subscribe(data => {
+
       console.log(data);
       localStorage.removeItem('AddPedido');
       localStorage.removeItem('datoEntrega');
@@ -457,6 +458,7 @@ export class PedidosCrear2Component implements OnInit {
           this.selection.clear();
         }
       });
+      this.procesarDatos = true;
   }
   
   

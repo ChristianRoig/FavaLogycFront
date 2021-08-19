@@ -116,7 +116,17 @@
             <ng-container matColumnDef="info">
                 <th mat-header-cell *matHeaderCellDef> Info </th>
                 <td mat-cell class="mx-16" *matCellDef="let element">
-                    <mat-icon #tooltip="matTooltip" matTooltip="{{element.codigoArticuloAsociado}} - {{element.descripcionArticuloAsociado}}" matTooltipPosition="above" matTooltipHideDelay="100" aria-label="" class="example-button">info</mat-icon>
+
+                    <ng-container *ngIf="element.codigoArticuloAsociado; then conInfo; else sinInfo"></ng-container>
+
+                    <ng-template #conInfo>
+                        <mat-icon #tooltip="matTooltip" matTooltipClass="tooltip" matTooltip="{{element.codigoArticuloAsociado}} - {{element.descripcionArticuloAsociado}}" matTooltipPosition="above" matTooltipHideDelay="100" aria-label="" class="example-button tooltip">info</mat-icon>
+                    </ng-template>
+
+                    <ng-template #sinInfo>
+                        <mat-icon #tooltip="matTooltip" matTooltip="" matTooltipPosition="above" matTooltipHideDelay="100" aria-label="" class="example-button">info</mat-icon>
+                    </ng-template>
+                    <!-- <mat-icon #tooltip="matTooltip" matTooltip="{{element.codigoArticuloAsociado}} - {{element.descripcionArticuloAsociado}}" matTooltipPosition="above" matTooltipHideDelay="100" aria-label="" class="example-button">info</mat-icon> -->
                 </td>
             </ng-container>
 

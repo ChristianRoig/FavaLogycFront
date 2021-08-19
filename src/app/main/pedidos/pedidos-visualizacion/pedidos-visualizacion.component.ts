@@ -89,7 +89,8 @@ export class PedidosVisualizacionComponent implements OnInit {
   }
 
   getArticulos( page, size, columna, order) {
-    if(this.idPedidoCbte > 0 && this.vengoDeCbte == "true"){
+
+    if (this.idPedidoCbte > 0 && this.vengoDeCbte == "true"){
       console.log("estoy consultando los articulos con id -> ", this.idPedidoCbte);
       this._service.getArticulos( this.idPedidoCbte, page, size, columna, order ).subscribe(paramsArt => {
         if(paramsArt){
