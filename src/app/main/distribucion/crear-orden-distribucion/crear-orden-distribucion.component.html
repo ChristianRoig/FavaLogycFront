@@ -1,0 +1,97 @@
+<app-plantilla-fondo-simple titulo='Crear Orden de Distribución'>
+
+    <!-- CONTENIDO -->
+    <div contenido>
+
+        <div fxLayout="column" class="fuse-card" style="max-width: 100%; margin-bottom: 20px;">
+
+            <div fxLayout="row">
+
+                <form class="pr-24 pl-24" fxLayout="column" fxLayoutAlign="center" fxFlex="1 1 auto" name="form" style="width: 100%;">
+
+                    <div fxLayout="row">
+                        <div class="controlesBusqueda">
+
+                            <mat-form-field appearance="outline" class="inputBuscarLote">
+                                <mat-label>Código de Artículo o Comprobante</mat-label>
+                                <!-- (keyup)="searchCbte()" -->
+                                <input #buscarOrden class="text-uppercase" matInput value="" placeholder="Buscar Cód. Artículo o comprobante">
+                                <mat-icon matSuffix>search</mat-icon>
+                            </mat-form-field>
+
+                            <div class="botonesBusqueda">
+
+                                <button (click)="crearOrdenDeDistribucion()" class="btn" mat-raised-button color="primary" [matBadge]="selection.selected.length" [disabled]="selection.selected.length===0" matBadgeColor="warn">
+                                    Crear O.D.
+                                </button>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </form>
+            </div>
+
+            <ng-container *ngTemplateOutlet="listaRemitos"> </ng-container>
+
+        </div>
+
+        <div class="mat-card my-24">
+        </div>
+
+    </div>
+
+</app-plantilla-fondo-simple>
+
+<ng-template #listaRemitos>
+    <mat-card-subtitle class="pl-24">Lista de Remitos</mat-card-subtitle>
+    <div style="width: 100%; overflow: auto;">
+        <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="dataSource2" class="mb-24">
+
+            <ng-container matColumnDef="select">
+                <th mat-header-cell *matHeaderCellDef class="">
+                    <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
+                    </mat-checkbox>
+                </th>
+                <td mat-cell *matCellDef="let row" class="">
+                    <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
+                    </mat-checkbox>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="id">
+                <th mat-sort-header="id" mat-header-cell *matHeaderCellDef> Id </th>
+                <td mat-cell *matCellDef="let remito"> {{ remito.id }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="codComprobante">
+                <th mat-sort-header="codComprobante" mat-header-cell *matHeaderCellDef> Codigo Comprobante </th> -->
+                <td mat-cell *matCellDef="let remito"> {{remito.pedidoTipoCbte.codigoCbte}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="nroComprobante">
+                <th mat-sort-header="nroComprobante" mat-header-cell *matHeaderCellDef> Nro Comprobante </th>
+                <td mat-cell *matCellDef="let remito"> {{ remito.nroCbte }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="fechaAlta">
+                <th mat-sort-header="fechaAlta" mat-header-cell *matHeaderCellDef> Fecha Alta </th>
+                <td mat-cell *matCellDef="let remito"> {{ getSoloFecha(remito.fechaCbte) }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="cantArticulos">
+                <th mat-sort-header="cantArticulos" mat-header-cell *matHeaderCellDef> Cant Articulos </th>
+                <td mat-cell *matCellDef="let remito"> {{ remito.pedidoDetalles.length }} </td>
+            </ng-container>
+
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <div contenido class=" mb-4">
+            <mat-paginator [length]="length" [pageIndex]="page" [pageSize]="size" [pageSizeOptions]="[50, 250, 500]" (page)="paginar($event)">
+            </mat-paginator>
+        </div>
+    </div>
+</ng-template>
