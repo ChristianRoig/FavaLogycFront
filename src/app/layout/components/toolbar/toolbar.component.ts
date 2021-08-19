@@ -8,6 +8,12 @@ import { FuseConfigService } from '@fuse/services/config.service';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 
 import { navigation } from 'app/navigation/navigation';
+import { Router } from '@angular/router';
+
+//import { LoginComponent } from '../../../auth/login/login.component';
+import { LoginService } from '../../../auth/login/login.service';
+
+
 
 @Component({
     selector     : 'toolbar',
@@ -26,6 +32,9 @@ export class ToolbarComponent implements OnInit, OnDestroy
     selectedLanguage: any;
     userStatusOptions: any[];
 
+    user: string;
+    nombreUsuario: string = "Pablo Jacobo";
+
     // Private
     private _unsubscribeAll: Subject<any>;
 
@@ -39,7 +48,10 @@ export class ToolbarComponent implements OnInit, OnDestroy
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _fuseSidebarService: FuseSidebarService,
-        private _translateService: TranslateService
+        private _translateService: TranslateService,
+        private _router: Router,
+        private _loginService: LoginService
+
     )
     {
         // Set the defaults
@@ -110,6 +122,11 @@ export class ToolbarComponent implements OnInit, OnDestroy
 
         // Set the selected language from default languages
         this.selectedLanguage = _.find(this.languages, {id: this._translateService.currentLang});
+
+        //this.user = this._loginService.infoOnChanged.getValue();
+        this.user = localStorage.getItem("username");
+        this.setearNombre();  
+        //console.log("this.user", this.user);
     }
 
     /**
@@ -120,6 +137,11 @@ export class ToolbarComponent implements OnInit, OnDestroy
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
+    }
+
+    logout(){
+        localStorage.clear();
+        this._router.navigate([''])
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -159,5 +181,30 @@ export class ToolbarComponent implements OnInit, OnDestroy
 
         // Use the selected language for translations
         this._translateService.use(lang.id);
+    }
+
+    setearNombre(): void {
+
+        /* if (this.user === "burroni.santiago"){
+            this.nombreUsuario = "Santiago Burroni";
+        }
+        if (this.user === "herrada.laura"){
+            this.nombreUsuario = "Laura Herrada";
+        }
+        if (this.user === "honaine.nicolas"){
+            this.nombreUsuario = "Nicolas Honaine";
+        }
+        if (this.user === "luque.gonzalo"){
+            this.nombreUsuario = "Gonzalo Luque";
+        }
+        if (this.user === "thomas.juan"){
+            this.nombreUsuario = "Juan Thomas";
+        }
+        if (this.user === "cejas.fernando"){
+            this.nombreUsuario = "Fernando Cejas";
+        }
+        if (this.user === "augelli.angel"){
+            this.nombreUsuario = "Angel Augelli";
+        } */
     }
 }

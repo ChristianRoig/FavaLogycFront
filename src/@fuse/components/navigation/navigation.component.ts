@@ -3,6 +3,9 @@ import { merge, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
+import { LoginService } from 'app/auth/login/login.service';
+
+
 
 @Component({
     selector       : 'fuse-navigation',
@@ -19,6 +22,8 @@ export class FuseNavigationComponent implements OnInit
     @Input()
     navigation: any;
 
+    rolActual: string = "comun";
+
     // Private
     private _unsubscribeAll: Subject<any>;
 
@@ -29,7 +34,8 @@ export class FuseNavigationComponent implements OnInit
      */
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
-        private _fuseNavigationService: FuseNavigationService
+        private _fuseNavigationService: FuseNavigationService,
+        private _loginService: LoginService
     )
     {
         // Set the private defaults
@@ -60,6 +66,9 @@ export class FuseNavigationComponent implements OnInit
                 this._changeDetectorRef.markForCheck();
             });
 
+        // Subscribe to Rol Changes (FAVA 29/06/2021)
+        this._subscribeToRolChanges();
+
         // Subscribe to navigation item
         merge(
             this._fuseNavigationService.onNavigationItemAdded,
@@ -72,4 +81,37 @@ export class FuseNavigationComponent implements OnInit
              this._changeDetectorRef.markForCheck();
          });
     }
+    
+    //  (FAVA 29/06/2021)
+    // en Gestionate: private _visualizarSegunRol(): void {
+    private _subscribeToRolChanges(): void {
+            this._loginService.rolOnChanged
+            .pipe(takeUntil(this._unsubscribeAll))
+                .subscribe(
+                    (respu: []) => {
+                        if (respu == null) {
+                            respu = [];
+                        }
+
+                        //console.log("rol change");
+                        //console.log(respu);
+                        this._loginService.hideByRol(respu);
+                        // this.hideByRol(respu); Mejor en el servicio, asi cambiamos menos el kernel de Fuse
+                    },
+                    (error: any) => {
+                        console.log("rol change error");
+                        console.log(error);
+                        this._loginService.hideByRol([]);      
+                    });
+    }
+
+    // en Gestionate: private switchByRol(roles: string[]): void {
+    /*private hideByRol(roles: string[]): void {
+        if (roles.includes("comun") || roles == null || roles.length == 0){
+            this._fuseNavigationService.updateNavigationItem('infoAuxiliar', {
+                hidden: true
+            });          
+        }
+    }*/
+
 }

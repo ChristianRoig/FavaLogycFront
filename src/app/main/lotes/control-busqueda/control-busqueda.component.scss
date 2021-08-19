@@ -1,0 +1,162 @@
+    table {
+        width: 100%;
+        min-width: 1056px;
+    }
+    
+    td.mat-column-star {
+        width: 20px;
+        padding-right: 8px;
+    }
+    
+    th.mat-column-position,
+    td.mat-column-position {
+        padding-left: 8px;
+    }
+    
+    .mat-table-sticky:first-child {
+        border-right: 1px solid #e0e0e0;
+    }
+    
+    .mat-table-sticky:last-child {
+        border-left: 1px solid #e0e0e0;
+    }
+    
+    a {
+        cursor: pointer;
+    }
+    
+    fuse-sidebar {
+        width: unset !important;
+        max-width: unset !important;
+    }
+    
+    .divLista {
+        border-radius: 10px;
+    }
+    
+    .controlesBusqueda {
+        height: 80px;
+        display: flex;
+        width: 100%;
+        align-items: center !important;
+        justify-content: flex-start;
+    }
+    
+    .controlesBusquedaDos {
+        height: 80px;
+        display: flex;
+        width: 80%;
+        align-items: center !important;
+        justify-content: flex-start;
+    }
+    
+    .inputBuscarLote {
+        width: 600px;
+        justify-content: flex-start;
+        padding-top: 20px;
+    }
+    
+    .botonesBusqueda {
+        display: flex;
+        width: 400px;
+        align-items: center !important;
+        justify-content: flex-start;
+    }
+    
+    .btn {
+        height: 40px;
+        width: 120px;
+        padding-left: 5px;
+        padding-right: 5px;
+        margin-left: 15px;
+    }
+    
+    .btnToggle {
+        width: 180px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    
+    .botonesBusquedaSup {
+        display: flex;
+        width: 700px;
+        align-items: center !important;
+        justify-content: space-between;
+    }
+
+    .btnTable { /* no funciona */
+        margin-right: 15px;
+    }
+    
+    .estadoNuevo {
+        padding: 4px;
+        padding-left: 25px;
+        border-radius: 5px;
+        color: white;
+        background-color: #03a9f4;
+        text-transform: uppercase;
+        width: 100px !important;
+    }
+    
+    .estadoEstanteria {
+        padding: 4px;
+        padding-left: 10px;
+        border-radius: 5px;
+        color: rgb(0, 0, 0);
+        background-color: #fff176;
+        text-transform: uppercase;
+        width: 100px !important;
+    }
+    
+    .estadoRemitido {
+        padding: 4px;
+        padding-left: 10px;
+        border-radius: 5px;
+        color: rgb(0, 0, 0);
+        background-color: #dcedc8;
+        text-transform: uppercase;
+        width: 100px !important;
+    }
+    
+    .estadoAnulado {
+        padding: 4px;
+        padding-left: 10px;
+        border-radius: 5px;
+        color: rgb(0, 0, 0);
+        background-color: #ff9800;
+        text-transform: uppercase;
+        width: 100px !important;
+    }
+    
+    .estadoDarsena {
+        padding: 4px;
+        padding-left: 18px;
+        border-radius: 5px;
+        color: white;
+        background-color: #8bc34a;
+        text-transform: uppercase;
+        width: 100px !important;
+    }
+    
+    @media (max-width: 1024px) {
+        .inputBuscarLote {
+            width: 600px;
+            justify-content: flex-start;
+            padding-top: 20px;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .btn {
+            height: 60px;
+            width: 120px;
+            padding-left: 5px;
+            padding-right: 5px;
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+        .paddingLeft {
+            margin-left: 10px;
+        }
+    }

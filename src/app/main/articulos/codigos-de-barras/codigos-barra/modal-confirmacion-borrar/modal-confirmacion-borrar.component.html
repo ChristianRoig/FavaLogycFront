@@ -1,0 +1,20 @@
+<h2 mat-dialog-title>Confirmación de Borrado</h2>
+
+<mat-dialog-content class="mat-typography">
+
+  <!--  id: id, 
+        codigoArticulo: this.codigoArticulo,
+        codigoDeBarras: codigoDeBarras, 
+        descripcion: descripcion -->
+
+  <p>¿Confirma que desea BORRAR este elemento?</p>
+  <br>
+  <p>Artículo: {{data.codigoArticulo}}</p>
+  <p>Descripción: {{data.descripcion}}</p>
+  <p>Código de Barras: {{data.codigoDeBarras}}</p>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close="true">Borrar</button>
+  <button mat-button mat-dialog-close autofocus>Cancelar</button>
+</mat-dialog-actions>
