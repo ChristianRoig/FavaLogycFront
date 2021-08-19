@@ -5,6 +5,8 @@ import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.componen
 import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 
+
+
 //service
 import { ConfirmarOrdenDeDistribucionService } from './confirmar-ordenDist.service';
 import { Debounce } from 'app/shared/decorators/debounce';
@@ -45,33 +47,49 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
   toAdd = new Array();
   cantRemitos: number = 0;
   nombreOrden: string = "";
-  idOrden: number ;
+  idOrden: number;
   datosOrden: {} = {};
   ordenActual = {};
   estoyEditando: boolean = false;
   nombreBoton: string = "Crear";
   contador: number = 0;
   mostrarSpinner: boolean = false;
+  nuevaFecha: boolean = false;
+  cantTurnosManiana: number = 0;
+  cantTurnosTarde: number = 0;
+  pdfOrdenUrl: string;
+  estanTodosLosDatos: boolean = false;
 
   localidadDefault: any = 1402;
 
   filtroTransportes: any;
-  selectedTransporte: any = 0;
+  selectedTransporte: any = null;
 
   filtroTurnos: any;
-  selectedTurno: any = 1;
+  selectedTurno: any = null;
 
-  constructor(public matDialogRef: MatDialogRef<ConfirmarOrdenDeDistribucionComponent>,
+  filtroFechasDeEntregaExistentes: any;
+  selectedFecha: string = null;
+
+
+  minDateHastaOrden: Date;
+  maxDateHastaOrden: Date;
+
+  pickerFechaEntregaOrden: any   = null;
+
+
+ constructor( public matDialogRef: MatDialogRef<ConfirmarOrdenDeDistribucionComponent>,
               @Inject(MAT_DIALOG_DATA) public data:any,
               private _confirmarOrdenDeDistribucionService: ConfirmarOrdenDeDistribucionService,
               private _dialog: MatDialog,
-              private _router: Router) { }
+              private _router: Router) {
+
+              }
 
   ngOnInit(): void {
-    this.getfiltros();
-    
-
-    if(this.data.vengoDeCrear == true){
+    this.setMaxAndMinFechaSeleccion();
+  
+    if (this.data.vengoDeCrear == true) {
       console.log(this.data.selection._selected);
       this.toAdd = this.data.selection._selected;
       console.log("vengo de crear orden");
@@ -81,7 +99,7 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
       console.log( "this.localidadDefault", this.localidadDefault.id );
       this.cantRemitos = this.data.selection._selected.length;
     }
-    if (this.data.vengoDeOrden == true){
+    if (this.data.vengoDeOrden == true) {
 
       console.log("vengo de ver orden", this.data.selection);
       
@@ -97,9 +115,12 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
       //this.getOrdenById();
     }
     //localStorage.clear();
+    this.getfiltros();
   }
 
-  crearOrden( accion: string ){
+
+
+  crearOrden( accion: string ) {
     this.contador++;
     this.mostrarSpinner = true;
     console.log("this.contador", this.contador);
@@ -108,8 +129,8 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
       console.log("accion ->", accion);
       this.actualizarOrden();
     }
-    else{
-      if ( this.contador == 1 ){
+    else {
+      if ( this.contador == 1 ) {
 
         let seleccionados = [];
     
@@ -118,15 +139,18 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
         }
     
         let body = { 
-          nombre         : this.nombreOrdenDistInput.nativeElement.value,
-          idTurno        : this.selectedTurno,
-          idTransporte   : this.selectedTransporte,
-          listaId        : seleccionados
+          nombre             : this.nombreOrdenDistInput.nativeElement.value,
+          idTurno            : this.selectedTurno,
+          idTransporte       : this.selectedTransporte,
+          fechaEntregaEnvio  : this.selectedFecha,
+          listaId            : seleccionados
         }
         
         console.log("body que mando", body);
         this._confirmarOrdenDeDistribucionService.crearOrdenDeDistribucion( body ).subscribe( params => {
-          console.log("entró");
+          console.log("entró", params);
+          this.pdfOrdenUrl = params;
+          this.imprimirOrdenDistribucion();
           this._dialog.closeAll();
           this.esperarYnavegar();
         },
@@ -153,11 +177,23 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
     }
   }
 
+  imprimirOrdenDistribucion(){
+    window.open( this.pdfOrdenUrl, '_blank');
+  }
+
   esperarYnavegar(){
     
     setTimeout(() => {                          
       this.navegarAlistaOrdenes();
     }, 1000);
+  }
+
+  verificarEstanTodosLosDatos(){
+    if (( this.selectedTransporte != null && this.selectedFecha != null) && this.selectedTurno != null){
+      this.estanTodosLosDatos = true;
+    } else{
+      this.estanTodosLosDatos = false;
+    }
   }
 
 
@@ -177,6 +213,14 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
         idTurno        : this.selectedTurno,
         idTransporte   : this.selectedTransporte
       }
+
+      /* let body = { 
+          nombre             : this.nombreOrdenDistInput.nativeElement.value,
+          idTurno            : this.selectedTurno,
+          idTransporte       : this.selectedTransporte,
+          fechaEntregaEnvio  : this.selectedFecha,
+          listaId            : seleccionados
+        } */
   
       console.log("body", body, "idOrden", this.idOrden);
       
@@ -280,9 +324,18 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
   }
 
   getfiltros(){
-    this._confirmarOrdenDeDistribucionService.getAllTransportes().subscribe(params => {
+    let listaIdDetalle: number [] = [];
+    for( let elem of this.toAdd ){
+      listaIdDetalle.push(elem.id);
+    }
+    let body = {
+      "listaIdPedidoCbte": listaIdDetalle
+    }
+
+    this._confirmarOrdenDeDistribucionService.getAllTransportes( body ).subscribe(params => {
       this.filtroTransportes = params.datos;
-      //console.log("this.filtroTransportes", this.filtroTransportes);
+      console.log("this.filtroTransportes", this.filtroTransportes);
+      console.log( this.verificarCantPedidos() ); // se saco el transporte seleccionado por default
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
@@ -300,9 +353,13 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
         }
       }
     })
-    this._confirmarOrdenDeDistribucionService.getAllTurnos().subscribe(params => {
+
+    this._confirmarOrdenDeDistribucionService.getAllTurnos( body ).subscribe(params => {
       this.filtroTurnos = params.datos;
-      //console.log("this.filtroTurnos", this.filtroTurnos);
+      this.setearCantidadDeTurnos();
+      //this.setSelectedTurno(); se saco el turno seleccionado por default
+      console.log("this.filtroTurnos", this.filtroTurnos);
+      console.log("TURNO SELECCIONADO", this.selectedTurno );
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
@@ -319,20 +376,152 @@ export class ConfirmarOrdenDeDistribucionComponent implements OnInit {
           this.mostrarError(errStatus, titulo, mensaje);
         }
       }
-    })
+    });
+
+    this._confirmarOrdenDeDistribucionService.getAllFechasDeEntregaExistentes( body ).subscribe(params => {
+      this.filtroFechasDeEntregaExistentes = params.datos;
+      console.log("FechasEntregaExistentes ->", params);
+      //this.selectedFecha = this.filtroFechasDeEntregaExistentes[0].fechaEntregaEnvio; //se saco la fecha seleccionada por default
+      //console.log("this.selectedFecha", this.selectedFecha);
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
+        } else {
+          let titulo = 'Error al cargar filtros';
+          let mensaje = err.error.message.toString();
+          this.mostrarError(errStatus, titulo, mensaje);
+        }
+      }
+    });
   }
 
+  setearCantidadDeTurnos(){
+    if (this.filtroTurnos) {
+
+      if (this.filtroTurnos[0].cantidadPedido > 0 && this.filtroTurnos[0].id === 1 ){
+        this.cantTurnosManiana = this.filtroTurnos[0].cantidadPedido;
+      }
+      if (this.filtroTurnos[0].cantidadPedido > 0 && this.filtroTurnos[0].id === 2 ){
+        this.cantTurnosTarde = this.filtroTurnos[0].cantidadPedido;
+      }
+      if (this.filtroTurnos[1].cantidadPedido > 0 && this.filtroTurnos[1].id === 1 ){
+        this.cantTurnosManiana = this.filtroTurnos[1].cantidadPedido;
+      }
+      if (this.filtroTurnos[1].cantidadPedido > 0 && this.filtroTurnos[1].id === 2 ){
+        this.cantTurnosTarde = this.filtroTurnos[1].cantidadPedido;
+      }
+    }
+  }
+
+  setSelectedTurno(){
+    if (this.cantTurnosManiana > 0 && this.cantTurnosTarde === 0){
+      this.selectedTurno = 1;
+    }
+    if (this.cantTurnosManiana === 0 && this.cantTurnosTarde > 0){
+      this.selectedTurno = 2;
+    }
+    console.log("this.selectedTurno", this.selectedTurno); 
+  }
+  verificarCantPedidos(): boolean{
+    let contador: number = 0;
+    for ( let elem of this.filtroTransportes ) {
+      if (elem.cantidadPedido > 0) {
+        //this.selectedTransporte = elem.id; //se saco el tranposrte seleccionadop por default
+        contador++;
+        if (contador > 1){
+          this.selectedTransporte = null;
+          return true;
+        }
+      }
+    }
+    if (contador === 1){
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  selectFechaExistente(event: Event) {
+    this.selectedFecha = (event.target as HTMLSelectElement).value;
+    console.log("this.selectedFecha", this.selectedFecha);
+    this.verificarEstanTodosLosDatos();
+  }
+  
   selectTransporte(event: Event) {
     this.selectedTransporte = (event.target as HTMLSelectElement).value;
-    console.log("this.selectedTransporte",this.selectedTransporte);
+    console.log("this.selectedTransporte", this.selectedTransporte);
+    this.verificarEstanTodosLosDatos();
   }
-
-  selectTurno(event: Event) {
-    this.selectedTurno = (event.target as HTMLSelectElement).value;
+  
+  selectTurno( value: number ) {
+    /* console.log("entre a select turno");
+    this.selectedTurno = (event.target as HTMLSelectElement).value; */
+    this.selectedTurno = value;
     console.log("this.selectedTurno",this.selectedTurno);
+    this.verificarEstanTodosLosDatos();
+  }
+  
+  addEvent( tipo, evento ) {
+    
+    if (evento.value) {
+      /* ----------------- Para agregarle 0 adelante a mes y dia de un digito ---------------------- */
+      let mes: string;
+      let dia: string;
+      if (evento.value._i.month < 10 && evento.value._i.month > 0 ){
+        mes = "0"+ (evento.value._i.month + 1 );
+      }
+      else {
+        mes = evento.value._i.month + 1;
+      }
+      if (evento.value._i.date < 10 && evento.value._i.date > 0 ){
+        dia = "0" + evento.value._i.date;
+      }
+      else {
+        dia = evento.value._i.date;
+      }
+      let fecha = evento.value._i.year+"-"+ mes +"-"+dia;
+      this.selectedFecha = fecha;
+      console.log("this.selectedFecha", this.selectedFecha);
+      console.log("tipo "+ tipo + ": " +fecha);
+      /* ---------------------------------------------------------------------------------------- */
+      
+      switch (tipo) {
+        case "pickerFechaEntregaOrden":
+          this.pickerFechaEntregaOrden = fecha;
+          this.selectedFecha = fecha;
+          this.minDateHastaOrden = evento.value;
+          break;
+        }    
+      }
+      this.verificarEstanTodosLosDatos();
+    }
+    
+  setMaxAndMinFechaSeleccion(){
+    const currentYear = new Date().getFullYear();
+    this.minDateHastaOrden   = new Date(currentYear - 5, 0, 1);
+    this.maxDateHastaOrden   = new Date(currentYear + 1, 11, 31);
   }
 
+  activarNuevaFecha(){
+    this.nuevaFecha = !this.nuevaFecha;
+  }
 
+  definirTurno(): boolean {
+    if (this.cantTurnosManiana > 0 && this.cantTurnosTarde > 0 ){
+      return true;
+    } 
+    else{
+      return false;
+    }
+  }
 
 
 }

@@ -39,4 +39,12 @@ export class ControlDeCargaService {
         let ruta = `${ BASE_URL }pedidos/distribucion/${ idOrdenDist }`;
         return this._httpClient.get(ruta);
     }
+
+    getOrdenDistribucionPorCupa ( cupa ): Observable<any>{  
+        
+        let ruta = `${ BASE_URL }pedidos/distribucion/cupa/${ cupa }`; 
+
+        return this._httpClient.get(ruta);
+    }
+    
 }

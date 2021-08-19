@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { MatRadioModule } from '@angular/material/radio'
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 //fuse
 import { FuseSharedModule } from '@fuse/shared.module';
@@ -30,6 +32,8 @@ import { ControlarCargaComponent } from './controlar-orden/controlar-orden.compo
 import { PopUpOrdenControladaComponent } from './controlar-orden/popUpOrdenControlada/popUpOrdenControlada.component';
 import { ControlDeCargaService } from './control-de-carga/control-de-carga.service';
 import { ControlarOrdenService } from './controlar-orden/controlar-orden.service';
+import { PopUpOrdenControladaService } from './controlar-orden/popUpOrdenControlada/popUpOrdenControlada.service';
+
 
 
 const routes: Routes = [
@@ -74,7 +78,9 @@ const routes: Routes = [
         FuseSharedModule,
         FuseWidgetModule,
         CustomTagModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        PdfViewerModule,
+        MatRadioModule
     ],
     providers   : [
         CrearOrdenDistribucionService,
@@ -82,7 +88,8 @@ const routes: Routes = [
         VerOrdenDistribucionService,
         ConfirmarOrdenDeDistribucionService,
         ControlDeCargaService,
-        ControlarOrdenService
+        ControlarOrdenService,
+        PopUpOrdenControladaService
     ],
     entryComponents: [ MatDialogModule ]
 })
