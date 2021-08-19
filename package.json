@@ -1,6 +1,6 @@
 {
     "name": "favalogyc",
-    "version": "9.0.0",
+    "version": "0.7",
     "license": "https://themeforest.net/licenses/terms/regular",
     "scripts": {
         "ng": "ng",
