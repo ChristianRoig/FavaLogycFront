@@ -57,6 +57,52 @@
     margin-left: 23px;
 }
 
+.btnToggle {
+    padding-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    padding-left: 20px;
+}
+
+.turnos {
+    display: flex;
+    justify-content: space-around;
+    width: 300px;
+    height: 30px;
+}
+
+.selectFecha {
+    width: 250px;
+}
+
+::ng-deep .tooltip {
+    font-size: 16px !important;
+    color: black;
+}
+
+.turnosDiv {
+    align-items: center;
+}
+
+.alertTurno {
+    padding-left: 50px;
+    padding-right: 45px;
+    font-weight: bold;
+    border-radius: 15px;
+    color: white;
+    background-color: #ff5e00;
+    text-transform: uppercase;
+    width: 250px;
+    height: 20px;
+    padding-top: 4px;
+    margin-bottom: 10px;
+    margin-top: 0px;
+    font-size: 10px;
+    margin-left: 50px;
+}
+
 
 /* .primerDiv {
     background: red !important;

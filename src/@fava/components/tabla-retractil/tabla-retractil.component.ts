@@ -68,7 +68,7 @@ export class TablaRetractilComponent implements OnInit {
       }
       //let codBarra = 0; 
       let cupa = element.listaPartes[0].codigoUnicoParteArticulo;
-      let idVisual = element.listaPartes[0].idVisual;
+      let idVisual = element.detalle.idVisual;
 
       let objeto = {
         'Cod. Art.': cod_art,

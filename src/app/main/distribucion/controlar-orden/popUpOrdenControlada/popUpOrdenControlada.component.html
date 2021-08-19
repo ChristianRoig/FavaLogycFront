@@ -16,6 +16,14 @@
     </div>
 
     <div mat-dialog-actions class="m-0 divBotones" fxLayout="row" fxLayoutAlign="end center">
+        <a download="file.txt">
+            <!-- [href]="fileUrl" download="file.txt" -->
+            <button (click)="descargarCOT()" mat-stroked-button color="accent" class="btnLarge">
+                Descargar COT
+            </button>
+        </a>
+    </div>
+    <div mat-dialog-actions class="m-0 divBotones" fxLayout="row" fxLayoutAlign="end center">
 
         <button (click)="navegarAlista()" mat-raised-button class="btn" color="accent" aria-label="SAVE">
            Continuar
