@@ -1,0 +1,50 @@
+@import "src/@fuse/scss/fuse";
+error-404 {
+    #error-404 {
+        width: 100%;
+        background: #e7e7e7;
+        .content {
+            width: 90%;
+            max-width: 650px !important;
+            .error-code {
+                font-size: 112px;
+                text-align: center;
+                line-height: 1;
+                margin-bottom: 16px;
+                font-weight: 600;
+            }
+            .message {
+                font-size: 24px;
+                text-align: center;
+            }
+            .search {
+                width: 100%;
+                height: 56px;
+                line-height: 56px;
+                margin: 48px auto 16px auto;
+                padding: 16px;
+                border: 1px solid;
+                border-radius: 28px;
+                input {
+                    padding: 0 0 0 16px;
+                }
+            }
+            .back-link {
+                padding-left: 18px;
+                padding-top: 20px;
+                color: white;
+                font-size: 18px;
+                text-align: center;
+            }
+        }
+    }
+}
+
+.contenedorLink {
+    margin-top: 20px;
+    background: #039be6;
+    border-radius: 5px;
+    width: 150px !important;
+    height: 30px !important;
+    border: 5px;
+}

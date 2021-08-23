@@ -4,7 +4,13 @@
 
 export const environment = {
     production: false,
-    hmr       : false
+    hmr       : false,
+    server    : 'http://192.168.100.117:28080/',
+    // server    : 'localhost:8080/',
+    baseUrl   : 'api_favalogyc_frontend/',
+    url_node: 'http://localhost:3000',
+    api_log: 'http://10.100.58.10:8080/fava-auth-svc/login',
+    url_tomcat: 'https://192.168.100.101:8443/apiOnboard_trb/rest/'
 };
 
 /*

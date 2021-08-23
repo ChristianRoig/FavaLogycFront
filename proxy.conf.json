@@ -1,0 +1,7 @@
+{
+    "/api_favalogyc_backend/*": {
+        "target": "http://192.168.100.117:28080",
+        "secure": false,
+        "changeOrigin": true
+    }
+}
