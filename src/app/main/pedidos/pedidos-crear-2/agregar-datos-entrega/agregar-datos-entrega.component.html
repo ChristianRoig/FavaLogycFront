@@ -1,0 +1,245 @@
+<div fxLayout="row" style="width: 100%;" class="formClass">
+    <mat-toolbar matDialogTitle class="mat-accent">
+        <mat-toolbar-row fxLayoutAlign="center" class="titulo2">
+            <h2 *ngIf="this.data.option === 'add'" class="centrarTitulo" mat-dialog-title>Agregar Dato de entrega</h2>
+            <h2 *ngIf="this.data.option === 'upd'" class="centrarTitulo" mat-dialog-title>Modificar Dato de entrega</h2>
+            <h2 *ngIf="this.data.option === 'view'" class="centrarTitulo" mat-dialog-title>Ver Dato de entrega</h2>
+        </mat-toolbar-row>
+    </mat-toolbar>
+</div>
+<mat-dialog-content *ngIf="this.crearDirec" class="mat-typography contenedorPadre">
+
+    <!-- <div fxLayout="column" class="divPrincipal"> -->
+
+    <form class="formulario" fxLayout="column" fxFlex="1 0 auto" name="form" fusePerfectScrollbar>
+
+        <!-- <div class="contenedorBarra">
+            <mat-label class="titulo">Información de entrega</mat-label>
+            <div class="divDos">
+                <mat-form-field appearance="outline" fxFlex class="selector">
+                    <mat-label>{{ filtroTransporte ? 'Transporte' : 'Cargando...'}}</mat-label>
+                    <select matNativeControl (change)="selectTransporte($event)" [disabled]="!filtroTransporte || deshabilitado">
+                            <option *ngIf="this.mostrarDatos == false" [value]="0">Seleccionar Transporte</option>
+                            <option *ngIf="this.mostrarDatos == true"> {{ devolverNombreTransporte(this.data.item.sysTransporte.id) }} </option>
+                            <option *ngFor="let transporte of filtroTransporte" [value]="transporte.id"
+                                [selected]="selectedTransporte === transporte.id"> {{ transporte.nombre }}</option>
+                        </select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex class="selector">
+                    <mat-label>Fecha de entrega</mat-label>
+                    <input matInput *ngIf="this.mostrarDatos == false" autocomplete="off" [matDatepicker]="picker" [min]="minDateHastaFiltro" [value]='valorPicker' (dateChange)="addEvent($event)" [disabled]='deshabilitado'>
+                    <input matInput *ngIf="this.mostrarDatos == true" autocomplete="off" [matDatepicker]="picker" [min]="minDateHastaFiltro" [value]='this.valorPicker' (dateChange)="addEvent($event)" [disabled]='deshabilitado'>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex class="selector">
+                    <mat-label>{{ filtroTurnos ? 'Turno' : 'Cargando...'}}</mat-label>
+                    <select matNativeControl (change)="selectTurno($event)" [disabled]="!filtroTurnos || deshabilitado">
+                            <option *ngIf="this.mostrarDatos == false"[value]="0">Seleccionar Turno</option>
+                            <option *ngIf="this.mostrarDatos == true"> {{ devolverTurno(this.selectedTurno) }} </option>
+                            <option *ngFor="let turno of filtroTurnos" [value]="turno.id"
+                                [selected]="selectedTurno === turno.id"> {{ turno.nombre }}</option>
+                        </select>
+                </mat-form-field>
+
+
+            </div>
+        </div> -->
+        <div class="divContenedor">
+            <!-- <div class="divDos">
+                <mat-form-field appearance="outline" fxFlex class="selector">
+                    <mat-label>Fecha de entrega</mat-label>
+                    <input matInput *ngIf="this.mostrarDatos == false" autocomplete="off" [matDatepicker]="picker" [min]="minDateHastaFiltro" [value]='valorPicker' (dateChange)="addEvent($event)" [disabled]='deshabilitado'>
+                    <input matInput *ngIf="this.mostrarDatos == true" autocomplete="off" [matDatepicker]="picker" [min]="minDateHastaFiltro" [value]='this.valorPicker' (dateChange)="addEvent($event)" [disabled]='deshabilitado'>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex class="selector">
+                    <mat-label>{{ filtroTurnos ? 'Turno' : 'Cargando...'}}</mat-label>
+                    <select matNativeControl (change)="selectTurno($event)" [disabled]="!filtroTurnos || deshabilitado">
+                            <option *ngIf="this.mostrarDatos == false"[value]="0">Seleccionar Turno</option>
+                            <option *ngIf="this.mostrarDatos == true"> {{ devolverTurno(this.selectedTurno) }} </option>
+                            <option *ngFor="let turno of filtroTurnos" [value]="turno.id"
+                                [selected]="selectedTurno === turno.id"> {{ turno.nombre }}</option>
+                        </select>
+                </mat-form-field>
+            </div> -->
+
+            <div fxLayout="column" class="divUno">
+                <mat-label class="tituloDos">Información de entrega</mat-label>
+                <div fxLayout="row" class="divFechaAndTurno">
+                    <mat-form-field appearance="outline" fxFlex class="selectorFecha">
+                        <mat-label>Fecha de entrega</mat-label>
+                        <input matInput *ngIf="this.mostrarDatos == false" autocomplete="off" [matDatepicker]="picker" [min]="minDateHastaFiltro" [value]='this.valorPicker' (dateChange)="addEvent($event)" [disabled]='deshabilitado'>
+                        <input matInput *ngIf="this.mostrarDatos == true" autocomplete="off" [matDatepicker]="picker" [min]="minDateHastaFiltro" [value]='this.valorPicker' (dateChange)="addEvent($event)" [disabled]='deshabilitado'>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+
+                    <!-- <mat-form-field appearance="outline" fxFlex class="selectorFecha">
+                        <mat-label>{{ filtroTurnos ? 'Turno' : 'Cargando...'}}</mat-label>
+                        <select matNativeControl (change)="selectTurno($event)" [disabled]="!filtroTurnos || deshabilitado">
+                            <option *ngIf="this.mostrarDatos == false"[value]="0">Seleccionar Turno</option>
+                            <option *ngIf="this.mostrarDatos == true"> {{ devolverTurno(this.selectedTurno) }} </option>
+                            <option *ngFor="let turno of filtroTurnos" [value]="turno.id"
+                                [selected]="selectedTurno === turno.id"> {{ turno.nombre }}</option>
+                        </select>
+                    </mat-form-field> -->
+
+
+                    <div class="divBtnToggle" fxLayout="column">
+                        <label>Turno:</label>
+                        <div class="btnToggle" fxLayout="row">
+                            <mat-slide-toggle formcontrolname="hidden" (click)="definirTurno()" type="button" class="mat-slide-toggle"></mat-slide-toggle>
+                            <label class="pl-8">{{ this.nombreTurno }}</label>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- ------------------------------------------------------------------------------------ -->
+                <mat-label class="tituloDos">Información de Destino</mat-label>
+                <!-- class="bloque" -->
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Dirección</mat-label>
+                    <input matInput [(ngModel)]='this.direccion' [disabled]='deshabilitado' [ngModelOptions]="{standalone: true}">
+                </mat-form-field>
+
+                <!-- <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Código Postal</mat-label>
+                    <input matInput disabled [value]="this.codigoPostal">
+                </mat-form-field> -->
+
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>{{ selectedProvincia ? 'Provincia' : 'Cargando...'}}</mat-label>
+                    <select matNativeControl (change)="selectProvincia($event)" [disabled]="!filtroProvincias || deshabilitado">
+
+                        <ng-container *ngIf="mostrarDatos; then provinciasViewUpdy; else provincias"></ng-container>
+                        
+                        <ng-template #provinciasViewUpdy>
+                            <option *ngFor="let provincia of filtroProvincias; let index = index" [value]="provincia.id" [selected]="index == selectedProvincia - 1"> 
+                                {{ provincia.nombre }}
+                            </option>
+                        </ng-template>
+
+                        <ng-template #provincias>
+                            <option *ngFor="let provincia of filtroProvincias; let index = index" [value]="provincia.id" [selected]="index == selectedProvincia - 1"> 
+                                {{ provincia.nombre }}
+                            </option>
+                        </ng-template>
+                       
+                    </select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>{{ filtroLocalidades ? 'Localidad' : 'Cargando...'}}</mat-label>
+                    <select matNativeControl (change)="selectLocalidad( $event )" [disabled]="!filtroLocalidades || deshabilitado">
+
+                        <ng-container *ngIf="mostrarDatos; then localidadesViewUpdt; else localidades"></ng-container>
+                        
+                        <ng-template #localidadesViewUpdt>
+                            <option *ngFor="let localidad of filtroLocalidades; let index = index" [value]="localidad.id" [selected]="index == ( this.indexLocalidad )"> 
+                                {{ localidad.nombre }}  ({{ localidad.codigoPostal }})
+                            </option>
+                        </ng-template>
+
+                        <ng-template #localidades>
+                            <option *ngFor="let localidad of filtroLocalidades; let index = index" [value]="localidad.id" [selected]="index == (this.selectedLocalidad - 1 )"> 
+                               {{ localidad.nombre }} ({{ localidad.codigoPostal }})
+                            </option>
+                        </ng-template>
+                        
+                    </select>
+                </mat-form-field>
+
+                <!-------------------------------------------ESPACIO PARA SELECT TRANSPORTES------------------------------------------------------------------>
+
+                <div class="divToggleTransporte" fxLayout="row">
+                    <label class="pr-8">Seleccionar Transporte</label>
+                    <mat-slide-toggle formcontrolname="hidden" (click)="activarTransporte()" type="button" class="mat-slide-toggle"></mat-slide-toggle>
+                </div>
+                <div *ngIf="this.setTransporte === true">
+                    <mat-form-field appearance="outline" fxFlex class="selector">
+                        <mat-label>{{ filtroTransporte ? 'Transporte' : 'Cargando...'}}</mat-label>
+                        <select matNativeControl (change)="selectTransporte($event)" [disabled]="!filtroTransporte || deshabilitado">
+                            <option *ngIf="this.mostrarDatos == false" [value]="0">Seleccionar Transporte</option>
+                            <option *ngIf="this.mostrarDatos == true"> {{ devolverNombreTransporte(this.data.item.sysTransporte.id) }} </option>
+                            <option *ngFor="let transporte of filtroTransporte" [value]="transporte.id"
+                                [selected]="selectedTransporte === transporte.id"> {{ transporte.nombre }}</option>
+                        </select>
+                    </mat-form-field>
+                </div>
+
+                <!------------------------------------------------------------------------------------------------------------->
+
+
+            </div>
+            <div class="divTres">
+                <mat-label class="tituloDos">Información de Contacto</mat-label>
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Nombre de Contacto</mat-label>
+
+                    <input matInput [(ngModel)]='this.contacto' [disabled]='deshabilitado' [ngModelOptions]="{standalone: true}">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Teléfono</mat-label>
+                    <input matInput [(ngModel)]='this.telefono' [disabled]='deshabilitado' [ngModelOptions]="{standalone: true}">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Mail</mat-label>
+                    <input matInput [(ngModel)]='this.mail' [disabled]='deshabilitado' [ngModelOptions]="{standalone: true}">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Observaciones (máximo dos renglones)</mat-label>
+                    <!-- cols="20" rows="5" wrap="hard" maxlength="100"   PARA SETEAR VALORES DE TAMAÑO, CARACTERES Y FILAS -->
+                    <textarea matInput [(ngModel)]='this.observaciones' [disabled]='deshabilitado' placeholder="Ingrese la observación" rows="5" [ngModelOptions]="{standalone: true}"></textarea>
+                </mat-form-field>
+            </div>
+        </div>
+
+    </form>
+
+</mat-dialog-content>
+
+<!-- --------------------------------------------------------------------------------------------------------------------------------- -->
+
+<!-- <mat-dialog-content *ngIf="!this.crearDirec" class="mat-typography contenedorPadre">
+
+    <form class="formularioDos" fxLayout="column" fxFlex="1 0 auto" name="form" fusePerfectScrollbar>
+
+        <div class="divCuatro">
+
+            <mat-label class="tituloDirecciones">Direcciones disponibles</mat-label>
+            <mat-form-field appearance="outline" fxFlex class="selector">
+                <mat-label>Seleccionar dirección</mat-label>
+                <select matNativeControl>
+                    <option>Calle Luro 641</option>
+                    <option> Calle Falsa 123</option>
+                </select>
+            </mat-form-field>
+            <mat-label class="tituloDirecciones">ó</mat-label>
+
+            <button mat-raised-button class="btnAddDirecc" color="accent" (click)="agregarNuevaDirec()">Agregar nueva dirección</button>
+        </div>
+    </form>
+
+</mat-dialog-content> -->
+
+<mat-dialog-actions *ngIf="this.data.option === 'add'">
+    <div class="botones">
+        <button mat-raised-button [mat-dialog-close]="true" class="btn" color="accent" (click)="agregar()">Agregar</button>
+        <button mat-stroked-button class="btn" mat-dialog-close>Cancelar</button>
+    </div>
+</mat-dialog-actions>
+<mat-dialog-actions *ngIf="this.data.option === 'upd'">
+    <button mat-raised-button [mat-dialog-close]="true" class="btn" color="accent" (click)="agregar()">Modificar</button>
+    <button mat-stroked-button class="btn" mat-dialog-close>Cancelar</button>
+</mat-dialog-actions>
+<mat-dialog-actions class="btn" *ngIf="this.data.option === 'view'" fxLayoutAlign="end center">
+    <button mat-stroked-button class="btn" mat-dialog-close>Cancelar</button>
+</mat-dialog-actions>

@@ -1,0 +1,59 @@
+<app-plantilla-fondo arrowBack=true titulo='Controlar Lote en {{ this.tituloPagina }} - Lote {{ this.idLote }}'>
+
+
+    <div contenido>
+
+        <!--div style="width: 100%;"-->
+
+            <div fxLayout="row" class="controlesBusquedaF">
+
+                <div fxLayout="row" class="inputs">
+                    <mat-form-field appearance="outline" class="inputBusqueda">
+                        <mat-label>Código de Barras</mat-label>
+                        <input #buscarCodigoBarras (keydown)="saltarAcupa($event)" (keyup)="searchCodigoBarras()" matInput value="" placeholder="Ingrese un Código de Barras">
+                        <mat-icon matSuffix>search</mat-icon>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="inputBusqueda">
+                        <mat-label>CUPA</mat-label>
+                        <input #buscarCUPA id="inputCupa" (keyup)="searchCUPA()" (keydown)="saltarAbotonControlar($event)" matInput value="" placeholder="Ingrese un CUPA">
+                        <mat-icon matSuffix>search</mat-icon>
+                    </mat-form-field>
+                </div>
+
+                <div class="botonesBusqueda">
+                    <div *ngIf="this.ocultarBotones">
+                        <button mat-raised-button (click)="controlarEtapaArticulo()" [disabled]="!this.cupa || !this.codigoBarras" #btnRef="matButton" class="btn" color="primary">Controlar</button>
+
+                        <!-- <button mat-raised-button class="btn" color="warn" (click)="toggle()">Eliminar</button> -->
+                        <button mat-raised-button class="btn" color="warn" (click)="popUpLoteControlado()">Eliminar</button>
+                    </div>
+                    <div class="btnToggle">
+                        <mat-slide-toggle formcontrolname="hidden" type="button" (click)="toggleBotones()" [(ngModel)]="ocultarBotones" class="mat-slide-toggle"></mat-slide-toggle>
+                        <label class="pl-8">Mostar botones</label>
+                    </div>
+                </div>
+
+            </div>
+
+            <div [@esconder]="funcionEsconder" class="botonesBusqueda" style="width: 100%;">
+                <mat-form-field appearance="outline" class="inputBusquedaBorrar">
+                    <mat-label>CUPA a eliminar</mat-label>
+                    <input #eliminaCupa class="text-uppercase" (keyup)="searchCUPA()" matInput value="" placeholder="Ingrese un CUPA">
+                    <mat-icon matSuffix>search</mat-icon>
+                </mat-form-field>
+                <button mat-raised-button class="btnBorrar" color="warn" (click)="borrarArticuloDeLotePorCupa()">Borrar</button>
+            </div>
+
+            <div fxLayout="row" class="divEstado">
+                <mat-label class="mt-16">Estado del lote: </mat-label>
+                <p *ngIf="this.estadoLote === 'CONTROLADO'" class="estadoControlado">{{ this.estadoLote }}</p>
+                <p *ngIf="this.estadoLote === 'A CONTROLAR'" class="estadoAcontrolar">{{ this.estadoLote }}</p>
+            </div>
+          
+                <app-tabla-retractil *ngIf="this.articulos" [arregloDeDetalles]='this.articulos'></app-tabla-retractil>
+           
+        </div>
+
+    <!--/div--> 
+</app-plantilla-fondo>

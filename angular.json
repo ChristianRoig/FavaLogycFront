@@ -17,8 +17,8 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-            "aot": true,
-                        "outputPath": "dist/fuse",
+                        "aot": true,
+                        "outputPath": "dist",
                         "index": "src/index.html",
                         "main": "src/main.ts",
                         "polyfills": "src/polyfills.ts",
@@ -35,12 +35,10 @@
                     },
                     "configurations": {
                         "production": {
-                            "fileReplacements": [
-                                {
-                                    "replace": "src/environments/environment.ts",
-                                    "with": "src/environments/environment.prod.ts"
-                                }
-                            ],
+                            "fileReplacements": [{
+                                "replace": "src/environments/environment.ts",
+                                "with": "src/environments/environment.prod.ts"
+                            }],
                             "optimization": true,
                             "outputHashing": "all",
                             "sourceMap": false,
@@ -50,41 +48,209 @@
                             "extractLicenses": true,
                             "vendorChunk": false,
                             "buildOptimizer": true,
-                            "budgets": [
-                                {
+                            "budgets": [{
                                     "type": "initial",
                                     "maximumWarning": "4mb",
                                     "maximumError": "6mb"
                                 },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb"
-                }
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "6kb"
+                                }
+                            ]
+                        },
+                        "devFront": {
+                            "fileReplacements": [{
+                                "replace": "src/environments/environment.ts",
+                                "with": "src/environments/environment.devFront.ts"
+                            }],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "aot": true,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [{
+                                    "type": "initial",
+                                    "maximumWarning": "4mb",
+                                    "maximumError": "6mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "6kb"
+                                }
+                            ]
+                        },
+                        "devBack": {
+                            "fileReplacements": [{
+                                "replace": "src/environments/environment.ts",
+                                "with": "src/environments/environment.devBack.ts"
+                            }],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "aot": true,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [{
+                                    "type": "initial",
+                                    "maximumWarning": "4mb",
+                                    "maximumError": "6mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "6kb"
+                                }
+                            ]
+                        },
+                        "debug": {
+                            "fileReplacements": [{
+                                "replace": "src/environments/environment.ts",
+                                "with": "src/environments/environment.debug.ts"
+                            }],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "aot": true,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [{
+                                    "type": "initial",
+                                    "maximumWarning": "4mb",
+                                    "maximumError": "6mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "6kb"
+                                }
+                            ]
+                        },
+                        "debugTomcat": {
+                            "fileReplacements": [{
+                                "replace": "src/environments/environment.ts",
+                                "with": "src/environments/environment.debugTomcat.ts"
+                            }],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "aot": true,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [{
+                                    "type": "initial",
+                                    "maximumWarning": "4mb",
+                                    "maximumError": "6mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "6kb"
+                                }
+                            ]
+                        },
+                        "preProd": {
+                            "fileReplacements": [{
+                                "replace": "src/environments/environment.ts",
+                                "with": "src/environments/environment.preProd.ts"
+                            }],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "aot": true,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [{
+                                    "type": "initial",
+                                    "maximumWarning": "4mb",
+                                    "maximumError": "6mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "6kb"
+                                }
+                            ]
+                        },
+                        "test": {
+                            "fileReplacements": [{
+                                "replace": "src/environments/environment.ts",
+                                "with": "src/environments/environment.test.ts"
+                            }],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "aot": true,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [{
+                                    "type": "initial",
+                                    "maximumWarning": "4mb",
+                                    "maximumError": "6mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "6kb"
+                                }
+                            ]
+                        },
+                        "desarr": {
+                            "fileReplacements": [{
+                                "replace": "src/environments/environment.ts",
+                                "with": "src/environments/environment.desarr.ts"
+                            }],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "aot": true,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [{
+                                    "type": "initial",
+                                    "maximumWarning": "4mb",
+                                    "maximumError": "6mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "6kb"
+                                }
                             ]
                         },
                         "ec": {
-              "budgets": [
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb"
-                }
-              ],
+                            "budgets": [{
+                                "type": "anyComponentStyle",
+                                "maximumWarning": "6kb"
+                            }],
                             "sourceMap": true,
                             "extractCss": true
                         },
                         "hmr": {
-              "budgets": [
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb"
-                }
-              ],
-                            "fileReplacements": [
-                                {
-                                    "replace": "src/environments/environment.ts",
-                                    "with": "src/environments/environment.hmr.ts"
-                                }
-                            ]
+                            "budgets": [{
+                                "type": "anyComponentStyle",
+                                "maximumWarning": "6kb"
+                            }],
+                            "fileReplacements": [{
+                                "replace": "src/environments/environment.ts",
+                                "with": "src/environments/environment.hmr.ts"
+                            }]
                         }
                     }
                 },
@@ -157,5 +323,8 @@
             }
         }
     },
-    "defaultProject": "fuse"
+    "defaultProject": "fuse",
+    "cli": {
+        "analytics": "72eec33e-f6eb-40dd-9207-b5015c5ab190"
+    }
 }

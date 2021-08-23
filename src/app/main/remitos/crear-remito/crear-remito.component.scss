@@ -1,0 +1,89 @@
+table {
+    width: 100%;
+    min-width: 720px;
+}
+
+td.mat-column-star {
+    width: 20px;
+    padding-right: 8px;
+}
+
+th.mat-column-position,
+td.mat-column-position {
+    padding-left: 8px;
+}
+
+.mat-table-sticky:first-child {
+    border-right: 1px solid #e0e0e0;
+}
+
+.mat-table-sticky:last-child {
+    border-left: 1px solid #e0e0e0;
+}
+
+a {
+    cursor: pointer;
+}
+
+.filtros {
+    width: 300px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: auto;
+    margin-right: 0px;
+    padding-bottom: 15px;
+}
+
+.btnToggle {
+    width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+fuse-sidebar {
+    width: unset !important;
+    max-width: unset !important;
+}
+
+.field-auto {
+    flex-direction: row;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+::ng-deep .field-auto mat-form-field {
+    width: 600px !important;
+    min-width: 100px !important;
+    margin-right: 10px;
+    padding: 0px !important;
+}
+
+.inputBusqueda {
+    width: 600px !important;
+}
+
+.btn {
+    height: 40px;
+    width: 120px;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-top: 22px;
+    margin-left: 22px;
+}
+
+.darsenaSelect {
+    width: 300px;
+}
+
+@media (max-width: 768px) {
+    .btn {
+        height: 60px;
+        width: 120px;
+        padding-left: 5px;
+        padding-right: 5px;
+        margin-top: 12px;
+    }
+}

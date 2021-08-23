@@ -1,0 +1,193 @@
+<fuse-sidebar name="sidebarFilter" class="theme-options-sidebar" position="right" [invisibleOverlay]="false">
+
+    <div fxLayout="column">
+
+        <!-- BOTON CERRAR -->
+        <span fxLayoutAlign="start">
+            <button fxHide.gt-sm mat-button (click)="toggleSidebarOpen('sidebarFilter')" class="mb-24">
+                <mat-icon>close</mat-icon>
+            </button> 
+        </span>
+        <!-- / BOTON CERRAR -->
+
+        <!-- FILTROS LOTE -->
+        <span class="p-24 pt-8">
+            <ng-container *ngTemplateOutlet="filtrosLote"></ng-container>
+        </span>
+        <!-- / FILTROS LOTE -->
+
+        <!-- FILTROS ARTICULOS -->
+        <span class="p-24 pt-8">
+            <ng-container *ngTemplateOutlet="filtros"></ng-container>
+        </span>
+        <!-- / FILTRO ARTICULOS -->
+
+    </div>
+</fuse-sidebar>
+<!-- / SIDE BAR -->
+
+<!-- TEMPLATE SIN DETALLES -->
+<ng-template #notHasDetalle>
+    <mat-card class="align-items: center;">{{this.mensaje}}</mat-card>
+</ng-template>
+
+<!-- FILTROS ARTICULOS -->
+<ng-template #filtros>
+    <form fxLayout="column" name="form">
+
+        <span fxLayoutAlign="space-between">
+
+            <div class="h2 mb-24">
+                Filtros por Artículos
+            </div>
+          
+        </span>
+
+        <mat-form-field appearance="outline">
+            <mat-label>{{ filtroTipos ? 'Tipos' : 'Cargando...'}}</mat-label>
+            <select matNativeControl (change)="selectTipo($event)" [disabled]="!filtroTipos">
+                <option [value]="0">TODOS</option>
+                <option *ngFor="let tipo of filtroTipos" [value]="tipo.id"
+                    [selected]="selectedTipo === tipo.id"> {{ tipo.nombre }}</option>
+            </select>
+        </mat-form-field>
+
+
+        <!-- <div fxLayout="row"> -->
+
+        <!-- <mat-form-field appearance="outline" fxFlex="50" class="mr-4">
+                <mat-label>{{ filtroTurnos ? 'Turno' : 'Cargando...'}}</mat-label>
+                <select matNativeControl (change)="selectTurno($event)" [disabled]="!filtroTurnos">
+                    <option [value]="0">TODOS</option>
+                    <option *ngFor="let turno of filtroTurnos" [value]="turno.id"
+                        [selected]="selectedTurno === turno.id"> {{ turno.nombre }}</option>
+                </select>
+            </mat-form-field>   -->
+
+        <mat-form-field appearance="outline">
+            <mat-label>{{ filtroOrigenes ? 'Origen' : 'Cargando...'}}</mat-label>
+            <select matNativeControl (change)="selectOrigen($event)" [disabled]="!filtroOrigenes">
+                    <option [value]="0">TODOS</option>
+                    <option *ngFor="let origen of filtroOrigenes" [value]="origen.id"
+                        [selected]="selectedOrigen === origen.id"> {{ origen.nombre }}</option>
+                </select>
+        </mat-form-field>
+        <!-- </div> -->
+
+
+        <div fxLayout="row">
+
+            <!-- <mat-form-field appearance="outline" fxFlex="50" class="mr-4">
+                <mat-label>{{ filtroEstados ? 'Estado' : 'Cargando...'}}</mat-label>
+                <select matNativeControl (change)="selectEstado($event)" [disabled]="!filtroEstados">
+                    <option [value]="0">TODOS</option>
+                    <option *ngFor="let estado of filtroEstados" [value]="estado.id"
+                        [selected]="selectedEstado === estado.id"> {{ estado.nombre }}</option>
+                </select>
+            </mat-form-field>    -->
+            <mat-form-field appearance="outline" fxFlex="50" class="mr-4">
+                <mat-label>{{ filtroTurnos ? 'Turno' : 'Cargando...'}}</mat-label>
+                <select matNativeControl (change)="selectTurno($event)" [disabled]="!filtroTurnos">
+                    <option [value]="0">TODOS</option>
+                    <option *ngFor="let turno of filtroTurnos" [value]="turno.id"
+                        [selected]="selectedTurno === turno.id"> {{ turno.nombre }}</option>
+                </select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" fxFlex="50" class="ml-4">
+                <mat-label>{{ filtroEtapas ? 'Etapa' : 'Cargando...'}}</mat-label>
+                <select matNativeControl (change)="selectEtapa($event)" [disabled]="!filtroEtapas">
+                    <option [value]="-1">ACTIVOS</option>
+                    <option [value]="0">TODOS</option>
+                    <option *ngFor="let etapa of filtroEtapas" [value]="etapa.id"
+                        [selected]="selectedEtapa === etapa.id"> {{ etapa.nombre }}</option>
+                </select>
+            </mat-form-field>
+        </div>
+
+        <div fxLayout="row">
+
+            <mat-form-field appearance="outline" fxFlex="50" class="mr-4">
+                <mat-label>{{ filtroProvincias ? 'Provincia' : 'Cargando...'}}</mat-label>
+                <select matNativeControl (change)="selectProvincia($event)" [disabled]="!filtroProvincias">
+                    <option [value]="0">TODOS</option>
+                    <option *ngFor="let provincia of filtroProvincias" [value]="provincia.id"
+                        [selected]="selectedProvincia === provincia.id"> {{ provincia.nombre }}</option>
+                </select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" fxFlex="50" class="ml-4">
+                <!-- <mat-label>Localidad</mat-label> -->
+                <mat-label>{{ filtroLocalidades ? 'Localidad' : 'Cargando...'}}</mat-label>
+                <select matNativeControl (change)="selectLocalidad($event)" [disabled]="!filtroLocalidades">
+                    <option [value]="0">TODOS</option>
+                    <option *ngFor="let localidad of filtroLocalidades" [value]="localidad.id"
+                        [selected]="selectedLocalidad === localidad.id"> {{ localidad.nombre }}</option>
+                </select>
+            </mat-form-field>
+        </div>
+
+        <div fxLayout="row">
+
+            <mat-form-field appearance="outline" fxFlex="50" class="mr-4">
+                <mat-label>Desde</mat-label>
+                <input matInput [min]="minDateDesdeFiltro" [max]="maxDateDesdeFiltro" [matDatepicker]="pickerFiltroDesde" (dateChange)="addEvent('pickerFiltroDesde', $event)">
+                <mat-datepicker-toggle matSuffix [for]="pickerFiltroDesde"></mat-datepicker-toggle>
+                <mat-datepicker #pickerFiltroDesde></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" fxFlex="50" class="ml-4">
+                <mat-label>Hasta</mat-label>
+                <input matInput [min]="minDateHastaFiltro" [max]="maxDateHastaFiltro" [matDatepicker]="pickerFiltroHasta" (dateChange)="addEvent('pickerFiltroHasta', $event)">
+                <mat-datepicker-toggle matSuffix [for]="pickerFiltroHasta"></mat-datepicker-toggle>
+                <mat-datepicker #pickerFiltroHasta></mat-datepicker>
+            </mat-form-field>
+        </div>
+
+        <button mat-stroked-button color="accent" (click)="buscar()" class="mb-24">
+            Aplicar Filtros
+        </button>
+    </form>
+</ng-template>
+<!-- / FILTROS ARTICULOS -->
+
+
+<!-- FILTROS LOTE -->
+<ng-template #filtrosLote>
+
+    <div fxLayout="column">
+
+        <span fxLayout="row" fxLayoutAlign="space-between">
+        
+            <div class="h2 mb-24">
+                Filtros por Lote
+            </div>
+        </span>
+
+
+        <mat-form-field appearance="outline">
+            <mat-label>Lote</mat-label>
+            <input #buscarLote (keyup)="searchLote()" matInput value="" placeholder="Buscar lote">
+            <!-- <input matInput value="" placeholder="Buscar lote"> -->
+            <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+
+        <div fxLayout="row">
+
+            <mat-form-field appearance="outline" fxFlex="50" class="mr-4">
+                <mat-label>Desde (lote)</mat-label>
+                <input matInput [min]="minDateDesdeLote" [max]="maxDateDesdeLote" [matDatepicker]="pickerLoteDesde" (dateChange)="addEvent('pickerLoteDesde', $event)">
+                <mat-datepicker-toggle matSuffix [for]="pickerLoteDesde"></mat-datepicker-toggle>
+                <mat-datepicker #pickerLoteDesde></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" fxFlex="50" class="ml-4">
+                <mat-label>Hasta (lote)</mat-label>
+                <input matInput [min]="minDateHastaLote" [max]="maxDateHastaLote" [matDatepicker]="pickerLoteHasta" (dateChange)="addEvent('pickerLoteHasta', $event)">
+                <mat-datepicker-toggle matSuffix [for]="pickerLoteHasta"></mat-datepicker-toggle>
+                <mat-datepicker #pickerLoteHasta></mat-datepicker>
+            </mat-form-field>
+        </div>
+    </div>
+</ng-template>
+<!-- / FILTROS LOTE -->

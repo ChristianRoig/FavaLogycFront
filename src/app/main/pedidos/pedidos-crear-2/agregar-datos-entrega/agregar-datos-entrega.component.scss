@@ -1,0 +1,316 @@
+.contenedorPadre {
+    width: 1000px;
+    max-width: 1003px;
+    border-radius: 10px;
+    align-items: center;
+    border: 1px solid;
+    border-color: rgb(197, 197, 197);
+    background: rgb(248, 248, 248);
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+mat-form-field {
+    width: 350px !important;
+    height: 80px !important;
+}
+
+.mat-dialog-container {
+    height: 1000px!important;
+    width: 1000px!important;
+}
+
+body.theme-default {
+    background: #7c7c7c !important;
+}
+
+.titulo {
+    padding-left: 30px;
+}
+
+.tituloDirecciones {
+    padding-bottom: 20px;
+}
+
+.tituloDos {
+    margin-right: 200px;
+    margin-bottom: 10px;
+}
+
+.contenedorBarra {
+    width: 96%;
+    flex-direction: column;
+    border: 1px solid;
+    border-color: lightgray;
+    background: white;
+    border-radius: 10px;
+    padding-top: 20px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    height: 150px;
+}
+
+.contenedorBarraDos {
+    width: 96%;
+    flex-direction: column;
+    border: 1px solid;
+    border-color: lightgray;
+    background: white;
+    border-radius: 10px;
+    padding-top: 20px;
+    margin-top: 10px;
+    //margin-left: 50px;
+    //margin-right: 50px;
+    margin-bottom: 20px;
+    height: 400px;
+}
+
+.mat-dialog-actions {
+    justify-content: space-around;
+}
+
+.divUno {
+    width: 470px !important;
+    height: 600px;
+    flex-direction: column;
+    box-sizing: border-box;
+    display: flex;
+    background: white;
+    border-radius: 10px;
+    align-items: center;
+    padding-top: 30px;
+    border: 1px solid;
+    border-color: lightgray;
+    margin-left: 20px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    padding-bottom: 20px;
+}
+
+.divTres {
+    width: 470px !important;
+    height: 600px;
+    flex-direction: column;
+    box-sizing: border-box;
+    display: flex;
+    background: white;
+    border-radius: 10px;
+    align-items: center;
+    padding-top: 30px;
+    border: 1px solid;
+    border-color: lightgray;
+    margin-left: 10px;
+    margin-right: 20px;
+    margin-bottom: 10px;
+    padding-bottom: 50px;
+}
+
+.divCuatro {
+    width: 470px !important;
+    height: 300px;
+    flex-direction: column;
+    box-sizing: border-box;
+    display: flex;
+    background: white;
+    border-radius: 10px;
+    align-items: center;
+    padding-top: 30px;
+    border: 1px solid;
+    border-color: lightgray;
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+
+.divFechaAndTurno {
+    display: flex;
+}
+
+.btnToggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 5px;
+}
+
+.divBtnToggle {
+    margin-top: 10px;
+    margin-left: 30px;
+    width: 90px;
+}
+
+.divToggleTransporte {
+    width: 200px;
+    margin-bottom: 20px;
+}
+
+.divContenedor {
+    display: flex;
+    align-items: center !important;
+    justify-content: space-between;
+    width: 990px;
+}
+
+.divDos {
+    width: 96%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 10px;
+    margin-top: 10px;
+    background: white;
+}
+
+.formulario {
+    display: block;
+    align-items: center;
+    width: 990px;
+}
+
+.formularioDos {
+    display: block;
+    align-items: center;
+    width: 500px;
+}
+
+.titulo2 {
+    background: #039be6;
+    color: white;
+    height: 50px;
+    width: 100%;
+    border-radius: 5px;
+}
+
+.formClass {
+    width: 99% !important;
+    /* flex-direction: row; */
+    box-sizing: border-box;
+    /* display: flex; */
+    display: block !important;
+    justify-content: center;
+    align-items: center;
+    margin-left: 5px;
+    height: 60 px;
+}
+
+.btn {
+    width: 140px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.btnAddDirecc {
+    width: 350px;
+    margin-top: 5px;
+    margin-bottom: 50px;
+}
+
+.botones {
+    width: 99%;
+    margin-left: 5px;
+    justify-content: space-around;
+    display: flex;
+}
+
+.selector {
+    width: 350px !important;
+    margin-right: 15px;
+    margin-left: 15px;
+}
+
+.selectorFecha {
+    width: 225px !important;
+    /* margin-right: 15px;
+    margin-left: 15px; */
+}
+
+.centrarTitulo {
+    place-content: center;
+    align-items: center;
+    flex-direction: row;
+    box-sizing: border-box;
+    display: flex;
+    padding-top: 20px;
+}
+
+mat-dialog-content {
+    display: flex;
+    //padding: 24px;
+    overflow: auto;
+    width: 100% !important;
+    height: 100%;
+    min-height: inherit;
+    max-height: inherit;
+    justify-content: center !important;
+    margin-left: 5px;
+    margin-right: 5px;
+    padding: 10px;
+}
+
+@media (max-width: 768px) {
+    .formulario {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: 90%;
+        flex-direction: column;
+    }
+    .tituloDos {
+        margin-right: 200px;
+        margin-bottom: 10px;
+    }
+    .contenedorBarra {
+        width: 100%;
+        flex-direction: column;
+        border: 1px solid;
+        border-color: lightgray;
+        background: white;
+        border-radius: 10px;
+        padding-top: 20px;
+        margin-top: 10px;
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-bottom: 20px;
+    }
+    .divUno {
+        width: 100% !important;
+        flex-direction: column;
+        box-sizing: border-box;
+        display: flex;
+        background: white;
+        border-radius: 10px;
+        align-items: center;
+        padding-top: 20px;
+        border: 1px solid;
+        border-color: lightgray;
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+    .divContenedor {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 100%;
+    }
+    .divDos {
+        margin-left: 0px;
+        flex-direction: column;
+        box-sizing: border-box;
+        display: flex;
+        background: white;
+        width: 100%;
+    }
+    mat-dialog-content {
+        display: flex;
+        flex-direction: column;
+        overflow: auto;
+        width: 100% !important;
+        height: 800px;
+        min-height: inherit;
+        max-height: inherit;
+        justify-content: center !important;
+        margin-left: 5px;
+        margin-right: 5px;
+        padding: 10px;
+    }
+}

@@ -1,0 +1,131 @@
+.titular {
+    justify-content: space-between;
+    align-items: center;
+    height: 30px;
+    width: 100%;
+}
+
+.material-icons.color_white {
+    color: #0000FF;
+}
+
+.colorText {
+    color: white;
+    padding-left: 50px;
+}
+
+.inputAndBoton {
+    width: 700px;
+    align-items: center;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 20px;
+}
+
+.nombreLote {
+    width: 450px;
+    height: 35px;
+    border-radius: 5px;
+    margin-right: 20px;
+}
+
+.tabla {
+    justify-content: space-between;
+}
+
+.tablaArticulos {
+    justify-content: space-between;
+    width: 100%;
+}
+
+.controlesBusqueda2 {
+    display: flex;
+    width: 100%;
+    align-items: center !important;
+    justify-content: flex-start;
+}
+
+.inputBusqueda2 {
+    width: 600px;
+    justify-content: flex-start;
+    padding-top: 20px;
+}
+
+.botonesBusqueda2 {
+    display: flex;
+    width: 150px;
+    align-items: center !important;
+    justify-content: space-around;
+}
+
+.btn {
+    height: 40px;
+    width: 150px;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-left: 15px;
+}
+
+.active-icon {
+    border-radius: 50%;
+}
+
+.espaciado {
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+.estadoAcontrolar {
+    margin-left: 20px;
+    padding: 4px;
+    padding-left: 10px;
+    border-radius: 5px;
+    color: white;
+    background-color: #f44336;
+    text-transform: uppercase;
+    width: 120px !important;
+}
+
+.estadoControlado {
+    margin-left: 20px;
+    padding: 4px;
+    padding-left: 10px;
+    border-radius: 5px;
+    color: white;
+    background-color: #43a047;
+    text-transform: uppercase;
+    width: 120px !important;
+}
+
+.divSpinner {
+    display: flex;
+    justify-content: center !important;
+}
+
+mat-spinner {
+    display: flex;
+    justify-content: center !important;
+}
+
+@media (max-width: 768px) {
+    .inputBusqueda {
+        width: 400px;
+    }
+    .btn {
+        height: 60px;
+        width: 80px;
+        padding-left: 5px;
+        padding-right: 5px;
+        margin-left: 6px;
+        margin-right: 3px;
+    }
+    .controlesBusqueda {
+        margin-top: 0px;
+    }
+    .espaciado {
+        margin-left: 100px;
+        margin-right: 100px;
+        padding-left: 100px;
+        padding-right: 100px;
+    }
+}

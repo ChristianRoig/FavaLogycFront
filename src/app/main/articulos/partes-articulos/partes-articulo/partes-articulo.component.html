@@ -1,0 +1,60 @@
+<app-plantilla-fondo titulo='Lista de partes artículos'>
+
+    <!-- SEARCH -->
+    <div search class="search-wrapper  ml-sm-32">
+        <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center" style="background-color: white;">
+            <mat-icon style="color: gray;">search</mat-icon>
+            <input class="text-uppercase" (keyup)="search()" #buscar placeholder="Búsqueda por Código o Nombre">
+        </div>
+    </div>
+    <!-- / SEARCH -->
+
+
+    <!-- CONTENIDO -->
+    <table contenido mat-table matSort (matSortChange)="sortData($event)" [dataSource]="dataSource2" class="mat-elevation-z8">
+
+        <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="id">
+            <th mat-sort-header="id" mat-header-cell *matHeaderCellDef> Id </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="codigoArticulo">
+            <th mat-sort-header="codigoArticulo" mat-header-cell *matHeaderCellDef> Código </th>
+            <td mat-cell *matCellDef="let element"> {{element.codigoArticulo}} </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="nombre">
+            <th mat-sort-header="nombre" mat-header-cell *matHeaderCellDef> Nombre </th>
+            <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="cantidad">
+            <th mat-sort-header="cantidad" mat-header-cell *matHeaderCellDef> Cantidad </th>
+            <td mat-cell *matCellDef="let element"> {{element.partes}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="editar">
+            <th mat-header-cell *matHeaderCellDef> Acción </th>
+            <td mat-cell class="example-button-row" *matCellDef="let element">
+                <button mat-stroked-button color="primary" (click)="editar(element.id)">Editar</button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <!-- / CONTENIDO -->
+
+    <div contenido class=" mb-4">
+        <mat-paginator [length]="length" [pageIndex]="page" [pageSize]="size" [pageSizeOptions]="[50, 250, 500]" (page)="paginar($event)">
+        </mat-paginator>
+    </div>
+</app-plantilla-fondo>
