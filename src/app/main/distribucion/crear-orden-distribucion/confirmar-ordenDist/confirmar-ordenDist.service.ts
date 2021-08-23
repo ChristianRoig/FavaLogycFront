@@ -43,15 +43,40 @@ export class ConfirmarOrdenDeDistribucionService
         let ruta = `${BASE_URL}pedidos/distribucion/${ idOrden }`;
         return this._httpClient.put(ruta, body,{headers: headers});
     }
-
-    getAllTransportes(): Observable<any> {
-        let ruta = `${BASE_URL}pedidos/transporte/`;
-        return this._httpClient.get(ruta);
-    }
     
-    getAllTurnos(): Observable<any> {
-        let ruta = `${BASE_URL}pedidos/pedidoturno`;
-        return this._httpClient.get(ruta);
+    getAllTransportes( body ): Observable<any> {
+
+        let headers = new HttpHeaders({
+            "Content-Type": "application/json"
+        });
+
+        let ruta = `${BASE_URL}pedidos/transporte//por-remitos`;
+
+        return this._httpClient.post(ruta, body, {headers: headers});
     }
+
+    
+    getAllTurnos( body ): Observable<any> {
+
+        let headers = new HttpHeaders({
+          "Content-Type": "application/json"
+        });
+
+        let ruta = `${BASE_URL}pedidos/pedidoturno`;
+
+        return this._httpClient.post(ruta, body, {headers: headers});
+    }
+
+    getAllFechasDeEntregaExistentes( body ): Observable<any> {
+
+        let headers = new HttpHeaders({
+          "Content-Type": "application/json"
+        });
+
+        let ruta = `${BASE_URL}pedidos/fechaentrega`;
+
+        return this._httpClient.post(ruta, body, {headers: headers});
+    }
+   
 
 }
