@@ -83,7 +83,7 @@ export class RemitosComponent implements OnInit {
   selectedTipo: any = 1;
   
   filtroDarsena: any;
-  selectedDarsena: any = 1;
+  selectedDarsena: any;
 
   pickerFiltroDesde:any = null;
   pickerFiltroHasta:any = null;
@@ -118,7 +118,7 @@ export class RemitosComponent implements OnInit {
 
   resetFiltros(){
 
-    this.busqueda = ""
+    this.busqueda = "";
     this.columna = 'idDetalle';
     this.order = 'asc';
 
@@ -154,6 +154,12 @@ export class RemitosComponent implements OnInit {
     
     this._loteCrearLoteService.getAllDarsena().subscribe(params => {
       this.filtroDarsena = params.datos;
+      const obj = {
+        id: 0,
+        nombre: "TODAS"
+      }
+      this.filtroDarsena.push(obj);
+      console.log(this.filtroDarsena);
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
@@ -173,7 +179,7 @@ export class RemitosComponent implements OnInit {
     })
   }
 
-  getPedidosSinRemitir(  ){
+  getPedidosSinRemitir(  ) {
     let idTipo      :number = null;
     let idDarsena   :number = null;
     let desde       :string = null;
@@ -196,7 +202,7 @@ export class RemitosComponent implements OnInit {
     this.body.desdePedido = desde;
     this.body.hastaPedido = hasta;
     
-    console.log(this.body);
+    console.log("this.body", this.body);
 
     this._loteCrearLoteService.getPedidosSinRemitir(this.body, this.busqueda, this.columna, this.order).subscribe(
       data => {
@@ -367,5 +373,17 @@ export class RemitosComponent implements OnInit {
 
   activarTipo(){
     this.mostrarTipo = !this.mostrarTipo;
+  }
+
+  navegarHaciaCodigoArticulo( codigoArticulo: string ){
+
+    this._router.navigate([`articulos/codigos-barra/${ codigoArticulo }`]);
+  }
+
+  navegarHaciaVerPedido( idPedidoCabecera: number, idCbte: number ){
+    localStorage.setItem('idCbte', idCbte.toString() );
+    localStorage.setItem('vengoDeCbte', "true" );
+
+    this._router.navigate([`pedidos/ver-pedido/${ idPedidoCabecera }`]);
   }
 }

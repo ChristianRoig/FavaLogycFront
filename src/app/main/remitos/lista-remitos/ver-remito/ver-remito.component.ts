@@ -30,7 +30,7 @@ export class VerRemitoComponent implements OnInit {
   
   @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
 
-  displayedColumns: string[] = ['id', 'codigoArticulo', 'nombre', 'cantPartes', 'localidad', 'direccion', 'fechaDeEntrega'];
+  displayedColumns: string[] = ['id', 'codigoArticulo', 'nombre', 'cantPartes', 'localidad', 'direccion', 'fechaDeEntrega', 'info'];
   selection = new SelectionModel<any>(true, []);
   dataSource2: any;
 
@@ -46,6 +46,8 @@ export class VerRemitoComponent implements OnInit {
 
   mensaje: string;
   titulo: string;
+  url: string;
+  pdfRemitoUrl: string;
 
   constructor(
     private _verRemitoService: VerRemitoService,
@@ -59,8 +61,12 @@ export class VerRemitoComponent implements OnInit {
 
       this.idRemito = params['id'];
       this.getRemitoPorId( params['id'] );
-      console.log("id remito -> ", params['id']);
+      //console.log("id remito -> ", params['id']);
     });
+    this.obtenerURLRemitoAimprimir();
+    if (localStorage.getItem("nuevoRemito")){
+      localStorage.removeItem("nuevoRemito");
+    }
   }
   
   getRemitoPorId( idRemito: number ){
@@ -90,13 +96,17 @@ export class VerRemitoComponent implements OnInit {
     });
   }
 
-  imprimirRemito(){
-    this._verRemitoService.getImprimirRemito( this.idRemito ).subscribe( data => {
+  obtenerURLRemitoAimprimir(): any {
 
-      console.log("data", data );
-      //this.link = data.toString();
-      window.open( data.toString(), '_blank');
-      
+    const listaIdPedidoCbte:  number[] = [];
+    listaIdPedidoCbte.push( this.idRemito );
+    let body= {
+      "listaIdPedidoCbte": listaIdPedidoCbte
+    };
+
+    this._verRemitoService.getImprimirRemito( body ).subscribe( data => {
+      //console.log(" U R L ->", data );
+      this.pdfRemitoUrl = data.toString();
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
@@ -115,6 +125,10 @@ export class VerRemitoComponent implements OnInit {
       }
     });
   }
+
+  imprimirRemito( ){
+    window.open( this.pdfRemitoUrl, '_blank');
+  } 
 
   confirmacionBorrar() {
     const dialogRef = this._dialog.open( ModalConfirmacionBorrarComponent, { 
@@ -193,5 +207,9 @@ export class VerRemitoComponent implements OnInit {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.Id + 1}`;
+  }
+
+  navegarHaciaCodigoArticulo( codigoArticulo: string ){
+    this._router.navigate([`articulos/codigos-barra/${ codigoArticulo }`]);
   }
 }

@@ -94,8 +94,8 @@ export class PedidosCrear2Service
     }
 
 
-    putPedidos(listaDatosDeEntrega): Observable<any>
-    {   
+    putPedidos(listaDatosDeEntrega): Observable<any> {   
+        
         let ruta = `${BASE_URL}pedidos/datosentrega`;
         
         let body=   {

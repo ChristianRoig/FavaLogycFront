@@ -62,6 +62,11 @@
         margin-left: 15px;
     }
     
+    ::ng-deep .tooltip {
+        font-size: 24px !important;
+        color: #8bc34a;
+    }
+    
     @media (max-width: 768px) {
         .inputBusqueda {
             width: 400px;
