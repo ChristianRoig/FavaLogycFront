@@ -30,6 +30,9 @@ import { PedidosCodigosBarraAddService } from './codigos-de-barras/codigos-barra
 import { PedidosCodigosBarraService } from './codigos-de-barras/codigos-barra/codigos-barra.service';
 import { PedidosCodigosBarraArticulosService } from './codigos-de-barras/codigos-barra-articulos/codigos-barra-articulos.service';
 import { ImprimirCodBarraService } from './codigos-de-barras/codigos-barra/imprimir-cod-barra/imprimir-cod-barra.service';
+import { ModalConfirmacionComponent } from './partes-articulos/partes-articulo-editar/modal-confirmacion/modal-confirmacion.component';
+
+
 
 const routes: Routes = [
     /* {
@@ -49,7 +52,7 @@ const routes: Routes = [
         component: PedidosCodigosBarraComponent
     },
     {
-        path     : 'codigos-barra-articulos',
+        path     : 'codigos-barra-articulos/:id',
         component: PedidosCodigosBarraArticulosComponent
     },
     {
@@ -71,7 +74,8 @@ const routes: Routes = [
         PedidosCodigosBarraAddComponent,
         PedidosCodigosBarraArticulosComponent,
         ModalConfirmacionBorrarComponent,
-        ImprimirCodBarraComponent
+        ImprimirCodBarraComponent,
+        ModalConfirmacionComponent
     ],
     imports     : [
         CommonModule,
@@ -95,6 +99,7 @@ const routes: Routes = [
         PedidosCodigosBarraArticulosService,
         ImprimirCodBarraService
     ]
+    
 })
 export class ArticulosModule
 {

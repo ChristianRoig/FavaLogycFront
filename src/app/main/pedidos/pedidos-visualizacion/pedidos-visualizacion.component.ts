@@ -54,7 +54,7 @@ export class PedidosVisualizacionComponent implements OnInit {
 
     this.subParametros = this.route.params.subscribe( params => {
       this.idPedidoCabecera = params['id'];
-      console.log(this.idPedidoCabecera);
+      //console.log(this.idPedidoCabecera);
     });
     this.idPedidoCbte = +localStorage.getItem('idCbte');
     this.vengoDeCbte = localStorage.getItem('vengoDeCbte');
@@ -66,13 +66,13 @@ export class PedidosVisualizacionComponent implements OnInit {
     this._service.getCabecera( this.idPedidoCabecera ).subscribe(params => {
       if (params) {
         this.cabecera = params;
-        console.log("cabecera", this.cabecera);
+        //console.log("cabecera", this.cabecera);
         this.getArticulos(this.page, this.size, this.columna, this.order);
       }
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
-        console.log("Client-side error");
+        //console.log("Client-side error");
       } else {
         let errStatus = err.status;
         if (errStatus == 0){
@@ -91,10 +91,10 @@ export class PedidosVisualizacionComponent implements OnInit {
   getArticulos( page, size, columna, order) {
 
     if (this.idPedidoCbte > 0 && this.vengoDeCbte == "true"){
-      console.log("estoy consultando los articulos con id -> ", this.idPedidoCbte);
+      //console.log("estoy consultando los articulos con id -> ", this.idPedidoCbte);
       this._service.getArticulos( this.idPedidoCbte, page, size, columna, order ).subscribe(paramsArt => {
         if(paramsArt){
-          console.log("articulos -> ", paramsArt.datos);
+          //console.log("articulos -> ", paramsArt.datos);
           this.dataSourceArticulos = paramsArt.datos;
           this.length = paramsArt.totalRegistros;
           this.vengoDeCbte = localStorage.getItem('vengoDeCbte');
@@ -119,17 +119,17 @@ export class PedidosVisualizacionComponent implements OnInit {
 
     } 
     if (this.vengoDeCbte == "false"){
-      console.log("viniendo desde PEDIDO");
+      //console.log("viniendo desde PEDIDO");
       this._service.getArticulosPedidos( this.idPedidoCabecera, page, size, columna, order ).subscribe(paramsArt => {
         if(paramsArt){
-          console.log("articulos -> ", paramsArt.datos);
+          //console.log("articulos -> ", paramsArt.datos);
           this.dataSourceArticulos = paramsArt.datos;
           this.length = paramsArt.totalRegistros;
         }
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
-          console.log("Client-side error");
+          //console.log("Client-side error");
         } else {
           let errStatus = err.status;
           if (errStatus == 0){
@@ -200,10 +200,8 @@ export class PedidosVisualizacionComponent implements OnInit {
     this._router.navigate([ruta]);
   }
   
-  navegar( codArticulo ){
-    
-    let ruta = `articulos/codigos-barra/${ codArticulo }`;
-    this._router.navigate([ruta]);
+  navegar( codArticulo: string ){
+    this._router.navigate([`articulos/codigos-barra-articulos/${ codArticulo }`]);
   }
 
 }

@@ -48,7 +48,7 @@ export class PedidosComprobantesComponent implements OnInit {
 
     this.route.params.subscribe( params => {
       this.idPedidoCabecera = params['id'];
-      console.log(this.idPedidoCabecera);
+      //console.log(this.idPedidoCabecera);
     });
 
     this.page = 0;
@@ -67,16 +67,16 @@ export class PedidosComprobantesComponent implements OnInit {
     if( this.vengoDeCbte == "true"){ 
       this._service.getComprobantes( this.idPedidoCbte, page, size, columna, order ).subscribe(paramsArt => {
         if(paramsArt){
-          console.log("COMPROBANTES - vengo de comprobante", this.idPedidoCbte);
-          console.log("comprobantes -> ", paramsArt);
+          //console.log("COMPROBANTES - vengo de comprobante", this.idPedidoCbte);
+          //console.log("comprobantes -> ", paramsArt);
           this.dataSourceComprobantes = paramsArt.datos;
-          console.log("esteeeeeeeee", this.dataSourceComprobantes);
+          //console.log("esteeeeeeeee", this.dataSourceComprobantes);
           this.length = paramsArt.totalRegistros;
         }
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
-          console.log("Client-side error");
+         // console.log("Client-side error");
         } else {
           let errStatus = err.status
           if (errStatus == 0){
@@ -94,15 +94,15 @@ export class PedidosComprobantesComponent implements OnInit {
     if( this.vengoDeCbte == "false"){ 
       this._service.getComprobantesPedidos( this.idPedidoCabecera, page, size, columna, order ).subscribe(paramsArt => {
         if(paramsArt){
-          console.log("COMPROBANTES - vengo de pedido", this.idPedidoCabecera);
-          console.log("comprobantes -> ",paramsArt);
+          //console.log("COMPROBANTES - vengo de pedido", this.idPedidoCabecera);
+          //console.log("comprobantes -> ",paramsArt);
           this.dataSourceComprobantes = paramsArt.datos;
           this.length = paramsArt.totalRegistros;
         }
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
-          console.log("Client-side error");
+          //console.log("Client-side error");
         } else {
           let errStatus = err.status
           if (errStatus == 0){

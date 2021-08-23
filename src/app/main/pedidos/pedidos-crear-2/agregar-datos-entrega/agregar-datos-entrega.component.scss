@@ -16,12 +16,16 @@ mat-form-field {
 }
 
 .mat-dialog-container {
-    height: 1000px!important;
-    width: 1000px!important;
+    height: 1000px !important;
+    width: 1000px !important;
 }
 
 body.theme-default {
     background: #7c7c7c !important;
+}
+
+.boldFont {
+    font-weight: bold;
 }
 
 .titulo {

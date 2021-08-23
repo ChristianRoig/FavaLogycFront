@@ -50,7 +50,7 @@ export class PedidosCupaComponent implements OnInit {
       this.idPedido = params['id'];
     });
 
-    console.log("idPedido", this.idPedido);
+    //console.log("idPedido", this.idPedido);
     this.page = 0;
     this.size = 50;
     this.columna = 'id';
@@ -65,17 +65,17 @@ export class PedidosCupaComponent implements OnInit {
 
   buscarCUPA(page, size, columna, order){
     if (this.vengoDeCbte == "true"){
-      console.log("CUPA - vengo de comprobante", this.idPedidoCbte);
+      //console.log("CUPA - vengo de comprobante", this.idPedidoCbte);
       this._service.getCUPA( this.idPedidoCbte, page, size, columna, order ).subscribe(paramsArt => {
         if(paramsArt){
           this.dataSourceCUPA = paramsArt.datos;
-          console.log("CUPA ->",this.dataSourceCUPA);
+          //console.log("CUPA ->",this.dataSourceCUPA);
           this.length = paramsArt.totalRegistros;
         }
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
-          console.log("Client-side error");
+          //console.log("Client-side error");
         } else {
           let errStatus = err.status
           if (errStatus == 0){
@@ -91,17 +91,17 @@ export class PedidosCupaComponent implements OnInit {
       });
     } 
     if (this.vengoDeCbte == "false"){
-      console.log("CUPA - vengo de pedido");
+      //console.log("CUPA - vengo de pedido");
       this._service.getCUPAPedidos( this.idPedido, page, size, columna, order ).subscribe(paramsArt => {
         if(paramsArt){
           this.dataSourceCUPA = paramsArt.datos;
-          console.log("CUPA ->",this.dataSourceCUPA);
+          //console.log("CUPA ->",this.dataSourceCUPA);
           this.length = paramsArt.totalRegistros;
         }
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
-          console.log("Client-side error");
+          //console.log("Client-side error");
         } else {
           let errStatus = err.status
           if (errStatus == 0){
@@ -121,13 +121,13 @@ export class PedidosCupaComponent implements OnInit {
   imprimirCupa( id: number ){
     this._service.getImprimirCUPA( id ).subscribe( data => {
 
-      console.log("data", data );
+      //console.log("data", data );
       window.open( data.toString(), '_blank');
       
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
-        console.log("Client-side error");
+        //console.log("Client-side error");
       } else {
         let errStatus = err.status;
         if (errStatus == 0){

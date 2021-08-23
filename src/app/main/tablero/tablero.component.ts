@@ -14,6 +14,7 @@ import { LoginService } from '../../auth/login/login.service';
 
 //service
 import { TableroService } from './tablero.service';
+import { AuthStorageService } from '../../auth/login/auth-storage.service';
 
 @Component({
     selector     : 'app-tablero',
@@ -36,60 +37,75 @@ export class ProjectDashboardComponent implements OnInit {
     widget11: any = {};
 
     resumen: any = [];
-    numEstado: number = 0;
+    numEstado: number;
 
     length: number = 0;
     mensaje: string;
-    valorFijo: string = "En Proceso";
+    valorEnProceso: number;
+
+    estoyEnSUC: boolean = false;
 
     dateNow = Date.now();
     user: string;
     nombreUsuario: string = "Pablo";
     sucursal: string = "CASA CENTRAL";
     
-
+    userSuc: boolean;
     estados = [
         { valor: 0, texto:"A Programar" },
         { valor: 1, texto:"En Proceso" },
         { valor: 2, texto:"Despachados" }
     ];
-
+    
     /**
      * Constructor
      *
      * @param {FuseSidebarService} _fuseSidebarService
      * @param {TableroService} _tableroService
      */
-    constructor (
-        private _fuseSidebarService: FuseSidebarService,
-        private _tableroService: TableroService,
-        private _dialog: MatDialog,
-        private _loginService: LoginService
-    )
-    { }
-
-
-    /**
-     * On init
-     */
-    ngOnInit(): void {
-
+    constructor ( private _fuseSidebarService: FuseSidebarService,
+      private _tableroService: TableroService,
+      private _dialog: MatDialog,
+      private _authStorage: AuthStorageService ) { }
+      
+      /**
+       * On init
+       */
+      ngOnInit(): void {
+        
+        this.estoyEnSUCFunction();
         this.getResumen();
-        /* this.widget11.onContactsChanged = new BehaviorSubject({});
-        this.widget11.onContactsChanged.next(this.widgets.widget11.table.rows);
-        this.widget11.dataSource = new FilesDataSource(this.widget11); */ 
-        this.user = localStorage.getItem("username");
+        this.user = localStorage.getItem("user");
         this.sucursal = localStorage.getItem("nbSuc");
-    }
-
-    setValor(num){
+      }
+      
+      setValor(num){
         console.log(num);
         this.numEstado = num;
-    }
+      }
+      
+      seleccionarProyecto(): void{
+      }
+      
+      estoyEnSUCFunction (): any {
+        console.log("entroooo");
+        const user = this._authStorage.getUser();
+        if ( user === "luque.gonzalo" ) {
+          this.userSuc = true;
+          this.valorEnProceso = this.estados[0].valor;
+          this.numEstado = 0;
+          console.log( this.userSuc );
+        } else {
+          this.numEstado = 1;
+          this.valorEnProceso = this.estados[1].valor;
+          return false;
+        }
+      }
+      
+      getResumen(){
+        const token = this._authStorage.getToken();
 
-    getResumen(){
-
-        this._tableroService.getResumen().subscribe(
+        this._tableroService.getResumen( token ).subscribe(
             data => {
               console.log("resumen ->", data.resumen);
               this.resumen = data.resumen; 
@@ -143,8 +159,7 @@ export class ProjectDashboardComponent implements OnInit {
      *
      * @param name
      */
-    toggleSidebar(name): void
-    {
+    toggleSidebar(name): void {
         this._fuseSidebarService.getSidebar(name).toggleOpen();
     }
 }

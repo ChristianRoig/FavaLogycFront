@@ -23,6 +23,7 @@ import { RemitosComponent } from './crear-remito/crear-remito.component';
 import { ListaRemitosComponent } from './lista-remitos/lista-remitos.component';
 import { VerRemitoComponent } from './lista-remitos/ver-remito/ver-remito.component';
 import { ConfirmarRemitoComponent } from './crear-remito/confirmar-remito/confirmar-remito.component';
+import { ModalConfirmacionBorrarComponent } from './lista-remitos/ver-remito/modal-confirmacion-borrar/modal-confirmacion-borrar.component';
 
 //services
 import { RemitoService } from './crear-remito/crear-remito.service';
@@ -50,7 +51,8 @@ const routes: Routes = [
         RemitosComponent,
         ConfirmarRemitoComponent,
         ListaRemitosComponent,
-        VerRemitoComponent
+        VerRemitoComponent,
+        ModalConfirmacionBorrarComponent
     ],
     imports     : [
         CommonModule,

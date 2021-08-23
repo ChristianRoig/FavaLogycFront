@@ -40,7 +40,7 @@ export class PedidosPartesArticuloComponent implements OnInit {
         this.page = 0;
         this.size = 10;
         this.columna = 'id';
-        this.order = 'asc';
+        this.order = 'desc';
 
         this.buscar(this.busqueda, this.page, this.size, this.columna, this.order);
     }
@@ -115,7 +115,7 @@ export class PedidosPartesArticuloComponent implements OnInit {
      * @param event
      */
     sortData( event ) {
-        
+        console.log("columna a ordenar", event.active);
         this.page = 0;
         this.columna = event.active;
         

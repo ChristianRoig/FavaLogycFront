@@ -112,7 +112,31 @@ pedidos-partes-articulo {
     }
 }
 
-.mat-dialog-container {
-    height: 1000px!important;
-    width: 1000px!important;
+.styleLeido {
+    color: #dcdf4d !important;
+}
+
+.styleProcesado {
+    color: #59d459 !important;
+}
+
+.btnProcesado {
+    background-color: #59d459 !important;
+    color: rgb(255, 255, 255) !important;
+}
+
+.btnLeido {
+    background-color: #f6f887 !important;
+    color: black;
+}
+
+.itemsEstado {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.estado {
+    padding-top: 4px;
+    padding-left: 5px;
 }

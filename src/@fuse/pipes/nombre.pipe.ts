@@ -12,11 +12,12 @@ export class NombrePipe implements PipeTransform {
     if (value != null){
 
       splitted = value.split(".");
-  
-      let name = splitted[1][0].toUpperCase() + splitted[1].substr(1).toLowerCase();
-      let surname = splitted[0][0].toUpperCase() + splitted[0].substr(1).toLowerCase();
-  
-      return (name + " " + surname);
+      console.log({splitted});
+      if (splitted != " "){
+        let name = splitted[1][0].toUpperCase() + splitted[1].substr(1).toLowerCase();
+        let surname = splitted[0][0].toUpperCase() + splitted[0].substr(1).toLowerCase();
+        return (name + " " + surname);
+      } 
     }
   }
 

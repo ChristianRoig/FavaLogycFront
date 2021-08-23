@@ -148,6 +148,12 @@ export class ControlDeCargaComponent implements OnInit {
 
   }
 
+  saltarAbotonBuscar(e){
+    if (e.key === "Enter" && this.cupa != null) {
+      this.getOrdenPorCupa();
+    }
+  } 
+ 
   paginar(e: any){
     console.log(e);
     this.page = e.pageIndex;

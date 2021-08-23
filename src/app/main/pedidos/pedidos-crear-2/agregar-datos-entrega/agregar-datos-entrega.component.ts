@@ -57,7 +57,7 @@ export class AgregarDatosEntregaComponent implements OnInit{
       this.minDateHastaFiltro = new Date();
     }
 
-    datoEntrega: ListaDatosDeEntrega ={
+    datoEntrega: ListaDatosDeEntrega = {
       id: null,
       direccion: null,
       fechaDeEntrega: null,

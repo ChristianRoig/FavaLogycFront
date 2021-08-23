@@ -25,15 +25,15 @@
             <div fxLayout="row" class="mb-8" fxLayoutAlign="start start">
                 <mat-form-field appearance="outline" fxFlex>
                     <mat-label>Fecha</mat-label>
-                    <input *ngIf="this.data.vengoDeVerLote == true" matInput disabled value="{{this.fechaAlta}}">
-                    <input *ngIf="!this.data.vengoDeVerLote" matInput disabled value="{{this.picker | date:'shortDate'}}">
+                    <input *ngIf="this.data.vengoDeVerLote == true" matInput class="boldFont" disabled value="{{this.fechaAlta}}">
+                    <input *ngIf="!this.data.vengoDeVerLote" matInput disabled class="boldFont" value="{{this.picker | date:'shortDate'}}">
                 </mat-form-field>
             </div>
 
             <div fxLayout="row" class="mb-8" fxLayoutAlign="start start">
                 <mat-form-field appearance="outline" fxFlex>
                     <mat-label>Cantidad de Articulos</mat-label>
-                    <input matInput disabled type="number" value="{{this.cantidadArticulos}}">
+                    <input matInput disabled type="number" class="boldFont" value="{{this.cantidadArticulos}}">
                 </mat-form-field>
             </div>
         </form>

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { MatIconModule } from '@angular/material/icon';
 
 //fuse
 import { FuseSharedModule } from '@fuse/shared.module';
@@ -29,6 +30,8 @@ import { PedidosCrear2Component } from './pedidos-crear-2/pedidos-crear-2.compon
 import { PedidosCupaComponent } from './pedidos-visualizacion/pedidos-cupa/pedidos-cupa.component';
 import { AgregarDatosEntregaComponent } from './pedidos-crear-2/agregar-datos-entrega/agregar-datos-entrega.component';
 import { FiltrosComponent } from './x_NOSEUSA_pedidos-lista/filtros/filtros.component';
+import { NotificacionesComprobanteComponent } from './pedidos-visualizacion/notificaciones-comprobante/notificaciones-comprobante.component';
+
 
 //services
 import { PedidosListaService } from './x_NOSEUSA_pedidos-lista/pedidos-lista.service';
@@ -76,19 +79,7 @@ const routes: Routes = [
     {
         path     : 'lista-comprobantes',
         component: ComprobantesListaComponent
-    },
-    /* {   path     : 'lista-comprobantes/comprobantes-a-programar',  // cambios proximos
-        component: TableComprobantesAprogramarComponent 
-    },
-    {   path     : 'lista-comprobantes/comprobantes',
-        component: TableComprobantesComponent 
-    },
-    {   path     : 'lista-comprobantes/pedidos',
-        component: TablePedidosComponent 
-    },
-    {   path     : 'lista-comprobantes/articulos',
-        component: TableArticulosComponent 
-    }, */
+    }
 ];
 
 
@@ -111,6 +102,7 @@ const routes: Routes = [
         TableComprobantesAprogramarComponent,
         TableArticulosComponent,
         TablePedidosComponent,
+        NotificacionesComprobanteComponent,
         GuionPipe
     ],
     imports     : [
@@ -123,7 +115,8 @@ const routes: Routes = [
         MaterialDesignModule,
 
         CustomTagModule,
-        TablaRetractilModule
+        TablaRetractilModule,
+        MatIconModule
     ],
     providers   : [
         PedidosListaService,

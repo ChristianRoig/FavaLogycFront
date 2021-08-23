@@ -17,15 +17,15 @@
 
             <div fxLayout="row ">
 
-                <div class="selected-project" *ngIf="this.projects">{{selectedProject.name}}</div>
+                <div class="selected-project" *ngIf="this.projects">{{ selectedProject.name }}</div>
 
                 <button mat-icon-button class="project-selector" [matMenuTriggerFor]="projectsMenu" aria-label="Select project">
                     <mat-icon>more_horiz</mat-icon>
                 </button>
 
                 <mat-menu #projectsMenu="matMenu">
-                    <button mat-menu-item *ngFor="let project of projects" (click)="selectedProject = project">
-                        <span>{{project.name}}</span>
+                    <button mat-menu-item *ngFor="let project of projects" (click)="seleccionarProyecto()">
+                        <span>{{ project.name }}</span>
                     </button>
                 </mat-menu>
             </div>
@@ -44,8 +44,13 @@
                     <div class="fuse-widget-front">
                         <div fxLayout="row" fxLayoutAlign="space-between center">
                             <mat-form-field class="sdasda">
-                                <mat-select class="selector" aria-label="Change range" [value]="this.valorFijo">
-                                    <mat-option *ngFor="let estado of estados" [value]="this.valorFijo" (click)="setValor(estado.valor)">
+                                <mat-select class="selector" *ngIf="this.userSuc" aria-label="Change range" [value]="this.valorEnProceso">
+                                    <mat-option *ngFor="let estado of estados" [value]="estado.valor" (click)="setValor(estado.valor)">
+                                        {{ estado.texto }}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-select class="selector" *ngIf="!this.userSuc" aria-label="Change range" [value]="this.valorEnProceso">
+                                    <mat-option *ngFor="let estado of estados" [value]="estado.valor" (click)="setValor(estado.valor)">
                                         {{ estado.texto }}
                                     </mat-option>
                                 </mat-select>

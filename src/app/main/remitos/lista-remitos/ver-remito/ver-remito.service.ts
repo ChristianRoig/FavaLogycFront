@@ -21,12 +21,19 @@ export class VerRemitoService {
    * @returns {Observable} Observable
    */
 
-  getRemitoPorId( idRemito: number ){
+  
+  getRemitoPorId( idRemito: number ) {
     let ruta = `${BASE_URL}pedidos/pedidocbte/remito/por-idremito/${ idRemito }`;
-      return this._httpClient.get(ruta);
+    return this._httpClient.get(ruta);
   }
 
-  getImprimirRemito( body: any ){
+  anularRemitoPorId( idRemito: number ) {
+    let ruta = `${BASE_URL}pedidos/remito/anular/${ idRemito }`;
+    return this._httpClient.get(ruta);
+  }
+
+  getImprimirRemito( body: any ) {
+
     console.log("BODYYY", body );  
     let headers = new HttpHeaders({
       "Content-Type": "application/json"
@@ -34,7 +41,6 @@ export class VerRemitoService {
     let ruta = `${ BASE_URL }pedidos/pedidocbte/imprimir-remito`;
 
     return this._httpClient.post(ruta, body, {headers: headers});
-
   }
 }
 

@@ -107,6 +107,7 @@ export class PedidosCodigosBarraComponent implements OnInit {
         
         this._pedidosCodigosBarraService.getCodigosBarra(codigoArticulo, busqueda, page, size, columna, order).subscribe(
             data => {
+              console.log("data -> ", data);
                 this.dataSource2 = data.datos;
                 this.idArticulo = this.dataSource2[0].id;
                 this.length = data.totalRegistros;

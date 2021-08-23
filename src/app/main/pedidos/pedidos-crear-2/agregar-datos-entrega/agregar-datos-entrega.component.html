@@ -1,4 +1,4 @@
-<div fxLayout="row" style="width: 100%;" class="formClass">
+<div fxLayout="row" class="formClass">
     <mat-toolbar matDialogTitle class="mat-accent">
         <mat-toolbar-row fxLayoutAlign="center" class="titulo2">
             <h2 *ngIf="this.data.option === 'add'" class="centrarTitulo" mat-dialog-title>Agregar Dato de entrega</h2>
@@ -35,12 +35,13 @@
                     </div>
 
                 </div>
-                
+
                 <mat-label class="tituloDos">Información de Destino</mat-label>
                 <!-- class="bloque" -->
                 <mat-form-field appearance="outline" fxFlex>
                     <mat-label>Dirección</mat-label>
-                    <input matInput [(ngModel)]='this.direccion' [disabled]='deshabilitado' [ngModelOptions]="{standalone: true}">
+                    <input matInput [(ngModel)]='this.direccion' *ngIf="this.data.option === 'add' || this.data.option === 'upd'" class="inputDirec" [disabled]='deshabilitado' [ngModelOptions]="{standalone: true}">
+                    <input matInput *ngIf="this.data.option === 'view'" [(ngModel)]='this.direccion' class="inputDirec boldFont" [disabled]='deshabilitado' [ngModelOptions]="{standalone: true}">
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" fxFlex>
@@ -111,24 +112,27 @@
                 <mat-label class="tituloDos">Información de Contacto</mat-label>
                 <mat-form-field appearance="outline" fxFlex>
                     <mat-label>Nombre de Contacto</mat-label>
-
-                    <input matInput [(ngModel)]='this.contacto' [disabled]='deshabilitado' [ngModelOptions]="{standalone: true}">
+                    <input matInput [(ngModel)]='this.contacto' [disabled]='deshabilitado' *ngIf="this.data.option === 'add' || this.data.option === 'upd'" [ngModelOptions]="{standalone: true}">
+                    <input matInput [(ngModel)]='this.contacto' [disabled]='deshabilitado' *ngIf="this.data.option === 'view'" class="boldFont" [ngModelOptions]="{standalone: true}">
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" fxFlex>
                     <mat-label>Teléfono</mat-label>
-                    <input matInput [(ngModel)]='this.telefono' [disabled]='deshabilitado' [ngModelOptions]="{standalone: true}">
+                    <input matInput [(ngModel)]='this.telefono' [disabled]='deshabilitado' *ngIf="this.data.option === 'add' || this.data.option === 'upd'" [ngModelOptions]="{standalone: true}">
+                    <input matInput [(ngModel)]='this.telefono' [disabled]='deshabilitado' *ngIf="this.data.option === 'view'" class="boldFont" [ngModelOptions]="{standalone: true}">
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" fxFlex>
                     <mat-label>Mail</mat-label>
-                    <input matInput [(ngModel)]='this.mail' [disabled]='deshabilitado' [ngModelOptions]="{standalone: true}">
+                    <input matInput [(ngModel)]='this.mail' [disabled]='deshabilitado' *ngIf="this.data.option === 'add' || this.data.option === 'upd'" [ngModelOptions]="{standalone: true}">
+                    <input matInput [(ngModel)]='this.mail' [disabled]='deshabilitado' *ngIf="this.data.option === 'view'" class="boldFont" [ngModelOptions]="{standalone: true}">
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" fxFlex>
                     <mat-label>Observaciones (máximo dos renglones)</mat-label>
                     <!-- cols="20" rows="5" wrap="hard" maxlength="100"   PARA SETEAR VALORES DE TAMAÑO, CARACTERES Y FILAS -->
-                    <textarea matInput [(ngModel)]='this.observaciones' [disabled]='deshabilitado' placeholder="Ingrese la observación" rows="5" [ngModelOptions]="{standalone: true}"></textarea>
+                    <textarea matInput [(ngModel)]='this.observaciones' [disabled]='deshabilitado' *ngIf="this.data.option === 'add' || this.data.option === 'upd'" placeholder="Ingrese la observación" rows="5" [ngModelOptions]="{standalone: true}"></textarea>
+                    <textarea matInput [(ngModel)]='this.observaciones' [disabled]='deshabilitado' *ngIf="this.data.option === 'view'" class="boldFont" placeholder="Ingrese la observación" rows="5" [ngModelOptions]="{standalone: true}"></textarea>
                 </mat-form-field>
             </div>
         </div>

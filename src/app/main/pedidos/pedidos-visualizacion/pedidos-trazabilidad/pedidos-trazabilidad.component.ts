@@ -52,7 +52,7 @@ export class PedidosTrazabilidadComponent implements OnInit {
 
     this.route.params.subscribe( params => {
       this.idPedidoCabecera = params['id'];
-      console.log(this.idPedidoCabecera);
+      //console.log(this.idPedidoCabecera);
     });
 
     this.page = 0;
@@ -73,13 +73,13 @@ export class PedidosTrazabilidadComponent implements OnInit {
       this._service.getTrazabilidad( this.idPedidoCbte, page, size, columna, order ).subscribe(paramsArt => {
         if(paramsArt){
           this.dataSourceTrazabilidad = paramsArt.datos;
-          console.log("TRAZABILIDAD -> ", this.dataSourceTrazabilidad);
+          //console.log("TRAZABILIDAD -> ", this.dataSourceTrazabilidad);
           this.length = paramsArt.totalRegistros;
         }
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
-          console.log("Client-side error");
+          //console.log("Client-side error");
         } else {
           let errStatus = err.status
           if (errStatus == 0){

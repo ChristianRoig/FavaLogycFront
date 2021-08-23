@@ -202,6 +202,26 @@ fuse-sidebar {
     height: 20px;
 }
 
+.styleLeido {
+    color: #dcdf4d !important;
+    padding-top: 5px;
+}
+
+.styleNueva {
+    color: #d84f4f !important;
+    padding-top: 5px;
+}
+
+.styleSinNovedad {
+    color: #e0e0e0 !important;
+    padding-top: 5px;
+}
+
+.styleProcesado {
+    color: #59d459 !important;
+    padding-top: 5px;
+}
+
 @media (max-width: 768px) {
     .inputBusqueda {
         width: 400px;

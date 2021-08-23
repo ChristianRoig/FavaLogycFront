@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'environments/environment';
 
@@ -11,7 +10,8 @@ export class TableroService {
     /* projects: any[];
     widgets: any[]; */
     
-
+    headers = new HttpHeaders();
+    token: string;
     /**
      * Constructor
      *
@@ -19,15 +19,21 @@ export class TableroService {
      */
     constructor(
         private _httpClient: HttpClient
-    )
-    {
-    }
+    ) { }
 
-    getResumen( ): Observable<any> {
-
-        let ruta = `${ BASE_URL }pedidos/resumen/SALON`;
+    getResumen( token: string ): Observable<any> {
         
-        return this._httpClient.get(ruta);
+        let headers = new HttpHeaders({
+            'Content-Type' : 'application/json; charset=utf-8',
+            'Accept'       : 'application/json',
+            'Authorization': token
+        });
+   
+        let ruta = `${ BASE_URL }pedidos/resumen`;
+        
+        return this._httpClient.get(ruta, {headers: headers} );
+        //return this._httpClient.post(ruta, null,{headers: headers});
     }
+
     
 }

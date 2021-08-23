@@ -16,11 +16,14 @@ import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.componen
 
 import { SonidoService } from 'app/shared/services/sonidos.service';
 import { LoginService } from './login.service';
+import { AuthStorageService } from './auth-storage.service';
+
+
+
 const sesion_activa: number = config.sesion_activa; // Minutos
 
 export interface Data {
     infoToken?: string;
-    expirar?: Date;
     user?: string;
 }
 
@@ -83,6 +86,7 @@ export class LoginComponent implements OnInit {
         private _dialog: MatDialog,
         private _serviceSonido: SonidoService,
         private _loginService: LoginService,
+        private _authStorage: AuthStorageService
     )
     {  
         // Configure the layout
@@ -115,9 +119,11 @@ export class LoginComponent implements OnInit {
      */
     ngOnInit(): void {
 
+        this.logout();
+
         this.loginForm = this._formBuilder.group({
 
-            email   : ['', Validators.required],
+            user   : ['', Validators.required],
             password: ['', Validators.required]
 
         });
@@ -150,45 +156,66 @@ export class LoginComponent implements OnInit {
 
     // -----------------------------------------------------------------------------------------------------
 
-    logIn() {
-        let email:    string  = this.loginForm.get('email').value;
+    logIn(): void {
+        let user:    string  = this.loginForm.get('user').value;
         let password: string  = this.loginForm.get('password').value;
 
         this.logout();
+
+
+        /* Lineas para autenticar admin/cedis/suc */
+        if ( this.chequearUserEspecial( user, password )) {
+
+            this.asignarDataSegunUser( user );
+            this._loginService.hideByRol([]);
+            this._serviceSonido.playAudioSuccess();
+            this._router.navigate(['/inicio']);
+        } /* ------------------------------------------------------ */
+        else {
+            this._loginService._obtenerLogin( user, password ).subscribe((info: ResponseLogin) => { 
+                console.log("info - obtenerLogin|", info);
+                
+                if (info.token == null){          
+                    this._serviceSonido.playAudioAlert();
+                    let titulo = 'Fallo al ingresar';
+                    let mensaje = 'El usuario o la contraseña son incorrectos';
+                    this.mostrarError(0, titulo, mensaje);
+                } 
+                else {
+                    info = new ResponseLogin( info );
+                    this.info = info;
+  
+                    this._authStorage.guardarToken( info.token );
+                    this._authStorage.guardarUser( info.username );
+                    this._authStorage.guardarSession();
+                    this.setearRol( info );
+
+                    this._loginService.rolOnChanged.next(this.rol);
+                    this._loginService.infoOnChanged.next(this.info);
+  
+                    this._serviceSonido.playAudioSuccess();
+                    this._router.navigate(['/inicio'])
+                }
+                /* ----------------------------------------------------- */
+            },
+            (err: HttpErrorResponse) => {
+              if (err.error instanceof Error) {
+                console.log("Client-side error");
+              } else {
+                let errStatus = err.status
+                if (errStatus == 0){
+                  let titulo = 'Error de Servidor';
+                  let mensaje = "Por favor comunicarse con Sistemas";
+                  this.mostrarError(errStatus, titulo, mensaje);
+                } else {
+                  let titulo = 'Fallo al ingresar';
+                  let mensaje = 'El usuario o la contraseña son incorrectos';
+                  this.mostrarError(errStatus, titulo, mensaje);
+                }
+              }
+            });
+        }
         
-        this._loginService._obtenerLogin( email, password ).subscribe((info: ResponseLogin) => { 
-            console.log("info - obtenerLogin|", info);
-            
-            if (info.token == null){          
-                this._serviceSonido.playAudioAlert();
-                let titulo = 'Fallo al ingresar';
-                let mensaje = 'El usuario o la contraseña son incorrectos';
-                this.mostrarError(0, titulo, mensaje);
-            } 
-            else {
-                info = new ResponseLogin( info );
-                this.setTiempoSession( info );
-                this._serviceSonido.playAudioSuccess();
-                this._router.navigate(['/inicio'])
-                this._loginService.infoOnChanged.next(info);
-            }
-        },
-        (err: HttpErrorResponse) => {
-          if (err.error instanceof Error) {
-            console.log("Client-side error");
-          } else {
-            let errStatus = err.status
-            if (errStatus == 0){
-              let titulo = 'Error de Servidor';
-              let mensaje = "Por favor comunicarse con Sistemas";
-              this.mostrarError(errStatus, titulo, mensaje);
-            } else {
-              let titulo = 'Fallo al ingresar';
-              let mensaje = 'El usuario o la contraseña son incorrectos';
-              this.mostrarError(errStatus, titulo, mensaje);
-            }
-          }
-        });
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -200,7 +227,7 @@ export class LoginComponent implements OnInit {
         this._loginService.infoOnChanged.next( new ResponseLogin({}) ); 
         this._loginService.rolOnChanged.next([]);
 
-        localStorage.clear();
+        this._authStorage.singOut();
 
         this._router.navigate(['']);
     }
@@ -219,70 +246,116 @@ export class LoginComponent implements OnInit {
     //--------------------------------------------------------------------------------------------------
 
     private setTiempoSession(info: ResponseLogin): void {     
-
-        //objeto que contiene el tiempo de session limite
-        let expirarDate = new Date();
-        expirarDate.setMinutes(expirarDate.getMinutes() + sesion_activa);
         
         this.info = info;
         this.username = info.username;
 
-        this.setearRol(); 
+        this.setearRol( info ); 
         
         let dataCookie: Data = {
-            expirar: expirarDate,
             infoToken: info.token,
             user: info.username
         };
         
-        this.guardarInfoEnLocalStorage( dataCookie );
+       //this.guardarInfoEnLocalStorage( dataCookie );
         
         this._loginService.infoOnChanged.next(this.info);
         this._loginService.rolOnChanged.next(this.rol);
     }
-    
+
     // -----------------------------------------------------------------------------------------------------
-    
-    setearRol(): void {
+    private chequearUserEspecial( user: string, password: string ): any{
+        
+        if (user === "admin" && password == "1234"){
+            return true;
+        }
+        if (user === "cedis" && password == "1234"){
+            return true;
+        }
+        if (user === "suc" && password == "1234"){
+            return true;
+        }
+    }
+
+    // -----------------------------------------------------------------------------------------------------
+    //funcion para asignar datos a usuarios especiales
+    private asignarDataSegunUser( user: string ): any{   
+
         //Defaults
         this.rol = ["comun"];
         this.idSuc = 1;
         this.nbSuc = "CASA CENTRAL";
 
-        //Roles y Sucursales asignados
-        if (this.info.username === "burroni.santiago"){
+        let data: Data = {
+            infoToken:  "",
+            user:  ""
+        }
+
+        if (user === "admin"){
+            data.infoToken = "MOCK-AUTH-user-santiago.burroni-suc-95";
+            data.user = "burroni.santiago";
             this.rol = ["admin"];
         }
-
-        if (this.info.username === "cejas.fernando"){
+        if (user === "cedis"){
+            data.infoToken = "MOCK-AUTH-user-pablo.jacobo-suc-95";
+            data.user = "jacobo.pablo";
             this.rol = ["cedis"];
         }
-        if (this.info.username === "jacobo.pablo"){
-            this.rol = ["cedis"];
-        }
-        if (this.info.username === "augelli.angel"){
-            this.rol = ["cedis"];
-        }
-
-        /*if (this.info.username === "herrada.laura"){
-            this.rol = ["comun"];
-        }
-        if (this.info.username === "honaine.nicolas"){
-            this.rol = ["comun"];
-        }*/
-        if (this.info.username === "luque.gonzalo"){
-            //this.rol = ["comun"];
+        if (user === "suc"){
+            data.infoToken = "MOCK-AUTH-user-gonzalo.luque-suc-21";
+            data.user = "luque.gonzalo";
             this.idSuc = 8;
             this.nbSuc = "PUERTO";
-            }
-        if (this.info.username === "thomas.juan"){
-            //this.rol = ["comun"];
+        }
+
+        // guardar datos en localStorage
+        this._authStorage.guardarToken( data.infoToken );         
+        this._authStorage.guardarUser( data.user );
+        this._authStorage.guardarSession();         
+        this._authStorage.guardarRol( this.rol.toString() );         
+        this._authStorage.guardarIdSuc( this.idSuc.toString() );         
+        this._authStorage.guardarNbSuc( this.nbSuc );         
+        
+    }
+
+    // -----------------------------------------------------------------------------------------------------
+    
+    setearRol( info ): void {
+        console.log("this.info.username", info.username);
+        
+        //Roles y Sucursales asignados
+        if (info.username === "burroni.santiago"){
+            console.log("llego hasta acaa");
+            this.rol = ["admin"];
+        }
+        if (info.username === "cejas.fernando"){
+            this.rol = ["cedis"];
+        }
+        if (info.username === "jacobo.pablo"){
+            this.rol = ["cedis"];
+        }
+        if (info.username === "augelli.angel"){
+            this.rol = ["cedis"];
+        }
+        if (info.username === "luque.gonzalo"){
+            this.idSuc = 8;
+            this.nbSuc = "PUERTO";
+        }
+        if (info.username === "thomas.juan"){
             this.idSuc = 10;
             this.nbSuc = "TANDIL";
+        } 
+        if ( this.rol == [] ) {
+            this.rol = ["comun"];
+            this.idSuc = 1;
+            this.nbSuc = "CASA CENTRAL"; 
         }
-        localStorage.setItem("rol", this.rol.toString());
-        localStorage.setItem("idSuc", this.idSuc.toString());
-        localStorage.setItem("nbSuc", this.nbSuc);
+
+        this._authStorage.guardarRol( this.rol.toString() );         
+        this._authStorage.guardarIdSuc( this.idSuc.toString() );         
+        this._authStorage.guardarNbSuc( this.nbSuc );   
+
+        this._loginService.hideByRol([]);
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -291,25 +364,24 @@ export class LoginComponent implements OnInit {
      * para extender las cookies solamente NO hay que enviar la data
      * @param {DataCookie} data 
      */
-    private guardarInfoEnLocalStorage(data?: Data): void {
+    /* private guardarInfoEnLocalStorage(data?: Data): void {
 
         //console.log("token + tiempo sesion",{data});
         if ( data ){
             localStorage.setItem("token", data.infoToken);
             localStorage.setItem("username", data.user);
-            localStorage.setItem("expirar", data.expirar.toString());
         }
 
         // obtengo el token en el service para tenerlo disponible ahí, para futuros chequeos de logueo
         this._loginService.getToken();   
-    }
+    } */
 
     //--------------------------------------------------------------------------------------------------
 
     /**
      * Determina si los datos de log estan disponibles            // YA ESTA EN EL COMPONENT
      */
-    estaLogueado(): boolean {
+/*     estaLogueado(): boolean {
         const userLog = localStorage.getItem("username");
         const tokenLog = localStorage.getItem("token");
         console.log("userLog",userLog, "tokenLog", tokenLog);
@@ -319,7 +391,7 @@ export class LoginComponent implements OnInit {
             this.logout();
             return false;
         }    
-    }
+    } */
 
     //--------------------------------------------------------------------------------------------------
         

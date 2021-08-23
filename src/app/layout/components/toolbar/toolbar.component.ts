@@ -124,7 +124,7 @@ export class ToolbarComponent implements OnInit, OnDestroy
         this.selectedLanguage = _.find(this.languages, {id: this._translateService.currentLang});
 
         //this.user = this._loginService.infoOnChanged.getValue();
-        this.user = localStorage.getItem("username");
+        this.user = localStorage.getItem("user");
         this.setearNombre();  
         //console.log("this.user", this.user);
     }

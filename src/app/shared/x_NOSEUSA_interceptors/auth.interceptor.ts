@@ -3,12 +3,13 @@ import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpHeaders } fro
 import { Observable, from } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
-import { UsuarioService } from 'app/shared/services/usuario.service';
+//import { UsuarioService } from 'app/shared/services/usuario.service';
+import { AuthStorageService } from '../../auth/login/auth-storage.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
     
-    constructor(private usuario: UsuarioService) { 
+    constructor(private _authStorage: AuthStorageService) { 
 
     }
     
@@ -17,12 +18,22 @@ export class AuthInterceptor implements HttpInterceptor {
 
         console.log('*** Hola Soy el Interceptor *** : ', request.url);
         
+        const headers = new HttpHeaders({
+            'Content-Type' : 'application/json; charset=utf-8',
+            'Accept'       : 'application/json',
+            'Authorization': `${ this._authStorage.getToken() }`
+        });   
+
+        const requestClone = request.clone({
+            headers
+        });
+        return next.handle( requestClone );
         
-        return from(this.usuario.getToken())
+/*         return from(this._authStorage.getToken())
         .pipe(
             switchMap(token => {
                 const headers = request.headers
-                .set('Authorization', 'OAuth ' + token)
+                .set('Authorization', token)
                 .append('Content-Type', 'application/json');
                 const requestClone = request.clone({
                     headers 
@@ -30,13 +41,8 @@ export class AuthInterceptor implements HttpInterceptor {
             console.log('*** Hola Soy el Interceptor Y ESTOY ADENTRO *** : ', token);
             return next.handle(requestClone);
           })
-         );
+         ); */
         
-        // let headers = new HttpHeaders({
-        //     'Authorization': `OAuth ${ this.usuario.getToken() }`
-        // });   
-
-
         // Con esto solo afectamos a las request contra el Tomcat
         //     if ( request.url.includes('apiOnboard') ) {
 
@@ -48,10 +54,6 @@ export class AuthInterceptor implements HttpInterceptor {
         //             }
         //         })
         //     }
-
-
-        // return next.handle(request);
-
     }
 
 }

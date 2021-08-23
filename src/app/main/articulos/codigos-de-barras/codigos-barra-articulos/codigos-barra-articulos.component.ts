@@ -1,4 +1,4 @@
-import {Component, ViewEncapsulation, OnInit, ViewChild, ElementRef} from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -27,13 +27,14 @@ export class PedidosCodigosBarraArticulosComponent implements OnInit {
 
     @ViewChild('buscar') buscarInput: ElementRef;
 
-    displayedColumns: string[] = ['id', 'codigoArticulo', 'nombre', 'codigoDeBarras', 'seleccionar'];
+    displayedColumns: string[] = ['id', 'codigoArticulo', 'nombre', 'cantArticulos', 'codigoDeBarras', 'seleccionar'];
     dataSource2: any;
     subParametros: Subscription;
     id:number;
     codigoDeBarra: string;
+    codigoBusqueda: string = "";
 
-    busqueda: string;
+    busqueda: string = "";
     length: number;
     page: number;
     size: number;
@@ -43,30 +44,36 @@ export class PedidosCodigosBarraArticulosComponent implements OnInit {
 
     constructor(
         private _router: Router,
+        private _route: ActivatedRoute,
         private _pedidosCodigosBarraArticulosService: PedidosCodigosBarraArticulosService,
         private _dialog: MatDialog
-    )
-    {
+    ){}
+
+    ngOnInit(): void {   
+
+      this.subParametros = this._route.params.subscribe( params => {
+        this.busqueda = params['id'];
+      });
         
+      this.page = 0;
+      this.size = 10;
+      this.columna = 'id';
+      this.order = 'asc';
+      if ( this.busqueda == undefined || this.busqueda == "cero" ) {
+        this.busqueda = "";
+      } else {
+        this.codigoBusqueda = this.busqueda;
+      }
+
+      this.buscar( this.busqueda, this.page, this.size, this.columna, this.order );
     }
 
-    ngOnInit(): void{   
-        
-        this.busqueda = ""
-        this.page = 0;
-        this.size = 10;
-        this.columna = 'id';
-        this.order = 'asc';
-
-        this.buscar(this.busqueda, this.page, this.size, this.columna, this.order);
+    irAlArticulo(codigoArticulo) {
+      let ruta = `articulos/codigos-barra/${codigoArticulo}`;
+      this._router.navigate([ruta]);
     }
 
-    irAlArticulo(codigoArticulo){
-        let ruta = `articulos/codigos-barra/${codigoArticulo}`;
-        this._router.navigate([ruta]);
-    }
-
-    buscar(busqueda, page, size, columna, order){
+    buscar( busqueda, page, size, columna, order ){
 
         if(!busqueda){
             busqueda = '';
@@ -117,7 +124,7 @@ export class PedidosCodigosBarraArticulosComponent implements OnInit {
                 this._router.navigate(['']);
               }
           });
-      }
+    }
     
     //@Debounce(1000)
     search() {

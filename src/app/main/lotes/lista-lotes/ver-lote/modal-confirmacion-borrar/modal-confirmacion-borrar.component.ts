@@ -4,7 +4,8 @@ import { VerLoteComponent } from '../ver-lote.component';
 
 @Component({
   selector: 'app-modal-confirmacion-borrar',
-  templateUrl: './modal-confirmacion-borrar.component.html'
+  templateUrl: './modal-confirmacion-borrar.component.html',
+  styleUrls: ['./modal-confirmacion-borrar.scss']
 })
 export class ModalConfirmacionBorrarComponent implements OnInit {
 

@@ -1,4 +1,4 @@
-<app-plantilla-fondo titulo='Lista de partes artículos'>
+<app-plantilla-fondo titulo='Cantidad de Partes'>
 
     <!-- SEARCH -->
     <div search class="search-wrapper  ml-sm-32">
@@ -18,7 +18,7 @@
 
         <!-- Position Column -->
         <ng-container matColumnDef="id">
-            <th mat-sort-header="id" mat-header-cell *matHeaderCellDef> Id </th>
+            <th mat-header-cell *matHeaderCellDef> Id </th>
             <td mat-cell *matCellDef="let element"> {{element.id}} </td>
         </ng-container>
 
@@ -37,14 +37,18 @@
         <!-- Symbol Column -->
         <ng-container matColumnDef="cantidad">
             <th mat-sort-header="cantidad" mat-header-cell *matHeaderCellDef> Cantidad </th>
-            <td mat-cell *matCellDef="let element"> {{element.partes}} </td>
+            <td mat-cell *matCellDef="let element">
+                <p *ngIf="element.partes > 0" class="cantArticulos"> {{ element.partes }} </p>
+                <p *ngIf="element.partes === 0" class="cantArticuloCero"> {{ element.partes }} </p>
+                <!-- {{element.partes}} -->
+            </td>
         </ng-container>
 
         <!-- Symbol Column -->
         <ng-container matColumnDef="editar">
             <th mat-header-cell *matHeaderCellDef> Acción </th>
             <td mat-cell class="example-button-row" *matCellDef="let element">
-                <button mat-stroked-button color="primary" (click)="editar(element.id)">Editar</button>
+                <button mat-stroked-button color="primary" (click)="editar(element.id)">Modificar Partes</button>
             </td>
         </ng-container>
 

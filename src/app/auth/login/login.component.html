@@ -14,15 +14,15 @@
 
                 <mat-form-field appearance="outline">
                     <mat-label>Usuario de dominio</mat-label>
-                    <input matInput formControlName="email" placeholder="Usuario de dominio">
+                    <input matInput formControlName="user" placeholder="Usuario de dominio" minlength="3" maxlength="20">
                     <mat-icon matSuffix class="secondary-text">mail</mat-icon>
 
-                    <mat-error *ngIf="loginForm.get('email').hasError('required')">
+                    <mat-error *ngIf="loginForm.get('user').hasError('required')">
                         El Usuario es requerido
                     </mat-error>
 
-                    <mat-error *ngIf="!loginForm.get('email').hasError('required') &&
-                                    loginForm.get('email').hasError('email')">
+                    <mat-error *ngIf="!loginForm.get('user').hasError('required') &&
+                                    loginForm.get('user').hasError('user')">
                         Por Favor, ingrese un Usuario válido
                     </mat-error>
 
@@ -30,7 +30,7 @@
 
                 <mat-form-field appearance="outline">
                     <mat-label>Contraseña</mat-label>
-                    <input matInput [type]="hide ? 'password' : 'text'" autocomplete="off" formControlName="password">
+                    <input matInput [type]="hide ? 'password' : 'text'" autocomplete="off" formControlName="password" minlength="4">
                     <mat-icon matSuffix class="secondary-text visibility" (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                     <mat-error>
                         La contraseña es requerida

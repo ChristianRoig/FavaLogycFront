@@ -134,15 +134,42 @@ export class VerRemitoComponent implements OnInit {
     const dialogRef = this._dialog.open( ModalConfirmacionBorrarComponent, { 
       data: {
         id: this.idRemito,
-        nombre: "Remito "+ this.idRemito,
-
+        nombre: "Remito "+ this.idRemito
       } 
     });
     dialogRef.afterClosed()
       .subscribe(result => {
-        if ( result )
-          this.volver();
+        if ( result ){
+          this.anularRemito();
+        }
       }); 
+  }
+
+  anularRemito(){
+    this._verRemitoService.anularRemitoPorId( this.idRemito ).subscribe( data => {
+      console.log("respuesta delete", data);
+      this.navegarAlistaRemitos();
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error");
+      } else {
+        let errStatus = err.status;
+        if (errStatus == 0){
+          let titulo = 'Error de Servidor';
+          let mensaje = "Por favor comunicarse con Sistemas";
+          this.mostrarError(errStatus, titulo, mensaje);
+        } else {
+          let titulo = 'Error al borrar el remito';
+          let mensaje = err.error.message.toString();
+          this.mostrarError(errStatus, titulo, mensaje);
+        }
+      }
+    });
+  }
+
+  navegarAlistaRemitos( ){
+    this._router.navigate([ `remitos/lista-remitos` ]);
   }
 
   volver(){
@@ -209,7 +236,8 @@ export class VerRemitoComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.Id + 1}`;
   }
 
-  navegarHaciaCodigoArticulo( codigoArticulo: string ){
-    this._router.navigate([`articulos/codigos-barra/${ codigoArticulo }`]);
+  navegarHaciaCodigoArticulo( codArticulo: string ){
+
+    this._router.navigate([ `articulos/codigos-barra-articulos/${ codArticulo }` ]);
   }
 }

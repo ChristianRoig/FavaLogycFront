@@ -17,18 +17,18 @@
 
                             <mat-form-field appearance="outline" fxFlex="20%" class="ml-4 mr-4">
                                 <mat-label>Tipo</mat-label>
-                                <input disabled matInput value="{{this.tipoCbte}}">
+                                <input disabled matInput class="boldFont" value="{{this.tipoCbte}}">
                             </mat-form-field>
 
                             <mat-form-field appearance="outline" fxFlex="30%" class="ml-4 mr-4">
                                 <mat-label>Número</mat-label>
-                                <input disabled matInput value="{{this.numeroCbte}}">
+                                <input disabled matInput class="boldFont" value="{{this.numeroCbte}}">
                             </mat-form-field>
 
                             <mat-form-field appearance="outline" fxFlex="50%" class="ml-4 mr-4">
                                 <mat-label>Cliente</mat-label>
 
-                                <input disabled matInput [value]="codigoCliente + '-' + nombreCliente">
+                                <input disabled matInput class="boldFont" [value]="codigoCliente + '-' + nombreCliente">
 
                             </mat-form-field>
 

@@ -32,7 +32,7 @@ export class TableComprobantesComponent implements OnInit {
 
   @ViewChild('buscarCbte') buscarCbteInput: ElementRef;
 
-  displayedColumns: string[] = ['Comprobante', 'Fecha-Entrega', 'priDireccion', 'NombreArticulo', 'priEtapa', 'seleccionar'];  
+  displayedColumns: string[] = ['Comprobante', 'Fecha-Entrega', 'priDireccion', 'NombreArticulo', 'notificacion', 'priEtapa', 'seleccionar'];  
   dataSource2: any;
 
   lote: string = null;

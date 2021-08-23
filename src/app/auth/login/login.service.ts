@@ -11,10 +11,10 @@ import { Router } from '@angular/router';
 
 const API_LOG: string = environment.api_log;
 
-const user: string = config.Cookie_User;
-const token: string = config.Cookie_Token;
-const expirar: string = config.Cookie_expirar;
-const sesion_activa: number = config.sesion_activa; // Minutos
+const user: string = "user";
+const token: string = "token";
+const expirar: string = "expirar";
+const sesion_activa: number = 60; // Minutos
 
 export interface DataCookie {
     infoToken?: string;
@@ -94,37 +94,10 @@ export class LoginService {
     }
 
     //--------------------------------------------------------------------------------------------------
-    
-    estaLogueado(): boolean {
-        const userLog = localStorage.getItem("username");
-        const tokenLog = localStorage.getItem("token");
-        console.log("userLog",userLog, "tokenLog", tokenLog);
-        if ((userLog) && (tokenLog)) {
-            return true;
-        } else {
-            this.logout();
-            return false;
-        }    
-    }
-    
-    //--------------------------------------------------------------------------------------------------
-
-    getToken(): string {
-        if ( localStorage.getItem("token") != "" ) {
-
-            this.token = localStorage.getItem("token");
-            return this.token;
-        } else{
-            return "";
-        }
-    }
-
-    //--------------------------------------------------------------------------------------------------
 
     logout(): void {
-
         localStorage.clear();
-        this._router.navigate(['']);
+        window.location.reload();
     }
 
     //--------------------------------------------------------------------------------------------------

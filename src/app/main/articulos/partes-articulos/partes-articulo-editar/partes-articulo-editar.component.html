@@ -1,4 +1,4 @@
-<app-plantilla-fondo titulo='Partes por articulo' arrowBack=true>
+<app-plantilla-fondo titulo='Modificar partes de articulo' arrowBack=true>
 
 
     <div contenido class="content" fxLayout="row" fxLayoutAlign="center">
@@ -6,34 +6,35 @@
 
         <form class="p-24 mr-24" fxLayout="column" fxLayoutAlign="center" fxFlex="1 0 auto" name="form">
 
-            <div class="h2 mb-24">Editar Cantidad</div>
+
 
             <mat-form-field appearance="outline">
                 <mat-label>Código Articulo</mat-label>
-                <input matInput disabled value="{{this.codigoArticulo}}">
+                <input matInput disabled class="boldFont" value="{{this.codigoArticulo}}">
             </mat-form-field>
 
             <br>
 
             <mat-form-field appearance="outline">
                 <mat-label>Nombre</mat-label>
-                <input matInput disabled value="{{this.nombre}}">
+                <input matInput disabled class="boldFont" value="{{this.nombre}}">
             </mat-form-field>
 
             <br>
 
             <mat-form-field appearance="outline">
                 <mat-label>Descripcion</mat-label>
-                <input matInput disabled value="{{this.descripcion}}">
+                <input matInput disabled class="boldFont" value="{{this.descripcion}}">
             </mat-form-field>
 
             <br>
-
-            <mat-form-field appearance="outline">
-                <mat-label>Cantidad</mat-label>
-                <input id="cantidad-editar" matInput [(ngModel)]='this.cantidad' [ngModelOptions]="{standalone: true}" type="number" min="1" autofocus required>
-            </mat-form-field>
-
+            <div fxLayout="row">
+                <mat-form-field appearance="outline" class="inputCantidad">
+                    <mat-label>Cantidad de Partes</mat-label>
+                    <input id="cantidad-editar" matInput [(ngModel)]='this.cantidad' [ngModelOptions]="{standalone: true}" type="number" min="1" autofocus required>
+                </mat-form-field>
+                <p appearance="outline" class="aclaracion boldFont">ACLARACIÓN: en Favalogyc no se pueden modificar o agregar articulos, SOLO se puede modificar el número de partes que tiene cada artículo.</p>
+            </div>
 
             <div class="mt-4 pt-4" fxLayout="row" fxLayoutAlign="space-between">
 

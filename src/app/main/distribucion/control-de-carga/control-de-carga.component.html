@@ -21,7 +21,7 @@
         <div class="controlesBusqueda">
             <mat-form-field appearance="outline" class="inputBuscar">
                 <mat-label>Buscar Orden de Distribucion por CUPA</mat-label>
-                <input #buscar (keyup)="searchOrden()" minlength="15" matInput value="" placeholder="Ingrese un CUPA">
+                <input #buscar (keyup)="searchOrden()" (keydown)="saltarAbotonBuscar($event)" minlength="15" matInput value="" placeholder="Ingrese un CUPA">
                 <mat-icon matSuffix>search</mat-icon>
             </mat-form-field>
 

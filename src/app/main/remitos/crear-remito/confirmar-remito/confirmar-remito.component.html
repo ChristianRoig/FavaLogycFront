@@ -14,35 +14,16 @@
     <div mat-dialog-content class="pb-0 m-0" *ngIf="!this.mostrarSpinner" style="width: 100%;" fusePerfectScrollbar>
         <form class="formClass">
 
-            <!-- <div fxLayout="row" class="mb-8" fxLayoutAlign="start start">
-                <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>{{ filtroDepositosCarga ? 'Depositos Carga' : 'Cargando...'}}</mat-label>
-                    <select matNativeControl (change)="selectDepositoCarga($event)" [disabled]="!filtroDepositosCarga">
-                        <option *ngFor="let deposito of filtroDepositosCarga" [value]="deposito.id"
-                        [selected]="selectedDepositoCarga === deposito.id">
-                            {{ deposito.nombre }}
-                        </option>
-                          </select>
-                </mat-form-field>
-            </div> -->
-
             <div fxLayout="row" class="mb-8" fxLayoutAlign="start start">
 
                 <mat-form-field appearance="outline" class="talonario">
-                    <!-- <mat-label>{{ filtroTalonarios ? 'Talonarios' : 'Cargando...'}}</mat-label>
-                    <select matNativeControl (change)="selectTalonario($event)" [disabled]="!filtroTalonarios">
-                        <option *ngFor="let talonario of filtroTalonarios" [value]="talonario.nroTalonario"
-                        [selected]="selectedTalonario === talonario.nroTalonario"> 
-                            {{ talonario.alias }}
-                        </option>
-                    </select> -->
                     <mat-label>Alias</mat-label>
-                    <input matInput disabled [value]="this.alias">
+                    <input matInput disabled class="boldFont" [value]="this.alias">
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" class="cantRemitos">
                     <mat-label>Cant. Remitos</mat-label>
-                    <input matInput disabled [value]="this.cantRemitos">
+                    <input matInput disabled class="boldFont" [value]="this.cantRemitos">
                 </mat-form-field>
 
             </div>
@@ -50,11 +31,11 @@
             <div fxLayout="row" class="mb-8" fxLayoutAlign="start start">
                 <mat-form-field appearance="outline" class="comprobante">
                     <mat-label>Nro Desde</mat-label>
-                    <input matInput disabled [value]="this.nroDesde">
+                    <input matInput disabled class="boldFont" [value]="this.nroDesde">
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="comprobante ml-16">
                     <mat-label>Nro Hasta</mat-label>
-                    <input matInput disabled [value]="this.nroHasta">
+                    <input matInput disabled class="boldFont" [value]="this.nroHasta">
                 </mat-form-field>
             </div>
 

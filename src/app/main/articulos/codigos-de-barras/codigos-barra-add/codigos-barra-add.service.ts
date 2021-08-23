@@ -12,33 +12,20 @@ export class PedidosCodigosBarraAddService
         private _httpClient: HttpClient
     ){}
 
-    getCodigoBarra(codArt, page, size, columna, order): Observable<any>
-    {
+    getCodigoBarra(codArt, page, size, columna, order): Observable<any> {
         //let ruta = `${BASE_URL}pedidos/codigodebarras/porcodigoarticuloonombre/${codArt}/0/1/id/asc`;
         let ruta = `${BASE_URL}pedidos/codigodebarras/porcodigoarticuloonombre/${codArt}/${page}/${size}/${columna}/${order}`;
         return this._httpClient.get(ruta);
     }
 
-    postCodigoBarra(id:number, codigoDeBarras:string, descripcion: string): Observable<any>
-    {
+    postCodigoBarra( body: {} ): Observable<any> {
         
         let ruta = `${BASE_URL}pedidos/codigodebarras`
-
-        let body=   {
-            codigoDeBarras: codigoDeBarras,
-            descripcion: descripcion,
-            sysUsuario: {
-                id: 1
-            },
-            articulo: {
-                id: id
-            }
-        }
 
         let headers = new HttpHeaders({
             "Content-Type": "application/json"
         });
-
+        console.log("body", body);
         return this._httpClient.post(ruta,body,{headers:headers});
     }
 }

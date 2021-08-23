@@ -102,7 +102,7 @@ export class PedidosDatosEntregaComponent implements OnInit {
 
     this.route.params.subscribe( params => {
       this.idPedidoCabecera = params['id'];
-      console.log( "ID PEDIDO CABECERA -> ",this.idPedidoCabecera );
+      //console.log( "ID PEDIDO CABECERA -> ",this.idPedidoCabecera );
     });
 
 
@@ -113,7 +113,7 @@ export class PedidosDatosEntregaComponent implements OnInit {
 
     this.idPedidoCbte = +localStorage.getItem('idCbte');
     this.vengoDeCbte = localStorage.getItem('vengoDeCbte');
-    console.log("this.idPedidoCbte", this.idPedidoCbte);
+    //console.log("this.idPedidoCbte", this.idPedidoCbte);
 
     //localStorage.removeItem('idCbte');
 
@@ -121,22 +121,22 @@ export class PedidosDatosEntregaComponent implements OnInit {
     
     this.dataSourceDatosDeEntrega = this.listaDatosVacia;
     this.getDatosDeEntrga();
-    console.log('termino el onInit');
+    //console.log('termino el onInit');
   }
 
   buscarDatosEntrega(page, size, columna, order){
     if (this.vengoDeCbte == "true"){
-      console.log("DATO ENTREGA - vengo de comprobante");
+      //console.log("DATO ENTREGA - vengo de comprobante");
       this._service.getDatosEntrega( this.idPedidoCbte, page, size, columna, order ).subscribe(paramsArt => {
         if(paramsArt){
-          console.log("DATOS DE ENTREGA -> ",paramsArt);
+          //console.log("DATOS DE ENTREGA -> ",paramsArt);
           this.dataSourceDatosEntrega = paramsArt.datos;
           this.length = paramsArt.totalRegistros;
         }
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
-          console.log("Client-side error");
+         // console.log("Client-side error");
         } else {
           let errStatus = err.status
           if (errStatus == 0){
@@ -152,17 +152,17 @@ export class PedidosDatosEntregaComponent implements OnInit {
       });
     }
     if (this.vengoDeCbte == "false"){
-      console.log("DATO ENTREGA - vengo de pedidos");
+      //console.log("DATO ENTREGA - vengo de pedidos");
       this._service.getDatosEntregaPedidos( this.idPedidoCabecera, page, size, columna, order ).subscribe(paramsArt => {
         if(paramsArt){
-          console.log("DATOS DE ENTREGA -> ",paramsArt);
+          //console.log("DATOS DE ENTREGA -> ",paramsArt);
           this.dataSourceDatosEntrega = paramsArt.datos;
           this.length = paramsArt.totalRegistros;
         }
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
-          console.log("Client-side error");
+          //console.log("Client-side error");
         } else {
           let errStatus = err.status
           if (errStatus == 0){
@@ -181,12 +181,12 @@ export class PedidosDatosEntregaComponent implements OnInit {
 
   getDatosDeEntrga(){
     this._serviceDatoEntrega.getDatosDeEntregaUpd( this.idPedidoCabecera ).subscribe((params) => {
-      console.log("PARAMS-----------", params);
+      //console.log("PARAMS-----------", params);
       this.dataSourceDatosDeEntrega.datos = params;
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
-        console.log("Client-side error");
+        //console.log("Client-side error");
       } else {
         let errStatus = err.status
         if (errStatus == 0){
@@ -203,10 +203,10 @@ export class PedidosDatosEntregaComponent implements OnInit {
   }
 
   verDatoEntrega(item){
-    console.log(item);
+    //console.log(item);
 
     let dialogRef = this._dialog.open(AgregarDatosEntregaComponent, {
-      width: window.innerWidth+'px',
+
       data: {
         option: 'view',
         item: item

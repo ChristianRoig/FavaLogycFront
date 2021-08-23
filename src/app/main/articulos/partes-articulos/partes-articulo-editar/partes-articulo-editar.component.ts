@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.component';
+import { ModalConfirmacionComponent } from './modal-confirmacion/modal-confirmacion.component';
 import { MatDialog } from '@angular/material/dialog';
 
 //services
@@ -119,13 +120,9 @@ export class PedidosPartesArticuloEditarComponent implements OnInit {
 
         }
 
-        this._pedidosPartesArticulosEditarService.putArticulo( this.id, body ).subscribe(
-          data => {
-            let titulo = 'Confirmación de Edición';
-            let mensaje = "Se actualizó el registro correctamente";
-            this.mostrarError(200, titulo, mensaje);
-          },
-          (err: HttpErrorResponse) => {
+        this._pedidosPartesArticulosEditarService.putArticulo( this.id, body ).subscribe( data => {
+          this.popUpContinuar();
+          },(err: HttpErrorResponse) => {
               if (err.error instanceof Error) {
                 console.log("Client-side error");
               } else {
@@ -143,6 +140,14 @@ export class PedidosPartesArticuloEditarComponent implements OnInit {
             }
         );
       }
+    }
+
+    popUpContinuar(): void{
+      const dialogRef = this._dialog.open( ModalConfirmacionComponent )
+      dialogRef.afterClosed()
+        .subscribe( result => {
+        this.volver();
+      });
     }
 
     mostrarError(errStatus, titulo, mensaje){

@@ -10,6 +10,7 @@ import { ModalErrorComponent } from 'app/shared/modal-error/modal-error.componen
 
 //services
 import { PedidosCodigosBarraEditarService } from './codigos-barra-editar.service';
+import { ModalConfirmacionComponent } from '../../partes-articulos/partes-articulo-editar/modal-confirmacion/modal-confirmacion.component';
 
 /**
  * @title Basic use of `<table mat-table>`
@@ -84,9 +85,10 @@ export class PedidosCodigosBarraEditarComponent implements OnInit {
     editar(){
         this._pedidosCodigosBarraEditarService.putCodigoBarra(this.id,this.codigoDeBarras,this.descripcion).subscribe(
           data => {
-            let titulo = 'Confirmación de Edición';
+            this._dialog.open( ModalConfirmacionComponent );
+            /* let titulo = 'Confirmación de Edición';
             let mensaje = "Se actualizó el registro correctamente";
-            this.mostrarError(200, titulo, mensaje);
+            this.mostrarError(200, titulo, mensaje); */
           },
           (err: HttpErrorResponse) => {
               if (err.error instanceof Error) {

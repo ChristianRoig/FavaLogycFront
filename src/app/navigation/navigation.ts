@@ -174,7 +174,7 @@ export const navigation: FuseNavigation[] = [
                         id        : 'codigos-barra',
                         title     : 'Códigos de Barras',
                         type      : 'item',
-                        url       : 'articulos/codigos-barra-articulos',
+                        url       : 'articulos/codigos-barra-articulos/cero',
                         exactMatch: true
                     },
                 ]

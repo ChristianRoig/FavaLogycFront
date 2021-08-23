@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterModule, Routes } from '@angular/router';
@@ -24,9 +24,10 @@ import { SharedModule } from './shared/shared.module';
 
 import { SonidoService } from './shared/services/sonidos.service';
 
+//import { AuthInterceptor } from './shared/x_NOSEUSA_interceptors/auth.interceptor'; // interceptor para añadir token en peticiones http
+
 // import { ProjectDashboardComponent } from './main/apps/tablero/tablero.component';
 // import { PlantillaFondoComponent } from './shared/custom-tags/plantilla-fondo/plantilla-fondo.component';
-// import { AuthInterceptor } from './shared/x_NOSEUSA_interceptors/auth.interceptor';
 // import { UsuarioGuard } from './shared/x_NOSEUSA_guards/usuario.guard';
 // import { SampleModule } from './main/x_NOSEUSA_sample/sample.module';
 
@@ -129,7 +130,7 @@ const appRoutes: Routes = [
     providers: [
         SonidoService,
         //{ provide: LocationStrategy, useClass: HashLocationStrategy }
-        // { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+        //{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
     ],
     bootstrap   : [
         AppComponent

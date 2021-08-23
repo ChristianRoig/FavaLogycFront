@@ -1,1 +1,39 @@
-<h2 mat-dialog-title>Confirmación de Borrado</h2>
+<!-- <h2 mat-dialog-title>Confirmación de Borrado</h2>
+
+<mat-dialog-content class="mat-typography">
+
+    <p>¿Confirma que desea BORRAR este elemento?</p>
+    <br>
+    <p>Remito: {{data.id}}</p>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-raised-button color="warn" mat-dialog-close="true">Borrar</button>
+    <button mat-raised-button mat-dialog-close autofocus>Cancelar</button>
+</mat-dialog-actions> -->
+
+
+<div class="father">
+    <div fxLayout="row" style="width: 100%;">
+
+        <mat-toolbar-row fxLayoutAlign="center" class="titulo2">
+            <h2 mat-dialog-title>Confirmación de Anulado</h2>
+        </mat-toolbar-row>
+
+    </div>
+
+
+    <mat-dialog-content class="mat-typography">
+
+        <p>¿Confirma que desea BORRAR este elemento?</p>
+        <br>
+        <p>Remito: {{data.id}}</p>
+
+
+        <mat-dialog-actions>
+            <button mat-raised-button color="warn" class="boton" mat-dialog-close="true">Borrar</button>
+            <button mat-raised-button class="boton" mat-dialog-close autofocus>Cancelar</button>
+        </mat-dialog-actions>
+
+    </mat-dialog-content>
+</div>

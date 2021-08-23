@@ -290,10 +290,10 @@ export class ControlarCargaComponent implements OnInit {
   }
 
   navegarCodigoArticulo( codArticulo: string ){
-    this._router.navigate([ `articulos/codigos-barra/${ codArticulo }` ]);
+    this._router.navigate([ `articulos/codigos-barra-articulos/${ codArticulo }` ]);
   }
 
-  verPedido( idPedido, idCbte ){                          // falta que el back agregue datos para hacer la navegacion
+  verPedido( idPedido, idCbte ){                    
     localStorage.setItem('vengoDeCbte', "true" );
     localStorage.setItem('idCbte', idCbte );
     this._router.navigate([ `pedidos/ver-pedido/${ idPedido }` ]);

@@ -526,6 +526,6 @@ export class VerLoteComponent implements OnInit {
 
   navegarCodigoArticulo( codArticulo ){
 
-    this._router.navigate([ `articulos/codigos-barra/${ codArticulo }` ]);
+    this._router.navigate([ `articulos/codigos-barra-articulos/${ codArticulo }` ]);
   }
 }
